@@ -4,8 +4,9 @@ import {Title} from '../../components/global.styles'
 import TitleBG from '../../images/title_bg.png'
 import EthSymbol from '../../images/eth.svg'
 import Discord from '../../images/discord.svg'
-import Github from '../../images/github.svg'
 import Twitter from '../../images/twitter.svg'
+import { faMediumM } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button, {ButtonsWhite} from '@components/Button';
 import {
     ArrowUpRight
@@ -82,11 +83,15 @@ const DataValueBlue = styled(DataValue)`
 const SocialButton = styled(ButtonsWhite)`
     padding: 14px;
     border-radius: 50%;
+    width: 50px;
+    height: 50px;
 `
 
 const SocialIMG = styled.img`
     width: 23px;
     height: 23px;
+    margin-top: -6px;
+    margin-left: -1px;
 `
 
 interface EthValuePair {
@@ -125,9 +130,9 @@ const Home: React.FC = () => {
                 </DataContainer>
             </UpperContainer>
             <LowerContainer>
-                <SocialButton to="/" as={Link}><SocialIMG src={Github} /></SocialButton>
-                <SocialButton to="/" as={Link}><SocialIMG src={Twitter} /></SocialButton>
-                <SocialButton to="/" as={Link}><SocialIMG src={Discord} /></SocialButton>
+                <SocialButton to="https://medium.com/abacus-wtf" as={Link}><FontAwesomeIcon style={{fontSize: 20, marginTop: -2}} icon={faMediumM} /></SocialButton>
+                <SocialButton to="https://twitter.com/abacus_wtf" as={Link}><SocialIMG src={Twitter} /></SocialButton>
+                <SocialButton to="https://discord.com/invite/WZUv4y5rPd" as={Link}><SocialIMG src={Discord} /></SocialButton>
             </LowerContainer>
         </HomeContainer>
     )

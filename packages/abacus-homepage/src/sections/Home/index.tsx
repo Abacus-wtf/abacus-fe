@@ -130,9 +130,9 @@ const Home: React.FC = () => {
                 </DataContainer>
             </UpperContainer>
             <LowerContainer>
-                <SocialButton to="https://medium.com/abacus-wtf" as={Link}><FontAwesomeIcon style={{fontSize: 20, marginTop: -2}} icon={faMediumM} /></SocialButton>
-                <SocialButton to="https://twitter.com/abacus_wtf" as={Link}><SocialIMG src={Twitter} /></SocialButton>
-                <SocialButton to="https://discord.com/invite/WZUv4y5rPd" as={Link}><SocialIMG src={Discord} /></SocialButton>
+                <SocialButton target={'_blank'} to="https://medium.com/abacus-wtf" as={Link}><FontAwesomeIcon style={{fontSize: 20, marginTop: -2}} icon={faMediumM} /></SocialButton>
+                <SocialButton target={'_blank'} to="https://twitter.com/abacus_wtf" as={Link}><SocialIMG src={Twitter} /></SocialButton>
+                <SocialButton target={'_blank'} to="https://discord.com/invite/WZUv4y5rPd" as={Link}><SocialIMG src={Discord} /></SocialButton>
             </LowerContainer>
         </HomeContainer>
     )

@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import Link from 'gatsby-link'
 import { ChevronsLeft, AlignJustify } from "react-feather";
 import {Row} from 'shards-react'
 import Button, {ButtonsWhite} from '../Button'
+import Link from 'gatsby-link'
 
 const RowStyled = styled(Row)`
   padding: 0px;
@@ -62,7 +62,7 @@ const Navbar = () => {
           <CategoryLink as={Link} to="/">
             Launch App
           </CategoryLink>
-          <SecondaryCategoryLink as={Link} to="/">
+          <SecondaryCategoryLink target={'_blank'} as={'a'} href="/Abacus_White_Paper.pdf">
             Whitepaper
           </SecondaryCategoryLink>
         </CategoryList>

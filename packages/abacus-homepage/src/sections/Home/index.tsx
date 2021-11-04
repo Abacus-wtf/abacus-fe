@@ -123,7 +123,7 @@ const Home: React.FC = () => {
                     <DataPair value={'-'} title={'NFTs Priced'} symbol={<DataValueBlue>+</DataValueBlue>}/>
                     <DataPair value={'-'} title={'Issued'} symbol={<DataValueBlue>$ABC</DataValueBlue>}/>
                     <React.Fragment>
-                        <Button data-tip={'Launch App'}  as={Link} to="/" style={{borderRadius: '50%', height: 65, width: 65, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <Button data-tip={'Launch App'} as={'a'} href="https://app.abacus.wtf" style={{borderRadius: '50%', height: 65, width: 65, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                             <ArrowUpRight />
                         </Button>
                     </React.Fragment>

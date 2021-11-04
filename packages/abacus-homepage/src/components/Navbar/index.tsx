@@ -59,7 +59,7 @@ const Navbar = () => {
         </Logo>
         <DashedLine />
         <CategoryList>
-          <CategoryLink as={Link} to="/">
+          <CategoryLink as={'a'} href="https://app.abacus.wtf">
             Launch App
           </CategoryLink>
           <SecondaryCategoryLink target={'_blank'} as={'a'} href="/Abacus_White_Paper.pdf">

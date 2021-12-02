@@ -22,7 +22,11 @@ const Logo = styled(Link)`
 
 const CategoryList = styled.div`
   display: flex;
-  grid-gap: 8px;
+  margin-top: 15px;
+  @media ${({ theme }) => theme.media.phone} {
+    margin: 0;
+    grid-gap: 8px;
+  }
 `
 
 const CategoryLink = styled(Button)`
@@ -30,6 +34,10 @@ const CategoryLink = styled(Button)`
   padding: 8px 16px;
   min-width: fit-content;
   transition: 0.1s;
+
+  &:first-of-type {
+    margin-right: 8px;
+  }
 `
 
 const SecondaryCategoryLink = styled(ButtonsWhite)`
@@ -46,7 +54,6 @@ const NavbarContainer = styled.div`
   width: 100%;
   justify-content: center;
   flex-direction: column;
-  grid-gap: 15px;
   @media ${({ theme }) => theme.media.phone} {
     grid-gap: 30px;
     justify-content: flex-start;

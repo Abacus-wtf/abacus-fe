@@ -29,11 +29,7 @@ const UpperContainer = styled.div`
 
 const LowerContainer = styled.div`
   display: flex;
-  position: absolute;
   margin: 2rem 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   justify-content: center;
   grid-gap: 16px;
   @media ${({ theme }) => theme.media.phone} {
@@ -96,6 +92,7 @@ const DataValue = styled(Title)`
   display: flex;
   grid-gap: 8px;
   margin: 0px !important;
+  margin-right: 8px !important;
 `
 
 const DataValueBlue = styled(DataValue)`
@@ -108,6 +105,10 @@ const SocialButton = styled(ButtonsWhite)`
   border-radius: 50%;
   width: 50px;
   height: 50px;
+  margin: 0 5px;
+  @media ${({ theme }) => theme.media.phone} {
+    margin: 0;
+  }
 `
 
 const SocialIMG = styled.img`
@@ -133,7 +134,7 @@ interface EthValuePair {
 const DataPair = ({ value, title, symbol }: EthValuePair) => {
   return (
     <DataPairContainer>
-      <div style={{ display: "flex", gridGap: 8 }}>
+      <div style={{ display: "flex" }}>
         <DataValue>{value}</DataValue>
         {symbol}
       </div>

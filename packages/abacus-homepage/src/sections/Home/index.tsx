@@ -204,7 +204,7 @@ const Home: React.FC = () => {
         </SocialButton>
         <SocialButton
           target={"_blank"}
-          to="https://discord.com/invite/WZUv4y5rPd"
+          to="https://discord.gg/ZGEY3d3W"
           as={Link}
         >
           <SocialIMG src={Discord} />

@@ -1,6 +1,6 @@
-import * as React from "react"
+import React, {useState, useEffect} from "react"
 import styled from "styled-components"
-import { Title } from "../../components/global.styles"
+import { Title } from "@components/global.styles"
 import TitleBG from "../../images/title_bg.png"
 import EthSymbol from "../../images/eth.svg"
 import Discord from "../../images/discord.svg"
@@ -10,6 +10,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Button, { ButtonsWhite } from "@components/Button"
 import { ArrowUpRight } from "react-feather"
 import Link from "gatsby-link"
+import { ABC_TREASURY_ADDRESS, useWeb3Contract } from "@components/useWeb3Contract"
+import { formatEther } from "ethers/lib/utils"
+import ABC_TREASURY from '@components/contracts/ABC_TREASURY.json'
 
 const HomeContainer = styled.div`
   display: flex;
@@ -144,6 +147,25 @@ const DataPair = ({ value, title, symbol }: EthValuePair) => {
 }
 
 const Home: React.FC = () => {
+  const treasuryContract = useWeb3Contract(ABC_TREASURY)
+  const [nftsPriced, setNftsPriced] = React.useState('-')
+  const [earned, setEarned] = React.useState('-')
+
+  useEffect(() => {
+    const loadData = async () => {
+      const [profitGenerated, nftsPricedContract] = await Promise.all([
+        treasuryContract(ABC_TREASURY_ADDRESS).methods.profitGenerated().call(),
+        treasuryContract(ABC_TREASURY_ADDRESS).methods.nftsPriced().call(),
+      ])
+      setEarned(Number(formatEther(profitGenerated)).toLocaleString('en-us', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }))
+      setNftsPriced(nftsPricedContract)
+    }
+    loadData()
+  }, [])
+
   return (
     <HomeContainer>
       <UpperContainer>
@@ -151,19 +173,14 @@ const Home: React.FC = () => {
         <TitleBackground />
         <DataContainer>
           <DataPair
-            value={"-"}
+            value={earned}
             title={"Earned"}
             symbol={<img src={EthSymbol} />}
           />
           <DataPair
-            value={"-"}
+            value={nftsPriced}
             title={"NFTs Priced"}
             symbol={<DataValueBlue>+</DataValueBlue>}
-          />
-          <DataPair
-            value={"-"}
-            title={"Issued"}
-            symbol={<DataValueBlue>$ABC</DataValueBlue>}
           />
           <LaunchButtonContainer>
             <Button

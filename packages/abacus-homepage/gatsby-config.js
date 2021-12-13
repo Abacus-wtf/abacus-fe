@@ -28,16 +28,6 @@ module.exports = {
     },
 
     {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Personal Website`,
-        display: `minimal-ui`,
-        path: `${__dirname}/src/images`,
-        icon: `src/images/logo.png`
-      }
-    },
-
-    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,

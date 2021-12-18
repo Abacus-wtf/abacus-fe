@@ -78,16 +78,22 @@ const Home: React.FC = () => {
             value={spread}
             title={"Spread"}
             symbol={<DataValueBlue>🎯</DataValueBlue>}
+            tooltipId="spread"
+            tooltipText="The acceptable margin of error in which an appraiser is considered correct"
           />
           <DataPair
             value={defender}
             title={"Defender"}
             symbol={<DataValueBlue>🛡️</DataValueBlue>}
+            tooltipId="defender"
+            tooltipText="The tightness of appraisals allowed is determined by this value"
           />
           <DataPair
             value={riskFactor}
             title={"Risk Factor"}
             symbol={<DataValueBlue>⚖️</DataValueBlue>}
+            tooltipId="riskfactor"
+            tooltipText="The multiplier applied to amount harvested and sent to the profit pool"
           />
           <LaunchButtonContainer>
             <Button

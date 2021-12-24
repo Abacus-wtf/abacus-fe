@@ -42,9 +42,9 @@ const Home: React.FC = () => {
           GET_NFT_PRICE_DATA,
           {}
         ),
-        pricingSessionContract(ABC_PRICING_SESSION_ADDRESS).methods.riskFactor().call(),
-        pricingSessionContract(ABC_PRICING_SESSION_ADDRESS).methods.spread().call(),
-        pricingSessionContract(ABC_PRICING_SESSION_ADDRESS).methods.defender().call(),
+        treasuryContract(ABC_TREASURY_ADDRESS).methods.riskFactor().call(),
+        treasuryContract(ABC_TREASURY_ADDRESS).methods.spread().call(),
+        treasuryContract(ABC_TREASURY_ADDRESS).methods.defender().call(),
       ])
       setEarned(Number(formatEther(profitGenerated)).toLocaleString('en-us', {
         minimumFractionDigits: 2,

@@ -21,6 +21,7 @@ const Logo = styled.a`
   font-size: 1.5rem;
   font-weight: 500;
   color: ${theme.colors.text1};
+  min-width: max-content;
 `
 
 const LinkList = styled.div<{ menuOpen: boolean }>`
@@ -126,7 +127,7 @@ const Navbar = ({ location }) => {
   return (
     <RowStyled>
       <NavbarContainer>
-        <Logo href="/">Abacus</Logo>
+        <Logo href="/">ABC Pools</Logo>
         <MobileNavButton onClick={() => setMenuOpen((open) => !open)}>
           {menuOpen ? <X /> : <Menu />}
         </MobileNavButton>
@@ -145,6 +146,9 @@ const Navbar = ({ location }) => {
               active={(location.pathname === "/auctions").toString()}
             >
               Auctions
+            </HeaderLink>
+            <HeaderLink as="a" href="https://app.abacus.wtf/" active={false}>
+              Crowds
             </HeaderLink>
           </ListSection>
           <ListSectionSelector>

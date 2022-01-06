@@ -2,6 +2,7 @@ import React from "react"
 import { useGetPoolStatus } from "@state/singlePoolData/hooks"
 import { PoolStateStatus } from "@state/singlePoolData/reducer"
 import AMM from "./AMM"
+import Auction from "./Auction"
 
 const CurrentState = () => {
   const status = useGetPoolStatus()
@@ -9,7 +10,7 @@ const CurrentState = () => {
     case PoolStateStatus.AMM:
       return <AMM />
     case PoolStateStatus.Auction:
-      return <AMM />
+      return <Auction />
     default:
       return null
   }

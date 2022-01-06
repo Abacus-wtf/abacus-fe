@@ -19,9 +19,13 @@ export const useSetPoolData = () => {
         ownerAddress: "0x",
         animation_url: null,
         symbol: "DRAGO",
+        endTime: "1641545735000",
+        tokensLeft: "1000",
+        tokensClaimed: "200",
+        tokenPrice: "0.5",
         img: "https://lh3.googleusercontent.com/SWhiz5ufXCRGpsNgLn21G8losMUGf0YbVb6Su3mljhiJ5VGvjobrDH_poUX2kve-vne5rSkUUcTtvKIby_0m2TyeaLJWD-tbs_K-=w600",
       }
-      const poolState: PoolStateStatus = PoolStateStatus.AMM
+      const poolState: PoolStateStatus = PoolStateStatus.Auction
       dispatch(getPoolData({ data: pool, status: poolState }))
     },
     [dispatch]

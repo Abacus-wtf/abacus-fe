@@ -37,6 +37,7 @@ export const HorizontalListGroup = styled(ListGroup)`
 export const ListGroupHeader = styled(ListGroupItemHeading)`
   font-weight: bold;
   margin: 0px;
+  font-size: 1.15rem;
 `
 
 export const ListGroupSubtext = styled(ListGroupItemText)`

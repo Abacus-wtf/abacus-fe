@@ -11,6 +11,10 @@ export interface Pool {
   owner: string
   ownerAddress: string
   symbol?: string
+  endTime?: string
+  tokensLeft?: string
+  tokensClaimed?: string
+  tokenPrice?: string
 }
 
 interface PoolState {

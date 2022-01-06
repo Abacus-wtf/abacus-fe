@@ -89,7 +89,7 @@ export function useMultiCall(abi: any) {
   const { chainId } = useActiveWeb3React()
   let networkSymbol = useGetCurrentNetwork()
   if (networkSymbol === NetworkSymbolEnum.NONE) {
-    networkSymbol = NetworkSymbolEnum.ARBITRUM
+    networkSymbol = NetworkSymbolEnum.ETH
   }
 
   return useCallback(
@@ -140,7 +140,7 @@ export function useMultiCall(abi: any) {
 export function useWeb3Contract(ABI: any) {
   let networkSymbol = useGetCurrentNetwork()
   if (networkSymbol === NetworkSymbolEnum.NONE) {
-    networkSymbol = NetworkSymbolEnum.ARBITRUM
+    networkSymbol = NetworkSymbolEnum.ETH
   }
   return useCallback(
     (address: string) => {

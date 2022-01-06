@@ -6,10 +6,7 @@ import { Container, Row } from "shards-react"
 import Web3Modal from "@components/Web3Modal"
 import Web3 from "web3"
 import { useActiveWeb3React } from "@hooks/index"
-import {
-  useSelectNetwork,
-  useGetCurrentNetwork,
-} from "@state/application/hooks"
+import { useSelectNetwork } from "@state/application/hooks"
 import { NetworkSymbolEnum, NetworkSymbolAndId } from "@config/constants"
 import GeneralizedContractError from "@components/GeneralizedContractError"
 import NotConnectedAlert from "@components/NotConnectedAlert"
@@ -72,26 +69,17 @@ const GlobalLayout: React.FC = (props: any) => {
         return {
           title: "Abacus Protocol",
         }
-      case "/auction/":
+      case "/auctions/":
         return {
-          title: "Abacus Protocol | Auction",
+          title: "Abacus Protocol | Auctions",
         }
-      case "/claim-pool/":
+      case "/create-pool/":
         return {
-          title: "Abacus Protocol | Claim Pool",
+          title: "Abacus Protocol | Create Pool",
         }
-      case "/create-session/":
+      case "/pool/":
         return {
-          title: "Abacus Protocol | Create New Session",
-        }
-
-      case "/current-session/":
-        return {
-          title: "Abacus Protocol | Current Session",
-        }
-      case "/my-sessions/":
-        return {
-          title: "Abacus Protocol | My Sessions",
+          title: "Abacus Protocol | Current Pool",
         }
       default:
         return {

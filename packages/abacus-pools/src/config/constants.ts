@@ -21,22 +21,17 @@ export declare enum ChainId {
   MUMBAI = 80001,
 }
 
-export type NetworkSymbol = "ETH" | "AETH"
+export type NetworkSymbol = "ETH"
 
 export enum NetworkSymbolEnum {
   NONE = "SOLID_NUTHIN",
   ETH = "ETH",
-  ARBITRUM = "AETH",
 }
 
 export const OPENSEA_API_KEY = process.env.GATSBY_OPENSEA_API_KEY || undefined
 export const NetworkContextName = "NETWORK"
 export const ETH_RPC = process.env.GATSBY_NETWORK_URL as string
-export const ARBITRUM_ETH_RPC = process.env
-  .GATSBY_APP_ARBITRUM_NETWORK_URL as string
-export const ARBITRUM_NETWORK_CHAIN_ID = Number(
-  process.env.GATSBY_APP_ARBITRUM_CHAIN_ID as string
-)
+
 export const NETWORK_CHAIN_ID = Number(process.env.GATSBY_CHAIN_ID as string)
 export const IS_PRODUCTION = process.env.GATSBY_IS_PRODUCTION === "true"
 export const OPENSEA_LINK = process.env.GATSBY_OPENSEA_API as string
@@ -56,30 +51,12 @@ const ETH_ABC_PRICING_SESSION_ADDRESS = IS_PRODUCTION
   ? "0x37b4932ECeAE6b07b761F4B86975325Cb36c31aD"
   : "0x0816DdF293398927736E117Bc60eb6F7fB1195AA"
 
-const ARB_ABC_VAULT_CONTRACT = IS_PRODUCTION
-  ? "0xB3f1069B04726C145197853Db772483Bd6B9650D"
-  : "0x828912757A7e94E9f43dcb2c8B196050e1A0A13c"
-const ARB_ABC_TREASURY_ADDRESS = IS_PRODUCTION
-  ? "0x93dcf21284B78163ec218DeF37471C4B77CCC6E1"
-  : "0x41FD0B4393E3f68f21CfCE916d671E1BA0775b9B"
-const ARB_ABC_TOKEN_ADDRESS = IS_PRODUCTION
-  ? ""
-  : "0x80Bb44F69602198249e436a43b37Efd0560eb098"
-const ARB_ABC_AUCTION_ADDRESS = IS_PRODUCTION
-  ? "0x396dd1f7E3c8044784937935F834C3F8d58EB497"
-  : "0x91eb9bF3F7EA1B983072A2488232C10D92056696"
-const ARB_ABC_PRICING_SESSION_ADDRESS = IS_PRODUCTION
-  ? "0xaEad2547e478A9483EE8dc6C876aE6b2caeB6DC9"
-  : "0x68BC528A0fE774927523e9387FA1CBa79591dEAC"
-
 export const ABC_VAULT_ADDRESS = (networkSymbol: NetworkSymbolEnum) => {
   switch (networkSymbol) {
     case NetworkSymbolEnum.ETH:
       return ETH_ABC_VAULT_CONTRACT
-    case NetworkSymbolEnum.ARBITRUM:
-      return ARB_ABC_VAULT_CONTRACT
     case NetworkSymbolEnum.NONE:
-      return ARB_ABC_VAULT_CONTRACT
+      return ETH_ABC_VAULT_CONTRACT
     default:
       return ""
   }
@@ -88,21 +65,19 @@ export const ABC_VAULT_ADDRESS = (networkSymbol: NetworkSymbolEnum) => {
 export const ABC_TREASURY_ADDRESS = (networkSymbol: NetworkSymbolEnum) =>
   networkSymbol === NetworkSymbolEnum.ETH
     ? ETH_ABC_TREASURY_ADDRESS
-    : ARB_ABC_TREASURY_ADDRESS
+    : ETH_ABC_TREASURY_ADDRESS
 
 export const ABC_TOKEN_ADDRESS = (networkSymbol: NetworkSymbolEnum) =>
   networkSymbol === NetworkSymbolEnum.ETH
     ? ETH_ABC_TOKEN_ADDRESS
-    : ARB_ABC_TOKEN_ADDRESS
+    : ETH_ABC_TOKEN_ADDRESS
 
 export const ABC_AUCTION_ADDRESS = (networkSymbol: NetworkSymbolEnum) => {
   switch (networkSymbol) {
     case NetworkSymbolEnum.ETH:
       return ETH_ABC_AUCTION_ADDRESS
-    case NetworkSymbolEnum.ARBITRUM:
-      return ARB_ABC_AUCTION_ADDRESS
     case NetworkSymbolEnum.NONE:
-      return ARB_ABC_AUCTION_ADDRESS
+      return ETH_ABC_AUCTION_ADDRESS
     default:
       return ""
   }
@@ -113,10 +88,8 @@ export const ABC_PRICING_SESSION_ADDRESS = (
   switch (networkSymbol) {
     case NetworkSymbolEnum.ETH:
       return ETH_ABC_PRICING_SESSION_ADDRESS
-    case NetworkSymbolEnum.ARBITRUM:
-      return ARB_ABC_PRICING_SESSION_ADDRESS
     case NetworkSymbolEnum.NONE:
-      return ARB_ABC_PRICING_SESSION_ADDRESS
+      return ETH_ABC_PRICING_SESSION_ADDRESS
     default:
       return ""
   }
@@ -137,7 +110,6 @@ export interface NetworkInfo {
 
 const NETWORK_ADDRESSES = {
   [NetworkSymbolEnum.ETH]: ETH_RPC,
-  [NetworkSymbolEnum.ARBITRUM]: ARBITRUM_ETH_RPC,
 }
 
 export const web3 = (networkSymbol: NetworkSymbolEnum) =>
@@ -156,21 +128,10 @@ export const NetworkInfoMap: NetworkInfo[] = [
       ? "https://etherscan.io/#/"
       : "https://rinkeby.etherscan.io/#/",
   },
-  {
-    rpc: ARBITRUM_ETH_RPC,
-    chainId: ARBITRUM_NETWORK_CHAIN_ID,
-    symbol: "AETH",
-    network: IS_PRODUCTION ? "Arbitrum One" : "Arbitrum Testnet Rinkeby",
-    logo: "AETH.svg",
-    blockExplorer: IS_PRODUCTION
-      ? "https://explorer.arbitrum.io/#/"
-      : "https://rinkeby-explorer.arbitrum.io/#/",
-  },
 ]
 
 export const NetworkSymbolAndId = {
   [NETWORK_CHAIN_ID]: NetworkSymbolEnum.ETH,
-  [ARBITRUM_NETWORK_CHAIN_ID]: NetworkSymbolEnum.ARBITRUM,
 }
 
 export interface WalletInfo {

@@ -5,6 +5,35 @@ import { ButtonsWhite } from "@components/Button"
 import { Info } from "react-feather"
 import { Label } from "../global.styles"
 
+export const NumericalInput = styled(FormInput).attrs({
+  size: "lg",
+})`
+  border: none;
+  border-radius: 0.375rem !important;
+  padding: 0px;
+  height: 36px;
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &:active {
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  &:focus {
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  &:disabled {
+    background-color: transparent !important;
+  }
+`
+
 export const MainInput = styled(FormInput).attrs((props) => ({
   size: props.size || "sm",
   ...props,

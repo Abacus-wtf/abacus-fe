@@ -3,12 +3,8 @@ import styled from "styled-components"
 import { Row } from "shards-react"
 import { useActiveWeb3React, usePrevious } from "@hooks/index"
 import { shortenAddress } from "@config/utils"
-import {
-  useGetCurrentNetwork,
-  useToggleWalletModal,
-} from "@state/application/hooks"
+import { useToggleWalletModal } from "@state/application/hooks"
 import { Menu, X } from "react-feather"
-import { NetworkSymbolEnum } from "@config/constants"
 import { theme } from "@config/theme"
 import loadable from "@loadable/component"
 import Button, { ButtonClear } from "../Button"
@@ -120,8 +116,6 @@ const Navbar = ({ location }) => {
   const { account } = useActiveWeb3React()
   const toggleWalletModal = useToggleWalletModal()
   const prevLocation = usePrevious(location)
-  const networkSymbol = useGetCurrentNetwork()
-  const isNetworkSymbolNone = networkSymbol === NetworkSymbolEnum.NONE
 
   useEffect(() => {
     if (location !== prevLocation) {
@@ -143,38 +137,14 @@ const Navbar = ({ location }) => {
               href="/"
               active={(location.pathname === "/").toString()}
             >
-              Explore
+              Pools
             </HeaderLink>
             <HeaderLink
               as="a"
-              href="/auction"
-              active={location.pathname.includes("/auction").toString()}
+              href="/auctions"
+              active={(location.pathname === "/auctions").toString()}
             >
-              Auction
-            </HeaderLink>
-            <HeaderLink
-              as="a"
-              href="/my-sessions"
-              active={location.pathname.includes("/my-sessions").toString()}
-              disabled={isNetworkSymbolNone}
-            >
-              My Sessions
-            </HeaderLink>
-            <HeaderLink
-              as="a"
-              href="/claim-pool"
-              active={location.pathname.includes("/claim-pool").toString()}
-              disabled={isNetworkSymbolNone}
-            >
-              Claim & Deposit
-            </HeaderLink>
-            <HeaderLink
-              as="a"
-              href="https://legacy.abacus.wtf"
-              active={location.pathname.includes("/legacy").toString()}
-              disabled={isNetworkSymbolNone}
-            >
-              Legacy
+              Auctions
             </HeaderLink>
           </ListSection>
           <ListSectionSelector>

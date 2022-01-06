@@ -36,9 +36,6 @@ const GlobalLayout: React.FC = (props: any) => {
   const { children, location } = props
   const { chainId, account } = useActiveWeb3React()
   const selectNetwork = useSelectNetwork()
-  const networkSymbol = useGetCurrentNetwork()
-  const isArbitrumNetwork = networkSymbol === NetworkSymbolEnum.ARBITRUM
-  const isNetworkSymbolNone = networkSymbol === NetworkSymbolEnum.NONE
 
   useEffect(() => {
     const checkConnection = async () => {

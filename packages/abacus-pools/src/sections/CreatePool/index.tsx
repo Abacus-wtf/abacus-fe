@@ -131,6 +131,20 @@ const CreatePool: React.FC = () => {
           <ListGroupStyled>
             <ListGroupItem>
               <InputWithTitle
+                title="Pool Token Name"
+                id="poolTokenName"
+                placeholder="BAYC Vault"
+              />
+            </ListGroupItem>
+            <ListGroupItem>
+              <InputWithTitle
+                title="Pool Token Symbol"
+                id="poolTokenSymbol"
+                placeholder="BAYC"
+              />
+            </ListGroupItem>
+            <ListGroupItem>
+              <InputWithTitle
                 title="NFT address"
                 id="nftAddress"
                 placeholder={ZERO_ADDRESS}
@@ -141,9 +155,16 @@ const CreatePool: React.FC = () => {
             </ListGroupItem>
             <ListGroupItem>
               <InputWithTitle
-                title="Initial Market Cap (ETH)"
+                title="Initial Value of NFT (ETH)"
                 id="initMC"
                 placeholder="100"
+              />
+            </ListGroupItem>
+            <ListGroupItem>
+              <InputWithTitle
+                title="Exit Fee (%)"
+                id="exitFee"
+                placeholder="5"
               />
             </ListGroupItem>
           </ListGroupStyled>

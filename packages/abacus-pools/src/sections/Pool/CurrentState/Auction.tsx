@@ -23,7 +23,7 @@ const Auction: FunctionComponent = () => {
   const theme = useContext(ThemeContext)
   const [purchaseAmount, setPurchaseAmount] = useState("")
   const networkSymbol = useGetCurrentNetwork()
-  const isNetworkSymbolNone = networkSymbol === NetworkSymbolEnum.NONE
+  const isNetworkSymbolETH = networkSymbol === NetworkSymbolEnum.ETH
 
   return (
     <>
@@ -49,7 +49,7 @@ const Auction: FunctionComponent = () => {
       </HorizontalListGroup>
       <AuctionCountdown />
       <Form
-        disabled={isNetworkSymbolNone}
+        disabled={!isNetworkSymbolETH}
         onSubmit={async (e: FormEvent<HTMLDivElement>) => {
           e.preventDefault()
         }}
@@ -69,7 +69,7 @@ const Auction: FunctionComponent = () => {
         <VerticalContainer style={{ marginTop: 35, alignItems: "center" }}>
           <div style={{ width: "100%" }} id="submitWeighButton">
             <Button
-              disabled={isNetworkSymbolNone}
+              disabled={!isNetworkSymbolETH}
               style={{ width: "100%" }}
               type="submit"
             >
@@ -79,11 +79,11 @@ const Auction: FunctionComponent = () => {
           <Tooltip
             open={isToolTipOpen}
             target="#submitWeighButton"
-            disabled={isNetworkSymbolNone}
+            disabled={isNetworkSymbolETH}
             toggle={() => setIsToolTipOpen(!isToolTipOpen)}
             placement="right"
           >
-            {isNetworkSymbolNone &&
+            {!isNetworkSymbolETH &&
               "Your wallet is not connected or you are on the wrong network!"}
           </Tooltip>
         </VerticalContainer>

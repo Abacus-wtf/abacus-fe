@@ -9,7 +9,7 @@ import { ButtonContainer, VerticalContainer } from "../Pool.styles"
 const ManagePool: FunctionComponent = () => {
   const [isToolTipOpen, setIsToolTipOpen] = useState(false)
   const networkSymbol = useGetCurrentNetwork()
-  const isNetworkSymbolNone = networkSymbol === NetworkSymbolEnum.NONE
+  const isNetworkSymbolETH = networkSymbol === NetworkSymbolEnum.ETH
   const poolData = useGetPoolData()
 
   return (
@@ -17,14 +17,16 @@ const ManagePool: FunctionComponent = () => {
       <VerticalContainer style={{ marginTop: 10, alignItems: "center" }}>
         <ButtonContainer style={{ width: "100%" }}>
           <Button
-            disabled={isNetworkSymbolNone}
+            className="notConnected"
+            disabled={!isNetworkSymbolETH}
             style={{ width: "100%", borderRadius: 5 }}
             type="submit"
           >
             Trigger Auction
           </Button>
           <Button
-            disabled={isNetworkSymbolNone}
+            className="notConnected"
+            disabled={!isNetworkSymbolETH}
             style={{ width: "100%", borderRadius: 5 }}
             type="submit"
           >
@@ -33,12 +35,12 @@ const ManagePool: FunctionComponent = () => {
         </ButtonContainer>
         <Tooltip
           open={isToolTipOpen}
-          target="#notConnected"
-          disabled={isNetworkSymbolNone}
+          target=".notConnected"
+          disabled={isNetworkSymbolETH}
           toggle={() => setIsToolTipOpen(!isToolTipOpen)}
-          placement="right"
+          placement="bottom"
         >
-          {isNetworkSymbolNone &&
+          {!isNetworkSymbolETH &&
             "Your wallet is not connected or you are on the wrong network!"}
         </Tooltip>
       </VerticalContainer>

@@ -48,9 +48,9 @@ const IconContainer = styled.div`
 const NotConnectedAlert: FunctionComponent = () => {
   const [showModal, setShowModal] = useState(false)
   const networkSymbol = useGetCurrentNetwork()
-  const isNetworkSymbolNone = networkSymbol === NetworkSymbolEnum.NONE
+  const isNetworkSymbolETH = networkSymbol === NetworkSymbolEnum.ETH
   const toggleWalletModal = useToggleWalletModal()
-  if (!isNetworkSymbolNone) {
+  if (!isNetworkSymbolETH) {
     return null
   }
   return (

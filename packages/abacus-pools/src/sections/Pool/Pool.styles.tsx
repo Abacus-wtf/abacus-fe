@@ -5,6 +5,11 @@ import { Text, ImageContainer } from "@components/global.styles"
 import { HorizontalListGroup } from "@components/ListGroupMods"
 import { theme } from "@config/theme"
 
+export const ButtonContainer = styled.div`
+  display: flex;
+  grid-gap: 15px;
+`
+
 export const CallToActionCopy = styled.p`
   margin: 0;
   padding: 0;

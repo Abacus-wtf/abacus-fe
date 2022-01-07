@@ -147,6 +147,13 @@ const Navbar = ({ location }) => {
             >
               Auctions
             </HeaderLink>
+            <HeaderLink
+              as="a"
+              href="/my-pools"
+              active={(location.pathname === "/my-pools").toString()}
+            >
+              My Pools
+            </HeaderLink>
             <HeaderLink as="a" href="https://app.abacus.wtf/" active={false}>
               Crowds
             </HeaderLink>

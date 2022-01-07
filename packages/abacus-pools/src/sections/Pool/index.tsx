@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Title, SmallUniversalContainer } from "@components/global.styles"
 import * as queryString from "query-string"
 import { ButtonsWhite } from "@components/Button"
@@ -10,6 +10,7 @@ import {
   VerticalSmallGapContainer,
   FileContainer,
   SubText,
+  ButtonContainer,
 } from "./Pool.styles"
 import CurrentState from "./CurrentState/index"
 
@@ -17,11 +18,12 @@ const Pool = ({ location }) => {
   const { address, tokenId } = queryString.parse(location.search)
   const setPool = useSetPoolData()
   const poolData = useGetPoolData()
+  const [isManagerPage, setIsOnManagerPage] = useState(true)
 
   useEffect(() => {
     setPool(String(address), String(tokenId))
   }, [])
-  console.log(poolData)
+
   if (!poolData) {
     return (
       <SmallUniversalContainer
@@ -37,7 +39,7 @@ const Pool = ({ location }) => {
       <SplitContainer>
         <VerticalContainer>
           <FileContainer {...poolData} />
-          <div style={{ display: "flex", gridGap: 15 }}>
+          <ButtonContainer>
             <ButtonsWhite
               style={{ borderRadius: 8 }}
               target="_blank"
@@ -46,9 +48,27 @@ const Pool = ({ location }) => {
             >
               OpenSea
             </ButtonsWhite>
-          </div>
+          </ButtonContainer>
         </VerticalContainer>
         <VerticalContainer>
+          {poolData.isManager ? (
+            <ButtonContainer>
+              <ButtonsWhite
+                disabled={isManagerPage}
+                onClick={() => setIsOnManagerPage(true)}
+                style={{ borderRadius: 8 }}
+              >
+                Manage
+              </ButtonsWhite>
+              <ButtonsWhite
+                disabled={!isManagerPage}
+                onClick={() => setIsOnManagerPage(false)}
+                style={{ borderRadius: 8 }}
+              >
+                Main
+              </ButtonsWhite>
+            </ButtonContainer>
+          ) : null}
           <VerticalSmallGapContainer style={{ minHeight: 90 }}>
             <SubText>{poolData.collectionTitle}</SubText>
             <Title>
@@ -64,7 +84,7 @@ const Pool = ({ location }) => {
               </OutboundLink>
             </SubText>
           </VerticalSmallGapContainer>
-          <CurrentState />
+          <CurrentState isOnManage={poolData.isManager && isManagerPage} />
         </VerticalContainer>
       </SplitContainer>
     </SmallUniversalContainer>

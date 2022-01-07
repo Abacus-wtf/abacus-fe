@@ -23,6 +23,8 @@ export const useSetPoolData = () => {
         tokensLeft: "1000",
         tokensClaimed: "200",
         tokenPrice: "0.5",
+        isManager: true,
+        exitFee: "5",
         img: "https://lh3.googleusercontent.com/SWhiz5ufXCRGpsNgLn21G8losMUGf0YbVb6Su3mljhiJ5VGvjobrDH_poUX2kve-vne5rSkUUcTtvKIby_0m2TyeaLJWD-tbs_K-=w600",
       }
       const poolState: PoolStateStatus = PoolStateStatus.Auction

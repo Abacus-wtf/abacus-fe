@@ -44,7 +44,7 @@ const Home: React.FC = () => {
       <CardContainer>
         {_.map(myPools, (i) => (
           <a
-            href={`/manage-pool?address=${i.address}&tokenId=${i.tokenId}`}
+            href={`/pool?address=${i.address}&tokenId=${i.tokenId}`}
             key={`${i.address}-${i.tokenId}`}
           >
             <Card {...i} />

@@ -1,0 +1,12 @@
+{
+  "name": "abacus-fe",
+  "version": "1.0.0",
+  "repository": "git@github.com:Abacus-wtf/abacus-fe.git",
+  "description": "Monorepo for all abacus UI and shared components",
+  "author": "Abacus Team",
+  "license": "MIT",
+  "dependencies": {
+    "lerna": "^4.0.0",
+    "lerna-wizard": "^1.1.1"
+  }
+}

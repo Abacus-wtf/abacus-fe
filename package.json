@@ -5,8 +5,13 @@
   "description": "Monorepo for all abacus UI and shared components",
   "author": "Abacus Team",
   "license": "MIT",
+  "scripts": {
+    "dev:portal": "cd packages/abacus-portal && yarn dev",
+    "dev": "npm-run-all --parallel dev:portal"
+  },
   "dependencies": {
     "lerna": "^4.0.0",
-    "lerna-wizard": "^1.1.1"
+    "lerna-wizard": "^1.1.1",
+    "npm-run-all": "^4.1.5"
   }
 }

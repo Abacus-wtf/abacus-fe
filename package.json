@@ -5,6 +5,7 @@
   "description": "Monorepo for all abacus UI and shared components",
   "author": "Abacus Team",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "prepare": "husky install",
     "dev:portal": "cd packages/abacus-portal && yarn dev",
@@ -21,5 +22,8 @@
   },
   "devDependencies": {
     "husky": "^7.0.4"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }

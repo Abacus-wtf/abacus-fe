@@ -2,7 +2,7 @@
   "name": "abacus-protocol-portal",
   "private": true,
   "description": "Abacus NFT Valuation",
-  "version": "1.0",
+  "version": "1.0.0",
   "author": "Abacus Team",
   "dependencies": {
     "@ethersproject/address": "^5.5.0",

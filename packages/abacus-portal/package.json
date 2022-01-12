@@ -102,7 +102,6 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "7.27.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "husky": "^7.0.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.3",
     "lint-staged": "11.2.6",
@@ -117,7 +116,6 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "prepare": "husky install",
     "dev": "gatsby develop",
     "start": "yarn run dev",
     "serve": "gatsby serve",
@@ -126,6 +124,7 @@
     "test:coverage": "yarn test -- --coverage",
     "test:watch": "yarn test -- --watch",
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
+    "lint:fix": "yarn run lint --fix",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "verify": "tsc --noEmit"
   }

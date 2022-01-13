@@ -3,6 +3,8 @@
 import { AbstractConnector } from "@web3-react/abstract-connector"
 import { InjectedConnector } from "@web3-react/injected-connector"
 import Web3 from "web3"
+import EthIcon from "@images/ETH.svg"
+import AethIcon from "@images/AETH.svg"
 import {
   fortmatic,
   portis,
@@ -10,8 +12,6 @@ import {
   walletlink,
   InjectedConnectorProps,
 } from "./connectors"
-import EthIcon from "@images/ETH.svg"
-import AethIcon from "@images/AETH.svg"
 
 export declare enum ChainId {
   MAINNET = 1,

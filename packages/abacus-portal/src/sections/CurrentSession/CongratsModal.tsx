@@ -6,7 +6,7 @@ import { OutboundLink } from "gatsby-plugin-google-gtag"
 import React, { FunctionComponent } from "react"
 import { Modal, ModalBody } from "shards-react"
 import moment from "moment"
-import dancingPepe from "../../images/dancing_pepe.gif"
+import dancingPepe from "@images/dancing_pepe.gif"
 
 const ButtonsContainer = styled.div`
   margin-top: 25px;

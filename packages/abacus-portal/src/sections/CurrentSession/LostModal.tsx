@@ -1,7 +1,7 @@
 import { Label, UniversalContainer } from "@components/global.styles"
 import React, { FunctionComponent } from "react"
 import { Modal, ModalBody } from "shards-react"
-import lostGIF from "../../images/lost.gif"
+import lostGIF from "@images/lost.gif"
 
 type LostModalProps = {
   open: boolean

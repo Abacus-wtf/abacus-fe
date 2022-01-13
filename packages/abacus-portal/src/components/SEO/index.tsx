@@ -8,7 +8,7 @@
 import React, { FunctionComponent } from "react"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
-import defaultMetaImage from "../../images/metaImage.png"
+import defaultMetaImage from "@images/metaImage.png"
 
 import config from "../../../website"
 import SchemaOrg from "./SchemaOrg"

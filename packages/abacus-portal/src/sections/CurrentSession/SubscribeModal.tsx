@@ -12,7 +12,7 @@ import {
 } from "@state/sessionData/hooks"
 import { PromiseStatus } from "@models/PromiseStatus"
 import { SessionState } from "@state/sessionData/reducer"
-import dogeGIF from "../../images/happy_doge.gif"
+import dogeGIF from "@images/happy_doge.gif"
 
 const ButtonsContainer = styled.div`
   margin-top: 25px;

@@ -10,8 +10,8 @@ import {
   walletlink,
   InjectedConnectorProps,
 } from "./connectors"
-import EthIcon from "../../images/ETH.svg"
-import AethIcon from "../../images/AETH.svg"
+import EthIcon from "@images/ETH.svg"
+import AethIcon from "@images/AETH.svg"
 
 export declare enum ChainId {
   MAINNET = 1,

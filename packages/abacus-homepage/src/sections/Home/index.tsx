@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react"
 import EthSymbol from "../../images/eth.svg"
 import Discord from "../../images/discord.svg"
 import Twitter from "../../images/twitter.svg"
+import Notion from "../../images/notion.svg"
 import { faMediumM } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Button from "@components/Button"
@@ -138,6 +139,13 @@ const Home: React.FC = () => {
           as={Link}
         >
           <SocialIMG src={Discord} />
+        </SocialButton>
+        <SocialButton
+          target={"_blank"}
+          to="https://abcdao.notion.site/Knowledge-Center-903c10f39eb24efb8e55644a992f859b"
+          as={Link}
+        >
+          <SocialIMG src={Notion} />
         </SocialButton>
       </LowerContainer>
     </HomeContainer>

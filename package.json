@@ -9,8 +9,10 @@
   "scripts": {
     "prepare": "husky install",
     "dev:portal": "cd packages/abacus-portal && yarn dev",
+    "dev:homepage": "cd packages/abacus-homepage && yarn dev",
     "dev": "npm-run-all --parallel dev:portal",
     "lint:portal": "cd packages/abacus-portal && yarn lint:fix",
+    "lint:homepage": "cd packages/abacus-homepage && yarn lint:fix",
     "lint:fix": "npm-run-all --parallel lint:portal",
     "test:portal": "cd packages/abacus-portal && yarn test",
     "test": "npm-run-all --parallel test:portal"

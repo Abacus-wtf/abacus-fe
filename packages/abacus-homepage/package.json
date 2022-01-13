@@ -1,8 +1,8 @@
 {
-  "name": "abacus-protocol",
+  "name": "abacus-homepage",
   "private": true,
-  "description": "Abacus NFT Valuation Protocol",
-  "version": "1.0",
+  "description": "Abacus NFT Valuation Protocol Homepage",
+  "version": "1.0.0",
   "author": "Abacus Team",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",

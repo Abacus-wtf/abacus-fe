@@ -2,8 +2,8 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import { ChevronsLeft, AlignJustify } from "react-feather"
 import { Row } from "shards-react"
-import Button, { ButtonsWhite } from "../Button"
 import Link from "gatsby-link"
+import Button, { ButtonsWhite } from "../Button"
 
 const RowStyled = styled(Row)`
   margin: 0;
@@ -70,27 +70,25 @@ const DashedLine = styled.div`
   background-color: ${({ theme }) => theme.colors.text2};
 `
 
-const Navbar = () => {
-  return (
-    <RowStyled>
-      <NavbarContainer>
-        <Logo to="/">Abacus</Logo>
-        <DashedLine />
-        <CategoryList>
-          <CategoryLink as={"a"} href="https://app.abacus.wtf">
-            Launch App
-          </CategoryLink>
-          <SecondaryCategoryLink
-            target={"_blank"}
-            as={"a"}
-            href="/Abacus_White_Paper.pdf"
-          >
-            Whitepaper
-          </SecondaryCategoryLink>
-        </CategoryList>
-      </NavbarContainer>
-    </RowStyled>
-  )
-}
+const Navbar = () => (
+  <RowStyled>
+    <NavbarContainer>
+      <Logo to="/">Abacus</Logo>
+      <DashedLine />
+      <CategoryList>
+        <CategoryLink as="a" href="https://app.abacus.wtf">
+          Launch App
+        </CategoryLink>
+        <SecondaryCategoryLink
+          target="_blank"
+          as="a"
+          href="/Abacus_White_Paper.pdf"
+        >
+          Whitepaper
+        </SecondaryCategoryLink>
+      </CategoryList>
+    </NavbarContainer>
+  </RowStyled>
+)
 
 export default Navbar

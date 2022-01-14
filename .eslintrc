@@ -22,7 +22,8 @@
     "airbnb",
     "prettier",
     "plugin:jest/recommended",
-    "plugin:jest/style"
+    "plugin:jest/style",
+    "plugin:workspaces/recommended"
   ],
   "rules": {
     // "jest/prefer-strict-equal": "error",

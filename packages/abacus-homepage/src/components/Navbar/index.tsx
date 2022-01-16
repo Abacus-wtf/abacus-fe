@@ -1,6 +1,5 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
-import { ChevronsLeft, AlignJustify } from "react-feather"
 import { Row } from "shards-react"
 import Link from "gatsby-link"
 import Button, { ButtonsWhite } from "../Button"

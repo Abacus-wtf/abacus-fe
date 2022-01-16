@@ -46,17 +46,7 @@
     "max-classes-per-file": "off",
     "react/no-unescaped-entities": "off",
     "prefer-destructuring": "off",
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": [
-          "**/*.test.[jt]s",
-          "**/*.spec.[jt]s",
-          "**/*.test.[jt]sx",
-          "**/*.spec.[jt]sx"
-        ]
-      }
-    ],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -89,17 +79,6 @@
         "no-use-before-define": [0],
         "@typescript-eslint/no-use-before-define": [1],
         "import/no-unresolved": 0,
-        "import/no-extraneous-dependencies": [
-          "error",
-          {
-            "devDependencies": [
-              "**/*.test.ts",
-              "**/*.spec.ts",
-              "**/*.test.tsx",
-              "**/*.spec.tsx"
-            ]
-          }
-        ],
         "quotes": "off",
         "@typescript-eslint/no-unused-vars": [2, { "argsIgnorePattern": "^_" }],
         "prefer-const": "off"

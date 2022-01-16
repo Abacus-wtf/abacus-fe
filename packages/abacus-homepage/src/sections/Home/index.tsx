@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import { faMediumM } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Button from "@components/Button"
@@ -6,13 +6,11 @@ import { ArrowUpRight } from "react-feather"
 import Link from "gatsby-link"
 import {
   ABC_TREASURY_ADDRESS,
-  ABC_PRICING_SESSION_ADDRESS,
   useWeb3Contract,
   SUBGRAPH,
 } from "@components/useWeb3Contract"
 import { formatEther } from "ethers/lib/utils"
 import ABC_TREASURY from "@components/contracts/ABC_TREASURY.json"
-import ABC_PRICING_SESSION from "@components/contracts/ABC_PRICING_SESSION.json"
 import { request, gql } from "graphql-request"
 import Notion from "../../images/notion.svg"
 import Twitter from "../../images/twitter.svg"
@@ -42,7 +40,6 @@ const GET_NFT_PRICE_DATA = gql`
 
 const Home: React.FC = () => {
   const treasuryContract = useWeb3Contract(ABC_TREASURY)
-  const pricingSessionContract = useWeb3Contract(ABC_PRICING_SESSION)
   const [nftsPriced, setNftsPriced] = React.useState("-")
   const [earned, setEarned] = React.useState("-")
   const [riskFactor, setRiskFactor] = React.useState("-")
@@ -78,7 +75,7 @@ const Home: React.FC = () => {
       setDefender(defenderContract)
     }
     loadData()
-  }, [])
+  }, [treasuryContract])
 
   return (
     <HomeContainer>
@@ -89,7 +86,7 @@ const Home: React.FC = () => {
           <DataPair
             value={earned}
             title="Earned"
-            symbol={<img src={EthSymbol} />}
+            symbol={<img src={EthSymbol} alt="" />}
           />
           <DataPair
             value={nftsPriced}
@@ -152,7 +149,7 @@ const Home: React.FC = () => {
           to="https://twitter.com/abacus_wtf"
           as={Link}
         >
-          <SocialIMG src={Twitter} />
+          <SocialIMG src={Twitter} alt="" />
         </SocialButton>
         <SocialButton
           target="_blank"

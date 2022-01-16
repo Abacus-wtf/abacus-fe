@@ -1,4 +1,3 @@
-import { theme } from "@config/theme"
 import styled from "styled-components"
 import { Col } from "shards-react"
 

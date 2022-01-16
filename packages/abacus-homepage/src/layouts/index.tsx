@@ -16,13 +16,13 @@ const StyledContainer = styled(Container)`
   }
 `
 
-const GlobalLayout: React.FC = (props: any) => (
+const GlobalLayout: React.FC = ({ children }: any) => (
   <>
     <GlobalStyles />
     <Helmet title="Abacus Protocol" />
     <StyledContainer>
       <Navbar />
-      {props.children}
+      {children}
     </StyledContainer>
   </>
 )

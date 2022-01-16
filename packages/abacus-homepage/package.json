@@ -5,8 +5,12 @@
   "version": "1.0.0",
   "author": "Abacus Team",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.16",
+    "ethers": "^5.5.3",
     "gatsby": "^4.4.0",
+    "gatsby-link": "^4.5.0",
     "gatsby-plugin-google-analytics": "^4.0.0",
     "gatsby-plugin-google-gtag": "^4.2.0",
     "gatsby-plugin-image": "^2.5.0",
@@ -18,9 +22,16 @@
     "gatsby-plugin-typescript": "^4.4.0",
     "gatsby-source-filesystem": "^4.4.0",
     "gatsby-transformer-sharp": "^4.4.0",
-    "react-tooltip": "^4.2.21"
+    "graphql-request": "^3.7.0",
+    "react-feather": "^2.0.9",
+    "react-tooltip": "^4.2.21",
+    "shards-react": "^1.0.3",
+    "web3": "^1.6.1"
   },
   "devDependencies": {
+    "@types/react": "^17.0.38",
+    "@types/react-helmet": "^6.1.5",
+    "@types/styled-components": "^5.1.20",
     "babel-jest": "^27.4.2",
     "electron": "^16.0.4",
     "eslint": "8.2.0",

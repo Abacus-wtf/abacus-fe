@@ -130,7 +130,11 @@ export default ({
           {tokenId.length >= 8 ? `${tokenId.slice(0, 8)}...` : tokenId}
         </BoldText>
         <EthText>
-          <StaticImage alt="" style={{ height: 15 }} src="@images/ETH.svg" />{" "}
+          <StaticImage
+            alt=""
+            style={{ height: 15 }}
+            src="../../images/ETH.svg"
+          />{" "}
           {finalAppraisalValue !== undefined
             ? finalAppraisalValue.toLocaleString("en-US", {
                 minimumFractionDigits: 2,

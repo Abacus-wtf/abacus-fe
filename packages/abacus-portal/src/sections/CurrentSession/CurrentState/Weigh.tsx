@@ -49,7 +49,7 @@ const Weigh: FunctionComponent = () => {
 
   const theme = useContext(ThemeContext)
   const [appraisalValue, setAppraisalValue] = useState("")
-  const [passwordValue, setPasswordValue] = useState("")
+  const [passwordValue, setPasswordValue] = useState("") 
 
   useEffect(() => {
     const encodedVals = encodeSessionData({

@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
-import {Tooltip} from 'shards-react'
+import React, { useState } from "react"
+import { Tooltip } from "shards-react"
 import { Title } from "@components/global.styles"
-import TitleBG from "../../images/title_bg.png"
 import { ButtonsWhite } from "@components/Button"
-import styled from 'styled-components'
+import styled from "styled-components"
 import { Info } from "react-feather"
+import TitleBG from "../../images/title_bg.png"
 
 export const HomeContainer = styled.div`
   display: flex;
@@ -128,25 +128,33 @@ interface EthValuePair {
   tooltipId?: string
 }
 
-export const DataPair = ({ value, title, symbol, tooltipText, tooltipId }: EthValuePair) => {
+export const DataPair = ({
+  value,
+  title,
+  symbol,
+  tooltipText,
+  tooltipId,
+}: EthValuePair) => {
   const [isToolTipOpen, setIsToolTipOpen] = useState(false)
   return (
     <DataPairContainer>
       <div style={{ display: "flex" }}>
         <DataValue>{value}</DataValue>
-        {symbol} {tooltipText && 
-        <>
-          <Info id={tooltipId} style={{ height: 15, marginTop: 5 }} />
-          <Tooltip
-            open={isToolTipOpen}
-            target={`#${tooltipId}`}
-            toggle={() => setIsToolTipOpen(!isToolTipOpen)}
-            placement="right"
-            trigger="hover"
-          >
-            {tooltipText}
-          </Tooltip>
-        </>}
+        {symbol}{" "}
+        {tooltipText && (
+          <>
+            <Info id={tooltipId} style={{ height: 15, marginTop: 5 }} />
+            <Tooltip
+              open={isToolTipOpen}
+              target={`#${tooltipId}`}
+              toggle={() => setIsToolTipOpen(!isToolTipOpen)}
+              placement="right"
+              trigger="hover"
+            >
+              {tooltipText}
+            </Tooltip>
+          </>
+        )}
       </div>
       <DataTitle>{title}</DataTitle>
     </DataPairContainer>

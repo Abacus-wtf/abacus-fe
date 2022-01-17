@@ -1,4 +1,4 @@
-'use strict'
+"use strict"
 
 const path = require(`path`)
 
@@ -7,8 +7,8 @@ module.exports = {
     title: `Abacus Protocol`,
     description: ``,
     author: {
-      name: 'Abacus'
-    }
+      name: "Abacus",
+    },
   },
   plugins: [
     {
@@ -17,22 +17,15 @@ module.exports = {
         trackingId: "G-RQL9BMSZ1Y",
         head: true,
         anonymize: true,
-      }
+      },
     },
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: 'gatsby-plugin-generate-types',
-      options: {
-        inProduction: true
-      }
-    },
-
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: path.join(__dirname, `src`, `images`)
-      }
+        path: path.join(__dirname, `src`, `images`),
+      },
     },
 
     {
@@ -41,10 +34,9 @@ module.exports = {
         // Setting a color is optional.
         color: `#E85D75`,
         // Disable the loading spinner.
-        showSpinner: true
-      }
+        showSpinner: true,
+      },
     },
-
 
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,

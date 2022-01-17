@@ -1,0 +1,47 @@
+{
+  "name": "abacus-components",
+  "version": "1.0.0",
+  "description": "Shared react components for all abacus-fe projects",
+  "keywords": [
+    "abacus",
+    "react",
+    "ui"
+  ],
+  "author": "lauchness <lauchlanchisholm@gmail.com>",
+  "homepage": "https://github.com/Abacus-wtf/abacus-fe#readme",
+  "license": "MIT",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
+  "files": [
+    "/lib"
+  ],
+  "directories": {
+    "lib": "src"
+  },
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abacus-wtf/abacus-fe.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "prepack": "yarn build",
+    "build": "rollup -c",
+    "watch": "rollup -cw"
+  },
+  "bugs": {
+    "url": "https://github.com/Abacus-wtf/abacus-fe/issues"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "rollup": "^2.64.0",
+    "rollup-plugin-typescript2": "^0.31.1",
+    "typescript": "^4.5.4"
+  }
+}

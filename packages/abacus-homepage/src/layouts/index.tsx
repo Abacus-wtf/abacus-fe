@@ -1,10 +1,10 @@
 import * as React from "react"
 import Helmet from "react-helmet"
-import { GlobalStyles } from "./styles"
 import { theme } from "@config/theme"
 import Navbar from "@components/Navbar"
 import styled from "styled-components"
 import { Container } from "shards-react"
+import { GlobalStyles } from "./styles"
 
 const StyledContainer = styled(Container)`
   width: 100%;
@@ -16,17 +16,15 @@ const StyledContainer = styled(Container)`
   }
 `
 
-const GlobalLayout: React.FC = (props: any) => {
-  return (
-    <React.Fragment>
-      <GlobalStyles />
-      <Helmet title={"Abacus Protocol"} />
-      <StyledContainer>
-        <Navbar />
-        {props.children}
-      </StyledContainer>
-    </React.Fragment>
-  )
-}
+const GlobalLayout: React.FC = ({ children }: any) => (
+  <>
+    <GlobalStyles />
+    <Helmet title="Abacus Protocol" />
+    <StyledContainer>
+      <Navbar />
+      {children}
+    </StyledContainer>
+  </>
+)
 
 export default GlobalLayout

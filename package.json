@@ -11,14 +11,19 @@
     "check:dependencies": "yarn dedupe --check",
     "build:portal": "cd packages/abacus-portal && yarn build",
     "build:homepage": "cd packages/abacus-homepage && yarn build",
-    "build:all": "npm-run-all --parallel build:portal build:homepage",
+    "build:components": "lerna run build --scope abacus-components",
+    "build:all": "npm-run-all --parallel build:portal build:homepage build:components",
     "dev:portal": "cd packages/abacus-portal && yarn dev",
     "dev:homepage": "cd packages/abacus-homepage && yarn dev",
-    "dev": "npm-run-all --parallel dev:portal dev:homepage",
+    "dev:components": "lerna run watch --scope abacus-components",
+    "dev": "npm-run-all --parallel dev:portal dev:homepage dev:components",
     "lint": "eslint --ignore-path .gitignore \"**/**/src/**/*.+(ts|js|tsx)\"",
     "lint:fix": "yarn lint --fix",
     "test:portal": "cd packages/abacus-portal && yarn test",
-    "test": "npm-run-all --parallel test:portal"
+    "test:portal:changed": "cd packages/abacus-portal && yarn test:changed",
+    "test:changed": "npm-run-all --parallel test:portal:changed",
+    "test": "npm-run-all --parallel test:portal",
+    "package": "lerna exec --scope abacus-components -- npm pack"
   },
   "dependencies": {
     "@ethersproject/address": "^5.5.0",

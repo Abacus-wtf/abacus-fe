@@ -78,6 +78,17 @@ const CurrentSession = ({ location }) => {
   }, [claimData, sessionData, userStatus])
 
   useEffect(() => {
+    if (
+      (sessionData.address !== "" && sessionData.address !== address) ||
+      (sessionData.tokenId !== "" && sessionData.tokenId !== tokenId) ||
+      (sessionData.nonce !== 0 && sessionData.nonce !== Number(nonce))
+    ) {
+      getCurrentSessionData(String(address), String(tokenId), Number(nonce))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionData, address, tokenId, nonce])
+
+  useEffect(() => {
     const localString = `${sessionData.address}${sessionData.tokenId}${sessionData.nonce}`
     const wasShown = localStorage.getItem(localString)
     if (

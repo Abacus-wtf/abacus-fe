@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { faMediumM } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Button from "@components/Button"
+import { Button } from "abacus-components"
 import { ArrowUpRight } from "react-feather"
 import Link from "gatsby-link"
 import {
@@ -153,7 +153,7 @@ const Home: React.FC = () => {
         </SocialButton>
         <SocialButton
           target="_blank"
-          to="https://discord.gg/ZGEY3d3W"
+          to="http://discord.com/invite/abacus"
           as={Link}
         >
           <SocialIMG src={Discord} />

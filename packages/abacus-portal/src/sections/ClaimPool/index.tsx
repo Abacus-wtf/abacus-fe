@@ -1,8 +1,13 @@
 import React, { FunctionComponent, useState, useEffect } from "react"
-import Button from "@components/Button"
+import {
+  Button,
+  InputWithTitle,
+  InputWithTitleAndButton,
+  SmallUniversalContainer,
+  Title,
+} from "abacus-components"
 import { HorizontalListGroup } from "@components/ListGroupMods"
 import { ListGroupItem } from "shards-react"
-import { InputWithTitle, InputWithTitleAndButton } from "@components/Input"
 import {
   useOnClaimPayout,
   useOnDepositPrincipal,
@@ -10,7 +15,6 @@ import {
 } from "@hooks/claim-pool"
 import { useSetPayoutData, useClaimPayoutData } from "@state/miscData/hooks"
 import { useActiveWeb3React } from "@hooks/index"
-import { SmallUniversalContainer, Title } from "@components/global.styles"
 import ConnectWalletAlert from "@components/ConnectWalletAlert"
 import styled from "styled-components"
 import { useGetCurrentNetwork } from "@state/application/hooks"
@@ -104,9 +108,9 @@ const ClaimPool: FunctionComponent = () => {
           </MaxWidthItem>
           <MaxWidthItem>
             <InputWithTitleAndButton
-              title="Claim Principal"
+              title="Withdraw Principal"
               id="claimPrincipal"
-              placeholder="Enter claim amount in ETH"
+              placeholder="Enter withdraw amount in ETH"
               value={claimPrincipalVal}
               onChange={(e) => setClaimPrincipalVal(e.target.value)}
               buttonText="Max"

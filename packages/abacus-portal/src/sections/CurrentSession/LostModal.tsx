@@ -1,4 +1,4 @@
-import { Label, UniversalContainer } from "@components/global.styles"
+import { Label, UniversalContainer } from "abacus-components"
 import React, { FunctionComponent } from "react"
 import { Modal, ModalBody } from "shards-react"
 import lostGIF from "@images/lost.gif"

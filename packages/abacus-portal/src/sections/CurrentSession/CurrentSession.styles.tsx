@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { ListGroupItem } from "shards-react"
-import { Text, ImageContainer } from "@components/global.styles"
+import { Text, ImageContainer } from "abacus-components"
 import { HorizontalListGroup } from "@components/ListGroupMods"
 import { theme } from "@config/theme"
 

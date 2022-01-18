@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Title, SmallUniversalContainer } from "@components/global.styles"
+import { Title, SmallUniversalContainer, ButtonsWhite } from "abacus-components"
 import * as queryString from "query-string"
 import { navigate } from "gatsby"
 import {
@@ -11,7 +11,6 @@ import {
   useGetUserStatus,
 } from "@state/sessionData/hooks"
 import { PromiseStatus } from "@models/PromiseStatus"
-import { ButtonsWhite } from "@components/Button"
 import { useActiveWeb3React } from "@hooks/index"
 import ConnectWalletAlert from "@components/ConnectWalletAlert"
 import { useGetCurrentNetwork } from "@state/application/hooks"

@@ -5,11 +5,9 @@ import {
 import React, { FunctionComponent, FormEvent, useState } from "react"
 import styled from "styled-components"
 import { Modal, ModalBody, ListGroupItem, ListGroup, Form } from "shards-react"
-import { InputWithTitle } from "@components/Input"
-import Button from "@components/Button"
+import { InputWithTitle, Button, Label } from "abacus-components"
 import { SessionState } from "@state/sessionData/reducer"
 import { theme } from "@config/theme"
-import { Label } from "../global.styles"
 
 const StyledModalBody = styled(ModalBody)`
   overflow-y: scroll;

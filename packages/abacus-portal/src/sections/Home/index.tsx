@@ -4,8 +4,9 @@ import {
   Subheader,
   UniversalContainer,
   Label,
-} from "@components/global.styles"
-import Button, { ButtonsWhite } from "@components/Button"
+  Button,
+  ButtonsWhite,
+} from "abacus-components"
 import Card from "@components/Card"
 import {
   useGetMultiSessionData,

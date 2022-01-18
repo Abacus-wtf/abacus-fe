@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react"
 import { Alert } from "shards-react"
 import styled from "styled-components"
-import Button from "@components/Button"
+import { Button } from "abacus-components"
 import { useToggleWalletModal } from "@state/application/hooks"
 
 const FlexContainer = styled.div`

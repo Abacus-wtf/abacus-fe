@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useMemo, useRef } from "react"
 import styled from "styled-components"
-import { Title, UniversalContainer } from "@components/global.styles"
-import Button, { ButtonsWhite } from "@components/Button"
+import {
+  Title,
+  UniversalContainer,
+  Button,
+  ButtonsWhite,
+} from "abacus-components"
 import Card from "@components/Card"
 import {
   useActiveSessionsState,

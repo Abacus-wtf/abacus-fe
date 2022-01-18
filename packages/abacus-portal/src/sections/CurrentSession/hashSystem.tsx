@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { ListGroupItem } from "shards-react"
-import { InputWithTitle } from "@components/Input"
+import { InputWithTitle } from "abacus-components"
 import {
   useCurrentSessionData,
   useCurrentSessionUserStatus,

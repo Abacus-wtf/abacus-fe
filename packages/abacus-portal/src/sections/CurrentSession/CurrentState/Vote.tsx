@@ -1,8 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { FormEvent, useContext, useState } from "react"
 import { ThemeContext } from "styled-components"
-import { Label } from "@components/global.styles"
-import Button from "@components/Button"
+import { Label, Button } from "abacus-components"
 import {
   HorizontalListGroup,
   ListGroupHeader,

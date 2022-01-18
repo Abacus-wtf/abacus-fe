@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { faMediumM } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Button from "@components/Button"
+import { Button } from "abacus-components"
 import { ArrowUpRight } from "react-feather"
 import Link from "gatsby-link"
 import {

@@ -20,6 +20,9 @@ export default {
   plugins: [
     typescript({
       typescript: require("typescript"),
+      tsconfigOverride: {
+        exclude: ["**/*.test.tsx", "**/*.config.js"],
+      },
     }),
   ],
 };

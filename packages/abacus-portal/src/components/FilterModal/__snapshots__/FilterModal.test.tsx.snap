@@ -35,7 +35,7 @@ exports[`FilterModal Matches snapshot 1`] = `
               >
                 <div
                   class="sc-egiyK dfjKoX"
-                  type=""
+                  type="text"
                 >
                   <label
                     class="sc-iqseJM kZpVIH"
@@ -46,7 +46,7 @@ exports[`FilterModal Matches snapshot 1`] = `
                   <input
                     class="sc-crHmcD GfPcp form-control form-control-lg"
                     id="nftAddress"
-                    inputtype=""
+                    inputtype="text"
                     placeholder="0x16baf0de678e52367adc69fd067e5edd1d33e3bf"
                     theme="[object Object]"
                     value=""
@@ -58,7 +58,7 @@ exports[`FilterModal Matches snapshot 1`] = `
               >
                 <div
                   class="sc-egiyK dfjKoX"
-                  type=""
+                  type="text"
                 >
                   <label
                     class="sc-iqseJM kZpVIH"
@@ -69,7 +69,7 @@ exports[`FilterModal Matches snapshot 1`] = `
                   <input
                     class="sc-crHmcD GfPcp form-control form-control-lg"
                     id="tokenId"
-                    inputtype=""
+                    inputtype="text"
                     placeholder="6407"
                     theme="[object Object]"
                     value=""

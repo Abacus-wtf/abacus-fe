@@ -8,7 +8,7 @@ import {
 import { SessionState, Vote } from "@state/sessionData/reducer"
 import { getEtherscanLink, useActiveWeb3React } from "@hooks/index"
 import { shortenAddress, isWithinWinRange } from "@config/utils"
-import { Title } from "@components/global.styles"
+import { Title } from "abacus-components"
 import styled from "styled-components"
 import { theme } from "@config/theme"
 

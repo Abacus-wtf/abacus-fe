@@ -1,14 +1,12 @@
 import React, { FunctionComponent, useContext } from "react"
 import { ThemeContext } from "styled-components"
-import { Label } from "@components/global.styles"
-import { Button } from "abacus-components"
+import { Label, Button, InputWithTitle } from "abacus-components"
 import {
   HorizontalListGroup,
   ListGroupHeader,
   ListGroupSubtext,
 } from "@components/ListGroupMods"
 import { ListGroupItem } from "shards-react"
-import { InputWithTitle } from "@components/Input"
 import { User } from "react-feather"
 import { useOnEndSession } from "@hooks/current-session"
 import { useCurrentSessionData } from "@state/sessionData/hooks"

@@ -4,10 +4,11 @@ import {
   Subheader,
   UniversalContainer,
   SubText,
-} from "@components/global.styles"
+  InputWithTitle,
+  Button,
+  ButtonsWhite,
+} from "abacus-components"
 import { ListGroup, ListGroupItem, Form, Modal, ModalBody } from "shards-react"
-import { InputWithTitle } from "@components/Input"
-import { Button, ButtonsWhite } from "abacus-components"
 import styled from "styled-components"
 import { useActiveWeb3React, useWeb3Contract } from "@hooks/index"
 import { useOnCreateNewSession } from "@hooks/create-sessions"

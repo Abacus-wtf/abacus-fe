@@ -5,8 +5,7 @@ import React, {
   useState,
 } from "react"
 import styled, { ThemeContext } from "styled-components"
-import { Label } from "@components/global.styles"
-import { Button } from "abacus-components"
+import { Label, Button, InputWithTitle } from "abacus-components"
 import {
   HorizontalListGroup,
   ListGroupHeader,
@@ -17,7 +16,6 @@ import {
   useCanUserInteract,
   useCurrentSessionData,
 } from "@state/sessionData/hooks"
-import { InputWithTitle } from "@components/Input"
 import { User } from "react-feather"
 import { useOnHarvest } from "@hooks/current-session"
 import { useGetCurrentNetwork } from "@state/application/hooks"

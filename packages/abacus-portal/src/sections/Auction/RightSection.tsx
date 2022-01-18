@@ -5,8 +5,7 @@ import React, {
   useState,
 } from "react"
 import { ThemeContext } from "styled-components"
-import { Label } from "@components/global.styles"
-import { Button } from "abacus-components"
+import { Label, Button, InputWithTitle } from "abacus-components"
 import {
   HorizontalListGroup,
   ListGroupHeader,
@@ -14,7 +13,6 @@ import {
 } from "@components/ListGroupMods"
 import { ListGroupItem, ListGroup, Form, Tooltip } from "shards-react"
 import { useAuctionData, useSetAuctionData } from "@state/miscData/hooks"
-import { InputWithTitle } from "@components/Input"
 import { useActiveWeb3React } from "@hooks/index"
 import { ZERO_ADDRESS } from "@config/constants"
 import { useOnBid, useOnClaim, useOnAddToBid } from "@hooks/auction"

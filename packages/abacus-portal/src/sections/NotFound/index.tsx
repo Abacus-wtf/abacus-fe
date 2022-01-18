@@ -1,4 +1,4 @@
-import { Title } from "@components/global.styles"
+import { Title } from "abacus-components"
 import * as React from "react"
 import { Container } from "./styles"
 

@@ -1,9 +1,12 @@
-import { Button } from "abacus-components"
-import { Label, UniversalContainer } from "@components/global.styles"
+import {
+  Button,
+  Label,
+  UniversalContainer,
+  InputWithTitle,
+} from "abacus-components"
 import styled from "styled-components"
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { Modal, ModalBody, ListGroupItem, Alert } from "shards-react"
-import { InputWithTitle } from "@components/Input"
 import axios from "axios"
 import { BACKEND_LINK } from "@config/constants"
 import {

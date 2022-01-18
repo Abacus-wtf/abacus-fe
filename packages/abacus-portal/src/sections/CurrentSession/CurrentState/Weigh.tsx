@@ -7,15 +7,13 @@ import React, {
   useEffect,
 } from "react"
 import { ThemeContext } from "styled-components"
-import { Label } from "@components/global.styles"
-import { Button } from "abacus-components"
+import { Label, Button, InputWithTitle } from "abacus-components"
 import {
   HorizontalListGroup,
   ListGroupHeader,
   ListGroupSubtext,
 } from "@components/ListGroupMods"
 import { ListGroupItem, ListGroup, Form, Tooltip } from "shards-react"
-import { InputWithTitle } from "@components/Input"
 import { User } from "react-feather"
 import { useActiveWeb3React } from "@hooks/index"
 import { useOnWeightVote } from "@hooks/current-session"

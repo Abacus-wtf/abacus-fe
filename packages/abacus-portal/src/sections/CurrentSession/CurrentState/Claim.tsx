@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useContext, useState } from "react"
 import { ThemeContext } from "styled-components"
-import { Label } from "@components/global.styles"
-import { Button } from "abacus-components"
+import { Label, Button, InputWithTitle } from "abacus-components"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import {
   HorizontalListGroup,
@@ -13,7 +12,6 @@ import {
   useCanUserInteract,
   useCurrentSessionData,
 } from "@state/sessionData/hooks"
-import { InputWithTitle } from "@components/Input"
 import { User } from "react-feather"
 import { NetworkSymbolEnum } from "@config/constants"
 import { useOnClaim } from "@hooks/current-session"

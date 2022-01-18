@@ -5,13 +5,12 @@
     "baseUrl": "./src",
     "outDir": "lib",
     "jsx": "react",
-    // TODO: bring these rules to top level
     "declaration": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noImplicitAny": false, // TODO: Find @types for shards-react
+    "noImplicitAny": false,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "paths": {

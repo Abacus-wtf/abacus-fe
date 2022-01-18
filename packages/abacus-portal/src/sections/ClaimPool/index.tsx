@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, useEffect } from "react"
-import Button from "@components/Button"
+import { Button } from "abacus-components"
 import { HorizontalListGroup } from "@components/ListGroupMods"
 import { ListGroupItem } from "shards-react"
 import { InputWithTitle, InputWithTitleAndButton } from "@components/Input"

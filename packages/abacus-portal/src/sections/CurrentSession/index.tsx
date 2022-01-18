@@ -11,7 +11,7 @@ import {
   useGetUserStatus,
 } from "@state/sessionData/hooks"
 import { PromiseStatus } from "@models/PromiseStatus"
-import { ButtonsWhite } from "@components/Button"
+import { ButtonsWhite } from "abacus-components"
 import { useActiveWeb3React } from "@hooks/index"
 import ConnectWalletAlert from "@components/ConnectWalletAlert"
 import { useGetCurrentNetwork } from "@state/application/hooks"

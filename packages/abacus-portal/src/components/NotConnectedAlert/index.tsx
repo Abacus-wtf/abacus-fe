@@ -8,7 +8,7 @@ import styled from "styled-components"
 import { AlertCircle } from "react-feather"
 import { theme } from "@config/theme"
 import { NetworkSymbolEnum } from "@config/constants"
-import Button from "@components/Button"
+import { Button } from "abacus-components"
 import { NetworkSelectorModal } from "@components/Navbar/NetworkSelectorButton"
 
 const StyledAlert = styled(Alert)`

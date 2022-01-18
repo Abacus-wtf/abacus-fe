@@ -11,7 +11,7 @@ import { Menu, X } from "react-feather"
 import { NetworkSymbolEnum } from "@config/constants"
 import { theme } from "@config/theme"
 import loadable from "@loadable/component"
-import Button, { ButtonClear } from "../Button"
+import { Button, ButtonClear } from "abacus-components"
 
 const NetworkSelectorButton = loadable(() => import("./NetworkSelectorButton"))
 

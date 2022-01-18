@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useContext, useState } from "react"
 import { ThemeContext } from "styled-components"
 import { Label } from "@components/global.styles"
-import Button from "@components/Button"
+import { Button } from "abacus-components"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import {
   HorizontalListGroup,

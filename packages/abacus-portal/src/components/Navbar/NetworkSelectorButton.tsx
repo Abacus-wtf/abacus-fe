@@ -13,7 +13,7 @@ import { useActiveWeb3React } from "@hooks/index"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { Activity } from "react-feather"
 import { theme } from "@config/theme"
-import Button from "../Button"
+import { Button } from "abacus-components"
 
 const StyledMenuButton = styled.button`
   position: relative;

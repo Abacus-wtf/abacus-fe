@@ -1,6 +1,6 @@
-import { theme } from "@config/theme"
-import { Button } from "shards-react"
-import styled from "styled-components"
+import { theme } from "@theme/index";
+import { Button } from "shards-react";
+import styled from "styled-components";
 
 const Buttons = styled(Button)`
   background-color: ${theme.colors.accent} !important;
@@ -21,7 +21,7 @@ const Buttons = styled(Button)`
     background-color: ${theme.colors.accent} !important;
     box-shadow: none;
   }
-`
+`;
 
 export const ButtonsWhite = styled(Buttons)`
   background-color: #fff !important;
@@ -50,7 +50,7 @@ export const ButtonsWhite = styled(Buttons)`
     border: 1px solid #c3c8d7;
     background-color: #fff !important;
   }
-`
+`;
 
 export const ButtonClear = styled(Buttons)`
   background-color: transparent !important;
@@ -76,6 +76,6 @@ export const ButtonClear = styled(Buttons)`
     border: none !important;
     color: black !important;
   }
-`
+`;
 
-export default Buttons
+export default Buttons;

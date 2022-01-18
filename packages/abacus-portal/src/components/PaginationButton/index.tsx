@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import Button from "../Button"
+import { Button } from "abacus-components"
 
 type PaginationButtonProps = {
   isLastPage: boolean

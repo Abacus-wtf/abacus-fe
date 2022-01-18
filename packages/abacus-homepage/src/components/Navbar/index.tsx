@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Row } from "shards-react"
 import Link from "gatsby-link"
-import Button, { ButtonsWhite } from "../Button"
+import { Button, ButtonsWhite } from "abacus-components"
 
 const RowStyled = styled(Row)`
   margin: 0;

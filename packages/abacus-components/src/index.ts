@@ -1,2 +1,5 @@
-export { default as Dummy } from "./components/Dummy"; // export the default export from './Hello'
-export * from "./components/Dummy"; // export all named exports from './Hello'
+// export the default exports
+export { default as Button } from "./components/Button";
+
+// export all named exports
+export * from "./components/Button";

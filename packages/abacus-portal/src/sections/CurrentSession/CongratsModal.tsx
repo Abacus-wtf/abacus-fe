@@ -1,4 +1,4 @@
-import Button from "@components/Button"
+import { Button } from "abacus-components"
 import { Label, UniversalContainer } from "@components/global.styles"
 import styled from "styled-components"
 import { useCurrentSessionData } from "@state/sessionData/hooks"

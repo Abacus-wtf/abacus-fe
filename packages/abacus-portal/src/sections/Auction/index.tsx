@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { Title, SmallUniversalContainer } from "@components/global.styles"
 import { useAuctionData, useSetAuctionData } from "@state/miscData/hooks"
-import { ButtonsWhite } from "@components/Button"
+import { ButtonsWhite } from "abacus-components"
 import { shortenAddress } from "@config/utils"
 import { useActiveWeb3React } from "@hooks/index"
 import ConnectWalletAlert from "@components/ConnectWalletAlert"

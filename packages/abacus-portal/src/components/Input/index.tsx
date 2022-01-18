@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import { FormInput, Tooltip } from "shards-react"
-import { ButtonsWhite } from "@components/Button"
+import { ButtonsWhite } from "abacus-components"
 import { Info } from "react-feather"
 import { Label } from "../global.styles"
 

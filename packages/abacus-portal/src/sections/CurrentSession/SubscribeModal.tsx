@@ -1,4 +1,4 @@
-import Button from "@components/Button"
+import { Button } from "abacus-components"
 import { Label, UniversalContainer } from "@components/global.styles"
 import styled from "styled-components"
 import React, { FunctionComponent, useEffect, useState } from "react"

@@ -153,7 +153,7 @@ const Home: React.FC = () => {
         </SocialButton>
         <SocialButton
           target="_blank"
-          to="https://discord.gg/ZGEY3d3W"
+          to="http://discord.com/invite/abacus"
           as={Link}
         >
           <SocialIMG src={Discord} />

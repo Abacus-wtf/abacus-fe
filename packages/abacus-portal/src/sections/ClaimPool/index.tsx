@@ -104,9 +104,9 @@ const ClaimPool: FunctionComponent = () => {
           </MaxWidthItem>
           <MaxWidthItem>
             <InputWithTitleAndButton
-              title="Claim Principal"
+              title="Withdraw Principal"
               id="claimPrincipal"
-              placeholder="Enter claim amount in ETH"
+              placeholder="Enter withdraw amount in ETH"
               value={claimPrincipalVal}
               onChange={(e) => setClaimPrincipalVal(e.target.value)}
               buttonText="Max"

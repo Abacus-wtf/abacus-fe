@@ -90,7 +90,7 @@ export const useOnClaimPrincipalAmount = () => {
       value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
-          summary: "Claim Principal Amount",
+          summary: "Withdraw Principal Amount",
         })
       }
       await generalizedContractCall({

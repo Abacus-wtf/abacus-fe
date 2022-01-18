@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { Tooltip } from "shards-react"
-import { Title } from "@components/global.styles"
-import { ButtonsWhite } from "@components/Button"
+import { Title, ButtonsWhite } from "abacus-components"
 import styled from "styled-components"
 import { Info } from "react-feather"
 import TitleBG from "../../images/title_bg.png"

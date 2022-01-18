@@ -1,13 +1,12 @@
 import React, { FunctionComponent, useContext } from "react"
 import { ThemeContext } from "styled-components"
-import { Label } from "@components/global.styles"
+import { Label, InputWithTitle } from "abacus-components"
 import {
   HorizontalListGroup,
   ListGroupHeader,
   ListGroupSubtext,
 } from "@components/ListGroupMods"
 import { ListGroupItem } from "shards-react"
-import { InputWithTitle } from "@components/Input"
 import { useCurrentSessionData } from "@state/sessionData/hooks"
 import SessionCountdown from "./SessionCountdown"
 import { ListGroupItemMinWidth } from "../CurrentSession.styles"

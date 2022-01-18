@@ -4,7 +4,7 @@ import Countdown from "react-countdown"
 import { theme } from "@config/theme"
 import { User } from "react-feather"
 import { StaticImage } from "gatsby-plugin-image"
-import { Text, ImageContainer } from "@components/global.styles"
+import { Text, ImageContainer } from "abacus-components"
 import { SessionData } from "@state/sessionData/reducer"
 
 const CardContainer = styled.div`

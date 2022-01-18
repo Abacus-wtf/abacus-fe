@@ -1,5 +1,5 @@
-import { getByTestId, render } from "@test-utils/index"
 import React from "react"
+import { getByTestId, render } from "@test-utils/index"
 import "@testing-library/jest-dom/extend-expect"
 import Card from "./index"
 

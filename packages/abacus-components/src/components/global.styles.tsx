@@ -1,18 +1,18 @@
-import { theme } from "@config/theme"
-import styled from "styled-components"
-import { Col } from "shards-react"
+import { theme } from "@theme/index";
+import styled from "styled-components";
+import { Col } from "shards-react";
 
 export const Text = styled.span`
   color: ${theme.colors.text1};
   text-align: center;
   font-weight: normal;
-`
+`;
 
 export const SubText = styled.span`
   font-weight: 400;
   color: ${theme.colors.text2};
   font-size: 0.8rem;
-`
+`;
 
 export const Subheader = styled.h4`
   color: ${theme.colors.text2} !important;
@@ -20,7 +20,7 @@ export const Subheader = styled.h4`
   text-align: left;
   font-size: 1rem;
   margin: 0px !important;
-`
+`;
 
 export const UniversalContainer = styled.div`
   display: flex;
@@ -28,11 +28,11 @@ export const UniversalContainer = styled.div`
   width: 100%;
   height: 100%;
   padding-bottom: 0px;
-`
+`;
 
 export const SmallUniversalContainer = styled(UniversalContainer)`
   max-width: 1100px;
-`
+`;
 
 export const Title = styled.h2`
   color: ${theme.colors.text1} !important;
@@ -44,7 +44,7 @@ export const Title = styled.h2`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-`
+`;
 
 export const MainContainer = styled(Col)`
   display: flex;
@@ -52,7 +52,7 @@ export const MainContainer = styled(Col)`
   padding: 32px;
   grid-gap: 24px;
   padding-top: 32px;
-`
+`;
 
 export const CategoryButton = styled.div<{ active: boolean }>`
   font-weight: 400;
@@ -79,7 +79,7 @@ export const CategoryButton = styled.div<{ active: boolean }>`
             opacity: 1.0;
         }
     `}
-`
+`;
 
 export const ImageContainer = styled.div<{ src: string }>`
   width: 100%;
@@ -95,10 +95,10 @@ export const ImageContainer = styled.div<{ src: string }>`
   background-position: center;
   background-color: black;
   border-radius: 6px;
-`
+`;
 
 export const Label = styled.label`
   font-weight: 500;
   font-size: 0.9rem;
   cursor: default;
-`
+`;

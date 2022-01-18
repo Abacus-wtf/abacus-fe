@@ -7,7 +7,7 @@ import Countdown from "react-countdown"
 import { ThemeContext } from "styled-components"
 import { ListGroupItem } from "shards-react"
 import { ListGroupHeader, ListGroupSubtext } from "@components/ListGroupMods"
-import { Label } from "@components/global.styles"
+import { Label } from "abacus-components"
 
 interface SessionCountdownProps {
   overrideOnComplete?: () => void

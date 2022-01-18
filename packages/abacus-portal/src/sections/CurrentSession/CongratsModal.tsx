@@ -1,5 +1,4 @@
-import Button from "@components/Button"
-import { Label, UniversalContainer } from "@components/global.styles"
+import { Button, Label, UniversalContainer } from "abacus-components"
 import styled from "styled-components"
 import { useCurrentSessionData } from "@state/sessionData/hooks"
 import { OutboundLink } from "gatsby-plugin-google-gtag"

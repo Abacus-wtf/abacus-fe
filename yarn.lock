@@ -16747,7 +16747,7 @@ react-helmet@^6.1.0:
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
 
-react-iconly@^2.2.3, react-iconly@^2.2.5:
+react-iconly@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/react-iconly/-/react-iconly-2.2.5.tgz#32b9a1d66815ae6a421026694e7d16027248d87f"
   integrity sha512-c9WO/2TJltmyCVGj+/mdJZFoldfzYA8uUPmcml03D6YlBVWsCN5gq5Vb2k95qmeg+vSqMRvC69yghZvM0T4lKQ==

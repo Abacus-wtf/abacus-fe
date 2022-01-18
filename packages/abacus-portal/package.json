@@ -55,7 +55,6 @@
     "query-string": "^7.0.1",
     "react-countdown": "^2.3.2",
     "react-feather": "^2.0.9",
-    "react-iconly": "^2.2.5",
     "react-redux": "^7.2.5",
     "redux": "^4.1.1",
     "shards-react": "^1.0.3",

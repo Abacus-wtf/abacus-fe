@@ -40,6 +40,7 @@ export const MassiveTitle = styled(Title)`
   text-align: left;
   max-width: 65%;
   z-index: 1;
+  white-space: pre-wrap;
   @media ${({ theme }) => theme.media.phone} {
     font-size: 5rem;
   }

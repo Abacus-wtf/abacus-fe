@@ -13,12 +13,7 @@ module.exports = {
     title: config.siteTitle,
     twitterHandle: config.twitterHandle,
     description: config.siteDescription,
-    keywords: [
-      "Software Engineer",
-      "Musician",
-      "JavaScript Training",
-      "Learn Music",
-    ],
+    keywords: [],
     canonicalUrl: config.siteUrl,
     author: {
       name: config.author,

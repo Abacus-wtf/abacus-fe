@@ -24,7 +24,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     setPools()
-  }, [])
+  }, [setPools])
 
   if (!pools) {
     return (

@@ -22,7 +22,7 @@ const Pool = ({ location }) => {
 
   useEffect(() => {
     setPool(String(address), String(tokenId))
-  }, [])
+  }, [address, setPool, tokenId])
 
   if (!poolData) {
     return (

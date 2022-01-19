@@ -20,7 +20,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     setMyPools()
-  }, [])
+  }, [setMyPools])
 
   if (!myPools) {
     return (

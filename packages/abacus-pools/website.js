@@ -1,15 +1,12 @@
 module.exports = {
-  siteTitle: "Abacus Protocol",
-  siteTitleAlt: "Abacus Pricing Protocal", // Alternative Site title for SEO
-  siteTitleShort: "Abacus", // short_name for manifest
+  siteTitle: "Abacus Pools",
+  siteTitleAlt: "Abacus Pools - NFT Primitive", // Alternative Site title for SEO
+  siteTitleShort: "Abacus Pools", // short_name for manifest
   siteUrl: "https://app.abacus.wtf", // Domain of your site. No trailing slash!
   lang: "en", // Language Tag on <html> element
   pathPrefix: "/",
-  siteDescription: "NFT Valuation Tool",
-  minibio: `
-    <strong>Abacus</strong> is an NFT Evaluation Tool. Using the "Keynesian beauty contest" as a basis,
-    apraisooooors are incentivised to accurately evaluate NFTs and make ETH in the process
-  `,
+  siteDescription: "NFT Primitive",
+  minibio: ``,
   author: "Abacus Team", // Author for schemaORGJSONLD
   organization: "AbacusWTF",
 

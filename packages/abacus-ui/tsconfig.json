@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.json",
-  "exclude": ["node_modules", "lib"],
+  "exclude": ["node_modules", "lib", "**/*.story*"],
   "compilerOptions": {
     "baseUrl": "./src",
     "outDir": "lib",

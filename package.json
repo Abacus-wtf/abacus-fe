@@ -23,7 +23,8 @@
     "test:changed": "jest --onlyChanged",
     "test:coverage": "yarn test -- --coverage",
     "test:watch": "yarn test -- --watch",
-    "package": "lerna exec --scope abacus-components -- npm pack"
+    "package": "lerna exec --scope abacus-components -- npm pack",
+    "storybook": "cd packages/abacus-ui && yarn storybook"
   },
   "dependencies": {
     "@ethersproject/address": "^5.5.0",

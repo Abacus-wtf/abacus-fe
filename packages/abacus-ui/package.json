@@ -1,25 +1,28 @@
 {
-  "name": "abacus-components",
+  "name": "abacus-ui",
   "version": "1.0.0",
-  "description": "Shared react components for all abacus-fe projects",
+  "description": "Abacus Design System for use across Abacus apps, or anywhere anyone wants to use them!",
   "keywords": [
     "abacus",
+    "web3",
+    "dapp",
+    "design-system",
     "react",
-    "ui"
+    "styled-components"
   ],
   "author": "lauchness <lauchlanchisholm@gmail.com>",
-  "homepage": "https://github.com/Abacus-wtf/abacus-fe#readme",
+  "homepage": "https://abacus.wtf",
   "license": "MIT",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/esm/index.d.ts",
+  "directories": {
+    "lib": "src"
+  },
   "files": [
     "lib",
     "src"
   ],
-  "directories": {
-    "lib": "src"
-  },
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
   },
@@ -29,31 +32,34 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "prepack": "yarn build",
-    "build": "rollup -c",
-    "watch": "rollup -cw"
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "bugs": {
     "url": "https://github.com/Abacus-wtf/abacus-fe/issues"
   },
   "peerDependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.10",
+    "@storybook/addon-actions": "^6.4.13",
+    "@storybook/addon-docs": "^6.4.13",
+    "@storybook/addon-essentials": "^6.4.13",
+    "@storybook/addon-links": "^6.4.13",
+    "@storybook/react": "^6.4.13",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "babel-loader": "^8.2.3",
     "rollup": "^2.64.0",
     "rollup-plugin-typescript2": "^0.31.1",
     "ts-jest": "^27.1.3",
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "react-feather": "^2.0.9",
-    "react-iconly": "^2.2.5",
-    "shards-react": "^1.0.3",
-    "shards-ui": "^3.0.0",
-    "styled-components": "^5.3.3"
+    "@storybook/addon-docs": "^6.4.13"
   }
 }

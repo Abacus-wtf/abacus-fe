@@ -67,7 +67,7 @@ const Home: React.FC = () => {
         <HeaderBarContainer>
           <ButtonsWhite
             onClick={() => setFilterOpen(true)}
-            // disabled={isNetworkSymbolNone}
+            disabled={isNetworkSymbolNone}
           >
             Filter
           </ButtonsWhite>

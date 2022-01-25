@@ -39,6 +39,7 @@ exports[`FilterModal Matches snapshot 1`] = `
                 >
                   <label
                     class="sc-ksdxgE flrFew"
+                    for="nftAddress"
                     style="margin-bottom: 10px;"
                   >
                     NFT Address
@@ -46,9 +47,9 @@ exports[`FilterModal Matches snapshot 1`] = `
                   <input
                     class="sc-hBUSln jmykjM form-control form-control-lg"
                     id="nftAddress"
-                    inputtype="text"
                     placeholder="0x16baf0de678e52367adc69fd067e5edd1d33e3bf"
                     theme="[object Object]"
+                    type="text"
                     value=""
                   />
                 </div>
@@ -62,6 +63,7 @@ exports[`FilterModal Matches snapshot 1`] = `
                 >
                   <label
                     class="sc-ksdxgE flrFew"
+                    for="tokenId"
                     style="margin-bottom: 10px;"
                   >
                     Token ID
@@ -69,9 +71,9 @@ exports[`FilterModal Matches snapshot 1`] = `
                   <input
                     class="sc-hBUSln jmykjM form-control form-control-lg"
                     id="tokenId"
-                    inputtype="text"
                     placeholder="6407"
                     theme="[object Object]"
+                    type="text"
                     value=""
                   />
                 </div>
@@ -100,15 +102,16 @@ exports[`FilterModal Matches snapshot 1`] = `
                   >
                     <label
                       class="sc-ksdxgE flrFew"
+                      for="vote"
                       style="margin-bottom: 0px;"
                     >
                       Vote
                     </label>
                     <input
-                      class="sc-hBUSln kZyZsF form-control form-control-lg"
+                      class="sc-hBUSln ciwDEL form-control form-control-lg"
                       id="vote"
-                      inputtype="checkbox"
                       theme="[object Object]"
+                      type="checkbox"
                     />
                   </div>
                 </li>
@@ -121,15 +124,16 @@ exports[`FilterModal Matches snapshot 1`] = `
                   >
                     <label
                       class="sc-ksdxgE flrFew"
+                      for="weigh"
                       style="margin-bottom: 0px;"
                     >
                       Weigh
                     </label>
                     <input
-                      class="sc-hBUSln kZyZsF form-control form-control-lg"
+                      class="sc-hBUSln ciwDEL form-control form-control-lg"
                       id="weigh"
-                      inputtype="checkbox"
                       theme="[object Object]"
+                      type="checkbox"
                     />
                   </div>
                 </li>
@@ -142,15 +146,16 @@ exports[`FilterModal Matches snapshot 1`] = `
                   >
                     <label
                       class="sc-ksdxgE flrFew"
+                      for="setFinalAppraisal"
                       style="margin-bottom: 0px;"
                     >
                       Set Final
                     </label>
                     <input
-                      class="sc-hBUSln kZyZsF form-control form-control-lg"
+                      class="sc-hBUSln ciwDEL form-control form-control-lg"
                       id="setFinalAppraisal"
-                      inputtype="checkbox"
                       theme="[object Object]"
+                      type="checkbox"
                     />
                   </div>
                 </li>
@@ -167,15 +172,16 @@ exports[`FilterModal Matches snapshot 1`] = `
                   >
                     <label
                       class="sc-ksdxgE flrFew"
+                      for="harvest"
                       style="margin-bottom: 0px;"
                     >
                       Harvest
                     </label>
                     <input
-                      class="sc-hBUSln kZyZsF form-control form-control-lg"
+                      class="sc-hBUSln ciwDEL form-control form-control-lg"
                       id="harvest"
-                      inputtype="checkbox"
                       theme="[object Object]"
+                      type="checkbox"
                     />
                   </div>
                 </li>
@@ -188,15 +194,16 @@ exports[`FilterModal Matches snapshot 1`] = `
                   >
                     <label
                       class="sc-ksdxgE flrFew"
+                      for="claim"
                       style="margin-bottom: 0px;"
                     >
                       Claim
                     </label>
                     <input
-                      class="sc-hBUSln kZyZsF form-control form-control-lg"
+                      class="sc-hBUSln ciwDEL form-control form-control-lg"
                       id="claim"
-                      inputtype="checkbox"
                       theme="[object Object]"
+                      type="checkbox"
                     />
                   </div>
                 </li>
@@ -209,15 +216,16 @@ exports[`FilterModal Matches snapshot 1`] = `
                   >
                     <label
                       class="sc-ksdxgE flrFew"
+                      for="complete"
                       style="margin-bottom: 0px;"
                     >
                       Complete
                     </label>
                     <input
-                      class="sc-hBUSln kZyZsF form-control form-control-lg"
+                      class="sc-hBUSln ciwDEL form-control form-control-lg"
                       id="complete"
-                      inputtype="checkbox"
                       theme="[object Object]"
+                      type="checkbox"
                     />
                   </div>
                 </li>

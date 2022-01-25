@@ -12,9 +12,10 @@ export const MainInput = styled(FormInput).attrs((props) => ({
   border: transparent;
   border-radius: 0px;
   padding: 0px;
-  ${({ inputtype }) =>
-    inputtype === "checkbox" &&
+  ${({ type }) =>
+    type === "checkbox" &&
     `
+    appearance: auto;
     width: 20px;
   `}
 
@@ -73,7 +74,10 @@ export const InputWithTitle = ({
   const [isToolTipOpen, setIsToolTipOpen] = useState(false);
   return (
     <Container type={type}>
-      <Label style={{ marginBottom: type === "checkbox" ? 0 : 10 }}>
+      <Label
+        style={{ marginBottom: type === "checkbox" ? 0 : 10 }}
+        htmlFor={id}
+      >
         {title}
         {infoText && (
           <>
@@ -93,7 +97,7 @@ export const InputWithTitle = ({
           </>
         )}
       </Label>
-      <MainInput id={id} size="lg" inputtype={type} {...props} />
+      <MainInput id={id} size="lg" type={type} {...props} />
     </Container>
   );
 };

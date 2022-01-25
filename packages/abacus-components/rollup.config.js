@@ -1,28 +1,34 @@
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import typescript from "rollup-plugin-typescript2";
-import pkg from "./package.json";
+
+const packageJson = require("./package.json");
 
 export default {
   input: "src/index.ts",
   output: [
     {
-      file: "./lib/cjs/index.js",
+      file: packageJson.main,
       format: "cjs",
+      sourcemap: true,
     },
     {
-      file: "./lib/esm/index.js",
-      format: "es",
+      file: packageJson.module,
+      format: "esm",
+      sourcemap: true,
     },
   ],
   external: [
-    ...Object.keys(pkg.peerDependencies || {}),
-    ...Object.keys(pkg.dependencies || {}),
+    ...Object.keys(packageJson.peerDependencies || {}),
+    ...Object.keys(packageJson.dependencies || {}),
   ],
   plugins: [
+    peerDepsExternal(),
     typescript({
       typescript: require("typescript"),
       tsconfigOverride: {
         exclude: ["**/*.test.tsx", "**/*.config.js"],
       },
+      useTsconfigDeclarationDir: true,
     }),
   ],
 };

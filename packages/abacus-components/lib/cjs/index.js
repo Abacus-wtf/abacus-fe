@@ -161,9 +161,9 @@ var Label = styled__default["default"].label(templateObject_10 || (templateObjec
 var templateObject_1$1, templateObject_2$1, templateObject_3$1, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10;
 
 var MainInput = styled__default["default"](shardsReact.FormInput).attrs(function (props) { return (__assign({ size: props.size || "sm" }, props)); })(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  border: transparent;\n  border-radius: 0px;\n  padding: 0px;\n  ", "\n\n  input::-webkit-outer-spin-button,\n  input::-webkit-inner-spin-button {\n    -webkit-appearance: none;\n    margin: 0;\n  }\n\n  &:active {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  .form-control:focus {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  &:focus {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  &:disabled {\n    background-color: transparent !important;\n  }\n"], ["\n  border: transparent;\n  border-radius: 0px;\n  padding: 0px;\n  ", "\n\n  input::-webkit-outer-spin-button,\n  input::-webkit-inner-spin-button {\n    -webkit-appearance: none;\n    margin: 0;\n  }\n\n  &:active {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  .form-control:focus {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  &:focus {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  &:disabled {\n    background-color: transparent !important;\n  }\n"])), function (_a) {
-    var inputtype = _a.inputtype;
-    return inputtype === "checkbox" &&
-        "\n    width: 20px;\n  ";
+    var type = _a.type;
+    return type === "checkbox" &&
+        "\n    appearance: auto;\n    width: 20px;\n  ";
 });
 var Container = styled__default["default"].div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: ", ";\n  align-items: ", ";\n  justify-content: ", ";\n  width: 100%;\n"], ["\n  display: flex;\n  flex-direction: ", ";\n  align-items: ", ";\n  justify-content: ", ";\n  width: 100%;\n"])), function (_a) {
     var type = _a.type;
@@ -179,12 +179,12 @@ var InputWithTitle = function (_a) {
     var title = _a.title, _b = _a.type, type = _b === void 0 ? "text" : _b, id = _a.id, infoText = _a.infoText, props = __rest(_a, ["title", "type", "id", "infoText"]);
     var _c = React.useState(false), isToolTipOpen = _c[0], setIsToolTipOpen = _c[1];
     return (React__default["default"].createElement(Container, { type: type },
-        React__default["default"].createElement(Label, { style: { marginBottom: type === "checkbox" ? 0 : 10 } },
+        React__default["default"].createElement(Label, { style: { marginBottom: type === "checkbox" ? 0 : 10 }, htmlFor: id },
             title,
             infoText && (React__default["default"].createElement(React__default["default"].Fragment, null,
                 React__default["default"].createElement(reactFeather.Info, { id: id, style: { height: 15, marginTop: -2, marginLeft: 1 } }),
                 React__default["default"].createElement(shardsReact.Tooltip, { open: isToolTipOpen, target: "#".concat(id), toggle: function () { return setIsToolTipOpen(!isToolTipOpen); }, placement: "right", trigger: "hover" }, infoText)))),
-        React__default["default"].createElement(MainInput, __assign({ id: id, size: "lg", inputtype: type }, props))));
+        React__default["default"].createElement(MainInput, __assign({ id: id, size: "lg", type: type }, props))));
 };
 var InputContainer = styled__default["default"].div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  width: 100%;\n  display: flex;\n  justify-content: space-between;\n"], ["\n  width: 100%;\n  display: flex;\n  justify-content: space-between;\n"])));
 var InputWithTitleAndButton = function (_a) {
@@ -214,3 +214,4 @@ exports.Subheader = Subheader;
 exports.Text = Text;
 exports.Title = Title;
 exports.UniversalContainer = UniversalContainer;
+//# sourceMappingURL=index.js.map

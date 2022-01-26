@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { getUniqueId } from "@utils";
+import { Font } from "@theme";
 
 type InputProps = {
   value: string;
@@ -11,9 +12,32 @@ type InputProps = {
   id?: string;
 };
 
-const StyledLabel = styled.label``;
+const InputContainer = styled.div`
+  height: 54px;
+  background-color: white;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 2px 0px #f6f6f6;
+`;
 
-const StyledInput = styled.input``;
+const StyledLabel = styled.label`
+  ${Font("milli")}
+`;
+
+const StyledInput = styled.input`
+  ${Font("mega")}
+  border: none;
+  outline: none;
+  padding: 0;
+
+  &:focus,
+  &:active,
+  &:focus-visible {
+    box-shadow: 0px 2px 0px #6b6b6b;
+  }
+`;
 
 const Input: FunctionComponent<InputProps> = ({
   value,
@@ -25,8 +49,8 @@ const Input: FunctionComponent<InputProps> = ({
 }) => {
   const ID = typeof id === "string" ? id : getUniqueId("input");
   return (
-    <>
-      {typeof label === "string" && (
+    <InputContainer>
+      {typeof label === "string" && label && (
         <StyledLabel htmlFor={ID}>{label}</StyledLabel>
       )}
       <StyledInput
@@ -36,7 +60,7 @@ const Input: FunctionComponent<InputProps> = ({
         type={type}
         onChange={(e) => onChange(e.target.value)}
       />
-    </>
+    </InputContainer>
   );
 };
 

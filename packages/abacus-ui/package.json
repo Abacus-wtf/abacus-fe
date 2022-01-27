@@ -33,7 +33,8 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "new-component": "./new-component"
   },
   "bugs": {
     "url": "https://github.com/Abacus-wtf/abacus-fe/issues"
@@ -53,8 +54,10 @@
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "@types/styled-components": "^5.1.21",
     "babel-loader": "^8.2.3",
     "rollup": "^2.64.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.31.1",
     "ts-jest": "^27.1.3",
     "typescript": "^4.5.4"

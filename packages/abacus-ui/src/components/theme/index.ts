@@ -25,6 +25,9 @@ const defaultTheme = {
   },
   copy: {
     // https://learn-the-web.algonquindesign.ca/topics/typografier-cheat-sheet/
+    pico: {},
+    nano: {},
+    micro: {},
     milli: {
       "font-size": "14px",
       "line-height": "17px",
@@ -41,6 +44,31 @@ const defaultTheme = {
       "font-size": "24px",
       "line-height": "29px",
     },
+    tera: {
+      "font-size": "26px",
+      "line-height": "31.47px",
+    },
+    peta: {
+      "font-size": "30px",
+      "line-height": "36px",
+    },
+    exa: {
+      "font-size": "32px",
+      "line-height": "38.73px",
+    },
+    zetta: {
+      "font-size": "34px",
+      "line-height": "40.8px",
+    },
+    yotta: {
+      "font-size": "38px",
+      "line-height": "45.6px",
+    },
+    nina: {
+      "font-size": "48px",
+      "line-height": "57.6px",
+    },
+    tena: {},
   },
   media: {
     splitCenter: `(min-width: ${sizes.splitCenter})`,

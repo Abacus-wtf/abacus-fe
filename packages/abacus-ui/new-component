@@ -1,0 +1,68 @@
+#!/bin/bash
+
+SRC="./src/components"
+INDEX="index.ts"
+COMPONENT_INDEX="index.tsx"
+
+if [[ -z "$1" ]]; then
+  echo "Must Provide Component Name"
+  exit 1
+else
+  COMPONENT=$1
+fi
+
+if [[ "$2" =~ (atom|molecule|organism) ]]; then
+  STRUCTURE=$2
+else
+  echo "Must Provide Component Structure (atom/molecule/organism)"
+  exit 1
+fi
+
+DIRECTORY="$SRC/${STRUCTURE}s/$COMPONENT"
+
+
+mkdir -p $DIRECTORY "$DIRECTORY/src" "$DIRECTORY/stories" 
+
+touch "${DIRECTORY}/${INDEX}" "$DIRECTORY/src/${INDEX}" "$DIRECTORY/src/${COMPONENT}.tsx" "$DIRECTORY/stories/${COMPONENT}.stories.tsx" 
+
+echo "export * from \"./src\";" > "${DIRECTORY}/${INDEX}"
+
+echo "export { default as ${COMPONENT} } from \"./${COMPONENT}\";" > "$DIRECTORY/src/${INDEX}"
+
+echo "import React, { FunctionComponent } from \"react\";
+import styled from \"styled-components\";
+
+type ${COMPONENT}Props = {};
+
+// You probably want to change this to something semantic or abandon it all together
+const Container = styled.div``;
+
+const ${COMPONENT}: FunctionComponent<${COMPONENT}Props> = ({}) => {
+  return (
+    <Container>
+    </Container>
+  );
+};
+
+export default ${COMPONENT};
+" > "$DIRECTORY/src/${COMPONENT}.tsx"
+
+echo "import React from \"react\";
+import { ComponentStory, ComponentMeta } from \"@storybook/react\";
+
+import { ${COMPONENT} } from \"../src\";
+
+export default {
+  title: \"${STRUCTURE}/${COMPONENT}\",
+  component: ${COMPONENT},
+  argTypes: {},
+} as ComponentMeta<typeof ${COMPONENT}>;
+
+const Template: ComponentStory<typeof ${COMPONENT}> = (args) => <${COMPONENT} {...args} />;
+
+export const Primary = Template.bind({});
+Text.args = {};
+
+export const Secondary = Template.bind({});
+Number.args = {};
+" > "$DIRECTORY/stories/${COMPONENT}.stories.tsx"

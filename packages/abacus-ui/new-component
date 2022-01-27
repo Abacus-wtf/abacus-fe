@@ -61,7 +61,7 @@ export default {
 const Template: ComponentStory<typeof ${COMPONENT}> = (args) => <${COMPONENT} {...args} />;
 
 export const Primary = Template.bind({});
-Text.args = {};
+Primary.args = {};
 
 export const Secondary = Template.bind({});
 Number.args = {};

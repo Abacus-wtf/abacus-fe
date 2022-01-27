@@ -34,6 +34,10 @@ const defaultTheme = {
       "line-height": "19px",
     },
     mega: {
+      "font-size": "20px",
+      "line-height": "24px",
+    },
+    giga: {
       "font-size": "24px",
       "line-height": "29px",
     },

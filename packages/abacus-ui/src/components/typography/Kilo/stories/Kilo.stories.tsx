@@ -13,5 +13,5 @@ const Template: ComponentStory<typeof Kilo> = (args) => <Kilo {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
-  children: "Hi there, this is what a <p> tag looks like",
+  children: "Hi there, this is what a <Kilo> tag looks like - renders as div",
 };

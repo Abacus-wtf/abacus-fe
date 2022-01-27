@@ -2,10 +2,12 @@ import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Font } from "@theme";
 
-const StyledP = styled.p`
+const StyledDiv = styled.div`
   ${Font()}
 `;
 
-const Kilo: FunctionComponent = ({ children }) => <StyledP>{children}</StyledP>;
+const Kilo: FunctionComponent = ({ children }) => (
+  <StyledDiv>{children}</StyledDiv>
+);
 
 export default Kilo;

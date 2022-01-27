@@ -9,11 +9,15 @@ export const sizes = {
 const defaultTheme = {
   colors: {
     background: "#FFFFFF1",
+    background2: "#1A1A1A0A",
     text1: "#1A1A1A",
     text2: "#1C233399",
   },
   layout: {
     maxWidth: "800px",
+  },
+  borderRadius: {
+    main: "10px",
   },
   boxShadow: {
     main: "0px 2px 0px #f6f6f6",
@@ -39,9 +43,13 @@ const defaultTheme = {
     tablet: `(min-width: ${sizes.tablet})`,
     phone: `(min-width: ${sizes.phone})`,
   },
-};
+} as const;
 
 export type Theme = typeof defaultTheme;
+
+export type WithTheme = {
+  theme: Theme;
+};
 
 export const Font = (size = "kilo") => css`
   font-family: Arial;

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { getUniqueId } from "@utils";
-import { Font } from "@theme";
+import { Font, WithTheme } from "@theme";
 
 type InputProps = {
   value: string;
@@ -13,17 +13,26 @@ type InputProps = {
 };
 
 const InputContainer = styled.div`
-  height: 54px;
   background-color: white;
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0px 2px 0px #f6f6f6;
+
+  &:focus-within {
+    box-shadow: 0px 2px 0px #6b6b6b;
+  }
 `;
 
-const StyledLabel = styled.label`
+const StyledLabel = styled.label<WithTheme>`
   ${Font("milli")}
+  text-align: center;
+  background-color: ${({ theme }) => theme.colors.background2};
+  padding: 10px;
+  height: calc(100% - 17px);
+  margin: 8.5px 0;
+  border-radius: ${({ theme }) => theme.borderRadius.main};
 `;
 
 const StyledInput = styled.input`
@@ -31,12 +40,7 @@ const StyledInput = styled.input`
   border: none;
   outline: none;
   padding: 0;
-
-  &:focus,
-  &:active,
-  &:focus-visible {
-    box-shadow: 0px 2px 0px #6b6b6b;
-  }
+  width: 100%;
 `;
 
 const Input: FunctionComponent<InputProps> = ({

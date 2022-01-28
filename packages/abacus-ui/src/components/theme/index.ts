@@ -1,11 +1,11 @@
-import { css } from "styled-components";
+import { css, CSSObject, SimpleInterpolation } from "styled-components";
 
 const defaultTheme = {
   colors: {
-    background1: "#FFFFFF1",
-    background2: "#1A1A1A0A",
+    background1: "#FFFFFF",
+    background2: "#1A1A1A",
     text1: "#1A1A1A",
-    text2: "#1C233399",
+    text2: "#1C2333",
   },
   layout: {
     maxWidth: "800px",
@@ -82,22 +82,38 @@ export const Font = (size = "kilo") => css`
     theme?.copy ? theme.copy[size] : defaultTheme.copy[size]}
 `;
 
+enum Sizes {
+  SMALL = "sm",
+  MEDIUM = "md",
+  LARGE = "lg",
+}
+
 export const breakpoints = [
   { size: "lg", value: "1200px" },
   { size: "md", value: "885px" },
   { size: "sm", value: "600px" },
-];
+] as { size: Sizes; value: string }[];
 
-export const Media: { [label: string]: typeof css } = breakpoints.reduce(
+export const Media: { [breakpoint in Sizes]: typeof css } = breakpoints.reduce(
   (accumulator, { size, value }) => {
-    accumulator[size] = (...args) => css`
+    const nextMedia = (
+      first: TemplateStringsArray | CSSObject,
+      ...interpolations: SimpleInterpolation[]
+    ) => css`
       @media (min-width: ${value}) {
-        ${css(...args)};
+        ${css(first, ...interpolations)};
       }
     `;
-    return accumulator;
+    return {
+      ...accumulator,
+      [size]: nextMedia,
+    };
   },
-  {}
+  {
+    sm: css,
+    md: css,
+    lg: css,
+  }
 );
 
 // TODO: Make media query helper, but be sure to use breakpoints in array to guarantee order

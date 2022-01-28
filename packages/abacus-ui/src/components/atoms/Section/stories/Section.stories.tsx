@@ -10,10 +10,10 @@ export default {
 } as ComponentMeta<typeof Section>;
 
 const Template: ComponentStory<typeof Section> = (args) => (
-  <Section {...args} />
+  <Section {...args}>
+    <div style={{ height: "200px", width: "200px" }}>Hello</div>
+    <div style={{ height: "200px", width: "200px" }}>World</div>
+  </Section>
 );
 
 export const Primary = Template.bind({});
-Primary.args = {
-  foo: "Hello world",
-};

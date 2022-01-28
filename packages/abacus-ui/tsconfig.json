@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.json",
   "exclude": ["node_modules", "lib", "**/*.story*"],
   "compilerOptions": {
+    "typeRoots": ["./src/styled.d.ts"],
     "baseUrl": "./src",
     "outDir": "lib",
     "jsx": "react",

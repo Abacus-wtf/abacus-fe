@@ -1,27 +1,23 @@
-import { css } from "styled-components";
-
-export const sizes = {
-  tablet: "1200px",
-  splitCenter: "885px",
-  phone: "600px",
-};
+import { css, CSSObject, SimpleInterpolation } from "styled-components";
 
 const defaultTheme = {
   colors: {
-    background: "#FFFFFF1",
-    background2: "#1A1A1A0A",
+    background1: "#FFFFFF",
+    background2: "#1A1A1A",
     text1: "#1A1A1A",
-    text2: "#1C233399",
+    text2: "#1C2333",
   },
   layout: {
     maxWidth: "800px",
   },
   borderRadius: {
     main: "10px",
+    section: "26px",
   },
   boxShadow: {
     main: "0px 2px 0px #f6f6f6",
     alt: "0px 2px 0px #6b6b6b",
+    section: "0px 2px 32px rgba(0, 0, 0, 0.06)",
   },
   copy: {
     // https://learn-the-web.algonquindesign.ca/topics/typografier-cheat-sheet/
@@ -70,11 +66,6 @@ const defaultTheme = {
     },
     tena: {},
   },
-  media: {
-    splitCenter: `(min-width: ${sizes.splitCenter})`,
-    tablet: `(min-width: ${sizes.tablet})`,
-    phone: `(min-width: ${sizes.phone})`,
-  },
 } as const;
 
 export type Theme = typeof defaultTheme;
@@ -90,6 +81,40 @@ export const Font = (size = "kilo") => css`
   ${({ theme }: { theme: typeof defaultTheme }) =>
     theme?.copy ? theme.copy[size] : defaultTheme.copy[size]}
 `;
+
+enum Sizes {
+  SMALL = "sm",
+  MEDIUM = "md",
+  LARGE = "lg",
+}
+
+export const breakpoints = [
+  { size: "lg", value: "1200px" },
+  { size: "md", value: "885px" },
+  { size: "sm", value: "600px" },
+] as { size: Sizes; value: string }[];
+
+export const Media: { [breakpoint in Sizes]: typeof css } = breakpoints.reduce(
+  (accumulator, { size, value }) => {
+    const nextMedia = (
+      first: TemplateStringsArray | CSSObject,
+      ...interpolations: SimpleInterpolation[]
+    ) => css`
+      @media (min-width: ${value}) {
+        ${css(first, ...interpolations)};
+      }
+    `;
+    return {
+      ...accumulator,
+      [size]: nextMedia,
+    };
+  },
+  {
+    sm: css,
+    md: css,
+    lg: css,
+  }
+);
 
 // TODO: Make media query helper, but be sure to use breakpoints in array to guarantee order
 

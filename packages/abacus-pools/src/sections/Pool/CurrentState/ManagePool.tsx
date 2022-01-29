@@ -33,6 +33,16 @@ const ManagePool: FunctionComponent = () => {
             Exit Position (Pay {poolData.exitFee}% of Total)
           </Button>
         </ButtonContainer>
+        <ButtonContainer style={{ width: "100%" }}>
+          <Button
+            className="notConnected"
+            disabled={!isNetworkSymbolETH}
+            style={{ width: "100%", borderRadius: 5 }}
+            type="submit"
+          >
+            End Auction
+          </Button>
+        </ButtonContainer>
         <Tooltip
           open={isToolTipOpen}
           target=".notConnected"

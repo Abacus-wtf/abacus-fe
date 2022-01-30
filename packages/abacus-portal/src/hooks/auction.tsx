@@ -153,3 +153,46 @@ export const useOnClaim = () => {
     isPending,
   }
 }
+
+export const useOnEndAuction = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall(
+    ReloadDataType.Auction
+  )
+  const addTransaction = useTransactionAdder()
+  const networkSymbol = useGetCurrentNetwork()
+
+  const onEndAuction = useCallback(async () => {
+    let estimate
+    let method: (...args: any) => Promise<TransactionResponse>
+    let args: Array<BigNumber | number | string>
+    let value: BigNumber | null
+
+    const auctionContract = getContract(
+      ABC_AUCTION_ADDRESS(networkSymbol),
+      ABC_AUCTION_ABI,
+      library,
+      account
+    )
+    method = auctionContract.endAuction
+    estimate = auctionContract.estimateGas.endAuction
+    args = []
+    value = null
+    const txnCb = async (response: any) => {
+      addTransaction(response, {
+        summary: "End Auction Action",
+      })
+    }
+    await generalizedContractCall({
+      method,
+      estimate,
+      args,
+      value,
+      cb: txnCb,
+    })
+  }, [account, addTransaction, generalizedContractCall, library, networkSymbol])
+  return {
+    onEndAuction,
+    isPending,
+  }
+}

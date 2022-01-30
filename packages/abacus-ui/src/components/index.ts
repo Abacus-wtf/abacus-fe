@@ -7,3 +7,7 @@ export * from "./theme";
 
 // TODO: Build out and export molecules
 // export * from "./organisms";
+
+module.exports = {
+  staticDirs: ["../public"],
+};

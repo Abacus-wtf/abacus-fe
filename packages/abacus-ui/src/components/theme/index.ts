@@ -2,10 +2,25 @@ import { css, CSSObject, SimpleInterpolation } from "styled-components";
 
 const defaultTheme = {
   colors: {
-    background1: "#FFFFFF",
-    background2: "#1A1A1A",
-    text1: "#1A1A1A",
-    text2: "#1C2333",
+    core: {
+      primary: "#1C233399",
+      900: "rgba(28, 35, 51, 0.72)",
+      800: "rgba(28, 35, 51, 0.6)",
+      700: "rgba(28, 35, 51, 0.4)",
+      border: "rgba(28, 35, 51, 0.04)",
+      white: "white",
+    },
+    button: {
+      secondary: "rgba(28, 35, 51, 0.04)",
+      primary: "#1A1A1A",
+    },
+    utility: {
+      green: "#23CE7C",
+      purple: "#8673FF",
+      blue: "#3E74FF",
+      red: "#F33636",
+      yellow: "#FFC93E",
+    },
   },
   layout: {
     maxWidth: "800px",
@@ -15,9 +30,16 @@ const defaultTheme = {
     section: "26px",
   },
   boxShadow: {
+    button: "0px 5px 60px rgba(0, 0, 0, 0.1)",
     main: "0px 2px 0px #f6f6f6",
     alt: "0px 2px 0px #6b6b6b",
     section: "0px 2px 32px rgba(0, 0, 0, 0.06)",
+  },
+  padding: {
+    main: "16px 24px",
+  },
+  transitionTime: {
+    main: "0.3s",
   },
   copy: {
     // https://learn-the-web.algonquindesign.ca/topics/typografier-cheat-sheet/
@@ -74,8 +96,9 @@ export type WithTheme = {
   theme: Theme;
 };
 
-export const Font = (size = "kilo") => css`
-  font-family: Arial;
+export const Font = (size = "kilo", fontFamily = "Inter") => css`
+  @import url("https://rsms.me/inter/inter.css");
+  font-family: "${fontFamily}", sans-serif;
   font-style: normal;
   font-weight: normal;
   ${({ theme }: { theme: typeof defaultTheme }) =>

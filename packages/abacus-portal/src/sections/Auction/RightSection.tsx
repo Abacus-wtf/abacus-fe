@@ -15,7 +15,12 @@ import { ListGroupItem, ListGroup, Form, Tooltip } from "shards-react"
 import { useAuctionData, useSetAuctionData } from "@state/miscData/hooks"
 import { useActiveWeb3React } from "@hooks/index"
 import { ZERO_ADDRESS } from "@config/constants"
-import { useOnBid, useOnClaim, useOnAddToBid } from "@hooks/auction"
+import {
+  useOnBid,
+  useOnClaim,
+  useOnAddToBid,
+  useOnEndAuction,
+} from "@hooks/auction"
 import SessionCountdown from "../CurrentSession/CurrentState/SessionCountdown"
 import {
   VerticalContainer,
@@ -26,9 +31,11 @@ const RightSection: FunctionComponent = () => {
   const { account } = useActiveWeb3React()
   const auctionData = useAuctionData()
   const [isToolTipOpen, setIsToolTipOpen] = useState(false)
+  const [isToolTipAuctionOpen, setIsToolTipAuctionOpen] = useState(false)
   const { onBid, isPending } = useOnBid()
   const { onAddToBid, isPending: isPendingAddToBid } = useOnAddToBid()
   const { onClaim, isPending: isPendingClaim } = useOnClaim()
+  const { onEndAuction, isPending: isPendingAuction } = useOnEndAuction()
   const [nftAddress, setNftAddress] = useState()
   const [tokenId, setTokenId] = useState()
 
@@ -141,6 +148,22 @@ const RightSection: FunctionComponent = () => {
               {isPendingClaim ? "Pending..." : "Claim Previous Bid"}
             </Button>
           </div>
+          <div
+            id="endAuctionButton"
+            style={{ width: "100%", display: "flex", gridGap: 15 }}
+          >
+            <Button
+              disabled={
+                !account || isPendingAuction || Date.now() < auctionData.endTime
+              }
+              style={{ width: "100%" }}
+              onClick={async () => {
+                await onEndAuction()
+              }}
+            >
+              {isPendingAuction ? "Pending..." : "End Auction"}
+            </Button>
+          </div>
           <Tooltip
             open={isToolTipOpen}
             target="#submitBidButton"
@@ -149,6 +172,19 @@ const RightSection: FunctionComponent = () => {
             placement="right"
           >
             Connect your wallet to bid
+          </Tooltip>
+          <Tooltip
+            open={isToolTipAuctionOpen}
+            target="#endAuctionButton"
+            disabled={
+              (account !== null && account !== undefined) ||
+              isPendingAuction ||
+              Date.now() >= auctionData.endTime
+            }
+            toggle={() => setIsToolTipAuctionOpen(!isToolTipAuctionOpen)}
+            placement="right"
+          >
+            Please wait until end of bid period to perform end auction.
           </Tooltip>
         </VerticalContainer>
       </Form>

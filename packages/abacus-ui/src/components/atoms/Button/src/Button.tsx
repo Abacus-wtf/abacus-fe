@@ -12,7 +12,7 @@ type ButtonProps = {
   children: any;
   onClick?: () => void;
   disabled?: boolean;
-  type: ButtonType;
+  type?: ButtonType;
 };
 
 const Container = styled.button<{ buttonType: ButtonType }>`

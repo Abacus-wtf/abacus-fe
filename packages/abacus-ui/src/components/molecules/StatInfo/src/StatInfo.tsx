@@ -1,6 +1,5 @@
 import { Font } from "@theme";
-import { Mega } from "components";
-import { Nina } from "components/typography/Nina";
+import Mega from "components/typography/Mega/src/Mega";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 

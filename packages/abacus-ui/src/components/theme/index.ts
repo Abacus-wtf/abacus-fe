@@ -8,6 +8,7 @@ const defaultTheme = {
       800: "rgba(28, 35, 51, 0.6)",
       700: "rgba(28, 35, 51, 0.4)",
       border: "rgba(28, 35, 51, 0.04)",
+      lightWhite: "rgba(255, 255, 255, 0.8)",
       white: "white",
     },
     button: {
@@ -86,7 +87,10 @@ const defaultTheme = {
       "font-size": "48px",
       "line-height": "57.6px",
     },
-    tena: {},
+    tena: {
+      "font-size": "72px",
+      "line-height": "78.6px",
+    },
   },
 } as const;
 
@@ -98,11 +102,16 @@ export type WithTheme = {
 
 export const Font = (size = "kilo", fontFamily = "Inter") => css`
   @import url("https://rsms.me/inter/inter.css");
+  @font-face {
+    font-family: "Bluu Next";
+    src: url("../../static/BluuNext-Bold.otf");
+    font-weight: bold;
+  }
   font-family: "${fontFamily}", sans-serif;
   font-style: normal;
   font-weight: normal;
   ${({ theme }: { theme: typeof defaultTheme }) =>
-    theme?.copy ? theme.copy[size] : defaultTheme.copy[size]}
+    theme?.copy ? theme.copy[size] : defaultTheme.copy[size]};
 `;
 
 enum Sizes {

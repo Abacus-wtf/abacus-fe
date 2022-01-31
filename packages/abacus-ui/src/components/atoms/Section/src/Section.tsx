@@ -7,7 +7,7 @@ const Container = styled.section`
   flex-direction: column;
   align-items: flex-start;
   padding: 20px;
-  background: ${({ theme }) => theme.colors.background1};
+  background: ${({ theme }) => theme.colors.utility.white};
   box-shadow: ${({ theme }) => theme.boxShadow.section};
   border-radius: ${({ theme }) => theme.borderRadius.section};
 

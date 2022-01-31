@@ -21,6 +21,7 @@ const defaultTheme = {
       blue: "#3E74FF",
       red: "#F33636",
       yellow: "#FFC93E",
+      white: "#FFFFFF",
     },
   },
   layout: {

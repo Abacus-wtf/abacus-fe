@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Zetta } from "../src";
 
 export default {
-  title: "atom/Zetta",
+  title: "typography/Zetta",
   component: Zetta,
   argTypes: {},
 } as ComponentMeta<typeof Zetta>;

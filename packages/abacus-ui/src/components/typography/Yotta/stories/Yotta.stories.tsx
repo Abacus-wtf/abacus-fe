@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Yotta } from "../src";
 
 export default {
-  title: "atom/Yotta",
+  title: "typography/Yotta",
   component: Yotta,
   argTypes: {},
 } as ComponentMeta<typeof Yotta>;

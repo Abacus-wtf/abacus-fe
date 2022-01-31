@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Giga } from "../src";
 
 export default {
-  title: "atom/Giga",
+  title: "typography/Giga",
   component: Giga,
   argTypes: {},
 } as ComponentMeta<typeof Giga>;

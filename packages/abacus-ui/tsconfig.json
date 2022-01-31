@@ -16,7 +16,8 @@
     "suppressImplicitAnyIndexErrors": true,
     "paths": {
       "@utils": ["utils/index"],
-      "@theme": ["components/theme/index"]
+      "@theme": ["components/theme/index"],
+      "@static/*": ["static/*"]
     }
   }
 }

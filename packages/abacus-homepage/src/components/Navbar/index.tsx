@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { SocialLinks, Button, ButtonType, H1 } from "abacus-ui"
+import { SocialLinks, Button, H1 } from "abacus-ui"
 
 const Container = styled.nav`
   width: 100%;

@@ -10,11 +10,13 @@ export default {
     {
       file: packageJson.main,
       format: "cjs",
+      exports: "named",
       sourcemap: true,
     },
     {
       file: packageJson.module,
-      format: "esm",
+      format: "es",
+      exports: "named",
       sourcemap: true,
     },
   ],
@@ -28,9 +30,10 @@ export default {
     typescript({
       typescript: require("typescript"),
       tsconfigOverride: {
-        exclude: ["**/*.test.tsx", "**/*.config.js"],
+        exclude: ["**/*.test.tsx", "**/*.config.js", "**/*.stories.*"],
       },
-      useTsconfigDeclarationDir: true,
+      rollupCommonJSResolveHack: false,
+      clean: true,
     }),
   ],
 };

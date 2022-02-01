@@ -230,12 +230,12 @@ var Section = function (_a) {
 };
 var templateObject_1$r, templateObject_2$7;
 
-var ButtonType;
+exports.ButtonType = void 0;
 (function (ButtonType) {
     ButtonType[ButtonType["Standard"] = 0] = "Standard";
     ButtonType[ButtonType["White"] = 1] = "White";
     ButtonType[ButtonType["Clear"] = 2] = "Clear";
-})(ButtonType || (ButtonType = {}));
+})(exports.ButtonType || (exports.ButtonType = {}));
 var Container$n = styled__default["default"].button(templateObject_1$q || (templateObject_1$q = __makeTemplateObject(["\n  ", "\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: 100%;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n"], ["\n  ", "\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ",
     ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ",
     ";\n  background-color: ",
@@ -247,25 +247,25 @@ var Container$n = styled__default["default"].button(templateObject_1$q || (templ
     return theme.padding.main;
 }, function (_a) {
     var theme = _a.theme, buttonType = _a.buttonType;
-    return buttonType === ButtonType.Clear ? "none" : theme.boxShadow.button;
+    return buttonType === exports.ButtonType.Clear ? "none" : theme.boxShadow.button;
 }, function (_a) {
     var theme = _a.theme;
     return theme.transitionTime.main;
 }, function (_a) {
     var theme = _a.theme, buttonType = _a.buttonType;
-    return buttonType === ButtonType.White
+    return buttonType === exports.ButtonType.White
         ? theme.colors.button.primary
         : theme.colors.core.white;
 }, function (_a) {
     var theme = _a.theme, buttonType = _a.buttonType;
-    return buttonType === ButtonType.Standard
+    return buttonType === exports.ButtonType.Standard
         ? theme.colors.utility.blue
-        : buttonType === ButtonType.White
+        : buttonType === exports.ButtonType.White
             ? theme.colors.core.white
             : "transparent";
 });
 var Button = function (_a) {
-    var children = _a.children, onClick = _a.onClick, disabled = _a.disabled, _b = _a.type, type = _b === void 0 ? ButtonType.Standard : _b;
+    var children = _a.children, onClick = _a.onClick, disabled = _a.disabled, _b = _a.type, type = _b === void 0 ? exports.ButtonType.Standard : _b;
     return (React__default["default"].createElement(Container$n, { buttonType: type, disabled: disabled, onClick: onClick }, children));
 };
 var templateObject_1$q;

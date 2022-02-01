@@ -19,7 +19,7 @@
     "dev:components": "lerna run watch --scope abacus-components",
     "dev:ui": "lerna run watch --scope abacus-ui",
     "dev": "npm-run-all --parallel dev:portal dev:homepage dev:components",
-    "lint": "eslint --ignore-path .gitignore \"**/**/src/**/*.+(ts|js|tsx)\"",
+    "lint": "eslint --ignore-path .eslintignore \"**/**/src/**/*.+(ts|js|tsx)\"",
     "lint:fix": "yarn lint --fix",
     "test": "jest --passWithNoTests",
     "test:changed": "jest --onlyChanged",

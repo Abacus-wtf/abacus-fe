@@ -156,10 +156,11 @@ var defaultTheme = {
         },
     },
 };
+var FontImport = function () { return styled.css(templateObject_1$t || (templateObject_1$t = __makeTemplateObject(["\n  @import url(\"https://rsms.me/inter/inter.css\");\n"], ["\n  @import url(\"https://rsms.me/inter/inter.css\");\n"]))); };
 var Font = function (size, fontFamily) {
     if (size === void 0) { size = "kilo"; }
     if (fontFamily === void 0) { fontFamily = "Inter"; }
-    return styled.css(templateObject_1$t || (templateObject_1$t = __makeTemplateObject(["\n  @import url(\"https://rsms.me/inter/inter.css\");\n  @font-face {\n    font-family: \"Bluu Next\";\n    src: url(\"../../static/BluuNext-Bold.otf\");\n    font-weight: bold;\n  }\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ", ";\n"], ["\n  @import url(\"https://rsms.me/inter/inter.css\");\n  @font-face {\n    font-family: \"Bluu Next\";\n    src: url(\"../../static/BluuNext-Bold.otf\");\n    font-weight: bold;\n  }\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ",
+    return styled.css(templateObject_2$9 || (templateObject_2$9 = __makeTemplateObject(["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ", ";\n"], ["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ",
         ";\n"])), fontFamily, function (_a) {
         var theme = _a.theme;
         return (theme === null || theme === void 0 ? void 0 : theme.copy) ? theme.copy[size] : defaultTheme.copy[size];
@@ -184,7 +185,7 @@ var Media = breakpoints.reduce(function (accumulator, _a) {
         for (var _i = 1; _i < arguments.length; _i++) {
             interpolations[_i - 1] = arguments[_i];
         }
-        return styled.css(templateObject_2$9 || (templateObject_2$9 = __makeTemplateObject(["\n      @media (min-width: ", ") {\n        ", ";\n      }\n    "], ["\n      @media (min-width: ", ") {\n        ", ";\n      }\n    "])), value, styled.css.apply(void 0, __spreadArrays([first], interpolations)));
+        return styled.css(templateObject_3$5 || (templateObject_3$5 = __makeTemplateObject(["\n      @media (min-width: ", ") {\n        ", ";\n      }\n    "], ["\n      @media (min-width: ", ") {\n        ", ";\n      }\n    "])), value, styled.css.apply(void 0, __spreadArrays([first], interpolations)));
     };
     return __assign(__assign({}, accumulator), (_b = {}, _b[size] = nextMedia, _b));
 }, {
@@ -192,7 +193,7 @@ var Media = breakpoints.reduce(function (accumulator, _a) {
     md: styled.css,
     lg: styled.css,
 });
-var templateObject_1$t, templateObject_2$9;
+var templateObject_1$t, templateObject_2$9, templateObject_3$5;
 
 var InputContainer = styled__default["default"].div(templateObject_1$s || (templateObject_1$s = __makeTemplateObject(["\n  background-color: white;\n  display: flex;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: center;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n"], ["\n  background-color: white;\n  display: flex;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: center;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n"])));
 var StyledLabel = styled__default["default"].label(templateObject_2$8 || (templateObject_2$8 = __makeTemplateObject(["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: 10px;\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"], ["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: 10px;\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"])), Font("milli"), function (_a) {
@@ -496,6 +497,7 @@ var templateObject_1, templateObject_2;
 exports.Button = Button;
 exports.Exa = Container$h;
 exports.Font = Font;
+exports.FontImport = FontImport;
 exports.Giga = Container$g;
 exports.H1 = Container$f;
 exports.H2 = Container$e;

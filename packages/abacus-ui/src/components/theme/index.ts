@@ -102,13 +102,11 @@ export type WithTheme = {
   theme: Theme;
 };
 
-export const Font = (size = "kilo", fontFamily = "Inter") => css`
+export const FontImport = () => css`
   @import url("https://rsms.me/inter/inter.css");
-  @font-face {
-    font-family: "Bluu Next";
-    src: url("../../static/BluuNext-Bold.otf");
-    font-weight: bold;
-  }
+`;
+
+export const Font = (size = "kilo", fontFamily = "Inter") => css`
   font-family: "${fontFamily}", sans-serif;
   font-style: normal;
   font-weight: normal;

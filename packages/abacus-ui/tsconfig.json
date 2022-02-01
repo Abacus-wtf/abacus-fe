@@ -17,7 +17,12 @@
     "paths": {
       "@utils": ["utils/index"],
       "@theme": ["components/theme/index"],
-      "@static/*": ["static/*"]
+      "@static/*": ["static/*"],
+      "@atoms": ["components/atoms/index"],
+      "@molecules": ["components/molecules/index"],
+      "@typography": ["components/typography/index"],
+      "@organisms": ["components/organisms/index"],
+      "@templates": ["components/templates/index"]
     }
   }
 }

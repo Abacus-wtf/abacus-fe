@@ -1,6 +1,5 @@
-import { Button } from "components";
-import Zetta from "components/typography/Zetta/src/Zetta";
-import Mega from "components/typography/Mega/src/Mega";
+import { Button } from "@atoms";
+import { Zetta, Mega } from "@typography";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 

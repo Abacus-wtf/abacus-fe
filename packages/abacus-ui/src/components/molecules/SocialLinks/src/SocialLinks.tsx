@@ -1,7 +1,6 @@
 /* eslint-disable import/no-webpack-loader-syntax */
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
-import Thing from "@static/discord.svg";
 import { VisuallyHidden } from "../../../atoms";
 import { Twitter, Discord, Medium } from "./icons";
 
@@ -47,24 +46,21 @@ const SocialLinks: FunctionComponent<SocialLinksProps> = ({
   twitter,
   discord,
   medium,
-}) => {
-  console.log(Thing);
-  return (
-    <Container>
-      <StyledLink href={twitter}>
-        <Twitter />
-        <VisuallyHidden>Twitter Profile</VisuallyHidden>
-      </StyledLink>
-      <StyledLink href={discord}>
-        <Discord />
-        <VisuallyHidden>Discord Channel</VisuallyHidden>
-      </StyledLink>
-      <StyledLink href={medium}>
-        <Medium />
-        <VisuallyHidden>Medium Account</VisuallyHidden>
-      </StyledLink>
-    </Container>
-  );
-};
+}) => (
+  <Container>
+    <StyledLink href={twitter}>
+      <Twitter />
+      <VisuallyHidden>Twitter Profile</VisuallyHidden>
+    </StyledLink>
+    <StyledLink href={discord}>
+      <Discord />
+      <VisuallyHidden>Discord Channel</VisuallyHidden>
+    </StyledLink>
+    <StyledLink href={medium}>
+      <Medium />
+      <VisuallyHidden>Medium Account</VisuallyHidden>
+    </StyledLink>
+  </Container>
+);
 
 export default SocialLinks;

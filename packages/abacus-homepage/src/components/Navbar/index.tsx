@@ -13,14 +13,22 @@ const StyledH1 = styled(H1)`
   font-family: "Bluu Next", sans-serif;
 `
 
+const ButtonWrapper = styled.div`
+  display: flex;
+
+  & button {
+    width: max-content;
+  }
+`
+
 const Navbar = () => (
   <Container>
     <SocialLinks />
-    <StyledH1>ABACUS</StyledH1>
-    <div>
-      <Button>Whitepaper</Button>
-      <Button>Launch App</Button>
-    </div>
+    <StyledH1>Abacus</StyledH1>
+    <ButtonWrapper>
+      <Button type={2}>Whitepaper</Button>
+      <Button type={1}>Launch App</Button>
+    </ButtonWrapper>
   </Container>
 )
 

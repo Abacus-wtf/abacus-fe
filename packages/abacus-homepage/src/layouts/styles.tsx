@@ -1,7 +1,15 @@
-import { defaultTheme } from "abacus-ui"
+import { defaultTheme, FontImport } from "abacus-ui"
 import { createGlobalStyle } from "styled-components"
 
 export const GlobalStyles = createGlobalStyle`
+  ${FontImport()}
+
+  @font-face {
+    font-family: "Bluu Next";
+    src: url("/fonts/BluuNext-Bold.otf") format("opentype");
+    font-weight: bold;
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -9,9 +17,6 @@ export const GlobalStyles = createGlobalStyle`
   
   body {
     background-color: ${defaultTheme.colors.utility.black};
-  }
-
-  h1, h2,h3, h4, h5, h6, p {
     color: ${defaultTheme.colors.utility.white};
   }
 

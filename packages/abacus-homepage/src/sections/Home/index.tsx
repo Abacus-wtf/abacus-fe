@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-import { SocialLinks } from "abacus-ui"
 import {
   ABC_TREASURY_ADDRESS,
   useWeb3Contract,
@@ -62,9 +61,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <StyledContainer>
-        <SocialLinks />
-      </StyledContainer>
+      <StyledContainer>I am a page</StyledContainer>
     </>
   )
 }

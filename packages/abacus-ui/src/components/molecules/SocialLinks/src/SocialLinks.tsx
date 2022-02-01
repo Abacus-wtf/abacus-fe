@@ -21,6 +21,7 @@ const Container = styled.div`
 const StyledLink = styled.a`
   display: flex;
   margin: 0 12px;
+  cursor: pointer;
 
   &:first-of-type {
     margin-left: 0;

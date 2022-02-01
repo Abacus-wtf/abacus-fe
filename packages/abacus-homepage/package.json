@@ -9,6 +9,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
     "abacus-components": "^1.0.0",
+    "abacus-ui": "^1.0.0",
     "ethers": "^5.5.3",
     "gatsby": "^4.4.0",
     "gatsby-link": "^4.5.0",

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 type InfographicProps = {
   imgSrc: string;
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   description: string;
   onClick: () => void;
@@ -22,6 +22,7 @@ const Container = styled.div`
   align-items: center;
   grid-gap: 20px;
   width: 100%;
+  padding: 0 90px;
 `;
 
 const ZettaStyled = styled(Zetta)`
@@ -44,11 +45,7 @@ const Infographic: FunctionComponent<InfographicProps> = ({
 }) => (
   <Container>
     <ImageStyled src={imgSrc} />
-    <img
-      src={icon}
-      alt={`${title} icon`}
-      style={{ height: 58, width: 58, marginBottom: 10 }}
-    />
+    {icon}
     <ZettaStyled>{title}</ZettaStyled>
     <MegaStyled>{description}</MegaStyled>
     <Button onClick={onClick}>{title}</Button>

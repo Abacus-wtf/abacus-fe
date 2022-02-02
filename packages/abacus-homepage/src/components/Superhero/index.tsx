@@ -8,7 +8,8 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 130px 0px 300px 0px;
+  padding: 0;
+  padding-top: 130px;
 `
 
 const StyledH1 = styled(H1)`

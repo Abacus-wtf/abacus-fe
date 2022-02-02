@@ -9,6 +9,9 @@ import ABC_TREASURY from "@components/contracts/ABC_TREASURY.json"
 import { request, gql } from "graphql-request"
 // import EthSymbol from "../../images/eth.svg"
 import Superhero from "@components/Superhero"
+import Callout from "@components/Callout"
+import styled from "styled-components"
+import { Infographic, AbacusCrowdsIcon, AbacusSpotIcon } from "abacus-ui"
 
 const GET_NFT_PRICE_DATA = gql`
   query {
@@ -16,6 +19,24 @@ const GET_NFT_PRICE_DATA = gql`
       total
     }
   }
+`
+
+const CalloutContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 200px;
+`
+
+const InfographicDivider = styled.span`
+  background: linear-gradient(180deg, #3e74ff 0%, rgba(147, 62, 255, 0) 100%);
+  border-radius: 100px;
+  width: 4px;
+  margin: 50px 0;
+`
+
+const InfographicContainer = styled.div`
+  display: flex;
 `
 
 const Home: React.FC = () => {
@@ -62,6 +83,32 @@ const Home: React.FC = () => {
   return (
     <>
       <Superhero />
+      <CalloutContainer>
+        <Callout copy={`${defender} Ξ`} label="Treasury Size" />
+        <Callout copy={nftsPriced} label="NFTs appraised" />
+        <Callout copy={`${earned} Ξ`} label="NFTs appraised" />
+      </CalloutContainer>
+      <InfographicContainer>
+        <Infographic
+          imgSrc="/abacus_crowds_bg.png"
+          icon={<AbacusCrowdsIcon />}
+          title="Abacus Crowds"
+          description="A short description about how Abacus Crowd works in a simple way."
+          onClick={() => {
+            console.log("click")
+          }}
+        />
+        <InfographicDivider />
+        <Infographic
+          imgSrc="/abacus_spot_bg.png"
+          icon={<AbacusSpotIcon />}
+          title="Abacus Spot"
+          description="A short description about how Abacus Spot works in a simple way."
+          onClick={() => {
+            console.log("click")
+          }}
+        />
+      </InfographicContainer>
     </>
   )
 }

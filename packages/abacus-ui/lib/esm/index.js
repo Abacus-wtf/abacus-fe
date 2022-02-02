@@ -103,47 +103,47 @@ var defaultTheme = {
         micro: {},
         milli: {
             "font-size": "14px",
-            "line-height": "17px",
+            "line-height": "132%",
         },
         kilo: {
             "font-size": "16px",
-            "line-height": "19px",
+            "line-height": "132%",
         },
         mega: {
             "font-size": "20px",
-            "line-height": "24px",
+            "line-height": "132%",
         },
         giga: {
             "font-size": "24px",
-            "line-height": "29px",
+            "line-height": "132%",
         },
         tera: {
-            "font-size": "26px",
-            "line-height": "31.47px",
+            "font-size": "28px",
+            "line-height": "132%",
         },
         peta: {
-            "font-size": "30px",
-            "line-height": "36px",
+            "font-size": "32px",
+            "line-height": "132%",
         },
         exa: {
-            "font-size": "32px",
-            "line-height": "38.73px",
+            "font-size": "38px",
+            "line-height": "132%",
         },
         zetta: {
-            "font-size": "34px",
-            "line-height": "40.8px",
+            "font-size": "42px",
+            "line-height": "120%",
         },
         yotta: {
-            "font-size": "38px",
-            "line-height": "45.6px",
+            "font-size": "52px",
+            "line-height": "120%",
         },
         nina: {
-            "font-size": "48px",
-            "line-height": "57.6px",
+            "font-size": "62px",
+            "line-height": "120%",
         },
         tena: {
             "font-size": "72px",
-            "line-height": "78.6px",
+            "line-height": "120%",
         },
     },
 };
@@ -389,7 +389,7 @@ var Container$5 = styled.div(templateObject_1$5 || (templateObject_1$5 = __makeT
 var templateObject_1$5;
 
 var ImageStyled = styled.img(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n  transform: rotate(15deg);\n  width: 70%;\n"], ["\n  transform: rotate(15deg);\n  width: 70%;\n"])));
-var Container$4 = styled.div(templateObject_2$3 || (templateObject_2$3 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n"])));
+var Container$4 = styled.div(templateObject_2$3 || (templateObject_2$3 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  padding: 0 90px;\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  padding: 0 90px;\n"])));
 var ZettaStyled = styled(Container$5)(templateObject_3$1 || (templateObject_3$1 = __makeTemplateObject(["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"], ["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.white;
@@ -402,7 +402,7 @@ var Infographic = function (_a) {
     var imgSrc = _a.imgSrc, icon = _a.icon, title = _a.title, description = _a.description, onClick = _a.onClick;
     return (React.createElement(Container$4, null,
         React.createElement(ImageStyled, { src: imgSrc }),
-        React.createElement("img", { src: icon, alt: title + " icon", style: { height: 58, width: 58, marginBottom: 10 } }),
+        icon,
         React.createElement(ZettaStyled, null, title),
         React.createElement(MegaStyled$1, null, description),
         React.createElement(Button, { onClick: onClick }, title)));
@@ -506,5 +506,21 @@ var Abacus = function (_a) {
         React.createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 2.5 17)", fill: fill })));
 };
 
-export { Abacus as AbacusIcon, Button, ButtonType, Container$h as Exa, Flex, Font, FontImport, Container$g as Giga, Container$f as H1, Container$e as H2, Container$d as H3, Container$c as H4, Container$b as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, Logo, Media, Container$j as Mega, Container$a as Milli, MiniList, Navbar, StyledP as P, Container$9 as Peta, Section, SessionCard, Container$8 as Small, SocialLinks, SplitSection, StatInfo, Container$7 as Tera, VisuallyHidden, Container$6 as Yotta, Container$5 as Zetta, breakpoints, defaultTheme };
+var AbacusCrowds = function (_a) {
+    var _b = _a.stroke, stroke = _b === void 0 ? "white" : _b;
+    return (React.createElement("svg", { width: "58", height: "58", viewBox: "0 0 58 58", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+        React.createElement("rect", { x: "2.41667", y: "2.41667", width: "21.75", height: "21.75", rx: "10.875", stroke: stroke, strokeWidth: "4.83333" }),
+        React.createElement("rect", { x: "33.8333", y: "2.41667", width: "21.75", height: "21.75", rx: "10.875", stroke: stroke, strokeWidth: "4.83333" }),
+        React.createElement("rect", { x: "2.41667", y: "33.8333", width: "21.75", height: "21.75", rx: "10.875", stroke: stroke, strokeWidth: "4.83333" }),
+        React.createElement("rect", { x: "33.8333", y: "33.8333", width: "21.75", height: "21.75", rx: "10.875", stroke: stroke, strokeWidth: "4.83333" })));
+};
+
+var AbacusSpot = function (_a) {
+    var _b = _a.stroke, stroke = _b === void 0 ? "white" : _b;
+    return (React.createElement("svg", { width: "58", height: "58", viewBox: "0 0 58 58", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+        React.createElement("rect", { x: "2.41667", y: "2.41667", width: "53.1667", height: "53.1667", rx: "26.5833", stroke: stroke, strokeWidth: "4.83333" }),
+        React.createElement("rect", { x: "16.4167", y: "16.4167", width: "25.1667", height: "25.1667", rx: "12.5833", stroke: stroke, strokeWidth: "4.83333" })));
+};
+
+export { AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, Button, ButtonType, Container$h as Exa, Flex, Font, FontImport, Container$g as Giga, Container$f as H1, Container$e as H2, Container$d as H3, Container$c as H4, Container$b as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, Logo, Media, Container$j as Mega, Container$a as Milli, MiniList, Navbar, StyledP as P, Container$9 as Peta, Section, SessionCard, Container$8 as Small, SocialLinks, SplitSection, StatInfo, Container$7 as Tera, VisuallyHidden, Container$6 as Yotta, Container$5 as Zetta, breakpoints, defaultTheme };
 //# sourceMappingURL=index.js.map

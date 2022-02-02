@@ -1,7 +1,7 @@
-import { FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 declare type InfographicProps = {
     imgSrc: string;
-    icon: string;
+    icon: React.ReactNode;
     title: string;
     description: string;
     onClick: () => void;

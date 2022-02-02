@@ -49,47 +49,47 @@ declare const defaultTheme: {
         readonly micro: {};
         readonly milli: {
             readonly "font-size": "14px";
-            readonly "line-height": "17px";
+            readonly "line-height": "132%";
         };
         readonly kilo: {
             readonly "font-size": "16px";
-            readonly "line-height": "19px";
+            readonly "line-height": "132%";
         };
         readonly mega: {
             readonly "font-size": "20px";
-            readonly "line-height": "24px";
+            readonly "line-height": "132%";
         };
         readonly giga: {
             readonly "font-size": "24px";
-            readonly "line-height": "29px";
+            readonly "line-height": "132%";
         };
         readonly tera: {
-            readonly "font-size": "26px";
-            readonly "line-height": "31.47px";
+            readonly "font-size": "28px";
+            readonly "line-height": "132%";
         };
         readonly peta: {
-            readonly "font-size": "30px";
-            readonly "line-height": "36px";
+            readonly "font-size": "32px";
+            readonly "line-height": "132%";
         };
         readonly exa: {
-            readonly "font-size": "32px";
-            readonly "line-height": "38.73px";
+            readonly "font-size": "38px";
+            readonly "line-height": "132%";
         };
         readonly zetta: {
-            readonly "font-size": "34px";
-            readonly "line-height": "40.8px";
+            readonly "font-size": "42px";
+            readonly "line-height": "120%";
         };
         readonly yotta: {
-            readonly "font-size": "38px";
-            readonly "line-height": "45.6px";
+            readonly "font-size": "52px";
+            readonly "line-height": "120%";
         };
         readonly nina: {
-            readonly "font-size": "48px";
-            readonly "line-height": "57.6px";
+            readonly "font-size": "62px";
+            readonly "line-height": "120%";
         };
         readonly tena: {
             readonly "font-size": "72px";
-            readonly "line-height": "78.6px";
+            readonly "line-height": "120%";
         };
     };
 };

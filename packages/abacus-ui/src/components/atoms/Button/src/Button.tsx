@@ -13,7 +13,7 @@ type ButtonProps = {
   onClick?: () => void;
   disabled?: boolean;
   type?: ButtonType;
-  className: string;
+  className?: string;
 };
 
 const Container = styled.button<{ buttonType: ButtonType }>`

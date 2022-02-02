@@ -28,6 +28,7 @@ import {
 import { formatEther } from "ethers/lib/utils"
 import { PromiseStatus } from "@models/PromiseStatus"
 import { useGetCurrentNetwork } from "@state/application/hooks"
+import { BigNumber } from "@ethersproject/bignumber"
 import {
   SessionData,
   CurrentSessionState,
@@ -465,7 +466,7 @@ export const useGetCurrentSessionData = () => {
       pricingSessionCheck =
         formatPricingSessionCheckMulticall(pricingSessionCheck)
       getStatus = `${parseInt(getStatus[0].hex, 16)}`
-      finalAppraisalResult = `${parseInt(finalAppraisalResult[0].hex, 16)}`
+      finalAppraisalResult = BigNumber.from(finalAppraisalResult[0].hex)
       const { pricingSession: pricingSessionGrt } = grtData?.data.data ?? {}
       let ethUsd
       try {

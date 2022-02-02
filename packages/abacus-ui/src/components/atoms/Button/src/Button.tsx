@@ -34,7 +34,7 @@ const Container = styled.button<{ buttonType: ButtonType }>`
       : buttonType === ButtonType.White
       ? theme.colors.core.white
       : "transparent"};
-  width: 100%;
+  width: max-content;
 
   &:hover {
     opacity: 0.6;

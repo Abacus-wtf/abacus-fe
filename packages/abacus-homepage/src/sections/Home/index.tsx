@@ -8,7 +8,7 @@ import { formatEther } from "ethers/lib/utils"
 import ABC_TREASURY from "@components/contracts/ABC_TREASURY.json"
 import { request, gql } from "graphql-request"
 // import EthSymbol from "../../images/eth.svg"
-import { StyledContainer } from "./Home.styles"
+import Superhero from "@components/Superhero"
 
 const GET_NFT_PRICE_DATA = gql`
   query {
@@ -61,7 +61,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <StyledContainer>I am a page</StyledContainer>
+      <Superhero />
     </>
   )
 }

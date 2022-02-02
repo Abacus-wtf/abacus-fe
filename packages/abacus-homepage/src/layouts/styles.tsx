@@ -1,6 +1,5 @@
 import { defaultTheme, FontImport } from "abacus-ui"
 import { createGlobalStyle } from "styled-components"
-import Background from "/background.png"
 
 export const GlobalStyles = createGlobalStyle`
   ${FontImport()}
@@ -17,9 +16,10 @@ export const GlobalStyles = createGlobalStyle`
   }
   
   body {
-    background-color: #101010;
     color: ${defaultTheme.colors.utility.white};
     background: url("/background.png");
+    background-position: top;
+    background-color: #101010;
   }
 
   a {

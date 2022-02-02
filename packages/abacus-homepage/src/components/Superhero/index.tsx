@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { H1, P, Button, ButtonType, Mega } from "abacus-ui"
+import { StaticImage } from "gatsby-plugin-image"
 
 const Container = styled.div`
   display: flex;
@@ -25,13 +26,22 @@ const StyledP = styled(P)`
   line-height: 26.63px;
 `
 
+const StyledButton = styled(Button)`
+  margin-bottom: 300px;
+`
+
 const Superhero: FunctionComponent = () => (
   <Container>
     <StyledH1>Decentralized appraisal tool for NFTS</StyledH1>
     <StyledP>A short tagline to explain how Abacus works.</StyledP>
-    <Button type={ButtonType.White}>
+    <StyledButton type={ButtonType.White}>
       <Mega>Launch App</Mega>
-    </Button>
+    </StyledButton>
+    <StaticImage
+      alt=""
+      // style={{ height: 15 }}
+      src="../../images/3d-row.png"
+    />
   </Container>
 )
 

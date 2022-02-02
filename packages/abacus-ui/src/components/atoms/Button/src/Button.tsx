@@ -13,6 +13,7 @@ type ButtonProps = {
   onClick?: () => void;
   disabled?: boolean;
   type?: ButtonType;
+  className: string;
 };
 
 const Container = styled.button<{ buttonType: ButtonType }>`
@@ -47,8 +48,14 @@ const Button: FunctionComponent<ButtonProps> = ({
   onClick,
   disabled,
   type = ButtonType.Standard,
+  className,
 }: ButtonProps) => (
-  <Container buttonType={type} disabled={disabled} onClick={onClick}>
+  <Container
+    className={className}
+    buttonType={type}
+    disabled={disabled}
+    onClick={onClick}
+  >
     {children}
   </Container>
 );

@@ -9,6 +9,7 @@ declare type ButtonProps = {
     onClick?: () => void;
     disabled?: boolean;
     type?: ButtonType;
+    className: string;
 };
 declare const Button: FunctionComponent<ButtonProps>;
 export default Button;

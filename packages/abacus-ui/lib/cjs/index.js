@@ -265,8 +265,8 @@ var Container$o = styled__default["default"].button(templateObject_1$r || (templ
             : "transparent";
 });
 var Button = function (_a) {
-    var children = _a.children, onClick = _a.onClick, disabled = _a.disabled, _b = _a.type, type = _b === void 0 ? exports.ButtonType.Standard : _b;
-    return (React__default["default"].createElement(Container$o, { buttonType: type, disabled: disabled, onClick: onClick }, children));
+    var children = _a.children, onClick = _a.onClick, disabled = _a.disabled, _b = _a.type, type = _b === void 0 ? exports.ButtonType.Standard : _b, className = _a.className;
+    return (React__default["default"].createElement(Container$o, { className: className, buttonType: type, disabled: disabled, onClick: onClick }, children));
 };
 var templateObject_1$r;
 

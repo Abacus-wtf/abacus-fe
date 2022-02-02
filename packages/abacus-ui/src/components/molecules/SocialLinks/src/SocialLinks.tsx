@@ -8,6 +8,7 @@ type SocialLinksProps = {
   twitter: string;
   discord: string;
   medium: string;
+  className: string;
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -47,8 +48,9 @@ const SocialLinks: FunctionComponent<SocialLinksProps> = ({
   twitter,
   discord,
   medium,
+  className,
 }) => (
-  <Container>
+  <Container className={className}>
     <StyledLink href={twitter}>
       <Twitter />
       <VisuallyHidden>Twitter Profile</VisuallyHidden>

@@ -27,14 +27,20 @@ const StyledFlex = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 0;
 `
 
 const ButtonWrapper = styled.div`
   display: flex;
+  z-index: 1;
 
   & button {
     width: max-content;
   }
+`
+
+const StyledSocialLinks = styled(SocialLinks)`
+  z-index: 1;
 `
 
 const social = {
@@ -45,7 +51,7 @@ const social = {
 
 const Navbar = () => (
   <Container>
-    <SocialLinks {...social} />
+    <StyledSocialLinks {...social} />
     <StyledFlex>
       <AbacusIcon />
       <StyledExa>Abacus</StyledExa>

@@ -459,8 +459,8 @@ var StyledLink = styled.a(templateObject_2$1 || (templateObject_2$1 = __makeTemp
     return theme.colors.core.lightWhite;
 });
 var SocialLinks = function (_a) {
-    var twitter = _a.twitter, discord = _a.discord, medium = _a.medium;
-    return (React.createElement(Container$2, null,
+    var twitter = _a.twitter, discord = _a.discord, medium = _a.medium, className = _a.className;
+    return (React.createElement(Container$2, { className: className },
         React.createElement(StyledLink, { href: twitter },
             React.createElement(Twitter, null),
             React.createElement(VisuallyHidden, null, "Twitter Profile")),

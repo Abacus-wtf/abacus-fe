@@ -468,8 +468,8 @@ var StyledLink = styled__default["default"].a(templateObject_2$1 || (templateObj
     return theme.colors.core.lightWhite;
 });
 var SocialLinks = function (_a) {
-    var twitter = _a.twitter, discord = _a.discord, medium = _a.medium;
-    return (React__default["default"].createElement(Container$2, null,
+    var twitter = _a.twitter, discord = _a.discord, medium = _a.medium, className = _a.className;
+    return (React__default["default"].createElement(Container$2, { className: className },
         React__default["default"].createElement(StyledLink, { href: twitter },
             React__default["default"].createElement(Twitter, null),
             React__default["default"].createElement(VisuallyHidden, null, "Twitter Profile")),

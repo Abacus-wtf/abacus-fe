@@ -161,7 +161,7 @@ const CurrentSession = ({ location }) => {
             >
               Share
             </ButtonsWhite>
-            {sessionData.rankings && (
+            {sessionData.rankings && status !== SessionState.Harvest && (
               <ButtonsWhite
                 onClick={() => setIsRankingsModalOpen(true)}
                 style={{ borderRadius: 8 }}

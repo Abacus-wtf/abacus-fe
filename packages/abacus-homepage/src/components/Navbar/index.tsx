@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { SocialLinks, Button, ButtonType, Logo, Media } from "abacus-ui"
+import { social } from "@config/index"
 import MobileNav from "./MobileNav"
 
 const Mobile = styled.div`
@@ -40,12 +41,6 @@ const StyledSocialLinks = styled(SocialLinks)`
     width: 33%;
   `}
 `
-
-export const social = {
-  twitter: "https://twitter.com/abacus_wtf",
-  discord: "https://discord.com/channels/861936155494842368/871084437306220564",
-  medium: "https://medium.com/abacus-wtf",
-}
 
 type NavbarProps = {
   footer?: boolean

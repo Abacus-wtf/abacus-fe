@@ -29,7 +29,7 @@ const slide = keyframes`
   }
 
   to {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
 `
 

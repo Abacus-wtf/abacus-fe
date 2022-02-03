@@ -9,11 +9,11 @@ import ABC_TREASURY from "@components/contracts/ABC_TREASURY.json"
 import { request, gql } from "graphql-request"
 import Superhero from "@components/Superhero"
 import styled from "styled-components"
-import { H2, SocialLinks, StatInfo, Media } from "abacus-ui"
+import { StatInfo, Media } from "abacus-ui"
 import Navbar from "@components/Navbar"
 import Infographics from "@components/Infographics"
 import PreviousSessions from "@components/PreviousSessions"
-import { StaticImage } from "gatsby-plugin-image"
+import JoinUs from "@components/JoinUs"
 
 const GET_NFT_PRICE_DATA = gql`
   query {
@@ -28,7 +28,7 @@ const StatInfoContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 200px;
+  margin-bottom: 50px;
 
   ${Media.sm`
     flex-direction: row;
@@ -36,6 +36,7 @@ const StatInfoContainer = styled.div`
     max-width: 800px;
     margin-right: auto;
     margin-left: auto;
+    margin-bottom: 200px;
   `}
 `
 
@@ -50,35 +51,6 @@ const StyledStatInfo = styled(StatInfo)`
     margin: 0;
   `}
 `
-
-const JoinUsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 300px 0;
-  position: relative;
-  overflow: hidden;
-`
-
-const JoinUsHeader = styled(H2)`
-  font-size: 62;
-  line-height: 120%;
-  margin-bottom: 30px;
-`
-
-const JoinUsCubeContainer = styled.div<{ right?: string; left?: string }>`
-  position: absolute;
-  z-index: 0;
-  right: ${({ right }) => right};
-  left: ${({ left }) => left};
-`
-
-const social = {
-  twitter: "https://twitter.com/abacus_wtf",
-  discord: "https://discord.com/channels/861936155494842368/871084437306220564",
-  medium: "https://medium.com/abacus-wtf",
-}
 
 const Home: React.FC = () => {
   const treasuryContract = useWeb3Contract(ABC_TREASURY)
@@ -129,26 +101,7 @@ const Home: React.FC = () => {
       </StatInfoContainer>
       <Infographics />
       <PreviousSessions />
-      <JoinUsContainer>
-        <div style={{ zIndex: 1 }}>
-          <JoinUsHeader>Join Our Community</JoinUsHeader>
-          <SocialLinks {...social} size="30px" />
-        </div>
-        <JoinUsCubeContainer left="-25%">
-          <StaticImage
-            alt=""
-            // style={{ height: 15 }}
-            src="../../images/dark-cube-1.png"
-          />
-        </JoinUsCubeContainer>
-        <JoinUsCubeContainer right="-15%">
-          <StaticImage
-            alt=""
-            // style={{ height: 15 }}
-            src="../../images/dark-cube-3.png"
-          />
-        </JoinUsCubeContainer>
-      </JoinUsContainer>
+      <JoinUs />
       <Navbar footer />
       <div style={{ paddingBottom: "15px" }} />
     </>

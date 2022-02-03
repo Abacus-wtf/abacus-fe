@@ -8,10 +8,11 @@ import { formatEther } from "ethers/lib/utils"
 import ABC_TREASURY from "@components/contracts/ABC_TREASURY.json"
 import { request, gql } from "graphql-request"
 import Superhero from "@components/Superhero"
-import styled, { keyframes } from "styled-components"
-import { H2, SessionCard, SocialLinks, StatInfo, Media } from "abacus-ui"
+import styled from "styled-components"
+import { H2, SocialLinks, StatInfo, Media } from "abacus-ui"
 import Navbar from "@components/Navbar"
 import Infographics from "@components/Infographics"
+import PreviousSessions from "@components/PreviousSessions"
 import { StaticImage } from "gatsby-plugin-image"
 
 const GET_NFT_PRICE_DATA = gql`
@@ -50,42 +51,6 @@ const StyledStatInfo = styled(StatInfo)`
   `}
 `
 
-const PreviousSessionsHeader = styled(H2)`
-  font-size: 62px;
-  line-height: 120px;
-  font-family: "Bluu Next", serif;
-  display: flex;
-  justify-content: center;
-  margin-top: 180px;
-  margin-bottom: 60px;
-`
-
-const PreviousSessionsCarousel = styled.div`
-  overflow: hidden;
-  position: relative;
-  height: 480px;
-`
-
-const slide = keyframes`
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-`
-
-const PreviousSessionsWrapper = styled.div`
-  position: absolute;
-  display: flex;
-  animation: ${slide} 100s linear infinite alternate;
-`
-
-const PreviousSessionContainer = styled.div`
-  margin: 0 20px;
-`
-
 const JoinUsContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -109,81 +74,6 @@ const JoinUsCubeContainer = styled.div<{ right?: string; left?: string }>`
   left: ${({ left }) => left};
 `
 
-const previousSessions = [
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 1,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 2,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 3,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 4,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 5,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 6,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 7,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 8,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 9,
-  },
-]
-
 const social = {
   twitter: "https://twitter.com/abacus_wtf",
   discord: "https://discord.com/channels/861936155494842368/871084437306220564",
@@ -203,8 +93,8 @@ const Home: React.FC = () => {
       const [
         profitGenerated,
         nftsPricedContract,
-        riskFactorContract,
-        spreadContract,
+        // riskFactorContract,
+        // spreadContract,
         defenderContract,
       ] = await Promise.all([
         treasuryContract(ABC_TREASURY_ADDRESS).methods.profitGenerated().call(),
@@ -238,16 +128,7 @@ const Home: React.FC = () => {
         <StyledStatInfo stat={earned} title="NFTs appraised" showEthIcon />
       </StatInfoContainer>
       <Infographics />
-      <PreviousSessionsHeader>Previous Sessions</PreviousSessionsHeader>
-      <PreviousSessionsCarousel>
-        <PreviousSessionsWrapper>
-          {previousSessions.map((session) => (
-            <PreviousSessionContainer key={session.id}>
-              <SessionCard {...session} />
-            </PreviousSessionContainer>
-          ))}
-        </PreviousSessionsWrapper>
-      </PreviousSessionsCarousel>
+      <PreviousSessions />
       <JoinUsContainer>
         <div style={{ zIndex: 1 }}>
           <JoinUsHeader>Join Our Community</JoinUsHeader>

@@ -13,7 +13,6 @@ import { ListGroupItemMinWidth } from "../CurrentSession.styles"
 
 const SessionCompleted: FunctionComponent = () => {
   const sessionData = useCurrentSessionData()
-
   const theme = useContext(ThemeContext)
   return (
     <>
@@ -57,18 +56,36 @@ const SessionCompleted: FunctionComponent = () => {
         <SessionCountdown />
       </HorizontalListGroup>
 
-      <ListGroupItem>
-        <InputWithTitle
-          title="Final Appraisal Value"
-          id="stake"
-          value={`${sessionData.finalAppraisalValue.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 4,
-          })} ETH`}
-          infoText="The final appraisal value has been determined for this pricing session."
-          disabled
-        />
-      </ListGroupItem>
+      <ListGroupHeader>
+        <ListGroupItem>
+          <InputWithTitle
+            title="Final Appraisal Value"
+            id="stake"
+            value={`${sessionData.finalAppraisalValue.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 4,
+            })} ETH`}
+            infoText="The final appraisal value has been determined for this pricing session."
+            disabled
+          />
+        </ListGroupItem>
+      </ListGroupHeader>
+      {sessionData.guessedAppraisal > 0 ? (
+        <ListGroupHeader>
+          <ListGroupItem>
+            <InputWithTitle
+              title="Guessed Appraisal Value"
+              id="stake"
+              value={`${sessionData.guessedAppraisal.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 4,
+              })} ETH`}
+              infoText="The appraisal you guessed at."
+              disabled
+            />
+          </ListGroupItem>
+        </ListGroupHeader>
+      ) : null}
     </>
   )
 }

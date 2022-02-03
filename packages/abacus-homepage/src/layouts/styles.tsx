@@ -1,8 +1,14 @@
-import { defaultTheme, FontImport } from "abacus-ui"
+import { defaultTheme } from "abacus-ui"
 import { createGlobalStyle } from "styled-components"
 
 export const GlobalStyles = createGlobalStyle`
-  ${FontImport()}
+  @import url('https://rsms.me/inter/inter.css');
+  html { 
+    font-family: 'Inter', sans-serif;
+  }
+  @supports (font-variation-settings: normal) {
+    html { font-family: 'Inter var', sans-serif; }
+  }
 
   @font-face {
     font-family: "Bluu Next";
@@ -11,7 +17,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   * {
-    margin: 0;
+    margin: 0; 
     padding: 0;
   }
   

@@ -2,6 +2,7 @@ import { Button } from "@atoms";
 import { Zetta, Mega } from "@typography";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
+import { Media } from "@theme";
 
 type InfographicProps = {
   imgSrc: string;
@@ -22,7 +23,11 @@ const Container = styled.div`
   align-items: center;
   grid-gap: 20px;
   width: 100%;
-  padding: 0 90px;
+
+  ${Media.sm`
+    padding: 0 90px;
+    width: calc(100% - 180px);
+  `}
 `;
 
 const ZettaStyled = styled(Zetta)`

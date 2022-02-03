@@ -22,7 +22,8 @@
       "@molecules": ["components/molecules/index"],
       "@typography": ["components/typography/index"],
       "@organisms": ["components/organisms/index"],
-      "@templates": ["components/templates/index"]
+      "@templates": ["components/templates/index"],
+      "@icons": ["components/icons/index"]
     }
   }
 }

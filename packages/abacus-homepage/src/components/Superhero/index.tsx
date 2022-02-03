@@ -35,7 +35,7 @@ const Superhero: FunctionComponent = () => (
   <Container>
     <StyledH1>Decentralized appraisal tool for NFTS</StyledH1>
     <StyledP>A short tagline to explain how Abacus works.</StyledP>
-    <StyledButton type={ButtonType.White}>
+    <StyledButton buttonType={ButtonType.White} type="button">
       <Mega>Launch App</Mega>
     </StyledButton>
     {/* TODO: Video does not have transparent background */}

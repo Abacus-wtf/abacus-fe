@@ -236,10 +236,10 @@ exports.ButtonType = void 0;
     ButtonType[ButtonType["White"] = 1] = "White";
     ButtonType[ButtonType["Clear"] = 2] = "Clear";
 })(exports.ButtonType || (exports.ButtonType = {}));
-var Container$o = styled__default["default"].button(templateObject_1$r || (templateObject_1$r = __makeTemplateObject(["\n  ", "\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: max-content;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n"], ["\n  ", "\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ",
+var Container$o = styled__default["default"].button(templateObject_1$r || (templateObject_1$r = __makeTemplateObject(["\n  ", "\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n"], ["\n  ", "\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ",
     ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ",
     ";\n  background-color: ",
-    ";\n  width: max-content;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n"])), Font(), function (_a) {
+    ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n"])), Font(), function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.section;
 }, function (_a) {
@@ -265,8 +265,8 @@ var Container$o = styled__default["default"].button(templateObject_1$r || (templ
             : "transparent";
 });
 var Button = function (_a) {
-    var children = _a.children, onClick = _a.onClick, disabled = _a.disabled, _b = _a.type, type = _b === void 0 ? exports.ButtonType.Standard : _b, className = _a.className;
-    return (React__default["default"].createElement(Container$o, { className: className, buttonType: type, disabled: disabled, onClick: onClick }, children));
+    var children = _a.children, onClick = _a.onClick, disabled = _a.disabled, _b = _a.buttonType, buttonType = _b === void 0 ? exports.ButtonType.Standard : _b, className = _a.className;
+    return (React__default["default"].createElement(Container$o, { className: className, buttonType: buttonType, disabled: disabled, onClick: onClick }, children));
 };
 var templateObject_1$r;
 
@@ -308,23 +308,49 @@ var Flex = function (_a) {
 };
 var templateObject_1$n;
 
-var AbacusLogoWhite = "<svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"20\" height=\"1\" rx=\"0.5\" transform=\"matrix(1 0 0 -1 0 3.75)\" fill=\"white\"/>\n<circle r=\"2.5\" transform=\"matrix(1 0 0 -1 17.5 3)\" fill=\"white\"/>\n<circle r=\"2.5\" transform=\"matrix(1 0 0 -1 10 3)\" fill=\"white\"/>\n<rect width=\"20\" height=\"1\" rx=\"0.5\" transform=\"matrix(1 0 0 -1 0 10.75)\" fill=\"white\"/>\n<circle r=\"2.5\" transform=\"matrix(1 0 0 -1 10 10)\" fill=\"white\"/>\n<circle r=\"2.5\" transform=\"matrix(1 0 0 -1 2.5 10)\" fill=\"white\"/>\n<rect width=\"20\" height=\"1\" rx=\"0.5\" transform=\"matrix(1 0 0 -1 0 17.75)\" fill=\"white\"/>\n<circle r=\"2.5\" transform=\"matrix(1 0 0 -1 17.5 17)\" fill=\"white\"/>\n<circle r=\"2.5\" transform=\"matrix(1 0 0 -1 2.5 17)\" fill=\"white\"/>\n</svg>";
+var Abacus = function (_a) {
+    var _b = _a.fill, fill = _b === void 0 ? "white" : _b;
+    return (React__default["default"].createElement("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+        React__default["default"].createElement("rect", { width: "20", height: "1", rx: "0.5", transform: "matrix(1 0 0 -1 0 3.75)", fill: fill }),
+        React__default["default"].createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 17.5 3)", fill: fill }),
+        React__default["default"].createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 10 3)", fill: fill }),
+        React__default["default"].createElement("rect", { width: "20", height: "1", rx: "0.5", transform: "matrix(1 0 0 -1 0 10.75)", fill: fill }),
+        React__default["default"].createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 10 10)", fill: fill }),
+        React__default["default"].createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 2.5 10)", fill: fill }),
+        React__default["default"].createElement("rect", { width: "20", height: "1", rx: "0.5", transform: "matrix(1 0 0 -1 0 17.75)", fill: fill }),
+        React__default["default"].createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 17.5 17)", fill: fill }),
+        React__default["default"].createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 2.5 17)", fill: fill })));
+};
 
-var AbacusLogoDark = "<svg width=\"38\" height=\"38\" viewBox=\"0 0 38 38\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"37.1248\" height=\"1.85624\" rx=\"0.92812\" transform=\"matrix(1 0 0 -1 0.155441 7.06525)\" fill=\"#1A1A1A\"/>\n<circle r=\"4.6406\" transform=\"matrix(1 0 0 -1 32.6397 5.67309)\" fill=\"#1A1A1A\"/>\n<circle r=\"4.6406\" transform=\"matrix(1 0 0 -1 18.7178 5.67309)\" fill=\"#1A1A1A\"/>\n<rect width=\"37.1248\" height=\"1.85624\" rx=\"0.92812\" transform=\"matrix(1 0 0 -1 0.155441 20.059)\" fill=\"#1A1A1A\"/>\n<circle r=\"4.6406\" transform=\"matrix(1 0 0 -1 18.7178 18.6668)\" fill=\"#1A1A1A\"/>\n<circle r=\"4.6406\" transform=\"matrix(1 0 0 -1 4.79604 18.6668)\" fill=\"#1A1A1A\"/>\n<rect width=\"37.1248\" height=\"1.85624\" rx=\"0.92812\" transform=\"matrix(1 0 0 -1 0.155441 33.0527)\" fill=\"#1A1A1A\"/>\n<circle r=\"4.6406\" transform=\"matrix(1 0 0 -1 32.6397 31.6605)\" fill=\"#1A1A1A\"/>\n<circle r=\"4.6406\" transform=\"matrix(1 0 0 -1 4.79604 31.6605)\" fill=\"#1A1A1A\"/>\n</svg>";
+var AbacusCrowds = function (_a) {
+    var _b = _a.stroke, stroke = _b === void 0 ? "white" : _b;
+    return (React__default["default"].createElement("svg", { width: "58", height: "58", viewBox: "0 0 58 58", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+        React__default["default"].createElement("rect", { x: "2.41667", y: "2.41667", width: "21.75", height: "21.75", rx: "10.875", stroke: stroke, strokeWidth: "4.83333" }),
+        React__default["default"].createElement("rect", { x: "33.8333", y: "2.41667", width: "21.75", height: "21.75", rx: "10.875", stroke: stroke, strokeWidth: "4.83333" }),
+        React__default["default"].createElement("rect", { x: "2.41667", y: "33.8333", width: "21.75", height: "21.75", rx: "10.875", stroke: stroke, strokeWidth: "4.83333" }),
+        React__default["default"].createElement("rect", { x: "33.8333", y: "33.8333", width: "21.75", height: "21.75", rx: "10.875", stroke: stroke, strokeWidth: "4.83333" })));
+};
 
-var PetaModified = styled__default["default"].div(templateObject_1$m || (templateObject_1$m = __makeTemplateObject(["\n  ", ";\n  color: ", ";\n"], ["\n  ", ";\n  color: ",
+var AbacusSpot = function (_a) {
+    var _b = _a.stroke, stroke = _b === void 0 ? "white" : _b;
+    return (React__default["default"].createElement("svg", { width: "58", height: "58", viewBox: "0 0 58 58", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+        React__default["default"].createElement("rect", { x: "2.41667", y: "2.41667", width: "53.1667", height: "53.1667", rx: "26.5833", stroke: stroke, strokeWidth: "4.83333" }),
+        React__default["default"].createElement("rect", { x: "16.4167", y: "16.4167", width: "25.1667", height: "25.1667", rx: "12.5833", stroke: stroke, strokeWidth: "4.83333" })));
+};
+
+var PetaModified = styled__default["default"].div(templateObject_1$m || (templateObject_1$m = __makeTemplateObject(["\n  ", ";\n  margin-left: 8px;\n  color: ", ";\n"], ["\n  ", ";\n  margin-left: 8px;\n  color: ",
     ";\n"])), Font("peta", "Bluu Next"), function (_a) {
     var isDark = _a.isDark, theme = _a.theme;
-    return isDark ? theme.colors.button.primary : theme.colors.core.white;
+    return isDark ? theme.colors.core.white : theme.colors.button.primary;
 });
-var Container$k = styled__default["default"].div(templateObject_2$5 || (templateObject_2$5 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n  grid-gap: 8px;\n  cursor: pointer;\n  transition: ", ";\n\n  &:hover {\n    opacity: 0.8;\n  }\n"], ["\n  display: flex;\n  flex-direction: row;\n  grid-gap: 8px;\n  cursor: pointer;\n  transition: ", ";\n\n  &:hover {\n    opacity: 0.8;\n  }\n"])), function (_a) {
+var Container$k = styled__default["default"].div(templateObject_2$5 || (templateObject_2$5 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  cursor: pointer;\n  transition: ", ";\n\n  &:hover {\n    opacity: 0.8;\n  }\n"], ["\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  cursor: pointer;\n  transition: ", ";\n\n  &:hover {\n    opacity: 0.8;\n  }\n"])), function (_a) {
     var theme = _a.theme;
     return theme.transitionTime.main;
 });
 var Logo = function (_a) {
     var onClick = _a.onClick, _b = _a.isDark, isDark = _b === void 0 ? false : _b;
     return (React__default["default"].createElement(Container$k, { onClick: onClick },
-        React__default["default"].createElement("img", { style: { width: 20 }, src: isDark ? AbacusLogoDark : AbacusLogoWhite, alt: "Abacus Logo" }),
+        React__default["default"].createElement(Abacus, { fill: isDark ? "white" : "black" }),
         React__default["default"].createElement(PetaModified, { isDark: isDark }, "Abacus")));
 };
 var templateObject_1$m, templateObject_2$5;
@@ -398,12 +424,13 @@ var Container$5 = styled__default["default"].div(templateObject_1$5 || (template
 var templateObject_1$5;
 
 var ImageStyled = styled__default["default"].img(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n  transform: rotate(15deg);\n  width: 70%;\n"], ["\n  transform: rotate(15deg);\n  width: 70%;\n"])));
-var Container$4 = styled__default["default"].div(templateObject_2$3 || (templateObject_2$3 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  padding: 0 90px;\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  padding: 0 90px;\n"])));
-var ZettaStyled = styled__default["default"](Container$5)(templateObject_3$1 || (templateObject_3$1 = __makeTemplateObject(["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"], ["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var Container$4 = styled__default["default"].div(templateObject_3$1 || (templateObject_3$1 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n\n  ",
+    "\n"])), Media.sm(templateObject_2$3 || (templateObject_2$3 = __makeTemplateObject(["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "], ["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "]))));
+var ZettaStyled = styled__default["default"](Container$5)(templateObject_4$1 || (templateObject_4$1 = __makeTemplateObject(["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"], ["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.white;
 });
-var MegaStyled$1 = styled__default["default"](Container$j)(templateObject_4$1 || (templateObject_4$1 = __makeTemplateObject(["\n  color: ", ";\n  text-align: center;\n"], ["\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var MegaStyled$1 = styled__default["default"](Container$j)(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  color: ", ";\n  text-align: center;\n"], ["\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.lightWhite;
 });
@@ -416,7 +443,7 @@ var Infographic = function (_a) {
         React__default["default"].createElement(MegaStyled$1, null, description),
         React__default["default"].createElement(Button, { onClick: onClick }, title)));
 };
-var templateObject_1$4, templateObject_2$3, templateObject_3$1, templateObject_4$1;
+var templateObject_1$4, templateObject_2$3, templateObject_3$1, templateObject_4$1, templateObject_5;
 
 var ImageSection = styled__default["default"].img(templateObject_1$3 || (templateObject_1$3 = __makeTemplateObject(["\n  width: 280px;\n  height: 280px;\n  border-top-left-radius: ", ";\n  border-top-right-radius: ", ";\n  object-fit: cover;\n"], ["\n  width: 280px;\n  height: 280px;\n  border-top-left-radius: ", ";\n  border-top-right-radius: ", ";\n  object-fit: cover;\n"])), function (_a) {
     var theme = _a.theme;
@@ -509,36 +536,6 @@ var SplitSection = function (_a) {
         rightSection));
 };
 var templateObject_1, templateObject_2;
-
-var Abacus = function (_a) {
-    var _b = _a.fill, fill = _b === void 0 ? "white" : _b;
-    return (React__default["default"].createElement("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
-        React__default["default"].createElement("rect", { width: "20", height: "1", rx: "0.5", transform: "matrix(1 0 0 -1 0 3.75)", fill: fill }),
-        React__default["default"].createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 17.5 3)", fill: fill }),
-        React__default["default"].createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 10 3)", fill: fill }),
-        React__default["default"].createElement("rect", { width: "20", height: "1", rx: "0.5", transform: "matrix(1 0 0 -1 0 10.75)", fill: fill }),
-        React__default["default"].createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 10 10)", fill: fill }),
-        React__default["default"].createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 2.5 10)", fill: fill }),
-        React__default["default"].createElement("rect", { width: "20", height: "1", rx: "0.5", transform: "matrix(1 0 0 -1 0 17.75)", fill: fill }),
-        React__default["default"].createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 17.5 17)", fill: fill }),
-        React__default["default"].createElement("circle", { r: "2.5", transform: "matrix(1 0 0 -1 2.5 17)", fill: fill })));
-};
-
-var AbacusCrowds = function (_a) {
-    var _b = _a.stroke, stroke = _b === void 0 ? "white" : _b;
-    return (React__default["default"].createElement("svg", { width: "58", height: "58", viewBox: "0 0 58 58", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
-        React__default["default"].createElement("rect", { x: "2.41667", y: "2.41667", width: "21.75", height: "21.75", rx: "10.875", stroke: stroke, strokeWidth: "4.83333" }),
-        React__default["default"].createElement("rect", { x: "33.8333", y: "2.41667", width: "21.75", height: "21.75", rx: "10.875", stroke: stroke, strokeWidth: "4.83333" }),
-        React__default["default"].createElement("rect", { x: "2.41667", y: "33.8333", width: "21.75", height: "21.75", rx: "10.875", stroke: stroke, strokeWidth: "4.83333" }),
-        React__default["default"].createElement("rect", { x: "33.8333", y: "33.8333", width: "21.75", height: "21.75", rx: "10.875", stroke: stroke, strokeWidth: "4.83333" })));
-};
-
-var AbacusSpot = function (_a) {
-    var _b = _a.stroke, stroke = _b === void 0 ? "white" : _b;
-    return (React__default["default"].createElement("svg", { width: "58", height: "58", viewBox: "0 0 58 58", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
-        React__default["default"].createElement("rect", { x: "2.41667", y: "2.41667", width: "53.1667", height: "53.1667", rx: "26.5833", stroke: stroke, strokeWidth: "4.83333" }),
-        React__default["default"].createElement("rect", { x: "16.4167", y: "16.4167", width: "25.1667", height: "25.1667", rx: "12.5833", stroke: stroke, strokeWidth: "4.83333" })));
-};
 
 exports.AbacusCrowdsIcon = AbacusCrowds;
 exports.AbacusIcon = Abacus;

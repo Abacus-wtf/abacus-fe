@@ -10,16 +10,10 @@ import { request, gql } from "graphql-request"
 // import EthSymbol from "../../images/eth.svg"
 import Superhero from "@components/Superhero"
 import Callout from "@components/Callout"
-import styled from "styled-components"
-import {
-  Infographic,
-  AbacusCrowdsIcon,
-  AbacusSpotIcon,
-  H2,
-  SessionCard,
-  SocialLinks,
-} from "abacus-ui"
+import styled, { keyframes } from "styled-components"
+import { H2, SessionCard, SocialLinks } from "abacus-ui"
 import Navbar from "@components/Navbar"
+import Infographics from "@components/Infographics"
 import { StaticImage } from "gatsby-plugin-image"
 
 const GET_NFT_PRICE_DATA = gql`
@@ -38,17 +32,6 @@ const CalloutContainer = styled.div`
   /* background: linear-gradient(black, transparent); */
 `
 
-const InfographicDivider = styled.span`
-  background: linear-gradient(180deg, #3e74ff 0%, rgba(147, 62, 255, 0) 100%);
-  border-radius: 100px;
-  width: 4px;
-  margin: 50px 0;
-`
-
-const InfographicContainer = styled.div`
-  display: flex;
-`
-
 const PreviousSessionsHeader = styled(H2)`
   font-size: 62px;
   line-height: 120px;
@@ -61,8 +44,24 @@ const PreviousSessionsHeader = styled(H2)`
 
 const PreviousSessionsCarousel = styled.div`
   overflow: hidden;
-  display: flex;
   position: relative;
+  height: 480px;
+`
+
+const slide = keyframes`
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+`
+
+const PreviousSessionsWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  animation: ${slide} 100s linear infinite alternate;
 `
 
 const PreviousSessionContainer = styled.div`
@@ -177,8 +176,8 @@ const Home: React.FC = () => {
   const treasuryContract = useWeb3Contract(ABC_TREASURY)
   const [nftsPriced, setNftsPriced] = React.useState("-")
   const [earned, setEarned] = React.useState("-")
-  const [riskFactor, setRiskFactor] = React.useState("-")
-  const [spread, setSpread] = React.useState("-")
+  // const [riskFactor, setRiskFactor] = React.useState("-")
+  // const [spread, setSpread] = React.useState("-")
   const [defender, setDefender] = React.useState("-")
 
   useEffect(() => {
@@ -212,8 +211,6 @@ const Home: React.FC = () => {
     loadData()
   }, [treasuryContract])
 
-  console.table({ nftsPriced, earned, riskFactor, spread, defender })
-
   return (
     <>
       <Superhero />
@@ -222,34 +219,16 @@ const Home: React.FC = () => {
         <Callout copy={nftsPriced} label="NFTs appraised" />
         <Callout copy={`${earned} Ξ`} label="NFTs appraised" />
       </CalloutContainer>
-      <InfographicContainer>
-        <Infographic
-          imgSrc="/abacus_crowds_bg.png"
-          icon={<AbacusCrowdsIcon />}
-          title="Abacus Crowds"
-          description="A short description about how Abacus Crowd works in a simple way."
-          onClick={() => {
-            console.log("click")
-          }}
-        />
-        <InfographicDivider />
-        <Infographic
-          imgSrc="/abacus_spot_bg.png"
-          icon={<AbacusSpotIcon />}
-          title="Abacus Spot"
-          description="A short description about how Abacus Spot works in a simple way."
-          onClick={() => {
-            console.log("click")
-          }}
-        />
-      </InfographicContainer>
+      <Infographics />
       <PreviousSessionsHeader>Previous Sessions</PreviousSessionsHeader>
       <PreviousSessionsCarousel>
-        {previousSessions.map((session) => (
-          <PreviousSessionContainer key={session.id}>
-            <SessionCard {...session} />
-          </PreviousSessionContainer>
-        ))}
+        <PreviousSessionsWrapper>
+          {previousSessions.map((session) => (
+            <PreviousSessionContainer key={session.id}>
+              <SessionCard {...session} />
+            </PreviousSessionContainer>
+          ))}
+        </PreviousSessionsWrapper>
       </PreviousSessionsCarousel>
       <JoinUsContainer>
         <div style={{ zIndex: 1 }}>

@@ -12,7 +12,7 @@ type ButtonProps = {
   children: any;
   onClick?: () => void;
   disabled?: boolean;
-  type?: ButtonType;
+  buttonType?: ButtonType;
   className?: string;
 };
 
@@ -36,6 +36,7 @@ const Container = styled.button<{ buttonType: ButtonType }>`
       ? theme.colors.core.white
       : "transparent"};
   width: max-content;
+  height: min-content;
 
   &:hover {
     opacity: 0.6;
@@ -43,16 +44,18 @@ const Container = styled.button<{ buttonType: ButtonType }>`
   }
 `;
 
-const Button: FunctionComponent<ButtonProps> = ({
+const Button: FunctionComponent<
+  ButtonProps & React.HTMLProps<HTMLButtonElement>
+> = ({
   children,
   onClick,
   disabled,
-  type = ButtonType.Standard,
+  buttonType = ButtonType.Standard,
   className,
 }: ButtonProps) => (
   <Container
     className={className}
-    buttonType={type}
+    buttonType={buttonType}
     disabled={disabled}
     onClick={onClick}
   >

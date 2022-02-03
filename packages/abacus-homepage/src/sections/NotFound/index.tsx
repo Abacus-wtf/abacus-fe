@@ -1,12 +1,10 @@
-import { Title } from "abacus-components"
+import { H1 } from "abacus-ui"
 import * as React from "react"
-import { Container } from "./styles"
 
 const NotFound = () => (
-  <Container>
-    <Title className="four-title">404</Title>
-    <Title className="four-not">Not Found</Title>
-  </Container>
+  <>
+    <H1>404: Not Found</H1>
+  </>
 )
 
 export default NotFound

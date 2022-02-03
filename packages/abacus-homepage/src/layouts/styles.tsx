@@ -2,12 +2,16 @@ import { defaultTheme } from "abacus-ui"
 import { createGlobalStyle } from "styled-components"
 
 export const GlobalStyles = createGlobalStyle`
-  @import url('https://rsms.me/inter/inter.css');
   html { 
     font-family: 'Inter', sans-serif;
   }
   @supports (font-variation-settings: normal) {
     html { font-family: 'Inter var', sans-serif; }
+  }
+
+  @font-face {
+    font-family: "Inter";
+    src: url("/fonts/Inter-Regular.ttf");
   }
 
   @font-face {

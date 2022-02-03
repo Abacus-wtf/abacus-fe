@@ -69,6 +69,22 @@ const SessionCompleted: FunctionComponent = () => {
           disabled
         />
       </ListGroupItem>
+      {sessionData.guessedAppraisal > 0 ? (
+        <ListGroupItem>
+          (
+          <InputWithTitle
+            title="Guessed Appraisal Value"
+            id="stake"
+            value={`${sessionData.guessedAppraisal.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 4,
+            })} ETH`}
+            infoText="The final appraisal value has been determined for this pricing session."
+            disabled
+          />
+          )
+        </ListGroupItem>
+      ) : null}
     </>
   )
 }

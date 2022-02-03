@@ -25,7 +25,6 @@ export const GlobalStyles = createGlobalStyle`
     color: ${defaultTheme.colors.utility.white};
     background: url("/background.png");
     background-repeat: no-repeat;
-    background-position: top;
     background-color: #101010;
   }
 

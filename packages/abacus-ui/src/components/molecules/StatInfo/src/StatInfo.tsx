@@ -15,6 +15,7 @@ const StatText = styled.div`
   color: ${({ theme }) => theme.colors.core.white};
   text-align: center;
   display: flex;
+  justify-content: center;
 `;
 
 const Title = styled(Mega)`
@@ -26,14 +27,16 @@ type StatInfoProps = {
   stat: string;
   title: string;
   showEthIcon?: boolean;
+  className?: string;
 };
 
 const StatInfo: FunctionComponent<StatInfoProps> = ({
   stat,
   title,
   showEthIcon = false,
+  className,
 }) => (
-  <Container>
+  <Container className={className}>
     <StatText>
       {stat}{" "}
       {showEthIcon ? (

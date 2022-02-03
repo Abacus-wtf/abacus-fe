@@ -359,7 +359,7 @@ var Container$j = styled__default["default"].div(templateObject_1$l || (template
 var templateObject_1$l;
 
 var Container$i = styled__default["default"].div(templateObject_1$k || (templateObject_1$k = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  width: fit-content;\n"], ["\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  width: fit-content;\n"])));
-var StatText = styled__default["default"].div(templateObject_2$4 || (templateObject_2$4 = __makeTemplateObject(["\n  ", ";\n  color: ", ";\n  text-align: center;\n  display: flex;\n"], ["\n  ", ";\n  color: ", ";\n  text-align: center;\n  display: flex;\n"])), Font("tena", "Bluu Next"), function (_a) {
+var StatText = styled__default["default"].div(templateObject_2$4 || (templateObject_2$4 = __makeTemplateObject(["\n  ", ";\n  color: ", ";\n  text-align: center;\n  display: flex;\n  justify-content: center;\n"], ["\n  ", ";\n  color: ", ";\n  text-align: center;\n  display: flex;\n  justify-content: center;\n"])), Font("tena", "Bluu Next"), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.white;
 });
@@ -368,8 +368,8 @@ var Title = styled__default["default"](Container$j)(templateObject_3$2 || (templ
     return theme.colors.core.lightWhite;
 });
 var StatInfo = function (_a) {
-    var stat = _a.stat, title = _a.title, _b = _a.showEthIcon, showEthIcon = _b === void 0 ? false : _b;
-    return (React__default["default"].createElement(Container$i, null,
+    var stat = _a.stat, title = _a.title, _b = _a.showEthIcon, showEthIcon = _b === void 0 ? false : _b, className = _a.className;
+    return (React__default["default"].createElement(Container$i, { className: className },
         React__default["default"].createElement(StatText, null,
             stat,
             " ",

@@ -7,11 +7,9 @@ import {
 import { formatEther } from "ethers/lib/utils"
 import ABC_TREASURY from "@components/contracts/ABC_TREASURY.json"
 import { request, gql } from "graphql-request"
-// import EthSymbol from "../../images/eth.svg"
 import Superhero from "@components/Superhero"
-import Callout from "@components/Callout"
 import styled, { keyframes } from "styled-components"
-import { H2, SessionCard, SocialLinks } from "abacus-ui"
+import { H2, SessionCard, SocialLinks, StatInfo, Media } from "abacus-ui"
 import Navbar from "@components/Navbar"
 import Infographics from "@components/Infographics"
 import { StaticImage } from "gatsby-plugin-image"
@@ -24,12 +22,32 @@ const GET_NFT_PRICE_DATA = gql`
   }
 `
 
-const CalloutContainer = styled.div`
+const StatInfoContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-bottom: 200px;
-  /* background: linear-gradient(black, transparent); */
+
+  ${Media.sm`
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 800px;
+    margin-right: auto;
+    margin-left: auto;
+  `}
+`
+
+const StyledStatInfo = styled(StatInfo)`
+  margin-top: 1rem;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+
+  ${Media.sm`
+    margin: 0;
+  `}
 `
 
 const PreviousSessionsHeader = styled(H2)`
@@ -204,8 +222,8 @@ const Home: React.FC = () => {
       setNftsPriced(
         nftsPricedContract.nftsPriced ? nftsPricedContract.nftsPriced.total : 0
       )
-      setRiskFactor(riskFactorContract)
-      setSpread(spreadContract)
+      // setRiskFactor(riskFactorContract)
+      // setSpread(spreadContract)
       setDefender(defenderContract)
     }
     loadData()
@@ -214,11 +232,11 @@ const Home: React.FC = () => {
   return (
     <>
       <Superhero />
-      <CalloutContainer>
-        <Callout copy={`${defender} Ξ`} label="Treasury Size" />
-        <Callout copy={nftsPriced} label="NFTs appraised" />
-        <Callout copy={`${earned} Ξ`} label="NFTs appraised" />
-      </CalloutContainer>
+      <StatInfoContainer>
+        <StyledStatInfo stat={defender} title="Treasury Size" showEthIcon />
+        <StyledStatInfo stat={nftsPriced} title="NFTs appraised" />
+        <StyledStatInfo stat={earned} title="NFTs appraised" showEthIcon />
+      </StatInfoContainer>
       <Infographics />
       <PreviousSessionsHeader>Previous Sessions</PreviousSessionsHeader>
       <PreviousSessionsCarousel>
@@ -250,7 +268,7 @@ const Home: React.FC = () => {
           />
         </JoinUsCubeContainer>
       </JoinUsContainer>
-      <Navbar />
+      <Navbar footer />
       <div style={{ paddingBottom: "15px" }} />
     </>
   )

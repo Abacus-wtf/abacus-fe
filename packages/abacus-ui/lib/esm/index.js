@@ -350,7 +350,7 @@ var Container$j = styled.div(templateObject_1$l || (templateObject_1$l = __makeT
 var templateObject_1$l;
 
 var Container$i = styled.div(templateObject_1$k || (templateObject_1$k = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  width: fit-content;\n"], ["\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  width: fit-content;\n"])));
-var StatText = styled.div(templateObject_2$4 || (templateObject_2$4 = __makeTemplateObject(["\n  ", ";\n  color: ", ";\n  text-align: center;\n  display: flex;\n"], ["\n  ", ";\n  color: ", ";\n  text-align: center;\n  display: flex;\n"])), Font("tena", "Bluu Next"), function (_a) {
+var StatText = styled.div(templateObject_2$4 || (templateObject_2$4 = __makeTemplateObject(["\n  ", ";\n  color: ", ";\n  text-align: center;\n  display: flex;\n  justify-content: center;\n"], ["\n  ", ";\n  color: ", ";\n  text-align: center;\n  display: flex;\n  justify-content: center;\n"])), Font("tena", "Bluu Next"), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.white;
 });
@@ -359,8 +359,8 @@ var Title = styled(Container$j)(templateObject_3$2 || (templateObject_3$2 = __ma
     return theme.colors.core.lightWhite;
 });
 var StatInfo = function (_a) {
-    var stat = _a.stat, title = _a.title, _b = _a.showEthIcon, showEthIcon = _b === void 0 ? false : _b;
-    return (React.createElement(Container$i, null,
+    var stat = _a.stat, title = _a.title, _b = _a.showEthIcon, showEthIcon = _b === void 0 ? false : _b, className = _a.className;
+    return (React.createElement(Container$i, { className: className },
         React.createElement(StatText, null,
             stat,
             " ",

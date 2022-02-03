@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
-import { H1, P, Button, ButtonType, Mega } from "abacus-ui"
+import { H1, P, Button, ButtonType, Mega, Media } from "abacus-ui"
 import { StaticImage } from "gatsby-plugin-image"
 
 const Container = styled.div`
@@ -8,27 +8,33 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0;
+  padding: 0 16px;
   padding-top: 130px;
 `
 
 const StyledH1 = styled(H1)`
-  font-size: 56px;
-  line-height: 67.2px;
+  line-height: 120%;
   font-family: "Bluu Next", sans-serif;
   max-width: 600px;
   text-align: center;
+
+  ${Media.sm`
+    font-size: 3.5rem;
+  `}
 `
 
 const StyledP = styled(P)`
   margin-top: 1rem;
   margin-bottom: 2rem;
-  font-size: 22px;
-  line-height: 26.63px;
+  font-size: 1.375rem;
+  line-height: 120%;
+  text-align: center;
 `
 
 const StyledButton = styled(Button)`
-  margin-bottom: 100px;
+  ${Media.sm`
+    margin-bottom: 100px;
+  `}
 `
 
 const Superhero: FunctionComponent = () => (
@@ -50,11 +56,7 @@ const Superhero: FunctionComponent = () => (
         title="Your browser does not support the <video> tag"
       />
     </video> */}
-    <StaticImage
-      alt=""
-      // style={{ height: 15 }}
-      src="../../images/3d-abacus-still.png"
-    />
+    <StaticImage alt="" src="../../images/3d-abacus-still.png" />
   </Container>
 )
 

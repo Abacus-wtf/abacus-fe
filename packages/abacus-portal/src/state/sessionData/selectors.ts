@@ -18,6 +18,7 @@ const defaultSessionData: AppState["sessionData"]["currentSessionData"]["session
     nonce: 0,
     maxAppraisal: 0,
     bounty: 0,
+    votingTime: 0,
   }
 
 export const multiSessionStateSelector = (

@@ -11,7 +11,7 @@ import {
   useGetUserStatus,
 } from "@state/sessionData/hooks"
 import { PromiseStatus } from "@models/PromiseStatus"
-import { useActiveWeb3React } from "@hooks/index"
+import { useActiveWeb3React, usePrevious } from "@hooks/index"
 import ConnectWalletAlert from "@components/ConnectWalletAlert"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { OutboundLink } from "gatsby-plugin-google-gtag"
@@ -37,6 +37,7 @@ const CurrentSession = ({ location }) => {
   const { address, tokenId, nonce } = queryString.parse(location.search)
   const getCurrentSessionData = useGetCurrentSessionData()
   const { account, chainId } = useActiveWeb3React()
+  const previousAccount = usePrevious(account)
   const sessionData = useCurrentSessionData()
   const fetchStatus = useCurrentSessionFetchStatus()
   const isLoading = fetchStatus === PromiseStatus.Pending
@@ -53,7 +54,7 @@ const CurrentSession = ({ location }) => {
 
   useEffect(() => {
     const loadData = async () => {
-      if (sessionData.address === "") {
+      if (sessionData.address === "" || account !== previousAccount) {
         await getCurrentSessionData(
           String(address),
           String(tokenId),
@@ -75,7 +76,7 @@ const CurrentSession = ({ location }) => {
       loadData()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [claimData, sessionData, userStatus])
+  }, [claimData, sessionData, userStatus, account, previousAccount])
 
   useEffect(() => {
     if (

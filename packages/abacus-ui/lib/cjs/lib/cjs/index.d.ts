@@ -1,6 +1,8 @@
 export var __esModule: boolean;
 export var ButtonType: {} | undefined;
+export function AbacusCrowdsIcon(_a: any): any;
 export function AbacusIcon(_a: any): any;
+export function AbacusSpotIcon(_a: any): any;
 export function Button(_a: any): any;
 export var Exa: any;
 export function Flex(_a: any): any;

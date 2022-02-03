@@ -11,7 +11,16 @@ import { request, gql } from "graphql-request"
 import Superhero from "@components/Superhero"
 import Callout from "@components/Callout"
 import styled from "styled-components"
-import { Infographic, AbacusCrowdsIcon, AbacusSpotIcon } from "abacus-ui"
+import {
+  Infographic,
+  AbacusCrowdsIcon,
+  AbacusSpotIcon,
+  H2,
+  SessionCard,
+  SocialLinks,
+} from "abacus-ui"
+import Navbar from "@components/Navbar"
+import { StaticImage } from "gatsby-plugin-image"
 
 const GET_NFT_PRICE_DATA = gql`
   query {
@@ -26,6 +35,7 @@ const CalloutContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 200px;
+  /* background: linear-gradient(black, transparent); */
 `
 
 const InfographicDivider = styled.span`
@@ -38,6 +48,130 @@ const InfographicDivider = styled.span`
 const InfographicContainer = styled.div`
   display: flex;
 `
+
+const PreviousSessionsHeader = styled(H2)`
+  font-size: 62px;
+  line-height: 120px;
+  font-family: "Bluu Next", serif;
+  display: flex;
+  justify-content: center;
+  margin-top: 180px;
+  margin-bottom: 60px;
+`
+
+const PreviousSessionsCarousel = styled.div`
+  overflow: hidden;
+  display: flex;
+  position: relative;
+`
+
+const PreviousSessionContainer = styled.div`
+  margin: 0 20px;
+`
+
+const JoinUsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 300px 0;
+  position: relative;
+  overflow: hidden;
+`
+
+const JoinUsHeader = styled(H2)`
+  font-size: 62;
+  line-height: 120%;
+  margin-bottom: 30px;
+`
+
+const JoinUsCubeContainer = styled.div<{ right?: string; left?: string }>`
+  position: absolute;
+  z-index: 0;
+  right: ${({ right }) => right};
+  left: ${({ left }) => left};
+`
+
+const previousSessions = [
+  {
+    imgSrc: "/img_example.png",
+    title: "NFT Name",
+    bounty: 0,
+    participants: 0,
+    appraisal: 0,
+    id: 1,
+  },
+  {
+    imgSrc: "/img_example.png",
+    title: "NFT Name",
+    bounty: 0,
+    participants: 0,
+    appraisal: 0,
+    id: 2,
+  },
+  {
+    imgSrc: "/img_example.png",
+    title: "NFT Name",
+    bounty: 0,
+    participants: 0,
+    appraisal: 0,
+    id: 3,
+  },
+  {
+    imgSrc: "/img_example.png",
+    title: "NFT Name",
+    bounty: 0,
+    participants: 0,
+    appraisal: 0,
+    id: 4,
+  },
+  {
+    imgSrc: "/img_example.png",
+    title: "NFT Name",
+    bounty: 0,
+    participants: 0,
+    appraisal: 0,
+    id: 5,
+  },
+  {
+    imgSrc: "/img_example.png",
+    title: "NFT Name",
+    bounty: 0,
+    participants: 0,
+    appraisal: 0,
+    id: 6,
+  },
+  {
+    imgSrc: "/img_example.png",
+    title: "NFT Name",
+    bounty: 0,
+    participants: 0,
+    appraisal: 0,
+    id: 7,
+  },
+  {
+    imgSrc: "/img_example.png",
+    title: "NFT Name",
+    bounty: 0,
+    participants: 0,
+    appraisal: 0,
+    id: 8,
+  },
+  {
+    imgSrc: "/img_example.png",
+    title: "NFT Name",
+    bounty: 0,
+    participants: 0,
+    appraisal: 0,
+    id: 9,
+  },
+]
+
+const social = {
+  twitter: "https://twitter.com/abacus_wtf",
+  discord: "https://discord.com/channels/861936155494842368/871084437306220564",
+  medium: "https://medium.com/abacus-wtf",
+}
 
 const Home: React.FC = () => {
   const treasuryContract = useWeb3Contract(ABC_TREASURY)
@@ -109,6 +243,36 @@ const Home: React.FC = () => {
           }}
         />
       </InfographicContainer>
+      <PreviousSessionsHeader>Previous Sessions</PreviousSessionsHeader>
+      <PreviousSessionsCarousel>
+        {previousSessions.map((session) => (
+          <PreviousSessionContainer key={session.id}>
+            <SessionCard {...session} />
+          </PreviousSessionContainer>
+        ))}
+      </PreviousSessionsCarousel>
+      <JoinUsContainer>
+        <div style={{ zIndex: 1 }}>
+          <JoinUsHeader>Join Our Community</JoinUsHeader>
+          <SocialLinks {...social} size="30px" />
+        </div>
+        <JoinUsCubeContainer left="-25%">
+          <StaticImage
+            alt=""
+            // style={{ height: 15 }}
+            src="../../images/dark-cube-1.png"
+          />
+        </JoinUsCubeContainer>
+        <JoinUsCubeContainer right="-15%">
+          <StaticImage
+            alt=""
+            // style={{ height: 15 }}
+            src="../../images/dark-cube-3.png"
+          />
+        </JoinUsCubeContainer>
+      </JoinUsContainer>
+      <Navbar />
+      <div style={{ paddingBottom: "15px" }} />
     </>
   )
 }

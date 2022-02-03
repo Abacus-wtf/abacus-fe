@@ -28,7 +28,7 @@ const StyledP = styled(P)`
 `
 
 const StyledButton = styled(Button)`
-  margin-bottom: 300px;
+  margin-bottom: 100px;
 `
 
 const Superhero: FunctionComponent = () => (
@@ -38,10 +38,22 @@ const Superhero: FunctionComponent = () => (
     <StyledButton type={ButtonType.White}>
       <Mega>Launch App</Mega>
     </StyledButton>
+    {/* TODO: Video does not have transparent background */}
+    {/* <video muted autoPlay loop>
+      <source
+        src="/3d-abacus-loop.mp4"
+        type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'
+      />
+      <img
+        src="/3d-abacus-still.png"
+        alt=""
+        title="Your browser does not support the <video> tag"
+      />
+    </video> */}
     <StaticImage
       alt=""
       // style={{ height: 15 }}
-      src="../../images/3d-row.png"
+      src="../../images/3d-abacus-still.png"
     />
   </Container>
 )

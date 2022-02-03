@@ -1,9 +1,13 @@
 import React from "react";
 
-export const Twitter = () => (
+type SVGProps = {
+  size: string;
+};
+
+export const Twitter = ({ size = "20" }: SVGProps) => (
   <svg
-    width="20"
-    height="17"
+    width={size}
+    height={size}
     viewBox="0 0 20 17"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -17,10 +21,10 @@ export const Twitter = () => (
   </svg>
 );
 
-export const Discord = () => (
+export const Discord = ({ size = "20" }: SVGProps) => (
   <svg
-    width="26"
-    height="20"
+    width={size}
+    height={size}
     viewBox="0 0 26 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -32,8 +36,14 @@ export const Discord = () => (
   </svg>
 );
 
-export const Medium = () => (
-  <svg width="24" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const Medium = ({ size = "20" }: SVGProps) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 14"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       d="M13.488 6.895c0 3.727-3.002 6.749-6.704 6.749S.081 10.622.081 6.894C.081 3.168 3.082.146 6.784.146c3.703 0 6.704 3.022 6.704 6.75ZM20.841 6.895c0 3.508-1.5 6.354-3.351 6.354s-3.352-2.846-3.352-6.354c0-3.509 1.5-6.354 3.351-6.354s3.352 2.844 3.352 6.354ZM23.85 6.895c0 3.143-.529 5.692-1.18 5.692-.65 0-1.178-2.549-1.178-5.692 0-3.144.527-5.693 1.178-5.693.651 0 1.18 2.549 1.18 5.693Z"
       fill="#fff"

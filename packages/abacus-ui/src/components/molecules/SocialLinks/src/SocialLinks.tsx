@@ -9,6 +9,7 @@ type SocialLinksProps = {
   discord: string;
   medium: string;
   className: string;
+  size?: string;
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -49,18 +50,19 @@ const SocialLinks: FunctionComponent<SocialLinksProps> = ({
   discord,
   medium,
   className,
+  size = "20",
 }) => (
   <Container className={className}>
     <StyledLink href={twitter}>
-      <Twitter />
+      <Twitter size={size} />
       <VisuallyHidden>Twitter Profile</VisuallyHidden>
     </StyledLink>
     <StyledLink href={discord}>
-      <Discord />
+      <Discord size={size} />
       <VisuallyHidden>Discord Channel</VisuallyHidden>
     </StyledLink>
     <StyledLink href={medium}>
-      <Medium />
+      <Medium size={size} />
       <VisuallyHidden>Medium Account</VisuallyHidden>
     </StyledLink>
   </Container>

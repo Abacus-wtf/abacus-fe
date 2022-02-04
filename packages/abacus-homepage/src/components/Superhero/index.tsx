@@ -63,7 +63,7 @@ const Superhero: FunctionComponent = () => (
         <Mega>Launch App</Mega>
       </StyledButton>
     </GradientContainer>
-    <StyledVideo muted autoPlay loop>
+    <StyledVideo muted autoPlay loop playsInline>
       <source
         src="/3d-abacus-loop.mp4"
         type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'

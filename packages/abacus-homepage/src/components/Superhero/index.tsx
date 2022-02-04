@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { H1, P, Button, ButtonType, Mega, Media } from "abacus-ui"
-import { StaticImage } from "gatsby-plugin-image"
+// import { StaticImage } from "gatsby-plugin-image"
+import ImageLoop from "./ImageLoop"
 
 const Container = styled.div`
   display: flex;
@@ -56,7 +57,8 @@ const Superhero: FunctionComponent = () => (
         title="Your browser does not support the <video> tag"
       />
     </video> */}
-    <StaticImage alt="" src="../../images/3d-abacus-still.png" />
+    {/* <StaticImage alt="" src="../../images/3d-abacus-still.png" /> */}
+    <ImageLoop />
   </Container>
 )
 

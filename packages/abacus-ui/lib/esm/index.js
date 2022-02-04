@@ -414,7 +414,7 @@ var templateObject_1$6;
 var Container$5 = styled.div(templateObject_1$5 || (templateObject_1$5 = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("zetta"));
 var templateObject_1$5;
 
-var ImageStyled = styled.img(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n  transform: rotate(15deg);\n  width: 70%;\n"], ["\n  transform: rotate(15deg);\n  width: 70%;\n"])));
+var ImageStyled = styled.img(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n  transform: rotate(15deg);\n  max-width: 400px;\n  width: 70%;\n"], ["\n  transform: rotate(15deg);\n  max-width: 400px;\n  width: 70%;\n"])));
 var Container$4 = styled.div(templateObject_3$1 || (templateObject_3$1 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n\n  ",
     "\n"])), Media.sm(templateObject_2$3 || (templateObject_2$3 = __makeTemplateObject(["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "], ["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "]))));
 var ZettaStyled = styled(Container$5)(templateObject_4$1 || (templateObject_4$1 = __makeTemplateObject(["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"], ["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"])), function (_a) {

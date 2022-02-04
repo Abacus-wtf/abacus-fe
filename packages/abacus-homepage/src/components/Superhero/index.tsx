@@ -1,16 +1,10 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { H1, P, Button, ButtonType, Mega, Media } from "abacus-ui"
-// import { StaticImage } from "gatsby-plugin-image"
-import ImageLoop from "./ImageLoop"
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 16px;
   padding-top: 130px;
+  position: relative;
 `
 
 const StyledH1 = styled(H1)`
@@ -38,27 +32,48 @@ const StyledButton = styled(Button)`
   `}
 `
 
+const GradientContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+  z-index: 1;
+`
+
+const StyledVideo = styled.video`
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0),
+    rgba(255, 255, 255, 1),
+    rgba(0, 0, 0, 0)
+  );
+`
+
 const Superhero: FunctionComponent = () => (
   <Container>
-    <StyledH1>Decentralized appraisal tool for NFTS</StyledH1>
-    <StyledP>A short tagline to explain how Abacus works.</StyledP>
-    <StyledButton buttonType={ButtonType.White} type="button">
-      <Mega>Launch App</Mega>
-    </StyledButton>
-    {/* TODO: Video does not have transparent background */}
-    {/* <video muted autoPlay loop>
+    <GradientContainer>
+      <StyledH1>Decentralized appraisal tool for NFTS</StyledH1>
+      <StyledP>A short tagline to explain how Abacus works.</StyledP>
+      <StyledButton buttonType={ButtonType.White} type="button">
+        <Mega>Launch App</Mega>
+      </StyledButton>
+    </GradientContainer>
+    <StyledVideo muted autoPlay loop>
       <source
         src="/3d-abacus-loop.mp4"
         type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'
       />
       <img
-        src="/3d-abacus-still.png"
+        src="/3d-sequence/1.png"
         alt=""
         title="Your browser does not support the <video> tag"
       />
-    </video> */}
-    {/* <StaticImage alt="" src="../../images/3d-abacus-still.png" /> */}
-    <ImageLoop />
+    </StyledVideo>
   </Container>
 )
 

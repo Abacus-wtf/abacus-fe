@@ -14,6 +14,7 @@ type InfographicProps = {
 
 const ImageStyled = styled.img`
   transform: rotate(15deg);
+  max-width: 400px;
   width: 70%;
 `;
 

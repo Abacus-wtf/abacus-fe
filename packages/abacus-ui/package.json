@@ -68,6 +68,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@storybook/addon-docs": "^6.4.16"
+    "@storybook/addon-docs": "^6.4.16",
+    "lodash": "^4.17.21"
   }
 }

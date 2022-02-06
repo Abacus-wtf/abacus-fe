@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import { AbacusBar } from "../src";
@@ -9,13 +9,19 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof AbacusBar>;
 
-const Template: ComponentStory<typeof AbacusBar> = (args) => (
-  <AbacusBar {...args} />
-);
+const Template: ComponentStory<typeof AbacusBar> = (args) => {
+  const [currentPosition, changeCurrentPosition] = useState(2);
+  return (
+    <AbacusBar
+      {...args}
+      currentPosition={currentPosition}
+      changeToPosition={(newPos) => changeCurrentPosition(newPos)}
+    />
+  );
+};
 
 export const Primary = Template.bind({});
 Primary.args = {
-  changeToPosition: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   totalNumberOfBeads: 5,
-  currentPosition: 2,
 };

@@ -34,6 +34,10 @@ const PreviousSessionsWrapper = styled.div`
   width: 200%;
   position: absolute;
   animation: ${marquee} 15s linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
 `
 
 const PreviousSessionContainer = styled.div<{ delay: number }>`

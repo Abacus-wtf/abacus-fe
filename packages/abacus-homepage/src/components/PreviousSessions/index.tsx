@@ -20,27 +20,26 @@ const PreviousSessionsHeader = styled(H2)`
 const PreviousSessionsCarousel = styled.div`
   overflow: hidden;
   position: relative;
+  display: flex;
   height: 480px;
 `
 
-const slide = keyframes`
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-25%);
-  }
+const marquee = keyframes`
+  0%   { left: 0%; }
+  100% { left: -100%; }
 `
 
 const PreviousSessionsWrapper = styled.div`
+  display: block;
+  width: 200%;
   position: absolute;
-  display: flex;
-  animation: ${slide} 100s linear infinite alternate;
+  animation: ${marquee} 15s linear infinite;
 `
 
-const PreviousSessionContainer = styled.div`
+const PreviousSessionContainer = styled.div<{ delay: number }>`
+  display: inline-block;
   margin: 0 20px;
+  transition: all 0.2s ease-out;
 `
 
 // TODO: Fetch actual data
@@ -124,8 +123,11 @@ const PreviousSessions: FunctionComponent = () => (
     <PreviousSessionsHeader>Previous Sessions</PreviousSessionsHeader>
     <PreviousSessionsCarousel>
       <PreviousSessionsWrapper>
-        {previousSessions.map((session) => (
-          <PreviousSessionContainer key={session.id}>
+        {previousSessions.map((session, index) => (
+          <PreviousSessionContainer
+            key={session.id}
+            delay={(index * 3) / (previousSessions.length - 1)}
+          >
             <SessionCard {...session} />
           </PreviousSessionContainer>
         ))}

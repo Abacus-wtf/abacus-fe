@@ -43,7 +43,7 @@ const PreviousSessionsWrapper = styled.div`
 const PreviousSessionContainer = styled.div<{ delay: number }>`
   display: inline-block;
   margin: 0 20px;
-  transition: all 0.2s ease-out;
+  /* transition: all 0.2s ease-out; */
 `
 
 // TODO: Fetch actual data

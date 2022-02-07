@@ -39,7 +39,6 @@ const GradientContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0 16px;
-  z-index: 1;
 `
 
 const StyledVideo = styled.video`

@@ -5,6 +5,17 @@ import { social } from "@config/index"
 import { StaticImage } from "gatsby-plugin-image"
 
 const JoinUsContainer = styled.div`
+  position: relative;
+  overflow: hidden;
+`
+
+const JoinUsWrapper = styled.div`
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 150px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,7 +24,7 @@ const JoinUsContainer = styled.div`
   position: relative;
   overflow: hidden;
 
-  ${Media.sm`
+  ${Media.md`
     padding: 300px 0;
   `}
 `
@@ -24,45 +35,56 @@ const JoinUsHeader = styled(H2)`
   margin-bottom: 30px;
 `
 
-const JoinUsCubeContainer = styled.div<{
-  top?: string
-  right?: string
-  left?: string
-  bottom?: string
-}>`
+const JoinUsCubeContainer = styled.div`
   position: absolute;
+  display: flex;
   z-index: 0;
-  width: 50vw;
-  top: ${({ top }) => top};
-  right: ${({ right }) => right};
-  left: ${({ left }) => left};
-  bottom: ${({ bottom }) => bottom};
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+`
 
-  ${Media.lg`
-    width: unset;
+const JoinUsCube = styled.div`
+  position: absolute;
+
+  ${Media.sm`
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    position: unset;
   `}
+
+  &:first-of-type {
+    transform: translateX(-50%);
+  }
+  &:last-of-type {
+    transform: translateX(50%);
+  }
 `
 
 const index: FunctionComponent = () => (
   <JoinUsContainer>
-    <div style={{ zIndex: 1 }}>
+    <JoinUsCubeContainer>
+      <JoinUsCube>
+        <StaticImage
+          alt=""
+          // style={{ height: 15 }}
+          src="../../images/dark-cube-1.png"
+        />
+      </JoinUsCube>
+      <JoinUsCube>
+        <StaticImage
+          alt=""
+          // style={{ height: 15 }}
+          src="../../images/dark-cube-3.png"
+        />
+      </JoinUsCube>
+    </JoinUsCubeContainer>
+    <JoinUsWrapper>
       <JoinUsHeader>Join Our Community</JoinUsHeader>
       <SocialLinks {...social} size="30px" />
-    </div>
-    <JoinUsCubeContainer left="-15%" top="0">
-      <StaticImage
-        alt=""
-        // style={{ height: 15 }}
-        src="../../images/dark-cube-1.png"
-      />
-    </JoinUsCubeContainer>
-    <JoinUsCubeContainer right="-15%" bottom="0">
-      <StaticImage
-        alt=""
-        // style={{ height: 15 }}
-        src="../../images/dark-cube-3.png"
-      />
-    </JoinUsCubeContainer>
+    </JoinUsWrapper>
   </JoinUsContainer>
 )
 

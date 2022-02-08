@@ -17,11 +17,8 @@ const PreviousSessionsHeader = styled(H2)`
   `}
 `
 
-const PreviousSessionsCarousel = styled.div`
+const PreviousSessionsMarquee = styled.div`
   overflow: hidden;
-  position: relative;
-  display: flex;
-  height: 480px;
 `
 
 const marquee = keyframes`
@@ -29,21 +26,34 @@ const marquee = keyframes`
   100% { left: -100%; }
 `
 
-const PreviousSessionsWrapper = styled.div`
+const Block = styled.div<{ totalItems: number }>`
+  height: 480px;
+  width: calc(320px * (${({ totalItems }) => totalItems}));
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+`
+
+const Inner = styled.div`
   display: block;
   width: 200%;
   position: absolute;
-  animation: ${marquee} 15s linear infinite;
+  animation: ${marquee} 40s linear infinite;
 
   &:hover {
     animation-play-state: paused;
   }
 `
 
-const PreviousSessionContainer = styled.div<{ delay: number }>`
+const Span = styled.span`
+  float: left;
+  width: 50%;
+`
+
+const PreviousSession = styled.div`
   display: inline-block;
   margin: 0 20px;
-  /* transition: all 0.2s ease-out; */
+  transition: all 0.2s ease-out;
 `
 
 // TODO: Fetch actual data
@@ -125,18 +135,26 @@ const previousSessions = [
 const PreviousSessions: FunctionComponent = () => (
   <>
     <PreviousSessionsHeader>Previous Sessions</PreviousSessionsHeader>
-    <PreviousSessionsCarousel>
-      <PreviousSessionsWrapper>
-        {previousSessions.map((session, index) => (
-          <PreviousSessionContainer
-            key={session.id}
-            delay={(index * 3) / (previousSessions.length - 1)}
-          >
-            <SessionCard {...session} />
-          </PreviousSessionContainer>
-        ))}
-      </PreviousSessionsWrapper>
-    </PreviousSessionsCarousel>
+    <PreviousSessionsMarquee>
+      <Block totalItems={previousSessions.length}>
+        <Inner>
+          <Span>
+            {previousSessions.map((session) => (
+              <PreviousSession key={session.id}>
+                <SessionCard {...session} />
+              </PreviousSession>
+            ))}
+          </Span>
+          <Span>
+            {previousSessions.map((session) => (
+              <PreviousSession key={session.id}>
+                <SessionCard {...session} />
+              </PreviousSession>
+            ))}
+          </Span>
+        </Inner>
+      </Block>
+    </PreviousSessionsMarquee>
   </>
 )
 

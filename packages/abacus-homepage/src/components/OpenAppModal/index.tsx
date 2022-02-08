@@ -11,6 +11,8 @@ const Container = styled.div`
   left: 0;
   right: 0;
   background: url("/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   backdrop-filter: blur(40px);
   z-index: 10;
   padding: 1rem;

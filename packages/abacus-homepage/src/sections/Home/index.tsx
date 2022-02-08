@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import {
   ABC_TREASURY_ADDRESS,
   useWeb3Contract,
@@ -14,6 +14,7 @@ import Navbar from "@components/Navbar"
 import Infographics from "@components/Infographics"
 import PreviousSessions from "@components/PreviousSessions"
 import JoinUs from "@components/JoinUs"
+import OpenAppModal from "@components/OpenAppModal"
 
 const GET_NFT_PRICE_DATA = gql`
   query {
@@ -21,6 +22,10 @@ const GET_NFT_PRICE_DATA = gql`
       total
     }
   }
+`
+
+const HomeContainer = styled.div<{ modalOpen: boolean }>`
+  ${({ modalOpen }) => (modalOpen ? "position: fixed;" : "")}
 `
 
 const StatInfoContainer = styled.div`
@@ -53,6 +58,7 @@ const StyledStatInfo = styled(StatInfo)`
 `
 
 const Home: React.FC = () => {
+  const [modalOpen, setModalOpen] = useState(false)
   const treasuryContract = useWeb3Contract(ABC_TREASURY)
   const [nftsPriced, setNftsPriced] = React.useState("-")
   const [earned, setEarned] = React.useState("-")
@@ -93,17 +99,21 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Superhero />
-      <StatInfoContainer>
-        <StyledStatInfo stat={defender} title="Treasury Size" showEthIcon />
-        <StyledStatInfo stat={nftsPriced} title="NFTs appraised" />
-        <StyledStatInfo stat={earned} title="NFTs appraised" showEthIcon />
-      </StatInfoContainer>
-      <Infographics />
-      <PreviousSessions />
-      <JoinUs />
-      <Navbar footer />
-      <div style={{ paddingBottom: "15px" }} />
+      <HomeContainer modalOpen={modalOpen}>
+        <Navbar openModal={() => setModalOpen(true)} />
+        <Superhero openModal={() => setModalOpen(true)} />
+        <StatInfoContainer>
+          <StyledStatInfo stat={defender} title="Treasury Size" showEthIcon />
+          <StyledStatInfo stat={nftsPriced} title="NFTs appraised" />
+          <StyledStatInfo stat={earned} title="NFTs appraised" showEthIcon />
+        </StatInfoContainer>
+        <Infographics />
+        <PreviousSessions />
+        <JoinUs />
+        <Navbar footer openModal={() => setModalOpen(true)} />
+        <div style={{ paddingBottom: "15px" }} />
+      </HomeContainer>
+      <OpenAppModal isOpen={modalOpen} toggle={() => setModalOpen(false)} />
     </>
   )
 }

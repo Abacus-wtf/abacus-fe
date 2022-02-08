@@ -52,13 +52,20 @@ const StyledVideo = styled.video`
     rgba(0, 0, 0, 0)
   );
 `
+type SuperheroProps = {
+  openModal: () => void
+}
 
-const Superhero: FunctionComponent = () => (
+const Superhero: FunctionComponent<SuperheroProps> = ({ openModal }) => (
   <Container>
     <GradientContainer>
       <StyledH1>Decentralized appraisal tool for NFTS</StyledH1>
       <StyledP>A short tagline to explain how Abacus works.</StyledP>
-      <StyledButton buttonType={ButtonType.White} type="button">
+      <StyledButton
+        buttonType={ButtonType.White}
+        type="button"
+        onClick={openModal}
+      >
         <Mega>Launch App</Mega>
       </StyledButton>
       <Popups />

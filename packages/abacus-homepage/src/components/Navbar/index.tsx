@@ -44,19 +44,25 @@ const StyledSocialLinks = styled(SocialLinks)`
 
 type NavbarProps = {
   footer?: boolean
+  openModal: () => void
 }
 
-const Navbar: FunctionComponent<NavbarProps> = ({ footer = false }) => (
+const Navbar: FunctionComponent<NavbarProps> = ({
+  footer = false,
+  openModal,
+}) => (
   <>
     <Mobile>
-      <MobileNav footer={footer} />
+      <MobileNav footer={footer} openModal={openModal} />
     </Mobile>
     <Container>
       <StyledSocialLinks {...social} />
       <Logo isDark />
       <ButtonWrapper>
         <Button buttonType={ButtonType.Clear}>Whitepaper</Button>
-        <Button buttonType={ButtonType.White}>Launch App</Button>
+        <Button buttonType={ButtonType.White} onClick={openModal}>
+          Launch App
+        </Button>
       </ButtonWrapper>
     </Container>
   </>

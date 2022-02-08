@@ -50,9 +50,13 @@ const HorizontalRule = styled.hr`
 
 type MobileNavProps = {
   footer: boolean
+  openModal: () => void
 }
 
-const MobileNav: FunctionComponent<MobileNavProps> = ({ footer }) => {
+const MobileNav: FunctionComponent<MobileNavProps> = ({
+  footer,
+  openModal,
+}) => {
   const [menuOpen, setMenuOpen] = useState(false)
   if (footer) {
     return null
@@ -81,7 +85,9 @@ const MobileNav: FunctionComponent<MobileNavProps> = ({ footer }) => {
         <SocialLinks {...social} />
         <HorizontalRule />
         <Button buttonType={ButtonType.Clear}>Whitepaper</Button>
-        <Button buttonType={ButtonType.White}>Launch App</Button>
+        <Button buttonType={ButtonType.White} onClick={openModal}>
+          Launch App
+        </Button>
       </LinksContainer>
     </Container>
   )

@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { H1, P, Button, ButtonType, Mega, Media } from "abacus-ui"
+import Popups from "./Popups"
 
 const Container = styled.div`
   padding-top: 130px;
@@ -27,9 +28,7 @@ const StyledP = styled(P)`
 `
 
 const StyledButton = styled(Button)`
-  ${Media.sm`
-    margin-bottom: 100px;
-  `}
+  margin-bottom: 100px;
 `
 
 const GradientContainer = styled.div`
@@ -45,6 +44,7 @@ const StyledVideo = styled.video`
   position: relative;
   z-index: 0;
   width: 100%;
+  margin-top: -15%;
   mask-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0),
@@ -61,6 +61,7 @@ const Superhero: FunctionComponent = () => (
       <StyledButton buttonType={ButtonType.White} type="button">
         <Mega>Launch App</Mega>
       </StyledButton>
+      <Popups />
     </GradientContainer>
     <StyledVideo muted autoPlay loop playsInline>
       <source

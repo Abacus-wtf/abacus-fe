@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import {
   ABC_TREASURY_ADDRESS,
   useWeb3Contract,
@@ -22,10 +22,6 @@ const GET_NFT_PRICE_DATA = gql`
       total
     }
   }
-`
-
-const HomeContainer = styled.div<{ modalOpen: boolean }>`
-  ${({ modalOpen }) => (modalOpen ? "position: fixed;" : "")}
 `
 
 const StatInfoContainer = styled.div`
@@ -97,23 +93,25 @@ const Home: React.FC = () => {
     loadData()
   }, [treasuryContract])
 
+  const openModal = useCallback(() => setModalOpen(true), [])
+  const closeModal = useCallback(() => setModalOpen(false), [])
+
   return (
     <>
-      <HomeContainer modalOpen={modalOpen}>
-        <Navbar openModal={() => setModalOpen(true)} />
-        <Superhero openModal={() => setModalOpen(true)} />
-        <StatInfoContainer>
-          <StyledStatInfo stat={defender} title="Treasury Size" showEthIcon />
-          <StyledStatInfo stat={nftsPriced} title="NFTs appraised" />
-          <StyledStatInfo stat={earned} title="NFTs appraised" showEthIcon />
-        </StatInfoContainer>
-        <Infographics />
-        <PreviousSessions />
-        <JoinUs />
-        <Navbar footer openModal={() => setModalOpen(true)} />
-        <div style={{ paddingBottom: "15px" }} />
-      </HomeContainer>
-      <OpenAppModal isOpen={modalOpen} toggle={() => setModalOpen(false)} />
+      <Navbar openModal={openModal} />
+      <Superhero openModal={openModal} />
+      <StatInfoContainer>
+        <StyledStatInfo stat={defender} title="Treasury Size" showEthIcon />
+        <StyledStatInfo stat={nftsPriced} title="NFTs appraised" />
+        <StyledStatInfo stat={earned} title="NFTs appraised" showEthIcon />
+      </StatInfoContainer>
+      <Infographics />
+      <PreviousSessions />
+      <JoinUs />
+      <Navbar footer openModal={openModal} />
+      <div style={{ paddingBottom: "15px" }} />
+
+      <OpenAppModal isOpen={modalOpen} toggle={closeModal} />
     </>
   )
 }

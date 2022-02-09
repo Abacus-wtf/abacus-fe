@@ -4,7 +4,8 @@ import { Button, VisuallyHidden, ButtonType, Media } from "abacus-ui"
 import { X } from "react-feather"
 import Infographics from "@components/Infographics"
 
-const Container = styled.div`
+const Container = styled.div<{ isOpen: boolean }>`
+  display: ${({ isOpen }) => (isOpen ? "unset" : "none")};
   position: fixed;
   top: 0;
   bottom: 0;
@@ -14,8 +15,10 @@ const Container = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   backdrop-filter: blur(40px);
-  z-index: 10;
+  z-index: ${({ isOpen }) => (isOpen ? "10" : "-1")};
   padding: 1rem;
+  transition: opacity 1s linear, z-index 1s linear;
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   overflow-y: scroll;
 
   ${Media.sm`
@@ -23,6 +26,7 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-y: hidden;
   `}
 `
 
@@ -42,34 +46,24 @@ const preventBubbling = (e: React.MouseEvent<HTMLDivElement>) => {
 
 const StyledButton = styled(Button)`
   display: flex;
-  width: 100%;
-  justify-content: flex-end;
+  align-self: flex-end;
 `
 
 const OpenAppModal: FunctionComponent<OpenAppModalProps> = ({
   isOpen,
   toggle,
-}) => {
-  if (!isOpen) {
-    return null
-  }
-  return (
-    <Container onClick={toggle}>
-      <StyledButton
-        type="button"
-        buttonType={ButtonType.Clear}
-        onClick={toggle}
-      >
-        <>
-          <X />
-          <VisuallyHidden>Close Modal</VisuallyHidden>
-        </>
-      </StyledButton>
-      <ModalBody onClick={preventBubbling}>
-        <Infographics />
-      </ModalBody>
-    </Container>
-  )
-}
+}) => (
+  <Container onClick={toggle} isOpen={isOpen}>
+    <StyledButton type="button" buttonType={ButtonType.Clear} onClick={toggle}>
+      <>
+        <X />
+        <VisuallyHidden>Close Modal</VisuallyHidden>
+      </>
+    </StyledButton>
+    <ModalBody onClick={preventBubbling}>
+      <Infographics />
+    </ModalBody>
+  </Container>
+)
 
 export default OpenAppModal

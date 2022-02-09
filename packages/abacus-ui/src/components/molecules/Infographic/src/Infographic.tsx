@@ -38,6 +38,7 @@ const ZettaStyled = styled(Zetta)`
 `;
 
 const MegaStyled = styled(Mega)`
+  flex: 1 0 auto;
   color: ${({ theme }) => theme.colors.core.lightWhite};
   text-align: center;
 `;

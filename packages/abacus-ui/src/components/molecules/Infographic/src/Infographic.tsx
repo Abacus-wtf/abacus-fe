@@ -12,10 +12,16 @@ type InfographicProps = {
   link: string;
 };
 
-const ImageStyled = styled.img`
-  transform: rotate(15deg);
+const ImageContainer = styled.div`
+  position: relative; /* If you want text inside of it */
   max-width: 400px;
   width: 70%;
+  flex: 1 0 auto;
+`;
+
+const ImageStyled = styled.img`
+  transform: rotate(15deg);
+  width: 100%;
 `;
 
 const Container = styled.div`
@@ -24,6 +30,7 @@ const Container = styled.div`
   align-items: center;
   grid-gap: 20px;
   width: 100%;
+  justify-content: space-evenly;
 
   ${Media.sm`
     padding: 0 90px;
@@ -51,7 +58,9 @@ const Infographic: FunctionComponent<InfographicProps> = ({
   link,
 }) => (
   <Container>
-    <ImageStyled src={imgSrc} />
+    <ImageContainer>
+      <ImageStyled src={imgSrc} />
+    </ImageContainer>
     {icon}
     <ZettaStyled>{title}</ZettaStyled>
     <MegaStyled>{description}</MegaStyled>

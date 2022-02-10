@@ -6,14 +6,18 @@ export type Session = {
   participants: number
   appraisal: number
   owner: string
+  nftAddress: string
+  tokenId: string
+  nonce: string
 }
 
 export type SubgraphPricingSession = {
   id: string
   nftAddress: string
-  tokenId: number
-  finalAppraisalValue: number
-  totalStaked: number
-  bounty: number
+  tokenId: string
+  nonce: string
+  finalAppraisalValue: string
+  totalStaked: string
+  bounty: string
   numParticipants: number
 }

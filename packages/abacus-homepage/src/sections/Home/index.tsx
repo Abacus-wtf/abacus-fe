@@ -37,6 +37,7 @@ const GET_PREVIOUS_SESSIONS = gql`
       id
       nftAddress
       tokenId
+      nonce
       finalAppraisalValue
       totalStaked
       bounty

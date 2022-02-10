@@ -23,6 +23,7 @@ export const mapSessions = async (
       finalAppraisalValue,
       nftAddress,
       tokenId,
+      nonce,
     }) => {
       const asset = matchOpenSeaAssetToNFT(assets, { nftAddress, tokenId })
       return {
@@ -38,6 +39,9 @@ export const mapSessions = async (
           ? asset?.owner?.user?.username ??
             shortenAddress(asset?.owner?.address)
           : "",
+        nftAddress,
+        tokenId,
+        nonce,
       }
     }
   )

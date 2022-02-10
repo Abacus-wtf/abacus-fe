@@ -89,14 +89,24 @@ const PopUp = styled.div<Indexed>`
 const PopUpImg = styled.img<Indexed>`
   filter: drop-shadow(0px 2px 32px rgba(0, 0, 0, 0.06));
   border-radius: 8px;
-  width: ${({ index }) => getSize(index)};
-  height: ${({ index }) => getSize(index)};
+  width: 6rem;
+  height: 6rem;
+
+  ${Media.md`
+    width: ${({ index }) => getSize(index)};
+    height: ${({ index }) => getSize(index)};
+  `}
 `
 
 const TextWrapper = styled.div`
   display: flex;
   padding: 20px 0;
   align-items: center;
+  flex-direction: column;
+
+  ${Media.md`
+    flex-direction: row;
+  `}
 `
 
 const BoldKilo = styled(Kilo)`
@@ -126,7 +136,11 @@ const GradientLine = styled.div<Indexed>`
 
   transform: min-height 2s ease;
 
-  animation: ${({ index }) => grow(getHeight(index))} 2s ease forwards;
+  animation: ${grow("20px")} 2s ease forwards;
+
+  ${Media.md`
+    animation: ${({ index }) => grow(getHeight(index))} 2s ease forwards;
+  `}
 `
 
 type PopupsProps = {

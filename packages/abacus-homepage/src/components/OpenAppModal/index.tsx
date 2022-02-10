@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { Button, VisuallyHidden, ButtonType, Media } from "abacus-ui"
 import { X } from "react-feather"
@@ -52,18 +52,43 @@ const StyledButton = styled(Button)`
 const OpenAppModal: FunctionComponent<OpenAppModalProps> = ({
   isOpen,
   toggle,
-}) => (
-  <Container onClick={toggle} isOpen={isOpen}>
-    <StyledButton type="button" buttonType={ButtonType.Clear} onClick={toggle}>
-      <>
-        <X />
-        <VisuallyHidden>Close Modal</VisuallyHidden>
-      </>
-    </StyledButton>
-    <ModalBody onClick={preventBubbling}>
-      <Infographics />
-    </ModalBody>
-  </Container>
-)
+}) => {
+  const closeRef = useRef<HTMLButtonElement>()
+
+  useEffect(() => {
+    if (isOpen) {
+      closeRef.current.focus()
+    }
+
+    const closeOnEsc = (e) => {
+      if (isOpen && (e.key === "Escape" || e.code === "Escape")) {
+        toggle()
+      }
+    }
+
+    document.addEventListener("keydown", closeOnEsc)
+
+    return () => document.removeEventListener("keydown", closeOnEsc)
+  }, [isOpen, toggle])
+
+  return (
+    <Container onClick={toggle} isOpen={isOpen}>
+      <StyledButton
+        type="button"
+        buttonType={ButtonType.Clear}
+        onClick={toggle}
+        ref={closeRef}
+      >
+        <>
+          <X />
+          <VisuallyHidden>Close Modal</VisuallyHidden>
+        </>
+      </StyledButton>
+      <ModalBody onClick={preventBubbling}>
+        <Infographics />
+      </ModalBody>
+    </Container>
+  )
+}
 
 export default OpenAppModal

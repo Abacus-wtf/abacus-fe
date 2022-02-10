@@ -56,106 +56,40 @@ const PreviousSession = styled.div`
   transition: all 0.2s ease-out;
 `
 
-// TODO: Fetch actual data
-const previousSessions = [
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 1,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 2,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 3,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 4,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 5,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 6,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 7,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 8,
-  },
-  {
-    imgSrc: "/img_example.png",
-    title: "NFT Name",
-    bounty: 0,
-    participants: 0,
-    appraisal: 0,
-    id: 9,
-  },
-]
+type PreviousSessionsProps = {
+  previousSessions: any[]
+}
 
-const PreviousSessions: FunctionComponent = () => (
-  <>
-    <PreviousSessionsHeader>Previous Sessions</PreviousSessionsHeader>
-    <PreviousSessionsMarquee>
-      <Block totalItems={previousSessions.length}>
-        <Inner>
-          <Span>
-            {previousSessions.map((session) => (
-              <PreviousSession key={session.id}>
-                <SessionCard {...session} />
-              </PreviousSession>
-            ))}
-          </Span>
-          <Span>
-            {previousSessions.map((session) => (
-              <PreviousSession key={session.id}>
-                <SessionCard {...session} />
-              </PreviousSession>
-            ))}
-          </Span>
-        </Inner>
-      </Block>
-    </PreviousSessionsMarquee>
-  </>
-)
+const PreviousSessions: FunctionComponent<PreviousSessionsProps> = ({
+  previousSessions,
+}) => {
+  console.log(previousSessions)
+
+  return (
+    <>
+      <PreviousSessionsHeader>Previous Sessions</PreviousSessionsHeader>
+      <PreviousSessionsMarquee>
+        <Block totalItems={previousSessions.length}>
+          <Inner>
+            <Span>
+              {previousSessions.map((session) => (
+                <PreviousSession key={session.id}>
+                  <SessionCard {...session} />
+                </PreviousSession>
+              ))}
+            </Span>
+            <Span>
+              {previousSessions.map((session) => (
+                <PreviousSession key={session.id}>
+                  <SessionCard {...session} />
+                </PreviousSession>
+              ))}
+            </Span>
+          </Inner>
+        </Block>
+      </PreviousSessionsMarquee>
+    </>
+  )
+}
 
 export default PreviousSessions

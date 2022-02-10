@@ -9,7 +9,7 @@ import {
   SocialLinks,
 } from "abacus-ui"
 import { X, Menu } from "react-feather"
-import { social } from "./index"
+import { social } from "@config/index"
 
 type Openable = { open: boolean }
 

@@ -17,7 +17,7 @@ const Container = styled.div<{ isOpen: boolean }>`
   backdrop-filter: blur(40px);
   z-index: ${({ isOpen }) => (isOpen ? "10" : "-1")};
   padding: 1rem;
-  transition: opacity 1s linear, z-index 1s linear;
+  transition: opacity 0.33s ease, z-index 0.33s ease;
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   overflow-y: scroll;
 

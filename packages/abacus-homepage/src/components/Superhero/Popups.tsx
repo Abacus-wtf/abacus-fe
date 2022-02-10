@@ -134,8 +134,6 @@ const GradientLine = styled.div<Indexed>`
   min-height: 0;
   background: ${({ index }) => getGradient(index)};
 
-  transform: min-height 2s ease;
-
   animation: ${grow("20px")} 2s ease forwards;
 
   ${Media.md`

@@ -81,8 +81,6 @@ const Home: React.FC = () => {
   const [nftsPriced, setNftsPriced] = React.useState("-")
   const [previousSessions, setPreviousSessions] = React.useState<Session[]>([])
   const [earned, setEarned] = React.useState("-")
-  // const [riskFactor, setRiskFactor] = React.useState("-")
-  // const [spread, setSpread] = React.useState("-")
   const [defender, setDefender] = React.useState("-")
 
   useEffect(() => {
@@ -91,8 +89,6 @@ const Home: React.FC = () => {
         profitGenerated,
         nftsPricedContract,
         pricingSessions,
-        // riskFactorContract,
-        // spreadContract,
         defenderContract,
       ] = await Promise.all([
         treasuryContract(ABC_TREASURY_ADDRESS).methods.profitGenerated().call(),
@@ -102,8 +98,6 @@ const Home: React.FC = () => {
           GET_PREVIOUS_SESSIONS,
           {}
         ),
-        // treasuryContract(ABC_TREASURY_ADDRESS).methods.riskFactor().call(),
-        // treasuryContract(ABC_TREASURY_ADDRESS).methods.spread().call(),
         treasuryContract(ABC_TREASURY_ADDRESS).methods.defender().call(),
       ])
       setEarned(
@@ -112,14 +106,12 @@ const Home: React.FC = () => {
           maximumFractionDigits: 2,
         })
       )
+      setDefender(defenderContract)
       setNftsPriced(
         nftsPricedContract.nftsPriced ? nftsPricedContract.nftsPriced.total : 0
       )
       const sessions = await mapSessions(pricingSessions.pricingSessions)
       setPreviousSessions(sessions)
-      // setRiskFactor(riskFactorContract)
-      // setSpread(spreadContract)
-      setDefender(defenderContract)
     }
     loadData()
   }, [treasuryContract])
@@ -132,9 +124,9 @@ const Home: React.FC = () => {
       <Navbar openModal={openModal} />
       <Superhero openModal={openModal} previousSessions={previousSessions} />
       <StatInfoContainer>
-        <StyledStatInfo stat={defender} title="Treasury Size" showEthIcon />
+        <StyledStatInfo stat={earned} title="Earned" showEthIcon />
         <StyledStatInfo stat={nftsPriced} title="NFTs appraised" />
-        <StyledStatInfo stat={earned} title="NFTs appraised" showEthIcon />
+        <StyledStatInfo stat={defender} title="Defender" />
       </StatInfoContainer>
       <Infographics />
       <PreviousSessions previousSessions={previousSessions} />

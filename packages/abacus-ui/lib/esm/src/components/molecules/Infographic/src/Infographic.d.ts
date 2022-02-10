@@ -4,7 +4,7 @@ declare type InfographicProps = {
     icon: React.ReactNode;
     title: string;
     description: string;
-    onClick: () => void;
+    link: string;
 };
 declare const Infographic: FunctionComponent<InfographicProps>;
 export default Infographic;

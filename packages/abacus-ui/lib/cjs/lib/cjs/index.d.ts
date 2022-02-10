@@ -3,7 +3,7 @@ export var ButtonType: {} | undefined;
 export function AbacusCrowdsIcon(_a: any): any;
 export function AbacusIcon(_a: any): any;
 export function AbacusSpotIcon(_a: any): any;
-export function Button(_a: any): any;
+export var Button: any;
 export var Exa: any;
 export function Flex(_a: any): any;
 export function Font(size: any, fontFamily: any): import("styled-components").FlattenInterpolation<import("styled-components").ThemeProps<import("styled-components").DefaultTheme>>;

@@ -1,15 +1,14 @@
-import React, { FunctionComponent } from "react";
+import React from "react";
 export declare enum ButtonType {
     Standard = 0,
     White = 1,
     Clear = 2
 }
 declare type ButtonProps = {
-    children: any;
-    onClick?: () => void;
+    children: React.ReactNode;
     disabled?: boolean;
     buttonType?: ButtonType;
     className?: string;
 };
-declare const Button: FunctionComponent<ButtonProps & React.HTMLProps<HTMLButtonElement>>;
+declare const Button: import("styled-components").StyledComponent<"button", import("styled-components").DefaultTheme, ButtonProps, never>;
 export default Button;

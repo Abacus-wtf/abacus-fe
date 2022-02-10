@@ -9,7 +9,7 @@ type InfographicProps = {
   icon: React.ReactNode;
   title: string;
   description: string;
-  onClick: () => void;
+  link: string;
 };
 
 const ImageStyled = styled.img`
@@ -48,14 +48,16 @@ const Infographic: FunctionComponent<InfographicProps> = ({
   icon,
   title,
   description,
-  onClick,
+  link,
 }) => (
   <Container>
     <ImageStyled src={imgSrc} />
     {icon}
     <ZettaStyled>{title}</ZettaStyled>
     <MegaStyled>{description}</MegaStyled>
-    <Button onClick={onClick}>{title}</Button>
+    <Button as="a" href={link}>
+      {title}
+    </Button>
   </Container>
 );
 

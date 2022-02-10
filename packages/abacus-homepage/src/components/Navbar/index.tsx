@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
-import { SocialLinks, Button, ButtonType, Logo, Media } from "abacus-ui"
+import { SocialLinks, Logo, Media } from "abacus-ui"
 import { social } from "@config/index"
+import ButtonLinks from "./ButtonLinks"
 import MobileNav from "./MobileNav"
 
 const Mobile = styled.div`
@@ -59,10 +60,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({
       <StyledSocialLinks {...social} />
       <Logo isDark />
       <ButtonWrapper>
-        <Button buttonType={ButtonType.Clear}>Whitepaper</Button>
-        <Button buttonType={ButtonType.White} onClick={openModal}>
-          Launch App
-        </Button>
+        <ButtonLinks openModal={openModal} />
       </ButtonWrapper>
     </Container>
   </>

@@ -213,7 +213,7 @@ var Input = function (_a) {
 };
 var templateObject_1$t, templateObject_2$8, templateObject_3$4;
 
-var Container$p = styled__default["default"].section(templateObject_2$7 || (templateObject_2$7 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ",
+var Container$o = styled__default["default"].section(templateObject_2$7 || (templateObject_2$7 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ",
     "\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.utility.white;
@@ -226,7 +226,7 @@ var Container$p = styled__default["default"].section(templateObject_2$7 || (temp
 }, Media.sm(templateObject_1$s || (templateObject_1$s = __makeTemplateObject(["\n    flex-direction: row;\n    align-items: center;\n    justify-content: flex-start;\n  "], ["\n    flex-direction: row;\n    align-items: center;\n    justify-content: flex-start;\n  "]))));
 var Section = function (_a) {
     var children = _a.children;
-    return (React__default["default"].createElement(Container$p, null, children));
+    return (React__default["default"].createElement(Container$o, null, children));
 };
 var templateObject_1$s, templateObject_2$7;
 
@@ -236,7 +236,7 @@ exports.ButtonType = void 0;
     ButtonType[ButtonType["White"] = 1] = "White";
     ButtonType[ButtonType["Clear"] = 2] = "Clear";
 })(exports.ButtonType || (exports.ButtonType = {}));
-var Container$o = styled__default["default"].button(templateObject_1$r || (templateObject_1$r = __makeTemplateObject(["\n  ", "\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n"], ["\n  ", "\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ",
+var Button = styled__default["default"].button(templateObject_1$r || (templateObject_1$r = __makeTemplateObject(["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n"], ["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ",
     ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ",
     ";\n  background-color: ",
     ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n"])), Font(), function (_a) {
@@ -258,16 +258,12 @@ var Container$o = styled__default["default"].button(templateObject_1$r || (templ
         : theme.colors.core.white;
 }, function (_a) {
     var theme = _a.theme, buttonType = _a.buttonType;
-    return buttonType === exports.ButtonType.Standard
-        ? theme.colors.utility.blue
+    return buttonType === exports.ButtonType.Clear
+        ? "transparent"
         : buttonType === exports.ButtonType.White
             ? theme.colors.core.white
-            : "transparent";
+            : theme.colors.utility.blue;
 });
-var Button = function (_a) {
-    var children = _a.children, onClick = _a.onClick, disabled = _a.disabled, _b = _a.buttonType, buttonType = _b === void 0 ? exports.ButtonType.Standard : _b, className = _a.className;
-    return (React__default["default"].createElement(Container$o, { className: className, buttonType: buttonType, disabled: disabled, onClick: onClick }, children));
-};
 var templateObject_1$r;
 
 var StyledDiv = styled__default["default"].div(templateObject_1$q || (templateObject_1$q = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font());
@@ -435,13 +431,13 @@ var MegaStyled$1 = styled__default["default"](Container$j)(templateObject_5 || (
     return theme.colors.core.lightWhite;
 });
 var Infographic = function (_a) {
-    var imgSrc = _a.imgSrc, icon = _a.icon, title = _a.title, description = _a.description, onClick = _a.onClick;
+    var imgSrc = _a.imgSrc, icon = _a.icon, title = _a.title, description = _a.description, link = _a.link;
     return (React__default["default"].createElement(Container$4, null,
         React__default["default"].createElement(ImageStyled, { src: imgSrc }),
         icon,
         React__default["default"].createElement(ZettaStyled, null, title),
         React__default["default"].createElement(MegaStyled$1, null, description),
-        React__default["default"].createElement(Button, { onClick: onClick }, title)));
+        React__default["default"].createElement(Button, { as: "a", href: link }, title)));
 };
 var templateObject_1$4, templateObject_2$3, templateObject_3$1, templateObject_4$1, templateObject_5;
 

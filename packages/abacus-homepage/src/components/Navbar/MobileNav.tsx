@@ -10,6 +10,7 @@ import {
 } from "abacus-ui"
 import { X, Menu } from "react-feather"
 import { social } from "@config/index"
+import ButtonLinks from "./ButtonLinks"
 
 type Openable = { open: boolean }
 
@@ -84,10 +85,7 @@ const MobileNav: FunctionComponent<MobileNavProps> = ({
       <LinksContainer open={menuOpen}>
         <SocialLinks {...social} />
         <HorizontalRule />
-        <Button buttonType={ButtonType.Clear}>Whitepaper</Button>
-        <Button buttonType={ButtonType.White} onClick={openModal}>
-          Launch App
-        </Button>
+        <ButtonLinks openModal={openModal} />
       </LinksContainer>
     </Container>
   )

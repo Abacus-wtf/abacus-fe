@@ -32,9 +32,7 @@ const Infographics: FunctionComponent = () => (
       icon={<AbacusCrowdsIcon />}
       title="Abacus Crowds"
       description="A short description about how Abacus Crowd works in a simple way."
-      onClick={() => {
-        console.log("click")
-      }}
+      link="https://app.abacus.wtf"
     />
     <InfographicDivider />
     <Infographic
@@ -42,9 +40,7 @@ const Infographics: FunctionComponent = () => (
       icon={<AbacusSpotIcon />}
       title="Abacus Spot"
       description="A short description about how Abacus Spot works in a simple way."
-      onClick={() => {
-        console.log("click")
-      }}
+      link="https://medium.com/abacus-wtf/introducing-abacus-spot-96ab14ed016a?source=collection_home---4------5-----------------------"
     />
   </InfographicContainer>
 )

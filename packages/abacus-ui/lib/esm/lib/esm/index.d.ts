@@ -1,12 +1,7 @@
 declare function AbacusCrowds(_a: any): React.ReactSVGElement;
 declare function Abacus(_a: any): React.ReactSVGElement;
 declare function AbacusSpot(_a: any): React.ReactSVGElement;
-export function Button(_a: any): React.DOMElement<{
-    className: any;
-    buttonType: any;
-    disabled: any;
-    onClick: any;
-}, Element>;
+export var Button: import("styled-components").StyledComponent<"button", import("styled-components").DefaultTheme, {}, never>;
 export var ButtonType: any;
 declare var Container$h: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
 export function Flex(_a: any): React.DOMElement<React.DOMAttributes<Element>, Element>;

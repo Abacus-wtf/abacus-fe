@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react"
 import styled, { keyframes } from "styled-components"
 import { H2, Media, SessionCard } from "abacus-ui"
+import { Session } from "@models/index"
 
 const PreviousSessionsHeader = styled(H2)`
   font-size: 3.875rem;
@@ -57,39 +58,35 @@ const PreviousSession = styled.div`
 `
 
 type PreviousSessionsProps = {
-  previousSessions: any[]
+  previousSessions: Session[]
 }
 
 const PreviousSessions: FunctionComponent<PreviousSessionsProps> = ({
   previousSessions,
-}) => {
-  console.log(previousSessions)
-
-  return (
-    <>
-      <PreviousSessionsHeader>Previous Sessions</PreviousSessionsHeader>
-      <PreviousSessionsMarquee>
-        <Block totalItems={previousSessions.length}>
-          <Inner>
-            <Span>
-              {previousSessions.map((session) => (
-                <PreviousSession key={session.id}>
-                  <SessionCard {...session} />
-                </PreviousSession>
-              ))}
-            </Span>
-            <Span>
-              {previousSessions.map((session) => (
-                <PreviousSession key={session.id}>
-                  <SessionCard {...session} />
-                </PreviousSession>
-              ))}
-            </Span>
-          </Inner>
-        </Block>
-      </PreviousSessionsMarquee>
-    </>
-  )
-}
+}) => (
+  <>
+    <PreviousSessionsHeader>Previous Sessions</PreviousSessionsHeader>
+    <PreviousSessionsMarquee>
+      <Block totalItems={previousSessions.length}>
+        <Inner>
+          <Span>
+            {previousSessions.map((session) => (
+              <PreviousSession key={session.id}>
+                <SessionCard {...session} />
+              </PreviousSession>
+            ))}
+          </Span>
+          <Span>
+            {previousSessions.map((session) => (
+              <PreviousSession key={session.id}>
+                <SessionCard {...session} />
+              </PreviousSession>
+            ))}
+          </Span>
+        </Inner>
+      </Block>
+    </PreviousSessionsMarquee>
+  </>
+)
 
 export default PreviousSessions

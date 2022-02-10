@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAddress } from '@ethersproject/address';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -141,5 +142,22 @@ var matchOpenSeaAssetToNFT = function (assets, session) {
     return ret;
 };
 
-export { matchOpenSeaAssetToNFT, openseaGet, openseaGetMany };
+function isAddress(value) {
+    try {
+        return getAddress(value);
+    }
+    catch (_a) {
+        return false;
+    }
+}
+function shortenAddress(address, chars) {
+    if (chars === void 0) { chars = 4; }
+    var parsed = isAddress(address);
+    if (!parsed) {
+        return "";
+    }
+    return parsed.substring(0, chars + 2) + "..." + parsed.substring(42 - chars);
+}
+
+export { isAddress, matchOpenSeaAssetToNFT, openseaGet, openseaGetMany, shortenAddress };
 //# sourceMappingURL=index.js.map

@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { H1, P, Button, ButtonType, Mega, Media } from "abacus-ui"
+import { Session } from "@models/index"
 import Popups from "./Popups"
 
 const Container = styled.div`
@@ -54,9 +55,13 @@ const StyledVideo = styled.video`
 `
 type SuperheroProps = {
   openModal: () => void
+  previousSessions: Session[]
 }
 
-const Superhero: FunctionComponent<SuperheroProps> = ({ openModal }) => (
+const Superhero: FunctionComponent<SuperheroProps> = ({
+  openModal,
+  previousSessions,
+}) => (
   <Container>
     <GradientContainer>
       <StyledH1>Decentralized appraisal tool for NFTS</StyledH1>
@@ -68,7 +73,7 @@ const Superhero: FunctionComponent<SuperheroProps> = ({ openModal }) => (
       >
         <Mega>Launch App</Mega>
       </StyledButton>
-      <Popups />
+      <Popups previousSessions={previousSessions} />
     </GradientContainer>
     <StyledVideo muted autoPlay loop playsInline>
       <source

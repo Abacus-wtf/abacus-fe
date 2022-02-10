@@ -1,24 +1,20 @@
-import { openseaGetMany, matchOpenSeaAssetToNFT } from "abacus-utils"
+import {
+  openseaGetMany,
+  matchOpenSeaAssetToNFT,
+  shortenAddress,
+} from "abacus-utils"
 import { formatEther } from "ethers/lib/utils"
-
-export type Session = {
-  id: string
-  imgSrc: string
-  title: string
-  bounty: number
-  participants: number
-  appraisal: number
-}
+import { Session, SubgraphPricingSession } from "@models/index"
 
 const OPENSEA_LINK = process.env.GATSBY_OPENSEA_API || ""
 
 export const mapSessions = async (
-  pricingSessions: any[]
+  pricingSessions: SubgraphPricingSession[]
 ): Promise<Session[]> => {
-  console.log(OPENSEA_LINK)
   const { assets } = await openseaGetMany(pricingSessions, {
     url: OPENSEA_LINK,
   })
+
   return pricingSessions.map(
     ({
       id,
@@ -38,6 +34,10 @@ export const mapSessions = async (
         appraisal: Number(
           Number(formatEther(finalAppraisalValue)).toPrecision(4)
         ),
+        owner: asset?.owner?.user
+          ? asset?.owner?.user?.username ??
+            shortenAddress(asset?.owner?.address)
+          : "",
       }
     }
   )

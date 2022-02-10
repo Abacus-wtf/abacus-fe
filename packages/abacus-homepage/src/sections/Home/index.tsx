@@ -15,6 +15,7 @@ import Infographics from "@components/Infographics"
 import PreviousSessions from "@components/PreviousSessions"
 import JoinUs from "@components/JoinUs"
 import OpenAppModal from "@components/OpenAppModal"
+import { Session, SubgraphPricingSession } from "@models/index"
 import { mapSessions } from "./mapSessions"
 
 const GET_NFT_PRICE_DATA = gql`
@@ -24,6 +25,7 @@ const GET_NFT_PRICE_DATA = gql`
     }
   }
 `
+
 const GET_PREVIOUS_SESSIONS = gql`
   query {
     pricingSessions(
@@ -40,13 +42,6 @@ const GET_PREVIOUS_SESSIONS = gql`
       bounty
       numParticipants
       maxAppraisal
-      participants {
-        user {
-          id
-        }
-        amountStaked
-        appraisal
-      }
     }
   }
 `
@@ -84,7 +79,7 @@ const Home: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const treasuryContract = useWeb3Contract(ABC_TREASURY)
   const [nftsPriced, setNftsPriced] = React.useState("-")
-  const [previousSessions, setPreviousSessions] = React.useState([])
+  const [previousSessions, setPreviousSessions] = React.useState<Session[]>([])
   const [earned, setEarned] = React.useState("-")
   // const [riskFactor, setRiskFactor] = React.useState("-")
   // const [spread, setSpread] = React.useState("-")
@@ -102,7 +97,11 @@ const Home: React.FC = () => {
       ] = await Promise.all([
         treasuryContract(ABC_TREASURY_ADDRESS).methods.profitGenerated().call(),
         request(SUBGRAPH, GET_NFT_PRICE_DATA, {}),
-        request(SUBGRAPH, GET_PREVIOUS_SESSIONS, {}),
+        request<{ pricingSessions: SubgraphPricingSession[] }>(
+          SUBGRAPH,
+          GET_PREVIOUS_SESSIONS,
+          {}
+        ),
         // treasuryContract(ABC_TREASURY_ADDRESS).methods.riskFactor().call(),
         // treasuryContract(ABC_TREASURY_ADDRESS).methods.spread().call(),
         treasuryContract(ABC_TREASURY_ADDRESS).methods.defender().call(),
@@ -131,7 +130,7 @@ const Home: React.FC = () => {
   return (
     <>
       <Navbar openModal={openModal} />
-      <Superhero openModal={openModal} />
+      <Superhero openModal={openModal} previousSessions={previousSessions} />
       <StatInfoContainer>
         <StyledStatInfo stat={defender} title="Treasury Size" showEthIcon />
         <StyledStatInfo stat={nftsPriced} title="NFTs appraised" />

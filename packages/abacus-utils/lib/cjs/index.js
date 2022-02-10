@@ -3,6 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var axios = require('axios');
+var address = require('@ethersproject/address');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -149,7 +150,26 @@ var matchOpenSeaAssetToNFT = function (assets, session) {
     return ret;
 };
 
+function isAddress(value) {
+    try {
+        return address.getAddress(value);
+    }
+    catch (_a) {
+        return false;
+    }
+}
+function shortenAddress(address, chars) {
+    if (chars === void 0) { chars = 4; }
+    var parsed = isAddress(address);
+    if (!parsed) {
+        return "";
+    }
+    return parsed.substring(0, chars + 2) + "..." + parsed.substring(42 - chars);
+}
+
+exports.isAddress = isAddress;
 exports.matchOpenSeaAssetToNFT = matchOpenSeaAssetToNFT;
 exports.openseaGet = openseaGet;
 exports.openseaGetMany = openseaGetMany;
+exports.shortenAddress = shortenAddress;
 //# sourceMappingURL=index.js.map

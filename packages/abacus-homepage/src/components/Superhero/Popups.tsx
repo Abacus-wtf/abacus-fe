@@ -1,6 +1,7 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, useMemo } from "react"
 import styled, { keyframes } from "styled-components"
 import { Kilo, Media } from "abacus-ui"
+import { Session } from "@models/index"
 
 const Container = styled.div`
   margin-top: 6rem;
@@ -128,44 +129,24 @@ const GradientLine = styled.div<Indexed>`
   animation: ${({ index }) => grow(getHeight(index))} 2s ease forwards;
 `
 
-const TEMP_ITEMS = [
-  {
-    id: 1,
-    src: "/img_example.png",
-    value: "15ETH",
-    winner: "@bohnjai",
-  },
-  {
-    id: 2,
-    src: "/img_example.png",
-    value: "15ETH",
-    winner: "@bgian",
-  },
-  {
-    id: 3,
-    src: "/img_example.png",
-    value: "15ETH",
-    winner: "@akayaian",
-  },
-  {
-    id: 4,
-    src: "/img_example.png",
-    value: "15ETH",
-    winner: "@vitalik",
-  },
-]
+type PopupsProps = {
+  previousSessions: Session[]
+}
 
-const Popups: FunctionComponent = () => {
+const Popups: FunctionComponent<PopupsProps> = ({ previousSessions }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [items, setItems] = useState(TEMP_ITEMS)
+  const items = useMemo<Session[]>(
+    () => previousSessions.slice(0, 4),
+    [previousSessions]
+  )
   return (
     <Container>
       {items.map((item, index) => (
         <PopUp key={item.id} index={index}>
-          <PopUpImg alt="" src={item.src} index={index} />
+          <PopUpImg alt="" src={item.imgSrc} index={index} />
           <TextWrapper>
-            <BoldKilo>{item.value}</BoldKilo>
-            <TransparentKilo>{item.winner}</TransparentKilo>
+            <BoldKilo>{item.appraisal} ETH</BoldKilo>
+            <TransparentKilo>@{item.owner}</TransparentKilo>
           </TextWrapper>
           <GradientLine index={index} />
         </PopUp>

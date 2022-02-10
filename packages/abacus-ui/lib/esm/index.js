@@ -275,7 +275,7 @@ var MiniList = function (_a) {
     var info = _a.info;
     return (React.createElement(Container$n, null, Object.entries(info).map(function (_a, index) {
         var key = _a[0], value = _a[1];
-        return (React.createElement(React.Fragment, null,
+        return (React.createElement(React.Fragment, { key: key },
             React.createElement(MiniContainer, null,
                 React.createElement(StyledKilo, null,
                     React.createElement("b", null, key)),

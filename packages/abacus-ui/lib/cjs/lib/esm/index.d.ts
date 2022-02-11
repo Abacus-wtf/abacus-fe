@@ -31,10 +31,10 @@ export function Section(_a: any): React.DOMElement<React.DOMAttributes<Element>,
 export function SessionCard(_a: any): React.DOMElement<React.DOMAttributes<Element>, Element>;
 declare var Container$8: import("styled-components").StyledComponent<"small", import("styled-components").DefaultTheme, {}, never>;
 export function SocialLinks(_a: any): React.FunctionComponentElement<{
+    ref?: ((instance: HTMLDivElement | null) => void) | React.RefObject<HTMLDivElement> | null | undefined;
     slot?: string | undefined;
     style?: React.CSSProperties | undefined;
     title?: string | undefined;
-    ref?: ((instance: HTMLDivElement | null) => void) | React.RefObject<HTMLDivElement> | null | undefined;
     key?: string | number | null | undefined;
     defaultChecked?: boolean | undefined;
     defaultValue?: string | number | readonly string[] | undefined;
@@ -54,7 +54,7 @@ export function SocialLinks(_a: any): React.FunctionComponentElement<{
     tabIndex?: number | undefined;
     translate?: "yes" | "no" | undefined;
     radioGroup?: string | undefined;
-    role?: "article" | "button" | "dialog" | "figure" | "form" | "img" | "link" | "main" | "menu" | "menuitem" | "option" | "table" | "switch" | "alert" | "alertdialog" | "application" | "banner" | "cell" | "checkbox" | "columnheader" | "combobox" | "complementary" | "contentinfo" | "definition" | "directory" | "document" | "feed" | "grid" | "gridcell" | "group" | "heading" | "list" | "listbox" | "listitem" | "log" | "marquee" | "math" | "menubar" | "menuitemcheckbox" | "menuitemradio" | "navigation" | "none" | "note" | "presentation" | "progressbar" | "radio" | "radiogroup" | "region" | "row" | "rowgroup" | "rowheader" | "scrollbar" | "search" | "searchbox" | "separator" | "slider" | "spinbutton" | "status" | "tab" | "tablist" | "tabpanel" | "term" | "textbox" | "timer" | "toolbar" | "tooltip" | "tree" | "treegrid" | "treeitem" | (string & {}) | undefined;
+    role?: "article" | "button" | "dialog" | "figure" | "form" | "img" | "link" | "main" | "menu" | "menuitem" | "option" | "table" | "switch" | (string & {}) | "none" | "alert" | "alertdialog" | "application" | "banner" | "cell" | "checkbox" | "columnheader" | "combobox" | "complementary" | "contentinfo" | "definition" | "directory" | "document" | "feed" | "grid" | "gridcell" | "group" | "heading" | "list" | "listbox" | "listitem" | "log" | "marquee" | "math" | "menubar" | "menuitemcheckbox" | "menuitemradio" | "navigation" | "note" | "presentation" | "progressbar" | "radio" | "radiogroup" | "region" | "row" | "rowgroup" | "rowheader" | "scrollbar" | "search" | "searchbox" | "separator" | "slider" | "spinbutton" | "status" | "tab" | "tablist" | "tabpanel" | "term" | "textbox" | "timer" | "toolbar" | "tooltip" | "tree" | "treegrid" | "treeitem" | undefined;
     about?: string | undefined;
     datatype?: string | undefined;
     inlist?: any;
@@ -79,14 +79,14 @@ export function SocialLinks(_a: any): React.FunctionComponentElement<{
     is?: string | undefined;
     'aria-activedescendant'?: string | undefined;
     'aria-atomic'?: boolean | "true" | "false" | undefined;
-    'aria-autocomplete'?: "list" | "none" | "inline" | "both" | undefined;
+    'aria-autocomplete'?: "none" | "list" | "inline" | "both" | undefined;
     'aria-busy'?: boolean | "true" | "false" | undefined;
     'aria-checked'?: boolean | "true" | "false" | "mixed" | undefined;
     'aria-colcount'?: number | undefined;
     'aria-colindex'?: number | undefined;
     'aria-colspan'?: number | undefined;
     'aria-controls'?: string | undefined;
-    'aria-current'?: boolean | "time" | "true" | "false" | "date" | "step" | "page" | "location" | undefined;
+    'aria-current'?: boolean | "time" | "true" | "false" | "step" | "date" | "page" | "location" | undefined;
     'aria-describedby'?: string | undefined;
     'aria-details'?: string | undefined;
     'aria-disabled'?: boolean | "true" | "false" | undefined;
@@ -294,10 +294,10 @@ export function SocialLinks(_a: any): React.FunctionComponentElement<{
 }>;
 export function SplitSection(_a: any): React.DOMElement<React.DOMAttributes<Element>, Element>;
 export function StatInfo(_a: any): React.FunctionComponentElement<{
+    ref?: ((instance: HTMLDivElement | null) => void) | React.RefObject<HTMLDivElement> | null | undefined;
     slot?: string | undefined;
     style?: React.CSSProperties | undefined;
     title?: string | undefined;
-    ref?: ((instance: HTMLDivElement | null) => void) | React.RefObject<HTMLDivElement> | null | undefined;
     key?: string | number | null | undefined;
     defaultChecked?: boolean | undefined;
     defaultValue?: string | number | readonly string[] | undefined;
@@ -317,7 +317,7 @@ export function StatInfo(_a: any): React.FunctionComponentElement<{
     tabIndex?: number | undefined;
     translate?: "yes" | "no" | undefined;
     radioGroup?: string | undefined;
-    role?: "article" | "button" | "dialog" | "figure" | "form" | "img" | "link" | "main" | "menu" | "menuitem" | "option" | "table" | "switch" | "alert" | "alertdialog" | "application" | "banner" | "cell" | "checkbox" | "columnheader" | "combobox" | "complementary" | "contentinfo" | "definition" | "directory" | "document" | "feed" | "grid" | "gridcell" | "group" | "heading" | "list" | "listbox" | "listitem" | "log" | "marquee" | "math" | "menubar" | "menuitemcheckbox" | "menuitemradio" | "navigation" | "none" | "note" | "presentation" | "progressbar" | "radio" | "radiogroup" | "region" | "row" | "rowgroup" | "rowheader" | "scrollbar" | "search" | "searchbox" | "separator" | "slider" | "spinbutton" | "status" | "tab" | "tablist" | "tabpanel" | "term" | "textbox" | "timer" | "toolbar" | "tooltip" | "tree" | "treegrid" | "treeitem" | (string & {}) | undefined;
+    role?: "article" | "button" | "dialog" | "figure" | "form" | "img" | "link" | "main" | "menu" | "menuitem" | "option" | "table" | "switch" | (string & {}) | "none" | "alert" | "alertdialog" | "application" | "banner" | "cell" | "checkbox" | "columnheader" | "combobox" | "complementary" | "contentinfo" | "definition" | "directory" | "document" | "feed" | "grid" | "gridcell" | "group" | "heading" | "list" | "listbox" | "listitem" | "log" | "marquee" | "math" | "menubar" | "menuitemcheckbox" | "menuitemradio" | "navigation" | "note" | "presentation" | "progressbar" | "radio" | "radiogroup" | "region" | "row" | "rowgroup" | "rowheader" | "scrollbar" | "search" | "searchbox" | "separator" | "slider" | "spinbutton" | "status" | "tab" | "tablist" | "tabpanel" | "term" | "textbox" | "timer" | "toolbar" | "tooltip" | "tree" | "treegrid" | "treeitem" | undefined;
     about?: string | undefined;
     datatype?: string | undefined;
     inlist?: any;
@@ -342,14 +342,14 @@ export function StatInfo(_a: any): React.FunctionComponentElement<{
     is?: string | undefined;
     'aria-activedescendant'?: string | undefined;
     'aria-atomic'?: boolean | "true" | "false" | undefined;
-    'aria-autocomplete'?: "list" | "none" | "inline" | "both" | undefined;
+    'aria-autocomplete'?: "none" | "list" | "inline" | "both" | undefined;
     'aria-busy'?: boolean | "true" | "false" | undefined;
     'aria-checked'?: boolean | "true" | "false" | "mixed" | undefined;
     'aria-colcount'?: number | undefined;
     'aria-colindex'?: number | undefined;
     'aria-colspan'?: number | undefined;
     'aria-controls'?: string | undefined;
-    'aria-current'?: boolean | "time" | "true" | "false" | "date" | "step" | "page" | "location" | undefined;
+    'aria-current'?: boolean | "time" | "true" | "false" | "step" | "date" | "page" | "location" | undefined;
     'aria-describedby'?: string | undefined;
     'aria-details'?: string | undefined;
     'aria-disabled'?: boolean | "true" | "false" | undefined;

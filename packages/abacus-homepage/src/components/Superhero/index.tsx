@@ -64,8 +64,8 @@ const Superhero: FunctionComponent<SuperheroProps> = ({
 }) => (
   <Container>
     <GradientContainer>
-      <StyledH1>Decentralized appraisal tool for NFTS</StyledH1>
-      <StyledP>A short tagline to explain how Abacus works.</StyledP>
+      <StyledH1>Decentralized appraisal tools for NFTS</StyledH1>
+      <StyledP>🧮 🧮 🧮</StyledP>
       <StyledButton
         buttonType={ButtonType.White}
         type="button"

@@ -80,7 +80,7 @@ const SessionCard: FunctionComponent<SessionCardProps> = ({
       </MegaStyled>
       <MiniList
         info={{
-          "Final Bounty": `${bounty} ETH`,
+          "Bounty + Staked": `${bounty} ETH`,
           Participants: `${participants} People`,
           Appraisal: `${appraisal} ETH`,
         }}

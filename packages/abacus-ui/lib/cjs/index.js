@@ -419,15 +419,16 @@ var templateObject_1$6;
 var Container$5 = styled__default["default"].div(templateObject_1$5 || (templateObject_1$5 = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("zetta"));
 var templateObject_1$5;
 
-var ImageContainer = styled__default["default"].div(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n  position: relative; /* If you want text inside of it */\n  max-width: 400px;\n  width: 70%;\n  flex: 1 0 auto;\n"], ["\n  position: relative; /* If you want text inside of it */\n  max-width: 400px;\n  width: 70%;\n  flex: 1 0 auto;\n"])));
-var ImageStyled = styled__default["default"].img(templateObject_2$3 || (templateObject_2$3 = __makeTemplateObject(["\n  transform: rotate(15deg);\n  width: 100%;\n"], ["\n  transform: rotate(15deg);\n  width: 100%;\n"])));
-var Container$4 = styled__default["default"].div(templateObject_4$1 || (templateObject_4$1 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ",
-    "\n"])), Media.sm(templateObject_3$1 || (templateObject_3$1 = __makeTemplateObject(["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "], ["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "]))));
-var ZettaStyled = styled__default["default"](Container$5)(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"], ["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var ImageContainer = styled__default["default"].div(templateObject_2$3 || (templateObject_2$3 = __makeTemplateObject(["\n  position: relative; /* If you want text inside of it */\n  max-width: 400px;\n  width: 70%;\n\n  ", "\n"], ["\n  position: relative; /* If you want text inside of it */\n  max-width: 400px;\n  width: 70%;\n\n  ",
+    "\n"])), Media.lg(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n    height: 350px;\n  "], ["\n    height: 350px;\n  "]))));
+var ImageStyled = styled__default["default"].img(templateObject_3$1 || (templateObject_3$1 = __makeTemplateObject(["\n  transform: rotate(15deg);\n  width: 100%;\n"], ["\n  transform: rotate(15deg);\n  width: 100%;\n"])));
+var Container$4 = styled__default["default"].div(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ",
+    "\n"])), Media.sm(templateObject_4$1 || (templateObject_4$1 = __makeTemplateObject(["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "], ["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "]))));
+var ZettaStyled = styled__default["default"](Container$5)(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"], ["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.white;
 });
-var MegaStyled$1 = styled__default["default"](Container$j)(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"], ["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var MegaStyled$1 = styled__default["default"](Container$j)(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"], ["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.lightWhite;
 });
@@ -441,7 +442,7 @@ var Infographic = function (_a) {
         React__default["default"].createElement(MegaStyled$1, null, description),
         React__default["default"].createElement(Button, { as: "a", href: link }, title)));
 };
-var templateObject_1$4, templateObject_2$3, templateObject_3$1, templateObject_4$1, templateObject_5, templateObject_6;
+var templateObject_1$4, templateObject_2$3, templateObject_3$1, templateObject_4$1, templateObject_5, templateObject_6, templateObject_7;
 
 var ImageSection = styled__default["default"].img(templateObject_1$3 || (templateObject_1$3 = __makeTemplateObject(["\n  width: 280px;\n  height: 280px;\n  border-top-left-radius: ", ";\n  border-top-right-radius: ", ";\n  object-fit: cover;\n"], ["\n  width: 280px;\n  height: 280px;\n  border-top-left-radius: ", ";\n  border-top-right-radius: ", ";\n  object-fit: cover;\n"])), function (_a) {
     var theme = _a.theme;
@@ -469,7 +470,7 @@ var SessionCard = function (_a) {
         React__default["default"].createElement(BottomSection, null,
             React__default["default"].createElement(MegaStyled, { as: "a", href: "https://app.abacus.wtf/current-session?address=" + nftAddress + "&tokenId=" + tokenId + "&nonce=" + nonce }, title),
             React__default["default"].createElement(MiniList, { info: {
-                    "Final Bounty": bounty + " ETH",
+                    "Bounty + Staked": bounty + " ETH",
                     Participants: participants + " People",
                     Appraisal: appraisal + " ETH",
                 } }))));

@@ -31,7 +31,17 @@ const Infographics: FunctionComponent = () => (
       imgSrc="/abacus_crowds_bg.png"
       icon={<AbacusCrowdsIcon />}
       title="Abacus Crowds"
-      description="A short description about how Abacus Crowd works in a simple way."
+      description={
+        <>
+          <strong>A wisdom of the crowds method to appraise NFT's.</strong>{" "}
+          Appraisers, submit weighted votes on a given assets value, make{" "}
+          <strong>
+            <pre style={{ display: "inline-block" }}>$ABC</pre>
+          </strong>{" "}
+          on your accuracy. Owners, allow the masses to price your assets in
+          this mathematically unbiased protocol.
+        </>
+      }
       link="https://app.abacus.wtf"
     />
     <InfographicDivider />
@@ -39,7 +49,17 @@ const Infographics: FunctionComponent = () => (
       imgSrc="/abacus_spot_bg.png"
       icon={<AbacusSpotIcon />}
       title="Abacus Spot"
-      description="A short description about how Abacus Spot works in a simple way."
+      description={
+        <>
+          <strong>
+            A liquid market appraisal method surrounding the price of an
+            individual NFT.
+          </strong>{" "}
+          Owners, collect yield on your NFT, and always have an appraisal spot
+          price. Appraisers, speculate, and find value in over or under valued
+          assets.
+        </>
+      }
       link="https://medium.com/abacus-wtf/introducing-abacus-spot-96ab14ed016a?source=collection_home---4------5-----------------------"
     />
   </InfographicContainer>

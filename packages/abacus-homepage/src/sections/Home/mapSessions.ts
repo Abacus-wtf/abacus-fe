@@ -19,6 +19,7 @@ export const mapSessions = async (
     ({
       id,
       bounty,
+      totalStaked,
       numParticipants,
       finalAppraisalValue,
       nftAddress,
@@ -30,7 +31,11 @@ export const mapSessions = async (
         id,
         title: asset?.asset_contract.name ?? "",
         imgSrc: (asset?.image_preview_url || asset?.image_url) ?? "",
-        bounty: Number(Number(formatEther(bounty)).toPrecision(4)),
+        bounty: Number(
+          (
+            Number(formatEther(bounty)) + Number(formatEther(totalStaked))
+          ).toPrecision(4)
+        ),
         participants: numParticipants,
         appraisal: Number(
           Number(formatEther(finalAppraisalValue)).toPrecision(4)

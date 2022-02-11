@@ -8,7 +8,7 @@ type InfographicProps = {
   imgSrc: string;
   icon: React.ReactNode;
   title: string;
-  description: string;
+  description: string | React.ReactNode;
   link: string;
 };
 
@@ -16,7 +16,10 @@ const ImageContainer = styled.div`
   position: relative; /* If you want text inside of it */
   max-width: 400px;
   width: 70%;
-  flex: 1 0 auto;
+
+  ${Media.lg`
+    height: 350px;
+  `}
 `;
 
 const ImageStyled = styled.img`

@@ -5,3 +5,4 @@ export * from "./SessionCard";
 export * from "./SocialLinks";
 export * from "./ProfileInfo";
 export * from "./AbacusBar";
+export * from "./ExploreCard";

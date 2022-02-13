@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "@storybook/addon-docs": "^6.4.16",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "react-countdown": "^2.3.2"
   }
 }

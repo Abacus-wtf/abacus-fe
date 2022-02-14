@@ -123,23 +123,28 @@ export type OpenSeaGetResponse = {
   assets: OpenSeaAsset[]
 }
 
-export async function openseaGet<T = OpenSeaAsset>(input: string) {
-  let result: AxiosResponse<T>
+async function openseaRequest(input: string) {
+  let result: AxiosResponse<OpenSeaAsset | OpenSeaGetResponse>
   try {
-    result = await axios.get<T>(OPENSEA_LINK + input, {
-      decompress: false,
-      headers: OPENSEA_API_KEY
-        ? {
-            "X-API-KEY": OPENSEA_API_KEY,
-          }
-        : {},
-    })
+    result = await axios.get<OpenSeaAsset | OpenSeaGetResponse>(
+      OPENSEA_LINK + input,
+      {
+        decompress: false,
+        headers: OPENSEA_API_KEY
+          ? {
+              "X-API-KEY": OPENSEA_API_KEY,
+            }
+          : {},
+      }
+    )
     return result.data
   } catch (e) {
     console.log("e", e)
     return DEFAULT_ASSET
   }
 }
+
+export const openseaGet = _.throttle(openseaRequest, 1500)
 
 function isOpenSeaAsset(
   asset: OpenSeaAsset | OpenSeaGetResponse
@@ -155,7 +160,7 @@ export async function openseaGetMany(pricingSessions: OpenSeaGetManyParams) {
     .toString()}${pricingSessions
     .map((session) => `token_ids=${session.tokenId}&`)
     .toString()}`
-  const result = await openseaGet<OpenSeaGetResponse>(URL.replaceAll(",", ""))
+  const result = await openseaGet(URL.replaceAll(",", ""))
   if (isOpenSeaAsset(result)) {
     const DEFAULT_OPENSEA_GET_RESPONSE: OpenSeaGetResponse = {
       assets: pricingSessions.map((session) => ({

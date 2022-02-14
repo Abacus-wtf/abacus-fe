@@ -21,7 +21,7 @@ const PlusIcon = styled.div`
   margin-right: -8px;
   background-color: #f6f6f6;
   ${Font("milli")};
-  color: #1c2333;
+  color: ${({ theme }) => theme.colors.core.semiTitle};
   border-radius: 50%;
   display: flex;
   justify-content: center;

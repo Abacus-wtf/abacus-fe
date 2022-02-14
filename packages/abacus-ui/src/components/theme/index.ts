@@ -10,6 +10,7 @@ const defaultTheme = {
       border: "rgba(28, 35, 51, 0.04)",
       lightWhite: "rgba(255, 255, 255, 0.8)",
       white: "white",
+      semiTitle: "#1C2333",
     },
     button: {
       secondary: "rgba(28, 35, 51, 0.04)",

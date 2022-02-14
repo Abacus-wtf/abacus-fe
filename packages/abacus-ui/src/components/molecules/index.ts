@@ -8,3 +8,4 @@ export * from "./AbacusBar";
 export * from "./ExploreCard";
 export * from "./ExploreScrollableCard";
 export * from "./ProfileGroup";
+export * from "./CardBar";

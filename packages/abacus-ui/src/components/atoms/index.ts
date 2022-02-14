@@ -8,3 +8,4 @@ export * from "./ExploreImage";
 export * from "./SessionCountdown";
 export * from "./ExploreInfo";
 export * from "./ProfileIcon";
+export * from "./CardBackground";

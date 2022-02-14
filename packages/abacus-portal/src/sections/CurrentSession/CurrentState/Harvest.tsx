@@ -27,6 +27,7 @@ import {
   ListGroupItemMinWidth,
 } from "../CurrentSession.styles"
 import SessionCountdown from "./SessionCountdown"
+import { isWithinWinRange } from "@config/utils"
 
 const CallToActionSmall = styled(CallToActionCopy)`
   margin-top: 35px;
@@ -107,9 +108,11 @@ const Harvest: FunctionComponent = () => {
         </ListGroupItem>
         <CallToActionSmall>
           {sessionData.guessedAppraisal &&
-          sessionData.guessedAppraisal <=
-            sessionData.finalAppraisalValue * 1.05 &&
-          sessionData.guessedAppraisal >= sessionData.finalAppraisalValue * 0.95
+          isWithinWinRange(
+            sessionData.guessedAppraisal,
+            sessionData.finalAppraisalValue,
+            sessionData.winnerAmount
+          )
             ? `Congrats! You appraised the NFT at ${sessionData.guessedAppraisal.toLocaleString(
                 "en-US",
                 { minimumFractionDigits: 2, maximumFractionDigits: 2 }

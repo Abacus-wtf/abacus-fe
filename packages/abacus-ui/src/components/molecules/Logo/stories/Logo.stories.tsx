@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Logo } from "../src";
 
 export default {
-  title: "molecules/Logo",
+  title: "molecule/Logo",
   component: Logo,
   argTypes: {},
 } as ComponentMeta<typeof Logo>;

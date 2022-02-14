@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { AbacusBar } from "../src";
 
 export default {
-  title: "molecules/AbacusBar",
+  title: "molecule/AbacusBar",
   component: AbacusBar,
   argTypes: {},
 } as ComponentMeta<typeof AbacusBar>;

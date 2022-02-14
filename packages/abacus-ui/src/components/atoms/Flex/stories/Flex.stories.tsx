@@ -5,7 +5,7 @@ import { AbacusIcon } from "../../../icons";
 import { Flex } from "../src";
 
 export default {
-  title: "atoms/Flex",
+  title: "atom/Flex",
   component: Flex,
   argTypes: {},
 } as ComponentMeta<typeof Flex>;

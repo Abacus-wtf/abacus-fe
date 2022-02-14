@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { ExploreImage } from "../src";
 
 export default {
-  title: "atoms/ExploreImage",
+  title: "atom/ExploreImage",
   component: ExploreImage,
   argTypes: {},
 } as ComponentMeta<typeof ExploreImage>;

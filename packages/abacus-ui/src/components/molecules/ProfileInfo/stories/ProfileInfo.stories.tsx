@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { ProfileInfo } from "../src";
 
 export default {
-  title: "molecules/ProfileInfo",
+  title: "molecule/ProfileInfo",
   component: ProfileInfo,
   argTypes: {},
 } as ComponentMeta<typeof ProfileInfo>;

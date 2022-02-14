@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { SocialLinks } from "../src";
 
 export default {
-  title: "molecules/SocialLinks",
+  title: "molecule/SocialLinks",
   component: SocialLinks,
   argTypes: {
     twitter: {

@@ -6,3 +6,5 @@ export * from "./VisuallyHidden";
 export * from "./Flex";
 export * from "./ExploreImage";
 export * from "./SessionCountdown";
+export * from "./ExploreInfo";
+export * from "./ProfileIcon";

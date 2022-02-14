@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { ExploreCard } from "../src";
 
 export default {
-  title: "molecules/ExploreCard",
+  title: "molecule/ExploreCard",
   component: ExploreCard,
   argTypes: {},
 } as ComponentMeta<typeof ExploreCard>;
@@ -20,7 +20,19 @@ Primary.args = {
   endTime: 1647027719000,
   numParticipants: 69,
   poolAmount: 1.22,
+  poolAmountDollars: 800,
+  link: "http://google.com",
   imgs: [
+    "../../../../static/prof.jpeg",
+    "../../../../static/prof.jpeg",
+    "../../../../static/prof.jpeg",
+    "../../../../static/prof.jpeg",
+    "../../../../static/prof.jpeg",
+    "../../../../static/prof.jpeg",
+    "../../../../static/prof.jpeg",
+    "../../../../static/prof.jpeg",
+    "../../../../static/prof.jpeg",
+    "../../../../static/prof.jpeg",
     "../../../../static/prof.jpeg",
     "../../../../static/prof.jpeg",
     "../../../../static/prof.jpeg",

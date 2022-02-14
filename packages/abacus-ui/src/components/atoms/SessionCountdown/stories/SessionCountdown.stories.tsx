@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { SessionCountdown } from "../src";
 
 export default {
-  title: "atoms/SessionCountdown",
+  title: "atom/SessionCountdown",
   component: SessionCountdown,
   argTypes: {},
 } as ComponentMeta<typeof SessionCountdown>;

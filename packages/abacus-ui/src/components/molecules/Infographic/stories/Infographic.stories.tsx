@@ -5,7 +5,7 @@ import { AbacusCrowdsIcon } from "../../../icons";
 import { Infographic } from "../src";
 
 export default {
-  title: "molecules/Infographic",
+  title: "molecule/Infographic",
   component: Infographic,
   argTypes: {},
 } as ComponentMeta<typeof Infographic>;

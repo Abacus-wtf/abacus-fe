@@ -1,4 +1,5 @@
 import { Button, ButtonType } from "components/atoms/Button/src";
+import { ProfileIcon } from "components/atoms/ProfileIcon";
 import { Kilo } from "components/typography/Kilo/src";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
@@ -21,11 +22,7 @@ const ProfileInfo: FunctionComponent<ProfileInfoProps> = ({
   profileIcon,
 }) => (
   <ButtonStyled buttonType={ButtonType.Clear}>
-    <img
-      style={{ borderRadius: "50%", width: 24, height: 24 }}
-      src={profileIcon}
-      alt="Profile Icon"
-    />
+    <ProfileIcon src={profileIcon} />
     <Kilo>{profileName}</Kilo>
   </ButtonStyled>
 );

@@ -6,11 +6,12 @@ import styled from "styled-components";
 type CardWithTitleProps = {
   title: string;
   children: JSX.Element;
+  style?: React.CSSProperties;
 };
 
 const KiloStyled = styled(Kilo)`
   color: ${({ theme }) => theme.colors.core.semiTitle};
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 const Border = styled.div`
@@ -31,9 +32,10 @@ const Container = styled.div`
 const CardWithTitle: FunctionComponent<CardWithTitleProps> = ({
   title,
   children,
+  style,
 }) => (
   <CardBackground>
-    <Container>
+    <Container style={{ ...style }}>
       <KiloStyled>{title}</KiloStyled>
       <Border />
       {children}

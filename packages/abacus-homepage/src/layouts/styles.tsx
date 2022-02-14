@@ -15,6 +15,11 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   @font-face {
+    font-family: "Inter SemiBold";
+    src: url("/fonts/Inter-SemiBold.ttf");
+  }
+
+  @font-face {
     font-family: "Bluu Next";
     src: url("/fonts/BluuNext-Bold.otf") format("opentype");
     font-weight: bold;

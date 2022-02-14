@@ -9,3 +9,5 @@ export * from "./ExploreCard";
 export * from "./ExploreScrollableCard";
 export * from "./ProfileGroup";
 export * from "./CardBar";
+export * from "./AboutSection";
+export * from "./PriceHistory";

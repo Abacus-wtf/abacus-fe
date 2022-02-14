@@ -56,7 +56,7 @@ const BadgeContainer = styled.div`
   height: fit-content;
   grid-gap: 8px;
   display: flex;
-  font-weight: 600;
+  font-weight: 500;
   ${Font("nano")};
   align-items: center;
 `;

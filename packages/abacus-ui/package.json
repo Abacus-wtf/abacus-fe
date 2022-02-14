@@ -70,6 +70,7 @@
   "dependencies": {
     "@storybook/addon-docs": "^6.4.16",
     "lodash": "^4.17.21",
-    "react-countdown": "^2.3.2"
+    "react-countdown": "^2.3.2",
+    "react-crossfade-image": "^1.2.0"
   }
 }

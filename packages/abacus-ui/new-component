@@ -53,7 +53,7 @@ import { ComponentStory, ComponentMeta } from \"@storybook/react\";
 import { ${COMPONENT} } from \"../src\";
 
 export default {
-  title: \"${STRUCTURE}s/${COMPONENT}\",
+  title: \"${STRUCTURE}/${COMPONENT}\",
   component: ${COMPONENT},
   argTypes: {},
 } as ComponentMeta<typeof ${COMPONENT}>;

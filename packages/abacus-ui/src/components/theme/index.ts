@@ -24,6 +24,7 @@ const defaultTheme = {
       white: "#FFFFFF",
       gray: "#CCCCCC",
       black: "#000000",
+      brown: "#964B00",
     },
   },
   layout: {

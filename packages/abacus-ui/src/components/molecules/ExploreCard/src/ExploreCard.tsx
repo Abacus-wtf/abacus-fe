@@ -3,16 +3,14 @@ import {
   ButtonType,
   ExploreImage,
   ExploreInfo,
-  ProfileIcon,
   SessionCountdown,
 } from "@atoms";
-import { Font } from "@theme";
 import { Yotta } from "@typography";
-import _ from "lodash";
+import { ProfileGroup } from "components/molecules/ProfileGroup";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 
-type ExploreCardProps = {
+export type ExploreCardProps = {
   nftSrc: string;
   nftTitle: string;
   endTime: number;
@@ -48,14 +46,14 @@ const SecondHalf = styled.div`
   box-sizing: border-box;
 `;
 
-const Divider = styled.div`
+export const Divider = styled.div`
   margin: 15px 0px;
   height: 2px;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.core.border};
 `;
 
-const ExploreInfoContainer = styled.div`
+export const ExploreInfoContainer = styled.div`
   display: flex;
   width: 100%;
   grid-gap: 50px;
@@ -64,25 +62,6 @@ const ExploreInfoContainer = styled.div`
 
 const ButtonStyled = styled(Button)`
   width: 100%;
-`;
-
-const ProfileContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const PlusIcon = styled.div`
-  border: 2px solid #fff;
-  height: 36px;
-  width: 36px;
-  margin-right: -8px;
-  background-color: #f6f6f6;
-  ${Font("milli")};
-  color: #1c2333;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const ExploreCard: FunctionComponent<ExploreCardProps> = ({
@@ -118,24 +97,7 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
           Participate
         </ButtonStyled>
       </a>
-      <ProfileContainer>
-        {_.map(_.range(0, imgs.length > 9 ? 9 : imgs.length), (i) => {
-          if (i === 8) {
-            return <PlusIcon>+{numParticipants - 9}</PlusIcon>;
-          }
-          return (
-            <ProfileIcon
-              src={imgs[i]}
-              style={{
-                border: "2px solid #fff",
-                height: 36,
-                width: 36,
-                marginRight: -8,
-              }}
-            />
-          );
-        })}
-      </ProfileContainer>
+      <ProfileGroup imgs={imgs} numParticipants={numParticipants} />
     </SecondHalf>
   </Container>
 );

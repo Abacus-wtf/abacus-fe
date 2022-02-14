@@ -6,3 +6,5 @@ export * from "./SocialLinks";
 export * from "./ProfileInfo";
 export * from "./AbacusBar";
 export * from "./ExploreCard";
+export * from "./ExploreScrollableCard";
+export * from "./ProfileGroup";

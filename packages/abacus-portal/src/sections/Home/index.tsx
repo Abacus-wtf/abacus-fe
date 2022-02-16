@@ -1,33 +1,22 @@
 import React, { useState, useEffect, useRef } from "react"
 import {
-  Title,
-  Subheader,
-  UniversalContainer,
-  Label,
-  Button,
-  ButtonsWhite,
-} from "abacus-components"
-import Card from "@components/Card"
-import {
   useGetMultiSessionData,
   useMultiSessionState,
 } from "@state/sessionData/hooks"
-import _ from "lodash"
 import { PromiseStatus } from "@models/PromiseStatus"
-import PaginationButton from "@components/PaginationButton"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { usePrevious } from "@hooks/index"
-import FilterModal from "@components/FilterModal"
-import { Tooltip } from "shards-react"
 import { NetworkSymbolEnum } from "@config/constants"
-import { Link } from "gatsby"
-import {
-  BackgroundIMG,
-  HeaderBar,
-  CardContainer,
-  Header,
-  HeaderBarContainer,
-} from "./Home.styles"
+import styled from "styled-components"
+
+const BigThing = styled.div`
+  width: 100vw;
+  height: 200vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12rem;
+`
 
 const Home: React.FC = () => {
   const isInitializedRef = useRef(false)
@@ -53,84 +42,7 @@ const Home: React.FC = () => {
     }
   }, [getMultiSessionData, isNewNetwork])
 
-  return (
-    <UniversalContainer>
-      <BackgroundIMG />
-      <HeaderBar>
-        <Header>
-          <Title>Highlighted</Title>
-          <Subheader>
-            Browse {multiSessionData ? multiSessionData.length : "-"} Total
-            Sessions
-          </Subheader>
-        </Header>
-        <HeaderBarContainer>
-          <ButtonsWhite
-            onClick={() => setFilterOpen(true)}
-            disabled={isNetworkSymbolNone}
-          >
-            Filter
-          </ButtonsWhite>
-          <FilterModal
-            open={filterOpen}
-            toggle={() => setFilterOpen(false)}
-            applyFilters={getMultiSessionData}
-            setFilters={setFilters}
-          />
-          <Button
-            id="createSession"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              cursor: "not-allowed",
-              opacity: 0.7,
-            }}
-            disabled={isNetworkSymbolNone}
-          >
-            Create Session
-          </Button>
-          <Tooltip
-            open={isToolTipOpen}
-            target="#createSession"
-            toggle={() => setIsToolTipOpen(!isToolTipOpen)}
-            placement="bottom"
-            trigger="hover"
-          >
-            The only way to create new sessions at the moment is to win the
-            bounty auction for the next slot.
-          </Tooltip>
-        </HeaderBarContainer>
-      </HeaderBar>
-
-      <CardContainer>
-        {_.map(multiSessionData, (i) => (
-          <Link
-            to={`/current-session?address=${i.address}&tokenId=${i.tokenId}&nonce=${i.nonce}`}
-            key={`${i.address}-${i.tokenId}-${i.nonce}`}
-          >
-            <Card {...i} />
-          </Link>
-        ))}
-      </CardContainer>
-      <UniversalContainer style={{ alignItems: "center", marginTop: "10px" }}>
-        {!isLoading &&
-          multiSessionData.length === 0 &&
-          isInitializedRef.current && (
-            <Label>No Results! Try changing the filters.</Label>
-          )}
-        <PaginationButton
-          isLastPage={isLastPage}
-          isLoading={isLoading}
-          getNextPage={() => getMultiSessionData(filters)}
-        />
-      </UniversalContainer>
-      {isLoading && (
-        <UniversalContainer style={{ alignItems: "center" }}>
-          Loading... {/* TODO: find a loader */}
-        </UniversalContainer>
-      )}
-    </UniversalContainer>
-  )
+  return <BigThing>Hi</BigThing>
 }
 
 export default Home

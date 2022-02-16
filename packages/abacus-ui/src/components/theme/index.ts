@@ -3,7 +3,7 @@ import { css, CSSObject, SimpleInterpolation } from "styled-components";
 const defaultTheme = {
   colors: {
     core: {
-      primary: "#1C233399",
+      primary: "#1C2333",
       900: "rgba(28, 35, 51, 0.72)",
       800: "rgba(28, 35, 51, 0.6)",
       700: "rgba(28, 35, 51, 0.4)",

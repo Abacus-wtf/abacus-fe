@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useEffect } from "react"
-import Navbar from "@components/Navbar"
+import { PortalNavbar } from "abacus-ui"
 import styled from "styled-components"
 import { Container, Row } from "shards-react"
 import Web3Modal from "@components/Web3Modal"
@@ -16,21 +16,6 @@ import NotConnectedAlert from "@components/NotConnectedAlert"
 import { theme } from "@config/theme"
 import SEO, { SEOWithQueryProps } from "@components/SEO"
 import { GlobalStyles } from "./styles"
-
-const StyledContainer = styled(Container)`
-  width: 100%;
-  max-width: 1600px;
-`
-
-const RowContainer = styled(Row)`
-  flex-wrap: inherit;
-  padding: 15px;
-  justify-content: center;
-
-  @media ${theme.mediaMin.splitCenter} {
-    padding: 65px 80px;
-  }
-`
 
 const GlobalLayout: React.FC = (props: any) => {
   const { children, location } = props
@@ -111,30 +96,22 @@ const GlobalLayout: React.FC = (props: any) => {
     <>
       <SEO {...seoProps} />
       <GlobalStyles />
-      <StyledContainer>
-        <Navbar location={location} />
-        <GeneralizedContractError />
-        <NotConnectedAlert />
-        <RowContainer>
-          <Web3Modal />
-          {!isArbitrumNetwork && !isNetworkSymbolNone ? (
-            <div
-              style={{
-                textAlign: "center",
-                maxWidth: "600px",
-                lineHeight: 1.8,
-              }}
-            >
-              We currently only support Arbitrum. Please change to the Arbitrum
-              network by clicking on the ETH label in your Navigation Bar to
-              access Abacus features. We will be porting to your favorite chain
-              shortly!
-            </div>
-          ) : (
-            children
-          )}
-        </RowContainer>
-      </StyledContainer>
+      {/* <PortalNavbar /> */}
+      {!isArbitrumNetwork && !isNetworkSymbolNone ? (
+        <div
+          style={{
+            textAlign: "center",
+            maxWidth: "600px",
+            lineHeight: 1.8,
+          }}
+        >
+          We currently only support Arbitrum. Please change to the Arbitrum
+          network by clicking on the ETH label in your Navigation Bar to access
+          Abacus features. We will be porting to your favorite chain shortly!
+        </div>
+      ) : (
+        children
+      )}
     </>
   )
 }

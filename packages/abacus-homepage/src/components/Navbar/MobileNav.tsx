@@ -9,7 +9,8 @@ import {
   SocialLinks,
 } from "abacus-ui"
 import { X, Menu } from "react-feather"
-import { social } from "./index"
+import { social } from "@config/index"
+import ButtonLinks from "./ButtonLinks"
 
 type Openable = { open: boolean }
 
@@ -50,9 +51,13 @@ const HorizontalRule = styled.hr`
 
 type MobileNavProps = {
   footer: boolean
+  openModal: () => void
 }
 
-const MobileNav: FunctionComponent<MobileNavProps> = ({ footer }) => {
+const MobileNav: FunctionComponent<MobileNavProps> = ({
+  footer,
+  openModal,
+}) => {
   const [menuOpen, setMenuOpen] = useState(false)
   if (footer) {
     return null
@@ -80,8 +85,7 @@ const MobileNav: FunctionComponent<MobileNavProps> = ({ footer }) => {
       <LinksContainer open={menuOpen}>
         <SocialLinks {...social} />
         <HorizontalRule />
-        <Button buttonType={ButtonType.Clear}>Whitepaper</Button>
-        <Button buttonType={ButtonType.White}>Launch App</Button>
+        <ButtonLinks openModal={openModal} />
       </LinksContainer>
     </Container>
   )

@@ -9,6 +9,9 @@ export type SessionCardProps = {
   bounty: number;
   participants: number;
   appraisal: number;
+  nftAddress: string;
+  tokenId: string;
+  nonce: string;
 };
 
 const ImageSection = styled.img`
@@ -23,12 +26,22 @@ const MegaStyled = styled(Mega)`
   color: ${({ theme }) => theme.colors.core.white};
   font-family: "Bluu Next";
   padding-bottom: 24px;
+  text-decoration: none;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 `;
 
 const Container = styled.div`
+  position: relative;
   border-radius: ${({ theme }) => theme.borderRadius.section};
   background-color: rgba(255, 255, 255, 0.1);
-  cursor: pointer;
   transition: ${({ theme }) => theme.transitionTime.main};
   padding: 0px;
   width: 280px;
@@ -52,14 +65,22 @@ const SessionCard: FunctionComponent<SessionCardProps> = ({
   bounty,
   participants,
   appraisal,
+  nftAddress,
+  tokenId,
+  nonce,
 }) => (
   <Container>
     <ImageSection src={imgSrc} alt={`${title}`} />
     <BottomSection>
-      <MegaStyled>{title}</MegaStyled>
+      <MegaStyled
+        as="a"
+        href={`https://app.abacus.wtf/current-session?address=${nftAddress}&tokenId=${tokenId}&nonce=${nonce}`}
+      >
+        {title}
+      </MegaStyled>
       <MiniList
         info={{
-          "Final Bounty": `${bounty} ETH`,
+          "Bounty + Staked": `${bounty} ETH`,
           Participants: `${participants} People`,
           Appraisal: `${appraisal} ETH`,
         }}

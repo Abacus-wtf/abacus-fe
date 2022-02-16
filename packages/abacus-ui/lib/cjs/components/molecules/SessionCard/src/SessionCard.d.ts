@@ -5,6 +5,9 @@ export declare type SessionCardProps = {
     bounty: number;
     participants: number;
     appraisal: number;
+    nftAddress: string;
+    tokenId: string;
+    nonce: string;
 };
 declare const SessionCard: FunctionComponent<SessionCardProps>;
 export default SessionCard;

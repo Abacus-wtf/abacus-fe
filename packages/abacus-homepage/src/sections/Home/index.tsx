@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import {
   ABC_TREASURY_ADDRESS,
   useWeb3Contract,
@@ -14,11 +14,35 @@ import Navbar from "@components/Navbar"
 import Infographics from "@components/Infographics"
 import PreviousSessions from "@components/PreviousSessions"
 import JoinUs from "@components/JoinUs"
+import OpenAppModal from "@components/OpenAppModal"
+import { Session, SubgraphPricingSession } from "@models/index"
+import { mapSessions } from "./mapSessions"
 
 const GET_NFT_PRICE_DATA = gql`
   query {
     nftsPriced(id: "0") {
       total
+    }
+  }
+`
+
+const GET_PREVIOUS_SESSIONS = gql`
+  query {
+    pricingSessions(
+      first: 20
+      orderBy: createdAt
+      orderDirection: desc
+      where: { sessionStatus: 5 }
+    ) {
+      id
+      nftAddress
+      tokenId
+      nonce
+      finalAppraisalValue
+      totalStaked
+      bounty
+      numParticipants
+      maxAppraisal
     }
   }
 `
@@ -53,11 +77,11 @@ const StyledStatInfo = styled(StatInfo)`
 `
 
 const Home: React.FC = () => {
+  const [modalOpen, setModalOpen] = useState(false)
   const treasuryContract = useWeb3Contract(ABC_TREASURY)
   const [nftsPriced, setNftsPriced] = React.useState("-")
+  const [previousSessions, setPreviousSessions] = React.useState<Session[]>([])
   const [earned, setEarned] = React.useState("-")
-  // const [riskFactor, setRiskFactor] = React.useState("-")
-  // const [spread, setSpread] = React.useState("-")
   const [defender, setDefender] = React.useState("-")
 
   useEffect(() => {
@@ -65,14 +89,16 @@ const Home: React.FC = () => {
       const [
         profitGenerated,
         nftsPricedContract,
-        // riskFactorContract,
-        // spreadContract,
+        pricingSessions,
         defenderContract,
       ] = await Promise.all([
         treasuryContract(ABC_TREASURY_ADDRESS).methods.profitGenerated().call(),
         request(SUBGRAPH, GET_NFT_PRICE_DATA, {}),
-        treasuryContract(ABC_TREASURY_ADDRESS).methods.riskFactor().call(),
-        treasuryContract(ABC_TREASURY_ADDRESS).methods.spread().call(),
+        request<{ pricingSessions: SubgraphPricingSession[] }>(
+          SUBGRAPH,
+          GET_PREVIOUS_SESSIONS,
+          {}
+        ),
         treasuryContract(ABC_TREASURY_ADDRESS).methods.defender().call(),
       ])
       setEarned(
@@ -81,29 +107,35 @@ const Home: React.FC = () => {
           maximumFractionDigits: 2,
         })
       )
+      setDefender(defenderContract)
       setNftsPriced(
         nftsPricedContract.nftsPriced ? nftsPricedContract.nftsPriced.total : 0
       )
-      // setRiskFactor(riskFactorContract)
-      // setSpread(spreadContract)
-      setDefender(defenderContract)
+      const sessions = await mapSessions(pricingSessions.pricingSessions)
+      setPreviousSessions(sessions)
     }
     loadData()
   }, [treasuryContract])
 
+  const openModal = useCallback(() => setModalOpen(true), [])
+  const closeModal = useCallback(() => setModalOpen(false), [])
+
   return (
     <>
-      <Superhero />
+      <Navbar openModal={openModal} />
+      <Superhero openModal={openModal} previousSessions={previousSessions} />
       <StatInfoContainer>
-        <StyledStatInfo stat={defender} title="Treasury Size" showEthIcon />
+        <StyledStatInfo stat={earned} title="Earned" showEthIcon />
         <StyledStatInfo stat={nftsPriced} title="NFTs appraised" />
-        <StyledStatInfo stat={earned} title="NFTs appraised" showEthIcon />
+        <StyledStatInfo stat={defender} title="Defender" />
       </StatInfoContainer>
       <Infographics />
-      <PreviousSessions />
+      <PreviousSessions previousSessions={previousSessions} />
       <JoinUs />
-      <Navbar footer />
+      <Navbar footer openModal={openModal} />
       <div style={{ paddingBottom: "15px" }} />
+
+      <OpenAppModal isOpen={modalOpen} toggle={closeModal} />
     </>
   )
 }

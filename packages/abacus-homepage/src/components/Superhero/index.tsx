@@ -1,15 +1,12 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { H1, P, Button, ButtonType, Mega, Media } from "abacus-ui"
-import { StaticImage } from "gatsby-plugin-image"
+import { Session } from "@models/index"
+import Popups from "./Popups"
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 16px;
   padding-top: 130px;
+  position: relative;
 `
 
 const StyledH1 = styled(H1)`
@@ -32,31 +29,63 @@ const StyledP = styled(P)`
 `
 
 const StyledButton = styled(Button)`
-  ${Media.sm`
-    margin-bottom: 100px;
-  `}
+  margin-bottom: 100px;
 `
 
-const Superhero: FunctionComponent = () => (
+const GradientContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+`
+
+const StyledVideo = styled.video`
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  margin-top: -15%;
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0),
+    rgba(255, 255, 255, 1),
+    rgba(0, 0, 0, 0)
+  );
+`
+type SuperheroProps = {
+  openModal: () => void
+  previousSessions: Session[]
+}
+
+const Superhero: FunctionComponent<SuperheroProps> = ({
+  openModal,
+  previousSessions,
+}) => (
   <Container>
-    <StyledH1>Decentralized appraisal tool for NFTS</StyledH1>
-    <StyledP>A short tagline to explain how Abacus works.</StyledP>
-    <StyledButton buttonType={ButtonType.White} type="button">
-      <Mega>Launch App</Mega>
-    </StyledButton>
-    {/* TODO: Video does not have transparent background */}
-    {/* <video muted autoPlay loop>
+    <GradientContainer>
+      <StyledH1>Decentralized appraisal tools for NFTS</StyledH1>
+      <StyledP>🧮 🧮 🧮</StyledP>
+      <StyledButton
+        buttonType={ButtonType.White}
+        type="button"
+        onClick={openModal}
+      >
+        <Mega>Launch App</Mega>
+      </StyledButton>
+      <Popups previousSessions={previousSessions} />
+    </GradientContainer>
+    <StyledVideo muted autoPlay loop playsInline>
       <source
         src="/3d-abacus-loop.mp4"
         type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'
       />
       <img
-        src="/3d-abacus-still.png"
+        src="/3d-sequence/1.png"
         alt=""
         title="Your browser does not support the <video> tag"
       />
-    </video> */}
-    <StaticImage alt="" src="../../images/3d-abacus-still.png" />
+    </StyledVideo>
   </Container>
 )
 

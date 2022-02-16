@@ -96,7 +96,11 @@ const GlobalLayout: React.FC = (props: any) => {
     <>
       <SEO {...seoProps} />
       <GlobalStyles />
-      {/* <PortalNavbar /> */}
+      <PortalNavbar
+        balance={0}
+        profileName="@bigint"
+        profileIcon="/temp_icon.png"
+      />
       {!isArbitrumNetwork && !isNetworkSymbolNone ? (
         <div
           style={{

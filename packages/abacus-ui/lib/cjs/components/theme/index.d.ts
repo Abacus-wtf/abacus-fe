@@ -2,13 +2,14 @@ import { css } from "styled-components";
 declare const defaultTheme: {
     readonly colors: {
         readonly core: {
-            readonly primary: "#1C233399";
+            readonly primary: "#1C2333";
             readonly 900: "rgba(28, 35, 51, 0.72)";
             readonly 800: "rgba(28, 35, 51, 0.6)";
             readonly 700: "rgba(28, 35, 51, 0.4)";
             readonly border: "rgba(28, 35, 51, 0.04)";
             readonly lightWhite: "rgba(255, 255, 255, 0.8)";
             readonly white: "white";
+            readonly semiTitle: "#1C2333";
         };
         readonly button: {
             readonly secondary: "rgba(28, 35, 51, 0.04)";
@@ -21,7 +22,9 @@ declare const defaultTheme: {
             readonly red: "#F33636";
             readonly yellow: "#FFC93E";
             readonly white: "#FFFFFF";
+            readonly gray: "#CCCCCC";
             readonly black: "#000000";
+            readonly brown: "#964B00";
         };
     };
     readonly layout: {

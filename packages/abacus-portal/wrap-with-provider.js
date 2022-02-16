@@ -3,9 +3,9 @@ import { Provider } from "react-redux"
 import React, { Fragment } from "react"
 import { ThemeProvider } from "styled-components"
 import { Web3Provider } from "@ethersproject/providers"
+import { defaultTheme } from "abacus-ui"
 import MetamaskProvider from "./src/config/MetamaskProvider"
 import { NetworkContextName } from "./src/config/constants"
-import { theme } from "./src/config/theme"
 import store from "./src/state"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "shards-ui/dist/css/shards.min.css"
@@ -25,7 +25,7 @@ const wrapper = ({ element }) => {
           <Web3ProviderNetwork getLibrary={getLibrary}>
             <Provider store={store}>
               <MetamaskProvider>
-                <ThemeProvider theme={theme}>{element}</ThemeProvider>
+                <ThemeProvider theme={defaultTheme}>{element}</ThemeProvider>
               </MetamaskProvider>
             </Provider>
           </Web3ProviderNetwork>

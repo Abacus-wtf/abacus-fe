@@ -1,10 +1,9 @@
-import { Button, ButtonType } from "@atoms";
+import { Button, ButtonType, VisuallyHidden } from "@atoms";
 import { Logo, ProfileInfo } from "@molecules";
 import { Kilo, Tera } from "@typography";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
-import Dropdown from "../../../../static/dropdown.svg";
-import Extras from "../../../../static/extras.svg";
+import { Dropdown, Extras } from "@icons";
 
 type PortalNavbarTypes = {
   balance: number;
@@ -37,6 +36,7 @@ const ImageContainer = styled.div`
   height: 38px;
   justify-content: center;
   display: flex;
+  align-items: center;
 `;
 
 const PortalNavbar: FunctionComponent<PortalNavbarTypes> = ({
@@ -50,11 +50,8 @@ const PortalNavbar: FunctionComponent<PortalNavbarTypes> = ({
       <Divider />
       <Tera>Crowds</Tera>
       <ImageContainer>
-        <img
-          style={{ width: 18, marginLeft: 5, marginTop: 5 }}
-          src={Dropdown}
-          alt="Dropdown"
-        />
+        <Dropdown />
+        <VisuallyHidden>Dropdown</VisuallyHidden>
       </ImageContainer>
     </SideContainer>
     <SideContainer style={{ gridGap: 32 }}>
@@ -68,7 +65,8 @@ const PortalNavbar: FunctionComponent<PortalNavbarTypes> = ({
       <Button buttonType={ButtonType.White}>New Session</Button>
       <ProfileInfo profileIcon={profileIcon} profileName={profileName} />
       <Button style={{ padding: 0 }} buttonType={ButtonType.Clear}>
-        <img src={Extras} alt="Menu Options" />
+        <Extras />
+        <VisuallyHidden>Menu Options</VisuallyHidden>
       </Button>
     </SideContainer>
   </Container>

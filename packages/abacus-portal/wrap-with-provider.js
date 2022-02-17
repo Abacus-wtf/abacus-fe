@@ -1,14 +1,12 @@
 import { createWeb3ReactRoot, Web3ReactProvider } from "@web3-react/core"
 import { Provider } from "react-redux"
-import React, { Fragment } from "react"
+import React from "react"
 import { ThemeProvider } from "styled-components"
 import { Web3Provider } from "@ethersproject/providers"
 import { defaultTheme } from "abacus-ui"
 import MetamaskProvider from "./src/config/MetamaskProvider"
 import { NetworkContextName } from "./src/config/constants"
 import store from "./src/state"
-import "bootstrap/dist/css/bootstrap.min.css"
-import "shards-ui/dist/css/shards.min.css"
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 const getLibrary = (provider) => {

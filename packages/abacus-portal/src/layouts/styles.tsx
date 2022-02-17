@@ -31,11 +31,31 @@ export const GlobalStyles = createGlobalStyle`
   }
   
   body {
+    position: relative;
     color: ${defaultTheme.colors.core.primary};
-    background: linear-gradient(179.02deg, rgba(255, 255, 255, 0) 55.82%, #FFFFFF 99.16%);
-    background-image: url('/background.png');
-    background-size: cover;
-    backdrop-filter: blur(114px);
+    background: ${defaultTheme.colors.core.background};
+
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 56.25%;
+      opacity: 0.25;
+      z-index: -1;
+      background-image: url('/background.png');
+      background-repeat: no-repeat;
+      background-position: 50% 0;
+      background-size: cover;    
+      mask-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 1),
+        rgba(0, 0, 0, 0)
+      );
+    }
   }
 
   a {

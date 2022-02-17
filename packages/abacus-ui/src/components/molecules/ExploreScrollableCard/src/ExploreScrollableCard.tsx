@@ -1,5 +1,4 @@
 import { ExploreInfo, SessionCountdown } from "@atoms";
-import { ProfileGroup } from "@molecules";
 import { Font } from "@theme";
 import { Tera } from "@typography";
 import {
@@ -9,6 +8,7 @@ import {
 } from "components/molecules/ExploreCard/src/ExploreCard";
 import React, { FunctionComponent, useContext } from "react";
 import styled, { ThemeContext } from "styled-components";
+import { ProfileGroup } from "../../ProfileGroup";
 
 export enum SessionState {
   Vote = 0,

@@ -10,6 +10,7 @@ declare const defaultTheme: {
             readonly lightWhite: "rgba(255, 255, 255, 0.8)";
             readonly white: "white";
             readonly semiTitle: "#1C2333";
+            readonly background: "#E5E5E5";
         };
         readonly button: {
             readonly secondary: "rgba(28, 35, 51, 0.04)";

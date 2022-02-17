@@ -1,5 +1,5 @@
 import { Giga, Kilo } from "@typography";
-import { Font } from "components";
+import { Font } from "@theme";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 

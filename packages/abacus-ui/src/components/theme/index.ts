@@ -11,6 +11,7 @@ const defaultTheme = {
       lightWhite: "rgba(255, 255, 255, 0.8)",
       white: "white",
       semiTitle: "#1C2333",
+      background: "#E5E5E5",
     },
     button: {
       secondary: "rgba(28, 35, 51, 0.04)",

@@ -30,7 +30,7 @@ export default {
     typescript({
       typescript: require("typescript"),
       tsconfigOverride: {
-        exclude: ["**/*.test.tsx", "**/*.config.js", "**/*.stories.*"],
+        exclude: ["**/*.test.tsx", "**/*.config.js", "**/*.stories.*", "lib"],
       },
       rollupCommonJSResolveHack: false,
       clean: true,

@@ -66,6 +66,7 @@ var defaultTheme = {
             lightWhite: "rgba(255, 255, 255, 0.8)",
             white: "white",
             semiTitle: "#1C2333",
+            background: "#E5E5E5",
         },
         button: {
             secondary: "rgba(28, 35, 51, 0.04)",
@@ -487,6 +488,20 @@ var AbacusSpot = function (_a) {
         React.createElement("rect", { x: "16.4167", y: "16.4167", width: "25.1667", height: "25.1667", rx: "12.5833", stroke: stroke, strokeWidth: "4.83333" })));
 };
 
+var Dropdown = function (_a) {
+    var _b = _a.stroke, stroke = _b === void 0 ? "#1C2333" : _b;
+    return (React.createElement("svg", { width: "14", height: "8", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+        React.createElement("path", { d: "M13 1 7 7 1 1", stroke: stroke, strokeOpacity: ".72", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })));
+};
+
+var Extras = function (_a) {
+    var _b = _a.fill, fill = _b === void 0 ? "#1C2333" : _b;
+    return (React.createElement("svg", { width: "24", height: "24", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+        React.createElement("circle", { cx: "5", cy: "12", r: "2", fill: fill }),
+        React.createElement("circle", { cx: "12", cy: "12", r: "2", fill: fill }),
+        React.createElement("circle", { cx: "19", cy: "12", r: "2", fill: fill })));
+};
+
 var PetaModified = styled.div(templateObject_1$g || (templateObject_1$g = __makeTemplateObject(["\n  ", ";\n  margin-left: 8px;\n  color: ", ";\n"], ["\n  ", ";\n  margin-left: 8px;\n  color: ",
     ";\n"])), Font("peta", "Bluu Next"), function (_a) {
     var isDark = _a.isDark, theme = _a.theme;
@@ -901,15 +916,11 @@ var SplitSection = function (_a) {
 };
 var templateObject_1$1, templateObject_2$1;
 
-var Dropdown = "<svg width=\"14\" height=\"8\" viewBox=\"0 0 14 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M13 1L7 7L1 1\" stroke=\"#1C2333\" stroke-opacity=\"0.72\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n</svg>";
-
-var Extras = "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<circle cx=\"5\" cy=\"12\" r=\"2\" fill=\"#1C2333\"/>\n<circle cx=\"12\" cy=\"12\" r=\"2\" fill=\"#1C2333\"/>\n<circle cx=\"19\" cy=\"12\" r=\"2\" fill=\"#1C2333\"/>\n</svg>";
-
 // You probably want to change this to something semantic or abandon it all together
 var Container = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  padding: 28px;\n  align-items: center;\n"], ["\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  padding: 28px;\n  align-items: center;\n"])));
 var SideContainer = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n"], ["\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n"])));
 var Divider = styled.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  background: rgba(0, 0, 0, 0.2);\n  width: 1px;\n  height: 38px;\n"], ["\n  background: rgba(0, 0, 0, 0.2);\n  width: 1px;\n  height: 38px;\n"])));
-var ImageContainer = styled.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  height: 38px;\n  justify-content: center;\n  display: flex;\n"], ["\n  height: 38px;\n  justify-content: center;\n  display: flex;\n"])));
+var ImageContainer = styled.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  height: 38px;\n  justify-content: center;\n  display: flex;\n  align-items: center;\n"], ["\n  height: 38px;\n  justify-content: center;\n  display: flex;\n  align-items: center;\n"])));
 var PortalNavbar = function (_a) {
     var balance = _a.balance, profileName = _a.profileName, profileIcon = _a.profileIcon;
     return (React.createElement(Container, null,
@@ -918,7 +929,8 @@ var PortalNavbar = function (_a) {
             React.createElement(Divider, null),
             React.createElement(Container$i, null, "Crowds"),
             React.createElement(ImageContainer, null,
-                React.createElement("img", { style: { width: 18, marginLeft: 5, marginTop: 5 }, src: Dropdown, alt: "Dropdown" }))),
+                React.createElement(Dropdown, null),
+                React.createElement(VisuallyHidden, null, "Dropdown"))),
         React.createElement(SideContainer, { style: { gridGap: 32 } },
             React.createElement(StyledDiv, null,
                 balance.toLocaleString("en-us", {
@@ -930,9 +942,10 @@ var PortalNavbar = function (_a) {
             React.createElement(Button, { buttonType: ButtonType.White }, "New Session"),
             React.createElement(ProfileInfo, { profileIcon: profileIcon, profileName: profileName }),
             React.createElement(Button, { style: { padding: 0 }, buttonType: ButtonType.Clear },
-                React.createElement("img", { src: Extras, alt: "Menu Options" })))));
+                React.createElement(Extras, null),
+                React.createElement(VisuallyHidden, null, "Menu Options")))));
 };
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
 
-export { AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, AboutSection, Button, ButtonType, CardBackground, CardBar, Container$s as Exa, ExploreCard, ExploreImage, ExploreInfo, ExploreScrollableCard, Flex, Font, FontImport, Container$r as Giga, Container$q as H1, Container$p as H2, Container$o as H3, Container$n as H4, Container$m as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, Logo, Media, Container$t as Mega, Container$l as Milli, MiniList, Navbar, StyledP as P, Container$k as Peta, PortalNavbar, PriceHistory, ProfileGroup, ProfileIcon, ProfileInfo, Section, SessionCard, SessionCountdown, Container$j as Small, SocialLinks, SplitSection, StatInfo, Container$i as Tera, VisuallyHidden, Container$h as Yotta, Container$g as Zetta, breakpoints, defaultTheme };
+export { AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, AboutSection, Button, ButtonType, CardBackground, CardBar, Dropdown, Container$s as Exa, ExploreCard, ExploreImage, ExploreInfo, ExploreScrollableCard, Extras, Flex, Font, FontImport, Container$r as Giga, Container$q as H1, Container$p as H2, Container$o as H3, Container$n as H4, Container$m as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, Logo, Media, Container$t as Mega, Container$l as Milli, MiniList, Navbar, StyledP as P, Container$k as Peta, PortalNavbar, PriceHistory, ProfileGroup, ProfileIcon, ProfileInfo, Section, SessionCard, SessionCountdown, Container$j as Small, SocialLinks, SplitSection, StatInfo, Container$i as Tera, VisuallyHidden, Container$h as Yotta, Container$g as Zetta, breakpoints, defaultTheme };
 //# sourceMappingURL=index.js.map

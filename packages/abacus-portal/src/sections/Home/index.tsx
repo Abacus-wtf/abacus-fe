@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useMemo } from "react"
 import {
   useGetMultiSessionData,
   useMultiSessionState,
@@ -8,14 +8,22 @@ import { useGetCurrentNetwork } from "@state/application/hooks"
 import { usePrevious } from "@hooks/index"
 import { NetworkSymbolEnum } from "@config/constants"
 import styled from "styled-components"
+import { ExploreCarousel, H2, P, AbacusBar, Media } from "abacus-ui"
 
-const BigThing = styled.div`
-  width: 100vw;
-  height: 200vh;
+const FeaturedHeader = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12rem;
+  flex-direction: column;
+  padding: 50px 16px;
+  justify-content: space-between;
+  text-align: center;
+  gap: 16px;
+
+  ${Media.sm`
+    gap: 0;
+    text-align: left;
+    flex-direction: row;
+    padding: 50px 80px;
+  `}
 `
 
 const Home: React.FC = () => {
@@ -42,7 +50,49 @@ const Home: React.FC = () => {
     }
   }, [getMultiSessionData, isNewNetwork])
 
-  return <BigThing>Hi</BigThing>
+  const cards = useMemo(
+    () =>
+      multiSessionData.map((session) => ({
+        nftSrc: session.image_url,
+        nftTitle: session.nftName,
+        endTime: session.endTime,
+        numParticipants: session.numPpl,
+        poolAmount: session.totalStaked,
+        poolAmountDollars: session.totalStakedInUSD,
+        imgs: [
+          "/temp_icon.png",
+          "/temp_icon.png",
+          "/temp_icon.png",
+          "/temp_icon.png",
+          "/temp_icon.png",
+        ],
+        link: `/current-session/?address=${session.address}&tokenId=${session.tokenId}&nonce=${session.nonce}`,
+      })),
+    [multiSessionData]
+  )
+
+  const [cardIndex, setCardIndex] = useState(0)
+
+  return (
+    <>
+      <FeaturedHeader>
+        <div>
+          <H2>Featured today</H2>
+          <P>Being appraised on Abacus right now!</P>
+        </div>
+        <AbacusBar
+          totalNumberOfBeads={cards.length}
+          currentPosition={cardIndex}
+          changeToPosition={setCardIndex}
+        />
+      </FeaturedHeader>
+      <ExploreCarousel
+        cards={cards}
+        currentMid={cardIndex}
+        setCurrentMid={setCardIndex}
+      />
+    </>
+  )
 }
 
 export default Home

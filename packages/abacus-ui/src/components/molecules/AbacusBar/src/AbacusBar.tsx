@@ -37,12 +37,14 @@ const Bead = styled.div<{
   border: 1px solid ${({ theme }) => theme.colors.core.white};
   position: absolute;
   z-index: 1;
-  margin-left: ${({ beadPosition, currentPosition, maxPosition }) =>
-    beadPosition <= currentPosition
-      ? beadPosition * 13
-      : 250 - (maxPosition - beadPosition) * 13}px;
+  transform: translateX(
+    ${({ beadPosition, currentPosition, maxPosition }) =>
+      beadPosition <= currentPosition
+        ? beadPosition * 13
+        : 250 - (maxPosition - beadPosition) * 13}px
+  );
 
-  transition: ${({ theme }) => theme.transitionTime.main};
+  transition: transform ${({ theme }) => theme.transitionTime.main} ease;
 `;
 
 const GradientLine = styled.div`
@@ -61,6 +63,7 @@ const AbacusBar: FunctionComponent<AbacusBarProps> = ({
     <GradientLine />
     {_.map(_.range(0, totalNumberOfBeads), (i) => (
       <Bead
+        key={i}
         beadPosition={i}
         currentPosition={currentPosition}
         maxPosition={totalNumberOfBeads}

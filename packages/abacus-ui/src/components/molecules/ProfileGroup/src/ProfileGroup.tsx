@@ -35,10 +35,11 @@ const ProfileGroup: FunctionComponent<ProfileGroupProps> = ({
   <ProfileContainer>
     {_.map(_.range(0, imgs.length > 9 ? 9 : imgs.length), (i) => {
       if (i === 8) {
-        return <PlusIcon>+{numParticipants - 9}</PlusIcon>;
+        return <PlusIcon key="plus-icon">+{numParticipants - 9}</PlusIcon>;
       }
       return (
         <ProfileIcon
+          key={i}
           src={imgs[i]}
           style={{
             border: "2px solid #fff",

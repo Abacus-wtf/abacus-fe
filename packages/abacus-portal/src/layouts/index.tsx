@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useEffect } from "react"
 import { PortalNavbar } from "abacus-ui"
-import styled from "styled-components"
-import { Container, Row } from "shards-react"
-import Web3Modal from "@components/Web3Modal"
 import Web3 from "web3"
 import { useActiveWeb3React } from "@hooks/index"
 import {
@@ -11,9 +8,6 @@ import {
   useGetCurrentNetwork,
 } from "@state/application/hooks"
 import { NetworkSymbolEnum, NetworkSymbolAndId } from "@config/constants"
-import GeneralizedContractError from "@components/GeneralizedContractError"
-import NotConnectedAlert from "@components/NotConnectedAlert"
-import { theme } from "@config/theme"
 import SEO, { SEOWithQueryProps } from "@components/SEO"
 import { GlobalStyles } from "./styles"
 

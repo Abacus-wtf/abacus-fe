@@ -2,11 +2,13 @@ import { ExploreImage } from "@atoms";
 import ExploreCard, {
   ExploreCardProps,
 } from "components/molecules/ExploreCard/src/ExploreCard";
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 
 type ExploreCarouselProps = {
   cards: ExploreCardProps[];
+  currentMid: number;
+  setCurrentMid: (next: number) => void;
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -22,8 +24,13 @@ const Container = styled.div`
 
 const ExploreCarousel: FunctionComponent<ExploreCarouselProps> = ({
   cards,
+  currentMid,
+  setCurrentMid,
 }) => {
-  const [currentMid, setCurrentMid] = useState(0);
+  if (cards.length < 1) {
+    return null;
+  }
+
   return (
     <Container>
       <ExploreImage

@@ -31,7 +31,11 @@ const wrapper = ({ element }) => {
       </>
     )
   }
-  return <Provider store={store}>{element}</Provider>
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <Provider store={store}>{element}</Provider>
+    </ThemeProvider>
+  )
 }
 
 export default wrapper

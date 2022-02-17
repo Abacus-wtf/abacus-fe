@@ -1,11 +1,7 @@
 import GlobalLayout from "@layouts/index"
-import Auction from "@sections/Auction"
+
 import React from "react"
 
-const AuctionPage = (props: any) => (
-  <GlobalLayout {...props}>
-    <Auction />
-  </GlobalLayout>
-)
+const AuctionPage = (props: any) => <GlobalLayout {...props}>STUB</GlobalLayout>
 
 export default AuctionPage

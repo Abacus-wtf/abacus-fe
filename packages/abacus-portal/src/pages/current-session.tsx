@@ -1,14 +1,9 @@
 import GlobalLayout from "@layouts/index"
-import CurrentSession from "@sections/CurrentSession"
+
 import React from "react"
 
-const CurrentSessionPage = (props) => {
-  const { location } = props
-  return (
-    <GlobalLayout {...props}>
-      <CurrentSession location={location} />
-    </GlobalLayout>
-  )
-}
+const CurrentSessionPage = (props) => (
+  <GlobalLayout {...props}>STUB</GlobalLayout>
+)
 
 export default CurrentSessionPage

@@ -90,10 +90,7 @@ const PortalNavbar: FunctionComponent<PortalNavbarTypes> = ({
   const [menuOpen, setMenuOpen] = React.useState(false);
   return (
     <Container menuOpen={menuOpen}>
-      <SideContainer
-        style={{ gridGap: 8, alignItems: "flex-end" }}
-        menuOpen={menuOpen}
-      >
+      <SideContainer style={{ gridGap: 8 }} menuOpen={menuOpen}>
         <Logo />
         <Divider />
         <Tera>Crowds</Tera>

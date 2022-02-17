@@ -5,7 +5,7 @@ import {
   ExploreInfo,
   SessionCountdown,
 } from "@atoms";
-import { Yotta } from "@typography";
+import { Font, Media } from "@theme";
 import { ProfileGroup } from "components/molecules/ProfileGroup";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
@@ -26,10 +26,7 @@ const Container = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.section};
   background-color: ${({ theme }) => theme.colors.core.white};
   box-shadow: ${({ theme }) => theme.boxShadow.section};
-
-  // @TODO: Subject to change for differing screen sizes
-  width: 480px;
-  height: 935px;
+  max-width: 80%;
   display: flex;
   flex-direction: column;
   padding: 0px;
@@ -44,6 +41,15 @@ const SecondHalf = styled.div`
   align-items: center;
   padding: 15px 20px;
   box-sizing: border-box;
+`;
+
+const Title = styled.h3`
+  text-align: center;
+  ${Font("peta", "Bluu Next")}
+
+  ${Media.md`
+    ${Font("zetta", "Bluu Next")}
+  `}
 `;
 
 export const Divider = styled.div`
@@ -64,6 +70,14 @@ const ButtonStyled = styled(Button)`
   width: 100%;
 `;
 
+const ProfileGroupContainer = styled.div`
+  display: none;
+
+  ${Media.md`
+    display: block;
+  `}
+`;
+
 const ExploreCard: FunctionComponent<ExploreCardProps> = ({
   nftSrc,
   nftTitle,
@@ -77,7 +91,7 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
   <Container>
     <ExploreImage imgSrc={nftSrc} />
     <SecondHalf>
-      <Yotta style={{ fontFamily: "Bluu Next" }}>{nftTitle}</Yotta>
+      <Title>{nftTitle}</Title>
       <SessionCountdown endTime={endTime} />
       <Divider />
       <ExploreInfoContainer>
@@ -97,7 +111,9 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
           Participate
         </ButtonStyled>
       </a>
-      <ProfileGroup imgs={imgs} numParticipants={numParticipants} />
+      <ProfileGroupContainer>
+        <ProfileGroup imgs={imgs} numParticipants={numParticipants} />
+      </ProfileGroupContainer>
     </SecondHalf>
   </Container>
 );

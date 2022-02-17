@@ -107,7 +107,10 @@ var defaultTheme = {
         // https://learn-the-web.algonquindesign.ca/topics/typografier-cheat-sheet/
         pico: {},
         nano: {},
-        micro: {},
+        micro: {
+            "font-size": "12px",
+            "line-height": "132%",
+        },
         milli: {
             "font-size": "14px",
             "line-height": "132%",
@@ -154,7 +157,7 @@ var defaultTheme = {
         },
     },
 };
-var FontImport = function () { return css(templateObject_1$K || (templateObject_1$K = __makeTemplateObject(["\n  @import url(\"https://rsms.me/inter/inter.css\");\n"], ["\n  @import url(\"https://rsms.me/inter/inter.css\");\n"]))); };
+var FontImport = function () { return css(templateObject_1$L || (templateObject_1$L = __makeTemplateObject(["\n  @import url(\"https://rsms.me/inter/inter.css\");\n"], ["\n  @import url(\"https://rsms.me/inter/inter.css\");\n"]))); };
 var Font = function (size, fontFamily) {
     if (size === void 0) { size = "kilo"; }
     if (fontFamily === void 0) { fontFamily = "Inter"; }
@@ -191,9 +194,9 @@ var Media = breakpoints.reduce(function (accumulator, _a) {
     md: css,
     lg: css,
 });
-var templateObject_1$K, templateObject_2$j, templateObject_3$c;
+var templateObject_1$L, templateObject_2$j, templateObject_3$c;
 
-var InputContainer = styled.div(templateObject_1$J || (templateObject_1$J = __makeTemplateObject(["\n  background-color: white;\n  display: flex;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: center;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n"], ["\n  background-color: white;\n  display: flex;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: center;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n"])));
+var InputContainer = styled.div(templateObject_1$K || (templateObject_1$K = __makeTemplateObject(["\n  background-color: white;\n  display: flex;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: center;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n"], ["\n  background-color: white;\n  display: flex;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: center;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n"])));
 var StyledLabel = styled.label(templateObject_2$i || (templateObject_2$i = __makeTemplateObject(["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: 10px;\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"], ["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: 10px;\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"])), Font("milli"), function (_a) {
     var theme = _a.theme;
     return theme.colors.utility.white;
@@ -209,7 +212,7 @@ var Input = function (_a) {
         typeof label === "string" && label && (React.createElement(StyledLabel, { htmlFor: ID }, label)),
         React.createElement(StyledInput, { id: ID, name: name, value: value, type: type, onChange: function (e) { return onChange(e.target.value); } })));
 };
-var templateObject_1$J, templateObject_2$i, templateObject_3$b;
+var templateObject_1$K, templateObject_2$i, templateObject_3$b;
 
 var Container$z = styled.section(templateObject_2$h || (templateObject_2$h = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ",
     "\n"])), function (_a) {
@@ -221,12 +224,12 @@ var Container$z = styled.section(templateObject_2$h || (templateObject_2$h = __m
 }, function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.section;
-}, Media.sm(templateObject_1$I || (templateObject_1$I = __makeTemplateObject(["\n    flex-direction: row;\n    align-items: center;\n    justify-content: flex-start;\n  "], ["\n    flex-direction: row;\n    align-items: center;\n    justify-content: flex-start;\n  "]))));
+}, Media.sm(templateObject_1$J || (templateObject_1$J = __makeTemplateObject(["\n    flex-direction: row;\n    align-items: center;\n    justify-content: flex-start;\n  "], ["\n    flex-direction: row;\n    align-items: center;\n    justify-content: flex-start;\n  "]))));
 var Section = function (_a) {
     var children = _a.children;
     return (React.createElement(Container$z, null, children));
 };
-var templateObject_1$I, templateObject_2$h;
+var templateObject_1$J, templateObject_2$h;
 
 var ButtonType;
 (function (ButtonType) {
@@ -234,7 +237,7 @@ var ButtonType;
     ButtonType[ButtonType["White"] = 1] = "White";
     ButtonType[ButtonType["Clear"] = 2] = "Clear";
 })(ButtonType || (ButtonType = {}));
-var Button = styled.button(templateObject_1$H || (templateObject_1$H = __makeTemplateObject(["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n"], ["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ",
+var Button = styled.button(templateObject_1$I || (templateObject_1$I = __makeTemplateObject(["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n"], ["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ",
     ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ",
     ";\n  background-color: ",
     ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n"])), Font(), function (_a) {
@@ -262,12 +265,12 @@ var Button = styled.button(templateObject_1$H || (templateObject_1$H = __makeTem
             ? theme.colors.core.white
             : theme.colors.utility.blue;
 });
+var templateObject_1$I;
+
+var StyledDiv = styled.div(templateObject_1$H || (templateObject_1$H = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font());
 var templateObject_1$H;
 
-var StyledDiv = styled.div(templateObject_1$G || (templateObject_1$G = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font());
-var templateObject_1$G;
-
-var Container$y = styled.div(templateObject_1$F || (templateObject_1$F = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  grid-gap: 10px;\n"], ["\n  display: flex;\n  flex-direction: column;\n  grid-gap: 10px;\n"])));
+var Container$y = styled.div(templateObject_1$G || (templateObject_1$G = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  grid-gap: 10px;\n"], ["\n  display: flex;\n  flex-direction: column;\n  grid-gap: 10px;\n"])));
 var MiniContainer = styled.div(templateObject_2$g || (templateObject_2$g = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n"], ["\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n"])));
 var StyledKilo = styled(StyledDiv)(templateObject_3$a || (templateObject_3$a = __makeTemplateObject(["\n  color: ", ";\n"], ["\n  color: ", ";\n"])), function (_a) {
     var theme = _a.theme;
@@ -286,36 +289,35 @@ var MiniList = function (_a) {
             index !== Object.entries(info).length - 1 ? React.createElement(Divider$3, null) : null));
     })));
 };
-var templateObject_1$F, templateObject_2$g, templateObject_3$a, templateObject_4$6;
+var templateObject_1$G, templateObject_2$g, templateObject_3$a, templateObject_4$6;
 
-var Container$x = styled.span(templateObject_1$E || (templateObject_1$E = __makeTemplateObject(["\n  border: 0px;\n  clip: rect(0px, 0px, 0px, 0px);\n  height: 1px;\n  width: 1px;\n  margin: -1px;\n  padding: 0px;\n  overflow: hidden;\n  white-space: nowrap;\n  position: absolute;\n"], ["\n  border: 0px;\n  clip: rect(0px, 0px, 0px, 0px);\n  height: 1px;\n  width: 1px;\n  margin: -1px;\n  padding: 0px;\n  overflow: hidden;\n  white-space: nowrap;\n  position: absolute;\n"])));
+var Container$x = styled.span(templateObject_1$F || (templateObject_1$F = __makeTemplateObject(["\n  border: 0px;\n  clip: rect(0px, 0px, 0px, 0px);\n  height: 1px;\n  width: 1px;\n  margin: -1px;\n  padding: 0px;\n  overflow: hidden;\n  white-space: nowrap;\n  position: absolute;\n"], ["\n  border: 0px;\n  clip: rect(0px, 0px, 0px, 0px);\n  height: 1px;\n  width: 1px;\n  margin: -1px;\n  padding: 0px;\n  overflow: hidden;\n  white-space: nowrap;\n  position: absolute;\n"])));
 var VisuallyHidden = function (_a) {
     var children = _a.children;
     return (React.createElement(Container$x, null, children));
 };
-var templateObject_1$E;
+var templateObject_1$F;
 
-var Container$w = styled.div(templateObject_1$D || (templateObject_1$D = __makeTemplateObject(["\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n"], ["\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n"])));
+var Container$w = styled.div(templateObject_1$E || (templateObject_1$E = __makeTemplateObject(["\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n"], ["\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n"])));
 var Flex = function (_a) {
     var children = _a.children;
     return (React.createElement(Container$w, null, children));
 };
-var templateObject_1$D;
+var templateObject_1$E;
 
-/* eslint-disable jsx-a11y/no-static-element-interactions */
+var ImageContainer$1 = styled.div(templateObject_1$D || (templateObject_1$D = __makeTemplateObject(["\n  width: 100%;\n  height: 0;\n  padding-bottom: 100%;\n"], ["\n  width: 100%;\n  height: 0;\n  padding-bottom: 100%;\n"])));
 var ExploreImage = function (_a) {
     var imgSrc = _a.imgSrc, enableFullBorderRadius = _a.enableFullBorderRadius, onClick = _a.onClick;
     var theme = useContext(ThemeContext);
     var _b = useState(false), hover = _b[0], setHover = _b[1];
     return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    React.createElement("div", { onClick: onClick, onPointerOver: function () { return setHover(true); }, onPointerOut: function () { return setHover(false); } },
+    React.createElement(ImageContainer$1, { onClick: onClick, onPointerOver: function () { return setHover(true); }, onPointerOut: function () { return setHover(false); } },
         React.createElement(CrossfadeImage, { src: imgSrc, enableFullBorderRadius: enableFullBorderRadius || false, alt: "Featured Explorer", style: {
                 cursor: onClick !== undefined ? "pointer" : "default",
                 maxWidth: "auto",
                 maxHeight: "auto",
-                height: 480,
-                width: 480,
+                width: "100%",
                 borderRadius: enableFullBorderRadius ? theme.borderRadius.section : 0,
                 borderTopLeftRadius: theme.borderRadius.section,
                 borderTopRightRadius: theme.borderRadius.section,
@@ -323,6 +325,7 @@ var ExploreImage = function (_a) {
                 transform: hover && onClick !== undefined ? "scale(1.10)" : "scale(1)",
             } })));
 };
+var templateObject_1$D;
 
 var Container$v = styled.div(templateObject_1$C || (templateObject_1$C = __makeTemplateObject(["\n  ", ";\n"], ["\n  ", ";\n"])), Font("mega"));
 var templateObject_1$C;
@@ -524,7 +527,7 @@ var StatText = styled.div(templateObject_2$c || (templateObject_2$c = __makeTemp
     var theme = _a.theme;
     return theme.colors.core.white;
 });
-var Title = styled(Container$v)(templateObject_3$8 || (templateObject_3$8 = __makeTemplateObject(["\n  color: ", ";\n  text-align: center;\n"], ["\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var Title$1 = styled(Container$v)(templateObject_3$8 || (templateObject_3$8 = __makeTemplateObject(["\n  color: ", ";\n  text-align: center;\n"], ["\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.lightWhite;
 });
@@ -535,7 +538,7 @@ var StatInfo = function (_a) {
             stat,
             " ",
             showEthIcon ? (React.createElement("div", { style: { marginLeft: 8, marginTop: 5, fontSize: 59 } }, "\u039E")) : null),
-        React.createElement(Title, null, title)));
+        React.createElement(Title$1, null, title)));
 };
 var templateObject_1$h, templateObject_2$c, templateObject_3$8;
 
@@ -544,11 +547,11 @@ var ImageContainer = styled.div(templateObject_2$b || (templateObject_2$b = __ma
 var ImageStyled = styled.img(templateObject_3$7 || (templateObject_3$7 = __makeTemplateObject(["\n  transform: rotate(15deg);\n  width: 100%;\n"], ["\n  transform: rotate(15deg);\n  width: 100%;\n"])));
 var Container$d = styled.div(templateObject_5$2 || (templateObject_5$2 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ",
     "\n"])), Media.sm(templateObject_4$4 || (templateObject_4$4 = __makeTemplateObject(["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "], ["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "]))));
-var ZettaStyled = styled(Container$i)(templateObject_6$1 || (templateObject_6$1 = __makeTemplateObject(["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"], ["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var ZettaStyled = styled(Container$i)(templateObject_6$2 || (templateObject_6$2 = __makeTemplateObject(["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"], ["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.white;
 });
-var MegaStyled$1 = styled(Container$v)(templateObject_7$1 || (templateObject_7$1 = __makeTemplateObject(["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"], ["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var MegaStyled$1 = styled(Container$v)(templateObject_7$2 || (templateObject_7$2 = __makeTemplateObject(["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"], ["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.lightWhite;
 });
@@ -562,7 +565,7 @@ var Infographic = function (_a) {
         React.createElement(MegaStyled$1, null, description),
         React.createElement(Button, { as: "a", href: link }, title)));
 };
-var templateObject_1$g, templateObject_2$b, templateObject_3$7, templateObject_4$4, templateObject_5$2, templateObject_6$1, templateObject_7$1;
+var templateObject_1$g, templateObject_2$b, templateObject_3$7, templateObject_4$4, templateObject_5$2, templateObject_6$2, templateObject_7$2;
 
 var ImageSection = styled.img(templateObject_1$f || (templateObject_1$f = __makeTemplateObject(["\n  width: 280px;\n  height: 280px;\n  border-top-left-radius: ", ";\n  border-top-right-radius: ", ";\n  object-fit: cover;\n"], ["\n  width: 280px;\n  height: 280px;\n  border-top-left-radius: ", ";\n  border-top-right-radius: ", ";\n  object-fit: cover;\n"])), function (_a) {
     var theme = _a.theme;
@@ -714,7 +717,7 @@ var ProfileGroup = function (_a) {
 var templateObject_1$b, templateObject_2$7;
 
 // You probably want to change this to something semantic or abandon it all together
-var Container$9 = styled.div(templateObject_1$a || (templateObject_1$a = __makeTemplateObject(["\n  border-radius: ", ";\n  background-color: ", ";\n  box-shadow: ", ";\n\n  // @TODO: Subject to change for differing screen sizes\n  width: 480px;\n  height: 935px;\n  display: flex;\n  flex-direction: column;\n  padding: 0px;\n"], ["\n  border-radius: ", ";\n  background-color: ", ";\n  box-shadow: ", ";\n\n  // @TODO: Subject to change for differing screen sizes\n  width: 480px;\n  height: 935px;\n  display: flex;\n  flex-direction: column;\n  padding: 0px;\n"])), function (_a) {
+var Container$9 = styled.div(templateObject_1$a || (templateObject_1$a = __makeTemplateObject(["\n  border-radius: ", ";\n  background-color: ", ";\n  box-shadow: ", ";\n  max-width: 80%;\n  display: flex;\n  flex-direction: column;\n  padding: 0px;\n"], ["\n  border-radius: ", ";\n  background-color: ", ";\n  box-shadow: ", ";\n  max-width: 80%;\n  display: flex;\n  flex-direction: column;\n  padding: 0px;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.section;
 }, function (_a) {
@@ -725,18 +728,22 @@ var Container$9 = styled.div(templateObject_1$a || (templateObject_1$a = __makeT
     return theme.boxShadow.section;
 });
 var SecondHalf = styled.div(templateObject_2$6 || (templateObject_2$6 = __makeTemplateObject(["\n  grid-gap: 18px;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 15px 20px;\n  box-sizing: border-box;\n"], ["\n  grid-gap: 18px;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 15px 20px;\n  box-sizing: border-box;\n"])));
-var Divider$2 = styled.div(templateObject_3$4 || (templateObject_3$4 = __makeTemplateObject(["\n  margin: 15px 0px;\n  height: 2px;\n  width: 100%;\n  background-color: ", ";\n"], ["\n  margin: 15px 0px;\n  height: 2px;\n  width: 100%;\n  background-color: ", ";\n"])), function (_a) {
+var Title = styled.h3(templateObject_4$2 || (templateObject_4$2 = __makeTemplateObject(["\n  text-align: center;\n  ", "\n\n  ", "\n"], ["\n  text-align: center;\n  ", "\n\n  ",
+    "\n"])), Font("peta", "Bluu Next"), Media.md(templateObject_3$4 || (templateObject_3$4 = __makeTemplateObject(["\n    ", "\n  "], ["\n    ", "\n  "])), Font("zetta", "Bluu Next")));
+var Divider$2 = styled.div(templateObject_5$1 || (templateObject_5$1 = __makeTemplateObject(["\n  margin: 15px 0px;\n  height: 2px;\n  width: 100%;\n  background-color: ", ";\n"], ["\n  margin: 15px 0px;\n  height: 2px;\n  width: 100%;\n  background-color: ", ";\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.border;
 });
-var ExploreInfoContainer = styled.div(templateObject_4$2 || (templateObject_4$2 = __makeTemplateObject(["\n  display: flex;\n  width: 100%;\n  grid-gap: 50px;\n  justify-content: center;\n"], ["\n  display: flex;\n  width: 100%;\n  grid-gap: 50px;\n  justify-content: center;\n"])));
-var ButtonStyled = styled(Button)(templateObject_5$1 || (templateObject_5$1 = __makeTemplateObject(["\n  width: 100%;\n"], ["\n  width: 100%;\n"])));
+var ExploreInfoContainer = styled.div(templateObject_6$1 || (templateObject_6$1 = __makeTemplateObject(["\n  display: flex;\n  width: 100%;\n  grid-gap: 50px;\n  justify-content: center;\n"], ["\n  display: flex;\n  width: 100%;\n  grid-gap: 50px;\n  justify-content: center;\n"])));
+var ButtonStyled = styled(Button)(templateObject_7$1 || (templateObject_7$1 = __makeTemplateObject(["\n  width: 100%;\n"], ["\n  width: 100%;\n"])));
+var ProfileGroupContainer = styled.div(templateObject_9$1 || (templateObject_9$1 = __makeTemplateObject(["\n  display: none;\n\n  ", "\n"], ["\n  display: none;\n\n  ",
+    "\n"])), Media.md(templateObject_8$1 || (templateObject_8$1 = __makeTemplateObject(["\n    display: block;\n  "], ["\n    display: block;\n  "]))));
 var ExploreCard = function (_a) {
     var nftSrc = _a.nftSrc, nftTitle = _a.nftTitle, endTime = _a.endTime, numParticipants = _a.numParticipants, poolAmount = _a.poolAmount, poolAmountDollars = _a.poolAmountDollars, imgs = _a.imgs, link = _a.link;
     return (React.createElement(Container$9, null,
         React.createElement(ExploreImage, { imgSrc: nftSrc }),
         React.createElement(SecondHalf, null,
-            React.createElement(Container$j, { style: { fontFamily: "Bluu Next" } }, nftTitle),
+            React.createElement(Title, null, nftTitle),
             React.createElement(SessionCountdown, { endTime: endTime }),
             React.createElement(Divider$2, null),
             React.createElement(ExploreInfoContainer, null,
@@ -744,9 +751,10 @@ var ExploreCard = function (_a) {
                 React.createElement(ExploreInfo, { title: "Pool Amount", text: poolAmount + " \u039E", unit: "$" + poolAmountDollars })),
             React.createElement("a", { href: link, style: { width: "100%" } },
                 React.createElement(ButtonStyled, { buttonType: ButtonType.Standard }, "Participate")),
-            React.createElement(ProfileGroup, { imgs: imgs, numParticipants: numParticipants }))));
+            React.createElement(ProfileGroupContainer, null,
+                React.createElement(ProfileGroup, { imgs: imgs, numParticipants: numParticipants })))));
 };
-var templateObject_1$a, templateObject_2$6, templateObject_3$4, templateObject_4$2, templateObject_5$1;
+var templateObject_1$a, templateObject_2$6, templateObject_3$4, templateObject_4$2, templateObject_5$1, templateObject_6$1, templateObject_7$1, templateObject_8$1, templateObject_9$1;
 
 var SessionState;
 (function (SessionState) {
@@ -1000,5 +1008,5 @@ var ExploreCarousel = function (_a) {
 };
 var templateObject_1;
 
-export { AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, AboutSection, Button, ButtonType, CardBackground, CardBar, Dropdown, Container$u as Exa, ExploreCard, ExploreCarousel, ExploreImage, ExploreInfo, ExploreScrollableCard, Extras, Flex, Font, FontImport, Container$t as Giga, Container$s as H1, Container$r as H2, Container$q as H3, Container$p as H4, Container$o as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, Logo, Media, Container$v as Mega, Container$n as Milli, MiniList, Navbar, StyledP as P, Container$m as Peta, PortalNavbar, PreviousSessionsAutoScroll, PriceHistory, ProfileGroup, ProfileIcon, ProfileInfo, Section, SessionCard, SessionCountdown, Container$l as Small, SocialLinks, SplitSection, StatInfo, Container$k as Tera, VisuallyHidden, Container$j as Yotta, Container$i as Zetta, breakpoints, defaultTheme };
+export { AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, AboutSection, Button, ButtonType, CardBackground, CardBar, Divider$2 as Divider, Dropdown, Container$u as Exa, ExploreCard, ExploreCarousel, ExploreImage, ExploreInfo, ExploreInfoContainer, ExploreScrollableCard, Extras, Flex, Font, FontImport, Container$t as Giga, Container$s as H1, Container$r as H2, Container$q as H3, Container$p as H4, Container$o as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, Logo, Media, Container$v as Mega, Container$n as Milli, MiniList, Navbar, StyledP as P, Container$m as Peta, PortalNavbar, PreviousSessionsAutoScroll, PriceHistory, ProfileGroup, ProfileIcon, ProfileInfo, Section, SessionCard, SessionCountdown, Container$l as Small, SocialLinks, SplitSection, StatInfo, Container$k as Tera, VisuallyHidden, Container$j as Yotta, Container$i as Zetta, breakpoints, defaultTheme };
 //# sourceMappingURL=index.js.map

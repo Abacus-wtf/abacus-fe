@@ -15,6 +15,7 @@ const FeaturedHeader = styled.div`
   flex-direction: column;
   padding: 50px 16px;
   justify-content: space-between;
+  align-items: center;
   text-align: center;
   gap: 16px;
 

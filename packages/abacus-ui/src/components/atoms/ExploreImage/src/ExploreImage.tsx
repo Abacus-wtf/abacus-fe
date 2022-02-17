@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { FunctionComponent, useContext, useState } from "react";
-import { ThemeContext } from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -12,6 +12,12 @@ type ExploreImageProps = {
   onClick?: () => void;
 };
 
+const ImageContainer = styled.div`
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+`;
+
 const ExploreImage: FunctionComponent<ExploreImageProps> = ({
   imgSrc,
   enableFullBorderRadius,
@@ -21,7 +27,7 @@ const ExploreImage: FunctionComponent<ExploreImageProps> = ({
   const [hover, setHover] = useState(false);
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    <div
+    <ImageContainer
       onClick={onClick}
       onPointerOver={() => setHover(true)}
       onPointerOut={() => setHover(false)}
@@ -34,8 +40,7 @@ const ExploreImage: FunctionComponent<ExploreImageProps> = ({
           cursor: onClick !== undefined ? "pointer" : "default",
           maxWidth: "auto",
           maxHeight: "auto",
-          height: 480,
-          width: 480,
+          width: "100%",
           borderRadius: enableFullBorderRadius ? theme.borderRadius.section : 0,
           borderTopLeftRadius: theme.borderRadius.section,
           borderTopRightRadius: theme.borderRadius.section,
@@ -44,7 +49,7 @@ const ExploreImage: FunctionComponent<ExploreImageProps> = ({
             hover && onClick !== undefined ? "scale(1.10)" : "scale(1)",
         }}
       />
-    </div>
+    </ImageContainer>
   );
 };
 

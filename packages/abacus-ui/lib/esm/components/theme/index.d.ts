@@ -50,7 +50,10 @@ declare const defaultTheme: {
     readonly copy: {
         readonly pico: {};
         readonly nano: {};
-        readonly micro: {};
+        readonly micro: {
+            readonly "font-size": "12px";
+            readonly "line-height": "132%";
+        };
         readonly milli: {
             readonly "font-size": "14px";
             readonly "line-height": "132%";

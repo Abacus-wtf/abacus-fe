@@ -22,6 +22,7 @@ const AnimatedDropdown = styled(Dropdown)<{ isOpen: boolean }>`
 
 const StyledKilo = styled(Kilo)`
   padding-left: 16px;
+  font-weight: bold;
 `;
 
 const AccordionItems = styled.div<{ isOpen: boolean }>`
@@ -33,7 +34,6 @@ const AccordionItems = styled.div<{ isOpen: boolean }>`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.core.white};
 `;
 
 const Accordion: FunctionComponent<AccordionProps> = ({ title, children }) => {

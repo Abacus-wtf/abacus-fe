@@ -11,3 +11,4 @@ export * from "./ProfileGroup";
 export * from "./CardBar";
 export * from "./AboutSection";
 export * from "./PriceHistory";
+export * from "./Accordion";

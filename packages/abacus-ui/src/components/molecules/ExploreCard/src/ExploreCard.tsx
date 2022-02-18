@@ -44,6 +44,10 @@ const SecondHalf = styled.div`
 const Title = styled.h3`
   text-align: center;
   margin-bottom: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
   ${Font("peta", "Bluu Next")}
 
   ${Media.md`

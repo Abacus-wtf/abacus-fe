@@ -6,7 +6,14 @@ import { Accordion } from "../src";
 export default {
   title: "molecule/Accordion",
   component: Accordion,
-  argTypes: {},
+  argTypes: {
+    title: {
+      type: "string",
+    },
+    type: {
+      type: "string",
+    },
+  },
 } as ComponentMeta<typeof Accordion>;
 
 const items = [
@@ -27,9 +34,12 @@ const Template: ComponentStory<typeof Accordion> = (args) => {
       <Accordion {...args}>
         {items.map((item, index) => (
           <Checkbox
+            {...args}
             key={item.name}
-            name={item.name}
+            name="storybook"
             label={item.name}
+            id={item.name}
+            value={item.name}
             checked={checked[index]}
             onChange={onChange(index)}
           />
@@ -42,4 +52,11 @@ const Template: ComponentStory<typeof Accordion> = (args) => {
 export const Primary = Template.bind({});
 Primary.args = {
   title: "Hello",
+  type: "checkbox",
+};
+
+export const Radio = Template.bind({});
+Radio.args = {
+  title: "Hello",
+  type: "radio",
 };

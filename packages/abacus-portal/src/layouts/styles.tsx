@@ -49,7 +49,7 @@ export const GlobalStyles = createGlobalStyle`
       background-image: url('/background.png');
       background-repeat: no-repeat;
       background-position: 50% 0;
-      background-size: cover;    
+      background-size: contain;    
       background-color: ${defaultTheme.colors.core.background};
       mask-image: linear-gradient(
         to bottom,

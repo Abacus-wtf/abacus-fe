@@ -8,7 +8,15 @@ import { useGetCurrentNetwork } from "@state/application/hooks"
 import { usePrevious } from "@hooks/index"
 import { NetworkSymbolEnum } from "@config/constants"
 import styled from "styled-components"
-import { ExploreCarousel, H2, P, AbacusBar, Media } from "abacus-ui"
+import {
+  ExploreCarousel,
+  H2,
+  P,
+  AbacusBar,
+  Media,
+  ExploreCard,
+} from "abacus-ui"
+import { ExploreFilters } from "@components/index"
 
 const FeaturedHeader = styled.div`
   display: flex;
@@ -25,6 +33,32 @@ const FeaturedHeader = styled.div`
     flex-direction: row;
     padding: 50px 80px;
   `}
+`
+
+const GridContainer = styled.div`
+  display: grid;
+  margin: 100px 80px;
+
+  ${Media.lg`
+    grid-template-columns: 260px 1fr;
+    grid-column-gap: 45px;
+  `}
+`
+
+const ExploreGrid = styled.div`
+  display: grid;
+
+  ${Media.sm`
+    grid-template-columns: repeat(2, calc(50% - 12px));
+    grid-column-gap: 24px;
+    grid-row-gap: 28px;
+  `}
+`
+
+const CardContainer = styled.div`
+  max-width: 480px;
+  width: 100%;
+  justify-self: center;
 `
 
 const Home: React.FC = () => {
@@ -92,6 +126,16 @@ const Home: React.FC = () => {
         currentMid={cardIndex}
         setCurrentMid={setCardIndex}
       />
+      <GridContainer>
+        <ExploreFilters />
+        <ExploreGrid>
+          {cards.map((card) => (
+            <CardContainer key={card.link}>
+              <ExploreCard {...card} />
+            </CardContainer>
+          ))}
+        </ExploreGrid>
+      </GridContainer>
     </>
   )
 }

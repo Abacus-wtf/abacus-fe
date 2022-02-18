@@ -6,14 +6,17 @@ type CheckboxProps = {
   checked: boolean;
   label: string;
   name: string;
+  value: string;
+  id: string;
   onChange: () => void;
+  type?: "checkbox" | "radio";
 };
 
 // You probably want to change this to something semantic or abandon it all together
 const Container = styled.div`
   margin: 0;
   position: relative;
-  width: min-content;
+  width: max-content;
   margin-right: 6px;
   margin-bottom: 12px;
 `;
@@ -34,6 +37,7 @@ const StyledLabel = styled.label`
 const StyledInput = styled.input`
   position: absolute;
   top: 0;
+  opacity: 0;
   left: 50%;
   transform: translateX(-50%);
   z-index: -1;
@@ -51,18 +55,21 @@ const Checkbox: FunctionComponent<CheckboxProps> = ({
   checked,
   label,
   name,
+  value,
+  id,
   onChange,
+  type = "checkbox",
 }) => (
   <Container>
     <StyledInput
-      type="checkbox"
-      id={name}
+      type={type}
+      id={id}
       name={name}
-      value={name}
+      value={value}
       checked={checked}
       onChange={onChange}
     />
-    <StyledLabel htmlFor={name}>{label}</StyledLabel>
+    <StyledLabel htmlFor={id}>{label}</StyledLabel>
   </Container>
 );
 

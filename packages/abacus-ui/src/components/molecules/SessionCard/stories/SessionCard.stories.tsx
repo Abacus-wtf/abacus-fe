@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { SessionCard } from "../src";
 
 export default {
-  title: "molecules/SessionCard",
+  title: "molecule/SessionCard",
   component: SessionCard,
   argTypes: {},
 } as ComponentMeta<typeof SessionCard>;

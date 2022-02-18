@@ -32,7 +32,7 @@ const Divider = styled.div`
 const MiniList: FunctionComponent<MiniListProps> = ({ info }) => (
   <Container>
     {Object.entries(info).map(([key, value], index) => (
-      <>
+      <React.Fragment key={key}>
         <MiniContainer>
           <StyledKilo>
             <b>{key}</b>
@@ -40,7 +40,7 @@ const MiniList: FunctionComponent<MiniListProps> = ({ info }) => (
           <StyledKilo>{value}</StyledKilo>
         </MiniContainer>
         {index !== Object.entries(info).length - 1 ? <Divider /> : null}
-      </>
+      </React.Fragment>
     ))}
   </Container>
 );

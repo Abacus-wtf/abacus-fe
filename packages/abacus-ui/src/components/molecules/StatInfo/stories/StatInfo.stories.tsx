@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { StatInfo } from "../src";
 
 export default {
-  title: "molecules/StatInfo",
+  title: "molecule/StatInfo",
   component: StatInfo,
   argTypes: {},
 } as ComponentMeta<typeof StatInfo>;

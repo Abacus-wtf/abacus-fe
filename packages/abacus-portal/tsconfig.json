@@ -3,6 +3,7 @@
   "exclude": ["_types/globalTypes.ts", "node_modules", "public", ".cache"],
   "compilerOptions": {
     "baseUrl": "./src",
+    "noEmit": true,
     "paths": {
       "@state/*": ["state/*"],
       "@hooks/*": ["hooks/*"],

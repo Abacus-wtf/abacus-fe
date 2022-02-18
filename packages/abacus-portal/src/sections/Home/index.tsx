@@ -1,33 +1,31 @@
-import React, { useState, useEffect, useRef } from "react"
-import {
-  Title,
-  Subheader,
-  UniversalContainer,
-  Label,
-  Button,
-  ButtonsWhite,
-} from "abacus-components"
-import Card from "@components/Card"
+import React, { useState, useEffect, useRef, useMemo } from "react"
 import {
   useGetMultiSessionData,
   useMultiSessionState,
 } from "@state/sessionData/hooks"
-import _ from "lodash"
 import { PromiseStatus } from "@models/PromiseStatus"
-import PaginationButton from "@components/PaginationButton"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { usePrevious } from "@hooks/index"
-import FilterModal from "@components/FilterModal"
-import { Tooltip } from "shards-react"
 import { NetworkSymbolEnum } from "@config/constants"
-import { Link } from "gatsby"
-import {
-  BackgroundIMG,
-  HeaderBar,
-  CardContainer,
-  Header,
-  HeaderBarContainer,
-} from "./Home.styles"
+import styled from "styled-components"
+import { ExploreCarousel, H2, P, AbacusBar, Media } from "abacus-ui"
+
+const FeaturedHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 50px 16px;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+
+  ${Media.sm`
+    gap: 0;
+    text-align: left;
+    flex-direction: row;
+    padding: 50px 80px;
+  `}
+`
 
 const Home: React.FC = () => {
   const isInitializedRef = useRef(false)
@@ -53,83 +51,48 @@ const Home: React.FC = () => {
     }
   }, [getMultiSessionData, isNewNetwork])
 
-  return (
-    <UniversalContainer>
-      <BackgroundIMG />
-      <HeaderBar>
-        <Header>
-          <Title>Highlighted</Title>
-          <Subheader>
-            Browse {multiSessionData ? multiSessionData.length : "-"} Total
-            Sessions
-          </Subheader>
-        </Header>
-        <HeaderBarContainer>
-          <ButtonsWhite
-            onClick={() => setFilterOpen(true)}
-            disabled={isNetworkSymbolNone}
-          >
-            Filter
-          </ButtonsWhite>
-          <FilterModal
-            open={filterOpen}
-            toggle={() => setFilterOpen(false)}
-            applyFilters={getMultiSessionData}
-            setFilters={setFilters}
-          />
-          <Button
-            id="createSession"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              cursor: "not-allowed",
-              opacity: 0.7,
-            }}
-            disabled={isNetworkSymbolNone}
-          >
-            Create Session
-          </Button>
-          <Tooltip
-            open={isToolTipOpen}
-            target="#createSession"
-            toggle={() => setIsToolTipOpen(!isToolTipOpen)}
-            placement="bottom"
-            trigger="hover"
-          >
-            The only way to create new sessions at the moment is to win the
-            bounty auction for the next slot.
-          </Tooltip>
-        </HeaderBarContainer>
-      </HeaderBar>
+  const cards = useMemo(
+    () =>
+      multiSessionData.map((session) => ({
+        nftSrc: session.image_url,
+        nftTitle: session.nftName,
+        endTime: new Date().getTime() + 100000,
+        numParticipants: session.numPpl,
+        poolAmount: session.totalStaked,
+        poolAmountDollars: session.totalStakedInUSD,
+        imgs: [
+          "/temp_icon.png",
+          "/temp_icon.png",
+          "/temp_icon.png",
+          "/temp_icon.png",
+          "/temp_icon.png",
+        ],
+        link: `/current-session/?address=${session.address}&tokenId=${session.tokenId}&nonce=${session.nonce}`,
+      })),
+    [multiSessionData]
+  )
 
-      <CardContainer>
-        {_.map(multiSessionData, (i) => (
-          <Link
-            to={`/current-session?address=${i.address}&tokenId=${i.tokenId}&nonce=${i.nonce}`}
-            key={`${i.address}-${i.tokenId}-${i.nonce}`}
-          >
-            <Card {...i} />
-          </Link>
-        ))}
-      </CardContainer>
-      <UniversalContainer style={{ alignItems: "center", marginTop: "10px" }}>
-        {!isLoading &&
-          multiSessionData.length === 0 &&
-          isInitializedRef.current && (
-            <Label>No Results! Try changing the filters.</Label>
-          )}
-        <PaginationButton
-          isLastPage={isLastPage}
-          isLoading={isLoading}
-          getNextPage={() => getMultiSessionData(filters)}
+  const [cardIndex, setCardIndex] = useState(0)
+
+  return (
+    <>
+      <FeaturedHeader>
+        <div>
+          <H2>Featured today</H2>
+          <P>Being appraised on Abacus right now!</P>
+        </div>
+        <AbacusBar
+          totalNumberOfBeads={cards.length}
+          currentPosition={cardIndex}
+          changeToPosition={setCardIndex}
         />
-      </UniversalContainer>
-      {isLoading && (
-        <UniversalContainer style={{ alignItems: "center" }}>
-          Loading... {/* TODO: find a loader */}
-        </UniversalContainer>
-      )}
-    </UniversalContainer>
+      </FeaturedHeader>
+      <ExploreCarousel
+        cards={cards}
+        currentMid={cardIndex}
+        setCurrentMid={setCardIndex}
+      />
+    </>
   )
 }
 

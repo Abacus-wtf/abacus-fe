@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Font } from "@theme";
-import AbacusLogoWhite from "../../../../static/abacus_logo_white.svg";
-import AbacusLogoDark from "../../../../static/abacus_logo_dark.svg";
+import { AbacusIcon } from "@icons";
 
 type LogoProps = {
   isDark?: boolean;
@@ -11,14 +10,15 @@ type LogoProps = {
 
 const PetaModified = styled.div<{ isDark: boolean }>`
   ${Font("peta", "Bluu Next")};
+  margin-left: 8px;
   color: ${({ isDark, theme }) =>
-    isDark ? theme.colors.button.primary : theme.colors.core.white};
+    isDark ? theme.colors.core.white : theme.colors.button.primary};
 `;
 
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  grid-gap: 8px;
+  align-items: center;
   cursor: pointer;
   transition: ${({ theme }) => theme.transitionTime.main};
 
@@ -29,11 +29,7 @@ const Container = styled.div`
 
 const Logo: FunctionComponent<LogoProps> = ({ onClick, isDark = false }) => (
   <Container onClick={onClick}>
-    <img
-      style={{ width: 20 }}
-      src={isDark ? AbacusLogoDark : AbacusLogoWhite}
-      alt="Abacus Logo"
-    />
+    <AbacusIcon fill={isDark ? "white" : "black"} />
     <PetaModified isDark={isDark}>Abacus</PetaModified>
   </Container>
 );

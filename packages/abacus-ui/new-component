@@ -11,7 +11,7 @@ else
   COMPONENT=$1
 fi
 
-if [[ "$2" =~ (atom|molecule|organism|template) ]]; then
+if [[ "$2" =~ ^(atom|molecule|organism|template)$ ]]; then
   STRUCTURE=$2
 else
   echo "Must Provide Component Structure (atom/molecule/organism/template)"

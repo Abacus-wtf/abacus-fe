@@ -16,7 +16,7 @@ export const Standard = Template.bind({});
 Standard.args = { children: "Hello world" };
 
 export const Clear = Template.bind({});
-Clear.args = { children: "Hello world", type: ButtonType.Clear };
+Clear.args = { children: "Hello world", buttonType: ButtonType.Clear };
 
 export const White = Template.bind({});
-White.args = { children: "Hello world", type: ButtonType.White };
+White.args = { children: "Hello world", buttonType: ButtonType.White };

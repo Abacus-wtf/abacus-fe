@@ -1,11 +1,9 @@
 import GlobalLayout from "@layouts/index"
-import ClaimPool from "@sections/ClaimPool"
+
 import React from "react"
 
 const ClaimPoolPage = (props: any) => (
-  <GlobalLayout {...props}>
-    <ClaimPool />
-  </GlobalLayout>
+  <GlobalLayout {...props}>STUB</GlobalLayout>
 )
 
 export default ClaimPoolPage

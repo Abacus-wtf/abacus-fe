@@ -33,7 +33,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     position: relative;
     color: ${defaultTheme.colors.core.primary};
-    background: ${defaultTheme.colors.core.background};
+    background: ${defaultTheme.colors.core.white};
 
 
     &::before {
@@ -50,6 +50,7 @@ export const GlobalStyles = createGlobalStyle`
       background-repeat: no-repeat;
       background-position: 50% 0;
       background-size: cover;    
+      background-color: ${defaultTheme.colors.core.background};
       mask-image: linear-gradient(
         to bottom,
         rgba(255, 255, 255, 1),

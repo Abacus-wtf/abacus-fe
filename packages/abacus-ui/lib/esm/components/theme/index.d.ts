@@ -112,7 +112,8 @@ export declare const Font: (size?: string, fontFamily?: string) => import("style
 declare enum Sizes {
     SMALL = "sm",
     MEDIUM = "md",
-    LARGE = "lg"
+    LARGE = "lg",
+    XLARGE = "xl"
 }
 export declare const breakpoints: {
     size: Sizes;

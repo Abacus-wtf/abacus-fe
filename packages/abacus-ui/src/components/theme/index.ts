@@ -128,9 +128,11 @@ enum Sizes {
   SMALL = "sm",
   MEDIUM = "md",
   LARGE = "lg",
+  XLARGE = "xl",
 }
 
 export const breakpoints = [
+  { size: "xl", value: "2000px" },
   { size: "lg", value: "1200px" },
   { size: "md", value: "885px" },
   { size: "sm", value: "600px" },
@@ -155,6 +157,7 @@ export const Media: { [breakpoint in Sizes]: typeof css } = breakpoints.reduce(
     sm: css,
     md: css,
     lg: css,
+    xl: css,
   }
 );
 

@@ -36,7 +36,7 @@ const Container = styled.div`
     grid-column-gap: 80px;
   `}
 
-  ${Media.md`
+  ${Media.xl`
     grid-template-columns: repeat(3, 42%);
     grid-column-gap: 0;
   `}

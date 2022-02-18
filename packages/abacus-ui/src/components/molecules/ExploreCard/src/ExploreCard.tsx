@@ -108,7 +108,7 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
         <ExploreInfo
           title="Pool Amount"
           text={`${poolAmount} Ξ`}
-          unit={`$${poolAmountDollars}`}
+          unit={`$${poolAmountDollars ?? "-"}`}
         />
       </ExploreInfoContainer>
       <a href={link} style={{ width: "100%" }}>

@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
-declare type DropdownProps = {
+import { StylableComponent } from "../models";
+interface DropdownProps extends StylableComponent {
     stroke?: string;
-};
+}
 declare const Dropdown: FunctionComponent<DropdownProps>;
 export default Dropdown;

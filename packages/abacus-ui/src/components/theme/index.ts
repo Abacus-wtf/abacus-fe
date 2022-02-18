@@ -51,7 +51,10 @@ const defaultTheme = {
   copy: {
     // https://learn-the-web.algonquindesign.ca/topics/typografier-cheat-sheet/
     pico: {},
-    nano: {},
+    nano: {
+      "font-size": "10px",
+      "line-height": "132%",
+    },
     micro: {
       "font-size": "12px",
       "line-height": "132%",

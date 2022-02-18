@@ -56,7 +56,7 @@ const Home: React.FC = () => {
       multiSessionData.map((session) => ({
         nftSrc: session.image_url,
         nftTitle: session.nftName,
-        endTime: session.endTime,
+        endTime: new Date().getTime() + 100000,
         numParticipants: session.numPpl,
         poolAmount: session.totalStaked,
         poolAmountDollars: session.totalStakedInUSD,

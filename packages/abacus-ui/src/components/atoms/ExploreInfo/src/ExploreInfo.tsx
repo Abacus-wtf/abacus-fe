@@ -1,5 +1,5 @@
 import { Giga, Kilo } from "@typography";
-import { Font } from "@theme";
+import { Font, Media } from "@theme";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 
@@ -22,16 +22,33 @@ const BoldenKilo = styled(Kilo)<{ isCardBar: boolean }>`
   color: ${({ theme, isCardBar }) =>
     isCardBar ? theme.colors.core[900] : "black"};
   font-weight: 600;
+  ${Font("micro")}
+
+  ${Media.md`
+    ${Font("kilo")}
+  `}
 `;
 
 const StyledGiga = styled(Giga)<{ isCardBar: boolean }>`
   color: ${({ theme, isCardBar }) =>
     isCardBar ? theme.colors.core[900] : "black"};
   ${({ isCardBar }) => Font(isCardBar ? "mega" : "giga")};
+
+  ${Font("mega")}
+
+  ${Media.md`
+    ${Font("giga")}
+  `}
 `;
 
 const ColoredKilo = styled(Kilo)`
   color: ${({ theme }) => theme.colors.core[900]};
+
+  ${Font("micro")}
+
+  ${Media.md`
+    ${Font("kilo")}
+  `}
 `;
 
 const ExploreInfo: FunctionComponent<ExploreInfoProps> = ({

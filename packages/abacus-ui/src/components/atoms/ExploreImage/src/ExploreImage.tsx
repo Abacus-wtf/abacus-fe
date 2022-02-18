@@ -12,10 +12,13 @@ type ExploreImageProps = {
   onClick?: () => void;
 };
 
-const ImageContainer = styled.div`
+const ImageContainer = styled.div<{ enableFullBorderRadius?: boolean }>`
   width: 100%;
   height: 0;
   padding-bottom: 100%;
+  background-color: ${({ theme }) => theme.colors.core.white};
+  border-radius: ${({ theme, enableFullBorderRadius }) =>
+    enableFullBorderRadius ? theme.borderRadius.section : 0};
 `;
 
 const ExploreImage: FunctionComponent<ExploreImageProps> = ({
@@ -28,6 +31,7 @@ const ExploreImage: FunctionComponent<ExploreImageProps> = ({
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <ImageContainer
+      enableFullBorderRadius
       onClick={onClick}
       onPointerOver={() => setHover(true)}
       onPointerOut={() => setHover(false)}

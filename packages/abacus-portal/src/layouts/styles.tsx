@@ -43,7 +43,7 @@ export const GlobalStyles = createGlobalStyle`
       left: 0;
       top: 0;
       width: 100%;
-      height: 56.25%;
+      height: 100%;
       opacity: 0.25;
       z-index: -1;
       background-image: url('/background.png');

@@ -9,7 +9,7 @@ export declare type ExploreCardProps = {
     imgs: string[];
     link: string;
 };
-export declare const Divider: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
+export declare const Divider: import("styled-components").StyledComponent<"hr", import("styled-components").DefaultTheme, {}, never>;
 export declare const ExploreInfoContainer: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
 declare const ExploreCard: FunctionComponent<ExploreCardProps>;
 export default ExploreCard;

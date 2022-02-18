@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import Countdown from "react-countdown";
-import { Mega } from "components/typography/Mega";
-import { Kilo } from "@typography";
+import { Milli, Kilo } from "@typography";
+import { Font, Media } from "@theme";
 
 type SessionCountdownProps = {
   endTime: number;
@@ -12,11 +12,27 @@ const IndivContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  grid-gap: 6px;
+  margin-right: 30px;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
 `;
 
-const Subtext = styled(Kilo)`
+const Text = styled(Kilo)`
+  ${Media.md`
+    font-size: 18px;
+  `}
+  margin-bottom: 6px;
+`;
+
+const Subtext = styled(Milli)`
+  ${Font("nano")}
   color: ${({ theme }) => theme.colors.core[900]};
+
+  ${Media.md`
+  ${Font("milli")}
+  `}
 `;
 
 const SessionCountdown: FunctionComponent<SessionCountdownProps> = ({
@@ -26,20 +42,20 @@ const SessionCountdown: FunctionComponent<SessionCountdownProps> = ({
     date={endTime}
     renderer={({ hours, minutes, seconds, completed }) => {
       if (completed) {
-        return "Session Completed";
+        return <Text>Session Completed</Text>;
       }
       return (
-        <div style={{ display: "flex", gridGap: 30 }}>
+        <div style={{ display: "flex" }}>
           <IndivContainer>
-            <Mega>{hours}</Mega>
+            <Text>{hours}</Text>
             <Subtext>Hours</Subtext>
           </IndivContainer>
           <IndivContainer>
-            <Mega>{minutes}</Mega>
+            <Text>{minutes}</Text>
             <Subtext>Minutes</Subtext>
           </IndivContainer>
           <IndivContainer>
-            <Mega>{seconds}</Mega>
+            <Text>{seconds}</Text>
             <Subtext>Seconds</Subtext>
           </IndivContainer>
         </div>

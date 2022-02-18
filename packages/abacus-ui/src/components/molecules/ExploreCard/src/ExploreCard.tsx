@@ -26,14 +26,12 @@ const Container = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.section};
   background-color: ${({ theme }) => theme.colors.core.white};
   box-shadow: ${({ theme }) => theme.boxShadow.section};
-  max-width: 80%;
   display: flex;
   flex-direction: column;
   padding: 0px;
 `;
 
 const SecondHalf = styled.div`
-  grid-gap: 18px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -45,6 +43,7 @@ const SecondHalf = styled.div`
 
 const Title = styled.h3`
   text-align: center;
+  margin-bottom: 18px;
   ${Font("peta", "Bluu Next")}
 
   ${Media.md`
@@ -52,18 +51,23 @@ const Title = styled.h3`
   `}
 `;
 
-export const Divider = styled.div`
-  margin: 15px 0px;
-  height: 2px;
+export const Divider = styled.hr`
+  margin: 18px 0px;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.core.border};
+  border-color: ${({ theme }) => theme.colors.core.border};
 `;
 
 export const ExploreInfoContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   width: 100%;
-  grid-gap: 50px;
   justify-content: center;
+  margin-bottom: 18px;
+
+  ${Media.sm`
+    grid-column-gap: 50px;
+    width: max-content;
+  `}
 `;
 
 const ButtonStyled = styled(Button)`
@@ -72,6 +76,7 @@ const ButtonStyled = styled(Button)`
 
 const ProfileGroupContainer = styled.div`
   display: none;
+  margin-top: 18px;
 
   ${Media.md`
     display: block;

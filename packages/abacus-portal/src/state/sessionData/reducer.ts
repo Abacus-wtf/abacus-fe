@@ -68,6 +68,7 @@ export interface SessionData {
   totalStakedInUSD?: number
   rankings?: Vote[]
   winnerAmount?: number
+  currentStatus?: SessionState
 }
 
 export interface ClaimState {

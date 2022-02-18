@@ -220,6 +220,7 @@ const parseSubgraphPricingSessions = async (
             ? asset?.owner?.user?.username
             : shortenAddress(asset?.owner?.address),
         maxAppraisal: Number(formatEther(session?.maxAppraisal)),
+        currentStatus: session.sessionStatus,
       }
     }
   )

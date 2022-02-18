@@ -14,7 +14,7 @@ import {
   P,
   AbacusBar,
   Media,
-  ExploreCard,
+  ExploreScrollableCard,
 } from "abacus-ui"
 import { ExploreFilters } from "@components/index"
 
@@ -102,6 +102,7 @@ const Home: React.FC = () => {
           "/temp_icon.png",
         ],
         link: `/current-session/?address=${session.address}&tokenId=${session.tokenId}&nonce=${session.nonce}`,
+        currentStatus: session.currentStatus,
       })),
     [multiSessionData]
   )
@@ -129,9 +130,12 @@ const Home: React.FC = () => {
       <GridContainer>
         <ExploreFilters />
         <ExploreGrid>
-          {cards.map((card) => (
+          {cards.map(({ currentStatus, ...card }) => (
             <CardContainer key={card.link}>
-              <ExploreCard {...card} />
+              <ExploreScrollableCard
+                cardInfo={card}
+                currentStatus={currentStatus}
+              />
             </CardContainer>
           ))}
         </ExploreGrid>

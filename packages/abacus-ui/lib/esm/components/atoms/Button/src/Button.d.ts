@@ -2,7 +2,8 @@ import React from "react";
 export declare enum ButtonType {
     Standard = 0,
     White = 1,
-    Clear = 2
+    Gray = 2,
+    Clear = 3
 }
 declare type ButtonProps = {
     children: React.ReactNode;

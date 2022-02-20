@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { SmallUniversalContainer } from "abacus-components"
+import { Title, SmallUniversalContainer, ButtonsWhite } from "abacus-components"
 import * as queryString from "query-string"
-import {
-  PricingSessionMainComponent,
-  CardBar,
-  Media,
-  PriceHistory,
-  AboutSection,
-  PartOfCollection,
-} from "abacus-ui"
 import { navigate } from "gatsby"
 import {
   useCurrentSessionData,
@@ -22,36 +14,23 @@ import { PromiseStatus } from "@models/PromiseStatus"
 import { useActiveWeb3React } from "@hooks/index"
 import ConnectWalletAlert from "@components/ConnectWalletAlert"
 import { useGetCurrentNetwork } from "@state/application/hooks"
+import { OutboundLink } from "gatsby-plugin-google-gtag"
 import { useSetPayoutData, useClaimPayoutData } from "@state/miscData/hooks"
+import RankingsModal from "@components/RankingsModal"
 import { NetworkSymbolEnum } from "@config/constants"
+import { SessionState } from "@state/sessionData/reducer"
 import { isWithinWinRange } from "@config/utils"
-import styled from "styled-components"
-import { SessionState } from "@models/SessionState"
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  grid-gap: 50px;
-  width: 100%;
-  padding-top: 50px;
-  padding: 0px 100px;
-  box-sizing: border-box;
-
-  ${Media.xl`
-    padding: 0px;
-    padding-top: 50px;
-  `}
-`
-
-const SplitContainer = styled.div`
-  display: grid;
-  grid-gap: 50px;
-  grid-template-columns: 1fr;
-
-  ${Media.md`
-    grid-template-columns: 1fr 1fr;
-  `}
-`
+import {
+  SplitContainer,
+  VerticalContainer,
+  VerticalSmallGapContainer,
+  FileContainer,
+  SubText,
+} from "./CurrentSession.styles"
+import CurrentState from "./CurrentState"
+import CongratsModal from "./CongratsModal"
+import SubscribeModal from "./SubscribeModal"
+import LostModal from "./LostModal"
 
 const CurrentSession = ({ location }) => {
   const status = useCurrentSessionStatus()
@@ -153,95 +132,87 @@ const CurrentSession = ({ location }) => {
   }
 
   return (
-    <Container>
-      <CardBar
-        title={sessionData.collectionTitle}
-        poolAmount={sessionData.totalStaked}
-        poolAmountUSD={1}
-        participants={sessionData.numPpl}
-        owner={sessionData.owner}
-      />
-      <PricingSessionMainComponent
-        cardInfo={{
-          nftSrc: sessionData.image_url,
-          nftTitle: "Saturiazone",
-          endTime: 1647027719000,
-          numParticipants: 69,
-          poolAmount: 1.22,
-          poolAmountDollars: 800,
-          link: "http://google.com",
-          imgs: [""],
-        }}
-        currentState={SessionState.Vote}
-        currentEthBalance={1.1}
-        openDepositModal={() => {}}
-        onMainClick={() => {}}
-        participation={{
-          appraisal: 1,
-          stake: 1.1,
-          seedNumber: "0x1234",
-        }}
+    <SmallUniversalContainer style={{ alignItems: "center" }}>
+      <RankingsModal
+        isOpen={isRankingsModalOpen}
+        toggle={() => setIsRankingsModalOpen(!isRankingsModalOpen)}
       />
       <SplitContainer>
-        <PriceHistory
-          openseaLink={`https://opensea.io/${sessionData.ownerAddress}`}
-          etherscanLink={`https://etherscan.io/${sessionData.address}/${sessionData.tokenId}`}
-        />
-        <AboutSection description="This is a description" />
+        <VerticalContainer>
+          <FileContainer {...sessionData} />
+          <div style={{ display: "flex", gridGap: 15 }}>
+            <ButtonsWhite
+              style={{ borderRadius: 8 }}
+              target="_blank"
+              href={`https://opensea.io/assets/${sessionData.address}/${sessionData.tokenId}`}
+              as={OutboundLink}
+            >
+              OpenSea
+            </ButtonsWhite>
+            <ButtonsWhite
+              style={{ borderRadius: 8 }}
+              target="_blank"
+              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                `https://app.abacus.wtf/current-session?address=${sessionData.address}&tokenId=${sessionData.tokenId}&nonce=${sessionData.nonce}`
+              )}&text=Just%20submitted%20my%20appraisal%20for%20${
+                sessionData.collectionTitle
+              }%20%23${sessionData.tokenId}%20on%20Abacus!&via=abacus_wtf`}
+              as={OutboundLink}
+            >
+              Share
+            </ButtonsWhite>
+            {sessionData.rankings && (
+              <ButtonsWhite
+                onClick={() => setIsRankingsModalOpen(true)}
+                style={{ borderRadius: 8 }}
+              >
+                Rankings
+              </ButtonsWhite>
+            )}
+            {(status === SessionState.Vote ||
+              status === SessionState.Weigh) && (
+              <ButtonsWhite
+                onClick={() => setSubscribeModalOpen(true)}
+                style={{ borderRadius: 8 }}
+              >
+                Subscribe
+              </ButtonsWhite>
+            )}
+          </div>
+        </VerticalContainer>
+        <VerticalContainer>
+          <VerticalSmallGapContainer>
+            <SubText>{sessionData.collectionTitle}</SubText>
+            <Title>
+              {sessionData.nftName} #{sessionData.tokenId}
+            </Title>
+            <SubText>
+              Owned by{" "}
+              <OutboundLink
+                target="_blank"
+                href={`https://opensea.io/${sessionData.ownerAddress}`}
+              >
+                {sessionData.owner}
+              </OutboundLink>
+            </SubText>
+          </VerticalSmallGapContainer>
+          <CurrentState setCongratsOpen={(input) => setCongratsOpen(input)} />
+          <CongratsModal
+            open={congratsOpen}
+            toggle={() => setCongratsOpen(!congratsOpen)}
+            openSubscribeModal={() => setSubscribeModalOpen(true)}
+          />
+          <SubscribeModal
+            open={isSubscribeModalOpen}
+            toggle={() => setSubscribeModalOpen(!isSubscribeModalOpen)}
+          />
+          <LostModal
+            open={isLostModalOpen}
+            toggle={() => setIsLostModalOpen(!isLostModalOpen)}
+          />
+        </VerticalContainer>
       </SplitContainer>
-      <PartOfCollection
-        openseaObjects={[
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
-          },
-        ]}
-      />
-    </Container>
+    </SmallUniversalContainer>
   )
 }
 

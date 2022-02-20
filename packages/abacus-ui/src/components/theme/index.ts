@@ -133,7 +133,7 @@ enum Sizes {
 }
 
 export const breakpoints = [
-  { size: "xl", value: "2000px" },
+  { size: "xl", value: "1700px" },
   { size: "lg", value: "1200px" },
   { size: "md", value: "885px" },
   { size: "sm", value: "600px" },

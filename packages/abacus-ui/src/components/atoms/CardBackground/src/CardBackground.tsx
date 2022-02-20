@@ -12,7 +12,7 @@ const Container = styled.div<{ isHalfScreen: boolean }>`
   border-radius: ${({ theme }) => theme.borderRadius.section};
   background-color: ${({ theme }) => theme.colors.core.white};
   box-shadow: ${({ theme }) => theme.boxShadow.section};
-  width: ${({ isHalfScreen }) => (isHalfScreen ? "50%" : "100%")};
+  width: auto;
   height: fit-content;
   padding: 20px;
   display: flex;

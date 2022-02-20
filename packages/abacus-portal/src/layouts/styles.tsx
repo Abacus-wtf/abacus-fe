@@ -8,7 +8,8 @@ export const Container = styled.div`
 `
 
 export const InnerContainer = styled.div`
-  max-width: 2000px;
+  max-width: 1700px;
+  width: 100%;
 `
 
 export const GlobalStyles = createGlobalStyle`

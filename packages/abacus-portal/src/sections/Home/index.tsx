@@ -26,12 +26,18 @@ const FeaturedHeader = styled.div`
   align-items: center;
   text-align: center;
   gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
 
-  ${Media.sm`
+  ${Media.lg`
     gap: 0;
     text-align: left;
     flex-direction: row;
     padding: 50px 80px;
+  `}
+
+  ${Media.xl`
+    padding: 50px 0px;
   `}
 `
 
@@ -131,12 +137,10 @@ const Home: React.FC = () => {
         <ExploreFilters />
         <ExploreGrid>
           {cards.map(({ currentStatus, ...card }) => (
-            <CardContainer key={card.link}>
-              <ExploreScrollableCard
-                cardInfo={card}
-                currentStatus={currentStatus}
-              />
-            </CardContainer>
+            <ExploreScrollableCard
+              cardInfo={card}
+              currentStatus={currentStatus}
+            />
           ))}
         </ExploreGrid>
       </GridContainer>

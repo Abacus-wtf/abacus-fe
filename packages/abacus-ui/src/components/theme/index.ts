@@ -16,6 +16,7 @@ const defaultTheme = {
     button: {
       secondary: "rgba(28, 35, 51, 0.04)",
       primary: "#1A1A1A",
+      gray: "rgb(244,244,244)",
     },
     utility: {
       green: "#23CE7C",

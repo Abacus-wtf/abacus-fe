@@ -5,6 +5,7 @@ import styled from "styled-components";
 export enum ButtonType {
   Standard,
   White,
+  Gray,
   Clear,
 }
 
@@ -26,7 +27,7 @@ const Button = styled.button<ButtonProps>`
   cursor: pointer;
   transition: ${({ theme }) => theme.transitionTime.main};
   color: ${({ theme, buttonType }) =>
-    buttonType === ButtonType.White
+    buttonType === ButtonType.White || buttonType === ButtonType.Gray
       ? theme.colors.button.primary
       : theme.colors.core.white};
   background-color: ${({ theme, buttonType }) =>
@@ -34,6 +35,8 @@ const Button = styled.button<ButtonProps>`
       ? "transparent"
       : buttonType === ButtonType.White
       ? theme.colors.core.white
+      : buttonType === ButtonType.Gray
+      ? theme.colors.button.gray
       : theme.colors.utility.blue};
   width: max-content;
   height: min-content;

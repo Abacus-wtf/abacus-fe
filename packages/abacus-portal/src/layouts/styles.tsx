@@ -1,5 +1,15 @@
 import { defaultTheme } from "abacus-ui"
-import { createGlobalStyle } from "styled-components"
+import styled, { createGlobalStyle } from "styled-components"
+
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`
+
+export const InnerContainer = styled.div`
+  max-width: 2000px;
+`
 
 export const GlobalStyles = createGlobalStyle`
   html { 

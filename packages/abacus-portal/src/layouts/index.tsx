@@ -9,7 +9,7 @@ import {
 } from "@state/application/hooks"
 import { NetworkSymbolEnum, NetworkSymbolAndId } from "@config/constants"
 import SEO, { SEOWithQueryProps } from "@components/SEO"
-import { GlobalStyles } from "./styles"
+import { GlobalStyles, Container, InnerContainer } from "./styles"
 
 const GlobalLayout: React.FC = (props: any) => {
   const { children, location } = props
@@ -95,21 +95,26 @@ const GlobalLayout: React.FC = (props: any) => {
         profileName="@bigint"
         profileIcon="/temp_icon.png"
       />
-      {!isArbitrumNetwork && !isNetworkSymbolNone ? (
-        <div
-          style={{
-            textAlign: "center",
-            maxWidth: "600px",
-            lineHeight: 1.8,
-          }}
-        >
-          We currently only support Arbitrum. Please change to the Arbitrum
-          network by clicking on the ETH label in your Navigation Bar to access
-          Abacus features. We will be porting to your favorite chain shortly!
-        </div>
-      ) : (
-        children
-      )}
+      <Container>
+        <InnerContainer>
+          {!isArbitrumNetwork && !isNetworkSymbolNone ? (
+            <div
+              style={{
+                textAlign: "center",
+                maxWidth: "600px",
+                lineHeight: 1.8,
+              }}
+            >
+              We currently only support Arbitrum. Please change to the Arbitrum
+              network by clicking on the ETH label in your Navigation Bar to
+              access Abacus features. We will be porting to your favorite chain
+              shortly!
+            </div>
+          ) : (
+            children
+          )}
+        </InnerContainer>
+      </Container>
     </>
   )
 }

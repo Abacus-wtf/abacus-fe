@@ -45,6 +45,7 @@ const Container = styled.a`
 
   &:hover {
     opacity: 0.8;
+    color: black !important;
   }
 `;
 

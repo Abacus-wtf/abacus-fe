@@ -75,7 +75,7 @@ const ExploreFilters: FunctionComponent = () => {
 
   return (
     <Container>
-      <H2>Explore</H2>
+      <H2 style={{ marginBottom: 8 }}>Explore</H2>
       <Accordion title="Status">
         {statuses.map((item) => (
           <Checkbox

@@ -10,6 +10,7 @@ type InputProps = {
   name: string;
   label?: string;
   id?: string;
+  placeholder?: string;
 };
 
 const InputContainer = styled.div`
@@ -40,6 +41,7 @@ const StyledInput = styled.input`
   border: none;
   outline: none;
   padding: 0;
+  padding-bottom: 7px;
   width: 100%;
 `;
 
@@ -50,6 +52,7 @@ const Input: FunctionComponent<InputProps> = ({
   label,
   name,
   id,
+  placeholder,
 }) => {
   const ID = typeof id === "string" ? id : getUniqueId("input");
   return (
@@ -62,6 +65,7 @@ const Input: FunctionComponent<InputProps> = ({
         name={name}
         value={value}
         type={type}
+        placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
       />
     </InputContainer>

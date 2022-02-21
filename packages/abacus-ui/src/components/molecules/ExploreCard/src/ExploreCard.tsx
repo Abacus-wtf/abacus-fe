@@ -111,7 +111,7 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
         />
         <ExploreInfo
           title="Pool Amount"
-          text={`${poolAmount} Ξ`}
+          text={`${poolAmount.toFixed(2)} Ξ`}
           unit={`$${poolAmountDollars ?? "-"}`}
         />
       </ExploreInfoContainer>

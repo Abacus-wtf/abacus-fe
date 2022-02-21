@@ -10,3 +10,4 @@ export * from "./ExploreInfo";
 export * from "./ProfileIcon";
 export * from "./CardBackground";
 export * from "./Checkbox";
+export * from "./AbacusBalance";

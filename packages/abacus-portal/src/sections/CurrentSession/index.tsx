@@ -4,7 +4,6 @@ import * as queryString from "query-string"
 import {
   PricingSessionMainComponent,
   CardBar,
-  Media,
   PriceHistory,
   AboutSection,
   PartOfCollection,
@@ -26,35 +25,8 @@ import { useGetCurrentNetwork } from "@state/application/hooks"
 import { useSetPayoutData, useClaimPayoutData } from "@state/miscData/hooks"
 import { NetworkSymbolEnum } from "@config/constants"
 import { isWithinWinRange } from "@config/utils"
-import styled from "styled-components"
 import { SessionState } from "@models/SessionState"
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  grid-gap: 50px;
-  width: 100%;
-  padding-top: 50px;
-  padding: 0px 100px;
-  padding-bottom: 100px;
-  box-sizing: border-box;
-
-  ${Media.xl`
-    padding: 0px;
-    padding-top: 50px;
-    padding-bottom: 100px;
-  `}
-`
-
-const SplitContainer = styled.div`
-  display: grid;
-  grid-gap: 50px;
-  grid-template-columns: 1fr;
-
-  ${Media.md`
-    grid-template-columns: 1fr 1fr;
-  `}
-`
+import { Container, SplitContainer } from "@layouts/styles"
 
 const CurrentSession = ({ location }) => {
   const status = useCurrentSessionStatus()

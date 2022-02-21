@@ -43,7 +43,8 @@ const ExploreImage: FunctionComponent<ExploreImageProps> = ({
         style={{
           cursor: onClick !== undefined ? "pointer" : "default",
           maxWidth: "auto",
-          maxHeight: "auto",
+          maxHeight: 480,
+          objectFit: "contain",
           width: "100%",
           borderRadius: enableFullBorderRadius ? theme.borderRadius.section : 0,
           borderTopLeftRadius: theme.borderRadius.section,

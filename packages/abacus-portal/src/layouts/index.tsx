@@ -10,7 +10,7 @@ import {
 import { NetworkSymbolEnum, NetworkSymbolAndId } from "@config/constants"
 import SEO, { SEOWithQueryProps } from "@components/SEO"
 import { navigate } from "gatsby"
-import { GlobalStyles, Container, InnerContainer } from "./styles"
+import { GlobalStyles, GlobalContainer, InnerContainer } from "./styles"
 
 const GlobalLayout: React.FC = (props: any) => {
   const { children, location } = props
@@ -96,8 +96,9 @@ const GlobalLayout: React.FC = (props: any) => {
         profileName="@bigint"
         profileIcon="/temp_icon.png"
         onClick={() => navigate("/")}
+        onBalanceClick={() => navigate("/claim-pool")}
       />
-      <Container>
+      <GlobalContainer>
         <InnerContainer>
           {!isArbitrumNetwork && !isNetworkSymbolNone ? (
             <div
@@ -116,7 +117,7 @@ const GlobalLayout: React.FC = (props: any) => {
             children
           )}
         </InnerContainer>
-      </Container>
+      </GlobalContainer>
     </>
   )
 }

@@ -18,11 +18,9 @@ import { useActiveWeb3React } from "@hooks/index"
 import ConnectWalletAlert from "@components/ConnectWalletAlert"
 import styled from "styled-components"
 import { useGetCurrentNetwork } from "@state/application/hooks"
-import { VerticalContainer } from "../CurrentSession/CurrentSession.styles"
-
-const MaxWidthItem = styled(ListGroupItem)`
-  width: 100%;
-`
+import { FundCard, Yotta, AbacusBalance } from "abacus-ui"
+import { Container, SplitContainer } from "@layouts/styles"
+import { VerticalContainer } from "../CurrentSession_dep/CurrentSession.styles"
 
 const ClaimPool: FunctionComponent = () => {
   const { account } = useActiveWeb3React()
@@ -82,177 +80,26 @@ const ClaimPool: FunctionComponent = () => {
   }
 
   return (
-    <SmallUniversalContainer style={{ alignItems: "center" }}>
-      <VerticalContainer style={{ maxWidth: 800 }}>
-        <Title>Deposit</Title>
-        <HorizontalListGroup>
-          <MaxWidthItem>
-            <InputWithTitle
-              title="Current Credit"
-              id="ethCredit"
-              placeholder="0"
-              value={`${claimData.ethCredit} ETH`}
-              disabled
-            />
-          </MaxWidthItem>
-        </HorizontalListGroup>
-        <HorizontalListGroup>
-          <MaxWidthItem>
-            <InputWithTitle
-              title="ETH Deposit Amount"
-              id="ethDeposit"
-              placeholder="Enter deposit amount in ETH"
-              value={ethDepositVal}
-              onChange={(e) => setEthDepositVal(e.target.value)}
-            />
-          </MaxWidthItem>
-          <MaxWidthItem>
-            <InputWithTitleAndButton
-              title="Withdraw Principal"
-              id="claimPrincipal"
-              placeholder="Enter withdraw amount in ETH"
-              value={claimPrincipalVal}
-              onChange={(e) => setClaimPrincipalVal(e.target.value)}
-              buttonText="Max"
-              onClick={() => setClaimPrincipalVal(`${claimData.ethCredit}`)}
-            />
-          </MaxWidthItem>
-        </HorizontalListGroup>
-        <VerticalContainer style={{ marginTop: 35, alignItems: "center" }}>
-          <HorizontalListGroup>
-            <div
-              style={{ padding: "0 8px 16px", width: "100%" }}
-              id="depositEth"
-            >
-              <Button
-                disabled={
-                  isPendingDeposit ||
-                  ethDepositVal === "" ||
-                  Number.isNaN(Number(ethDepositVal))
-                }
-                style={{ width: "100%" }}
-                type="button"
-                onClick={() => {
-                  onDeposit(ethDepositVal)
-                }}
-              >
-                {isPendingDeposit ? "Pending..." : "Deposit ETH"}
-              </Button>
-            </div>
-            <div
-              style={{ padding: "0 8px", width: "100%" }}
-              id="claimPrincipalAmount"
-            >
-              <Button
-                disabled={
-                  isPendingClaimPrincipal ||
-                  claimPrincipalVal === "" ||
-                  Number.isNaN(Number(claimPrincipalVal))
-                }
-                style={{ width: "100%" }}
-                type="button"
-                onClick={() => {
-                  onClaimPrincipal(claimPrincipalVal)
-                }}
-              >
-                {isPendingClaimPrincipal
-                  ? "Pending..."
-                  : "Claim Principal Amount"}
-              </Button>
-            </div>
-          </HorizontalListGroup>
-        </VerticalContainer>
-        <Title>Claim Rewards</Title>
-        <HorizontalListGroup>
-          <MaxWidthItem>
-            <InputWithTitle
-              title="ETH Payout"
-              id="ethPayout"
-              placeholder="0"
-              value={claimData.ethPayout}
-              disabled
-            />
-          </MaxWidthItem>
-          <MaxWidthItem>
-            <InputWithTitle
-              title="ABC Payout"
-              id="abcPayout"
-              placeholder="0"
-              value={claimData.abcPayout}
-              disabled
-            />
-          </MaxWidthItem>
-        </HorizontalListGroup>
-        <HorizontalListGroup>
-          <MaxWidthItem>
-            <InputWithTitleAndButton
-              title="ETH Withdrawal Amount"
-              id="ethWithdrawal"
-              placeholder="Enter withdraw amount in ETH"
-              value={ethWithdrawalVal}
-              onChange={(e) => setEthWithdrawalVal(e.target.value)}
-              buttonText="Max"
-              onClick={() => setEthWithdrawalVal(`${claimData.ethPayout}`)}
-            />
-          </MaxWidthItem>
-          <MaxWidthItem>
-            <InputWithTitleAndButton
-              title="ABC Withdrawal Amount"
-              id="abcWithdrawal"
-              placeholder="Enter withdraw amount in ABC"
-              value={abcWithdrawalVal}
-              onChange={(e) => setAbcWithdrawalVal(e.target.value)}
-              buttonText="Max"
-              onClick={() => setAbcWithdrawalVal(`${claimData.abcPayout}`)}
-            />
-          </MaxWidthItem>
-        </HorizontalListGroup>
-        <VerticalContainer style={{ marginTop: 35, alignItems: "center" }}>
-          <HorizontalListGroup>
-            <div
-              style={{ padding: "0 8px", width: "100%" }}
-              id="claimEthButton"
-            >
-              <Button
-                disabled={
-                  isEthPending ||
-                  ethWithdrawalVal === "" ||
-                  Number.isNaN(Number(ethWithdrawalVal))
-                }
-                style={{ width: "100%" }}
-                type="button"
-                onClick={() => {
-                  onClaim(true, ethWithdrawalVal)
-                  setIsEthButtonTrigger(true)
-                }}
-              >
-                {isEthPending ? "Pending..." : "Claim ETH"}
-              </Button>
-            </div>
-            <div
-              style={{ padding: "0 8px", width: "100%" }}
-              id="claimAbcButton"
-            >
-              <Button
-                disabled={
-                  isAbcPending ||
-                  abcWithdrawalVal === "" ||
-                  Number.isNaN(Number(abcWithdrawalVal))
-                }
-                style={{ width: "100%" }}
-                type="button"
-                onClick={() => {
-                  onClaim(false, abcWithdrawalVal)
-                  setIsEthButtonTrigger(false)
-                }}
-              >
-                {isAbcPending ? "Pending..." : "Claim ABC"}
-              </Button>
-            </div>
-          </HorizontalListGroup>
-        </VerticalContainer>
-      </VerticalContainer>
-    </SmallUniversalContainer>
+    <Container style={{ maxWidth: 1080 }}>
+      <Yotta style={{ fontFamily: "Bluu Next", textAlign: "center" }}>
+        Abacus Credits
+      </Yotta>
+      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+        <AbacusBalance balance={1} />{" "}
+      </div>
+      <SplitContainer>
+        <FundCard
+          title="Deposit Funds"
+          buttonTitle="Deposit Funds"
+          onClick={() => {}}
+        />
+        <FundCard
+          title="Withdraw Funds"
+          buttonTitle="Transfer to Wallet"
+          onClick={() => {}}
+        />
+      </SplitContainer>
+    </Container>
   )
 }
 

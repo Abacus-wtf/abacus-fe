@@ -1,15 +1,46 @@
-import { defaultTheme } from "abacus-ui"
+import { defaultTheme, Media } from "abacus-ui"
 import styled, { createGlobalStyle } from "styled-components"
 
-export const Container = styled.div`
+export const GlobalContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
 `
 
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  grid-gap: 50px;
+  width: 100%;
+  padding-top: 50px;
+  padding: 0px 100px;
+  padding-bottom: 100px;
+  box-sizing: border-box;
+
+  ${Media.xl`
+    padding: 0px;
+    padding-top: 50px;
+    padding-bottom: 100px;
+  `}
+`
+
 export const InnerContainer = styled.div`
   max-width: 1700px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+export const SplitContainer = styled.div`
+  display: grid;
+  grid-gap: 50px;
+  grid-template-columns: 1fr;
+
+  ${Media.md`
+    grid-template-columns: 1fr 1fr;
+  `}
 `
 
 export const GlobalStyles = createGlobalStyle`

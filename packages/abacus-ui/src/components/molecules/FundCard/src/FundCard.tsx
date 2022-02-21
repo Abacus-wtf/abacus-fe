@@ -35,7 +35,7 @@ const FundCard: FunctionComponent<FundCardProps> = ({
           onChange={(amount) => setValue(amount)}
         />
         <FullWidthButton
-          disabled={value === ""}
+          disabled={value.length === 0}
           buttonType={ButtonType.Standard}
           onClick={onClick}
         >

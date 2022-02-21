@@ -11,6 +11,7 @@ type PortalNavbarTypes = {
   profileName: string;
   profileIcon: string;
   onClick: () => void;
+  onBalanceClick: () => void;
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -83,11 +84,20 @@ const DropdownButton = styled(Button)<{ menuOpen: boolean }>`
   `}
 `;
 
+const StyledKilo = styled(Kilo)`
+  cursor: pointer;
+  transition: ${({ theme }) => theme.transitionTime.main};
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
 const PortalNavbar: FunctionComponent<PortalNavbarTypes> = ({
   balance,
   profileName,
   profileIcon,
   onClick,
+  onBalanceClick,
 }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   return (
@@ -106,13 +116,13 @@ const PortalNavbar: FunctionComponent<PortalNavbarTypes> = ({
         </DropdownButton>
       </SideContainer>
       <SideContainer style={{ gridGap: 32 }} isOptions menuOpen={menuOpen}>
-        <Kilo>
+        <StyledKilo onClick={onBalanceClick}>
           {balance.toLocaleString("en-us", {
             maximumSignificantDigits: 2,
             minimumSignificantDigits: 2,
           })}{" "}
           ETH
-        </Kilo>
+        </StyledKilo>
         <Button buttonType={ButtonType.White}>New Session</Button>
         <ProfileInfo profileIcon={profileIcon} profileName={profileName} />
         <Button style={{ padding: 0 }} buttonType={ButtonType.Clear}>

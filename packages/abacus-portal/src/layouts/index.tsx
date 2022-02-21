@@ -9,6 +9,7 @@ import {
 } from "@state/application/hooks"
 import { NetworkSymbolEnum, NetworkSymbolAndId } from "@config/constants"
 import SEO, { SEOWithQueryProps } from "@components/SEO"
+import { navigate } from "gatsby"
 import { GlobalStyles, Container, InnerContainer } from "./styles"
 
 const GlobalLayout: React.FC = (props: any) => {
@@ -94,6 +95,7 @@ const GlobalLayout: React.FC = (props: any) => {
         balance={0}
         profileName="@bigint"
         profileIcon="/temp_icon.png"
+        onClick={() => navigate("/")}
       />
       <Container>
         <InnerContainer>

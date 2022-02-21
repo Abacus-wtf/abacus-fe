@@ -53,7 +53,7 @@ const GridContainer = styled.div`
 
 const ExploreGrid = styled.div`
   display: grid;
-
+  grid-gap: 25px;
   ${Media.sm`
     grid-template-columns: repeat(2, calc(50% - 12px));
     grid-column-gap: 24px;

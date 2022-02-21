@@ -10,6 +10,7 @@ type PortalNavbarTypes = {
   balance: number;
   profileName: string;
   profileIcon: string;
+  onClick: () => void;
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -86,12 +87,13 @@ const PortalNavbar: FunctionComponent<PortalNavbarTypes> = ({
   balance,
   profileName,
   profileIcon,
+  onClick,
 }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   return (
     <Container menuOpen={menuOpen}>
       <SideContainer style={{ gridGap: 8 }} menuOpen={menuOpen}>
-        <Logo />
+        <Logo onClick={onClick} />
         <Divider />
         <Tera>Crowds</Tera>
         <DropdownButton

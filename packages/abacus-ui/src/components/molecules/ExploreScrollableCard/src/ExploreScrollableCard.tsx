@@ -31,7 +31,6 @@ const Container = styled.a`
   box-shadow: ${({ theme }) => theme.boxShadow.section};
 
   // @TODO: Subject to change for differing screen sizes
-  width: 430px;
   height: 665px;
   display: flex;
   flex-direction: column;
@@ -71,7 +70,7 @@ const BadgeIndicator = styled.div<{ color: string }>`
 
 const NFTImage = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.section};
-  max-height: 220px;
+  height: 220px;
   width: fit-content;
 `;
 
@@ -114,7 +113,9 @@ const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
         </BadgeContainer>
       </div>
       <NFTImage src={cardInfo.nftSrc} alt={cardInfo.nftTitle} />
-      <Tera style={{ fontFamily: "Bluu Next" }}>{cardInfo.nftTitle}</Tera>
+      <Tera style={{ fontFamily: "Bluu Next", overflow: "hidden" }}>
+        {cardInfo.nftTitle}
+      </Tera>
       <ExploreInfoContainer>
         <ExploreInfo
           title="Participants"
@@ -123,7 +124,7 @@ const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
         />
         <ExploreInfo
           title="Pool Amount"
-          text={`${cardInfo.poolAmount} Ξ`}
+          text={`${cardInfo.poolAmount.toFixed(2)} Ξ`}
           unit={`$${cardInfo.poolAmountDollars}`}
         />
       </ExploreInfoContainer>

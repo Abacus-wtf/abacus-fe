@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { getUniqueId } from "@utils";
 import { Font, WithTheme } from "@theme";
+import { Milli } from "@typography";
 
 type InputProps = {
   value: string;
@@ -11,6 +12,7 @@ type InputProps = {
   label?: string;
   id?: string;
   placeholder?: string;
+  showEth?: boolean;
 };
 
 const InputContainer = styled.div`
@@ -45,6 +47,15 @@ const StyledInput = styled.input`
   width: 100%;
 `;
 
+const EthLogo = styled(Milli)`
+  background-color: ${({ theme }) => theme.colors.core.border};
+  padding: 10px;
+  color: ${({ theme }) => theme.colors.core[700]};
+  border-radius: ${({ theme }) => theme.borderRadius.main};
+  font-weight: 600;
+  margin-bottom: 7px;
+`;
+
 const Input: FunctionComponent<InputProps> = ({
   value,
   onChange,
@@ -53,10 +64,12 @@ const Input: FunctionComponent<InputProps> = ({
   name,
   id,
   placeholder,
+  showEth,
 }) => {
   const ID = typeof id === "string" ? id : getUniqueId("input");
   return (
     <InputContainer>
+      {showEth ? <EthLogo>ETH</EthLogo> : null}
       {typeof label === "string" && label && (
         <StyledLabel htmlFor={ID}>{label}</StyledLabel>
       )}

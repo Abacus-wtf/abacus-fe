@@ -14,3 +14,4 @@ export * from "./PriceHistory";
 export * from "./Accordion";
 export * from "./PricingSessionMainComponent";
 export * from "./PartOfCollection";
+export * from "./ActivitySection";

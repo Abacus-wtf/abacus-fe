@@ -130,6 +130,7 @@ const PricingSessionMainComponent: FunctionComponent<PricingSessionMainComponent
                 </TitleContainer>
                 {participation === undefined ? (
                   <Input
+                    showEth
                     name="Amount"
                     type="text"
                     value={pageState === 0 ? appraisal : stake}

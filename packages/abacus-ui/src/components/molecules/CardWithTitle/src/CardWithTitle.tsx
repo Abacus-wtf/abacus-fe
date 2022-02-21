@@ -7,11 +7,12 @@ type CardWithTitleProps = {
   title: string;
   children: JSX.Element;
   style?: React.CSSProperties;
+  noBorder?: boolean;
 };
 
 const KiloStyled = styled(Kilo)`
   color: ${({ theme }) => theme.colors.core.semiTitle};
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 const Border = styled.div`
@@ -33,11 +34,12 @@ const CardWithTitle: FunctionComponent<CardWithTitleProps> = ({
   title,
   children,
   style,
+  noBorder,
 }) => (
   <CardBackground>
     <Container style={{ ...style }}>
       <KiloStyled>{title}</KiloStyled>
-      <Border />
+      {noBorder ? null : <Border />}
       {children}
     </Container>
   </CardBackground>

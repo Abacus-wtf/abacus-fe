@@ -8,6 +8,7 @@ import {
   PriceHistory,
   AboutSection,
   PartOfCollection,
+  ActivitySection,
 } from "abacus-ui"
 import { navigate } from "gatsby"
 import {
@@ -35,11 +36,13 @@ const Container = styled.div`
   width: 100%;
   padding-top: 50px;
   padding: 0px 100px;
+  padding-bottom: 100px;
   box-sizing: border-box;
 
   ${Media.xl`
     padding: 0px;
     padding-top: 50px;
+    padding-bottom: 100px;
   `}
 `
 
@@ -189,6 +192,52 @@ const CurrentSession = ({ location }) => {
         />
         <AboutSection description="This is a description" />
       </SplitContainer>
+      <ActivitySection
+        activityList={[
+          {
+            img: "../../../../static/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+          {
+            img: "../../../../static/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+          {
+            img: "../../../../static/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+          {
+            img: "../../../../static/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+          {
+            img: "../../../../static/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+          {
+            img: "../../../../static/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+          {
+            img: "../../../../static/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+        ]}
+      />
       <PartOfCollection
         openseaObjects={[
           {

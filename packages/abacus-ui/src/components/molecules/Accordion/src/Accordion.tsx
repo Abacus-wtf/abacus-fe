@@ -26,6 +26,7 @@ const StyledKilo = styled(Kilo)`
 `;
 
 const AccordionItems = styled.div<{ isOpen: boolean }>`
+  margin-top: 2px;
   display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
   flex-wrap: wrap;
 `;

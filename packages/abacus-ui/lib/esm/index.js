@@ -1010,7 +1010,7 @@ var AnimatedDropdown = styled(Dropdown)(templateObject_2$7 || (templateObject_2$
     return (isOpen ? "rotateZ(-180deg)" : "rotateZ(0)");
 });
 var StyledKilo$2 = styled(StyledDiv)(templateObject_3$5 || (templateObject_3$5 = __makeTemplateObject(["\n  padding-left: 16px;\n  font-weight: bold;\n"], ["\n  padding-left: 16px;\n  font-weight: bold;\n"])));
-var AccordionItems = styled.div(templateObject_4$5 || (templateObject_4$5 = __makeTemplateObject(["\n  display: ", ";\n  flex-wrap: wrap;\n"], ["\n  display: ", ";\n  flex-wrap: wrap;\n"])), function (_a) {
+var AccordionItems = styled.div(templateObject_4$5 || (templateObject_4$5 = __makeTemplateObject(["\n  margin-top: 2px;\n  display: ", ";\n  flex-wrap: wrap;\n"], ["\n  margin-top: 2px;\n  display: ", ";\n  flex-wrap: wrap;\n"])), function (_a) {
     var isOpen = _a.isOpen;
     return (isOpen ? "flex" : "none");
 });

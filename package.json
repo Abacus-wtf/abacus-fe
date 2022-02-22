@@ -21,6 +21,7 @@
     "dev": "npm-run-all --parallel dev:portal dev:homepage dev:components",
     "lint": "eslint --ignore-path .eslintignore \"**/**/src/**/*.+(ts|js|tsx)\"",
     "lint:fix": "yarn lint --fix",
+    "lint:staged": "eslint --ignore-path .eslintignore $(git diff --staged  --name-only -- \"*.ts\" \"*.tsx\" \"*.js\" \"*.jsx\") --fix",
     "test": "jest --passWithNoTests",
     "test:changed": "jest --onlyChanged",
     "test:coverage": "yarn test -- --coverage",

@@ -25,7 +25,7 @@ export const Container = styled.div`
 `
 
 export const InnerContainer = styled.div`
-  max-width: 1700px;
+  max-width: 1440px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -70,6 +70,7 @@ export const GlobalStyles = createGlobalStyle`
   * {
     margin: 0; 
     padding: 0;
+    box-sizing: border-box;
   }
   
   body {

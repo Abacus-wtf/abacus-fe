@@ -18,7 +18,11 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: visible;
+  overflow: hidden;
+
+  ${Media.xl`
+    overflow: visible;
+  `}
 `;
 
 const Container = styled.div`

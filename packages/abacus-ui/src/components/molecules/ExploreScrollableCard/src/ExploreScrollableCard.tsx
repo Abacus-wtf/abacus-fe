@@ -1,6 +1,5 @@
 import { ExploreInfo, SessionCountdown } from "@atoms";
 import { Font } from "@theme";
-import { Tera } from "@typography";
 import {
   Divider,
   ExploreCardProps,
@@ -25,7 +24,8 @@ type ExploreScrollableCardProps = {
 };
 
 // You probably want to change this to something semantic or abandon it all together
-const Container = styled.a`
+const Container = styled.div`
+  position: relative;
   border-radius: ${({ theme }) => theme.borderRadius.section};
   background-color: ${({ theme }) => theme.colors.core.white};
   box-shadow: ${({ theme }) => theme.boxShadow.section};
@@ -37,15 +37,7 @@ const Container = styled.a`
   padding: 12px;
   grid-gap: 20px;
   align-items: center;
-  transition: ${({ theme }) => theme.transitionTime.main};
-  cursor: pointer;
-  text-decoration: none;
   color: black;
-
-  &:hover {
-    opacity: 0.8;
-    color: black !important;
-  }
 `;
 
 const BadgeContainer = styled.div`
@@ -72,6 +64,36 @@ const NFTImage = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.section};
   height: 220px;
   width: fit-content;
+`;
+
+const Title = styled.a`
+  ${Font("Tera")}
+  font-family: "Bluu Next";
+  overflow: "hidden";
+  text-decoration: none;
+  color: black;
+
+  &:focus,
+  &:hover,
+  &:visited {
+    color: black;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  &:hover {
+    &::after {
+      opacity: 0.2;
+      background-color: white;
+    }
+  }
 `;
 
 const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
@@ -105,7 +127,7 @@ const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
       ? theme.colors.utility.brown
       : theme.colors.utility.green;
   return (
-    <Container href={cardInfo.link}>
+    <Container>
       <div style={{ width: "100%" }}>
         <BadgeContainer>
           <BadgeIndicator color={badgeColor} />
@@ -113,9 +135,7 @@ const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
         </BadgeContainer>
       </div>
       <NFTImage src={cardInfo.nftSrc} alt={cardInfo.nftTitle} />
-      <Tera style={{ fontFamily: "Bluu Next", overflow: "hidden" }}>
-        {cardInfo.nftTitle}
-      </Tera>
+      <Title href={cardInfo.link}>{cardInfo.nftTitle}</Title>
       <ExploreInfoContainer>
         <ExploreInfo
           title="Participants"

@@ -20,7 +20,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Bead = styled.div<{
+const Bead = styled.button<{
   beadPosition: number;
   currentPosition: number;
   maxPosition: number;

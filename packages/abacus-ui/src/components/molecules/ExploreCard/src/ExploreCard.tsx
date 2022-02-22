@@ -29,6 +29,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px;
+  position: relative;
 `;
 
 const SecondHalf = styled.div`
@@ -75,7 +76,26 @@ export const ExploreInfoContainer = styled.div`
 `;
 
 const ButtonStyled = styled(Button)`
+  display: flex;
+  text-align: center;
+  justify-content: center;
   width: 100%;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  &:hover {
+    &::after {
+      opacity: 0.2;
+      background-color: white;
+    }
+  }
 `;
 
 const ProfileGroupContainer = styled.div`
@@ -115,11 +135,9 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
           unit={`$${poolAmountDollars ?? "-"}`}
         />
       </ExploreInfoContainer>
-      <a href={link} style={{ width: "100%" }}>
-        <ButtonStyled buttonType={ButtonType.Standard}>
-          Participate
-        </ButtonStyled>
-      </a>
+      <ButtonStyled buttonType={ButtonType.Standard} as="a" href={link}>
+        Participate
+      </ButtonStyled>
       <ProfileGroupContainer>
         <ProfileGroup imgs={imgs} numParticipants={numParticipants} />
       </ProfileGroupContainer>

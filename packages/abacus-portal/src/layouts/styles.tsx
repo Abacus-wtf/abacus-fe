@@ -13,9 +13,13 @@ export const Container = styled.div`
   grid-gap: 50px;
   width: 100%;
   padding-top: 50px;
-  padding: 0px 100px;
+  padding: 0px 16px;
   padding-bottom: 100px;
   box-sizing: border-box;
+
+  ${Media.md`
+  padding: 0px 100px;
+  `}
 
   ${Media.xl`
     padding: 0px;

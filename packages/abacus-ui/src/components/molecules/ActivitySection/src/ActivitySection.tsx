@@ -7,6 +7,7 @@ import styled from "styled-components";
 const ListContainer = styled.div`
   height: 100%;
   overflow: scroll;
+  overflow-x: hidden;
   width: 100%;
   display: flex;
   flex-direction: column;

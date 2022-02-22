@@ -8,6 +8,7 @@ type ExploreInfoProps = {
   text: string;
   unit?: string;
   isCardBar?: boolean;
+  className?: string;
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -56,8 +57,9 @@ const ExploreInfo: FunctionComponent<ExploreInfoProps> = ({
   text,
   unit,
   isCardBar,
+  className,
 }) => (
-  <Container isCardBar={isCardBar || false}>
+  <Container isCardBar={isCardBar || false} className={className}>
     <BoldenKilo isCardBar={isCardBar || false}>{title}</BoldenKilo>
     <StyledGiga isCardBar={isCardBar || false}>{text}</StyledGiga>
     {unit ? <ColoredKilo>{unit}</ColoredKilo> : null}

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { SmallUniversalContainer } from "abacus-components"
 import * as queryString from "query-string"
 import {
   PricingSessionMainComponent,
@@ -109,21 +108,17 @@ const CurrentSession = ({ location }) => {
 
   if (!account && !isNetworkSymbolNone) {
     return (
-      <SmallUniversalContainer
-        style={{ alignItems: "center", justifyContent: "center" }}
-      >
+      <Container style={{ alignItems: "center", justifyContent: "center" }}>
         <ConnectWalletAlert />
-      </SmallUniversalContainer>
+      </Container>
     )
   }
 
   if (isLoading || sessionData === null) {
     return (
-      <SmallUniversalContainer
-        style={{ alignItems: "center", justifyContent: "center" }}
-      >
+      <Container style={{ alignItems: "center", justifyContent: "center" }}>
         Loading... {/* TODO: find a loader */}
-      </SmallUniversalContainer>
+      </Container>
     )
   }
 
@@ -167,43 +162,43 @@ const CurrentSession = ({ location }) => {
       <ActivitySection
         activityList={[
           {
-            img: "../../../../static/prof.jpeg",
+            img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",
           },
           {
-            img: "../../../../static/prof.jpeg",
+            img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",
           },
           {
-            img: "../../../../static/prof.jpeg",
+            img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",
           },
           {
-            img: "../../../../static/prof.jpeg",
+            img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",
           },
           {
-            img: "../../../../static/prof.jpeg",
+            img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",
           },
           {
-            img: "../../../../static/prof.jpeg",
+            img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",
           },
           {
-            img: "../../../../static/prof.jpeg",
+            img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",

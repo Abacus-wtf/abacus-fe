@@ -2,7 +2,7 @@ import { Kilo } from "@typography";
 import { CardWithTitle } from "components/molecules/CardWithTitle";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
-import LinkImage from "../../../../static/link_image.svg";
+import { LinkImage } from "@icons";
 
 type PriceHistoryProps = {
   etherscanLink: string;
@@ -42,11 +42,11 @@ const PriceHistory: FunctionComponent<PriceHistoryProps> = ({
     <Container>
       <Link style={{ paddingTop: 5 }} href={etherscanLink}>
         <KiloStyled>Etherscan</KiloStyled>
-        <img src={LinkImage} alt="Etherscan link" />
+        <LinkImage />
       </Link>
       <Link href={openseaLink}>
         <KiloStyled>OpenSea</KiloStyled>
-        <img src={LinkImage} alt="OpenSea link" />
+        <LinkImage />
       </Link>
     </Container>
   </CardWithTitle>

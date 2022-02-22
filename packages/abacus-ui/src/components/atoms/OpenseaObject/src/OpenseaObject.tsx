@@ -1,7 +1,7 @@
 import { Kilo } from "@typography";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
-import LinkImage from "../../../../static/link_image.svg";
+import { LinkImage } from "@icons";
 
 type OpenseaObjectProps = {
   src: string;
@@ -44,7 +44,7 @@ const OpenseaObject: FunctionComponent<OpenseaObjectProps> = ({
     <ImageContainer src={src} alt="Related in Collection" />
     <BottomContainer>
       <KiloStyled>OpenSea</KiloStyled>
-      <img src={LinkImage} alt="OpenSea link" />
+      <LinkImage />
     </BottomContainer>
   </Container>
 );

@@ -62,8 +62,8 @@ const BadgeIndicator = styled.div<{ color: string }>`
 
 const NFTImage = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.section};
-  height: 220px;
-  width: fit-content;
+  width: 100%;
+  aspect-ratio: 1 / 1;
 `;
 
 const Title = styled.a`

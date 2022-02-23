@@ -1,7 +1,7 @@
 import {
   Button,
   ButtonType,
-  CardBackground,
+  Section,
   Input,
   MiniList,
   SessionCountdown,
@@ -10,17 +10,30 @@ import { ExploreCardProps } from "@molecules";
 import { Exa, Kilo } from "@typography";
 import { SessionState } from "components/molecules/ExploreScrollableCard/src/ExploreScrollableCard";
 import React, { FunctionComponent, useState } from "react";
+import { Media } from "@theme";
 import styled from "styled-components";
 import Lock from "../../../../static/lock.svg";
 import EthLogo from "../../../../static/eth_logo.svg";
 
+const Container = styled.div`
+  display: grid;
+
+  ${Media.sm`
+    grid-template-columns: 45% 55%;
+  `}
+`;
+
 const LeftHalf = styled.div`
-  width: fit-content;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   grid-gap: 20px;
+
+  ${Media.lg`
+    padding: 28px 64px;
+  `}
 `;
 
 const RightHalf = styled.div`
@@ -30,11 +43,22 @@ const RightHalf = styled.div`
   flex-direction: column;
   justify-content: space-between;
   grid-gap: 20px;
+  padding: 20px 0;
+
+  ${Media.sm`
+    padding: 8px;
+    padding-top: 0px;
+    padding-left: 28px;
+  `}
+
+  ${Media.lg`
+    padding-top: 22px;
+  `}
 `;
 
 const Image = styled.img`
-  height: 321px;
-  width: 321px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: ${({ theme }) => theme.borderRadius.main};
 `;
 
@@ -48,6 +72,11 @@ const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   grid-gap: 12px;
+  text-align: center;
+
+  ${Media.sm`
+    text-align: left;
+  `}
 `;
 
 const Description = styled(Kilo)`
@@ -105,8 +134,8 @@ const PricingSessionMainComponent: FunctionComponent<PricingSessionMainComponent
     const [appraisal, setAppraisal] = useState("");
     const [stake, setStake] = useState("");
     return (
-      <CardBackground style={{ padding: "48px 84px", gridGap: 84 }}>
-        <>
+      <Section>
+        <Container>
           <LeftHalf>
             <Image src={cardInfo.nftSrc} />
             <CountdownContainer>
@@ -223,8 +252,8 @@ const PricingSessionMainComponent: FunctionComponent<PricingSessionMainComponent
               </>
             ) : null}
           </RightHalf>
-        </>
-      </CardBackground>
+        </Container>
+      </Section>
     );
   };
 

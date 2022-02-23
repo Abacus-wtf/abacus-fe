@@ -47,6 +47,7 @@ const Title = styled(Peta)`
   text-align: center;
 
   ${Media.lg`
+    text-align: left;
     flex: 1 0 auto;
     padding: 0 36px;
     width: 35%;

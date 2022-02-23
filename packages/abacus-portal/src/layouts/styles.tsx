@@ -10,6 +10,7 @@ export const GlobalContainer = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 1040px;
   grid-gap: 50px;
   width: 100%;
   padding-top: 50px;
@@ -18,7 +19,7 @@ export const Container = styled.div`
   box-sizing: border-box;
 
   ${Media.md`
-  padding: 0px 100px;
+    padding: 0px 100px;
   `}
 
   ${Media.xl`
@@ -78,6 +79,8 @@ export const GlobalStyles = createGlobalStyle`
   }
   
   body {
+    width: 100%;
+    min-height: 100vh;
     position: relative;
     color: ${defaultTheme.colors.core.primary};
     background: ${defaultTheme.colors.core.white};

@@ -1022,11 +1022,11 @@ var PriceHistory = function (_a) {
 };
 var templateObject_1$b, templateObject_2$8, templateObject_3$6;
 
-var AccordionButton = styled__default["default"](Button)(templateObject_1$a || (templateObject_1$a = __makeTemplateObject(["\n  display: flex;\n  color: ", ";\n  padding: 16px 6px;\n  align-items: center;\n  width: 100%;\n"], ["\n  display: flex;\n  color: ", ";\n  padding: 16px 6px;\n  align-items: center;\n  width: 100%;\n"])), function (_a) {
+var AnimatedDropdown = styled__default["default"](Dropdown)(templateObject_1$a || (templateObject_1$a = __makeTemplateObject([""], [""])));
+var AccordionButton = styled__default["default"](Button)(templateObject_2$7 || (templateObject_2$7 = __makeTemplateObject(["\n  display: flex;\n  color: ", ";\n  padding: 16px 6px;\n  align-items: center;\n  width: 100%;\n\n  & ", " {\n    transform: ", ";\n  }\n"], ["\n  display: flex;\n  color: ", ";\n  padding: 16px 6px;\n  align-items: center;\n  width: 100%;\n\n  & ", " {\n    transform: ", ";\n  }\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.primary;
-});
-var AnimatedDropdown = styled__default["default"](Dropdown)(templateObject_2$7 || (templateObject_2$7 = __makeTemplateObject(["\n  transform: ", ";\n"], ["\n  transform: ", ";\n"])), function (_a) {
+}, AnimatedDropdown, function (_a) {
     var isOpen = _a.isOpen;
     return (isOpen ? "rotateZ(-180deg)" : "rotateZ(0)");
 });
@@ -1041,8 +1041,8 @@ var Accordion = function (_a) {
     var title = _a.title, children = _a.children;
     var _b = React.useState(false), isOpen = _b[0], setIsOpen = _b[1];
     return (React__default["default"].createElement(Container$8, null,
-        React__default["default"].createElement(AccordionButton, { buttonType: exports.ButtonType.Clear, onClick: function () { return setIsOpen(function (open) { return !open; }); } },
-            React__default["default"].createElement(AnimatedDropdown, { isOpen: isOpen }),
+        React__default["default"].createElement(AccordionButton, { isOpen: isOpen, buttonType: exports.ButtonType.Clear, onClick: function () { return setIsOpen(function (open) { return !open; }); } },
+            React__default["default"].createElement(AnimatedDropdown, null),
             React__default["default"].createElement(StyledKilo$2, null, title)),
         React__default["default"].createElement(AccordionItems, { isOpen: isOpen }, children)));
 };

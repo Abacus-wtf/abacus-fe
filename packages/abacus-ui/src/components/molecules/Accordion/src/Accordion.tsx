@@ -8,16 +8,18 @@ type AccordionProps = {
   title: string;
 };
 
-const AccordionButton = styled(Button)`
+const AnimatedDropdown = styled(Dropdown)``;
+
+const AccordionButton = styled(Button)<{ isOpen: boolean }>`
   display: flex;
   color: ${({ theme }) => theme.colors.core.primary};
   padding: 16px 6px;
   align-items: center;
   width: 100%;
-`;
 
-const AnimatedDropdown = styled(Dropdown)<{ isOpen: boolean }>`
-  transform: ${({ isOpen }) => (isOpen ? "rotateZ(-180deg)" : "rotateZ(0)")};
+  & ${AnimatedDropdown} {
+    transform: ${({ isOpen }) => (isOpen ? "rotateZ(-180deg)" : "rotateZ(0)")};
+  }
 `;
 
 const StyledKilo = styled(Kilo)`
@@ -42,10 +44,11 @@ const Accordion: FunctionComponent<AccordionProps> = ({ title, children }) => {
   return (
     <Container>
       <AccordionButton
+        isOpen={isOpen}
         buttonType={ButtonType.Clear}
         onClick={() => setIsOpen((open) => !open)}
       >
-        <AnimatedDropdown isOpen={isOpen} />
+        <AnimatedDropdown />
         <StyledKilo>{title}</StyledKilo>
       </AccordionButton>
       <AccordionItems isOpen={isOpen}>{children}</AccordionItems>

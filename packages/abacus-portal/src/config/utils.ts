@@ -1,16 +1,13 @@
 import { getAddress } from "@ethersproject/address"
 import { OPENSEA_API_KEY, OPENSEA_LINK, web3Eth } from "@config/constants"
-import axios, { AxiosResponse } from "axios"
-import axiosRetry from "axios-retry"
 import { BigNumber } from "@ethersproject/bignumber"
 import { Web3Provider, JsonRpcSigner } from "@ethersproject/providers"
 import { Contract } from "@ethersproject/contracts"
 import { AddressZero } from "@ethersproject/constants"
 import { keccak256 } from "@ethersproject/keccak256"
 import { formatEther } from "ethers/lib/utils"
+import "whatwg-fetch"
 import _ from "lodash"
-
-axiosRetry(axios, { retries: 3 })
 
 export const formatPricingSessionCoreMulticall = (pricingSessionCore: any) => ({
   endTime: parseInt(pricingSessionCore[0].hex, 16),
@@ -124,17 +121,17 @@ export type OpenSeaGetResponse = {
 }
 
 export async function openseaGet<T = OpenSeaAsset>(input: string) {
-  let result: AxiosResponse<T>
+  let result: T
   try {
-    result = await axios.get<T>(OPENSEA_LINK + input, {
-      decompress: false,
+    const res = await fetch(OPENSEA_LINK + input, {
       headers: OPENSEA_API_KEY
         ? {
             "X-API-KEY": OPENSEA_API_KEY,
           }
         : {},
     })
-    return result.data
+    result = await res.json()
+    return result
   } catch (e) {
     console.log("e", e)
     return DEFAULT_ASSET

@@ -1,7 +1,7 @@
 import GlobalLayout from "@layouts/index"
 import CurrentSession from "@sections/CurrentSession"
 import { PageProps, GetServerDataProps } from "gatsby"
-import { openseaGet } from "@config/utils"
+import { openseaGet, OpenSeaAsset } from "@config/utils"
 
 import React from "react"
 
@@ -22,7 +22,10 @@ const CurrentSessionPage = ({
 
 export async function getServerData({ query }: GetServerDataProps) {
   const { address, tokenId } = query
-  const asset = await openseaGet(`asset/${address}/${tokenId}`)
+  let asset: OpenSeaAsset
+  if (address && tokenId) {
+    asset = await openseaGet(`asset/${address}/${tokenId}`)
+  }
   return {
     props: {
       openseaURL: asset?.image_url ?? null,

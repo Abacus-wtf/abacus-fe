@@ -150,7 +150,7 @@ const Home: React.FC = () => {
         <ExploreFilters />
         <ExploreGrid>
           {cards.map(({ currentStatus, ...card }) => (
-            <CardContainer>
+            <CardContainer key={card.link}>
               <ExploreScrollableCard
                 cardInfo={card}
                 currentStatus={currentStatus}

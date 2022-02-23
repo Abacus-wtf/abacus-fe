@@ -11,9 +11,6 @@ interface CurrentSessionPageProps extends PageProps {
   }
 }
 
-const OPENSEA_LINK = process.env.GATSBY_OPENSEA_API || ""
-const OPENSEA_API_KEY = process.env.GATSBY_OPENSEA_API_KEY || undefined
-
 const CurrentSessionPage = ({
   location,
   serverData,

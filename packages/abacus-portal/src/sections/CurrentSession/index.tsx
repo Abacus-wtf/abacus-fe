@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import * as queryString from "query-string"
+import { createGlobalStyle } from "styled-components"
 import {
   PricingSessionMainComponent,
   CardBar,
@@ -26,6 +27,18 @@ import { NetworkSymbolEnum } from "@config/constants"
 import { isWithinWinRange } from "@config/utils"
 import { SessionState } from "@models/SessionState"
 import { Container, SplitContainer } from "@layouts/styles"
+
+const GlobalStyle = createGlobalStyle<{ url: string }>`
+body {
+  &::before {
+    background-image: ${({ url }) =>
+      url ? `url('${url}')` : `url('/background.png')`};
+    filter: blur(100px);
+    opacity: 1;
+    height: 100%;
+  }
+}
+`
 
 const CurrentSession = ({ location }) => {
   const status = useCurrentSessionStatus()
@@ -123,6 +136,7 @@ const CurrentSession = ({ location }) => {
 
   return (
     <Container>
+      <GlobalStyle url={sessionData.image_url} />
       <CardBar
         title={sessionData.collectionTitle}
         poolAmount={sessionData.totalStaked}

@@ -94,10 +94,10 @@ export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
       content: "";
       display: block;
       position: absolute;
+      height: 100vh;
       left: 0;
       top: 0;
       right: 0;
-      height: 100vh;
       opacity: 0.25;
       z-index: -1;
       background-image: ${({ backgroundURL }) =>

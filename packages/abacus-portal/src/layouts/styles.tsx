@@ -48,7 +48,11 @@ export const SplitContainer = styled.div`
   `}
 `
 
-export const GlobalStyles = createGlobalStyle`
+type GlobalStylesProps = {
+  backgroundURL?: string
+}
+
+export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
   html { 
     font-family: 'Inter', sans-serif;
   }
@@ -92,14 +96,15 @@ export const GlobalStyles = createGlobalStyle`
       position: absolute;
       left: 0;
       top: 0;
-      width: 100%;
-      height: 100%;
+      right: 0;
+      height: 100vh;
       opacity: 0.25;
       z-index: -1;
-      background-image: url('/background.png');
+      background-image: ${({ backgroundURL }) =>
+        backgroundURL ? `url('${backgroundURL}')` : `url('/background.png')`};
       background-repeat: no-repeat;
       background-position: 50% 0;
-      background-size: contain;    
+      background-size: cover;
       background-color: ${defaultTheme.colors.core.background};
       mask-image: linear-gradient(
         to bottom,

@@ -9,11 +9,19 @@ import {
 } from "@state/application/hooks"
 import { NetworkSymbolEnum, NetworkSymbolAndId } from "@config/constants"
 import SEO, { SEOWithQueryProps } from "@components/SEO"
-import { navigate } from "gatsby"
+import { navigate, PageProps } from "gatsby"
 import { GlobalStyles, GlobalContainer, InnerContainer } from "./styles"
 
-const GlobalLayout: React.FC = (props: any) => {
-  const { children, location } = props
+type GlobalLayoutProps = {
+  backgroundURL?: string
+  location: PageProps["location"]
+}
+
+const GlobalLayout: React.FC<GlobalLayoutProps> = ({
+  children,
+  location,
+  backgroundURL,
+}) => {
   const { chainId, account } = useActiveWeb3React()
   const selectNetwork = useSelectNetwork()
   const networkSymbol = useGetCurrentNetwork()
@@ -89,8 +97,8 @@ const GlobalLayout: React.FC = (props: any) => {
 
   return (
     <>
-      <SEO {...seoProps} />
-      <GlobalStyles />
+      <SEO {...seoProps} metaImage={backgroundURL} />
+      <GlobalStyles backgroundURL={backgroundURL} />
       <PortalNavbar
         balance={0}
         profileName="@bigint"

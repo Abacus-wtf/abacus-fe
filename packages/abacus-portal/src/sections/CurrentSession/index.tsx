@@ -99,7 +99,6 @@ const CurrentSession = ({ location }) => {
         sessionData.winnerAmount
       )
     ) {
-      console.log("guessed", sessionData.guessedAppraisal)
       setIsLostModalOpen(true)
 
       localStorage.setItem(localString, "true")

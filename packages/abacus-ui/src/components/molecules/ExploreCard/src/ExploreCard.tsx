@@ -81,22 +81,6 @@ const ButtonStyled = styled(Button)`
   text-align: center;
   justify-content: center;
   width: 100%;
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-  }
-
-  &:hover {
-    &::after {
-      opacity: 0.2;
-      background-color: white;
-    }
-  }
 `;
 
 const ProfileGroupContainer = styled.div`

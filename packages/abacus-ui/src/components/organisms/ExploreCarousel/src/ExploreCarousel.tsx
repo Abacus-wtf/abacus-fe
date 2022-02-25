@@ -10,6 +10,7 @@ type ExploreCarouselProps = {
   cards: ExploreCardProps[];
   currentMid: number;
   setCurrentMid: (next: number) => void;
+  loading?: boolean;
 };
 
 const Wrapper = styled.div`
@@ -64,8 +65,9 @@ const ExploreCarousel: FunctionComponent<ExploreCarouselProps> = ({
   cards,
   currentMid,
   setCurrentMid,
+  loading,
 }) => {
-  if (cards.length < 1) {
+  if (!loading && cards.length < 1) {
     return null;
   }
 
@@ -74,6 +76,7 @@ const ExploreCarousel: FunctionComponent<ExploreCarouselProps> = ({
       <Container>
         <CarouselItem>
           <ExploreImage
+            loading={loading}
             onClick={() => {
               if (currentMid === 0) {
                 setCurrentMid(cards.length - 1);

@@ -4,6 +4,7 @@ declare type ExploreCarouselProps = {
     cards: ExploreCardProps[];
     currentMid: number;
     setCurrentMid: (next: number) => void;
+    loading?: boolean;
 };
 declare const ExploreCarousel: FunctionComponent<ExploreCarouselProps>;
 export default ExploreCarousel;

@@ -137,9 +137,10 @@ const Home: React.FC = () => {
           <P>Being appraised on Abacus right now!</P>
         </div>
         <AbacusBar
-          totalNumberOfBeads={cards.length || 4}
+          totalNumberOfBeads={cards.length || 7}
           currentPosition={cardIndex}
           changeToPosition={setCardIndex}
+          loading={isLoading}
         />
       </FeaturedHeader>
       <ExploreCarousel

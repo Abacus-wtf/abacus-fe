@@ -19,7 +19,7 @@ const LoadingShimmer = styled.div`
   background: linear-gradient(
     to right,
     ${({ theme }) => theme.colors.core.background} 9%,
-    ${({ theme }) => theme.colors.core.white} 18%,
+    ${({ theme }) => theme.colors.core.lightWhite} 18%,
     ${({ theme }) => theme.colors.core.background} 27%
   );
   background-size: 300% 100%;

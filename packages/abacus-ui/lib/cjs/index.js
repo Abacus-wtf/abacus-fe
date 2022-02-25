@@ -412,7 +412,7 @@ var LoadingShimmer = styled__default["default"].div(templateObject_2$q || (templ
     return theme.colors.core.background;
 }, function (_a) {
     var theme = _a.theme;
-    return theme.colors.core.white;
+    return theme.colors.core.lightWhite;
 }, function (_a) {
     var theme = _a.theme;
     return theme.colors.core.background;
@@ -811,10 +811,10 @@ var Container$f = styled__default["default"].div(templateObject_1$j || (template
     var theme = _a.theme;
     return theme.colors.core.white;
 });
-var Bead = styled__default["default"].button(templateObject_2$f || (templateObject_2$f = __makeTemplateObject(["\n  background-color: ", ";\n  cursor: ", ";\n  border-radius: 20px;\n  height: 16px;\n  width: 12px;\n  border: 1px solid ", ";\n  position: absolute;\n  z-index: 1;\n  transform: translateX(\n    ", "px\n  );\n\n  transition: transform ", " ease;\n"], ["\n  background-color: ",
+var Bead = styled__default["default"].button(templateObject_2$f || (templateObject_2$f = __makeTemplateObject(["\n  background-color: ", ";\n  cursor: ", ";\n  border-radius: 20px;\n  height: 16px;\n  width: 12px;\n  border: 1px solid ", ";\n  position: absolute;\n  z-index: 1;\n  transform: translateX(\n    ", "px\n  );\n  ", "\n\n  transition: transform ", ";\n"], ["\n  background-color: ",
     ";\n  cursor: ",
     ";\n  border-radius: 20px;\n  height: 16px;\n  width: 12px;\n  border: 1px solid ", ";\n  position: absolute;\n  z-index: 1;\n  transform: translateX(\n    ",
-    "px\n  );\n\n  transition: transform ", " ease;\n"])), function (_a) {
+    "px\n  );\n  ", "\n\n  transition: transform ", ";\n"])), function (_a) {
     var currentPosition = _a.currentPosition, beadPosition = _a.beadPosition, theme = _a.theme;
     return currentPosition === beadPosition
         ? theme.colors.utility.gray
@@ -831,15 +831,18 @@ var Bead = styled__default["default"].button(templateObject_2$f || (templateObje
         ? beadPosition * 13
         : 250 - (maxPosition - beadPosition) * 13;
 }, function (_a) {
+    var loading = _a.loading;
+    return (loading ? "transform: translateX(0px);" : "");
+}, function (_a) {
     var theme = _a.theme;
     return theme.transitionTime.main;
 });
 var GradientLine = styled__default["default"].div(templateObject_3$b || (templateObject_3$b = __makeTemplateObject(["\n  height: 2px;\n  width: 250px;\n  z-index: 0;\n  background: linear-gradient(90deg, #3e74ff -14.08%, rgba(0, 0, 0, 0) 127.23%);\n"], ["\n  height: 2px;\n  width: 250px;\n  z-index: 0;\n  background: linear-gradient(90deg, #3e74ff -14.08%, rgba(0, 0, 0, 0) 127.23%);\n"])));
 var AbacusBar = function (_a) {
-    var currentPosition = _a.currentPosition, totalNumberOfBeads = _a.totalNumberOfBeads, changeToPosition = _a.changeToPosition;
+    var currentPosition = _a.currentPosition, totalNumberOfBeads = _a.totalNumberOfBeads, changeToPosition = _a.changeToPosition, loading = _a.loading;
     return (React__default["default"].createElement(Container$f, null,
         React__default["default"].createElement(GradientLine, null),
-        ___default["default"].map(___default["default"].range(0, totalNumberOfBeads), function (i) { return (React__default["default"].createElement(Bead, { key: i, beadPosition: i, currentPosition: currentPosition, maxPosition: totalNumberOfBeads, onClick: function () {
+        ___default["default"].map(___default["default"].range(0, totalNumberOfBeads), function (i) { return (React__default["default"].createElement(Bead, { key: i, beadPosition: i, currentPosition: currentPosition, maxPosition: totalNumberOfBeads, loading: Boolean(loading), onClick: function () {
                 if (i !== currentPosition) {
                     changeToPosition(i);
                 }
@@ -1356,7 +1359,11 @@ var Container = styled__default["default"].div(templateObject_5 || (templateObje
 var CarouselItem = styled__default["default"].div(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  max-width: 480px;\n  width: 100%;\n  justify-self: center;\n\n  &:first-of-type {\n    justify-self: flex-end;\n  }\n\n  &:last-of-type {\n    justify-self: flex-start;\n  }\n"], ["\n  max-width: 480px;\n  width: 100%;\n  justify-self: center;\n\n  &:first-of-type {\n    justify-self: flex-end;\n  }\n\n  &:last-of-type {\n    justify-self: flex-start;\n  }\n"])));
 var ExploreCarousel = function (_a) {
     var _b, _c, _d, _e;
-    var cards = _a.cards, currentMid = _a.currentMid, setCurrentMid = _a.setCurrentMid, loading = _a.loading;
+    var cards = _a.cards, currentMid = _a.currentMid, setCurrentMid = _a.setCurrentMid;
+    var _f = React__default["default"].useState(true), loading = _f[0], setLoading = _f[1];
+    React__default["default"].useEffect(function () {
+        setTimeout(function () { return setLoading(false); }, 1000);
+    }, []);
     if (!loading && cards.length < 1) {
         return null;
     }

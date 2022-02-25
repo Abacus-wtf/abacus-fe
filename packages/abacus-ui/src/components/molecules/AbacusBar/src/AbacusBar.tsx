@@ -6,6 +6,7 @@ type AbacusBarProps = {
   currentPosition: number;
   totalNumberOfBeads: number;
   changeToPosition: (newPosition: number) => void;
+  loading?: boolean;
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -24,6 +25,7 @@ const Bead = styled.button<{
   beadPosition: number;
   currentPosition: number;
   maxPosition: number;
+  loading: boolean;
 }>`
   background-color: ${({ currentPosition, beadPosition, theme }) =>
     currentPosition === beadPosition
@@ -43,8 +45,9 @@ const Bead = styled.button<{
         ? beadPosition * 13
         : 250 - (maxPosition - beadPosition) * 13}px
   );
+  ${({ loading }) => (loading ? "transform: translateX(0px);" : "")}
 
-  transition: transform ${({ theme }) => theme.transitionTime.main} ease;
+  transition: transform ${({ theme }) => theme.transitionTime.main};
 `;
 
 const GradientLine = styled.div`
@@ -58,6 +61,7 @@ const AbacusBar: FunctionComponent<AbacusBarProps> = ({
   currentPosition,
   totalNumberOfBeads,
   changeToPosition,
+  loading,
 }) => (
   <Container>
     <GradientLine />
@@ -67,6 +71,7 @@ const AbacusBar: FunctionComponent<AbacusBarProps> = ({
         beadPosition={i}
         currentPosition={currentPosition}
         maxPosition={totalNumberOfBeads}
+        loading={Boolean(loading)}
         onClick={() => {
           if (i !== currentPosition) {
             changeToPosition(i);

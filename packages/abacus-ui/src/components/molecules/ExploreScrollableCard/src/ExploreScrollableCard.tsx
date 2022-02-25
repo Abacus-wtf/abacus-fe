@@ -79,7 +79,6 @@ const Title = styled.a`
   overflow: "hidden";
   text-decoration: none;
   color: black;
-
   &:focus,
   &:hover,
   &:visited {
@@ -87,6 +86,7 @@ const Title = styled.a`
   }
 
   &::after {
+    transition: ${({ theme }) => theme.transitionTime.main};
     content: "";
     position: absolute;
     top: 0;

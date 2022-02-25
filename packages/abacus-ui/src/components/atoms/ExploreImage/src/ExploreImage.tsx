@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { FunctionComponent, useContext, useState } from "react";
+import React, { FunctionComponent, useContext } from "react";
 import styled, { ThemeContext } from "styled-components";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -12,13 +12,21 @@ type ExploreImageProps = {
   onClick?: () => void;
 };
 
-const ImageContainer = styled.div<{ enableFullBorderRadius?: boolean }>`
+const ImageContainer = styled.div<{
+  enableFullBorderRadius?: boolean;
+  onClick?: ExploreImageProps["onClick"];
+}>`
   width: 100%;
-  height: 0;
-  padding-bottom: 100%;
+  aspect-ratio: 1/1;
   background-color: ${({ theme }) => theme.colors.core.white};
   border-radius: ${({ theme, enableFullBorderRadius }) =>
     enableFullBorderRadius ? theme.borderRadius.section : 0};
+  transition: transform ${({ theme }) => theme.transitionTime.main};
+
+  &:hover {
+    transform: ${({ onClick }) =>
+      typeof onClick !== "undefined" ? "scale(1.10)" : "scale(1)"};
+  }
 `;
 
 const ExploreImage: FunctionComponent<ExploreImageProps> = ({
@@ -27,15 +35,8 @@ const ExploreImage: FunctionComponent<ExploreImageProps> = ({
   onClick,
 }) => {
   const theme = useContext(ThemeContext);
-  const [hover, setHover] = useState(false);
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    <ImageContainer
-      enableFullBorderRadius
-      onClick={onClick}
-      onPointerOver={() => setHover(true)}
-      onPointerOut={() => setHover(false)}
-    >
+    <ImageContainer enableFullBorderRadius onClick={onClick}>
       <CrossfadeImage
         src={imgSrc}
         enableFullBorderRadius={enableFullBorderRadius || false}
@@ -49,9 +50,6 @@ const ExploreImage: FunctionComponent<ExploreImageProps> = ({
           borderRadius: enableFullBorderRadius ? theme.borderRadius.section : 0,
           borderTopLeftRadius: theme.borderRadius.section,
           borderTopRightRadius: theme.borderRadius.section,
-          transition: theme.transitionTime.main,
-          transform:
-            hover && onClick !== undefined ? "scale(1.10)" : "scale(1)",
         }}
       />
     </ImageContainer>

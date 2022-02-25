@@ -391,21 +391,25 @@ var templateObject_1$x;
 var Flex = styled.div(templateObject_1$w || (templateObject_1$w = __makeTemplateObject(["\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n"], ["\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n"])));
 var templateObject_1$w;
 
-var ImageContainer$2 = styled.div(templateObject_1$v || (templateObject_1$v = __makeTemplateObject(["\n  width: 100%;\n  height: 0;\n  padding-bottom: 100%;\n  background-color: ", ";\n  border-radius: ", ";\n"], ["\n  width: 100%;\n  height: 0;\n  padding-bottom: 100%;\n  background-color: ", ";\n  border-radius: ",
-    ";\n"])), function (_a) {
+var ImageContainer$2 = styled.div(templateObject_1$v || (templateObject_1$v = __makeTemplateObject(["\n  width: 100%;\n  aspect-ratio: 1/1;\n  background-color: ", ";\n  border-radius: ", ";\n  transition: transform ", ";\n\n  &:hover {\n    transform: ", ";\n  }\n"], ["\n  width: 100%;\n  aspect-ratio: 1/1;\n  background-color: ", ";\n  border-radius: ",
+    ";\n  transition: transform ", ";\n\n  &:hover {\n    transform: ",
+    ";\n  }\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.white;
 }, function (_a) {
     var theme = _a.theme, enableFullBorderRadius = _a.enableFullBorderRadius;
     return enableFullBorderRadius ? theme.borderRadius.section : 0;
+}, function (_a) {
+    var theme = _a.theme;
+    return theme.transitionTime.main;
+}, function (_a) {
+    var onClick = _a.onClick;
+    return typeof onClick !== "undefined" ? "scale(1.10)" : "scale(1)";
 });
 var ExploreImage = function (_a) {
     var imgSrc = _a.imgSrc, enableFullBorderRadius = _a.enableFullBorderRadius, onClick = _a.onClick;
     var theme = useContext(ThemeContext);
-    var _b = useState(false), hover = _b[0], setHover = _b[1];
-    return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    React.createElement(ImageContainer$2, { enableFullBorderRadius: true, onClick: onClick, onPointerOver: function () { return setHover(true); }, onPointerOut: function () { return setHover(false); } },
+    return (React.createElement(ImageContainer$2, { enableFullBorderRadius: true, onClick: onClick },
         React.createElement(CrossfadeImage, { src: imgSrc, enableFullBorderRadius: enableFullBorderRadius || false, alt: "Featured Explorer", style: {
                 cursor: onClick !== undefined ? "pointer" : "default",
                 maxWidth: "auto",
@@ -415,8 +419,6 @@ var ExploreImage = function (_a) {
                 borderRadius: enableFullBorderRadius ? theme.borderRadius.section : 0,
                 borderTopLeftRadius: theme.borderRadius.section,
                 borderTopRightRadius: theme.borderRadius.section,
-                transition: theme.transitionTime.main,
-                transform: hover && onClick !== undefined ? "scale(1.10)" : "scale(1)",
             } })));
 };
 var templateObject_1$v;

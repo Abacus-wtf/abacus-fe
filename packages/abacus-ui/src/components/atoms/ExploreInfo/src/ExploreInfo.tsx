@@ -35,6 +35,7 @@ const StyledGiga = styled(Giga)<{ isCardBar: boolean }>`
     isCardBar ? theme.colors.core[900] : "black"};
   ${({ isCardBar }) => Font(isCardBar ? "mega" : "giga")};
   width: 100%;
+  text-align: inherit;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

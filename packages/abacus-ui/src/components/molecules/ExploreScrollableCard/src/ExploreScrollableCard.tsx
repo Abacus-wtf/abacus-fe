@@ -1,7 +1,6 @@
 import { ExploreInfo, SessionCountdown } from "@atoms";
-import { Font } from "@theme";
+import { Font, Media } from "@theme";
 import {
-  Divider,
   ExploreCardProps,
   ExploreInfoContainer,
 } from "components/molecules/ExploreCard/src/ExploreCard";
@@ -29,15 +28,16 @@ const Container = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.section};
   background-color: ${({ theme }) => theme.colors.core.white};
   box-shadow: ${({ theme }) => theme.boxShadow.section};
-
-  // @TODO: Subject to change for differing screen sizes
-  height: 665px;
   display: flex;
   flex-direction: column;
   padding: 12px;
   grid-gap: 20px;
   align-items: center;
   color: black;
+
+  ${Media.lg`
+    grid-gap: 28px;
+  `}
 `;
 
 const BadgeContainer = styled.div`
@@ -64,10 +64,17 @@ const NFTImage = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.section};
   width: 100%;
   aspect-ratio: 1 / 1;
+  max-width: 200px;
+`;
+
+export const Divider = styled.hr`
+  width: 100%;
+  border-color: ${({ theme }) => theme.colors.core.border};
 `;
 
 const Title = styled.a`
-  ${Font("Tera")}
+  ${Font("peta")}
+  text-align: center;
   font-family: "Bluu Next";
   overflow: "hidden";
   text-decoration: none;
@@ -94,6 +101,18 @@ const Title = styled.a`
       background-color: white;
     }
   }
+`;
+
+const BottomContainer = styled.div`
+  grid-gap: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+
+  ${Media.lg`
+    margin-bottom: 28px;
+  `}
 `;
 
 const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
@@ -149,20 +168,13 @@ const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
         />
       </ExploreInfoContainer>
       <Divider />
-      <div
-        style={{
-          gridGap: 30,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+      <BottomContainer>
         <ProfileGroup
           imgs={cardInfo.imgs}
           numParticipants={cardInfo.numParticipants}
         />
         <SessionCountdown endTime={cardInfo.endTime} />
-      </div>
+      </BottomContainer>
     </Container>
   );
 };

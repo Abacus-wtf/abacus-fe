@@ -374,7 +374,7 @@ var StyledKilo$3 = styled__default["default"](StyledDiv)(templateObject_3$i || (
             ? theme.colors.core[800]
             : theme.colors.core.white;
 });
-var Divider$3 = styled__default["default"].div(templateObject_4$d || (templateObject_4$d = __makeTemplateObject(["\n  background: ", ";\n  opacity: 0.1;\n  height: 2px;\n  width: 100%;\n"], ["\n  background: ",
+var Divider$4 = styled__default["default"].div(templateObject_4$d || (templateObject_4$d = __makeTemplateObject(["\n  background: ", ";\n  opacity: 0.1;\n  height: 2px;\n  width: 100%;\n"], ["\n  background: ",
     ";\n  opacity: 0.1;\n  height: 2px;\n  width: 100%;\n"])), function (_a) {
     var theme = _a.theme, isdark = _a.isdark;
     return isdark ? theme.colors.core[800] : theme.colors.core.white;
@@ -388,7 +388,7 @@ var MiniList = function (_a) {
                 React__default["default"].createElement(StyledKilo$3, { isvalue: false, isdark: isDark || false },
                     React__default["default"].createElement("b", null, key)),
                 React__default["default"].createElement(StyledKilo$3, { isvalue: true, isdark: isDark || false }, value)),
-            index !== Object.entries(info).length - 1 ? (React__default["default"].createElement(Divider$3, { isdark: isDark || false })) : null));
+            index !== Object.entries(info).length - 1 ? (React__default["default"].createElement(Divider$4, { isdark: isDark || false })) : null));
     })));
 };
 var templateObject_1$y, templateObject_2$o, templateObject_3$i, templateObject_4$d;
@@ -476,8 +476,8 @@ var BoldenKilo = styled__default["default"](StyledDiv)(templateObject_3$g || (te
     var theme = _a.theme, isCardBar = _a.isCardBar;
     return isCardBar ? theme.colors.core[900] : "black";
 }, Font("micro"), Media.md(templateObject_2$m || (templateObject_2$m = __makeTemplateObject(["\n    ", "\n  "], ["\n    ", "\n  "])), Font("kilo")));
-var StyledGiga = styled__default["default"](Container$D)(templateObject_5$9 || (templateObject_5$9 = __makeTemplateObject(["\n  color: ", ";\n  ", ";\n  width: 100%;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n\n  ", "\n\n  ", "\n"], ["\n  color: ",
-    ";\n  ", ";\n  width: 100%;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n\n  ", "\n\n  ",
+var StyledGiga = styled__default["default"](Container$D)(templateObject_5$9 || (templateObject_5$9 = __makeTemplateObject(["\n  color: ", ";\n  ", ";\n  width: 100%;\n  text-align: inherit;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n\n  ", "\n\n  ", "\n"], ["\n  color: ",
+    ";\n  ", ";\n  width: 100%;\n  text-align: inherit;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n\n  ", "\n\n  ",
     "\n"])), function (_a) {
     var theme = _a.theme, isCardBar = _a.isCardBar;
     return isCardBar ? theme.colors.core[900] : "black";
@@ -485,11 +485,11 @@ var StyledGiga = styled__default["default"](Container$D)(templateObject_5$9 || (
     var isCardBar = _a.isCardBar;
     return Font(isCardBar ? "mega" : "giga");
 }, Font("mega"), Media.md(templateObject_4$b || (templateObject_4$b = __makeTemplateObject(["\n    ", "\n  "], ["\n    ", "\n  "])), Font("giga")));
-var ColoredKilo = styled__default["default"](StyledDiv)(templateObject_7$5 || (templateObject_7$5 = __makeTemplateObject(["\n  color: ", ";\n\n  ", "\n\n  ", "\n"], ["\n  color: ", ";\n\n  ", "\n\n  ",
+var ColoredKilo = styled__default["default"](StyledDiv)(templateObject_7$6 || (templateObject_7$6 = __makeTemplateObject(["\n  color: ", ";\n\n  ", "\n\n  ", "\n"], ["\n  color: ", ";\n\n  ", "\n\n  ",
     "\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core[900];
-}, Font("micro"), Media.md(templateObject_6$7 || (templateObject_6$7 = __makeTemplateObject(["\n    ", "\n  "], ["\n    ", "\n  "])), Font("kilo")));
+}, Font("micro"), Media.md(templateObject_6$8 || (templateObject_6$8 = __makeTemplateObject(["\n    ", "\n  "], ["\n    ", "\n  "])), Font("kilo")));
 var ExploreInfo = function (_a) {
     var title = _a.title, text = _a.text, unit = _a.unit, isCardBar = _a.isCardBar, className = _a.className;
     return (React__default["default"].createElement(Container$n, { isCardBar: isCardBar || false, className: className },
@@ -497,7 +497,7 @@ var ExploreInfo = function (_a) {
         React__default["default"].createElement(StyledGiga, { isCardBar: isCardBar || false }, text),
         unit ? React__default["default"].createElement(ColoredKilo, null, unit) : null));
 };
-var templateObject_1$t, templateObject_2$m, templateObject_3$g, templateObject_4$b, templateObject_5$9, templateObject_6$7, templateObject_7$5;
+var templateObject_1$t, templateObject_2$m, templateObject_3$g, templateObject_4$b, templateObject_5$9, templateObject_6$8, templateObject_7$6;
 
 var ProfileIcon = styled__default["default"].img.attrs(function (props) { return ({
     alt: "Profile Icon",
@@ -659,11 +659,11 @@ var ImageContainer$1 = styled__default["default"].div(templateObject_2$h || (tem
 var ImageStyled = styled__default["default"].img(templateObject_3$d || (templateObject_3$d = __makeTemplateObject(["\n  transform: rotate(15deg);\n  width: 100%;\n"], ["\n  transform: rotate(15deg);\n  width: 100%;\n"])));
 var Container$h = styled__default["default"].div(templateObject_5$8 || (templateObject_5$8 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ",
     "\n"])), Media.sm(templateObject_4$a || (templateObject_4$a = __makeTemplateObject(["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "], ["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "]))));
-var ZettaStyled = styled__default["default"](Container$r)(templateObject_6$6 || (templateObject_6$6 = __makeTemplateObject(["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"], ["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var ZettaStyled = styled__default["default"](Container$r)(templateObject_6$7 || (templateObject_6$7 = __makeTemplateObject(["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"], ["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.white;
 });
-var MegaStyled$1 = styled__default["default"](Container$x)(templateObject_7$4 || (templateObject_7$4 = __makeTemplateObject(["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"], ["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var MegaStyled$1 = styled__default["default"](Container$x)(templateObject_7$5 || (templateObject_7$5 = __makeTemplateObject(["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"], ["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.lightWhite;
 });
@@ -677,7 +677,7 @@ var Infographic = function (_a) {
         React__default["default"].createElement(MegaStyled$1, null, description),
         React__default["default"].createElement(Button, { as: "a", href: link }, title)));
 };
-var templateObject_1$m, templateObject_2$h, templateObject_3$d, templateObject_4$a, templateObject_5$8, templateObject_6$6, templateObject_7$4;
+var templateObject_1$m, templateObject_2$h, templateObject_3$d, templateObject_4$a, templateObject_5$8, templateObject_6$7, templateObject_7$5;
 
 var ImageSection = styled__default["default"].img(templateObject_1$l || (templateObject_1$l = __makeTemplateObject(["\n  width: 280px;\n  height: 280px;\n  border-top-left-radius: ", ";\n  border-top-right-radius: ", ";\n  object-fit: cover;\n"], ["\n  width: 280px;\n  height: 280px;\n  border-top-left-radius: ", ";\n  border-top-right-radius: ", ";\n  object-fit: cover;\n"])), function (_a) {
     var theme = _a.theme;
@@ -842,15 +842,15 @@ var Container$d = styled__default["default"].div(templateObject_1$g || (template
 var SecondHalf = styled__default["default"].div(templateObject_2$c || (templateObject_2$c = __makeTemplateObject(["\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 15px 20px;\n  box-sizing: border-box;\n"], ["\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 15px 20px;\n  box-sizing: border-box;\n"])));
 var Title$2 = styled__default["default"].h3(templateObject_4$8 || (templateObject_4$8 = __makeTemplateObject(["\n  text-align: center;\n  margin-bottom: 18px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  max-width: 100%;\n  ", "\n\n  ", "\n"], ["\n  text-align: center;\n  margin-bottom: 18px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  max-width: 100%;\n  ", "\n\n  ",
     "\n"])), Font("peta", "Bluu Next"), Media.md(templateObject_3$a || (templateObject_3$a = __makeTemplateObject(["\n    ", "\n  "], ["\n    ", "\n  "])), Font("zetta", "Bluu Next")));
-var Divider$2 = styled__default["default"].hr(templateObject_5$7 || (templateObject_5$7 = __makeTemplateObject(["\n  margin: 18px 0px;\n  width: 100%;\n  border-color: ", ";\n"], ["\n  margin: 18px 0px;\n  width: 100%;\n  border-color: ", ";\n"])), function (_a) {
+var Divider$3 = styled__default["default"].hr(templateObject_5$7 || (templateObject_5$7 = __makeTemplateObject(["\n  margin: 18px 0px;\n  width: 100%;\n  border-color: ", ";\n"], ["\n  margin: 18px 0px;\n  width: 100%;\n  border-color: ", ";\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.border;
 });
-var ExploreInfoContainer = styled__default["default"].div(templateObject_7$3 || (templateObject_7$3 = __makeTemplateObject(["\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  width: 100%;\n  justify-content: center;\n  margin-bottom: 18px;\n\n  ", "\n"], ["\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  width: 100%;\n  justify-content: center;\n  margin-bottom: 18px;\n\n  ",
-    "\n"])), Media.sm(templateObject_6$5 || (templateObject_6$5 = __makeTemplateObject(["\n    grid-column-gap: 50px;\n    width: max-content;\n  "], ["\n    grid-column-gap: 50px;\n    width: max-content;\n  "]))));
-var ButtonStyled = styled__default["default"](Button)(templateObject_8$3 || (templateObject_8$3 = __makeTemplateObject(["\n  display: flex;\n  text-align: center;\n  justify-content: center;\n  width: 100%;\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  &:hover {\n    &::after {\n      opacity: 0.2;\n      background-color: white;\n    }\n  }\n"], ["\n  display: flex;\n  text-align: center;\n  justify-content: center;\n  width: 100%;\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  &:hover {\n    &::after {\n      opacity: 0.2;\n      background-color: white;\n    }\n  }\n"])));
+var ExploreInfoContainer = styled__default["default"].div(templateObject_7$4 || (templateObject_7$4 = __makeTemplateObject(["\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  width: 100%;\n  justify-content: center;\n  margin-bottom: 18px;\n  text-align: center;\n\n  ", "\n"], ["\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  width: 100%;\n  justify-content: center;\n  margin-bottom: 18px;\n  text-align: center;\n\n  ",
+    "\n"])), Media.sm(templateObject_6$6 || (templateObject_6$6 = __makeTemplateObject(["\n    grid-column-gap: 50px;\n    width: max-content;\n  "], ["\n    grid-column-gap: 50px;\n    width: max-content;\n  "]))));
+var ButtonStyled = styled__default["default"](Button)(templateObject_8$4 || (templateObject_8$4 = __makeTemplateObject(["\n  display: flex;\n  text-align: center;\n  justify-content: center;\n  width: 100%;\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  &:hover {\n    &::after {\n      opacity: 0.2;\n      background-color: white;\n    }\n  }\n"], ["\n  display: flex;\n  text-align: center;\n  justify-content: center;\n  width: 100%;\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  &:hover {\n    &::after {\n      opacity: 0.2;\n      background-color: white;\n    }\n  }\n"])));
 var ProfileGroupContainer = styled__default["default"].div(templateObject_10$2 || (templateObject_10$2 = __makeTemplateObject(["\n  display: none;\n  margin-top: 18px;\n\n  ", "\n"], ["\n  display: none;\n  margin-top: 18px;\n\n  ",
-    "\n"])), Media.md(templateObject_9$3 || (templateObject_9$3 = __makeTemplateObject(["\n    display: block;\n  "], ["\n    display: block;\n  "]))));
+    "\n"])), Media.md(templateObject_9$4 || (templateObject_9$4 = __makeTemplateObject(["\n    display: block;\n  "], ["\n    display: block;\n  "]))));
 var ExploreCard = function (_a) {
     var nftSrc = _a.nftSrc, nftTitle = _a.nftTitle, endTime = _a.endTime, numParticipants = _a.numParticipants, poolAmount = _a.poolAmount, poolAmountDollars = _a.poolAmountDollars, imgs = _a.imgs, link = _a.link;
     return (React__default["default"].createElement(Container$d, null,
@@ -858,7 +858,7 @@ var ExploreCard = function (_a) {
         React__default["default"].createElement(SecondHalf, null,
             React__default["default"].createElement(Title$2, null, nftTitle),
             React__default["default"].createElement(SessionCountdown, { endTime: endTime }),
-            React__default["default"].createElement(Divider$2, null),
+            React__default["default"].createElement(Divider$3, null),
             React__default["default"].createElement(ExploreInfoContainer, null,
                 React__default["default"].createElement(ExploreInfo, { title: "Participants", text: "" + numParticipants, unit: "People" }),
                 React__default["default"].createElement(ExploreInfo, { title: "Pool Amount", text: poolAmount.toFixed(2) + " \u039E", unit: "$" + (poolAmountDollars !== null && poolAmountDollars !== void 0 ? poolAmountDollars : "-") })),
@@ -866,7 +866,7 @@ var ExploreCard = function (_a) {
             React__default["default"].createElement(ProfileGroupContainer, null,
                 React__default["default"].createElement(ProfileGroup, { imgs: imgs, numParticipants: numParticipants })))));
 };
-var templateObject_1$g, templateObject_2$c, templateObject_3$a, templateObject_4$8, templateObject_5$7, templateObject_6$5, templateObject_7$3, templateObject_8$3, templateObject_9$3, templateObject_10$2;
+var templateObject_1$g, templateObject_2$c, templateObject_3$a, templateObject_4$8, templateObject_5$7, templateObject_6$6, templateObject_7$4, templateObject_8$4, templateObject_9$4, templateObject_10$2;
 
 var SessionState;
 (function (SessionState) {
@@ -878,7 +878,8 @@ var SessionState;
     SessionState[SessionState["Complete"] = 5] = "Complete";
 })(SessionState || (SessionState = {}));
 // You probably want to change this to something semantic or abandon it all together
-var Container$c = styled__default["default"].div(templateObject_1$f || (templateObject_1$f = __makeTemplateObject(["\n  position: relative;\n  border-radius: ", ";\n  background-color: ", ";\n  box-shadow: ", ";\n\n  // @TODO: Subject to change for differing screen sizes\n  height: 665px;\n  display: flex;\n  flex-direction: column;\n  padding: 12px;\n  grid-gap: 20px;\n  align-items: center;\n  color: black;\n"], ["\n  position: relative;\n  border-radius: ", ";\n  background-color: ", ";\n  box-shadow: ", ";\n\n  // @TODO: Subject to change for differing screen sizes\n  height: 665px;\n  display: flex;\n  flex-direction: column;\n  padding: 12px;\n  grid-gap: 20px;\n  align-items: center;\n  color: black;\n"])), function (_a) {
+var Container$c = styled__default["default"].div(templateObject_2$b || (templateObject_2$b = __makeTemplateObject(["\n  position: relative;\n  border-radius: ", ";\n  background-color: ", ";\n  box-shadow: ", ";\n  display: flex;\n  flex-direction: column;\n  padding: 12px;\n  grid-gap: 20px;\n  align-items: center;\n  color: black;\n\n  ", "\n"], ["\n  position: relative;\n  border-radius: ", ";\n  background-color: ", ";\n  box-shadow: ", ";\n  display: flex;\n  flex-direction: column;\n  padding: 12px;\n  grid-gap: 20px;\n  align-items: center;\n  color: black;\n\n  ",
+    "\n"])), function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.section;
 }, function (_a) {
@@ -887,20 +888,26 @@ var Container$c = styled__default["default"].div(templateObject_1$f || (template
 }, function (_a) {
     var theme = _a.theme;
     return theme.boxShadow.section;
-});
-var BadgeContainer = styled__default["default"].div(templateObject_2$b || (templateObject_2$b = __makeTemplateObject(["\n  border: 2px solid ", ";\n  padding: 8px 18px;\n  border-radius: 70px;\n  width: fit-content;\n  height: fit-content;\n  grid-gap: 8px;\n  display: flex;\n  font-weight: 500;\n  ", ";\n  align-items: center;\n"], ["\n  border: 2px solid ", ";\n  padding: 8px 18px;\n  border-radius: 70px;\n  width: fit-content;\n  height: fit-content;\n  grid-gap: 8px;\n  display: flex;\n  font-weight: 500;\n  ", ";\n  align-items: center;\n"])), function (_a) {
+}, Media.lg(templateObject_1$f || (templateObject_1$f = __makeTemplateObject(["\n    grid-gap: 28px;\n  "], ["\n    grid-gap: 28px;\n  "]))));
+var BadgeContainer = styled__default["default"].div(templateObject_3$9 || (templateObject_3$9 = __makeTemplateObject(["\n  border: 2px solid ", ";\n  padding: 8px 18px;\n  border-radius: 70px;\n  width: fit-content;\n  height: fit-content;\n  grid-gap: 8px;\n  display: flex;\n  font-weight: 500;\n  ", ";\n  align-items: center;\n"], ["\n  border: 2px solid ", ";\n  padding: 8px 18px;\n  border-radius: 70px;\n  width: fit-content;\n  height: fit-content;\n  grid-gap: 8px;\n  display: flex;\n  font-weight: 500;\n  ", ";\n  align-items: center;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.border;
 }, Font("nano"));
-var BadgeIndicator = styled__default["default"].div(templateObject_3$9 || (templateObject_3$9 = __makeTemplateObject(["\n  border-radius: 50%;\n  height: 8px;\n  width: 8px;\n  background-color: ", ";\n"], ["\n  border-radius: 50%;\n  height: 8px;\n  width: 8px;\n  background-color: ", ";\n"])), function (_a) {
+var BadgeIndicator = styled__default["default"].div(templateObject_4$7 || (templateObject_4$7 = __makeTemplateObject(["\n  border-radius: 50%;\n  height: 8px;\n  width: 8px;\n  background-color: ", ";\n"], ["\n  border-radius: 50%;\n  height: 8px;\n  width: 8px;\n  background-color: ", ";\n"])), function (_a) {
     var color = _a.color;
     return color;
 });
-var NFTImage = styled__default["default"].img(templateObject_4$7 || (templateObject_4$7 = __makeTemplateObject(["\n  border-radius: ", ";\n  width: 100%;\n  aspect-ratio: 1 / 1;\n"], ["\n  border-radius: ", ";\n  width: 100%;\n  aspect-ratio: 1 / 1;\n"])), function (_a) {
+var NFTImage = styled__default["default"].img(templateObject_5$6 || (templateObject_5$6 = __makeTemplateObject(["\n  border-radius: ", ";\n  width: 100%;\n  aspect-ratio: 1 / 1;\n  max-width: 200px;\n"], ["\n  border-radius: ", ";\n  width: 100%;\n  aspect-ratio: 1 / 1;\n  max-width: 200px;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.section;
 });
-var Title$1 = styled__default["default"].a(templateObject_5$6 || (templateObject_5$6 = __makeTemplateObject(["\n  ", "\n  font-family: \"Bluu Next\";\n  overflow: \"hidden\";\n  text-decoration: none;\n  color: black;\n\n  &:focus,\n  &:hover,\n  &:visited {\n    color: black;\n  }\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  &:hover {\n    &::after {\n      opacity: 0.2;\n      background-color: white;\n    }\n  }\n"], ["\n  ", "\n  font-family: \"Bluu Next\";\n  overflow: \"hidden\";\n  text-decoration: none;\n  color: black;\n\n  &:focus,\n  &:hover,\n  &:visited {\n    color: black;\n  }\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  &:hover {\n    &::after {\n      opacity: 0.2;\n      background-color: white;\n    }\n  }\n"])), Font("Tera"));
+var Divider$2 = styled__default["default"].hr(templateObject_6$5 || (templateObject_6$5 = __makeTemplateObject(["\n  width: 100%;\n  border-color: ", ";\n"], ["\n  width: 100%;\n  border-color: ", ";\n"])), function (_a) {
+    var theme = _a.theme;
+    return theme.colors.core.border;
+});
+var Title$1 = styled__default["default"].a(templateObject_7$3 || (templateObject_7$3 = __makeTemplateObject(["\n  ", "\n  text-align: center;\n  font-family: \"Bluu Next\";\n  overflow: \"hidden\";\n  text-decoration: none;\n  color: black;\n\n  &:focus,\n  &:hover,\n  &:visited {\n    color: black;\n  }\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  &:hover {\n    &::after {\n      opacity: 0.2;\n      background-color: white;\n    }\n  }\n"], ["\n  ", "\n  text-align: center;\n  font-family: \"Bluu Next\";\n  overflow: \"hidden\";\n  text-decoration: none;\n  color: black;\n\n  &:focus,\n  &:hover,\n  &:visited {\n    color: black;\n  }\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  &:hover {\n    &::after {\n      opacity: 0.2;\n      background-color: white;\n    }\n  }\n"])), Font("peta"));
+var BottomContainer$1 = styled__default["default"].div(templateObject_9$3 || (templateObject_9$3 = __makeTemplateObject(["\n  grid-gap: 30px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  margin-bottom: 20px;\n\n  ", "\n"], ["\n  grid-gap: 30px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  margin-bottom: 20px;\n\n  ",
+    "\n"])), Media.lg(templateObject_8$3 || (templateObject_8$3 = __makeTemplateObject(["\n    margin-bottom: 28px;\n  "], ["\n    margin-bottom: 28px;\n  "]))));
 var ExploreScrollableCard = function (_a) {
     var cardInfo = _a.cardInfo, currentStatus = _a.currentStatus;
     var theme = React.useContext(styled.ThemeContext);
@@ -937,16 +944,11 @@ var ExploreScrollableCard = function (_a) {
             React__default["default"].createElement(ExploreInfo, { title: "Participants", text: "" + cardInfo.numParticipants, unit: "People" }),
             React__default["default"].createElement(ExploreInfo, { title: "Pool Amount", text: cardInfo.poolAmount.toFixed(2) + " \u039E", unit: "$" + cardInfo.poolAmountDollars })),
         React__default["default"].createElement(Divider$2, null),
-        React__default["default"].createElement("div", { style: {
-                gridGap: 30,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-            } },
+        React__default["default"].createElement(BottomContainer$1, null,
             React__default["default"].createElement(ProfileGroup, { imgs: cardInfo.imgs, numParticipants: cardInfo.numParticipants }),
             React__default["default"].createElement(SessionCountdown, { endTime: cardInfo.endTime }))));
 };
-var templateObject_1$f, templateObject_2$b, templateObject_3$9, templateObject_4$7, templateObject_5$6;
+var templateObject_1$f, templateObject_2$b, templateObject_3$9, templateObject_4$7, templateObject_5$6, templateObject_6$5, templateObject_7$3, templateObject_8$3, templateObject_9$3;
 
 // You probably want to change this to something semantic or abandon it all together
 var Container$b = styled__default["default"].div(templateObject_2$a || (templateObject_2$a = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  justify-content: space-between;\n  align-items: center;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  justify-content: space-between;\n  align-items: center;\n\n  ",
@@ -1322,7 +1324,7 @@ exports.Button = Button;
 exports.CardBackground = CardBackground;
 exports.CardBar = CardBar;
 exports.Checkbox = Checkbox;
-exports.Divider = Divider$2;
+exports.Divider = Divider$3;
 exports.Dropdown = Dropdown;
 exports.Exa = Container$E;
 exports.ExploreCard = ExploreCard;

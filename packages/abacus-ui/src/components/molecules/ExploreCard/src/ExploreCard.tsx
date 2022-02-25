@@ -68,6 +68,7 @@ export const ExploreInfoContainer = styled.div`
   width: 100%;
   justify-content: center;
   margin-bottom: 18px;
+  text-align: center;
 
   ${Media.sm`
     grid-column-gap: 50px;

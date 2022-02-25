@@ -9,7 +9,6 @@ const Shimmer = keyframes`
     }
 `;
 
-// You probably want to change this to something semantic or abandon it all together
 const LoadingShimmer = styled.div`
   animation-duration: 2.2s;
   animation-fill-mode: forwards;
@@ -24,8 +23,12 @@ const LoadingShimmer = styled.div`
     ${({ theme }) => theme.colors.core.background} 27%
   );
   background-size: 300% 100%;
-  border-radius: ${({ theme }) => theme.borderRadius.main};
+  border-radius: ${({ theme }) => theme.borderRadius.section};
   min-height: 16px;
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+  color: transparent;
 `;
 
 export default LoadingShimmer;

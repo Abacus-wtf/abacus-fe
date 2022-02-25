@@ -4,9 +4,9 @@ import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 
 type ExploreInfoProps = {
-  title: string;
-  text: string;
-  unit?: string;
+  title: string | React.ReactNode;
+  text: string | React.ReactNode;
+  unit?: string | React.ReactNode;
   isCardBar?: boolean;
   className?: string;
 };

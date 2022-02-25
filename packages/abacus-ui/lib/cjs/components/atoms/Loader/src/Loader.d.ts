@@ -1,4 +1,3 @@
 import { FunctionComponent } from "react";
-declare type LoaderProps = {};
-declare const Loader: FunctionComponent<LoaderProps>;
+declare const Loader: FunctionComponent;
 export default Loader;

@@ -9,6 +9,7 @@ import { Font, Media } from "@theme";
 import { ProfileGroup } from "components/molecules/ProfileGroup";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
+import Fallback from "./Fallback";
 
 export type ExploreCardProps = {
   nftSrc: string;
@@ -19,10 +20,11 @@ export type ExploreCardProps = {
   poolAmountDollars: number;
   imgs: string[];
   link: string;
+  loading?: boolean;
 };
 
 // You probably want to change this to something semantic or abandon it all together
-const Container = styled.div`
+export const Container = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.section};
   background-color: ${({ theme }) => theme.colors.core.white};
   box-shadow: ${({ theme }) => theme.boxShadow.section};
@@ -32,7 +34,7 @@ const Container = styled.div`
   position: relative;
 `;
 
-const SecondHalf = styled.div`
+export const SecondHalf = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -42,7 +44,7 @@ const SecondHalf = styled.div`
   box-sizing: border-box;
 `;
 
-const Title = styled.h3`
+export const Title = styled.h3`
   text-align: center;
   margin-bottom: 18px;
   white-space: nowrap;
@@ -76,14 +78,14 @@ export const ExploreInfoContainer = styled.div`
   `}
 `;
 
-const ButtonStyled = styled(Button)`
+export const ButtonStyled = styled(Button)`
   display: flex;
   text-align: center;
   justify-content: center;
   width: 100%;
 `;
 
-const ProfileGroupContainer = styled.div`
+export const ProfileGroupContainer = styled.div`
   display: none;
   margin-top: 18px;
 
@@ -101,33 +103,39 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
   poolAmountDollars,
   imgs,
   link,
-}) => (
-  <Container>
-    <ExploreImage imgSrc={nftSrc} />
-    <SecondHalf>
-      <Title>{nftTitle}</Title>
-      <SessionCountdown endTime={endTime} />
-      <Divider />
-      <ExploreInfoContainer>
-        <ExploreInfo
-          title="Participants"
-          text={`${numParticipants}`}
-          unit="People"
-        />
-        <ExploreInfo
-          title="Pool Amount"
-          text={`${poolAmount.toFixed(2)} Ξ`}
-          unit={`$${poolAmountDollars ?? "-"}`}
-        />
-      </ExploreInfoContainer>
-      <ButtonStyled buttonType={ButtonType.Standard} as="a" href={link}>
-        Participate
-      </ButtonStyled>
-      <ProfileGroupContainer>
-        <ProfileGroup imgs={imgs} numParticipants={numParticipants} />
-      </ProfileGroupContainer>
-    </SecondHalf>
-  </Container>
-);
+  loading,
+}) => {
+  if (loading) {
+    return <Fallback />;
+  }
+  return (
+    <Container>
+      <ExploreImage imgSrc={nftSrc} />
+      <SecondHalf>
+        <Title>{nftTitle}</Title>
+        <SessionCountdown endTime={endTime} />
+        <Divider />
+        <ExploreInfoContainer>
+          <ExploreInfo
+            title="Participants"
+            text={`${numParticipants}`}
+            unit="People"
+          />
+          <ExploreInfo
+            title="Pool Amount"
+            text={`${poolAmount.toFixed(2)} Ξ`}
+            unit={`$${poolAmountDollars ?? "-"}`}
+          />
+        </ExploreInfoContainer>
+        <ButtonStyled buttonType={ButtonType.Standard} as="a" href={link}>
+          Participate
+        </ButtonStyled>
+        <ProfileGroupContainer>
+          <ProfileGroup imgs={imgs} numParticipants={numParticipants} />
+        </ProfileGroupContainer>
+      </SecondHalf>
+    </Container>
+  );
+};
 
 export default ExploreCard;

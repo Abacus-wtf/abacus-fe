@@ -137,12 +137,13 @@ const Home: React.FC = () => {
           <P>Being appraised on Abacus right now!</P>
         </div>
         <AbacusBar
-          totalNumberOfBeads={cards.length}
+          totalNumberOfBeads={cards.length || 4}
           currentPosition={cardIndex}
           changeToPosition={setCardIndex}
         />
       </FeaturedHeader>
       <ExploreCarousel
+        loading={isLoading}
         cards={cards}
         currentMid={cardIndex}
         setCurrentMid={setCardIndex}

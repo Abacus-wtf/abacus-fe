@@ -3,10 +3,12 @@ import { Font } from "@theme";
 import _ from "lodash";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
+import Fallback from "./Fallback";
 
 type ProfileGroupProps = {
   imgs: string[];
   numParticipants: number;
+  loading?: boolean;
 };
 
 const ProfileContainer = styled.div`
@@ -31,26 +33,32 @@ const PlusIcon = styled.div`
 const ProfileGroup: FunctionComponent<ProfileGroupProps> = ({
   imgs,
   numParticipants,
-}) => (
-  <ProfileContainer>
-    {_.map(_.range(0, imgs.length > 9 ? 9 : imgs.length), (i) => {
-      if (i === 8) {
-        return <PlusIcon key="plus-icon">+{numParticipants - 9}</PlusIcon>;
-      }
-      return (
-        <ProfileIcon
-          key={i}
-          src={imgs[i]}
-          style={{
-            border: "2px solid #fff",
-            height: 36,
-            width: 36,
-            marginRight: -8,
-          }}
-        />
-      );
-    })}
-  </ProfileContainer>
-);
+  loading,
+}) => {
+  if (loading) {
+    return <Fallback />;
+  }
+  return (
+    <ProfileContainer>
+      {_.map(_.range(0, imgs.length > 9 ? 9 : imgs.length), (i) => {
+        if (i === 8) {
+          return <PlusIcon key="plus-icon">+{numParticipants - 9}</PlusIcon>;
+        }
+        return (
+          <ProfileIcon
+            key={i}
+            src={imgs[i]}
+            style={{
+              border: "2px solid #fff",
+              height: 36,
+              width: 36,
+              marginRight: -8,
+            }}
+          />
+        );
+      })}
+    </ProfileContainer>
+  );
+};
 
 export default ProfileGroup;

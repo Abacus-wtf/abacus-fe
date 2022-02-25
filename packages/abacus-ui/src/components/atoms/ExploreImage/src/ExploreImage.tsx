@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { FunctionComponent, useContext } from "react";
-import styled, { ThemeContext, css } from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import CrossfadeImage from "react-crossfade-image";
@@ -18,7 +18,8 @@ const ImageContainer = styled.div<{
   onClick?: ExploreImageProps["onClick"];
 }>`
   width: 100%;
-  aspect-ratio: 1/1;
+  height: 0;
+  padding-bottom: 100%;
   background-color: ${({ theme }) => theme.colors.core.white};
   border-radius: ${({ theme, enableFullBorderRadius }) =>
     enableFullBorderRadius ? theme.borderRadius.section : 0};
@@ -30,6 +31,12 @@ const ImageContainer = styled.div<{
   }
 `;
 
+const ImageLoadingShimmer = styled(LoadingShimmer)`
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+`;
+
 const ExploreImage: FunctionComponent<ExploreImageProps> = ({
   imgSrc,
   enableFullBorderRadius,
@@ -39,17 +46,8 @@ const ExploreImage: FunctionComponent<ExploreImageProps> = ({
   const theme = useContext(ThemeContext);
 
   if (loading) {
-    return <LoadingShimmer />;
+    return <ImageLoadingShimmer />;
   }
-
-  return (
-    <LoadingShimmer
-      css={css`
-        width: 100%;
-        aspect-ratio: 1/1;
-      `}
-    />
-  );
 
   return (
     <ImageContainer enableFullBorderRadius onClick={onClick}>

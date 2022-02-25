@@ -86,15 +86,17 @@ const ExploreCarousel: FunctionComponent<ExploreCarouselProps> = ({
             }}
             enableFullBorderRadius
             imgSrc={
-              cards[currentMid === 0 ? cards.length - 1 : currentMid - 1].nftSrc
+              cards[currentMid === 0 ? cards.length - 1 : currentMid - 1]
+                ?.nftSrc ?? ""
             }
           />
         </CarouselItem>
         <CarouselItem>
-          <ExploreCard {...cards[currentMid]} />
+          <ExploreCard {...cards[currentMid]} loading={loading} />
         </CarouselItem>
         <CarouselItem>
           <ExploreImage
+            loading={loading}
             onClick={() => {
               if (currentMid === cards.length - 1) {
                 setCurrentMid(0);
@@ -104,7 +106,8 @@ const ExploreCarousel: FunctionComponent<ExploreCarouselProps> = ({
             }}
             enableFullBorderRadius
             imgSrc={
-              cards[currentMid === cards.length - 1 ? 0 : currentMid + 1].nftSrc
+              cards[currentMid === cards.length - 1 ? 0 : currentMid + 1]
+                ?.nftSrc ?? ""
             }
           />
         </CarouselItem>

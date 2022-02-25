@@ -3,12 +3,14 @@ import styled from "styled-components";
 import Countdown from "react-countdown";
 import { Milli, Kilo } from "@typography";
 import { Font, Media } from "@theme";
+import Fallback from "./Fallback";
 
 type SessionCountdownProps = {
   endTime: number;
+  loading?: boolean;
 };
 
-const IndivContainer = styled.div`
+export const IndivContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,14 +21,14 @@ const IndivContainer = styled.div`
   }
 `;
 
-const Text = styled(Kilo)`
+export const Text = styled(Kilo)`
   ${Media.md`
     font-size: 18px;
   `}
   margin-bottom: 6px;
 `;
 
-const Subtext = styled(Milli)`
+export const Subtext = styled(Milli)`
   ${Font("nano")}
   color: ${({ theme }) => theme.colors.core[900]};
 
@@ -37,31 +39,37 @@ const Subtext = styled(Milli)`
 
 const SessionCountdown: FunctionComponent<SessionCountdownProps> = ({
   endTime,
-}) => (
-  <Countdown
-    date={endTime}
-    renderer={({ hours, minutes, seconds, completed }) => {
-      if (completed) {
-        return <Text>Session Completed</Text>;
-      }
-      return (
-        <div style={{ display: "flex" }}>
-          <IndivContainer>
-            <Text>{hours}</Text>
-            <Subtext>Hours</Subtext>
-          </IndivContainer>
-          <IndivContainer>
-            <Text>{minutes}</Text>
-            <Subtext>Minutes</Subtext>
-          </IndivContainer>
-          <IndivContainer>
-            <Text>{seconds}</Text>
-            <Subtext>Seconds</Subtext>
-          </IndivContainer>
-        </div>
-      );
-    }}
-  />
-);
+  loading,
+}) => {
+  if (loading) {
+    return <Fallback />;
+  }
+  return (
+    <Countdown
+      date={endTime}
+      renderer={({ hours, minutes, seconds, completed }) => {
+        if (completed) {
+          return <Text>Session Completed</Text>;
+        }
+        return (
+          <div style={{ display: "flex" }}>
+            <IndivContainer>
+              <Text>{hours}</Text>
+              <Subtext>Hours</Subtext>
+            </IndivContainer>
+            <IndivContainer>
+              <Text>{minutes}</Text>
+              <Subtext>Minutes</Subtext>
+            </IndivContainer>
+            <IndivContainer>
+              <Text>{seconds}</Text>
+              <Subtext>Seconds</Subtext>
+            </IndivContainer>
+          </div>
+        );
+      }}
+    />
+  );
+};
 
 export default SessionCountdown;

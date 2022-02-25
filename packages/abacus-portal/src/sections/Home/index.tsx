@@ -27,6 +27,7 @@ const FeaturedHeader = styled.div`
   text-align: center;
   gap: 16px;
   width: 100%;
+  max-width: 1280px;
   box-sizing: border-box;
 
   ${Media.lg`
@@ -35,16 +36,14 @@ const FeaturedHeader = styled.div`
     flex-direction: row;
     padding: 50px 80px;
   `}
-
-  ${Media.xl`
-    padding: 50px 0px;
-  `}
 `
 
 const GridContainer = styled.div`
   display: grid;
   width: 100%;
+  max-width: 1280px;
   margin: 100px 80px;
+  margin-top: 50px;
   padding: 0 16px;
 
   ${Media.lg`
@@ -92,6 +91,8 @@ const Home: React.FC = () => {
   const prevNetworkSymbol = usePrevious(networkSymbol)
   const isNewNetwork = networkSymbol !== prevNetworkSymbol
   const isNetworkSymbolNone = networkSymbol === NetworkSymbolEnum.NONE
+
+  console.log(process.env.NODE_ENV)
 
   useEffect(() => {
     if (isNewNetwork) {

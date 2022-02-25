@@ -30,6 +30,7 @@ const Container = styled.div`
   height: fit-content;
   display: grid;
   width: 100%;
+  margin-bottom: 50px;
   grid-template-columns: repeat(3, calc(75% - 24px));
   grid-column-gap: 16px;
   align-items: center;
@@ -40,9 +41,8 @@ const Container = styled.div`
     grid-column-gap: 80px;
   `}
 
-  ${Media.xl`
-    grid-template-columns: repeat(3, 42%);
-    grid-column-gap: 0;
+  ${Media.md`
+    grid-template-columns: 50% 480px 50%;
   `}
 `;
 
@@ -51,9 +51,13 @@ const CarouselItem = styled.div`
   width: 100%;
   justify-self: center;
 
-  ${Media.lg`
-    width: 75%;
-  `}
+  &:first-of-type {
+    justify-self: flex-end;
+  }
+
+  &:last-of-type {
+    justify-self: flex-start;
+  }
 `;
 
 const ExploreCarousel: FunctionComponent<ExploreCarouselProps> = ({

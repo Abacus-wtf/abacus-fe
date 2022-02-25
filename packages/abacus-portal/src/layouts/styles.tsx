@@ -30,7 +30,6 @@ export const Container = styled.div`
 `
 
 export const InnerContainer = styled.div`
-  max-width: 1440px;
   width: 100%;
   display: flex;
   flex-direction: column;

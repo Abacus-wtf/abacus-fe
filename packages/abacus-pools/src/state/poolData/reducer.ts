@@ -21,13 +21,17 @@ export interface Pool extends NFT {
   nftName: string
   owner: string
   ownerAddress: string
+  nonce: number
   symbol?: string
-  endTime?: string
-  tokensLeft?: string
-  tokensClaimed?: string
+  tokensLocked?: string
   tokenPrice?: string
   isManager?: boolean
-  exitFee?: string
+  exitFeeStatic?: string
+  exitFeePercentage?: string
+  creditsAvailable?: string
+  balance?: number
+  isClosed: boolean
+  hasPremiumPass?: boolean
 }
 
 interface PoolState {

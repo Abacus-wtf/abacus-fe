@@ -15,14 +15,14 @@ import {
 import CurrentState from "./CurrentState/index"
 
 const Pool = ({ location }) => {
-  const { address, tokenId } = queryString.parse(location.search)
+  const { address, tokenId, nonce } = queryString.parse(location.search)
   const setPool = useSetPoolData()
   const poolData = useGetPoolData()
-  const [isManagerPage, setIsOnManagerPage] = useState(true)
+  const [page, setPage] = useState(0)
 
   useEffect(() => {
-    setPool(String(address), String(tokenId))
-  }, [address, setPool, tokenId])
+    setPool(String(address), String(tokenId), Number(nonce))
+  }, [address, tokenId, nonce, setPool])
 
   if (!poolData) {
     return (
@@ -38,7 +38,11 @@ const Pool = ({ location }) => {
     <SmallUniversalContainer style={{ alignItems: "center" }}>
       <SplitContainer>
         <VerticalContainer>
-          <FileContainer {...poolData} />
+          <FileContainer
+            {...poolData}
+            img={poolData.img || "s"}
+            animation_url={null}
+          />
           <ButtonContainer>
             <ButtonsWhite
               style={{ borderRadius: 8 }}
@@ -51,24 +55,32 @@ const Pool = ({ location }) => {
           </ButtonContainer>
         </VerticalContainer>
         <VerticalContainer>
-          {poolData.isManager ? (
-            <ButtonContainer>
+          <ButtonContainer>
+            <ButtonsWhite
+              disabled={page === 0}
+              onClick={() => setPage(0)}
+              style={{ borderRadius: 8 }}
+            >
+              Main
+            </ButtonsWhite>
+            <ButtonsWhite
+              disabled={page === 1}
+              onClick={() => setPage(1)}
+              style={{ borderRadius: 8 }}
+            >
+              Credits
+            </ButtonsWhite>
+            {poolData.isManager && (
               <ButtonsWhite
-                disabled={isManagerPage}
-                onClick={() => setIsOnManagerPage(true)}
+                disabled={page === 2}
+                onClick={() => setPage(2)}
                 style={{ borderRadius: 8 }}
               >
                 Manage
               </ButtonsWhite>
-              <ButtonsWhite
-                disabled={!isManagerPage}
-                onClick={() => setIsOnManagerPage(false)}
-                style={{ borderRadius: 8 }}
-              >
-                Main
-              </ButtonsWhite>
-            </ButtonContainer>
-          ) : null}
+            )}
+          </ButtonContainer>
+
           <VerticalSmallGapContainer style={{ minHeight: 90 }}>
             <SubText>{poolData.collectionTitle}</SubText>
             <Title>
@@ -84,7 +96,7 @@ const Pool = ({ location }) => {
               </OutboundLink>
             </SubText>
           </VerticalSmallGapContainer>
-          <CurrentState isOnManage={poolData.isManager && isManagerPage} />
+          <CurrentState page={page} />
         </VerticalContainer>
       </SplitContainer>
     </SmallUniversalContainer>

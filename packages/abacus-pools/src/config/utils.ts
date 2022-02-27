@@ -86,7 +86,7 @@ export type OpenSeaAsset = {
     name: string
   }
   token_id: string
-  name: string
+  name: string | null
   owner?: {
     address: string
     user?: {

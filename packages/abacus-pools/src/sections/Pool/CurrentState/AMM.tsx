@@ -1,7 +1,11 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Button from "@components/Button"
 import { NumericalInput } from "@components/Input"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
+import { web3 } from "@config/constants"
+import { useGetCurrentNetwork } from "@state/application/hooks"
+import { formatEther } from "ethers/lib/utils"
+import { useActiveWeb3React } from "@hooks/index"
 import {
   InfoSectionContainer,
   InputContainer,
@@ -14,11 +18,24 @@ import {
 } from "./AMM.styles"
 
 const AMM = () => {
-  const [isTokenFirst, setIsTokenFirst] = useState(true)
+  const { account } = useActiveWeb3React()
+  const networkSymbol = useGetCurrentNetwork()
+  const [isTokenFirst, setIsTokenFirst] = useState(false)
   const poolData = useGetPoolData()
   const [inputAmount, setInputAmount] = useState("")
   const [outputAmount, setOutputAmount] = useState("0.0")
-  const [typingTimeout, setTypingTimeout] = useState<any>(null)
+  const [ethBalance, setEthBalance] = useState<number | null>(null)
+
+  useEffect(() => {
+    const getBalance = async () => {
+      const provider = web3(networkSymbol)
+      const balance = await provider.eth.getBalance(account)
+      setEthBalance(parseFloat(formatEther(balance)))
+    }
+    if (ethBalance === null) {
+      getBalance()
+    }
+  }, [account, ethBalance, networkSymbol])
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const handleButtonClick = async () => {}
@@ -37,7 +54,9 @@ const AMM = () => {
               <TinyTitles>
                 From: {isTokenFirst ? poolData.symbol : "ETH"}
               </TinyTitles>
-              <TinyTitles>Balance: 10</TinyTitles>
+              <TinyTitles>
+                Balance: {isTokenFirst ? poolData.balance : ethBalance}
+              </TinyTitles>
             </BalanceContainer>
           </LabelRow>
           <LabelRow>
@@ -46,19 +65,14 @@ const AMM = () => {
                 placeholder="0.0"
                 value={inputAmount}
                 onChange={(e) => {
-                  if (typingTimeout) {
-                    clearTimeout(typingTimeout)
-                  }
-                  setTypingTimeout(
-                    setTimeout(
-                      async (input) => {
-                        console.log(input)
-                        // getOutputData(input)
-                        setTypingTimeout(null)
-                      },
-                      800,
-                      e.target.value
-                    )
+                  setOutputAmount(
+                    isTokenFirst
+                      ? `${
+                          Number(e.target.value) * Number(poolData.tokenPrice)
+                        }`
+                      : `${
+                          Number(e.target.value) / Number(poolData.tokenPrice)
+                        }`
                   )
                   setInputAmount(e.target.value)
                 }}
@@ -73,9 +87,16 @@ const AMM = () => {
               </MaxButton>
               <MaxButton
                 onClick={() => {
-                  setInputAmount("3")
-                  setOutputAmount("5")
-                  // getOutputData(3)
+                  setInputAmount(
+                    isTokenFirst ? `${poolData.balance}` : `${ethBalance}`
+                  )
+                  setOutputAmount(
+                    isTokenFirst
+                      ? `${
+                          Number(poolData.balance) * Number(poolData.tokenPrice)
+                        }`
+                      : `${Number(ethBalance) / Number(poolData.tokenPrice)}`
+                  )
                 }}
               >
                 MAX
@@ -94,7 +115,9 @@ const AMM = () => {
               <TinyTitles>
                 To: {isTokenFirst ? "ETH" : poolData.symbol}
               </TinyTitles>
-              <TinyTitles>Balance: 10</TinyTitles>
+              <TinyTitles>
+                Balance: {isTokenFirst ? ethBalance : poolData.balance}
+              </TinyTitles>
             </BalanceContainer>
           </LabelRow>
           <LabelRow>
@@ -107,6 +130,10 @@ const AMM = () => {
       <Button
         style={{ width: "100%", padding: 20, fontSize: "1rem" }}
         onClick={handleButtonClick}
+        disabled={
+          (isTokenFirst && Number(inputAmount) > Number(poolData.balance)) ||
+          (!isTokenFirst && Number(inputAmount) > Number(ethBalance))
+        }
       >
         Exchange
       </Button>

@@ -37,63 +37,30 @@ export const IS_PRODUCTION = process.env.GATSBY_IS_PRODUCTION === "true"
 export const OPENSEA_LINK = process.env.GATSBY_OPENSEA_API as string
 export const BACKEND_LINK = process.env.GATSBY_APP_SERVER as string
 
-const ETH_ABC_VAULT_CONTRACT = IS_PRODUCTION ? "" : ""
-const ETH_ABC_TREASURY_ADDRESS = IS_PRODUCTION
-  ? "0xA20B4b391Cd5f581Ab17a8d61388e0fe78dde28C"
-  : "0x593978a0Db0473D813943b0dAfB5bCE1aF3Ab506"
-const ETH_ABC_TOKEN_ADDRESS = IS_PRODUCTION
-  ? "0x4Ec341bB76Ea53e57907675C84227F3a0e52a206"
-  : "0xE873Bf0b6705Ac231cDB18491e1518873a3C5754"
-const ETH_ABC_AUCTION_ADDRESS = IS_PRODUCTION
-  ? "0x46dc64ABa177cA298b827840F285f95498ab3ACd"
-  : "0xc34fe8aa917716B6c12C7234EE4a7D91B231cBE1"
-const ETH_ABC_PRICING_SESSION_ADDRESS = IS_PRODUCTION
-  ? "0x37b4932ECeAE6b07b761F4B86975325Cb36c31aD"
-  : "0x0816DdF293398927736E117Bc60eb6F7fB1195AA"
+export const ABC_CONTROLLER = IS_PRODUCTION
+  ? ""
+  : "0xE6405Dcc39C7511f7FAb676F4440D8eDE9612eaA"
 
-export const ABC_VAULT_ADDRESS = (networkSymbol: NetworkSymbolEnum) => {
-  switch (networkSymbol) {
-    case NetworkSymbolEnum.ETH:
-      return ETH_ABC_VAULT_CONTRACT
-    case NetworkSymbolEnum.NONE:
-      return ETH_ABC_VAULT_CONTRACT
-    default:
-      return ""
-  }
-}
+export const ABC_TREASURY = IS_PRODUCTION
+  ? ""
+  : "0x5A6dd1969cd0e150210C5715fE4ED895AfD26154"
 
-export const ABC_TREASURY_ADDRESS = (networkSymbol: NetworkSymbolEnum) =>
-  networkSymbol === NetworkSymbolEnum.ETH
-    ? ETH_ABC_TREASURY_ADDRESS
-    : ETH_ABC_TREASURY_ADDRESS
+export const ABC_FACTORY = IS_PRODUCTION
+  ? ""
+  : "0x9e5cb13CAC3F3833D8Bb3B0e568Dce25De7CE5Dc"
 
-export const ABC_TOKEN_ADDRESS = (networkSymbol: NetworkSymbolEnum) =>
-  networkSymbol === NetworkSymbolEnum.ETH
-    ? ETH_ABC_TOKEN_ADDRESS
-    : ETH_ABC_TOKEN_ADDRESS
+export const ABC_TOKEN = IS_PRODUCTION
+  ? ""
+  : "0x32E5417eA4F765e35dBecAd5CCad96899cEEA35E"
 
-export const ABC_AUCTION_ADDRESS = (networkSymbol: NetworkSymbolEnum) => {
-  switch (networkSymbol) {
-    case NetworkSymbolEnum.ETH:
-      return ETH_ABC_AUCTION_ADDRESS
-    case NetworkSymbolEnum.NONE:
-      return ETH_ABC_AUCTION_ADDRESS
-    default:
-      return ""
-  }
-}
-export const ABC_PRICING_SESSION_ADDRESS = (
-  networkSymbol: NetworkSymbolEnum
-) => {
-  switch (networkSymbol) {
-    case NetworkSymbolEnum.ETH:
-      return ETH_ABC_PRICING_SESSION_ADDRESS
-    case NetworkSymbolEnum.NONE:
-      return ETH_ABC_PRICING_SESSION_ADDRESS
-    default:
-      return ""
-  }
-}
+export const VE_ABC_TOKEN = IS_PRODUCTION
+  ? ""
+  : "0xc60f0b1adf8E370BD98cc9487603206E9A6e164b"
+
+export const ABC_EPOCH = IS_PRODUCTION
+  ? ""
+  : "0x0084A0565dbcA370b78236fA093A94F56eF757C1"
+
 export const ETH_USD_ORACLE_ADDRESS =
   "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
 

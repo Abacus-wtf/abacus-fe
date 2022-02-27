@@ -50,7 +50,7 @@ const NotConnectedAlert: FunctionComponent = () => {
   const networkSymbol = useGetCurrentNetwork()
   const isNetworkSymbolETH = networkSymbol === NetworkSymbolEnum.ETH
   const toggleWalletModal = useToggleWalletModal()
-  if (!isNetworkSymbolETH) {
+  if (isNetworkSymbolETH) {
     return null
   }
   return (

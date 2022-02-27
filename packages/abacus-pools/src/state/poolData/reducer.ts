@@ -1,12 +1,23 @@
 import { createReducer } from "@reduxjs/toolkit"
 import { getPools, getMyPools } from "./actions"
 
-export interface Pool {
+export interface NFT {
   address: string
   tokenId: string
-  img: string
-  animation_url: string | null
-  collectionTitle: string
+  img?: string
+  collectionTitle?: string
+}
+
+export interface NFTBasePool extends NFT {
+  poolTokenName?: string
+  poolTokenSymbol?: string
+  exitFeePercentage?: number
+  exitFeeStatic?: number
+  ownershipSymbol?: string
+  ownershipToken?: string
+}
+
+export interface Pool extends NFT {
   nftName: string
   owner: string
   ownerAddress: string

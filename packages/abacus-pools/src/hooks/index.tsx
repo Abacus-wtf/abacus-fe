@@ -179,7 +179,7 @@ export const useGeneralizedContractCall = () => {
     }: {
       estimate: any
       method: (...args: any) => Promise<TransactionResponse>
-      args: Array<BigNumber | number | string>
+      args: Array<BigNumber | number | string | boolean>
       value: BigNumber | null
       cb: (response: any) => void
     }) => {

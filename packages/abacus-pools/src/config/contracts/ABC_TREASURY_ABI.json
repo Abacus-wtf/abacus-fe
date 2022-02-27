@@ -10,7 +10,7 @@
   },
   {
     "inputs": [],
-    "name": "ABCToken",
+    "name": "abcToken",
     "outputs": [
       {
         "internalType": "address",
@@ -36,15 +36,28 @@
   },
   {
     "inputs": [],
-    "name": "auction",
+    "name": "backstopActive",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "bool",
         "name": "",
-        "type": "address"
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "claimValueBacked",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -61,97 +74,14 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "nftsPriced",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "pricingSession",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "profitGenerated",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "sendABCToken",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_ABCToken",
-        "type": "address"
-      }
-    ],
-    "name": "setABCTokenAddress",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_newAdmin",
+        "name": "_admin",
         "type": "address"
       }
     ],
     "name": "setAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_auction",
-        "type": "address"
-      }
-    ],
-    "name": "setAuction",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -172,24 +102,24 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_pricingFactory",
-        "type": "address"
+        "internalType": "bool",
+        "name": "_status",
+        "type": "bool"
       }
     ],
-    "name": "setPricingSession",
+    "name": "setTreasuryBackstop",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "tokensClaimed",
+    "name": "vaultFactory",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "address",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -197,45 +127,6 @@
   },
   {
     "inputs": [],
-    "name": "updateNftPriced",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateProfitGenerated",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amountAbc",
-        "type": "uint256"
-      }
-    ],
-    "name": "withdrawAbc",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amountEth",
-        "type": "uint256"
-      }
-    ],
     "name": "withdrawEth",
     "outputs": [],
     "stateMutability": "nonpayable",

@@ -12,6 +12,8 @@ import { NFT, NFTBasePool } from "@state/poolData/reducer"
 import Card from "@components/Card"
 import _ from "lodash"
 import { useOnApproveNFT, useOnCreatePool } from "@hooks/createPool"
+import ERC_721_ABI from "@config/contracts/ERC_721_ABI.json"
+import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
 import { CardContainer } from "../Home/Home.styles"
 import {
   SplitContainer,
@@ -19,7 +21,6 @@ import {
   FileContainer,
   SubText as SubTitle,
 } from "../Pool/Pool.styles"
-import ERC_721_ABI from "../../config/contracts/ERC_721_ABI.json"
 
 const ListGroupStyled = styled(ListGroup)`
   margin: 45px 0px;
@@ -80,6 +81,7 @@ type CreatePoolForm<Elements> = Elements & {
 const CreatePool: React.FC = () => {
   const { account } = useActiveWeb3React()
   const erc721 = useWeb3Contract(ERC_721_ABI)
+  const factory = useWeb3Contract(FACTORY_ABI)
   const { onApproveNFT } = useOnApproveNFT()
   const { onCreatePool } = useOnCreatePool()
   const [openModal, setOpenModal] = useState(false)
@@ -89,6 +91,7 @@ const CreatePool: React.FC = () => {
   const [isButtonLoading, setIsButtonLoading] = useState(false)
   const [nfts, setNFTs] = useState<NFT[] | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [currentNonce, setCurrentNonce] = useState(0)
 
   useEffect(() => {
     const loadNFTs = async () => {
@@ -135,6 +138,11 @@ const CreatePool: React.FC = () => {
       const exitFeeStatic = formElements.exitFeeStatic.value
 
       setIsButtonLoading(true)
+      const nonce = await factory(ABC_FACTORY).methods.nextVaultIndex(
+        newSesh.address,
+        newSesh.tokenId
+      )
+      setCurrentNonce(nonce)
       await onCreatePool(
         newSesh.address,
         newSesh.tokenId,
@@ -200,7 +208,7 @@ const CreatePool: React.FC = () => {
                 />
                 <ModalPair title="Token ID" value={newSesh.tokenId} />
                 <a
-                  href={`/pool?address=${newSesh.address}&tokenId=${newSesh.tokenId}`}
+                  href={`/pool?address=${newSesh.address}&tokenId=${newSesh.tokenId}&nonce=${currentNonce}`}
                 >
                   <Button style={{ width: "100%", textAlign: "center" }}>
                     Go to pool

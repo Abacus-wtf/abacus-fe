@@ -20,6 +20,7 @@ import { User } from "react-feather"
 import { useOnHarvest } from "@hooks/current-session"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { NetworkSymbolEnum } from "@config/constants"
+import { isWithinWinRange } from "@config/utils"
 import {
   CallToActionCopy,
   VerticalContainer,
@@ -27,7 +28,6 @@ import {
   ListGroupItemMinWidth,
 } from "../CurrentSession.styles"
 import SessionCountdown from "./SessionCountdown"
-import { isWithinWinRange } from "@config/utils"
 
 const CallToActionSmall = styled(CallToActionCopy)`
   margin-top: 35px;

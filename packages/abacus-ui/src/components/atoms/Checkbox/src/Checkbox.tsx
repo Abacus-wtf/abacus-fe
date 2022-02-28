@@ -47,7 +47,13 @@ const StyledInput = styled.input`
   }
 
   &:focus ~ ${StyledLabel} {
-    outline: 1px solid ${({ theme }) => theme.colors.core.semiTitle};
+    outline: 1px solid ${({ theme }) => theme.colors.utility.blue};
+  }
+
+  &:checked&:focus ~ ${StyledLabel} {
+    border: 2px solid ${({ theme }) => theme.colors.core.semiTitle};
+    outline: 1px solid ${({ theme }) => theme.colors.utility.white};
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.utility.blue};
   }
 `;
 

@@ -65,13 +65,8 @@ const ExploreCarousel: FunctionComponent<ExploreCarouselProps> = ({
   cards,
   currentMid,
   setCurrentMid,
+  loading,
 }) => {
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
-
   if (!loading && cards.length < 1) {
     return null;
   }

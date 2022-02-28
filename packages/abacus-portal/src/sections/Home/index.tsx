@@ -15,6 +15,7 @@ import {
   AbacusBar,
   Media,
   ExploreScrollableCard,
+  ExploreCardProps,
 } from "abacus-ui"
 import { ExploreFilters } from "@components/index"
 
@@ -78,6 +79,17 @@ const CardContainer = styled.div`
   width: 100%;
   justify-self: center;
 `
+
+const LOADING_CARD_INFO: ExploreCardProps = {
+  nftSrc: "",
+  nftTitle: "",
+  endTime: 0,
+  numParticipants: 0,
+  poolAmount: 0,
+  poolAmountDollars: 0,
+  imgs: [],
+  link: "",
+}
 
 const Home: React.FC = () => {
   const isInitializedRef = useRef(false)
@@ -152,14 +164,24 @@ const Home: React.FC = () => {
       <GridContainer>
         <ExploreFilters />
         <ExploreGrid>
-          {cards.map(({ currentStatus, ...card }) => (
-            <CardContainer key={card.link}>
+          {isLoading ? (
+            <CardContainer>
               <ExploreScrollableCard
-                cardInfo={card}
-                currentStatus={currentStatus}
+                cardInfo={LOADING_CARD_INFO}
+                currentStatus={0}
+                loading
               />
             </CardContainer>
-          ))}
+          ) : (
+            cards.map(({ currentStatus, ...card }) => (
+              <CardContainer key={card.link}>
+                <ExploreScrollableCard
+                  cardInfo={card}
+                  currentStatus={currentStatus}
+                />
+              </CardContainer>
+            ))
+          )}
         </ExploreGrid>
       </GridContainer>
     </>

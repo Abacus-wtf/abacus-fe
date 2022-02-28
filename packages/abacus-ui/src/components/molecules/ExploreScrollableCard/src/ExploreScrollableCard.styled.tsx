@@ -65,7 +65,7 @@ export const Title = styled.a`
   }
 
   &::after {
-    transition: ${({ theme }) => theme.transitionTime.main};
+    transition: all ${({ theme }) => theme.transitionTime.main}, opacity 0;
     content: "";
     position: absolute;
     top: 0;
@@ -75,6 +75,7 @@ export const Title = styled.a`
   }
 
   &:hover {
+    text-decoration: underline;
     &::after {
       opacity: 0.2;
       background-color: white;

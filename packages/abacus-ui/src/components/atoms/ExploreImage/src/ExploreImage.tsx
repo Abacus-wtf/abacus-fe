@@ -31,12 +31,6 @@ const ImageContainer = styled.div<{
   }
 `;
 
-const ImageLoadingShimmer = styled(LoadingShimmer)`
-  width: 100%;
-  height: 0;
-  padding-bottom: 100%;
-`;
-
 const ExploreImage: FunctionComponent<ExploreImageProps> = ({
   imgSrc,
   enableFullBorderRadius,
@@ -46,7 +40,11 @@ const ExploreImage: FunctionComponent<ExploreImageProps> = ({
   const theme = useContext(ThemeContext);
 
   if (loading) {
-    return <ImageLoadingShimmer />;
+    return (
+      <LoadingShimmer>
+        <ImageContainer enableFullBorderRadius />
+      </LoadingShimmer>
+    );
   }
 
   return (

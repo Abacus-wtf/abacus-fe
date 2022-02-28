@@ -65,6 +65,7 @@ export const Title = styled.a`
   }
 
   &::after {
+    transition: ${({ theme }) => theme.transitionTime.main};
     content: "";
     position: absolute;
     top: 0;

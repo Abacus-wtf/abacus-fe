@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { LoadingShimmer } from "../../LoadingShimmer";
-import { IndivContainer, Text, Subtext } from "./SessionCountdown";
+import { IndivContainer, Text, Subtext } from "./SessionCountdown.styled";
 
 const Fallback: FunctionComponent = () => (
   <div style={{ display: "flex" }}>

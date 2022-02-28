@@ -1,5 +1,5 @@
-import { ExploreCardProps } from "components/molecules/ExploreCard/src/ExploreCard";
 import { FunctionComponent } from "react";
+import { ExploreCardProps } from "../../ExploreCard";
 export declare enum SessionState {
     Vote = 0,
     Weigh = 1,
@@ -11,7 +11,7 @@ export declare enum SessionState {
 declare type ExploreScrollableCardProps = {
     cardInfo: ExploreCardProps;
     currentStatus: SessionState;
+    loading?: boolean;
 };
-export declare const Divider: import("styled-components").StyledComponent<"hr", import("styled-components").DefaultTheme, {}, never>;
 declare const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps>;
 export default ExploreScrollableCard;

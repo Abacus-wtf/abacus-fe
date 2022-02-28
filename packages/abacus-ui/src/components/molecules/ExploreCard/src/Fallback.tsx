@@ -6,7 +6,7 @@ import {
   ExploreInfo,
   SessionCountdown,
 } from "@atoms";
-import { ProfileGroup } from "components/molecules/ProfileGroup";
+import { ProfileGroup } from "../../ProfileGroup";
 import {
   Container,
   SecondHalf,
@@ -15,7 +15,7 @@ import {
   ExploreInfoContainer,
   ButtonStyled,
   ProfileGroupContainer,
-} from "./ExploreCard";
+} from "./ExploreCard.styled";
 
 const Fallback: FunctionComponent = () => (
   <Container>

@@ -1,7 +1,13 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, useState, useEffect } from "react"
 import { Checkbox, Accordion, H2 } from "abacus-ui"
 import styled from "styled-components"
 import { SessionState } from "@state/sessionData/reducer"
+import {
+  pricingSessionWhere,
+  PricingSessionFilters,
+} from "@state/sessionData/queries"
+import { useGetMultiSessionData } from "@state/sessionData/hooks"
+import { statuses, Range, Order } from "./constants"
 
 const Container = styled.div`
   display: flex;
@@ -17,41 +23,13 @@ const HR = styled.hr`
   border-color: ${({ theme }) => theme.colors.core.border};
 `
 
-const statuses = [
-  {
-    label: "Vote",
-    state: SessionState.Vote,
-  },
-  {
-    label: "Weigh",
-    state: SessionState.Weigh,
-  },
-  {
-    label: "Set Final",
-    state: SessionState.SetFinalAppraisal,
-  },
-  {
-    label: "Harvest",
-    state: SessionState.Harvest,
-  },
-  {
-    label: "Claim",
-    state: SessionState.Claim,
-  },
-  {
-    label: "Complete",
-    state: SessionState.Complete,
-  },
-]
-
-type Order = "lth" | "htl" | null
-
-type Range = "low_range" | "mid_range" | "high_range"
+let prevWhere: string = null
 
 const ExploreFilters: FunctionComponent = () => {
   const [sessionStatuses, setSessionStatuses] = useState(new Set<number>())
   const [sortOrder, setSortOrder] = useState<Order>(null)
   const [ranges, setRanges] = useState(new Set<Range>())
+  const getMultiSessionData = useGetMultiSessionData()
 
   const toggleSessionState = (state: SessionState) => () =>
     setSessionStatuses((statuses) => {
@@ -72,6 +50,20 @@ const ExploreFilters: FunctionComponent = () => {
       }
       return new Set(ranges)
     })
+
+  useEffect(() => {
+    const statuses = Array.from(sessionStatuses)
+    const filters: PricingSessionFilters = {
+      ...(statuses?.length && {
+        sessionStatus: statuses,
+      }),
+    }
+    const where = pricingSessionWhere(filters)
+    if (prevWhere !== where) {
+      prevWhere = where
+      getMultiSessionData(where)
+    }
+  }, [getMultiSessionData, sessionStatuses])
 
   return (
     <Container>

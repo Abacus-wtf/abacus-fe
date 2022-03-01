@@ -20,6 +20,9 @@ import {
   setMultipleSessionIsLastPage,
   setMySessionsIsLastPage,
   setActiveSessionsIsLastPage,
+  setFeaturedSessionData,
+  setFeaturedSessionFetchStatus,
+  setFeaturedSessionErrorMessage,
 } from "./actions"
 
 export interface Vote {
@@ -85,6 +88,12 @@ export interface CurrentSessionState {
   errorMessage?: string | null
 }
 
+export interface FeaturedSessionState {
+  featuredSessionData: SessionData[] | null
+  fetchStatus: PromiseStatus
+  errorMessage: string | null
+}
+
 export interface MultiSessionState {
   multiSessionData: SessionData[] | null
   fetchStatus: PromiseStatus
@@ -111,6 +120,7 @@ export interface ActiveSessionsState {
 
 interface SessionDataState {
   currentSessionData: CurrentSessionState | null
+  featuredSessionState: FeaturedSessionState
   multiSessionState: MultiSessionState
   mySessionsState: MySessionsState
   activeSessionsState: ActiveSessionsState
@@ -118,6 +128,11 @@ interface SessionDataState {
 
 export const initialState = {
   currentSessionData: null,
+  featuredSessionState: {
+    featuredSessionData: [],
+    fetchStatus: PromiseStatus.Idle,
+    errorMessage: null,
+  },
   multiSessionState: {
     multiSessionData: [],
     fetchStatus: PromiseStatus.Idle,
@@ -158,6 +173,20 @@ export default createReducer(initialState, (builder) =>
       if (state.currentSessionData !== null) {
         state.currentSessionData.errorMessage = action.payload
       }
+    })
+    .addCase(setFeaturedSessionData, (state, action) => {
+      state.featuredSessionState.featuredSessionData = action.payload
+    })
+    .addCase(setFeaturedSessionFetchStatus, (state, action) => {
+      if (action.payload === PromiseStatus.Rejected) {
+        state.featuredSessionState.errorMessage = "Failed to get Session Data"
+      } else if (action.payload === PromiseStatus.Resolved) {
+        state.featuredSessionState.errorMessage = null
+      }
+      state.featuredSessionState.fetchStatus = action.payload
+    })
+    .addCase(setFeaturedSessionErrorMessage, (state, action) => {
+      state.featuredSessionState.errorMessage = action.payload
     })
     .addCase(setMultipleSessionData, (state, action) => {
       state.multiSessionState.multiSessionData = action.payload

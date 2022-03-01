@@ -60,6 +60,41 @@ export const pricingSessionWhere = (
   }, "")
   return `{ ${filterString} }`
 }
+/*
+  will want to change the where clause to `where: { sessionStatus_lt: 5 }` when we have active sessions
+*/
+export const GET_FEATURED_SESSIONS = gql`
+  query GetPricingSessions($first: Int!, $skip: Int!) {
+    pricingSessions(
+      first: $first
+      orderBy: sessionStatus
+      orderDirection: asc
+      skip: $skip
+      where: { sessionStatus_gt: -1 }
+    ) {
+      id
+      nftAddress
+      tokenId
+      nonce
+      finalAppraisalValue
+      totalStaked
+      bounty
+      votingTime
+      endTime
+      sessionStatus
+      timeFinalAppraisalSet
+      numParticipants
+      maxAppraisal
+      participants {
+        user {
+          id
+        }
+        amountStaked
+        appraisal
+      }
+    }
+  }
+`
 
 export const GET_PRICING_SESSIONS = (where: string | null) => gql`
   query GetPricingSessions($first: Int!, $skip: Int!) {

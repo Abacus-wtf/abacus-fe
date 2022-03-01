@@ -50,6 +50,8 @@ import {
   setMySessionsIsLastPage,
   setActiveSessionsPage,
   setActiveSessionsIsLastPage,
+  setFeaturedSessionFetchStatus,
+  setFeaturedSessionData,
 } from "./actions"
 import {
   GET_PRICING_SESSIONS,
@@ -64,6 +66,7 @@ import {
   GetPricingSessionsVariables,
   GetMySessionsVariables,
   GetActiveSessionsVariables,
+  GET_FEATURED_SESSIONS,
 } from "./queries"
 import { PAGINATE_BY } from "./constants"
 import {
@@ -74,6 +77,7 @@ import {
   currentSessionFetchStatusSelector,
   mySessionsStateSelector,
   activeSessionsStateSelector,
+  featuredSessionStateSelector,
 } from "./selectors"
 
 const GRAPHQL_ENDPOINT = (networkSymbol: NetworkSymbolEnum): string => {
@@ -121,6 +125,11 @@ export const useMultiSessionState = () =>
   useSelector<AppState, AppState["sessionData"]["multiSessionState"]>(
     multiSessionStateSelector
   )
+export const useFeaturedSessionState = () =>
+  useSelector<AppState, AppState["sessionData"]["featuredSessionState"]>(
+    featuredSessionStateSelector
+  )
+
 export const useCurrentSessionFetchStatus = () =>
   useSelector<
     AppState,
@@ -225,6 +234,35 @@ const parseSubgraphPricingSessions = async (
     }
   )
   return sessionData
+}
+
+export const useGetFeaturedSessionData = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const networkSymbol = useGetCurrentNetwork()
+
+  return useCallback(async () => {
+    if (!networkSymbol) {
+      return
+    }
+    dispatch(setFeaturedSessionFetchStatus(PromiseStatus.Pending))
+    const variables: GetPricingSessionsVariables = {
+      first: 7,
+      skip: 0,
+    }
+    try {
+      const { pricingSessions } =
+        await request<GetPricingSessionsQueryResponse>(
+          GRAPHQL_ENDPOINT(networkSymbol),
+          GET_FEATURED_SESSIONS,
+          variables
+        )
+      const sessionData = await parseSubgraphPricingSessions(pricingSessions)
+      dispatch(setFeaturedSessionData(sessionData))
+      dispatch(setFeaturedSessionFetchStatus(PromiseStatus.Resolved))
+    } catch {
+      dispatch(setFeaturedSessionFetchStatus(PromiseStatus.Rejected))
+    }
+  }, [dispatch, networkSymbol])
 }
 
 export const useGetMultiSessionData = () => {

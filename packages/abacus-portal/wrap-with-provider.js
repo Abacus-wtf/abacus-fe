@@ -1,5 +1,6 @@
 import { createWeb3ReactRoot, Web3ReactProvider } from "@web3-react/core"
 import { Provider } from "react-redux"
+// eslint-disable-next-line no-unused-vars
 import React from "react"
 import { ThemeProvider } from "styled-components"
 import { Web3Provider } from "@ethersproject/providers"

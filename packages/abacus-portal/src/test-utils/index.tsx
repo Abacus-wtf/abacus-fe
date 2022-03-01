@@ -2,11 +2,17 @@ import React from "react"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { render as rtlRender } from "@testing-library/react"
 import { Provider } from "react-redux"
+import { ThemeProvider } from "styled-components"
+import { defaultTheme } from "abacus-ui"
 import store from "@state/index"
 
 function render(ui, { ...renderOptions } = {}) {
   function Wrapper({ children }) {
-    return <Provider store={store}>{children}</Provider>
+    return (
+      <ThemeProvider theme={defaultTheme}>
+        <Provider store={store}>{children}</Provider>
+      </ThemeProvider>
+    )
   }
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions })
 }

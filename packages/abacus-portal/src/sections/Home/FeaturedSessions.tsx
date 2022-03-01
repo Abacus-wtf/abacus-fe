@@ -46,6 +46,10 @@ const FeaturedSessions: FunctionComponent = () => {
 
   const [cardIndex, setCardIndex] = useState(0)
 
+  if (!isFeaturedSessionLoading && featuredSessionData.length === 0) {
+    return null
+  }
+
   return (
     <>
       <FeaturedHeader>

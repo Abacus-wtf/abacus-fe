@@ -3,7 +3,7 @@ import { Logo, ProfileInfo } from "@molecules";
 import { Kilo, Tera } from "@typography";
 import React, { FunctionComponent } from "react";
 import styled, { css } from "styled-components";
-import { Dropdown, Extras } from "@icons";
+import { Dropdown } from "@icons";
 import { Media } from "@theme";
 
 type PortalNavbarTypes = {
@@ -14,8 +14,7 @@ type PortalNavbarTypes = {
   onBalanceClick: () => void;
 };
 
-// You probably want to change this to something semantic or abandon it all together
-const Container = styled.div<{ menuOpen: boolean }>`
+const Container = styled.nav<{ menuOpen: boolean }>`
   display: flex;
   padding: 16px;
 
@@ -125,10 +124,6 @@ const PortalNavbar: FunctionComponent<PortalNavbarTypes> = ({
         </StyledKilo>
         <Button buttonType={ButtonType.White}>New Session</Button>
         <ProfileInfo profileIcon={profileIcon} profileName={profileName} />
-        <Button style={{ padding: 0 }} buttonType={ButtonType.Clear}>
-          <Extras />
-          <VisuallyHidden>Menu Options</VisuallyHidden>
-        </Button>
       </SideContainer>
     </Container>
   );

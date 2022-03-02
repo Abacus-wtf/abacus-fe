@@ -37,12 +37,14 @@ const StyledIconContainer = styled.div`
 type InfiniteScrollProps = {
   loading: boolean
   inViewCallback: (inView: boolean) => void
+  isLastPage: boolean
   className?: string
 }
 
 const InfiniteScroll: FunctionComponent<InfiniteScrollProps> = ({
   loading,
   inViewCallback,
+  isLastPage,
   className,
 }) => {
   const { ref, inView } = useInView({
@@ -52,10 +54,15 @@ const InfiniteScroll: FunctionComponent<InfiniteScrollProps> = ({
   const prevInView = usePrevious(inView)
 
   useEffect(() => {
-    if (inView !== prevInView && inView) {
+    const shouldRunCallback = !isLastPage && inView !== prevInView && inView
+    if (shouldRunCallback) {
       inViewCallback(inView)
     }
-  }, [inView, prevInView, inViewCallback])
+  }, [inView, prevInView, inViewCallback, isLastPage])
+
+  if (isLastPage) {
+    return null
+  }
 
   return (
     <Container ref={ref} className={className}>

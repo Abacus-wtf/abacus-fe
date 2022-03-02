@@ -61,7 +61,7 @@ const MultiSessions: FunctionComponent<MultiSessionsProps> = ({ setPage }) => {
   const {
     multiSessionData,
     fetchStatus: multiSessionFetchStatus,
-    // isLastPage,
+    isLastPage,
   } = useMultiSessionState()
   const isMultiSessionLoading =
     multiSessionFetchStatus === PromiseStatus.Pending
@@ -98,6 +98,7 @@ const MultiSessions: FunctionComponent<MultiSessionsProps> = ({ setPage }) => {
         </CardContainer>
       ))}
       <StyledInfiniteScroll
+        isLastPage={isLastPage}
         loading={isMultiSessionLoading}
         inViewCallback={(inView) =>
           setPage((page) => (inView ? page + 1 : page))

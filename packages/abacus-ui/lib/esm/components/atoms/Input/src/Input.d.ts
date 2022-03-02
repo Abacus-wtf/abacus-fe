@@ -8,6 +8,8 @@ declare type InputProps = {
     id?: string;
     placeholder?: string;
     showEth?: boolean;
+    className?: string;
+    hint?: string;
 };
 declare const Input: FunctionComponent<InputProps>;
 export default Input;

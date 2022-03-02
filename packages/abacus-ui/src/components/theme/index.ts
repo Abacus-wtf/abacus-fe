@@ -12,6 +12,8 @@ const defaultTheme = {
       white: "white",
       semiTitle: "#1C2333",
       background: "#E5E5E5",
+      modalBg: "rgba(98, 101, 101, 0.7)",
+      label: "rgba(26, 26, 26, 0.04)",
     },
     button: {
       secondary: "rgba(28, 35, 51, 0.04)",

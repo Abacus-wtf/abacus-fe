@@ -8,6 +8,7 @@ import {
   AboutSection,
   PartOfCollection,
   ActivitySection,
+  Modal,
 } from "abacus-ui"
 import { navigate } from "gatsby"
 import {
@@ -27,6 +28,7 @@ import { NetworkSymbolEnum } from "@config/constants"
 import { isWithinWinRange } from "@config/utils"
 import { SessionState } from "@models/SessionState"
 import { Container, SplitContainer } from "@layouts/styles"
+import DepositModal from "./DepositModal"
 
 const GlobalStyle = createGlobalStyle<{ url: string }>`
 body {
@@ -54,6 +56,7 @@ const CurrentSession = ({ location }) => {
   const setPayoutData = useSetPayoutData()
   const getUserStatus = useGetUserStatus()
   const userStatus = useCurrentSessionUserStatus()
+  const [isDepositModalOpen, setIsDepositModalOpen] = useState(true)
   const [isRankingsModalOpen, setIsRankingsModalOpen] = useState(false)
   const [isSubscribeModalOpen, setSubscribeModalOpen] = useState(false)
   const [isLostModalOpen, setIsLostModalOpen] = useState(false)
@@ -136,6 +139,10 @@ const CurrentSession = ({ location }) => {
 
   return (
     <Container>
+      <DepositModal
+        isOpen={isDepositModalOpen}
+        closeModal={() => setIsDepositModalOpen(false)}
+      />
       <GlobalStyle url={sessionData.image_url} />
       <CardBar
         title={sessionData.collectionTitle}

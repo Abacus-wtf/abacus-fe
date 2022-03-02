@@ -23,7 +23,7 @@ const Home: React.FC = () => {
   const pools = useGetPools()
 
   useEffect(() => {
-    setPools()
+    setPools(null)
   }, [setPools])
 
   if (!pools) {

@@ -9,6 +9,7 @@ import {
   shortenAddress,
 } from "@config/utils"
 import _ from "lodash"
+import { useActiveWeb3React } from "@hooks/index"
 import { getPools, getMyPools } from "./actions"
 import { Pool, PoolStatus } from "./reducer"
 import {
@@ -82,24 +83,24 @@ export const useSetPools = () => {
 }
 
 export const useSetMyPools = () => {
+  const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
 
   return useCallback(async () => {
-    const pools: Pool[] = [
-      {
-        owner: "0x",
-        address: "0xcc14dd8e6673fee203366115d3f9240b079a4930",
-        tokenId: "120",
-        nonce: 1,
-        collectionTitle: "Test",
-        nftName: "Dragon",
-        ownerAddress: "0x",
-        isClosed: false,
-        img: "https://lh3.googleusercontent.com/SWhiz5ufXCRGpsNgLn21G8losMUGf0YbVb6Su3mljhiJ5VGvjobrDH_poUX2kve-vne5rSkUUcTtvKIby_0m2TyeaLJWD-tbs_K-=w600",
-      },
-    ]
+    if (!account) return
+    const variables: GetVaultVariables = {
+      first: PAGINATE_BY,
+      skip: 0 * PAGINATE_BY,
+    }
+
+    const { vaults } = await request<GetVaultQueryResponse>(
+      GRAPHQL_ENDPOINT,
+      GET_VAULTS(`{ owner: "${account.toLowerCase()}" }`),
+      variables
+    )
+    const pools = await parseSubgraphVaults(vaults)
     dispatch(getMyPools(pools))
-  }, [dispatch])
+  }, [dispatch, account])
 }
 
 const getPoolsSelector = (state: AppState): AppState["poolData"]["pools"] =>

@@ -4,6 +4,8 @@ import { Tooltip } from "shards-react"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { NetworkSymbolEnum } from "@config/constants"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
+import { useOnExitPool } from "@hooks/vaultFunc"
+import { navigate } from "@reach/router"
 import { ButtonContainer, VerticalContainer } from "../Pool.styles"
 
 const ManagePool: FunctionComponent = () => {
@@ -11,6 +13,8 @@ const ManagePool: FunctionComponent = () => {
   const networkSymbol = useGetCurrentNetwork()
   const isNetworkSymbolETH = networkSymbol === NetworkSymbolEnum.ETH
   const poolData = useGetPoolData()
+  const { onExitPool, isPending } = useOnExitPool()
+  const [isAuction, setIsAuction] = useState(false)
 
   return (
     <>
@@ -20,20 +24,42 @@ const ManagePool: FunctionComponent = () => {
             className="notConnected"
             disabled={!isNetworkSymbolETH}
             style={{ width: "100%", borderRadius: 5 }}
-            type="submit"
+            onClick={() => {
+              setIsAuction(true)
+              return onExitPool(poolData.vaultAddress, false, () => {
+                alert("The auction has begun!")
+              })
+            }}
           >
-            Trigger Auction
+            {isPending && isAuction ? "Loading..." : "Trigger Auction"}
           </Button>
           <Button
             className="notConnected"
             disabled={!isNetworkSymbolETH}
             style={{ width: "100%", borderRadius: 5 }}
-            type="submit"
+            onClick={() => {
+              setIsAuction(false)
+              return onExitPool(poolData.vaultAddress, true, () => {
+                alert("The pool has been closed!")
+                navigate("/")
+              })
+            }}
           >
-            Exit Position (Pay {poolData.exitFee}% of Total)
+            {isPending && !isAuction
+              ? "Loading..."
+              : `Exit Position (Pay ${
+                  Number(poolData.exitFeeStatic) <
+                  Number(poolData.exitFeePercentage) *
+                    Number(poolData.tokensLocked) *
+                    Number(poolData.tokenPrice)
+                    ? poolData.exitFeeStatic
+                    : Number(poolData.exitFeePercentage) *
+                      Number(poolData.tokensLocked) *
+                      Number(poolData.tokenPrice)
+                } ETH)`}
           </Button>
         </ButtonContainer>
-        <ButtonContainer style={{ width: "100%" }}>
+        {/*<ButtonContainer style={{ width: "100%" }}>
           <Button
             className="notConnected"
             disabled={!isNetworkSymbolETH}
@@ -42,7 +68,7 @@ const ManagePool: FunctionComponent = () => {
           >
             End Auction
           </Button>
-        </ButtonContainer>
+            </ButtonContainer>*/}
         <Tooltip
           open={isToolTipOpen}
           target=".notConnected"

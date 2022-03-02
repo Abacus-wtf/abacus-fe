@@ -9,7 +9,7 @@ import { useGetPoolData } from "@state/singlePoolData/hooks"
 const AuctionCountdown = () => {
   const poolData = useGetPoolData()
   const theme = useContext(ThemeContext)
-  const endTime = poolData.endTime
+  const endTime = poolData.auctionEndTime
   return (
     <ListGroupItem style={{ width: "100%", borderRadius: "0.375rem" }}>
       <Label>Auction ends in</Label>

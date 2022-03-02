@@ -17,7 +17,14 @@ export interface NFTBasePool extends NFT {
   ownershipToken?: string
 }
 
+export enum PoolStatus {
+  Normal,
+  Closed,
+  Auction,
+}
+
 export interface Pool extends NFT {
+  vaultAddress?: string
   nftName: string
   owner: string
   ownerAddress: string
@@ -30,8 +37,10 @@ export interface Pool extends NFT {
   exitFeePercentage?: string
   creditsAvailable?: string
   balance?: number
-  isClosed: boolean
+  state: PoolStatus
   hasPremiumPass?: boolean
+  auctionEndTime?: number
+  highestBid?: number
 }
 
 interface PoolState {

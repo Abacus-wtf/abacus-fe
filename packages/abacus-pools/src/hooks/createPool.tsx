@@ -56,14 +56,14 @@ export const useOnCreatePool = () => {
       exitFeePercentage: string,
       cb: () => void
     ) => {
-      const nftContract = getContract(
+      const factoryContract = getContract(
         ABC_FACTORY,
         FACTORY_ABI,
         library,
         account
       )
-      const method = nftContract.createVault
-      const estimate = nftContract.estimateGas.createVault
+      const method = factoryContract.createVault
+      const estimate = factoryContract.estimateGas.createVault
       const args = [
         `Owner of ${poolName}`,
         `o${poolSymbol}`,

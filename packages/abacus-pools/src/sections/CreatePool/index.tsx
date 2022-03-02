@@ -138,10 +138,10 @@ const CreatePool: React.FC = () => {
       const exitFeeStatic = formElements.exitFeeStatic.value
 
       setIsButtonLoading(true)
-      const nonce = await factory(ABC_FACTORY).methods.nextVaultIndex(
-        newSesh.address,
-        newSesh.tokenId
-      )
+      const nonce = await factory(ABC_FACTORY)
+        .methods.nextVaultIndex(newSesh.address, newSesh.tokenId)
+        .call()
+      toggle()
       setCurrentNonce(nonce)
       await onCreatePool(
         newSesh.address,

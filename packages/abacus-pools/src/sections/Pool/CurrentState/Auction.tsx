@@ -29,21 +29,9 @@ const Auction: FunctionComponent = () => {
     <>
       <HorizontalListGroup>
         <ListGroupItemMinWidth>
-          <Label>Tokens Left</Label>
+          <Label>Highest Bid</Label>
           <ListGroupHeader style={{ color: theme.colors.accent }}>
-            {poolData.tokensLeft} {poolData.symbol}
-          </ListGroupHeader>
-        </ListGroupItemMinWidth>
-        <ListGroupItemMinWidth>
-          <Label>Tokens Claimed</Label>
-          <ListGroupHeader style={{ color: theme.colors.accent }}>
-            {poolData.tokensClaimed} {poolData.symbol}
-          </ListGroupHeader>
-        </ListGroupItemMinWidth>
-        <ListGroupItemMinWidth>
-          <Label>Price Per Token</Label>
-          <ListGroupHeader style={{ color: theme.colors.accent }}>
-            {poolData.tokenPrice} ETH
+            {poolData.highestBid} ETH
           </ListGroupHeader>
         </ListGroupItemMinWidth>
       </HorizontalListGroup>
@@ -52,13 +40,15 @@ const Auction: FunctionComponent = () => {
         disabled={!isNetworkSymbolETH}
         onSubmit={async (e: FormEvent<HTMLDivElement>) => {
           e.preventDefault()
+
+          // @TODO
         }}
       >
         <ListGroup>
           <ListGroupItem>
             <InputWithTitle
-              title="Purchase Amount"
-              id="purchaseAmount"
+              title="Bid"
+              id="bid"
               placeholder="0"
               value={purchaseAmount}
               onChange={(e) => setPurchaseAmount(e.target.value)}
@@ -73,7 +63,7 @@ const Auction: FunctionComponent = () => {
               style={{ width: "100%" }}
               type="submit"
             >
-              Purchase
+              Bid
             </Button>
           </div>
           <Tooltip

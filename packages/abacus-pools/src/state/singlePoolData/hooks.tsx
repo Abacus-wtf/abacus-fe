@@ -9,8 +9,42 @@ import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
 import { formatEther } from "ethers/lib/utils"
 import moment from "moment"
 import { BigNumber } from "ethers"
-import { Pool } from "../poolData/reducer"
-import { getPoolData } from "./actions"
+import { Pool, PoolStatus } from "../poolData/reducer"
+import { getPoolData, getTraderProfile } from "./actions"
+
+const getPoolDataSelector = (
+  state: AppState
+): AppState["singlePoolData"]["data"] => state.singlePoolData.data
+
+export const useGetPoolData = () =>
+  useSelector<AppState, AppState["singlePoolData"]["data"]>(getPoolDataSelector)
+
+const getTraderSelector = (
+  state: AppState
+): AppState["singlePoolData"]["traderProfile"] =>
+  state.singlePoolData.traderProfile
+
+export const useTraderProfile = () =>
+  useSelector<AppState, AppState["singlePoolData"]["traderProfile"]>(
+    getTraderSelector
+  )
+
+export const useGetTraderProfileData = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const vault = useWeb3Contract(VAULT_ABI)
+  const { account } = useActiveWeb3React()
+  const poolData = useGetPoolData()
+
+  return useCallback(async () => {
+    if (poolData.vaultAddress === undefined) return
+
+    const traderProfile = await vault(poolData.vaultAddress)
+      .methods.traderProfile(account)
+      .call()
+    console.log(traderProfile)
+    dispatch(getTraderProfile(traderProfile))
+  }, [account, dispatch, vault, poolData])
+}
 
 export const useSetPoolData = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -55,6 +89,7 @@ export const useSetPoolData = () => {
         }
         const asset = (os as { assets: OpenSeaAsset[] }).assets[0]
         const pool: Pool = {
+          vaultAddress,
           address,
           tokenId,
           nonce,
@@ -67,26 +102,27 @@ export const useSetPoolData = () => {
           tokenPrice: formatEther(pricePerToken[0]),
           isManager: String(owner[0]).toLowerCase() === account.toLowerCase(),
           balance: parseFloat(formatEther(balance)),
+          creditsAvailable: BigNumber.from(creditsAvailable).toString(),
+          state:
+            closePoolContract[0] === ZERO_ADDRESS
+              ? PoolStatus.Normal
+              : PoolStatus.Auction,
+
+          // @TODO
+          auctionEndTime: 1111,
+          highestBid: 1,
           // @TODO
           exitFeeStatic: "5",
           exitFeePercentage: "5",
-          creditsAvailable: BigNumber.from(creditsAvailable).toString(),
-          isClosed: closePoolContract[0] !== ZERO_ADDRESS,
+
           img: asset.image_url,
           hasPremiumPass,
         }
         dispatch(getPoolData(pool))
       } catch (e) {
-        // console.error(e)
+        console.log("Look into this")
       }
     },
     [factory, multicall, account, dispatch]
   )
 }
-
-const getPoolDataSelector = (
-  state: AppState
-): AppState["singlePoolData"]["data"] => state.singlePoolData.data
-
-export const useGetPoolData = () =>
-  useSelector<AppState, AppState["singlePoolData"]["data"]>(getPoolDataSelector)

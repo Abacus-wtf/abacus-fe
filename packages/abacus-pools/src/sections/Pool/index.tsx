@@ -4,6 +4,7 @@ import * as queryString from "query-string"
 import { ButtonsWhite } from "@components/Button"
 import { OutboundLink } from "gatsby-plugin-google-gtag"
 import { useGetPoolData, useSetPoolData } from "@state/singlePoolData/hooks"
+import { useActiveWeb3React } from "@hooks/index"
 import {
   SplitContainer,
   VerticalContainer,
@@ -19,6 +20,7 @@ const Pool = ({ location }) => {
   const setPool = useSetPoolData()
   const poolData = useGetPoolData()
   const [page, setPage] = useState(0)
+  const { account } = useActiveWeb3React()
 
   useEffect(() => {
     setPool(String(address), String(tokenId), Number(nonce))
@@ -63,20 +65,22 @@ const Pool = ({ location }) => {
             >
               Main
             </ButtonsWhite>
-            <ButtonsWhite
-              disabled={page === 1}
-              onClick={() => setPage(1)}
-              style={{ borderRadius: 8 }}
-            >
-              Credits
-            </ButtonsWhite>
+            {account ? (
+              <ButtonsWhite
+                disabled={page === 1}
+                onClick={() => setPage(1)}
+                style={{ borderRadius: 8 }}
+              >
+                Current Positions
+              </ButtonsWhite>
+            ) : null}
             {poolData.isManager && (
               <ButtonsWhite
                 disabled={page === 2}
                 onClick={() => setPage(2)}
                 style={{ borderRadius: 8 }}
               >
-                Manage
+                Manage Pool
               </ButtonsWhite>
             )}
           </ButtonContainer>
@@ -96,7 +100,7 @@ const Pool = ({ location }) => {
               </OutboundLink>
             </SubText>
           </VerticalSmallGapContainer>
-          <CurrentState page={page} />
+          <CurrentState page={page} status={poolData.state} />
         </VerticalContainer>
       </SplitContainer>
     </SmallUniversalContainer>

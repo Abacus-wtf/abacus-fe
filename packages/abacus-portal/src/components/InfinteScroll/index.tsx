@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer"
 import { usePrevious } from "@hooks/index"
 
 const Container = styled.div`
-  min-height: 16px;
+  min-height: 24px;
   width: 100%;
   background: transparent;
   display: flex;
@@ -30,7 +30,6 @@ const Pulse = keyframes`
 
 const StyledIconContainer = styled.div`
   opacity: 1;
-  margin: 10px;
   transform: scale(1);
   animation: ${Pulse} 2s infinite;
 `

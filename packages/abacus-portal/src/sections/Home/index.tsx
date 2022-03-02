@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import { Media } from "abacus-ui"
 import { ExploreFilters } from "@components/index"
@@ -24,32 +24,17 @@ const GridContainer = styled.div`
   `}
 `
 
-const ExploreGrid = styled.div`
-  display: grid;
-  grid-row-gap: 28px;
-  margin-top: 28px;
-
-  ${Media.sm`
-    grid-template-columns: repeat(2, calc(50% - 12px));
-    grid-column-gap: 24px;
-    grid-row-gap: 28px;
-  `}
-
-  ${Media.lg`
-    margin-top: 0;
-  `}
-`
-
-const Home: React.FC = () => (
-  <>
-    <FeaturedSessions />
-    <GridContainer>
-      <ExploreFilters />
-      <ExploreGrid>
-        <MultiSessions />
-      </ExploreGrid>
-    </GridContainer>
-  </>
-)
+const Home: React.FC = () => {
+  const [page, setPage] = useState(0)
+  return (
+    <>
+      <FeaturedSessions />
+      <GridContainer>
+        <ExploreFilters page={page} />
+        <MultiSessions setPage={setPage} />
+      </GridContainer>
+    </>
+  )
+}
 
 export default Home

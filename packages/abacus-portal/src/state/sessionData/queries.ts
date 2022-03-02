@@ -1,4 +1,5 @@
 import { gql } from "graphql-request"
+import { isBigNumberish } from "@ethersproject/bignumber/lib/bignumber"
 import { Vote } from "./reducer"
 
 export type SubgraphPricingSession = {
@@ -25,6 +26,8 @@ export type GetPricingSessionsQueryResponse = {
 export type GetPricingSessionsVariables = {
   first: number
   skip: number
+  orderBy?: string
+  orderDirection?: string
 }
 
 export type PricingSessionFilters = {
@@ -52,6 +55,9 @@ export const pricingSessionWhere = (
       case "object":
         if (Array.isArray(filterValue)) {
           return `${acc}${filter}_in: [${filterValue}],`
+        }
+        if (isBigNumberish(filterValue)) {
+          return `${acc}${filter}: ${filterValue.toString()},`
         }
         return acc
       default:
@@ -97,11 +103,16 @@ export const GET_FEATURED_SESSIONS = gql`
 `
 
 export const GET_PRICING_SESSIONS = (where: string | null) => gql`
-  query GetPricingSessions($first: Int!, $skip: Int!) {
+  query GetPricingSessions(
+    $first: Int!
+    $skip: Int!
+    $orderBy: String!
+    $orderDirection: String!
+  ) {
     pricingSessions(
       first: $first
-      orderBy: createdAt
-      orderDirection: desc
+      orderBy: $orderBy
+      orderDirection: $orderDirection
       skip: $skip
       where: ${where}
     ) {

@@ -1,1 +1,1 @@
-export const PAGINATE_BY = 20
+export const PAGINATE_BY = 2

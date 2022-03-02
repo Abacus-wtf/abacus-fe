@@ -7,7 +7,9 @@ import {
   PricingSessionFilters,
 } from "@state/sessionData/queries"
 import { useGetMultiSessionData } from "@state/sessionData/hooks"
-import { statuses, Range, Order } from "./constants"
+import { BigNumber } from "ethers"
+import { usePrevious } from "@hooks/index"
+import { statuses, Range, Order, RangeBoundaries } from "./constants"
 
 const Container = styled.div`
   display: flex;
@@ -25,9 +27,15 @@ const HR = styled.hr`
 
 let prevWhere: string = null
 
-const ExploreFilters: FunctionComponent = () => {
+type ExploreFiltersProps = {
+  page: number
+}
+
+const ExploreFilters: FunctionComponent<ExploreFiltersProps> = ({ page }) => {
   const [sessionStatuses, setSessionStatuses] = useState(new Set<number>())
   const [sortOrder, setSortOrder] = useState<Order>(null)
+  const previousSortOrder = usePrevious(sortOrder)
+  const previousPage = usePrevious(page)
   const [ranges, setRanges] = useState(new Set<Range>())
   const getMultiSessionData = useGetMultiSessionData()
 
@@ -53,17 +61,61 @@ const ExploreFilters: FunctionComponent = () => {
 
   useEffect(() => {
     const statuses = Array.from(sessionStatuses)
+    let lowerBound: BigNumber = null
+    let upperBound: BigNumber | boolean = null
+    ranges.forEach((range) => {
+      const rangeLower = RangeBoundaries[range].lower_bound
+      const rangeUpper = RangeBoundaries[range].upper_bound
+      lowerBound = !lowerBound
+        ? rangeLower
+        : rangeLower.lt(lowerBound)
+        ? rangeLower
+        : lowerBound
+
+      if (typeof rangeUpper === "number") {
+        upperBound = null
+      } else if (typeof upperBound === "boolean") {
+        upperBound = null
+      } else {
+        upperBound = !upperBound
+          ? rangeUpper
+          : rangeUpper.gt(upperBound)
+          ? rangeUpper
+          : upperBound
+      }
+    })
+
     const filters: PricingSessionFilters = {
       ...(statuses?.length && {
         sessionStatus: statuses,
       }),
+      ...(lowerBound && {
+        totalStaked_gt: lowerBound,
+      }),
+      ...(upperBound && {
+        totalStaked_lt: upperBound,
+      }),
     }
     const where = pricingSessionWhere(filters)
-    if (prevWhere !== where) {
+    if (
+      prevWhere !== where ||
+      previousSortOrder !== sortOrder ||
+      page > previousPage
+    ) {
       prevWhere = where
-      getMultiSessionData(where)
+      const orderBy = sortOrder ? "totalStaked" : null
+      const orderDirection = sortOrder || null
+      getMultiSessionData(where, orderBy, orderDirection)
     }
-  }, [getMultiSessionData, sessionStatuses])
+  }, [
+    getMultiSessionData,
+    previousSortOrder,
+    ranges,
+    sessionStatuses,
+    sortOrder,
+    page,
+    previousPage,
+  ])
 
   return (
     <Container>
@@ -89,8 +141,8 @@ const ExploreFilters: FunctionComponent = () => {
           label="Low to High"
           id="Low to High"
           value="Low to High"
-          checked={sortOrder === "lth"}
-          onChange={() => setSortOrder("lth")}
+          checked={sortOrder === "asc"}
+          onChange={() => setSortOrder("asc")}
         />
         <Checkbox
           type="radio"
@@ -98,8 +150,8 @@ const ExploreFilters: FunctionComponent = () => {
           label="High to Low"
           id="High to Low"
           value="High to Low"
-          checked={sortOrder === "htl"}
-          onChange={() => setSortOrder("htl")}
+          checked={sortOrder === "desc"}
+          onChange={() => setSortOrder("desc")}
         />
       </Accordion>
       <HR />

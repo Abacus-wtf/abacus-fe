@@ -268,32 +268,40 @@ export const useGetFeaturedSessionData = () => {
 export const useGetMultiSessionData = () => {
   const dispatch = useDispatch<AppDispatch>()
   const whereRef = useRef("")
+  const orderRef = useRef("")
   const { page, multiSessionData } = useMultiSessionState()
   const networkSymbol = useGetCurrentNetwork()
 
   return useCallback(
-    async (where: string | null) => {
+    async (where: string | null, orderBy?: string, orderDirection?: string) => {
       if (!networkSymbol) {
         return
       }
       let currentPage = page
       let currentData = multiSessionData
-      if (where !== whereRef.current) {
+      const currentOrder = `${orderBy}${orderDirection}`
+      const shouldReset =
+        where !== whereRef.current || currentOrder !== orderRef.current
+      if (shouldReset) {
         currentPage = 0
         currentData = []
         dispatch(setMultipleSessionData([]))
       }
+      orderRef.current = currentOrder
       whereRef.current = where
       dispatch(setMultipleSessionFetchStatus(PromiseStatus.Pending))
       const variables: GetPricingSessionsVariables = {
         first: PAGINATE_BY,
         skip: currentPage * PAGINATE_BY,
+        orderBy: orderBy || "sessionStatus",
+        orderDirection: orderDirection || "asc",
       }
       try {
+        const query = GET_PRICING_SESSIONS(where)
         const { pricingSessions } =
           await request<GetPricingSessionsQueryResponse>(
             GRAPHQL_ENDPOINT(networkSymbol),
-            GET_PRICING_SESSIONS(where),
+            query,
             variables
           )
         const sessionData = await parseSubgraphPricingSessions(pricingSessions)

@@ -2,19 +2,16 @@ import React, { useEffect, useState } from "react"
 import * as queryString from "query-string"
 import { createGlobalStyle } from "styled-components"
 import {
-  PricingSessionMainComponent,
   CardBar,
   PriceHistory,
   AboutSection,
   PartOfCollection,
   ActivitySection,
-  Modal,
 } from "abacus-ui"
 import { navigate } from "gatsby"
 import {
   useCurrentSessionData,
   useCurrentSessionFetchStatus,
-  useCurrentSessionStatus,
   useCurrentSessionUserStatus,
   useGetCurrentSessionData,
   useGetUserStatus,
@@ -26,8 +23,8 @@ import { useGetCurrentNetwork } from "@state/application/hooks"
 import { useSetPayoutData, useClaimPayoutData } from "@state/miscData/hooks"
 import { NetworkSymbolEnum } from "@config/constants"
 import { isWithinWinRange } from "@config/utils"
-import { SessionState } from "@models/SessionState"
 import { Container, SplitContainer } from "@layouts/styles"
+import PricingSession from "@components/PricingSession"
 import DepositModal from "./DepositModal"
 
 const GlobalStyle = createGlobalStyle<{ url: string }>`
@@ -43,7 +40,6 @@ body {
 `
 
 const CurrentSession = ({ location }) => {
-  const status = useCurrentSessionStatus()
   const { address, tokenId, nonce } = queryString.parse(location.search)
   const getCurrentSessionData = useGetCurrentSessionData()
   const { account, chainId } = useActiveWeb3React()
@@ -56,7 +52,7 @@ const CurrentSession = ({ location }) => {
   const setPayoutData = useSetPayoutData()
   const getUserStatus = useGetUserStatus()
   const userStatus = useCurrentSessionUserStatus()
-  const [isDepositModalOpen, setIsDepositModalOpen] = useState(true)
+  const [isDepositModalOpen, setIsDepositModalOpen] = useState(false)
   const [isRankingsModalOpen, setIsRankingsModalOpen] = useState(false)
   const [isSubscribeModalOpen, setSubscribeModalOpen] = useState(false)
   const [isLostModalOpen, setIsLostModalOpen] = useState(false)
@@ -151,26 +147,10 @@ const CurrentSession = ({ location }) => {
         participants={sessionData.numPpl}
         owner={sessionData.owner}
       />
-      <PricingSessionMainComponent
-        cardInfo={{
-          nftSrc: sessionData.image_url,
-          nftTitle: "Saturiazone",
-          endTime: 1647027719000,
-          numParticipants: 69,
-          poolAmount: 1.22,
-          poolAmountDollars: 800,
-          link: "http://google.com",
-          imgs: [""],
-        }}
-        currentState={SessionState.Vote}
-        currentEthBalance={1.1}
-        openDepositModal={() => {}}
-        onMainClick={() => {}}
-        participation={{
-          appraisal: 1,
-          stake: 1.1,
-          seedNumber: "0x1234",
-        }}
+      <PricingSession
+        nftSrc={sessionData.image_url}
+        endTime={sessionData.endTime}
+        openDepositModal={() => setIsDepositModalOpen(true)}
       />
       <SplitContainer>
         <PriceHistory
@@ -182,42 +162,49 @@ const CurrentSession = ({ location }) => {
       <ActivitySection
         activityList={[
           {
+            id: "1",
             img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",
           },
           {
+            id: "2",
             img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",
           },
           {
+            id: "3",
             img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",
           },
           {
+            id: "4",
             img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",
           },
           {
+            id: "5",
             img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",
           },
           {
+            id: "6",
             img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
             appraisorAddress: "0x1234541234123",
           },
           {
+            id: "7",
             img: "/prof.jpeg",
             appraisalAmount: 1,
             stakeAmount: 1,
@@ -229,51 +216,51 @@ const CurrentSession = ({ location }) => {
         openseaObjects={[
           {
             src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
+            link: "google.com/1",
           },
           {
             src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
+            link: "google.com/2",
           },
           {
             src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
+            link: "google.com/3",
           },
           {
             src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
+            link: "google.com/4",
           },
           {
             src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
+            link: "google.com/5",
           },
           {
             src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
+            link: "google.com/6",
           },
           {
             src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
+            link: "google.com/7",
           },
           {
             src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
+            link: "google.com/8",
           },
           {
             src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
+            link: "google.com/9",
           },
           {
             src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
+            link: "google.com/10",
           },
           {
             src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
+            link: "google.com/11",
           },
           {
             src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com",
+            link: "google.com/12",
           },
         ]}
       />

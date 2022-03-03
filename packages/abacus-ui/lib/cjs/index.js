@@ -306,12 +306,12 @@ var EthLogo$1 = styled__default["default"](Container$y)(templateObject_5$b || (t
 var Input = function (_a) {
     var value = _a.value, onChange = _a.onChange, type = _a.type, label = _a.label, name = _a.name, id = _a.id, placeholder = _a.placeholder, showEth = _a.showEth, className = _a.className, hint = _a.hint;
     var ID = typeof id === "string" ? id : getUniqueId("input");
-    return (React__default["default"].createElement(React__default["default"].Fragment, null,
+    return (React__default["default"].createElement("div", null,
         React__default["default"].createElement(InputContainer, { className: className },
             showEth ? React__default["default"].createElement(EthLogo$1, null, "ETH") : null,
             typeof label === "string" && label && (React__default["default"].createElement(StyledLabel$1, { htmlFor: ID }, label)),
             React__default["default"].createElement(StyledInput$1, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); } })),
-        typeof hint === "string" && hint && React__default["default"].createElement(StyledKilo$4, null, hint)));
+        hint && React__default["default"].createElement(StyledKilo$4, null, hint)));
 };
 var templateObject_1$F, templateObject_2$t, templateObject_3$k, templateObject_4$e, templateObject_5$b;
 
@@ -689,6 +689,12 @@ var Close = function (_a) {
     var _b = _a.stroke, stroke = _b === void 0 ? "#1C2333" : _b;
     return (React__default["default"].createElement("svg", { width: "14", height: "14", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
         React__default["default"].createElement("path", { d: "m1 1 12 12m0-12L1 13", stroke: stroke, strokeOpacity: ".72", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })));
+};
+
+var Lock$1 = function (_a) {
+    var _b = _a.fill, fill = _b === void 0 ? "#1C2333" : _b;
+    return (React__default["default"].createElement("svg", { width: "19", height: "27", viewBox: "0 0 19 27", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+        React__default["default"].createElement("path", { d: "M2.97266 26.1865H15.4014C17.1533 26.1865 18.0039 25.3105 18.0039 23.4189V13.8086C18.0039 12.1074 17.293 11.2188 15.8584 11.0791V7.99414C15.8584 3.13184 12.583 0.795898 9.18066 0.795898C5.77832 0.795898 2.51562 3.13184 2.51562 7.99414V11.1172C1.14453 11.3076 0.357422 12.1836 0.357422 13.8086V23.4189C0.357422 25.3105 1.2207 26.1865 2.97266 26.1865ZM5.19434 7.76562C5.19434 4.94727 6.98438 3.37305 9.18066 3.37305C11.377 3.37305 13.167 4.94727 13.167 7.76562V11.0537L5.19434 11.0664V7.76562Z", fill: fill, fillOpacity: "0.6" })));
 };
 
 var PetaModified = styled__default["default"].div(templateObject_1$r || (templateObject_1$r = __makeTemplateObject(["\n  ", ";\n  margin-left: 8px;\n  color: ", ";\n"], ["\n  ", ";\n  margin-left: 8px;\n  color: ",
@@ -1291,7 +1297,7 @@ var Container$6 = styled__default["default"].div(templateObject_1$8 || (template
 var PartOfCollection = function (_a) {
     var openseaObjects = _a.openseaObjects;
     return (React__default["default"].createElement(CardWithTitle, { style: { height: "fit-content" }, title: "Part of Collection" },
-        React__default["default"].createElement(Container$6, null, ___default["default"].map(openseaObjects, function (openseaObject) { return (React__default["default"].createElement(OpenseaObject, __assign({}, openseaObject))); }))));
+        React__default["default"].createElement(Container$6, null, ___default["default"].map(openseaObjects, function (openseaObject) { return (React__default["default"].createElement(OpenseaObject, __assign({ key: openseaObject.link }, openseaObject))); }))));
 };
 var templateObject_1$8;
 
@@ -1307,7 +1313,7 @@ var EmptyContainer = styled__default["default"].div(templateObject_6$2 || (templ
 var ActivitySection = function (_a) {
     var activityList = _a.activityList;
     return (React__default["default"].createElement(CardWithTitle, { title: "Activity" },
-        React__default["default"].createElement(ListContainer, null, activityList.length > 0 ? (___default["default"].map(activityList, function (activity) { return (React__default["default"].createElement(RowContainer, null,
+        React__default["default"].createElement(ListContainer, null, activityList.length > 0 ? (___default["default"].map(activityList, function (activity) { return (React__default["default"].createElement(RowContainer, { key: activity.id },
             React__default["default"].createElement(ProfileImage, { src: activity.img }),
             React__default["default"].createElement(TextContainer, null,
                 React__default["default"].createElement(StyledDiv, { style: { fontWeight: 600 } }, activity.appraisorAddress),
@@ -1521,6 +1527,7 @@ exports.Input = Input;
 exports.Kilo = StyledDiv;
 exports.LinkImage = LinkImage;
 exports.LoadingShimmer = LoadingShimmer;
+exports.Lock = Lock$1;
 exports.Logo = Logo;
 exports.Media = Media;
 exports.Mega = Container$z;

@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 declare type ActivitySectionProps = {
     activityList: {
+        id: string;
         img: string;
         appraisalAmount: number;
         stakeAmount: number;

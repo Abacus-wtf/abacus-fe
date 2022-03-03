@@ -25,7 +25,7 @@ const PartOfCollection: FunctionComponent<PartOfCollectionProps> = ({
   <CardWithTitle style={{ height: "fit-content" }} title="Part of Collection">
     <Container>
       {_.map(openseaObjects, (openseaObject) => (
-        <OpenseaObject {...openseaObject} />
+        <OpenseaObject key={openseaObject.link} {...openseaObject} />
       ))}
     </Container>
   </CardWithTitle>

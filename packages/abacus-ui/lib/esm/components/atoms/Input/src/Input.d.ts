@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 declare type InputProps = {
     value: string;
     onChange: (value: string) => void;
@@ -9,7 +9,7 @@ declare type InputProps = {
     placeholder?: string;
     showEth?: boolean;
     className?: string;
-    hint?: string;
+    hint?: React.ReactNode | string;
 };
 declare const Input: FunctionComponent<InputProps>;
 export default Input;

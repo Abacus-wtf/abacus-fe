@@ -14,7 +14,7 @@ type InputProps = {
   placeholder?: string;
   showEth?: boolean;
   className?: string;
-  hint?: string;
+  hint?: React.ReactNode | string;
 };
 
 const InputContainer = styled.div`
@@ -78,7 +78,7 @@ const Input: FunctionComponent<InputProps> = ({
 }) => {
   const ID = typeof id === "string" ? id : getUniqueId("input");
   return (
-    <>
+    <div>
       <InputContainer className={className}>
         {showEth ? <EthLogo>ETH</EthLogo> : null}
         {typeof label === "string" && label && (
@@ -93,8 +93,8 @@ const Input: FunctionComponent<InputProps> = ({
           onChange={(e) => onChange(e.target.value)}
         />
       </InputContainer>
-      {typeof hint === "string" && hint && <StyledKilo>{hint}</StyledKilo>}
-    </>
+      {hint && <StyledKilo>{hint}</StyledKilo>}
+    </div>
   );
 };
 

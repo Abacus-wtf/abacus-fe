@@ -135,7 +135,7 @@ export const useOnSubmitVote = () => {
       appraisalValue: string,
       stakeValue: string,
       hash: string,
-      callback: () => void
+      callback?: () => void
     ) => {
       const encodedVals = encodeSessionData({
         account,

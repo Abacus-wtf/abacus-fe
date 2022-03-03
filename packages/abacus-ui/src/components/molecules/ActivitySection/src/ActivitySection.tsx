@@ -49,6 +49,7 @@ const EmptyContainer = styled.div`
 
 type ActivitySectionProps = {
   activityList: {
+    id: string;
     img: string;
     appraisalAmount: number;
     stakeAmount: number;
@@ -63,7 +64,7 @@ const ActivitySection: FunctionComponent<ActivitySectionProps> = ({
     <ListContainer>
       {activityList.length > 0 ? (
         _.map(activityList, (activity) => (
-          <RowContainer>
+          <RowContainer key={activity.id}>
             <ProfileImage src={activity.img} />
             <TextContainer>
               <Kilo style={{ fontWeight: 600 }}>

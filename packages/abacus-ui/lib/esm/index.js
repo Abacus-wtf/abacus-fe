@@ -294,12 +294,12 @@ var EthLogo$1 = styled(Container$y)(templateObject_5$b || (templateObject_5$b = 
 var Input = function (_a) {
     var value = _a.value, onChange = _a.onChange, type = _a.type, label = _a.label, name = _a.name, id = _a.id, placeholder = _a.placeholder, showEth = _a.showEth, className = _a.className, hint = _a.hint;
     var ID = typeof id === "string" ? id : getUniqueId("input");
-    return (React.createElement(React.Fragment, null,
+    return (React.createElement("div", null,
         React.createElement(InputContainer, { className: className },
             showEth ? React.createElement(EthLogo$1, null, "ETH") : null,
             typeof label === "string" && label && (React.createElement(StyledLabel$1, { htmlFor: ID }, label)),
             React.createElement(StyledInput$1, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); } })),
-        typeof hint === "string" && hint && React.createElement(StyledKilo$4, null, hint)));
+        hint && React.createElement(StyledKilo$4, null, hint)));
 };
 var templateObject_1$F, templateObject_2$t, templateObject_3$k, templateObject_4$e, templateObject_5$b;
 
@@ -677,6 +677,12 @@ var Close = function (_a) {
     var _b = _a.stroke, stroke = _b === void 0 ? "#1C2333" : _b;
     return (React.createElement("svg", { width: "14", height: "14", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
         React.createElement("path", { d: "m1 1 12 12m0-12L1 13", stroke: stroke, strokeOpacity: ".72", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })));
+};
+
+var Lock$1 = function (_a) {
+    var _b = _a.fill, fill = _b === void 0 ? "#1C2333" : _b;
+    return (React.createElement("svg", { width: "19", height: "27", viewBox: "0 0 19 27", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+        React.createElement("path", { d: "M2.97266 26.1865H15.4014C17.1533 26.1865 18.0039 25.3105 18.0039 23.4189V13.8086C18.0039 12.1074 17.293 11.2188 15.8584 11.0791V7.99414C15.8584 3.13184 12.583 0.795898 9.18066 0.795898C5.77832 0.795898 2.51562 3.13184 2.51562 7.99414V11.1172C1.14453 11.3076 0.357422 12.1836 0.357422 13.8086V23.4189C0.357422 25.3105 1.2207 26.1865 2.97266 26.1865ZM5.19434 7.76562C5.19434 4.94727 6.98438 3.37305 9.18066 3.37305C11.377 3.37305 13.167 4.94727 13.167 7.76562V11.0537L5.19434 11.0664V7.76562Z", fill: fill, fillOpacity: "0.6" })));
 };
 
 var PetaModified = styled.div(templateObject_1$r || (templateObject_1$r = __makeTemplateObject(["\n  ", ";\n  margin-left: 8px;\n  color: ", ";\n"], ["\n  ", ";\n  margin-left: 8px;\n  color: ",
@@ -1279,7 +1285,7 @@ var Container$6 = styled.div(templateObject_1$8 || (templateObject_1$8 = __makeT
 var PartOfCollection = function (_a) {
     var openseaObjects = _a.openseaObjects;
     return (React.createElement(CardWithTitle, { style: { height: "fit-content" }, title: "Part of Collection" },
-        React.createElement(Container$6, null, _.map(openseaObjects, function (openseaObject) { return (React.createElement(OpenseaObject, __assign({}, openseaObject))); }))));
+        React.createElement(Container$6, null, _.map(openseaObjects, function (openseaObject) { return (React.createElement(OpenseaObject, __assign({ key: openseaObject.link }, openseaObject))); }))));
 };
 var templateObject_1$8;
 
@@ -1295,7 +1301,7 @@ var EmptyContainer = styled.div(templateObject_6$2 || (templateObject_6$2 = __ma
 var ActivitySection = function (_a) {
     var activityList = _a.activityList;
     return (React.createElement(CardWithTitle, { title: "Activity" },
-        React.createElement(ListContainer, null, activityList.length > 0 ? (_.map(activityList, function (activity) { return (React.createElement(RowContainer, null,
+        React.createElement(ListContainer, null, activityList.length > 0 ? (_.map(activityList, function (activity) { return (React.createElement(RowContainer, { key: activity.id },
             React.createElement(ProfileImage, { src: activity.img }),
             React.createElement(TextContainer, null,
                 React.createElement(StyledDiv, { style: { fontWeight: 600 } }, activity.appraisorAddress),
@@ -1469,5 +1475,5 @@ var ExploreCarousel = function (_a) {
 };
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6;
 
-export { AbacusBalance, AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, AboutSection, Accordion, ActivitySection, Button, ButtonType, CardBackground, CardBar, Checkbox, Close, Divider$3 as Divider, Dropdown, Eth as ETH, Container$G as Exa, ExploreCard, ExploreCarousel, ExploreImage, ExploreInfo, ExploreInfoContainer, ExploreScrollableCard, Extras, Flex, Font, FontImport, FundCard, Container$F as Giga, Container$E as H1, Container$D as H2, Container$C as H3, Container$B as H4, Container$A as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, LinkImage, LoadingShimmer, Logo, Media, Container$z as Mega, Container$y as Milli, MiniList, OpenAppModal as Modal, Navbar, StyledP as P, PartOfCollection, Container$x as Peta, PortalNavbar, PreviousSessionsAutoScroll, PriceHistory, PricingSessionMainComponent, ProfileGroup, ProfileIcon, ProfileInfo, Section, SessionCard, SessionCountdown, Container$w as Small, SocialLinks, SplitSection, StatInfo, Container$v as Tera, VisuallyHidden, Container$u as Yotta, Container$t as Zetta, breakpoints, defaultTheme };
+export { AbacusBalance, AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, AboutSection, Accordion, ActivitySection, Button, ButtonType, CardBackground, CardBar, Checkbox, Close, Divider$3 as Divider, Dropdown, Eth as ETH, Container$G as Exa, ExploreCard, ExploreCarousel, ExploreImage, ExploreInfo, ExploreInfoContainer, ExploreScrollableCard, Extras, Flex, Font, FontImport, FundCard, Container$F as Giga, Container$E as H1, Container$D as H2, Container$C as H3, Container$B as H4, Container$A as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, LinkImage, LoadingShimmer, Lock$1 as Lock, Logo, Media, Container$z as Mega, Container$y as Milli, MiniList, OpenAppModal as Modal, Navbar, StyledP as P, PartOfCollection, Container$x as Peta, PortalNavbar, PreviousSessionsAutoScroll, PriceHistory, PricingSessionMainComponent, ProfileGroup, ProfileIcon, ProfileInfo, Section, SessionCard, SessionCountdown, Container$w as Small, SocialLinks, SplitSection, StatInfo, Container$v as Tera, VisuallyHidden, Container$u as Yotta, Container$t as Zetta, breakpoints, defaultTheme };
 //# sourceMappingURL=index.js.map

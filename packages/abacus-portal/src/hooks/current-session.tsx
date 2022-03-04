@@ -148,6 +148,7 @@ export const useOnSubmitVote = () => {
         encodedVals,
         JSON.stringify({
           password: passwordValue,
+          stake: stakeValue,
           appraisal: appraisalValue,
         })
       )

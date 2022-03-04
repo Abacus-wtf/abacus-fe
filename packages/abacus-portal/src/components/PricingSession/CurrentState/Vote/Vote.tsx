@@ -12,11 +12,12 @@ import {
 } from "abacus-ui"
 import styled from "styled-components"
 import { useOnSubmitVote, useOnUpdateVote } from "@hooks/current-session"
-import { hashValues } from "@config/utils"
+import { genRanHex, hashValues } from "@config/utils"
 import { parseEther } from "ethers/lib/utils"
 import { useActiveWeb3React } from "@hooks/index"
 import { useClaimPayoutData } from "@state/miscData/hooks"
 import { useCurrentSessionData } from "@state/sessionData/hooks"
+import { BigNumber } from "ethers"
 import useParticipation from "../useParticipation"
 import useValidate, { ValidationFn } from "../useValidate"
 
@@ -70,14 +71,19 @@ type VoteProps = {
 
 const MIN_STAKE = 0.009
 
+enum PageState {
+  APPRAISAL,
+  STAKE,
+}
+
 const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
   const { account } = useActiveWeb3React()
-  const [pageState, setPageState] = useState(0)
+  const [pageState, setPageState] = useState(PageState.APPRAISAL)
   const [appraisal, setAppraisal] = useState("")
   const [inputHint, setInputHint] = useState("")
   const [inputError, setInputError] = useState("")
   const sessionData = useCurrentSessionData()
-  const password = "WHYDONTWEASKFORTHISANYMORE?"
+  const [password] = useState(`0x${genRanHex(20)}`)
   const [stake, setStake] = useState("")
   const participation = useParticipation()
   const { onSubmitVote, isPending: submitVotePending } = useOnSubmitVote()
@@ -138,10 +144,9 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
     const hash = hashValues({
       appraisalValue: parseEther(`${appraisal}`),
       account: account || "",
-      password,
-      // password: !passwordVal.startsWith("0x")
-      //   ? Number(passwordVal)
-      //   : BigNumber.from(passwordVal),
+      password: !password.startsWith("0x")
+        ? Number(password)
+        : BigNumber.from(password),
     })
 
     console.log("hash", hash)
@@ -157,10 +162,9 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
     const hash = hashValues({
       appraisalValue: parseEther(`${appraisal}`),
       account: account || "",
-      password,
-      // password: !passwordVal.startsWith("0x")
-      //   ? Number(passwordVal)
-      //   : BigNumber.from(passwordVal),
+      password: !password.startsWith("0x")
+        ? Number(password)
+        : BigNumber.from(password),
     })
 
     try {
@@ -231,7 +235,7 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
             info={{
               Appraisal: `${participation.appraisal} ETH`,
               Stake: `${participation.stake} ETH`,
-              "Seed Number": participation.seedNumber,
+              "Seed Number": participation.password,
             }}
             isDark
           />
@@ -242,21 +246,21 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
           <>
             <LockOuterContainer>
               <LockContainer>
-                {pageState === 0 ? <Lock /> : <ETH />}
+                {pageState === PageState.APPRAISAL ? <Lock /> : <ETH />}
                 <TitleContainer style={{ gridGap: 1 }}>
                   <Description style={{ fontWeight: 600 }}>
-                    {pageState === 0
+                    {pageState === PageState.APPRAISAL
                       ? "Private until you reveal"
                       : "Abacus Balance"}
                   </Description>
                   <Description>
-                    {pageState === 0
+                    {pageState === PageState.APPRAISAL
                       ? "Appraisals are anonymous until all submissions are in."
                       : `${claimPayout?.ethCredit ?? 0} ETH`}
                   </Description>
                 </TitleContainer>
               </LockContainer>
-              {pageState !== 0 ? (
+              {pageState !== PageState.APPRAISAL ? (
                 <Button
                   onClick={openDepositModal}
                   buttonType={ButtonType.White}
@@ -266,9 +270,9 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
                 </Button>
               ) : null}
             </LockOuterContainer>
-            {pageState === 0 ? (
+            {pageState === PageState.APPRAISAL ? (
               <FullWidthButton
-                onClick={() => setPageState(1)}
+                onClick={() => setPageState(PageState.STAKE)}
                 disabled={notLoggedIn || !appraisal || !appraisalValid.valid}
               >
                 Appraise
@@ -277,7 +281,7 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
               <TitleContainer style={{ flexDirection: "row" }}>
                 <Button
                   buttonType={ButtonType.Gray}
-                  onClick={() => setPageState(0)}
+                  onClick={() => setPageState(PageState.APPRAISAL)}
                   disabled={notLoggedIn}
                 >
                   Back

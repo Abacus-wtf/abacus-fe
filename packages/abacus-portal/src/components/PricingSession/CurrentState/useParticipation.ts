@@ -6,7 +6,7 @@ import { encodeSessionData } from "@config/utils"
 type Participation = {
   appraisal: number
   stake: number
-  seedNumber: string
+  password: string
 }
 
 function useParticipation() {
@@ -27,7 +27,7 @@ function useParticipation() {
       setParticipation({
         appraisal: Number(items.appraisal),
         stake: Number(items.stake),
-        seedNumber: String(items.seedNumber),
+        password: String(items.password),
       })
     }
   }, [account, sessionData.address, sessionData.nonce, sessionData.tokenId])

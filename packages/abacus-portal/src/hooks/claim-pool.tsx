@@ -111,9 +111,8 @@ export const useOnClaimPrincipalAmount = () => {
 
 export const useOnDepositPrincipal = () => {
   const { account, library } = useActiveWeb3React()
-  const { generalizedContractCall, isPending } = useGeneralizedContractCall(
-    ReloadDataType.ClaimPool
-  )
+  const { generalizedContractCall, isPending, txError } =
+    useGeneralizedContractCall(ReloadDataType.ClaimPool)
   const addTransaction = useTransactionAdder()
   const networkSymbol = useGetCurrentNetwork()
 
@@ -152,5 +151,6 @@ export const useOnDepositPrincipal = () => {
   return {
     onDeposit,
     isPending,
+    txError,
   }
 }

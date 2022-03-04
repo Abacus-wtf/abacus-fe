@@ -184,6 +184,7 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
   const setPayoutData = useSetPayoutData()
   const setAuctionData = useSetAuctionData()
   const [isPending, setIsPending] = useState(false)
+  const [txError, setTxError] = useState<string>(null)
   const previousIsPending = usePrevious(isPending)
 
   useEffect(() => {
@@ -225,7 +226,9 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
       args: Array<BigNumber | number | string>
       value: BigNumber | null
       cb: (response: any) => void
+      errorCb?: (error: { code: number; data: { message: string } }) => void
     }) => {
+      setTxError(null)
       dispatch(setGeneralizedContractErrorMessage(null))
       if (account === undefined || account === null) {
         toggleWalletModal()
@@ -268,7 +271,7 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
                   </p>{" "}
                   {error?.data?.message ? (
                     <p style={{ marginTop: 5 }}>
-                      The error message from MetaMask was: "
+                      The error message from received was: "
                       <i>{error.data.message}</i>"
                     </p>
                   ) : null}
@@ -277,8 +280,8 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
             )
 
             dispatch(setGeneralizedContractErrorMessage(ErrorMessage))
+            setTxError(error?.data?.message ?? null)
           }
-          console.error(error)
         })
     },
     [account, chainId, dispatch, library, toggleWalletModal]
@@ -287,5 +290,6 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
   return {
     generalizedContractCall,
     isPending,
+    txError,
   }
 }

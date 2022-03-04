@@ -13,6 +13,7 @@ import {
   Media,
 } from "abacus-ui"
 import { useClaimPayoutData } from "@state/miscData/hooks"
+import { useOnDepositPrincipal } from "@hooks/claim-pool"
 
 type DepositModalProps = {
   isOpen: boolean
@@ -80,12 +81,24 @@ const StyledButton = styled(Button)`
   margin-top: 16px;
 `
 
+const Error = styled(Kilo)`
+  color: ${({ theme }) => theme.colors.utility.red};
+  & pre {
+    display: inline-block;
+  }
+`
+
 const DepositModal: FunctionComponent<DepositModalProps> = ({
   isOpen,
   closeModal,
 }) => {
   const [ethValue, setEthValue] = useState("")
   const claimPayout = useClaimPayoutData()
+  const {
+    onDeposit,
+    isPending: isPendingDeposit,
+    txError,
+  } = useOnDepositPrincipal()
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
@@ -101,6 +114,11 @@ const DepositModal: FunctionComponent<DepositModalProps> = ({
             <VisuallyHidden>Close Deposit Funds Modal</VisuallyHidden>
           </CloseButton>
         </Header>
+        {txError && (
+          <Error>
+            Error from wallet: <pre>{txError}</pre>
+          </Error>
+        )}
         <Input
           value={ethValue}
           onChange={setEthValue}
@@ -119,7 +137,12 @@ const DepositModal: FunctionComponent<DepositModalProps> = ({
             <Kilo>{claimPayout?.ethCredit ?? 0} ETH</Kilo>
           </div>
         </BalanceContainer>
-        <StyledButton>Deposit Funds</StyledButton>
+        <StyledButton
+          onClick={() => onDeposit(ethValue)}
+          disabled={!ethValue || isPendingDeposit}
+        >
+          Deposit Funds
+        </StyledButton>
       </Container>
     </Modal>
   )

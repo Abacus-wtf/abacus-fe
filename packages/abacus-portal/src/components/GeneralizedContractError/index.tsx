@@ -1,36 +1,30 @@
 import { useGeneralizedContractError } from "@state/application/hooks"
 import React, { FunctionComponent } from "react"
-import { Alert } from "shards-react"
-import styled from "styled-components"
-import { AlertCircle } from "react-feather"
-import { theme } from "@config/theme"
+import styled, { keyframes } from "styled-components"
+import { PersistentBanner } from "abacus-ui"
 
-const StyledAlert = styled(Alert)`
-  padding: 25px;
-  border-radius: 20px;
-  margin-top: 35px;
-  margin-bottom: 0px;
-  max-width: ${theme.layout.maxWidth};
-  margin-right: auto;
-  margin-left: auto;
-  & p {
-    color: white !important;
-    margin: 0;
-    margin-top: 15px;
+const SlideUpThenDisappear = keyframes`
+  0% {
+    bottom: -100%
+  }
+  100% {
+    bottom: 0%
   }
 `
 
+const StyledPersistentBanner = styled(PersistentBanner)`
+  bottom: -100%;
+  animation: ${SlideUpThenDisappear} 1s forwards;
+`
+
 const GeneralizedContractError: FunctionComponent = () => {
-  const errorMessage = useGeneralizedContractError()
-  if (!errorMessage) {
+  const txError = useGeneralizedContractError()
+
+  if (!txError) {
     return null
   }
-  return (
-    <StyledAlert theme="danger">
-      <AlertCircle style={{ marginTop: -9, marginRight: 15 }} />
-      {errorMessage}
-    </StyledAlert>
-  )
+
+  return <StyledPersistentBanner type="error">{txError}</StyledPersistentBanner>
 }
 
 export default GeneralizedContractError

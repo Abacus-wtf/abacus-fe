@@ -12,7 +12,7 @@ import {
 } from "@state/application/hooks"
 import { NetworkSymbolEnum, NetworkSymbolAndId } from "@config/constants"
 import SEO, { SEOWithQueryProps } from "@components/SEO"
-import { Web3Modal } from "@components/index"
+import { Web3Modal, GeneralizedContractError } from "@components/index"
 import { GlobalStyles, GlobalContainer, InnerContainer } from "./styles"
 
 type GlobalLayoutProps = {
@@ -140,6 +140,7 @@ const GlobalLayout: React.FC<GlobalLayoutProps> = ({ children, location }) => {
           </PersistentBanner>
         )}
         <Web3Modal />
+        <GeneralizedContractError />
       </GlobalContainer>
     </>
   )

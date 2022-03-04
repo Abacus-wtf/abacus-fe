@@ -20,6 +20,7 @@ import { useCurrentSessionData } from "@state/sessionData/hooks"
 import { BigNumber } from "ethers"
 import useParticipation from "../useParticipation"
 import useValidate, { ValidationFn } from "../useValidate"
+import SeedNumber from "./SeedNumber"
 
 const TitleContainer = styled.div`
   display: flex;
@@ -74,6 +75,7 @@ const MIN_STAKE = 0.009
 enum PageState {
   APPRAISAL,
   STAKE,
+  SUBMITTED,
 }
 
 const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
@@ -149,8 +151,6 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
         : BigNumber.from(password),
     })
 
-    console.log("hash", hash)
-
     try {
       await onSubmitVote(password, appraisal, stake, hash)
     } catch (e) {
@@ -192,6 +192,12 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
     }
   }, [appraisal, pageState, stake, appraisalValid, stakeValid])
 
+  useEffect(() => {
+    if (participation) {
+      setPageState(PageState.SUBMITTED)
+    }
+  }, [participation])
+
   const notLoggedIn = !account
 
   return (
@@ -206,7 +212,7 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
             : "How much would you like to stake?"}
         </Description>
       </TitleContainer>
-      {!participation ? (
+      {pageState !== PageState.SUBMITTED ? (
         <Input
           label="ETH"
           name="Amount"
@@ -235,14 +241,14 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
             info={{
               Appraisal: `${participation.appraisal} ETH`,
               Stake: `${participation.stake} ETH`,
-              "Seed Number": participation.password,
+              "Seed Number": <SeedNumber />,
             }}
             isDark
           />
         </>
       )}
       <BottomButtonContainer>
-        {!participation ? (
+        {pageState !== PageState.SUBMITTED ? (
           <>
             <LockOuterContainer>
               <LockContainer>
@@ -287,7 +293,7 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
                   Back
                 </Button>
                 <FullWidthButton
-                  onClick={submitVote}
+                  onClick={participation ? updateVote : submitVote}
                   disabled={
                     notLoggedIn ||
                     !stake ||
@@ -295,7 +301,9 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
                     submitVotePending
                   }
                 >
-                  {submitVotePending ? "Submitting" : "Submit Stake"}
+                  {submitVotePending || updateVotePending
+                    ? "Submitting"
+                    : "Submit Stake"}
                 </FullWidthButton>
               </TitleContainer>
             )}
@@ -310,7 +318,7 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
                 Add to Bounty
               </FullWidthButton>
               <FullWidthButton
-                onClick={updateVote}
+                onClick={() => setPageState(PageState.APPRAISAL)}
                 disabled={updateVotePending || notLoggedIn}
               >
                 Edit Appraisal

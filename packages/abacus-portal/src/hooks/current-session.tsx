@@ -123,9 +123,8 @@ export const useOnAddToBountyVote = () => {
 export const useOnSubmitVote = () => {
   const { account, library } = useActiveWeb3React()
   const sessionData = useCurrentSessionData()
-  const { generalizedContractCall, isPending } = useGeneralizedContractCall(
-    ReloadDataType.ClaimPoolAndSession
-  )
+  const { generalizedContractCall, isPending, txError } =
+    useGeneralizedContractCall(ReloadDataType.ClaimPoolAndSession)
   const addTransaction = useTransactionAdder()
   const networkSymbol = useGetCurrentNetwork()
 
@@ -201,13 +200,15 @@ export const useOnSubmitVote = () => {
   return {
     onSubmitVote,
     isPending,
+    txError,
   }
 }
 
 export const useOnUpdateVote = () => {
   const { account, library } = useActiveWeb3React()
   const sessionData = useCurrentSessionData()
-  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const { generalizedContractCall, isPending, txError } =
+    useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
   const networkSymbol = useGetCurrentNetwork()
 
@@ -268,6 +269,7 @@ export const useOnUpdateVote = () => {
   return {
     onUpdateVote,
     isPending,
+    txError,
   }
 }
 

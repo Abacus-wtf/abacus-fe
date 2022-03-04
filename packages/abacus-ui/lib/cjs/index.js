@@ -294,11 +294,11 @@ var StyledLabel$1 = styled__default["default"].label(templateObject_4$e || (temp
     var theme = _a.theme;
     return theme.borderRadius.main;
 });
-var StyledInput$1 = styled__default["default"].input(templateObject_6$9 || (templateObject_6$9 = __makeTemplateObject(["\n  ", "\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ", "\n"], ["\n  ", "\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ",
+var StyledInput$1 = styled__default["default"].input(templateObject_6$a || (templateObject_6$a = __makeTemplateObject(["\n  ", "\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ", "\n"], ["\n  ", "\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ",
     "\n"])), Font("mega"), function (_a) {
     var disabled = _a.disabled;
     return disabled
-        ? styled.css(templateObject_5$b || (templateObject_5$b = __makeTemplateObject(["\n          background: unset;\n          cursor: not-allowed;\n        "], ["\n          background: unset;\n          cursor: not-allowed;\n        "]))) : "";
+        ? styled.css(templateObject_5$c || (templateObject_5$c = __makeTemplateObject(["\n          background: unset;\n          cursor: not-allowed;\n        "], ["\n          background: unset;\n          cursor: not-allowed;\n        "]))) : "";
 });
 var StyledKilo$4 = styled__default["default"](StyledDiv)(templateObject_7$7 || (templateObject_7$7 = __makeTemplateObject(["\n  color: ", ";\n  margin-top: 10px;\n"], ["\n  color: ", ";\n  margin-top: 10px;\n"])), function (_a) {
     var theme = _a.theme;
@@ -324,7 +324,7 @@ var Input = function (_a) {
             React__default["default"].createElement(StyledInput$1, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); }, disabled: disabled, "aria-disabled": disabled })),
         hint && React__default["default"].createElement(StyledKilo$4, null, hint)));
 };
-var templateObject_1$G, templateObject_2$v, templateObject_3$l, templateObject_4$e, templateObject_5$b, templateObject_6$9, templateObject_7$7, templateObject_8$5;
+var templateObject_1$G, templateObject_2$v, templateObject_3$l, templateObject_4$e, templateObject_5$c, templateObject_6$a, templateObject_7$7, templateObject_8$5;
 
 var Container$t = styled__default["default"].section(templateObject_2$u || (templateObject_2$u = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ",
     "\n"])), function (_a) {
@@ -396,19 +396,24 @@ var templateObject_1$E, templateObject_2$t;
 
 var Container$s = styled__default["default"].div(templateObject_1$D || (templateObject_1$D = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  grid-gap: 10px;\n"], ["\n  display: flex;\n  flex-direction: column;\n  grid-gap: 10px;\n"])));
 var MiniContainer = styled__default["default"].div(templateObject_2$s || (templateObject_2$s = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n"], ["\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n"])));
-var StyledKilo$3 = styled__default["default"](StyledDiv)(templateObject_3$k || (templateObject_3$k = __makeTemplateObject(["\n  color: ", ";\n"], ["\n  color: ",
+var StyledKilo$3 = styled__default["default"](StyledDiv)(templateObject_5$b || (templateObject_5$b = __makeTemplateObject(["\n  ", ";\n\n  color: ", ";\n"], ["\n  ",
+    ";\n\n  color: ",
     ";\n"])), function (_a) {
-    var theme = _a.theme, isdark = _a.isdark, isvalue = _a.isvalue;
-    return isdark && isvalue
+    var isValue = _a.isValue;
+    return isValue
+        ? styled.css(templateObject_3$k || (templateObject_3$k = __makeTemplateObject(["\n          word-break: break-word;\n        "], ["\n          word-break: break-word;\n        "]))) : styled.css(templateObject_4$d || (templateObject_4$d = __makeTemplateObject(["\n          flex: 1 0 auto;\n          margin-right: 16px;\n        "], ["\n          flex: 1 0 auto;\n          margin-right: 16px;\n        "])));
+}, function (_a) {
+    var theme = _a.theme, isDark = _a.isDark, isValue = _a.isValue;
+    return isDark && isValue
         ? theme.colors.core.primary
-        : isdark
+        : isDark
             ? theme.colors.core[800]
             : theme.colors.core.white;
 });
-var Divider$4 = styled__default["default"].div(templateObject_4$d || (templateObject_4$d = __makeTemplateObject(["\n  background: ", ";\n  opacity: 0.1;\n  height: 2px;\n  width: 100%;\n"], ["\n  background: ",
+var Divider$4 = styled__default["default"].div(templateObject_6$9 || (templateObject_6$9 = __makeTemplateObject(["\n  background: ", ";\n  opacity: 0.1;\n  height: 2px;\n  width: 100%;\n"], ["\n  background: ",
     ";\n  opacity: 0.1;\n  height: 2px;\n  width: 100%;\n"])), function (_a) {
-    var theme = _a.theme, isdark = _a.isdark;
-    return isdark ? theme.colors.core[800] : theme.colors.core.white;
+    var theme = _a.theme, isDark = _a.isDark;
+    return isDark ? theme.colors.core[800] : theme.colors.core.white;
 });
 var MiniList = function (_a) {
     var info = _a.info, isDark = _a.isDark;
@@ -416,13 +421,13 @@ var MiniList = function (_a) {
         var key = _a[0], value = _a[1];
         return (React__default["default"].createElement(React__default["default"].Fragment, { key: key },
             React__default["default"].createElement(MiniContainer, null,
-                React__default["default"].createElement(StyledKilo$3, { isvalue: false, isdark: isDark || false },
+                React__default["default"].createElement(StyledKilo$3, { isValue: false, isDark: isDark || false },
                     React__default["default"].createElement("b", null, key)),
-                React__default["default"].createElement(StyledKilo$3, { isvalue: true, isdark: isDark || false }, value)),
-            index !== Object.entries(info).length - 1 ? (React__default["default"].createElement(Divider$4, { isdark: isDark || false })) : null));
+                React__default["default"].createElement(StyledKilo$3, { isValue: true, isDark: isDark || false }, value)),
+            index !== Object.entries(info).length - 1 ? (React__default["default"].createElement(Divider$4, { isDark: isDark || false })) : null));
     })));
 };
-var templateObject_1$D, templateObject_2$s, templateObject_3$k, templateObject_4$d;
+var templateObject_1$D, templateObject_2$s, templateObject_3$k, templateObject_4$d, templateObject_5$b, templateObject_6$9;
 
 var Container$r = styled__default["default"].span(templateObject_1$C || (templateObject_1$C = __makeTemplateObject(["\n  border: 0px;\n  clip: rect(0px, 0px, 0px, 0px);\n  height: 1px;\n  width: 1px;\n  margin: -1px;\n  padding: 0px;\n  overflow: hidden;\n  white-space: nowrap;\n  position: absolute;\n"], ["\n  border: 0px;\n  clip: rect(0px, 0px, 0px, 0px);\n  height: 1px;\n  width: 1px;\n  margin: -1px;\n  padding: 0px;\n  overflow: hidden;\n  white-space: nowrap;\n  position: absolute;\n"])));
 var VisuallyHidden = function (_a) {

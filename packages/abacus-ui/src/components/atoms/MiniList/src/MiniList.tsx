@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Kilo from "../../../typography/Kilo/src/Kilo";
 
 type MiniListProps = {
-  info: { [key: string]: string };
+  info: { [key: string]: string | React.ReactNode };
   isDark?: boolean;
 };
 
@@ -19,18 +19,28 @@ const MiniContainer = styled.div`
   justify-content: space-between;
 `;
 
-const StyledKilo = styled(Kilo)<{ isdark: boolean; isvalue: boolean }>`
-  color: ${({ theme, isdark, isvalue }) =>
-    isdark && isvalue
+const StyledKilo = styled(Kilo)<{ isDark: boolean; isValue: boolean }>`
+  ${({ isValue }) =>
+    isValue
+      ? css`
+          word-break: break-word;
+        `
+      : css`
+          flex: 1 0 auto;
+          margin-right: 16px;
+        `};
+
+  color: ${({ theme, isDark, isValue }) =>
+    isDark && isValue
       ? theme.colors.core.primary
-      : isdark
+      : isDark
       ? theme.colors.core[800]
       : theme.colors.core.white};
 `;
 
-const Divider = styled.div<{ isdark: boolean }>`
-  background: ${({ theme, isdark }) =>
-    isdark ? theme.colors.core[800] : theme.colors.core.white};
+const Divider = styled.div<{ isDark: boolean }>`
+  background: ${({ theme, isDark }) =>
+    isDark ? theme.colors.core[800] : theme.colors.core.white};
   opacity: 0.1;
   height: 2px;
   width: 100%;
@@ -41,15 +51,15 @@ const MiniList: FunctionComponent<MiniListProps> = ({ info, isDark }) => (
     {Object.entries(info).map(([key, value], index) => (
       <React.Fragment key={key}>
         <MiniContainer>
-          <StyledKilo isvalue={false} isdark={isDark || false}>
+          <StyledKilo isValue={false} isDark={isDark || false}>
             <b>{key}</b>
           </StyledKilo>
-          <StyledKilo isvalue isdark={isDark || false}>
+          <StyledKilo isValue isDark={isDark || false}>
             {value}
           </StyledKilo>
         </MiniContainer>
         {index !== Object.entries(info).length - 1 ? (
-          <Divider isdark={isDark || false} />
+          <Divider isDark={isDark || false} />
         ) : null}
       </React.Fragment>
     ))}

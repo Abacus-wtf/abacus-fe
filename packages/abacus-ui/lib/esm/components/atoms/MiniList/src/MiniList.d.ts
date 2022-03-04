@@ -1,7 +1,7 @@
-import { FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 declare type MiniListProps = {
     info: {
-        [key: string]: string;
+        [key: string]: string | React.ReactNode;
     };
     isDark?: boolean;
 };

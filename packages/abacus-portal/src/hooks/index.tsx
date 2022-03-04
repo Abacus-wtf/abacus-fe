@@ -30,7 +30,7 @@ import {
 } from "ethereum-multicall"
 import _ from "lodash"
 
-const ErrorMessageLabel = styled.label`
+const ErrorMessageLabel = styled.span`
   font-size: 1.4rem;
   font-weight: bold;
   margin-left: 2px;
@@ -264,18 +264,21 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
                 <ErrorMessageLabel>
                   The transaction was reverted.
                 </ErrorMessageLabel>
-                <div style={{ marginLeft: 42 }}>
-                  <p style={{ marginTop: 10 }}>
+                <span>
+                  <p>
                     You may not have enough ABC or ETH to complete this
                     transaction.
                   </p>{" "}
                   {error?.data?.message ? (
-                    <p style={{ marginTop: 5 }}>
+                    <p>
                       The error message from received was: "
-                      <i>{error.data.message}</i>"
+                      <pre style={{ display: "inline-block" }}>
+                        {error.data.message}
+                      </pre>
+                      "
                     </p>
                   ) : null}
-                </div>
+                </span>
               </>
             )
 

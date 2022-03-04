@@ -9,7 +9,7 @@ import {
 import { useTransactionAdder } from "@state/transactions/hooks"
 import _ from "lodash"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import { formatEther } from "ethers/lib/utils"
+import { formatEther, parseEther } from "ethers/lib/utils"
 import VAULT_ABI from "../config/contracts/ABC_VAULT_ABI.json"
 
 export const useOnExitPool = () => {
@@ -108,7 +108,8 @@ export const useOnPurchaseTokens = () => {
       const estimate = vaultContract.estimateGas.purchaseToken
       const args = [account, ticketArray, purchaseAmount, lockupPeriod]
       console.log(args)
-      const value = null
+      const value = parseEther(`${(Number(tokenAmount) * 1.0025) / 1000}`)
+      console.log(value.toString())
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Purchase Locked Up Tokens",

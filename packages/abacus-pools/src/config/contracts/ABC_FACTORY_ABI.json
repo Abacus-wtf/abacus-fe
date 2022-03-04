@@ -54,6 +54,178 @@
       {
         "indexed": false,
         "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "toTreasury",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "toOwner",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "toVeHolders",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "postPool",
+        "type": "uint256"
+      }
+    ],
+    "name": "FeesRedeemed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_choice",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_finalVal",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_closePoolContract",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_vault",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_ownerToken",
+        "type": "address"
+      }
+    ],
+    "name": "PoolClosed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_buyer",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "tickets",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_lockTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "TokensPurchased",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_seller",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "tickets",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "desiredCredits",
+        "type": "uint256"
+      }
+    ],
+    "name": "TokensSold",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
         "name": "owner",
         "type": "address"
       },
@@ -269,6 +441,158 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "toTreasury",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "toOwner",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "toVeHolders",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "postPool",
+        "type": "uint256"
+      }
+    ],
+    "name": "emitFeeRedemption",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_choice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_finalVal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_closePoolContract",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_vault",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_ownerToken",
+        "type": "address"
+      }
+    ],
+    "name": "emitPoolClosure",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_buyer",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "tickets",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_lockTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "emitTokenPurchase",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_seller",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "tickets",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "desiredCredits",
+        "type": "uint256"
+      }
+    ],
+    "name": "emitTokenSale",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

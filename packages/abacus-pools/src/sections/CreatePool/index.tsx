@@ -141,7 +141,6 @@ const CreatePool: React.FC = () => {
       const nonce = await factory(ABC_FACTORY)
         .methods.nextVaultIndex(newSesh.address, newSesh.tokenId)
         .call()
-      toggle()
       setCurrentNonce(nonce)
       await onCreatePool(
         newSesh.address,

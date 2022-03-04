@@ -5,6 +5,8 @@ export type SubgraphVault = {
   nftAddress: string
   tokenId: string
   owner: string
+  status: number
+  nonce: number
 }
 
 export type GetVaultQueryResponse = {
@@ -60,6 +62,7 @@ export const GET_VAULTS = (where: string | null) => gql`
       nftAddress
       tokenId
       owner
+      status
     }
   }
 `

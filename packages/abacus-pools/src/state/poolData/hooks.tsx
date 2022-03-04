@@ -38,11 +38,13 @@ const parseSubgraphVaults = async (vaults: SubgraphVault[]) => {
     const asset = findAsset(assets, session)
     return {
       img: (asset?.image_preview_url || asset?.image_url) ?? "",
-
-      // @TODO: Once Medici adds nonce and propogating events, replace
-      nonce: 0,
-      state: PoolStatus.Normal,
-
+      nonce: session.nonce,
+      state:
+        session.status === 0
+          ? PoolStatus.Normal
+          : session.status === 1
+          ? PoolStatus.Auction
+          : PoolStatus.Closed,
       collectionTitle: asset?.asset_contract.name ?? "",
       nftName: asset?.name ?? "",
       address: session.nftAddress,

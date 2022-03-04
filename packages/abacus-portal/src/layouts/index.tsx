@@ -1,25 +1,33 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useEffect } from "react"
-import { PortalNavbar } from "abacus-ui"
+import styled from "styled-components"
+import { PortalNavbar, PersistentBanner, Button, ButtonType } from "abacus-ui"
 import Web3 from "web3"
+import { navigate, PageProps } from "gatsby"
 import { useActiveWeb3React } from "@hooks/index"
 import {
   useSelectNetwork,
   useGetCurrentNetwork,
+  useToggleWalletModal,
 } from "@state/application/hooks"
 import { NetworkSymbolEnum, NetworkSymbolAndId } from "@config/constants"
 import SEO, { SEOWithQueryProps } from "@components/SEO"
-import { navigate, PageProps } from "gatsby"
+import { Web3Modal } from "@components/index"
 import { GlobalStyles, GlobalContainer, InnerContainer } from "./styles"
 
 type GlobalLayoutProps = {
   location: PageProps["location"]
 }
 
+const ConnectButton = styled(Button)`
+  margin-left: 16px;
+`
+
 const GlobalLayout: React.FC<GlobalLayoutProps> = ({ children, location }) => {
   const { chainId, account } = useActiveWeb3React()
   const selectNetwork = useSelectNetwork()
   const networkSymbol = useGetCurrentNetwork()
+  const toggleWalletModal = useToggleWalletModal()
   const isArbitrumNetwork = networkSymbol === NetworkSymbolEnum.ARBITRUM
   const isNetworkSymbolNone = networkSymbol === NetworkSymbolEnum.NONE
 
@@ -120,6 +128,18 @@ const GlobalLayout: React.FC<GlobalLayoutProps> = ({ children, location }) => {
             children
           )}
         </InnerContainer>
+        {!account && (
+          <PersistentBanner bottom="0">
+            You are not connected.
+            <ConnectButton
+              onClick={toggleWalletModal}
+              buttonType={ButtonType.White}
+            >
+              Connect
+            </ConnectButton>
+          </PersistentBanner>
+        )}
+        <Web3Modal />
       </GlobalContainer>
     </>
   )

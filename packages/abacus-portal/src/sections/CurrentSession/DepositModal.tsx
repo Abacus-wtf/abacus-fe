@@ -12,6 +12,7 @@ import {
   VisuallyHidden,
   Media,
 } from "abacus-ui"
+import { useClaimPayoutData } from "@state/miscData/hooks"
 
 type DepositModalProps = {
   isOpen: boolean
@@ -84,6 +85,8 @@ const DepositModal: FunctionComponent<DepositModalProps> = ({
   closeModal,
 }) => {
   const [ethValue, setEthValue] = useState("")
+  const claimPayout = useClaimPayoutData()
+
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <Container>
@@ -104,7 +107,7 @@ const DepositModal: FunctionComponent<DepositModalProps> = ({
           name="deposit_funds"
           type="number"
           label="ETH"
-          placeholder="4.20"
+          placeholder="69.420"
           hint={ethValue && `${ethValue} ETH`}
         />
         <BalanceContainer>
@@ -113,7 +116,7 @@ const DepositModal: FunctionComponent<DepositModalProps> = ({
           </BalanceIconContainer>
           <div>
             <Kilo>Abacus Balance</Kilo>
-            <Kilo>1.00 ETH</Kilo>
+            <Kilo>{claimPayout?.ethCredit ?? 0} ETH</Kilo>
           </div>
         </BalanceContainer>
         <StyledButton>Deposit Funds</StyledButton>

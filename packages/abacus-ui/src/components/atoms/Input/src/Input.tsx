@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { getUniqueId } from "@utils";
 import { Font, WithTheme } from "@theme";
 import { Milli, Kilo } from "@typography";
@@ -15,9 +15,18 @@ type InputProps = {
   showEth?: boolean;
   className?: string;
   hint?: React.ReactNode | string;
+  disabled?: boolean;
 };
 
-const InputContainer = styled.div`
+type Disableable = {
+  disabled?: boolean;
+};
+
+const Container = styled.div`
+  width: 100%;
+`;
+
+const InputContainer = styled.div<Disableable>`
   background-color: white;
   display: flex;
   width: 100%;
@@ -25,6 +34,15 @@ const InputContainer = styled.div`
   justify-content: space-between;
   align-items: stretch;
   box-shadow: 0px 2px 0px #f6f6f6;
+
+  ${({ disabled }) =>
+    disabled
+      ? css`
+          background-color: rgba(239, 239, 239, 0.3);
+          color: rgb(84, 84, 84);
+          cursor: not-allowed;
+        `
+      : ""}
 
   &:focus-within {
     box-shadow: 0px 2px 0px #6b6b6b;
@@ -41,13 +59,21 @@ const StyledLabel = styled.label<WithTheme>`
   border-radius: ${({ theme }) => theme.borderRadius.main};
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled.input<Disableable>`
   ${Font("mega")}
   border: none;
   outline: none;
   padding: 0;
   width: 100%;
   padding-right: 6px;
+
+  ${({ disabled }) =>
+    disabled
+      ? css`
+          background: unset;
+          cursor: not-allowed;
+        `
+      : ""}
 `;
 
 const StyledKilo = styled(Kilo)`
@@ -75,11 +101,12 @@ const Input: FunctionComponent<InputProps> = ({
   showEth,
   className,
   hint,
+  disabled,
 }) => {
   const ID = typeof id === "string" ? id : getUniqueId("input");
   return (
-    <div>
-      <InputContainer className={className}>
+    <Container className={className}>
+      <InputContainer disabled={disabled}>
         {showEth ? <EthLogo>ETH</EthLogo> : null}
         {typeof label === "string" && label && (
           <StyledLabel htmlFor={ID}>{label}</StyledLabel>
@@ -91,10 +118,12 @@ const Input: FunctionComponent<InputProps> = ({
           type={type}
           placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
+          disabled={disabled}
+          aria-disabled={disabled}
         />
       </InputContainer>
       {hint && <StyledKilo>{hint}</StyledKilo>}
-    </div>
+    </Container>
   );
 };
 

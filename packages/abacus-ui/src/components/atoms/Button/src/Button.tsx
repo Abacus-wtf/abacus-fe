@@ -1,6 +1,6 @@
 import { Font } from "@theme";
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export enum ButtonType {
   Standard,
@@ -16,7 +16,11 @@ type ButtonProps = {
   className?: string;
 };
 
-const Button = styled.button<ButtonProps>`
+const Button = styled.button.attrs(({ disabled, ...rest }) => ({
+  "aria-disabled": disabled,
+  type: "button",
+  ...rest,
+}))<ButtonProps>`
   ${Font()}
   text-decoration: none;
   border-radius: ${({ theme }) => theme.borderRadius.section};
@@ -45,6 +49,18 @@ const Button = styled.button<ButtonProps>`
     opacity: 0.6;
     box-shadow: none;
   }
+
+  ${({ disabled }) =>
+    disabled
+      ? css`
+          opacity: 0.2;
+
+          &:hover {
+            cursor: not-allowed;
+            opacity: 0.2;
+          }
+        `
+      : ""}
 `;
 
 export default Button;

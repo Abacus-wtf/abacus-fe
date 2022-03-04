@@ -1,7 +1,7 @@
 import React from "react"
 import { useCurrentSessionStatus } from "@state/sessionData/hooks"
 import { SessionState } from "@state/sessionData/reducer"
-import Vote from "./Vote"
+import { Vote } from "./Vote"
 // import Weigh from "./Weigh"
 // import SetFinalAppraisal from "./SetFinalAppraisal"
 // import Harvest from "./Harvest"

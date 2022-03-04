@@ -12,3 +12,4 @@ export * from "./CardBackground";
 export * from "./Checkbox";
 export * from "./AbacusBalance";
 export * from "./LoadingShimmer";
+export * from "./PersistentBanner";

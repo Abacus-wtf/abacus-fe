@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, useEffect, useState, useMemo } from "react"
 import {
   Button,
   ButtonType,
@@ -17,7 +17,8 @@ import { parseEther } from "ethers/lib/utils"
 import { useActiveWeb3React } from "@hooks/index"
 import { useClaimPayoutData } from "@state/miscData/hooks"
 import { useCurrentSessionData } from "@state/sessionData/hooks"
-import useParticipation from "./useParticipation"
+import useParticipation from "../useParticipation"
+import useValidate, { ValidationFn } from "../useValidate"
 
 const TitleContainer = styled.div`
   display: flex;
@@ -59,15 +60,22 @@ const FullWidthButton = styled(Button)`
   width: 100%;
 `
 
+const InputError = styled.span`
+  color: ${({ theme }) => theme.colors.utility.red};
+`
+
 type VoteProps = {
   openDepositModal: () => void
 }
+
+const MIN_STAKE = 0.009
 
 const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
   const { account } = useActiveWeb3React()
   const [pageState, setPageState] = useState(0)
   const [appraisal, setAppraisal] = useState("")
   const [inputHint, setInputHint] = useState("")
+  const [inputError, setInputError] = useState("")
   const sessionData = useCurrentSessionData()
   const password = "WHYDONTWEASKFORTHISANYMORE?"
   const [stake, setStake] = useState("")
@@ -76,76 +84,111 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
   const { onUpdateVote, isPending: updateVotePending } = useOnUpdateVote()
   const claimPayout = useClaimPayoutData()
 
-  const validate = (): boolean => {
-    const stakeAsNum = Number(stake)
-    if (Number(appraisal) >= sessionData.maxAppraisal) {
-      alert(
-        `The Max Appraisal you can do is ${sessionData.maxAppraisal} Ether but you submitted ${appraisal} Ether.`
-      )
-      return false
-    }
+  const { maxAppraisal } = sessionData
+  const ethCredit = claimPayout?.ethCredit ?? 0
 
-    if (stakeAsNum > Number(claimPayout?.ethCredit)) {
-      alert(
-        `You tried to stake with a higher number than your credit amount. To increase your credit amount, visit the 'Claim & Deposit' page!`
-      )
-      return false
-    }
+  const appraisalChecks: ValidationFn<string>[] = useMemo(
+    () => [
+      (a) =>
+        Number(a) >= maxAppraisal
+          ? {
+              valid: false,
+              message: `Max Appraisal is ${maxAppraisal}`,
+            }
+          : { valid: true },
+      (a) => {
+        if (a.indexOf(".") !== -1) {
+          const numDecimals = a.split(".")[1].length
+          if (numDecimals > 11) {
+            return {
+              valid: false,
+              message: "Must be less than 11 decimal places",
+            }
+          }
+        }
+        return { valid: true }
+      },
+    ],
+    [maxAppraisal]
+  )
 
-    if (stakeAsNum < 0.009) {
-      alert(
-        `The min amount of eth you can stake is .009 Ether. You tried staking ${stakeAsNum} Ether. Keep in mind that 0.002 Ether is used for the Bounty tax and 0.002 Ether is used for the Keepers tax.`
-      )
-      return false
-    }
-
-    if (appraisal.indexOf(".") !== -1) {
-      const numDecimals = appraisal.split(".")[1].length
-      if (numDecimals > 11) {
-        alert(
-          "Please use a appraisal value that has less than 11 decimal places."
-        )
-        return false
-      }
-    }
-    return true
-  }
+  const stakeChecks: ValidationFn<string>[] = useMemo(
+    () => [
+      (s) =>
+        Number(s) > Number(ethCredit)
+          ? {
+              valid: false,
+              message: `You tried to stake with a higher number than your credit amount. Deposit some funds here! 👇`,
+            }
+          : { valid: true },
+      (s) =>
+        Number(s) < MIN_STAKE
+          ? {
+              valid: false,
+              message: `Min stake is ${MIN_STAKE} ETH. You tried staking ${s} Ether. Keep in mind that 0.002 Ether is used for the Bounty tax and 0.002 Ether is used for the Keepers tax.`,
+            }
+          : { valid: true },
+    ],
+    [ethCredit]
+  )
+  const appraisalValid = useValidate(appraisal, appraisalChecks)
+  const stakeValid = useValidate(stake, stakeChecks)
 
   const submitVote = async () => {
-    if (!stake) {
-      setInputHint("Must set a stake value")
-      return
-    }
-    if (validate()) {
-      const hash = hashValues({
-        appraisalValue: parseEther(`${appraisal}`),
-        account: account || "",
-        password,
-        // password: !passwordVal.startsWith("0x")
-        //   ? Number(passwordVal)
-        //   : BigNumber.from(passwordVal),
-      })
+    const hash = hashValues({
+      appraisalValue: parseEther(`${appraisal}`),
+      account: account || "",
+      password,
+      // password: !passwordVal.startsWith("0x")
+      //   ? Number(passwordVal)
+      //   : BigNumber.from(passwordVal),
+    })
 
-      console.log("hash", hash)
+    console.log("hash", hash)
 
+    try {
       await onSubmitVote(password, appraisal, stake, hash)
+    } catch (e) {
+      console.log(e)
     }
   }
 
   const updateVote = async () => {
-    if (validate()) {
-      const hash = hashValues({
-        appraisalValue: parseEther(`${appraisal}`),
-        account: account || "",
-        password,
-        // password: !passwordVal.startsWith("0x")
-        //   ? Number(passwordVal)
-        //   : BigNumber.from(passwordVal),
-      })
+    const hash = hashValues({
+      appraisalValue: parseEther(`${appraisal}`),
+      account: account || "",
+      password,
+      // password: !passwordVal.startsWith("0x")
+      //   ? Number(passwordVal)
+      //   : BigNumber.from(passwordVal),
+    })
 
+    try {
       await onUpdateVote(password, appraisal, hash)
+    } catch (e) {
+      console.log(e)
     }
   }
+
+  useEffect(() => {
+    if (pageState === 0) {
+      setInputHint(appraisal ? `${appraisal} ETH` : "Appraisal required")
+    } else {
+      setInputHint(stake ? `${stake} ETH` : "Stake required")
+    }
+    if (appraisalValid.valid && stakeValid.valid) {
+      setInputError("")
+    } else {
+      if (!appraisalValid.valid) {
+        setInputError(appraisalValid.message)
+      }
+      if (!stakeValid.valid) {
+        setInputError(stakeValid.message)
+      }
+    }
+  }, [appraisal, pageState, stake, appraisalValid, stakeValid])
+
+  const notLoggedIn = !account
 
   return (
     <>
@@ -169,7 +212,18 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
             pageState === 0 ? setAppraisal(value) : setStake(value)
           }
           placeholder={pageState === 0 ? "Appraisal Amount" : "Stake Amount"}
-          hint={inputHint}
+          hint={
+            <>
+              {inputHint}
+              {inputError && (
+                <>
+                  {" "}
+                  • <InputError>{inputError}</InputError>
+                </>
+              )}
+            </>
+          }
+          disabled={notLoggedIn}
         />
       ) : (
         <>
@@ -206,6 +260,7 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
                 <Button
                   onClick={openDepositModal}
                   buttonType={ButtonType.White}
+                  disabled={notLoggedIn}
                 >
                   Deposit Funds
                 </Button>
@@ -213,14 +268,8 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
             </LockOuterContainer>
             {pageState === 0 ? (
               <FullWidthButton
-                onClick={() => {
-                  if (appraisal !== "") {
-                    setPageState(1)
-                    setInputHint("")
-                  } else {
-                    setInputHint("Must set appraisal")
-                  }
-                }}
+                onClick={() => setPageState(1)}
+                disabled={notLoggedIn || !appraisal || !appraisalValid.valid}
               >
                 Appraise
               </FullWidthButton>
@@ -229,14 +278,20 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
                 <Button
                   buttonType={ButtonType.Gray}
                   onClick={() => setPageState(0)}
+                  disabled={notLoggedIn}
                 >
                   Back
                 </Button>
                 <FullWidthButton
                   onClick={submitVote}
-                  disabled={submitVotePending}
+                  disabled={
+                    notLoggedIn ||
+                    !stake ||
+                    !stakeValid.valid ||
+                    submitVotePending
+                  }
                 >
-                  Submit Stake
+                  {submitVotePending ? "Submitting" : "Submit Stake"}
                 </FullWidthButton>
               </TitleContainer>
             )}
@@ -244,12 +299,15 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
         ) : (
           <>
             <TitleContainer style={{ flexDirection: "row" }}>
-              <FullWidthButton buttonType={ButtonType.Gray}>
+              <FullWidthButton
+                buttonType={ButtonType.Gray}
+                disabled={notLoggedIn}
+              >
                 Add to Bounty
               </FullWidthButton>
               <FullWidthButton
                 onClick={updateVote}
-                disabled={updateVotePending}
+                disabled={updateVotePending || notLoggedIn}
               >
                 Edit Appraisal
               </FullWidthButton>

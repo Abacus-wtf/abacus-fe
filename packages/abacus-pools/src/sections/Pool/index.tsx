@@ -5,6 +5,7 @@ import { ButtonsWhite } from "@components/Button"
 import { OutboundLink } from "gatsby-plugin-google-gtag"
 import { useGetPoolData, useSetPoolData } from "@state/singlePoolData/hooks"
 import { useActiveWeb3React } from "@hooks/index"
+import { PoolStatus } from "@state/poolData/reducer"
 import {
   SplitContainer,
   VerticalContainer,
@@ -63,7 +64,7 @@ const Pool = ({ location }) => {
               onClick={() => setPage(0)}
               style={{ borderRadius: 8 }}
             >
-              Main
+              {poolData.state === PoolStatus.Auction ? "Auction" : "Main"}
             </ButtonsWhite>
             {account ? (
               <ButtonsWhite
@@ -100,7 +101,13 @@ const Pool = ({ location }) => {
               </OutboundLink>
             </SubText>
           </VerticalSmallGapContainer>
-          <CurrentState page={page} status={poolData.state} />
+          <CurrentState
+            page={page}
+            status={poolData.state}
+            refresh={() =>
+              setPool(String(address), String(tokenId), Number(nonce))
+            }
+          />
         </VerticalContainer>
       </SplitContainer>
     </SmallUniversalContainer>

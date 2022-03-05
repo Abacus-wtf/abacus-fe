@@ -4,27 +4,34 @@ import CurrentPosition from "./CurrentPosition"
 import AMM from "./AMM"
 import ManagePool from "./ManagePool"
 import Auction from "./Auction"
+import ClosedPool from "./ClosedPool"
+
+export interface StateComponent {
+  refresh: () => void
+}
 
 const CurrentState = ({
   page,
   status,
+  refresh,
 }: {
   page: number
   status: PoolStatus
+  refresh: () => void
 }) => {
   if (status === PoolStatus.Normal) {
     switch (page) {
       case 0:
-        return <AMM />
+        return <AMM refresh={refresh} />
       case 1:
         return <CurrentPosition />
       default:
-        return <ManagePool />
+        return <ManagePool refresh={refresh} />
     }
   } else if (status === PoolStatus.Auction) {
-    return <Auction />
+    return <Auction refresh={refresh} />
   }
-  return <></>
+  return <ClosedPool />
 }
 
 export default CurrentState

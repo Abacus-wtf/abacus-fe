@@ -38,7 +38,7 @@ const parseSubgraphVaults = async (vaults: SubgraphVault[]) => {
     const asset = findAsset(assets, session)
     return {
       img: (asset?.image_preview_url || asset?.image_url) ?? "",
-      nonce: session.nonce,
+      nonce: session.nonce || 0,
       state:
         session.status === 0
           ? PoolStatus.Normal

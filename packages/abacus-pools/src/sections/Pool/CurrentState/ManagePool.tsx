@@ -1,14 +1,14 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { useState } from "react"
 import Button from "@components/Button"
 import { Tooltip } from "shards-react"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { NetworkSymbolEnum } from "@config/constants"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { useOnExitPool } from "@hooks/vaultFunc"
-import { navigate } from "@reach/router"
 import { ButtonContainer, VerticalContainer } from "../Pool.styles"
+import { StateComponent } from "./index"
 
-const ManagePool: FunctionComponent = () => {
+const ManagePool = ({ refresh }: StateComponent) => {
   const [isToolTipOpen, setIsToolTipOpen] = useState(false)
   const networkSymbol = useGetCurrentNetwork()
   const isNetworkSymbolETH = networkSymbol === NetworkSymbolEnum.ETH
@@ -22,12 +22,12 @@ const ManagePool: FunctionComponent = () => {
         <ButtonContainer style={{ width: "100%" }}>
           <Button
             className="notConnected"
-            disabled={!isNetworkSymbolETH}
+            disabled={!isNetworkSymbolETH || (isPending && isAuction)}
             style={{ width: "100%", borderRadius: 5 }}
             onClick={() => {
               setIsAuction(true)
-              return onExitPool(poolData.vaultAddress, false, () => {
-                alert("The auction has begun!")
+              return onExitPool(poolData.vaultAddress, false, async () => {
+                await refresh()
               })
             }}
           >
@@ -35,13 +35,12 @@ const ManagePool: FunctionComponent = () => {
           </Button>
           <Button
             className="notConnected"
-            disabled={!isNetworkSymbolETH}
+            disabled={!isNetworkSymbolETH || (isPending && !isAuction)}
             style={{ width: "100%", borderRadius: 5 }}
             onClick={() => {
               setIsAuction(false)
               return onExitPool(poolData.vaultAddress, true, () => {
-                alert("The pool has been closed!")
-                navigate("/")
+                refresh()
               })
             }}
           >

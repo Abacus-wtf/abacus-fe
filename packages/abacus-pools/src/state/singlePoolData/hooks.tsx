@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
 import VAULT_ABI from "@config/contracts/ABC_VAULT_ABI.json"
+import CLOSE_POOL_ABI from "@config/contracts/ABC_CLOSE_POOL_ABI.json"
 import { ABC_FACTORY, ZERO_ADDRESS } from "@config/constants"
 import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
 import { formatEther } from "ethers/lib/utils"
 import moment from "moment"
 import { BigNumber } from "ethers"
-import { Pool, PoolStatus } from "../poolData/reducer"
+import { Auction, Pool, PoolStatus } from "../poolData/reducer"
 import { getPoolData, getTraderProfile } from "./actions"
 
 const getPoolDataSelector = (
@@ -49,7 +50,8 @@ export const useGetTraderProfileData = () => {
 export const useSetPoolData = () => {
   const dispatch = useDispatch<AppDispatch>()
   const factory = useWeb3Contract(FACTORY_ABI)
-  const multicall = useMultiCall(VAULT_ABI)
+  const vault = useMultiCall(VAULT_ABI)
+  const closePool = useMultiCall(CLOSE_POOL_ABI)
   const { account } = useActiveWeb3React()
 
   return useCallback(
@@ -63,7 +65,7 @@ export const useSetPoolData = () => {
         ])
 
         const [owner, closePoolContract, pricePerToken, tokensLocked, symbol] =
-          await multicall(
+          await vault(
             vaultAddress,
             [
               "vaultOwner",
@@ -78,7 +80,7 @@ export const useSetPoolData = () => {
         let balance = BigNumber.from(0)
         let creditsAvailable = BigNumber.from(0)
         if (account) {
-          const multi = await multicall(
+          const multi = await vault(
             vaultAddress,
             ["premiumPass", "getCreditsAvailableForPurchase", "balanceOf"],
             [[account], [account, moment().unix()], [account]]
@@ -87,6 +89,40 @@ export const useSetPoolData = () => {
           balance = multi[1][0]
           creditsAvailable = multi[2][0]
         }
+
+        let auction: Auction
+        if (closePoolContract[0] !== ZERO_ADDRESS) {
+          const [
+            auctionLive,
+            auctionComplete,
+            nftRedeemed,
+            auctionEndTime,
+            highestBid,
+            highestBidder,
+          ] = await closePool(
+            closePoolContract[0],
+            [
+              "auctionLive",
+              "auctionComplete",
+              "nftRedeemed",
+              "auctionEndTime",
+              "highestBid",
+              "highestBidder",
+            ],
+            [[], [], [], [], [], []]
+          )
+
+          auction = {
+            auctionLive: auctionLive[0],
+            auctionComplete: auctionComplete[0],
+            nftRedeemed: nftRedeemed[0],
+            auctionEndTime: BigNumber.from(auctionEndTime[0]).toNumber(),
+            highestBid: Number(formatEther(highestBid[0])),
+            highestBidder: highestBidder[0],
+            closePoolAddress: closePoolContract[0],
+          }
+        }
+
         const asset = (os as { assets: OpenSeaAsset[] }).assets[0]
         const pool: Pool = {
           vaultAddress,
@@ -106,11 +142,10 @@ export const useSetPoolData = () => {
           state:
             closePoolContract[0] === ZERO_ADDRESS
               ? PoolStatus.Normal
-              : PoolStatus.Auction,
-
-          // @TODO
-          auctionEndTime: 1111,
-          highestBid: 1,
+              : auction && auction.auctionLive
+              ? PoolStatus.Auction
+              : PoolStatus.Closed,
+          auction,
           // @TODO
           exitFeeStatic: "5",
           exitFeePercentage: "5",
@@ -123,6 +158,6 @@ export const useSetPoolData = () => {
         console.log("Look into this")
       }
     },
-    [factory, multicall, account, dispatch]
+    [factory, vault, closePool, account, dispatch]
   )
 }

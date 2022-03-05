@@ -17,6 +17,16 @@ export interface NFTBasePool extends NFT {
   ownershipToken?: string
 }
 
+export interface Auction {
+  auctionLive: boolean
+  auctionComplete: boolean
+  nftRedeemed: boolean
+  auctionEndTime: number
+  highestBid: number
+  highestBidder: string
+  closePoolAddress: string
+}
+
 export enum PoolStatus {
   Normal,
   Closed,
@@ -39,8 +49,7 @@ export interface Pool extends NFT {
   balance?: number
   state: PoolStatus
   hasPremiumPass?: boolean
-  auctionEndTime?: number
-  highestBid?: number
+  auction?: Auction
 }
 
 interface PoolState {

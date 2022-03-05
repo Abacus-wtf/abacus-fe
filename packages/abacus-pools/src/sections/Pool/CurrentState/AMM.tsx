@@ -21,6 +21,7 @@ import {
   CardContainer,
 } from "./AMM.styles"
 import "react-datepicker/dist/react-datepicker.css"
+import { StateComponent } from "./index"
 
 const DatePickerStyled = styled(DatePicker)`
   padding: 10px 15px;
@@ -31,7 +32,7 @@ const DatePickerStyled = styled(DatePicker)`
   font-weight: 400;
 `
 
-const AMM = () => {
+const AMM = (props: StateComponent) => {
   const { account } = useActiveWeb3React()
   const networkSymbol = useGetCurrentNetwork()
   const [isTokenFirst] = useState(false)
@@ -60,6 +61,7 @@ const AMM = () => {
       moment(startDate).unix() - moment().unix(),
       async () => {
         await getBalance()
+        await props.refresh()
         setInputAmount("")
       }
     )

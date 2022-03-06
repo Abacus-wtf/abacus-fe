@@ -27,7 +27,7 @@ const Auction = ({ refresh }: StateComponent) => {
   const networkSymbol = useGetCurrentNetwork()
   const isNetworkSymbolETH = networkSymbol === NetworkSymbolEnum.ETH
   const isHighestBidderOwner =
-    poolData.auction!.highestBidder.toLowerCase() === account.toLowerCase()
+    poolData.auction.highestBidder.toLowerCase() === account.toLowerCase()
 
   if (
     poolData.auction.auctionEndTime * 1000 >= moment().unix() &&
@@ -59,10 +59,10 @@ const Auction = ({ refresh }: StateComponent) => {
         <ListGroupItem style={{ width: "100%" }}>
           <Label style={{ marginBottom: 10 }}>Highest Bid</Label>
           <ListGroupHeader style={{ color: theme.colors.accent }}>
-            {poolData.auction!.highestBid} ETH by{" "}
+            {poolData.auction.highestBid} ETH by{" "}
             {isHighestBidderOwner
               ? "you"
-              : shortenAddress(poolData.auction!.highestBidder)}
+              : shortenAddress(poolData.auction.highestBidder)}
           </ListGroupHeader>
         </ListGroupItem>
       </HorizontalListGroup>

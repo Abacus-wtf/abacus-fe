@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { useCallback } from "react"
 import { getContract } from "@config/utils"
 import {

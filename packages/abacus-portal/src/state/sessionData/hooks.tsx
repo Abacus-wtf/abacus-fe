@@ -209,7 +209,7 @@ const parseSubgraphPricingSessions = async (
       return {
         image_url: (asset?.image_preview_url || asset?.image_url) ?? "",
         animation_url: null,
-        endTime: Number(session.endTime),
+        endTime: Number(session.endTime) * 1000,
         votingTime: Number(session.votingTime),
         numPpl: Number(session.numParticipants),
         collectionTitle: asset?.asset_contract.name ?? "",

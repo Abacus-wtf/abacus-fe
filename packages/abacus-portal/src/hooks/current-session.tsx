@@ -225,7 +225,7 @@ export const useOnUpdateVote = () => {
       let stake = null
       if (itemsString) {
         const items = JSON.parse(itemsString)
-        stake = Number(items.stake)
+        stake = items.stake
       }
 
       localStorage.setItem(

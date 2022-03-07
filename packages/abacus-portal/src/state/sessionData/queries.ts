@@ -73,8 +73,8 @@ export const GET_FEATURED_SESSIONS = gql`
   query GetPricingSessions($first: Int!, $skip: Int!) {
     pricingSessions(
       first: $first
-      orderBy: sessionStatus
-      orderDirection: asc
+      orderBy: endTime
+      orderDirection: desc
       skip: $skip
       where: { sessionStatus_gt: -1 }
     ) {

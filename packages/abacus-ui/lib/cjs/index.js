@@ -519,11 +519,11 @@ var Fallback$3 = function () { return (React__default["default"].createElement("
         React__default["default"].createElement(Subtext, null, "Seconds")))); };
 
 var SessionCountdown = function (_a) {
-    var endTime = _a.endTime, loading = _a.loading;
+    var endTime = _a.endTime, loading = _a.loading, key = _a.key;
     if (loading) {
         return React__default["default"].createElement(Fallback$3, null);
     }
-    return (React__default["default"].createElement(Countdown__default["default"], { date: endTime, renderer: function (_a) {
+    return (React__default["default"].createElement(Countdown__default["default"], { date: endTime, key: key, renderer: function (_a) {
             var hours = _a.hours, minutes = _a.minutes, seconds = _a.seconds, completed = _a.completed;
             if (completed) {
                 return React__default["default"].createElement(Text, null, "Session Completed");
@@ -1033,7 +1033,7 @@ var ExploreCard = function (_a) {
         React__default["default"].createElement(ExploreImage, { imgSrc: nftSrc }),
         React__default["default"].createElement(SecondHalf, null,
             React__default["default"].createElement(Title$2, null, nftTitle),
-            React__default["default"].createElement(SessionCountdown, { endTime: endTime }),
+            React__default["default"].createElement(SessionCountdown, { endTime: endTime, key: link }),
             React__default["default"].createElement(Divider$3, null),
             React__default["default"].createElement(ExploreInfoContainer, null,
                 React__default["default"].createElement(ExploreInfo, { title: "Participants", text: "" + numParticipants, unit: "People" }),

@@ -48,7 +48,7 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
       <ExploreImage imgSrc={nftSrc} />
       <SecondHalf>
         <Title>{nftTitle}</Title>
-        <SessionCountdown endTime={endTime} />
+        <SessionCountdown endTime={endTime} key={link} />
         <Divider />
         <ExploreInfoContainer>
           <ExploreInfo

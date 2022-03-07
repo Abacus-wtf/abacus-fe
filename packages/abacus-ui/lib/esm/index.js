@@ -507,11 +507,11 @@ var Fallback$3 = function () { return (React.createElement("div", { style: { dis
         React.createElement(Subtext, null, "Seconds")))); };
 
 var SessionCountdown = function (_a) {
-    var endTime = _a.endTime, loading = _a.loading;
+    var endTime = _a.endTime, loading = _a.loading, key = _a.key;
     if (loading) {
         return React.createElement(Fallback$3, null);
     }
-    return (React.createElement(Countdown, { date: endTime, renderer: function (_a) {
+    return (React.createElement(Countdown, { date: endTime, key: key, renderer: function (_a) {
             var hours = _a.hours, minutes = _a.minutes, seconds = _a.seconds, completed = _a.completed;
             if (completed) {
                 return React.createElement(Text, null, "Session Completed");
@@ -1021,7 +1021,7 @@ var ExploreCard = function (_a) {
         React.createElement(ExploreImage, { imgSrc: nftSrc }),
         React.createElement(SecondHalf, null,
             React.createElement(Title$2, null, nftTitle),
-            React.createElement(SessionCountdown, { endTime: endTime }),
+            React.createElement(SessionCountdown, { endTime: endTime, key: link }),
             React.createElement(Divider$3, null),
             React.createElement(ExploreInfoContainer, null,
                 React.createElement(ExploreInfo, { title: "Participants", text: "" + numParticipants, unit: "People" }),

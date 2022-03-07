@@ -6,11 +6,13 @@ import Fallback from "./Fallback";
 type SessionCountdownProps = {
   endTime: number;
   loading?: boolean;
+  key?: string;
 };
 
 const SessionCountdown: FunctionComponent<SessionCountdownProps> = ({
   endTime,
   loading,
+  key,
 }) => {
   if (loading) {
     return <Fallback />;
@@ -18,6 +20,7 @@ const SessionCountdown: FunctionComponent<SessionCountdownProps> = ({
   return (
     <Countdown
       date={endTime}
+      key={key}
       renderer={({ hours, minutes, seconds, completed }) => {
         if (completed) {
           return <Text>Session Completed</Text>;

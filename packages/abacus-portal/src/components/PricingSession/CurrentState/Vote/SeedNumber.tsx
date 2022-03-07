@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from "react"
-import styled, { keyframes, Keyframes } from "styled-components"
+import styled, { keyframes } from "styled-components"
 import { Button, ButtonType } from "abacus-ui"
 import useParticipation from "../useParticipation"
 

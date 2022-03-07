@@ -178,7 +178,7 @@ export const useOnSubmitVote = () => {
           summary: "Submit Vote",
         })
         await response.wait()
-        callback()
+        callback?.()
       }
       await generalizedContractCall({
         method,
@@ -221,11 +221,19 @@ export const useOnUpdateVote = () => {
         nonce: sessionData.nonce,
       })
 
+      const itemsString = localStorage.getItem(encodedVals)
+      let stake = null
+      if (itemsString) {
+        const items = JSON.parse(itemsString)
+        stake = Number(items.stake)
+      }
+
       localStorage.setItem(
         encodedVals,
         JSON.stringify({
           password: passwordValue,
           appraisal: appraisalValue,
+          stake,
         })
       )
 

@@ -3,7 +3,7 @@ import { SessionData } from "@state/sessionData/reducer"
 export const mapSessionData = (session: SessionData) => ({
   nftSrc: session.image_url,
   nftTitle: session.nftName,
-  endTime: new Date().getTime() + 100000,
+  endTime: session.endTime,
   numParticipants: session.numPpl,
   poolAmount: session.totalStaked,
   poolAmountDollars: session.totalStakedInUSD,

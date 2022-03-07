@@ -85,7 +85,7 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
   const [inputHint, setInputHint] = useState("")
   const [inputError, setInputError] = useState("")
   const sessionData = useCurrentSessionData()
-  const [password] = useState(`0x${genRanHex(20)}`)
+  const [password, setPassword] = useState(`0x${genRanHex(20)}`)
   const [stake, setStake] = useState("")
   const participation = useParticipation()
   const { onSubmitVote, isPending: submitVotePending } = useOnSubmitVote()
@@ -195,6 +195,8 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
   useEffect(() => {
     if (participation) {
       setPageState(PageState.SUBMITTED)
+      setPassword(participation.password)
+      setStake(String(participation.stake))
     }
   }, [participation])
 
@@ -217,11 +219,17 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
           label="ETH"
           name="Amount"
           type="number"
-          value={pageState === 0 ? appraisal : stake}
+          value={pageState === PageState.APPRAISAL ? appraisal : stake}
           onChange={(value) =>
-            pageState === 0 ? setAppraisal(value) : setStake(value)
+            pageState === PageState.APPRAISAL
+              ? setAppraisal(value)
+              : setStake(value)
           }
-          placeholder={pageState === 0 ? "Appraisal Amount" : "Stake Amount"}
+          placeholder={
+            pageState === PageState.APPRAISAL
+              ? "Appraisal Amount"
+              : "Stake Amount"
+          }
           hint={
             <>
               {inputHint}
@@ -233,7 +241,10 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
               )}
             </>
           }
-          disabled={notLoggedIn}
+          disabled={
+            notLoggedIn ||
+            (Boolean(participation) && pageState === PageState.STAKE)
+          }
         />
       ) : (
         <>
@@ -303,6 +314,8 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
                 >
                   {submitVotePending || updateVotePending
                     ? "Submitting"
+                    : participation
+                    ? "Update"
                     : "Submit Stake"}
                 </FullWidthButton>
               </TitleContainer>

@@ -76,18 +76,17 @@ export const useSetPoolData = () => {
             ],
             [[], [], [], [], [], []]
           )
-        let hasPremiumPass = false
+
         let balance = BigNumber.from(0)
         let creditsAvailable = BigNumber.from(0)
         if (account) {
           const multi = await vault(
             vaultAddress,
-            ["premiumPass", "getCreditsAvailableForPurchase", "balanceOf"],
-            [[account], [account, moment().unix()], [account]]
+            ["getCreditsAvailableForPurchase", "balanceOf"],
+            [[account, moment().unix()], [account]]
           )
-          hasPremiumPass = multi[0][0]
+          creditsAvailable = multi[0][0]
           balance = multi[1][0]
-          creditsAvailable = multi[2][0]
         }
 
         let auction: Auction
@@ -151,7 +150,6 @@ export const useSetPoolData = () => {
           exitFeePercentage: "5",
 
           img: asset.image_url,
-          hasPremiumPass,
         }
         dispatch(getPoolData(pool))
       } catch (e) {

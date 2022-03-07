@@ -52,8 +52,6 @@ export const useOnCreatePool = () => {
       tokenId: string,
       poolName: string,
       poolSymbol: string,
-      exitFeeStatic: string,
-      exitFeePercentage: string,
       cb: () => void
     ) => {
       const factoryContract = getContract(
@@ -64,16 +62,7 @@ export const useOnCreatePool = () => {
       )
       const method = factoryContract.createVault
       const estimate = factoryContract.estimateGas.createVault
-      const args = [
-        `Owner of ${poolName}`,
-        `o${poolSymbol}`,
-        poolName,
-        poolSymbol,
-        nftAddress,
-        tokenId,
-        exitFeePercentage,
-        exitFeeStatic,
-      ]
+      const args = [poolName, poolSymbol, nftAddress, tokenId]
       console.log(args)
       const value = null
       const txnCb = async (response: any) => {

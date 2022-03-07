@@ -134,8 +134,6 @@ const CreatePool: React.FC = () => {
       const formElements = e.target as CreatePoolForm<typeof e.target>
       const poolTokenName = formElements.poolTokenName.value
       const poolTokenSymbol = formElements.poolTokenSymbol.value
-      const exitFeePercentage = formElements.exitFeePercentage.value
-      const exitFeeStatic = formElements.exitFeeStatic.value
 
       setIsButtonLoading(true)
       const nonce = await factory(ABC_FACTORY)
@@ -147,8 +145,6 @@ const CreatePool: React.FC = () => {
         newSesh.tokenId,
         poolTokenName,
         poolTokenSymbol,
-        exitFeeStatic,
-        exitFeePercentage,
         () => {
           setIsButtonLoading(false)
           toggle()
@@ -275,20 +271,6 @@ const CreatePool: React.FC = () => {
                     title="Pool Token Symbol"
                     id="poolTokenSymbol"
                     placeholder="BAYC"
-                  />
-                </ListGroupItem>
-                <ListGroupItem>
-                  <InputWithTitle
-                    title="Exit Fee (Static)"
-                    id="exitFeeStatic"
-                    placeholder="100"
-                  />
-                </ListGroupItem>
-                <ListGroupItem>
-                  <InputWithTitle
-                    title="Exit Fee (%)"
-                    id="exitFeePercentage"
-                    placeholder="5"
                   />
                 </ListGroupItem>
               </ListGroupStyled>

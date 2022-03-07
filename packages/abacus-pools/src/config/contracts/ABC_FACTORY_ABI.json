@@ -16,6 +16,61 @@
       {
         "indexed": false,
         "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_finalVal",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_auctionVal",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_payoutCredits",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_payoutEth",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_closePoolContract",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_vault",
+        "type": "address"
+      }
+    ],
+    "name": "AccountClosed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
         "name": "_auction",
         "type": "address"
       },
@@ -24,15 +79,52 @@
         "internalType": "address",
         "name": "_vault",
         "type": "address"
+      }
+    ],
+    "name": "AuctionCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_finalVal",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_auctionVal",
+        "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "address",
-        "name": "_ownerToken",
+        "name": "_closePoolContract",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_vault",
         "type": "address"
       }
     ],
-    "name": "AuctionCreated",
+    "name": "AuctionedEnded",
     "type": "event"
   },
   {
@@ -72,19 +164,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "toOwner",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
         "name": "toVeHolders",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "postPool",
         "type": "uint256"
       }
     ],
@@ -109,12 +189,6 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "_choice",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
         "name": "_finalVal",
         "type": "uint256"
       },
@@ -128,12 +202,6 @@
         "indexed": false,
         "internalType": "address",
         "name": "_vault",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "_ownerToken",
         "type": "address"
       }
     ],
@@ -226,62 +294,25 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "vaultAddress",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "heldToken",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "heldTokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "VaultCreated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
         "name": "_creator",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "address",
-        "name": "_vault",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "_ownerToken",
+        "name": "_token",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "_tokenPrice",
+        "name": "_tokenId",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "exitFee",
+        "name": "_nonce",
         "type": "uint256"
       }
     ],
@@ -368,7 +399,7 @@
     "name": "controller",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "contract AbacusController",
         "name": "",
         "type": "address"
       }
@@ -378,16 +409,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_oName",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_oSymbol",
-        "type": "string"
-      },
       {
         "internalType": "string",
         "name": "_name",
@@ -406,16 +427,6 @@
       {
         "internalType": "uint256",
         "name": "_heldTokenId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_exitFeePercentage",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_exitFeeStatic",
         "type": "uint256"
       }
     ],
@@ -457,22 +468,98 @@
       },
       {
         "internalType": "uint256",
+        "name": "_finalVal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_auctionVal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_payoutCredits",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_payoutEth",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_closePoolContract",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_vault",
+        "type": "address"
+      }
+    ],
+    "name": "emitAccountClosed",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_finalVal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_auctionVal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_closePoolContract",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_vault",
+        "type": "address"
+      }
+    ],
+    "name": "emitAuctionEnded",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "toTreasury",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "toOwner",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "toVeHolders",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "postPool",
         "type": "uint256"
       }
     ],
@@ -495,11 +582,6 @@
       },
       {
         "internalType": "uint256",
-        "name": "_choice",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "_finalVal",
         "type": "uint256"
       },
@@ -511,11 +593,6 @@
       {
         "internalType": "address",
         "name": "_vault",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_ownerToken",
         "type": "address"
       }
     ],

@@ -126,7 +126,7 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
         Number(s) > Number(ethCredit)
           ? {
               valid: false,
-              message: `You tried to stake with a higher number than your credit amount. Deposit some funds here! 👇`,
+              message: `Insufficent funds. Deposit some funds here! 👇`,
             }
           : { valid: true },
       (s) =>
@@ -196,7 +196,6 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
     if (participation) {
       setPageState(PageState.SUBMITTED)
       setPassword(participation.password)
-      setStake(String(participation.stake))
     }
   }, [participation])
 

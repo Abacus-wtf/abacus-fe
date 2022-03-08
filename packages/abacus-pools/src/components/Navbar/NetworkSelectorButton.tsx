@@ -82,6 +82,11 @@ export const NetworkSelectorModal = ({
   setShowModal: (input: boolean) => void
 }) => {
   const { chainId } = useActiveWeb3React()
+
+  if (typeof window === "undefined") {
+    return null
+  }
+
   const { ethereum } = window as any
   const MetamaskRequest = async (network: NetworkInfo) => {
     if (network.chainId === 1) {

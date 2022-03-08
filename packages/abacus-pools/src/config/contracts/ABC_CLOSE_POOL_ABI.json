@@ -176,25 +176,7 @@
         "type": "uint256"
       }
     ],
-    "name": "closeAccountAuction",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amountCredits",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amountOfProfitToUse",
-        "type": "uint256"
-      }
-    ],
-    "name": "closeAccountExit",
+    "name": "closeAccount",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -214,22 +196,22 @@
   },
   {
     "inputs": [],
-    "name": "endAuction",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "controller",
+    "outputs": [
+      {
+        "internalType": "contract AbacusController",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "exitFee",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
+    "name": "endAuction",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -262,32 +244,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_ownerToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_vault",
         "type": "address"
       },
       {
         "internalType": "uint256",
         "name": "_nftVal",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_exitFee",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_postPoolDistribution",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_choice",
         "type": "uint256"
       }
     ],
@@ -305,33 +267,7 @@
   },
   {
     "inputs": [],
-    "name": "nftRedeemed",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "nftVal",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "postPoolDistribution",
     "outputs": [
       {
         "internalType": "uint256",
@@ -404,7 +340,20 @@
     "name": "vault",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "contract Vault",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "vaultFactory",
+    "outputs": [
+      {
+        "internalType": "contract VaultFactory",
         "name": "",
         "type": "address"
       }

@@ -43,8 +43,7 @@ export interface Pool extends NFT {
   tokensLocked?: string
   tokenPrice?: string
   isManager?: boolean
-  exitFeeStatic?: string
-  exitFeePercentage?: string
+  emissionsStarted?: boolean
   creditsAvailable?: string
   balance?: number
   state: PoolStatus

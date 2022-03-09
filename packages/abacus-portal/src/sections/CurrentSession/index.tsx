@@ -19,7 +19,7 @@ import {
 import { PromiseStatus } from "@models/PromiseStatus"
 import { useActiveWeb3React } from "@hooks/index"
 import ConnectWalletAlert from "@components/ConnectWalletAlert"
-import { useGetCurrentNetwork } from "@state/application/hooks"
+import { useEthToUSD, useGetCurrentNetwork } from "@state/application/hooks"
 import { useSetPayoutData, useClaimPayoutData } from "@state/miscData/hooks"
 import { NetworkSymbolEnum } from "@config/constants"
 import { isWithinWinRange } from "@config/utils"
@@ -53,6 +53,7 @@ const CurrentSession = ({ location }) => {
   const getUserStatus = useGetUserStatus()
   const userStatus = useCurrentSessionUserStatus()
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false)
+  const totalStakedUSD = useEthToUSD(sessionData.totalStaked)
   // const [isRankingsModalOpen, setIsRankingsModalOpen] = useState(false)
   // const [isSubscribeModalOpen, setSubscribeModalOpen] = useState(false)
   // const [isLostModalOpen, setIsLostModalOpen] = useState(false)
@@ -141,7 +142,7 @@ const CurrentSession = ({ location }) => {
       <CardBar
         title={sessionData.collectionTitle}
         poolAmount={sessionData.totalStaked}
-        poolAmountUSD={1}
+        poolAmountUSD={totalStakedUSD}
         participants={sessionData.numPpl}
         owner={sessionData.owner}
       />

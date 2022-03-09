@@ -1,7 +1,6 @@
 import { useActiveWeb3React } from "@hooks/index"
 import React, { FunctionComponent } from "react"
 import { Exa, Kilo, AbacusIcon } from "abacus-ui"
-import styled from "styled-components"
 import { useOnWeightVote } from "@hooks/current-session"
 import {
   useCurrentSessionData,
@@ -12,29 +11,12 @@ import {
   Description,
   BottomButtonContainer,
   FullWidthButton,
+  VerticallyCenteredContainer,
+  LoadingIconContainer,
 } from "../CurrentState.styled"
 import useParticipation from "../useParticipation"
 import useVotesWeighted from "./useVotesWeighted"
 import { InfoContainer, Info, InfoTitle } from "./Weigh.styled"
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-`
-
-const LoadingIconContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  margin-bottom: 16px;
-
-  & svg {
-    height: 40px;
-    width: 40px;
-  }
-`
 
 const Weigh: FunctionComponent = () => {
   const { account } = useActiveWeb3React()
@@ -68,7 +50,7 @@ const Weigh: FunctionComponent = () => {
   const notParticipant = !participation
 
   return (
-    <Container>
+    <VerticallyCenteredContainer>
       {isWeighing && !notParticipant && (
         <LoadingIconContainer>
           <AbacusIcon fill="black" />
@@ -120,7 +102,7 @@ const Weigh: FunctionComponent = () => {
           </TitleContainer>
         </BottomButtonContainer>
       )}
-    </Container>
+    </VerticallyCenteredContainer>
   )
 }
 

@@ -347,50 +347,56 @@ export const useOnWeightVote = () => {
 export const useOnSetFinalAppraisal = () => {
   const { account, library } = useActiveWeb3React()
   const sessionData = useCurrentSessionData()
-  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const { generalizedContractCall, isPending, txError } =
+    useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
   const networkSymbol = useGetCurrentNetwork()
 
-  const onSetFinalAppraisal = useCallback(async () => {
-    let estimate,
-      method: (...args: any) => Promise<TransactionResponse>,
-      args: Array<BigNumber | number | string>,
-      value: BigNumber | null
+  const onSetFinalAppraisal = useCallback(
+    async (cb?: () => void) => {
+      let estimate,
+        method: (...args: any) => Promise<TransactionResponse>,
+        args: Array<BigNumber | number | string>,
+        value: BigNumber | null
 
-    const pricingSessionContract = getContract(
-      ABC_PRICING_SESSION_ADDRESS(networkSymbol),
-      ABC_PRICING_SESSION_ABI,
-      library,
-      account
-    )
-    method = pricingSessionContract.setFinalAppraisal
-    estimate = pricingSessionContract.estimateGas.setFinalAppraisal
-    args = [sessionData.address, sessionData.tokenId]
-    value = null
-    const txnCb = async (response: any) => {
-      addTransaction(response, {
-        summary: "Set Final Appraisal",
+      const pricingSessionContract = getContract(
+        ABC_PRICING_SESSION_ADDRESS(networkSymbol),
+        ABC_PRICING_SESSION_ABI,
+        library,
+        account
+      )
+      method = pricingSessionContract.setFinalAppraisal
+      estimate = pricingSessionContract.estimateGas.setFinalAppraisal
+      args = [sessionData.address, sessionData.tokenId]
+      value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Set Final Appraisal",
+        })
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
       })
-    }
-    await generalizedContractCall({
-      method,
-      estimate,
-      args,
-      value,
-      cb: txnCb,
-    })
-  }, [
-    networkSymbol,
-    library,
-    account,
-    sessionData.address,
-    sessionData.tokenId,
-    generalizedContractCall,
-    addTransaction,
-  ])
+    },
+    [
+      networkSymbol,
+      library,
+      account,
+      sessionData.address,
+      sessionData.tokenId,
+      generalizedContractCall,
+      addTransaction,
+    ]
+  )
   return {
     onSetFinalAppraisal,
     isPending,
+    txError,
   }
 }
 

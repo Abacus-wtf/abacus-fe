@@ -44,3 +44,22 @@ export const FullWidthButton = styled(Button)`
 export const InputError = styled.span`
   color: ${({ theme }) => theme.colors.utility.red};
 `
+
+export const VerticallyCenteredContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+`
+
+export const LoadingIconContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 16px;
+
+  & svg {
+    height: 40px;
+    width: 40px;
+  }
+`

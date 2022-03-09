@@ -1,16 +1,5 @@
 import React, { FunctionComponent, useEffect, useState, useMemo } from "react"
-import {
-  Button,
-  ButtonType,
-  Input,
-  MiniList,
-  Exa,
-  Kilo,
-  ETH,
-  Lock,
-  Media,
-} from "abacus-ui"
-import styled from "styled-components"
+import { Button, ButtonType, Input, MiniList, Exa, Lock, ETH } from "abacus-ui"
 import { useOnSubmitVote, useOnUpdateVote } from "@hooks/current-session"
 import { genRanHex, hashValues } from "@config/utils"
 import { parseEther } from "ethers/lib/utils"
@@ -21,50 +10,15 @@ import { BigNumber } from "ethers"
 import useParticipation from "../useParticipation"
 import useValidate, { ValidationFn } from "../useValidate"
 import SeedNumber from "./SeedNumber"
-
-const TitleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  grid-gap: 12px;
-  text-align: center;
-
-  ${Media.sm`
-    text-align: left;
-  `}
-`
-
-const Description = styled(Kilo)`
-  color: ${({ theme }) => theme.colors.core[800]};
-`
-
-const BottomButtonContainer = styled.div`
-  grid-gap: 20px;
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-`
-
-const LockOuterContainer = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
-`
-
-const LockContainer = styled.div`
-  display: flex;
-  grid-gap: 18px;
-  padding-left: 10px;
-  align-items: center;
-`
-
-const FullWidthButton = styled(Button)`
-  width: 100%;
-`
-
-const InputError = styled.span`
-  color: ${({ theme }) => theme.colors.utility.red};
-`
+import {
+  TitleContainer,
+  Description,
+  InputError,
+  BottomButtonContainer,
+  LockOuterContainer,
+  LockContainer,
+  FullWidthButton,
+} from "../CurrentState.styled"
 
 type VoteProps = {
   openDepositModal: () => void
@@ -87,7 +41,7 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
   const sessionData = useCurrentSessionData()
   const [password, setPassword] = useState(`0x${genRanHex(20)}`)
   const [stake, setStake] = useState("")
-  const participation = useParticipation()
+  const { participation } = useParticipation()
   const { onSubmitVote, isPending: submitVotePending } = useOnSubmitVote()
   const { onUpdateVote, isPending: updateVotePending } = useOnUpdateVote()
   const claimPayout = useClaimPayoutData()

@@ -22,7 +22,6 @@ const Container = styled.div`
   flex-direction: column;
   height: 100%;
   justify-content: center;
-  gap: 40px;
 `
 
 const LoadingIconContainer = styled.div`
@@ -39,7 +38,7 @@ const LoadingIconContainer = styled.div`
 
 const Weigh: FunctionComponent = () => {
   const { account } = useActiveWeb3React()
-  const { participation, setHasWeighed } = useParticipation()
+  const { participation, setHasWeighted } = useParticipation()
   const currentSessionData = useCurrentSessionData()
   const getCurrentSessionData = useGetCurrentSessionData()
 
@@ -53,7 +52,7 @@ const Weigh: FunctionComponent = () => {
         () => {
           const { address, tokenId, nonce } = currentSessionData
           getCurrentSessionData(address, tokenId, nonce)
-          setHasWeighed(true)
+          setHasWeighted(true)
         }
       )
     } catch (e) {
@@ -64,8 +63,8 @@ const Weigh: FunctionComponent = () => {
   const notLoggedIn = !account
   const isParticipant = Boolean(participation)
   const votes = currentSessionData?.votes ?? null
-  const votesWeighted = useVotesWeighted(votes)
-  const isWeighing = votesWeighted > 0 || participation?.hasWeighed
+  const { votesWeighted, hasUserWeighed } = useVotesWeighted(votes)
+  const isWeighing = votesWeighted > 0
   const notParticipant = !participation
 
   return (
@@ -112,7 +111,9 @@ const Weigh: FunctionComponent = () => {
           <TitleContainer style={{ flexDirection: "row" }}>
             <FullWidthButton
               onClick={weighVote}
-              disabled={notLoggedIn || isPending || !isParticipant}
+              disabled={
+                notLoggedIn || isPending || !isParticipant || hasUserWeighed
+              }
             >
               {isPending ? "Submitting" : "Start weighing"}
             </FullWidthButton>

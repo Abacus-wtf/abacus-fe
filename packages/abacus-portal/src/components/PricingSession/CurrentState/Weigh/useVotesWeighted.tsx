@@ -1,7 +1,9 @@
+import { useActiveWeb3React } from "@hooks/index"
 import { Vote } from "@state/sessionData/reducer"
 import { useCallback, useState, useEffect } from "react"
 
 const useVotesWeighted = (votes: Vote[]) => {
+  const { account } = useActiveWeb3React()
   const getVotesWeighted = useCallback(
     () =>
       votes.reduce(
@@ -19,7 +21,9 @@ const useVotesWeighted = (votes: Vote[]) => {
     }
   }, [getVotesWeighted, votes])
 
-  return votesWeighted
+  const hasUserWeighed = votes.findIndex((vote) => vote.user === account) > -1
+
+  return { votesWeighted, hasUserWeighed }
 }
 
 export default useVotesWeighted

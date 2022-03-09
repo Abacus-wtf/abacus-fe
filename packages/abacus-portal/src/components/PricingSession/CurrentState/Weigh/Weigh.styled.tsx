@@ -6,6 +6,7 @@ export const InfoContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.core.label};
   align-self: center;
   border-radius: ${({ theme }) => theme.borderRadius.section};
+  margin-top: 40px;
 `
 
 export const Info = styled.div`

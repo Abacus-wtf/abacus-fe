@@ -507,11 +507,11 @@ var Fallback$3 = function () { return (React.createElement("div", { style: { dis
         React.createElement(Subtext, null, "Seconds")))); };
 
 var SessionCountdown = function (_a) {
-    var endTime = _a.endTime, loading = _a.loading, key = _a.key;
+    var endTime = _a.endTime, loading = _a.loading, key = _a.key, onComplete = _a.onComplete;
     if (loading) {
         return React.createElement(Fallback$3, null);
     }
-    return (React.createElement(Countdown, { date: endTime, key: key, renderer: function (_a) {
+    return (React.createElement(Countdown, { date: endTime, key: key, onComplete: onComplete, renderer: function (_a) {
             var hours = _a.hours, minutes = _a.minutes, seconds = _a.seconds, completed = _a.completed;
             if (completed) {
                 return React.createElement(Text, null, "Session Completed");

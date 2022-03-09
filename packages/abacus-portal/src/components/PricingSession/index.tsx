@@ -60,19 +60,24 @@ type PricingSessionProps = {
   nftSrc: string
   endTime: number
   openDepositModal: () => void
+  getCurrentSessionData: () => void
 }
 
 const PricingSession: FunctionComponent<PricingSessionProps> = ({
   nftSrc,
   endTime,
   openDepositModal,
+  getCurrentSessionData,
 }) => (
   <Section>
     <Container>
       <LeftHalf>
         <Image src={nftSrc} />
         <CountdownContainer>
-          <SessionCountdown endTime={endTime} />
+          <SessionCountdown
+            endTime={endTime}
+            onComplete={getCurrentSessionData}
+          />
         </CountdownContainer>
       </LeftHalf>
       <RightHalf>

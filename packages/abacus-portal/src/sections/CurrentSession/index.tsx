@@ -151,6 +151,9 @@ const CurrentSession = ({ location }) => {
         nftSrc={sessionData.image_url}
         endTime={sessionData.endTime}
         openDepositModal={() => setIsDepositModalOpen(true)}
+        getCurrentSessionData={() =>
+          getCurrentSessionData(String(address), String(tokenId), Number(nonce))
+        }
       />
       <SplitContainer>
         <PriceHistory

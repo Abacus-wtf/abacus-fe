@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react"
 import { Exa, Kilo, AbacusIcon } from "abacus-ui"
 import { useOnWeightVote } from "@hooks/current-session"
 import {
+  useCanUserInteract,
   useCurrentSessionData,
   useGetCurrentSessionData,
 } from "@state/sessionData/hooks"
@@ -21,6 +22,7 @@ import { InfoContainer, Info, InfoTitle } from "./Weigh.styled"
 const Weigh: FunctionComponent = () => {
   const { account } = useActiveWeb3React()
   const { participation, setHasWeighted } = useParticipation()
+  const canUserInteract = useCanUserInteract()
   const currentSessionData = useCurrentSessionData()
   const getCurrentSessionData = useGetCurrentSessionData()
 
@@ -47,11 +49,10 @@ const Weigh: FunctionComponent = () => {
   const votes = currentSessionData?.votes ?? null
   const { votesWeighted, hasUserWeighed } = useVotesWeighted(votes)
   const isWeighing = votesWeighted > 0
-  const notParticipant = !participation
 
   return (
     <VerticallyCenteredContainer>
-      {isWeighing && !notParticipant && (
+      {isWeighing && canUserInteract && (
         <LoadingIconContainer>
           <AbacusIcon fill="black" />
         </LoadingIconContainer>
@@ -59,14 +60,14 @@ const Weigh: FunctionComponent = () => {
       <TitleContainer style={{ textAlign: "center" }}>
         <Exa style={{ fontFamily: "Bluu Next" }}>
           {isWeighing
-            ? notParticipant
+            ? !canUserInteract
               ? "The submitted appraisals are being weighed..."
               : "Calculating appraisal"
             : "Ready for weighing!"}
         </Exa>
         <Description>
           {isWeighing
-            ? notParticipant
+            ? !canUserInteract
               ? "Check back in after the countdown to see the final appraisal amount."
               : `Hang tight, ${votesWeighted} of ${votes.length} submissions have been weighed`
             : "Your appraisal has reached completion. Start weighing everyones appraisal to continue."}
@@ -74,7 +75,7 @@ const Weigh: FunctionComponent = () => {
       </TitleContainer>
 
       {isWeighing ? (
-        notParticipant ? null : (
+        !canUserInteract ? null : (
           <InfoContainer>
             <Info>
               <InfoTitle>

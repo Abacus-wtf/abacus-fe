@@ -7,6 +7,7 @@ type Participation = {
   appraisal: number
   stake: number
   password: string
+  hasWeighed: boolean
 }
 
 function useParticipation() {
@@ -28,11 +29,28 @@ function useParticipation() {
         appraisal: Number(items.appraisal),
         stake: Number(items.stake),
         password: String(items.password),
+        hasWeighed: Boolean(items.hasWeighed),
       })
     }
   }, [account, sessionData.address, sessionData.nonce, sessionData.tokenId])
 
-  return participation
+  const setHasWeighed = (hasWeighed: boolean) => {
+    const encodedVals = encodeSessionData({
+      account,
+      nftAddress: sessionData.address,
+      tokenId: sessionData.tokenId,
+      nonce: sessionData.nonce,
+    })
+    localStorage.setItem(
+      encodedVals,
+      JSON.stringify({
+        ...participation,
+        hasWeighed,
+      })
+    )
+  }
+
+  return { participation, setHasWeighed }
 }
 
 export default useParticipation

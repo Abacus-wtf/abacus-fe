@@ -226,7 +226,6 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
       args: Array<BigNumber | number | string>
       value: BigNumber | null
       cb: (response: any) => void
-      errorCb?: (error: { code: number; data: { message: string } }) => void
     }) => {
       setTxError(null)
       dispatch(setGeneralizedContractErrorMessage(null))

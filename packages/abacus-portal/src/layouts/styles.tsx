@@ -22,6 +22,10 @@ export const Container = styled.div`
     padding: 0px 100px;
   `}
 
+  ${Media.lg`
+      padding: 0px;
+    `}
+
   ${Media.xl`
     padding: 0px;
     padding-top: 50px;

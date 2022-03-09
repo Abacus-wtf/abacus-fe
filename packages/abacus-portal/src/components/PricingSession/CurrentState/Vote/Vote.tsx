@@ -149,7 +149,7 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
   useEffect(() => {
     if (participation) {
       setPageState(PageState.SUBMITTED)
-      setPassword(participation.password)
+      setPassword(participation?.password)
     }
   }, [participation])
 
@@ -203,8 +203,8 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
         <>
           <MiniList
             info={{
-              Appraisal: `${participation.appraisal} ETH`,
-              Stake: `${participation.stake} ETH`,
+              Appraisal: `${participation?.appraisal} ETH`,
+              Stake: `${participation?.stake} ETH`,
               "Seed Number": <SeedNumber />,
             }}
             isDark

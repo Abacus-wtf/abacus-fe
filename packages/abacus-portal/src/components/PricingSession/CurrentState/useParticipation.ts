@@ -7,8 +7,8 @@ type Participation = {
   appraisal: number
   stake: number
   password: string
-  hasWeighed: boolean
-}
+  hasWeighted: boolean
+} | null
 
 function useParticipation() {
   const [participation, setParticipation] = useState<Participation>(null)
@@ -22,19 +22,24 @@ function useParticipation() {
       tokenId: sessionData.tokenId,
       nonce: sessionData.nonce,
     })
-    const itemsString = localStorage.getItem(encodedVals)
-    if (itemsString !== null && account) {
+
+    if (account) {
+      const itemsString = localStorage.getItem(encodedVals)
       const items = JSON.parse(itemsString)
-      setParticipation({
-        appraisal: Number(items.appraisal),
-        stake: Number(items.stake),
-        password: String(items.password),
-        hasWeighed: Boolean(items.hasWeighed),
-      })
+      if (items) {
+        setParticipation({
+          appraisal: Number(items.appraisal),
+          stake: Number(items.stake),
+          password: String(items.password),
+          hasWeighted: Boolean(items.hasWeighted),
+        })
+      } else {
+        setParticipation(null)
+      }
     }
   }, [account, sessionData.address, sessionData.nonce, sessionData.tokenId])
 
-  const setHasWeighed = (hasWeighed: boolean) => {
+  const setHasWeighted = (hasWeighted: boolean) => {
     const encodedVals = encodeSessionData({
       account,
       nftAddress: sessionData.address,
@@ -45,12 +50,12 @@ function useParticipation() {
       encodedVals,
       JSON.stringify({
         ...participation,
-        hasWeighed,
+        hasWeighted,
       })
     )
   }
 
-  return { participation, setHasWeighed }
+  return { participation, setHasWeighted }
 }
 
 export default useParticipation

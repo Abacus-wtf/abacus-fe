@@ -7,7 +7,7 @@ import {
   useGetCurrentSessionData,
 } from "@state/sessionData/hooks"
 import { useActiveWeb3React } from "@hooks/index"
-import { useOnHarvest } from "@hooks/current-session"
+import { useOnClaim } from "@hooks/current-session"
 import {
   TitleContainer,
   Description,
@@ -21,13 +21,13 @@ const ErrorMessage = styled(P)`
   color: ${({ theme }) => theme.colors.utility.red};
 `
 
-const Harvest: FunctionComponent = () => {
+const Claim: FunctionComponent = () => {
   const [errorMessage, setErrorMessage] = useState("")
   const { account } = useActiveWeb3React()
   const canUserInteract = useCanUserInteract()
   const currentSessionData = useCurrentSessionData()
   const getCurrentSessionData = useGetCurrentSessionData()
-  const { onHarvest, isPending, txError } = useOnHarvest()
+  const { onClaim, isPending, txError } = useOnClaim()
 
   useEffect(() => {
     if (txError) {
@@ -40,7 +40,7 @@ const Harvest: FunctionComponent = () => {
   const setFinalAppraisal = async () => {
     try {
       const { address, tokenId, nonce } = currentSessionData
-      await onHarvest(() => getCurrentSessionData(address, tokenId, nonce))
+      await onClaim(() => getCurrentSessionData(address, tokenId, nonce))
     } catch (e) {
       // console.log("oh hey", e)
     }
@@ -57,12 +57,12 @@ const Harvest: FunctionComponent = () => {
       )}
       <TitleContainer style={{ textAlign: "center" }}>
         <Exa style={{ fontFamily: "Bluu Next" }}>
-          {isPending ? "Harvesting..." : "Ready to Harvest!"}
+          {isPending ? "Claim pending..." : "Ready to Claim!"}
         </Exa>
         <Description>
           {isPending
             ? "The page should refresh when the tx is complete. If not, try refreshing manually."
-            : "Final Appraisals have been set. Be the one to Harvest, and get subsidized by the keepers tax!."}
+            : "All the votes have been harvested. Be the one to Claim, and get subsidized by the keepers tax!."}
         </Description>
       </TitleContainer>
       <BottomButtonContainer style={{ marginTop: "40px" }}>
@@ -73,7 +73,7 @@ const Harvest: FunctionComponent = () => {
               notLoggedIn || isPending || !canUserInteract || errorMessage
             }
           >
-            {isPending ? "Submitting" : "Harvest"}
+            {isPending ? "Submitting" : "Claim"}
           </FullWidthButton>
         </TitleContainer>
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
@@ -82,4 +82,4 @@ const Harvest: FunctionComponent = () => {
   )
 }
 
-export default Harvest
+export default Claim

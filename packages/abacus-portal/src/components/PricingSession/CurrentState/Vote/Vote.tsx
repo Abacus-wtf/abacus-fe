@@ -124,7 +124,7 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
     try {
       await onUpdateVote(password, appraisal, hash)
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
   }
 

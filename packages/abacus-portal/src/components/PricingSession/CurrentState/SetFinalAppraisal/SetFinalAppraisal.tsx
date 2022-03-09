@@ -44,7 +44,7 @@ const SetFinalAppraisal: FunctionComponent = () => {
         getCurrentSessionData(address, tokenId, nonce)
       )
     } catch (e) {
-      console.log("oh hey", e)
+      // console.log("oh hey", e)
     }
   }
 

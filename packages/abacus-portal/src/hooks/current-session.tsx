@@ -459,50 +459,56 @@ export const useOnHarvest = () => {
 export const useOnClaim = () => {
   const { account, library } = useActiveWeb3React()
   const sessionData = useCurrentSessionData()
-  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const { generalizedContractCall, isPending, txError } =
+    useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
   const networkSymbol = useGetCurrentNetwork()
 
-  const onClaim = useCallback(async () => {
-    let estimate,
-      method: (...args: any) => Promise<TransactionResponse>,
-      args: Array<BigNumber | number | string>,
-      value: BigNumber | null
+  const onClaim = useCallback(
+    async (cb: () => void) => {
+      let estimate,
+        method: (...args: any) => Promise<TransactionResponse>,
+        args: Array<BigNumber | number | string>,
+        value: BigNumber | null
 
-    const pricingSessionContract = getContract(
-      ABC_PRICING_SESSION_ADDRESS(networkSymbol),
-      ABC_PRICING_SESSION_ABI,
-      library,
-      account
-    )
-    method = pricingSessionContract.claim
-    estimate = pricingSessionContract.estimateGas.claim
-    args = [sessionData.address, sessionData.tokenId]
-    value = null
-    const txnCb = async (response: any) => {
-      addTransaction(response, {
-        summary: "Claim Tokens",
+      const pricingSessionContract = getContract(
+        ABC_PRICING_SESSION_ADDRESS(networkSymbol),
+        ABC_PRICING_SESSION_ABI,
+        library,
+        account
+      )
+      method = pricingSessionContract.claim
+      estimate = pricingSessionContract.estimateGas.claim
+      args = [sessionData.address, sessionData.tokenId]
+      value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Claim Tokens",
+        })
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
       })
-    }
-    await generalizedContractCall({
-      method,
-      estimate,
-      args,
-      value,
-      cb: txnCb,
-    })
-  }, [
-    networkSymbol,
-    library,
-    account,
-    sessionData.address,
-    sessionData.tokenId,
-    generalizedContractCall,
-    addTransaction,
-  ])
+    },
+    [
+      networkSymbol,
+      library,
+      account,
+      sessionData.address,
+      sessionData.tokenId,
+      generalizedContractCall,
+      addTransaction,
+    ]
+  )
   return {
     onClaim,
     isPending,
+    txError,
   }
 }
 

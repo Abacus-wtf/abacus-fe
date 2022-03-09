@@ -5,6 +5,8 @@ import AMM from "./AMM"
 import ManagePool from "./ManagePool"
 import Auction from "./Auction"
 import ClosedPool from "./ClosedPool"
+import Tickets from "./Tickets"
+import { Page } from ".."
 
 export interface StateComponent {
   refresh: () => void
@@ -21,10 +23,12 @@ const CurrentState = ({
 }) => {
   if (status === PoolStatus.Normal) {
     switch (page) {
-      case 0:
+      case Page.Main:
         return <AMM refresh={refresh} />
-      case 1:
+      case Page.CurrentPositions:
         return <CurrentPosition />
+      case Page.Tickets:
+        return <Tickets />
       default:
         return <ManagePool refresh={refresh} />
     }

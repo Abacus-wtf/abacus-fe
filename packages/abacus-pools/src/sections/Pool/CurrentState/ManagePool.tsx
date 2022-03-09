@@ -21,35 +21,22 @@ const ManagePool = ({ refresh }: StateComponent) => {
   return (
     <>
       <VerticalContainer style={{ marginTop: 10, alignItems: "center" }}>
-        <ButtonContainer style={{ width: "100%" }}>
+        <ButtonContainer
+          style={{ width: "100%", gridTemplateColumns: "1fr 1fr" }}
+        >
           <Button
             className="notConnected"
             disabled={!isNetworkSymbolETH || (isPending && isAuction)}
             style={{ width: "100%", borderRadius: 5 }}
             onClick={() => {
               setIsAuction(true)
-              return onExitPool(poolData.vaultAddress, false, async () => {
+              return onExitPool(poolData.vaultAddress, async () => {
                 await refresh()
               })
             }}
           >
             {isPending && isAuction ? "Loading..." : "Trigger Auction"}
           </Button>
-          <Button
-            className="notConnected"
-            disabled={!isNetworkSymbolETH || (isPending && !isAuction)}
-            style={{ width: "100%", borderRadius: 5 }}
-            onClick={() => {
-              setIsAuction(false)
-              return onExitPool(poolData.vaultAddress, true, () => {
-                refresh()
-              })
-            }}
-          >
-            {isPending && !isAuction ? "Loading..." : `Exit Position`}
-          </Button>
-        </ButtonContainer>
-        <ButtonContainer style={{ width: "100%" }}>
           <Button
             className="notConnected"
             disabled={

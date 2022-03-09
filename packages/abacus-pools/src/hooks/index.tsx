@@ -112,12 +112,12 @@ export function useMultiCall(abi: any) {
       const context: ContractCallContext[] = _.map(
         _.range(0, methods.length),
         (index) => ({
-          reference: methods[index],
+          reference: methods[index] + index,
           contractAddress,
           abi,
           calls: [
             {
-              reference: methods[index],
+              reference: methods[index] + index,
               methodName: methods[index],
               methodParameters: args[index],
             },

@@ -6,7 +6,8 @@ import { HorizontalListGroup } from "@components/ListGroupMods"
 import { theme } from "@config/theme"
 
 export const ButtonContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 15px;
 `
 

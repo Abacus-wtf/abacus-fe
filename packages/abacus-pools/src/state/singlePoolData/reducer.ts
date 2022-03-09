@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit"
-import { getPoolData, getTraderProfile } from "./actions"
+import { getPoolData, getTickets, getTraderProfile } from "./actions"
 import { Pool } from "../poolData/reducer"
 
 export interface TraderProfile {
@@ -15,9 +15,15 @@ export interface TraderProfile {
   }
 }
 
+export interface Ticket {
+  order: number
+  amount: number
+}
+
 export interface PoolState {
   data?: Pool
   traderProfile?: TraderProfile
+  tickets?: Ticket[]
 }
 
 const initialState: PoolState = {}
@@ -29,5 +35,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(getTraderProfile, (state, action) => {
       state.traderProfile = action.payload
+    })
+    .addCase(getTickets, (state, action) => {
+      state.tickets = action.payload
     })
 )

@@ -6,6 +6,7 @@ import { OutboundLink } from "gatsby-plugin-google-gtag"
 import { useGetPoolData, useSetPoolData } from "@state/singlePoolData/hooks"
 import { useActiveWeb3React } from "@hooks/index"
 import { PoolStatus } from "@state/poolData/reducer"
+import styled from "styled-components"
 import {
   SplitContainer,
   VerticalContainer,
@@ -16,11 +17,24 @@ import {
 } from "./Pool.styles"
 import CurrentState from "./CurrentState/index"
 
+const Tab = styled(ButtonsWhite)`
+  border-radius: 8px;
+  width: 100%;
+  font-size: 0.75rem;
+`
+
+export enum Page {
+  Main,
+  CurrentPositions,
+  ManagePool,
+  Tickets,
+}
+
 const Pool = ({ location }) => {
   const { address, tokenId, nonce } = queryString.parse(location.search)
   const setPool = useSetPoolData()
   const poolData = useGetPoolData()
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(Page.Main)
   const { account } = useActiveWeb3React()
 
   useEffect(() => {
@@ -59,32 +73,35 @@ const Pool = ({ location }) => {
         </VerticalContainer>
         <VerticalContainer>
           <ButtonContainer>
-            <ButtonsWhite
-              disabled={page === 0}
-              onClick={() => setPage(0)}
-              style={{ borderRadius: 8 }}
+            <Tab
+              disabled={page === Page.Main}
+              onClick={() => setPage(Page.Main)}
             >
               {poolData.state === PoolStatus.Auction ? "Auction" : "Main"}
-            </ButtonsWhite>
+            </Tab>
             {account ? (
-              <ButtonsWhite
-                disabled={page === 1}
-                onClick={() => setPage(1)}
-                style={{ borderRadius: 8 }}
+              <Tab
+                disabled={page === Page.CurrentPositions}
+                onClick={() => setPage(Page.CurrentPositions)}
               >
                 Current Positions
-              </ButtonsWhite>
+              </Tab>
             ) : null}
-            {poolData.isManager && (
-              <ButtonsWhite
-                disabled={page === 2}
-                onClick={() => setPage(2)}
-                style={{ borderRadius: 8 }}
-              >
-                Manage Pool
-              </ButtonsWhite>
-            )}
+            <Tab
+              disabled={page === Page.Tickets}
+              onClick={() => setPage(Page.Tickets)}
+            >
+              Tickets
+            </Tab>
           </ButtonContainer>
+          {poolData.isManager && (
+            <Tab
+              disabled={page === Page.ManagePool}
+              onClick={() => setPage(Page.ManagePool)}
+            >
+              Manage Pool
+            </Tab>
+          )}
 
           <VerticalSmallGapContainer style={{ minHeight: 90 }}>
             <SubText>{poolData.collectionTitle}</SubText>

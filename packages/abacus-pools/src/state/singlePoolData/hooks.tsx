@@ -11,8 +11,10 @@ import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
 import { formatEther } from "ethers/lib/utils"
 import moment from "moment"
 import { BigNumber } from "ethers"
+import _ from "lodash"
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"
-import { getPoolData, getTraderProfile } from "./actions"
+import { getPoolData, getTickets, getTraderProfile } from "./actions"
+import { Ticket } from "./reducer"
 
 const getPoolDataSelector = (
   state: AppState
@@ -31,6 +33,15 @@ export const useTraderProfile = () =>
     getTraderSelector
   )
 
+const getTicketsSelector = (
+  state: AppState
+): AppState["singlePoolData"]["tickets"] => state.singlePoolData.tickets
+
+export const useTickets = () =>
+  useSelector<AppState, AppState["singlePoolData"]["tickets"]>(
+    getTicketsSelector
+  )
+
 export const useGetTraderProfileData = () => {
   const dispatch = useDispatch<AppDispatch>()
   const vault = useWeb3Contract(VAULT_ABI)
@@ -46,6 +57,28 @@ export const useGetTraderProfileData = () => {
     console.log(traderProfile)
     dispatch(getTraderProfile(traderProfile))
   }, [account, dispatch, vault, poolData])
+}
+
+export const useGetTickets = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const vault = useMultiCall(VAULT_ABI)
+  const poolData = useGetPoolData()
+
+  return useCallback(async () => {
+    if (poolData.vaultAddress === undefined) return
+
+    const methods = _.map(_.range(0, 50), () => "ticketsPurchased")
+    const args = _.map(_.range(0, 50), (i) => [i])
+    const ticketFillings = await vault(poolData.vaultAddress, methods, args)
+    const tickets: Ticket[] = []
+    for (let i = 0; i < ticketFillings.length; i += 1) {
+      tickets.push({
+        order: i,
+        amount: BigNumber.from(ticketFillings[i][0]).toNumber(),
+      })
+    }
+    dispatch(getTickets(tickets))
+  }, [dispatch, vault, poolData])
 }
 
 export const useSetPoolData = () => {

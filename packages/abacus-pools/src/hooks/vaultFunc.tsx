@@ -17,7 +17,7 @@ export const useOnExitPool = () => {
   const addTransaction = useTransactionAdder()
 
   const onExitPool = useCallback(
-    async (vaultAddress: string, isExit: boolean, cb: () => void) => {
+    async (vaultAddress: string, cb: () => void) => {
       const vaultContract = getContract(
         vaultAddress,
         VAULT_ABI,
@@ -26,7 +26,7 @@ export const useOnExitPool = () => {
       )
       const method = vaultContract.closePool
       const estimate = vaultContract.estimateGas.closePool
-      const args = [isExit ? 1 : 0]
+      const args = []
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {

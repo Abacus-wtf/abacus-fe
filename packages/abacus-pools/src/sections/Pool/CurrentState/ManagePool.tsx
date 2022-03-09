@@ -4,7 +4,7 @@ import { Tooltip } from "shards-react"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { NetworkSymbolEnum } from "@config/constants"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import { useOnExitPool } from "@hooks/vaultFunc"
+import { useOnExitPool, useOnStartEmissions } from "@hooks/vaultFunc"
 import { ButtonContainer, VerticalContainer } from "../Pool.styles"
 import { StateComponent } from "./index"
 
@@ -14,6 +14,8 @@ const ManagePool = ({ refresh }: StateComponent) => {
   const isNetworkSymbolETH = networkSymbol === NetworkSymbolEnum.ETH
   const poolData = useGetPoolData()
   const { onExitPool, isPending } = useOnExitPool()
+  const { onStartEmissions, isPending: isPendingStartEmissions } =
+    useOnStartEmissions()
   const [isAuction, setIsAuction] = useState(false)
 
   return (
@@ -44,30 +46,27 @@ const ManagePool = ({ refresh }: StateComponent) => {
               })
             }}
           >
-            {isPending && !isAuction
-              ? "Loading..."
-              : `Exit Position (Pay ${
-                  Number(poolData.exitFeeStatic) <
-                  Number(poolData.exitFeePercentage) *
-                    Number(poolData.tokensLocked) *
-                    Number(poolData.tokenPrice)
-                    ? poolData.exitFeeStatic
-                    : Number(poolData.exitFeePercentage) *
-                      Number(poolData.tokensLocked) *
-                      Number(poolData.tokenPrice)
-                } ETH)`}
+            {isPending && !isAuction ? "Loading..." : `Exit Position`}
           </Button>
         </ButtonContainer>
-        {/*<ButtonContainer style={{ width: "100%" }}>
+        <ButtonContainer style={{ width: "100%" }}>
           <Button
             className="notConnected"
-            disabled={!isNetworkSymbolETH}
+            disabled={
+              !isNetworkSymbolETH ||
+              poolData.emissionsStarted ||
+              isPendingStartEmissions
+            }
             style={{ width: "100%", borderRadius: 5 }}
-            type="submit"
+            onClick={() =>
+              onStartEmissions(() => {
+                refresh()
+              })
+            }
           >
-            End Auction
+            {isPendingStartEmissions ? "Loading..." : `Start Emissions`}
           </Button>
-            </ButtonContainer>*/}
+        </ButtonContainer>
         <Tooltip
           open={isToolTipOpen}
           target=".notConnected"

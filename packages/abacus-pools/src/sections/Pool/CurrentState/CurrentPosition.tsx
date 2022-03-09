@@ -8,6 +8,8 @@ import {
 import styled from "styled-components"
 import moment from "moment"
 import _ from "lodash"
+import Buttons from "@components/Button"
+import { useUnlockPosition } from "@hooks/vaultFunc"
 
 const Container = styled.div`
   display: flex;
@@ -38,6 +40,7 @@ const CurrentPosition = () => {
   const getTraderProfileData = useGetTraderProfileData()
   const traderData = useTraderProfile()
   const poolData = useGetPoolData()
+  const { onUnlockPosition, isPending: isUnlockPending } = useUnlockPosition()
 
   useEffect(() => {
     getTraderProfileData()
@@ -87,6 +90,18 @@ const CurrentPosition = () => {
             </StatTitle>
           ))}
       </TicketContainer>
+      {traderData.timeUnlock <= 0 && (
+        <Buttons
+          onClick={() =>
+            onUnlockPosition(Object.keys(traderData.ticketsOwned), () =>
+              getTraderProfileData()
+            )
+          }
+          disabled={isUnlockPending}
+        >
+          Unlock Tickets
+        </Buttons>
+      )}
     </Container>
   )
 }

@@ -9,12 +9,9 @@ import { ABC_FACTORY } from "@config/constants"
 import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
 import { theme } from "@config/theme"
 import { NFT, NFTBasePool } from "@state/poolData/reducer"
-import Card from "@components/Card"
 import _ from "lodash"
-import { useOnApproveNFT, useOnCreatePool } from "@hooks/createPool"
-import ERC_721_ABI from "@config/contracts/ERC_721_ABI.json"
+import { useOnCreatePool } from "@hooks/createPool"
 import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
-import { CardContainer } from "../Home/Home.styles"
 import {
   SplitContainer,
   VerticalSmallGapContainer,
@@ -40,24 +37,6 @@ const ModalTitle = styled(Title)`
   font-size: 1.2rem;
 `
 
-const CardClick = styled.div`
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-`
-
-const Selected = styled.div`
-  border-radius: 14px;
-  padding: 10px;
-  background-color: #43a6c6;
-  color: white;
-  position: absolute;
-  font-weight: bold;
-  margin-top: 15px;
-  margin-left: 15px;
-  z-index: 1;
-`
-
 const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -76,17 +55,15 @@ type CreatePoolForm<Elements> = Elements & {
   poolTokenSymbol: HTMLInputElement
   exitFeePercentage: HTMLInputElement
   exitFeeStatic: HTMLInputElement
+  openseaLink: HTMLInputElement
 }
 
 const CreatePool: React.FC = () => {
   const { account } = useActiveWeb3React()
-  const erc721 = useWeb3Contract(ERC_721_ABI)
   const factory = useWeb3Contract(FACTORY_ABI)
-  const { onApproveNFT } = useOnApproveNFT()
   const { onCreatePool } = useOnCreatePool()
   const [openModal, setOpenModal] = useState(false)
   const [newSesh, setNewSesh] = useState<NFTBasePool | null>(null)
-  const [isApproved, setIsApproved] = useState(false)
   const [chosePool, setChosePool] = useState(false)
   const [isButtonLoading, setIsButtonLoading] = useState(false)
   const [nfts, setNFTs] = useState<NFT[] | null>(null)
@@ -120,18 +97,35 @@ const CreatePool: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const formElements = e.target as CreatePoolForm<typeof e.target>
 
-    if (isApproved && !chosePool) {
-      setChosePool(true)
-    } else if (!chosePool) {
-      setIsButtonLoading(true)
-      await onApproveNFT(newSesh.address, () => {
-        setIsButtonLoading(false)
+    if (!chosePool) {
+      const link = formElements.openseaLink.value
+      const addressIndex = link.indexOf("assets/") + "assets/".length
+      const tokenIndex = addressIndex + 43
+      const address = link.slice(addressIndex, tokenIndex - 1)
+      const tokenId = link.slice(tokenIndex, link.length)
+
+      try {
+        const os = (await openseaGet(
+          `asset/${address}/${tokenId}`
+        )) as OpenSeaAsset
+
+        if (os.asset_contract.schema_name !== "ERC721") {
+          alert("The NFT must be an ERC-721!")
+          return
+        }
+        setNewSesh({
+          address,
+          tokenId,
+          img: os.image_url,
+          collectionTitle: os.collection.name,
+        })
         setChosePool(true)
-        setIsApproved(true)
-      })
+      } catch (e) {
+        alert("Invalid link")
+      }
     } else {
-      const formElements = e.target as CreatePoolForm<typeof e.target>
       const poolTokenName = formElements.poolTokenName.value
       const poolTokenSymbol = formElements.poolTokenSymbol.value
 
@@ -151,15 +145,6 @@ const CreatePool: React.FC = () => {
         }
       )
     }
-  }
-
-  const choseNFT = async (nft: NFT) => {
-    const isAllowed = await erc721(nft.address)
-      .methods.isApprovedForAll(account, ABC_FACTORY)
-      .call()
-    console.log("isAllowed", isAllowed)
-    setIsApproved(isAllowed)
-    setNewSesh(nft)
   }
 
   if (isLoading) {
@@ -226,39 +211,31 @@ const CreatePool: React.FC = () => {
             <Button
               type="submit"
               style={{ maxWidth: "fit-content", height: 40 }}
-              disabled={!account || isButtonLoading || newSesh === null}
+              disabled={
+                !account || isButtonLoading || (newSesh === null && chosePool)
+              }
             >
               {isButtonLoading
                 ? "Loading..."
                 : newSesh === null
                 ? "Select NFT"
-                : isApproved && !chosePool
-                ? "Next"
-                : isApproved
-                ? "Create Pool"
-                : "Approve"}
+                : "Create Pool"}
             </Button>
           </TitleContainer>
           {!chosePool ? (
-            <CardContainer
-              style={{ marginTop: 20, gridTemplateColumns: "1fr 1fr 1fr 1fr" }}
-            >
-              {_.map(nfts, (i) => (
-                <div style={{ width: "100%", height: "100%" }}>
-                  {newSesh !== null &&
-                    newSesh.address === i.address &&
-                    newSesh.tokenId === i.tokenId && (
-                      <Selected>Selected</Selected>
-                    )}
-                  <CardClick onClick={() => choseNFT(i)}>
-                    <Card {...i} />
-                  </CardClick>
-                </div>
-              ))}
-            </CardContainer>
+            <ListGroupStyled>
+              <ListGroupItem>
+                <InputWithTitle
+                  title="NFT Link (OpenSea)"
+                  id="openseaLink"
+                  placeholder="https://opensea.io/assets/0x0000000000000000000000000000000000000000/1"
+                />
+              </ListGroupItem>
+            </ListGroupStyled>
           ) : (
             <>
               <ListGroupStyled>
+                <img src={newSesh.img} alt="NFT for Spot Pool" />
                 <ListGroupItem>
                   <InputWithTitle
                     title="Pool Token Name"

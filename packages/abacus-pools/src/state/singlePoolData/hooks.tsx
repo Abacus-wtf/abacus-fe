@@ -5,6 +5,7 @@ import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
 import VAULT_ABI from "@config/contracts/ABC_VAULT_ABI.json"
 import CLOSE_POOL_ABI from "@config/contracts/ABC_CLOSE_POOL_ABI.json"
+import ERC_721_ABI from "@config/contracts/ERC_721_ABI.json"
 import { ABC_FACTORY, ZERO_ADDRESS } from "@config/constants"
 import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
 import { formatEther } from "ethers/lib/utils"
@@ -50,6 +51,7 @@ export const useGetTraderProfileData = () => {
 export const useSetPoolData = () => {
   const dispatch = useDispatch<AppDispatch>()
   const factory = useWeb3Contract(FACTORY_ABI)
+  const erc721 = useWeb3Contract(ERC_721_ABI)
   const vault = useMultiCall(VAULT_ABI)
   const closePool = useMultiCall(CLOSE_POOL_ABI)
   const { account } = useActiveWeb3React()
@@ -57,25 +59,33 @@ export const useSetPoolData = () => {
   return useCallback(
     async (address: string, tokenId: string, nonce: number) => {
       try {
-        const [vaultAddress, os] = await Promise.all([
+        const [vaultAddress, os, ownerOf] = await Promise.all([
           factory(ABC_FACTORY).methods.nftVault(nonce, address, tokenId).call(),
           openseaGet(
             `assets?token_ids=${tokenId}&asset_contract_address=${address}`
           ),
+          erc721(address).methods.ownerOf(tokenId).call(),
         ])
 
-        const [owner, closePoolContract, pricePerToken, tokensLocked, symbol] =
-          await vault(
-            vaultAddress,
-            [
-              "vaultOwner",
-              "closePoolContract",
-              "pricePerToken",
-              "tokensLocked",
-              "symbol",
-            ],
-            [[], [], [], [], [], []]
-          )
+        const [
+          owner,
+          closePoolContract,
+          pricePerToken,
+          tokensLocked,
+          symbol,
+          emissionsStarted,
+        ] = await vault(
+          vaultAddress,
+          [
+            "vaultOwner",
+            "closePoolContract",
+            "pricePerToken",
+            "tokensLocked",
+            "symbol",
+            "emissionsStarted",
+          ],
+          [[], [], [], [], [], [], []]
+        )
 
         let balance = BigNumber.from(0)
         let creditsAvailable = BigNumber.from(0)
@@ -124,6 +134,7 @@ export const useSetPoolData = () => {
 
         const asset = (os as { assets: OpenSeaAsset[] }).assets[0]
         const pool: Pool = {
+          emissionsStarted: emissionsStarted[0],
           vaultAddress,
           address,
           tokenId,
@@ -135,7 +146,9 @@ export const useSetPoolData = () => {
           symbol: symbol[0],
           tokensLocked: formatEther(tokensLocked[0]),
           tokenPrice: formatEther(pricePerToken[0]),
-          isManager: String(owner[0]).toLowerCase() === account.toLowerCase(),
+          isManager:
+            String(owner[0]).toLowerCase() === account.toLowerCase() ||
+            ownerOf.toLowerCase() === account.toLowerCase(),
           balance: parseFloat(formatEther(balance)),
           creditsAvailable: BigNumber.from(creditsAvailable).toString(),
           state:
@@ -145,10 +158,6 @@ export const useSetPoolData = () => {
               ? PoolStatus.Auction
               : PoolStatus.Closed,
           auction,
-          // @TODO
-          exitFeeStatic: "5",
-          exitFeePercentage: "5",
-
           img: asset.image_url,
         }
         dispatch(getPoolData(pool))
@@ -156,6 +165,6 @@ export const useSetPoolData = () => {
         console.log("Look into this")
       }
     },
-    [factory, vault, closePool, account, dispatch]
+    [factory, vault, closePool, account, dispatch, erc721]
   )
 }

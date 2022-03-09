@@ -51,6 +51,88 @@ export const useOnExitPool = () => {
   }
 }
 
+export const useUnlockPosition = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+  const poolData = useGetPoolData()
+
+  const onUnlockPosition = useCallback(
+    async (tokens: string[], cb: () => void) => {
+      const vaultContract = getContract(
+        poolData.vaultAddress,
+        VAULT_ABI,
+        library,
+        account
+      )
+      const method = vaultContract.sellToken
+      const estimate = vaultContract.estimateGas.sellToken
+      const args = [account, tokens]
+      const value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Unlock Position",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [library, account, generalizedContractCall, addTransaction, poolData]
+  )
+  return {
+    onUnlockPosition,
+    isPending,
+  }
+}
+
+export const useOnStartEmissions = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+  const poolData = useGetPoolData()
+
+  const onStartEmissions = useCallback(
+    async (cb: () => void) => {
+      const vaultContract = getContract(
+        poolData.vaultAddress,
+        VAULT_ABI,
+        library,
+        account
+      )
+      const method = vaultContract.startEmissions
+      const estimate = vaultContract.estimateGas.startEmissions
+      const args = []
+      const value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Start Emissions",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [library, account, generalizedContractCall, addTransaction, poolData]
+  )
+  return {
+    onStartEmissions,
+    isPending,
+  }
+}
+
 export const useOnPurchaseTokens = () => {
   const { account, library } = useActiveWeb3React()
   const { generalizedContractCall, isPending } = useGeneralizedContractCall()

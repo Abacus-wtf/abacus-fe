@@ -1,7 +1,7 @@
 import { useCallback, useRef } from "react"
 import { AppState, AppDispatch } from "@state/index"
 import { useDispatch, useSelector } from "react-redux"
-import axios from "axios"
+import axios, { AxiosResponse } from "axios"
 import { request } from "graphql-request"
 import {
   useWeb3Contract,
@@ -20,6 +20,7 @@ import _ from "lodash"
 import {
   formatPricingSessionCheckMulticall,
   formatPricingSessionCoreMulticall,
+  OpenSeaAsset,
   openseaGet,
   openseaGetMany,
   OpenSeaGetResponse,
@@ -33,6 +34,7 @@ import {
   CurrentSessionState,
   UserState,
   SessionState,
+  CurrentSessionData,
 } from "./reducer"
 import {
   setMultipleSessionData,
@@ -470,16 +472,20 @@ export const useGetCurrentSessionData = () => {
       const ethUsdOracle = getEthUsdContract(ETH_USD_ORACLE_ADDRESS)
       const URL = `asset/${address}/${tokenId}`
 
-      let [
+      const [
         pricingSessionMetadata,
         [
-          pricingSessionCore,
-          getStatus,
-          pricingSessionCheck,
-          finalAppraisalResult,
+          pricingSessionCoreToFormat,
+          getStatusToFormat,
+          pricingSessionCheckToFormat,
+          finalAppraisalResultToFormat,
         ],
         grtData,
-      ]: any = await Promise.all([
+      ]: [
+        OpenSeaAsset,
+        any[][],
+        AxiosResponse<GetPricingSessionQueryResponse>
+      ] = await Promise.all([
         openseaGet(URL),
         multicall(
           ABC_PRICING_SESSION_ADDRESS(networkSymbol),
@@ -508,11 +514,17 @@ export const useGetCurrentSessionData = () => {
           }
         ),
       ])
-      pricingSessionCore = formatPricingSessionCoreMulticall(pricingSessionCore)
-      pricingSessionCheck =
-        formatPricingSessionCheckMulticall(pricingSessionCheck)
-      getStatus = `${parseInt(getStatus[0].hex, 16)}`
-      finalAppraisalResult = `${parseInt(finalAppraisalResult[0].hex, 16)}`
+      const pricingSessionCore = formatPricingSessionCoreMulticall(
+        pricingSessionCoreToFormat
+      )
+      const pricingSessionCheck = formatPricingSessionCheckMulticall(
+        pricingSessionCheckToFormat
+      )
+      const getStatus = `${parseInt(getStatusToFormat[0].hex, 16)}`
+      const finalAppraisalResult = `${parseInt(
+        finalAppraisalResultToFormat[0].hex,
+        16
+      )}`
       const { pricingSession: pricingSessionGrt } = grtData?.data.data ?? {}
       let ethUsd
       try {
@@ -579,11 +591,11 @@ export const useGetCurrentSessionData = () => {
           return 0
         })
       }
-      const sessionData: SessionData = {
+      const sessionData: CurrentSessionData = {
         winnerAmount:
           Number(pricingSessionCheck.secondaryPoints) !== 0
             ? 0.05
-            : pricingSessionCheck.finalStdev,
+            : Number(pricingSessionCheck.finalStdev),
         rankings,
         bounty: pricingSessionCore.bounty,
         image_url:
@@ -620,6 +632,14 @@ export const useGetCurrentSessionData = () => {
             : shortenAddress(pricingSessionMetadata?.owner?.address),
         ownerAddress: pricingSessionMetadata?.owner?.address,
         maxAppraisal: pricingSessionCore.maxAppraisal,
+        votes: pricingSessionGrt.participants.map(
+          ({ user, weight, appraisal, amountStaked }) => ({
+            user: user.id,
+            weight,
+            appraisal: formatEther(appraisal),
+            amountStaked: formatEther(amountStaked),
+          })
+        ),
       }
 
       const userStatus = await getUserStatus({

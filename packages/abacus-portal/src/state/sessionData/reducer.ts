@@ -26,11 +26,10 @@ import {
 } from "./actions"
 
 export interface Vote {
-  user: {
-    id: string
-  }
+  user: string
   appraisal: string
   amountStaked: string
+  weight: string
 }
 
 export enum SessionState {
@@ -74,6 +73,10 @@ export interface SessionData {
   currentStatus?: SessionState
 }
 
+export interface CurrentSessionData extends SessionData {
+  votes: Vote[]
+}
+
 export interface ClaimState {
   ethClaimAmount: number
   abcClaimAmount: number
@@ -81,7 +84,7 @@ export interface ClaimState {
 }
 
 export interface CurrentSessionState {
-  sessionData: SessionData
+  sessionData: CurrentSessionData
   sessionStatus: SessionState
   userStatus: UserState
   fetchStatus?: PromiseStatus

@@ -1,6 +1,14 @@
 import { gql } from "graphql-request"
 import { isBigNumberish } from "@ethersproject/bignumber/lib/bignumber"
-import { Vote } from "./reducer"
+
+export interface SubgraphVote {
+  user: {
+    id: string
+  }
+  appraisal: string
+  amountStaked: string
+  weight: string
+}
 
 export type SubgraphPricingSession = {
   id: string
@@ -16,7 +24,7 @@ export type SubgraphPricingSession = {
   numParticipants: number
   timeFinalAppraisalSet: number
   maxAppraisal: number
-  participants: Vote[]
+  participants: SubgraphVote[]
 }
 
 export type GetPricingSessionsQueryResponse = {
@@ -168,6 +176,7 @@ export const GET_PRICING_SESSION = (id: string) => `
         }
         amountStaked
         appraisal
+        weight
       }
     }
   }

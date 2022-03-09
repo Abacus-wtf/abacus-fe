@@ -2,7 +2,7 @@ import React from "react"
 import { useCurrentSessionStatus } from "@state/sessionData/hooks"
 import { SessionState } from "@state/sessionData/reducer"
 import { Vote } from "./Vote"
-// import Weigh from "./Weigh"
+import Weigh from "./Weigh"
 // import SetFinalAppraisal from "./SetFinalAppraisal"
 // import Harvest from "./Harvest"
 // import Claim from "./Claim"
@@ -17,8 +17,8 @@ const CurrentState = ({ openDepositModal }: CurrentStateProps) => {
   switch (status) {
     case SessionState.Vote:
       return <Vote openDepositModal={openDepositModal} />
-    // case SessionState.Weigh:
-    //   return <Weigh />
+    case SessionState.Weigh:
+      return <Weigh />
     // case SessionState.SetFinalAppraisal:
     //   return <SetFinalAppraisal />
     // case SessionState.Harvest:
@@ -28,7 +28,7 @@ const CurrentState = ({ openDepositModal }: CurrentStateProps) => {
     // case SessionState.Complete:
     //   return <SessionCompleted />
     default:
-      return <Vote openDepositModal={openDepositModal} />
+      return <Weigh />
   }
 }
 

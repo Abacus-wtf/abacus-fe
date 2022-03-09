@@ -53,10 +53,10 @@ const CurrentSession = ({ location }) => {
   const getUserStatus = useGetUserStatus()
   const userStatus = useCurrentSessionUserStatus()
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false)
-  const [isRankingsModalOpen, setIsRankingsModalOpen] = useState(false)
-  const [isSubscribeModalOpen, setSubscribeModalOpen] = useState(false)
-  const [isLostModalOpen, setIsLostModalOpen] = useState(false)
-  const [congratsOpen, setCongratsOpen] = useState(false)
+  // const [isRankingsModalOpen, setIsRankingsModalOpen] = useState(false)
+  // const [isSubscribeModalOpen, setSubscribeModalOpen] = useState(false)
+  // const [isLostModalOpen, setIsLostModalOpen] = useState(false)
+  // const [congratsOpen, setCongratsOpen] = useState(false)
 
   useEffect(() => {
     const loadData = async () => {
@@ -111,8 +111,6 @@ const CurrentSession = ({ location }) => {
         sessionData.winnerAmount
       )
     ) {
-      setIsLostModalOpen(true)
-
       localStorage.setItem(localString, "true")
     }
   }, [sessionData])

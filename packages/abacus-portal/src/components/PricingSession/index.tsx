@@ -1,3 +1,5 @@
+import { SessionState } from "@models/SessionState"
+import { useCurrentSessionStatus } from "@state/sessionData/hooks"
 import { Section, SessionCountdown, Media } from "abacus-ui"
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
@@ -68,23 +70,28 @@ const PricingSession: FunctionComponent<PricingSessionProps> = ({
   endTime,
   openDepositModal,
   getCurrentSessionData,
-}) => (
-  <Section>
-    <Container>
-      <LeftHalf>
-        <Image src={nftSrc} />
-        <CountdownContainer>
-          <SessionCountdown
-            endTime={endTime}
-            onComplete={getCurrentSessionData}
-          />
-        </CountdownContainer>
-      </LeftHalf>
-      <RightHalf>
-        <CurrentState openDepositModal={openDepositModal} />
-      </RightHalf>
-    </Container>
-  </Section>
-)
+}) => {
+  const currentSessionStatus = useCurrentSessionStatus()
+  return (
+    <Section>
+      <Container>
+        <LeftHalf>
+          <Image src={nftSrc} />
+          {currentSessionStatus <= SessionState.Weigh && (
+            <CountdownContainer>
+              <SessionCountdown
+                endTime={endTime}
+                onComplete={getCurrentSessionData}
+              />
+            </CountdownContainer>
+          )}
+        </LeftHalf>
+        <RightHalf>
+          <CurrentState openDepositModal={openDepositModal} />
+        </RightHalf>
+      </Container>
+    </Section>
+  )
+}
 
 export default PricingSession

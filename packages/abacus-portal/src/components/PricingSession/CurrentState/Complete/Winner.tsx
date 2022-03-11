@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useRef, useState } from "react"
 import { Exa, Button, ButtonType } from "abacus-ui"
 import styled from "styled-components"
+import { useOnClaimPayout } from "@hooks/claim-pool"
 import { FlexEndColumn, StyledMiniList, WinnerImage } from "./Complete.styled"
 import { TitleContainer, Description } from "../CurrentState.styled"
 import useEarningsAndBalance from "./useEarningsAndBalance"
@@ -19,6 +20,7 @@ const StyledButton = styled(Button)`
 
 const Winner: FunctionComponent = () => {
   const shownModalRef = useRef(false)
+  const { onClaim, isPending } = useOnClaimPayout()
   const [modalOpen, setModalOpen] = useState(true)
   const { ethBalance, balanceUSD, ethEarnings, earningsUSD, abcEarnings } =
     useEarningsAndBalance()
@@ -27,6 +29,9 @@ const Winner: FunctionComponent = () => {
     setModalOpen(false)
     shownModalRef.current = true
   }
+
+  const claimEth = () => onClaim(true, String(ethEarnings))
+  const claimAbc = () => onClaim(false, String(abcEarnings))
 
   return (
     <FlexEndColumn>
@@ -45,10 +50,16 @@ const Winner: FunctionComponent = () => {
         isDark
       />
       <ButtonContainer>
-        <StyledButton buttonType={ButtonType.Gray}>
+        <StyledButton
+          buttonType={ButtonType.Gray}
+          onClick={claimAbc}
+          disabled={isPending}
+        >
           Claim {abcEarnings} ABC
         </StyledButton>
-        <StyledButton>Claim {ethEarnings} ETH</StyledButton>
+        <StyledButton onClick={claimEth} disabled={isPending}>
+          Claim {ethEarnings} ETH
+        </StyledButton>
       </ButtonContainer>
       <WinnerModal
         isOpen={modalOpen && !shownModalRef.current}

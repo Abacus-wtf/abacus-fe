@@ -2,6 +2,7 @@ import React, { FunctionComponent, useRef, useState } from "react"
 import { Exa, Button, ButtonType } from "abacus-ui"
 import styled from "styled-components"
 import { useOnClaimPayout } from "@hooks/claim-pool"
+import { useClaimPayoutData } from "@state/miscData/hooks"
 import { FlexEndColumn, StyledMiniList, WinnerImage } from "./Complete.styled"
 import { TitleContainer, Description } from "../CurrentState.styled"
 import useEarningsAndBalance from "./useEarningsAndBalance"
@@ -20,6 +21,7 @@ const StyledButton = styled(Button)`
 
 const Winner: FunctionComponent = () => {
   const shownModalRef = useRef(false)
+  const claimData = useClaimPayoutData()
   const { onClaim, isPending } = useOnClaimPayout()
   const [modalOpen, setModalOpen] = useState(true)
   const { ethBalance, balanceUSD, ethEarnings, earningsUSD, abcEarnings } =
@@ -30,8 +32,8 @@ const Winner: FunctionComponent = () => {
     shownModalRef.current = true
   }
 
-  const claimEth = () => onClaim(true, String(ethEarnings))
-  const claimAbc = () => onClaim(false, String(abcEarnings))
+  const claimEth = () => onClaim(true, String(claimData.ethPayout))
+  const claimAbc = () => onClaim(false, String(claimData.abcPayout))
 
   return (
     <FlexEndColumn>

@@ -548,6 +548,7 @@ export const useGetCurrentSessionData = () => {
           pricingSessionGrt !== null ? pricingSessionGrt.participants : [],
           (vote) => ({
             ...vote,
+            user: vote.user.id,
             appraisal: formatEther(vote.appraisal),
             amountStaked: formatEther(vote.amountStaked),
           })
@@ -580,40 +581,40 @@ export const useGetCurrentSessionData = () => {
             ? 0.05
             : Number(pricingSessionCheck.finalStdev),
         rankings,
-        bounty: pricingSessionCore.bounty,
+        bounty: Number(pricingSessionCore.bounty),
         image_url:
           pricingSessionMetadata?.image_url ||
           pricingSessionMetadata?.image_preview_url,
         animation_url: pricingSessionMetadata?.animation_url || null,
-        endTime,
-        votingTime: pricingSessionCore.votingTime,
+        endTime: Number(endTime),
+        votingTime: Number(pricingSessionCore.votingTime),
         numPpl:
           sessionStatus >= 2
             ? Number(pricingSessionGrt.numParticipants)
-            : pricingSessionCore.uniqueVoters,
+            : Number(pricingSessionCore.uniqueVoters),
         collectionTitle: pricingSessionMetadata?.collection?.name,
         totalStaked:
           sessionStatus >= 2
             ? Number(formatEther(pricingSessionGrt.totalStaked))
-            : pricingSessionCore.totalSessionStake,
+            : Number(pricingSessionCore.totalSessionStake),
         totalStakedInUSD:
           sessionStatus >= 2
             ? Number(formatEther(pricingSessionGrt.totalStaked)) *
               Number(ethUsd)
-            : pricingSessionCore.totalSessionStake * Number(ethUsd),
-        bountyInUSD: pricingSessionCore.bounty * Number(ethUsd),
+            : Number(pricingSessionCore.totalSessionStake) * Number(ethUsd),
+        bountyInUSD: Number(pricingSessionCore.bounty) * Number(ethUsd),
         nftName: pricingSessionMetadata?.name,
         address,
         tokenId,
-        nonce,
-        finalAppraisalValue,
+        nonce: Number(nonce),
+        finalAppraisalValue: Number(finalAppraisalValue),
         owner:
           pricingSessionMetadata?.owner?.user &&
           pricingSessionMetadata?.owner?.user?.username
             ? pricingSessionMetadata?.owner?.user?.username
             : shortenAddress(pricingSessionMetadata?.owner?.address),
         ownerAddress: pricingSessionMetadata?.owner?.address,
-        maxAppraisal: pricingSessionCore.maxAppraisal,
+        maxAppraisal: Number(pricingSessionCore.maxAppraisal),
         votes: pricingSessionGrt.participants.map(
           ({ user, weight, appraisal, amountStaked }) => ({
             user: user.id,

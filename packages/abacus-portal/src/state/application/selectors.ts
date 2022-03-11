@@ -1,5 +1,6 @@
 import { AppState } from "@state/index"
 import { createSelector } from "reselect"
+import { round2Decimals } from "utils"
 
 export const networkSymbolSelector = (
   state: AppState
@@ -15,6 +16,6 @@ export const ethToUSDCalculationSelector = createSelector(
   (state: AppState, eth: number) => eth,
   (ethToUSD, eth) => {
     const value = eth * ethToUSD
-    return Math.round((value + Number.EPSILON) * 100) / 100
+    return round2Decimals(value)
   }
 )

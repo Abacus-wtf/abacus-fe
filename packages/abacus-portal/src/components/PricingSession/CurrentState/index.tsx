@@ -1,4 +1,4 @@
-import React from "react"
+import React, { FunctionComponent } from "react"
 import { useCurrentSessionStatus } from "@state/sessionData/hooks"
 import { SessionState } from "@state/sessionData/reducer"
 import { Vote } from "./Vote"
@@ -6,14 +6,23 @@ import { Weigh } from "./Weigh"
 import { SetFinalAppraisal } from "./SetFinalAppraisal"
 import { Harvest } from "./Harvest"
 import { Claim } from "./Claim"
-// import SessionCompleted from "./SessionCompleted"
+import { Complete } from "./Complete"
+import Fallback from "./Fallback"
 
 type CurrentStateProps = {
   openDepositModal: () => void
+  isLoading: boolean
 }
 
-const CurrentState = ({ openDepositModal }: CurrentStateProps) => {
+const CurrentState: FunctionComponent<CurrentStateProps> = ({
+  openDepositModal,
+  isLoading,
+}) => {
   const status = useCurrentSessionStatus()
+
+  if (isLoading) {
+    return <Fallback />
+  }
   switch (status) {
     case SessionState.Vote:
       return <Vote openDepositModal={openDepositModal} />
@@ -25,10 +34,10 @@ const CurrentState = ({ openDepositModal }: CurrentStateProps) => {
       return <Harvest />
     case SessionState.Claim:
       return <Claim />
-    // case SessionState.Complete:
-    //   return <SessionCompleted />
+    case SessionState.Complete:
+      return <Complete />
     default:
-      return <Claim />
+      return null
   }
 }
 

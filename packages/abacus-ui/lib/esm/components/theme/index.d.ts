@@ -17,7 +17,7 @@ declare const defaultTheme: {
         readonly button: {
             readonly secondary: "rgba(28, 35, 51, 0.04)";
             readonly primary: "#1A1A1A";
-            readonly gray: "rgb(244,244,244)";
+            readonly gray: "rgb(220,220,220)";
         };
         readonly utility: {
             readonly green: "#23CE7C";

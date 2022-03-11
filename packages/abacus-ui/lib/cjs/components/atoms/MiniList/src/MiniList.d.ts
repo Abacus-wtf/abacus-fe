@@ -4,6 +4,7 @@ declare type MiniListProps = {
         [key: string]: string | React.ReactNode;
     };
     isDark?: boolean;
+    className?: string;
 };
 declare const MiniList: FunctionComponent<MiniListProps>;
 export default MiniList;

@@ -5,6 +5,7 @@ import Kilo from "../../../typography/Kilo/src/Kilo";
 type MiniListProps = {
   info: { [key: string]: string | React.ReactNode };
   isDark?: boolean;
+  className?: string;
 };
 
 const Container = styled.div`
@@ -46,8 +47,12 @@ const Divider = styled.div<{ isDark: boolean }>`
   width: 100%;
 `;
 
-const MiniList: FunctionComponent<MiniListProps> = ({ info, isDark }) => (
-  <Container>
+const MiniList: FunctionComponent<MiniListProps> = ({
+  info,
+  isDark,
+  className,
+}) => (
+  <Container className={className}>
     {Object.entries(info).map(([key, value], index) => (
       <React.Fragment key={key}>
         <MiniContainer>

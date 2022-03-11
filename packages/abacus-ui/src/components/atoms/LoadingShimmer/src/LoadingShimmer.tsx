@@ -28,7 +28,11 @@ const LoadingShimmer = styled.div`
   font-size: inherit;
   line-height: inherit;
   font-weight: inherit;
-  color: transparent;
+  color: transparent !important;
+
+  & * {
+    color: transparent !important;
+  }
 `;
 
 export default LoadingShimmer;

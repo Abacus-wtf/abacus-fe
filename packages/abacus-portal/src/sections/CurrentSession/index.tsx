@@ -119,6 +119,7 @@ const CurrentSession = ({ location }) => {
       <PricingSession
         nftSrc={sessionData.image_url}
         endTime={sessionData.endTime}
+        nftName={sessionData.nftName}
         openDepositModal={() => setIsDepositModalOpen(true)}
         getCurrentSessionData={() => {
           getCurrentSessionData(String(address), String(tokenId), Number(nonce))

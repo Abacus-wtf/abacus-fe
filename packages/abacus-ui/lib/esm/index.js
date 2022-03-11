@@ -85,7 +85,7 @@ var defaultTheme = {
         button: {
             secondary: "rgba(28, 35, 51, 0.04)",
             primary: "#1A1A1A",
-            gray: "rgb(244,244,244)",
+            gray: "rgb(220,220,220)",
         },
         utility: {
             green: "#23CE7C",
@@ -404,8 +404,8 @@ var Divider$4 = styled.div(templateObject_6$9 || (templateObject_6$9 = __makeTem
     return isDark ? theme.colors.core[800] : theme.colors.core.white;
 });
 var MiniList = function (_a) {
-    var info = _a.info, isDark = _a.isDark;
-    return (React.createElement(Container$s, null, Object.entries(info).map(function (_a, index) {
+    var info = _a.info, isDark = _a.isDark, className = _a.className;
+    return (React.createElement(Container$s, { className: className }, Object.entries(info).map(function (_a, index) {
         var key = _a[0], value = _a[1];
         return (React.createElement(React.Fragment, { key: key },
             React.createElement(MiniContainer, null,
@@ -428,7 +428,7 @@ var Flex = styled.div(templateObject_1$B || (templateObject_1$B = __makeTemplate
 var templateObject_1$B;
 
 var Shimmer = keyframes(templateObject_1$A || (templateObject_1$A = __makeTemplateObject(["\n    0% {\n        background-position: 100% 0;\n    }\n    100% {\n        background-position: -100% 0;\n    }\n"], ["\n    0% {\n        background-position: 100% 0;\n    }\n    100% {\n        background-position: -100% 0;\n    }\n"])));
-var LoadingShimmer = styled.div(templateObject_2$r || (templateObject_2$r = __makeTemplateObject(["\n  animation-duration: 2.2s;\n  animation-fill-mode: forwards;\n  animation-iteration-count: infinite;\n  animation-name: ", ";\n  animation-timing-function: linear;\n  background: ", ";\n  background: linear-gradient(\n    to right,\n    ", " 9%,\n    ", " 18%,\n    ", " 27%\n  );\n  background-size: 300% 100%;\n  border-radius: ", ";\n  min-height: 16px;\n  font-size: inherit;\n  line-height: inherit;\n  font-weight: inherit;\n  color: transparent;\n"], ["\n  animation-duration: 2.2s;\n  animation-fill-mode: forwards;\n  animation-iteration-count: infinite;\n  animation-name: ", ";\n  animation-timing-function: linear;\n  background: ", ";\n  background: linear-gradient(\n    to right,\n    ", " 9%,\n    ", " 18%,\n    ", " 27%\n  );\n  background-size: 300% 100%;\n  border-radius: ", ";\n  min-height: 16px;\n  font-size: inherit;\n  line-height: inherit;\n  font-weight: inherit;\n  color: transparent;\n"])), Shimmer, function (_a) {
+var LoadingShimmer = styled.div(templateObject_2$r || (templateObject_2$r = __makeTemplateObject(["\n  animation-duration: 2.2s;\n  animation-fill-mode: forwards;\n  animation-iteration-count: infinite;\n  animation-name: ", ";\n  animation-timing-function: linear;\n  background: ", ";\n  background: linear-gradient(\n    to right,\n    ", " 9%,\n    ", " 18%,\n    ", " 27%\n  );\n  background-size: 300% 100%;\n  border-radius: ", ";\n  min-height: 16px;\n  font-size: inherit;\n  line-height: inherit;\n  font-weight: inherit;\n  color: transparent !important;\n\n  & * {\n    color: transparent !important;\n  }\n"], ["\n  animation-duration: 2.2s;\n  animation-fill-mode: forwards;\n  animation-iteration-count: infinite;\n  animation-name: ", ";\n  animation-timing-function: linear;\n  background: ", ";\n  background: linear-gradient(\n    to right,\n    ", " 9%,\n    ", " 18%,\n    ", " 27%\n  );\n  background-size: 300% 100%;\n  border-radius: ", ";\n  min-height: 16px;\n  font-size: inherit;\n  line-height: inherit;\n  font-weight: inherit;\n  color: transparent !important;\n\n  & * {\n    color: transparent !important;\n  }\n"])), Shimmer, function (_a) {
     var theme = _a.theme;
     return theme.colors.core.background;
 }, function (_a) {

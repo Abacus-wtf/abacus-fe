@@ -1,7 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit"
 import { PromiseStatus } from "@models/PromiseStatus"
 import {
-  getCurrentSessionData,
   setUserStatus,
   setMultipleSessionData,
   setMultipleSessionFetchStatus,
@@ -23,6 +22,8 @@ import {
   setFeaturedSessionData,
   setFeaturedSessionFetchStatus,
   setFeaturedSessionErrorMessage,
+  setCurrentSessionData,
+  setCurrentSessionStatus,
 } from "./actions"
 
 export interface Vote {
@@ -130,7 +131,7 @@ interface SessionDataState {
 }
 
 export const initialState = {
-  currentSessionData: null,
+  currentSessionData: {},
   featuredSessionState: {
     featuredSessionData: [],
     fetchStatus: PromiseStatus.Idle,
@@ -161,8 +162,11 @@ export const initialState = {
 
 export default createReducer(initialState, (builder) =>
   builder
-    .addCase(getCurrentSessionData, (state, action) => {
-      state.currentSessionData = action.payload
+    .addCase(setCurrentSessionData, (state, action) => {
+      state.currentSessionData.sessionData = action.payload
+    })
+    .addCase(setCurrentSessionStatus, (state, action) => {
+      state.currentSessionData.sessionStatus = action.payload
     })
     .addCase(setUserStatus, (state, action) => {
       state.currentSessionData.userStatus = action.payload

@@ -77,14 +77,15 @@ const PricingSession: FunctionComponent<PricingSessionProps> = ({
       <Container>
         <LeftHalf>
           <Image src={nftSrc} />
-          {currentSessionStatus <= SessionState.Weigh && (
-            <CountdownContainer>
-              <SessionCountdown
-                endTime={endTime}
-                onComplete={getCurrentSessionData}
-              />
-            </CountdownContainer>
-          )}
+          {currentSessionStatus > -1 &&
+            currentSessionStatus <= SessionState.Weigh && (
+              <CountdownContainer>
+                <SessionCountdown
+                  endTime={endTime}
+                  onComplete={getCurrentSessionData}
+                />
+              </CountdownContainer>
+            )}
         </LeftHalf>
         <RightHalf>
           <CurrentState openDepositModal={openDepositModal} />

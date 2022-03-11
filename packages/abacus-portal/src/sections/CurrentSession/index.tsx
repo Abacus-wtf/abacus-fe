@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import * as queryString from "query-string"
 import { createGlobalStyle } from "styled-components"
 import {
@@ -11,18 +11,14 @@ import {
 import { navigate } from "gatsby"
 import {
   useCurrentSessionData,
-  useCurrentSessionFetchStatus,
-  useCurrentSessionUserStatus,
   useGetCurrentSessionData,
   useGetUserStatus,
 } from "@state/sessionData/hooks"
-import { PromiseStatus } from "@models/PromiseStatus"
-import { useActiveWeb3React } from "@hooks/index"
+import { useActiveWeb3React, usePrevious } from "@hooks/index"
 import ConnectWalletAlert from "@components/ConnectWalletAlert"
 import { useEthToUSD, useGetCurrentNetwork } from "@state/application/hooks"
-import { useSetPayoutData, useClaimPayoutData } from "@state/miscData/hooks"
+import { useSetPayoutData } from "@state/miscData/hooks"
 import { NetworkSymbolEnum } from "@config/constants"
-import { isWithinWinRange } from "@config/utils"
 import { Container, SplitContainer } from "@layouts/styles"
 import PricingSession from "@components/PricingSession"
 import DepositModal from "./DepositModal"
@@ -40,81 +36,55 @@ body {
 `
 
 const CurrentSession = ({ location }) => {
+  const isInitialized = useRef(false)
   const { address, tokenId, nonce } = queryString.parse(location.search)
   const getCurrentSessionData = useGetCurrentSessionData()
   const { account, chainId } = useActiveWeb3React()
+  const prevAccount = usePrevious(account)
   const sessionData = useCurrentSessionData()
-  const fetchStatus = useCurrentSessionFetchStatus()
-  const isLoading = fetchStatus === PromiseStatus.Pending
   const networkSymbol = useGetCurrentNetwork()
+  const prevNetworkSymbol = usePrevious(networkSymbol)
   const isNetworkSymbolNone = networkSymbol === NetworkSymbolEnum.NONE
-  const claimData = useClaimPayoutData()
+  const isNewNetworkSymbol =
+    networkSymbol !== prevNetworkSymbol
+      ? !(
+          (networkSymbol === NetworkSymbolEnum.ARBITRUM &&
+            prevNetworkSymbol === NetworkSymbolEnum.NONE) ||
+          (networkSymbol === NetworkSymbolEnum.NONE &&
+            prevNetworkSymbol === NetworkSymbolEnum.ARBITRUM)
+        )
+      : false
   const setPayoutData = useSetPayoutData()
   const getUserStatus = useGetUserStatus()
-  const userStatus = useCurrentSessionUserStatus()
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false)
   const totalStakedUSD = useEthToUSD(sessionData.totalStaked)
-  // const [isRankingsModalOpen, setIsRankingsModalOpen] = useState(false)
-  // const [isSubscribeModalOpen, setSubscribeModalOpen] = useState(false)
-  // const [isLostModalOpen, setIsLostModalOpen] = useState(false)
-  // const [congratsOpen, setCongratsOpen] = useState(false)
 
   useEffect(() => {
-    const loadData = async () => {
-      if (sessionData.address === "") {
-        await getCurrentSessionData(
-          String(address),
-          String(tokenId),
-          Number(nonce)
-        )
-      }
-      if (claimData === null) {
-        await setPayoutData(account)
-      }
-      if (userStatus === -1) {
-        await getUserStatus(String(address), String(tokenId))
-      }
-    }
-
     if (!address || !tokenId || !nonce) {
       alert("This is a broken link, we are redirecting you to the home page.")
       navigate("/")
-    } else if ((account && chainId && networkSymbol) || isNetworkSymbolNone) {
-      loadData()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [claimData, sessionData, userStatus])
+  }, [address, nonce, tokenId])
 
   useEffect(() => {
-    if (
-      (sessionData.address !== "" && sessionData.address !== address) ||
-      (sessionData.tokenId !== "" && sessionData.tokenId !== tokenId) ||
-      (sessionData.nonce !== 0 && sessionData.nonce !== Number(nonce))
-    ) {
-      getCurrentSessionData(String(address), String(tokenId), Number(nonce))
+    const validSession = address && tokenId
+    const newAccount = account && account !== prevAccount
+    if (validSession && newAccount) {
+      getUserStatus(String(address), String(tokenId))
+      setPayoutData(account)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sessionData, address, tokenId, nonce])
+  }, [account, address, getUserStatus, prevAccount, setPayoutData, tokenId])
+
+  const loadSessionData = useCallback(async () => {
+    await getCurrentSessionData(String(address), String(tokenId), Number(nonce))
+  }, [address, getCurrentSessionData, nonce, tokenId])
 
   useEffect(() => {
-    const localString = `${sessionData.address}${sessionData.tokenId}${sessionData.nonce}`
-    const wasShown = localStorage.getItem(localString)
-    if (
-      wasShown === null &&
-      sessionData &&
-      sessionData.finalAppraisalValue &&
-      sessionData.guessedAppraisal &&
-      sessionData.guessedAppraisal !== -1 &&
-      sessionData.winnerAmount &&
-      !isWithinWinRange(
-        sessionData.guessedAppraisal,
-        sessionData.finalAppraisalValue,
-        sessionData.winnerAmount
-      )
-    ) {
-      localStorage.setItem(localString, "true")
+    if ((chainId && isNewNetworkSymbol) || !isInitialized.current) {
+      isInitialized.current = true
+      loadSessionData()
     }
-  }, [sessionData])
+  }, [chainId, isNewNetworkSymbol, loadSessionData])
 
   if (!account && !isNetworkSymbolNone) {
     return (
@@ -124,7 +94,7 @@ const CurrentSession = ({ location }) => {
     )
   }
 
-  if (isLoading || sessionData === null) {
+  if (sessionData === null) {
     return (
       <Container style={{ alignItems: "center", justifyContent: "center" }}>
         Loading... {/* TODO: find a loader */}
@@ -150,9 +120,9 @@ const CurrentSession = ({ location }) => {
         nftSrc={sessionData.image_url}
         endTime={sessionData.endTime}
         openDepositModal={() => setIsDepositModalOpen(true)}
-        getCurrentSessionData={() =>
+        getCurrentSessionData={() => {
           getCurrentSessionData(String(address), String(tokenId), Number(nonce))
-        }
+        }}
       />
       <SplitContainer>
         <PriceHistory

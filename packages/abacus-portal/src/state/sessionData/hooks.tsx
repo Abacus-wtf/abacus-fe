@@ -31,7 +31,6 @@ import { PromiseStatus } from "@models/PromiseStatus"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import {
   SessionData,
-  CurrentSessionState,
   UserState,
   SessionState,
   CurrentSessionData,
@@ -39,7 +38,6 @@ import {
 import {
   setMultipleSessionData,
   setMultipleSessionFetchStatus,
-  getCurrentSessionData,
   setUserStatus,
   setCurrentSessionFetchStatus,
   setMySessionsFetchStatus,
@@ -54,6 +52,8 @@ import {
   setActiveSessionsIsLastPage,
   setFeaturedSessionFetchStatus,
   setFeaturedSessionData,
+  setCurrentSessionStatus,
+  setCurrentSessionData,
 } from "./actions"
 import {
   GET_PRICING_SESSIONS,
@@ -182,7 +182,7 @@ export const useCanUserInteract = () => {
     case SessionState.Claim:
       return userStatus === UserState.CompletedWeigh
     case SessionState.Complete:
-      return true
+      return userStatus === UserState.CompletedWeigh
     default:
       return false
   }
@@ -460,10 +460,8 @@ const getUserStatus = async ({
 
 export const useGetCurrentSessionData = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const getPricingSessionContract = useWeb3Contract(ABC_PRICING_SESSION_ABI)
   const getEthUsdContract = useWeb3EthContract(ETH_USD_ORACLE_ABI)
   const networkSymbol = useGetCurrentNetwork()
-  const { account, chainId } = useActiveWeb3React()
   const multicall = useMultiCall(ABC_PRICING_SESSION_ABI)
 
   return useCallback(
@@ -544,21 +542,6 @@ export const useGetCurrentSessionData = () => {
           ? Number(formatEther(finalAppraisalResult))
           : undefined
 
-      let guessedAppraisal = -1
-      if (sessionStatus >= SessionState.Harvest && account) {
-        const index = _.findIndex(
-          pricingSessionGrt.participants,
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          (participant) => participant.user.id === account.toLowerCase()
-        )
-        if (index !== -1) {
-          guessedAppraisal = Number(
-            formatEther(pricingSessionGrt.participants[index].appraisal)
-          )
-        }
-      }
-
       let rankings
       if (sessionStatus >= SessionState.Weigh) {
         rankings = _.map(
@@ -604,7 +587,6 @@ export const useGetCurrentSessionData = () => {
         animation_url: pricingSessionMetadata?.animation_url || null,
         endTime,
         votingTime: pricingSessionCore.votingTime,
-        guessedAppraisal,
         numPpl:
           sessionStatus >= 2
             ? Number(pricingSessionGrt.numParticipants)
@@ -642,32 +624,12 @@ export const useGetCurrentSessionData = () => {
         ),
       }
 
-      const userStatus = await getUserStatus({
-        address,
-        account,
-        getPricingSessionContract,
-        tokenId,
-        networkSymbol,
-      })
-
-      const currentSessionData: CurrentSessionState = {
-        sessionData,
-        userStatus,
-        sessionStatus,
-      }
-      dispatch(getCurrentSessionData(currentSessionData))
+      dispatch(setCurrentSessionData(sessionData))
+      dispatch(setCurrentSessionStatus(sessionStatus))
       dispatch(setCurrentSessionFetchStatus(PromiseStatus.Resolved))
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      getPricingSessionContract,
-      networkSymbol,
-      getEthUsdContract,
-      account,
-      dispatch,
-      multicall,
-      chainId,
-    ]
+
+    [dispatch, getEthUsdContract, multicall, networkSymbol]
   )
 }
 

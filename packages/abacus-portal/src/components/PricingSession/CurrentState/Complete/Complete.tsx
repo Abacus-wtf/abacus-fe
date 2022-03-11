@@ -8,15 +8,13 @@ import { isWithinWinRange } from "@config/utils"
 import NonParticipant from "./NonParticipant"
 import Winner from "./Winner"
 import Loser from "./Loser"
+import useUserRanking from "./useUserRanking"
 
 const Weigh: FunctionComponent = () => {
-  const { account } = useActiveWeb3React()
   const sessionData = useCurrentSessionData()
   const isParticipant = useCanUserInteract()
 
-  const userRanking = sessionData?.rankings.find(
-    (ranking) => ranking.user.toLowerCase() === account.toLowerCase()
-  )
+  const userRanking = useUserRanking()
   const isWinner = userRanking
     ? isWithinWinRange(
         Number(userRanking.appraisal),
@@ -30,7 +28,7 @@ const Weigh: FunctionComponent = () => {
   }
 
   return isWinner ? (
-    <Winner />
+    <Winner userRanking={userRanking} />
   ) : (
     <Loser stake={Number(userRanking.amountStaked)} />
   )

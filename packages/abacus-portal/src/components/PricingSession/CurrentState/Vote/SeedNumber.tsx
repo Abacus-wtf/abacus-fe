@@ -34,7 +34,7 @@ const SuccessMessage = styled.div`
 const SeedNumber: FunctionComponent = () => {
   const [revealed, setRevealed] = useState(false)
   const [copied, setCopied] = useState(false)
-  const participation = useParticipation()
+  const { participation } = useParticipation()
 
   if (!participation) {
     return null

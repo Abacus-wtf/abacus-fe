@@ -7,6 +7,7 @@ import { useActiveWeb3React } from "@hooks/index"
 import { useClaimPayoutData } from "@state/miscData/hooks"
 import { useCurrentSessionData } from "@state/sessionData/hooks"
 import { BigNumber } from "ethers"
+import { useEthToUSD } from "@state/application/hooks"
 import useParticipation from "../useParticipation"
 import useValidate, { ValidationFn } from "../useValidate"
 import SeedNumber from "./SeedNumber"
@@ -45,6 +46,8 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
   const { onSubmitVote, isPending: submitVotePending } = useOnSubmitVote()
   const { onUpdateVote, isPending: updateVotePending } = useOnUpdateVote()
   const claimPayout = useClaimPayoutData()
+  const appraisalUSD = useEthToUSD(Number(appraisal))
+  const stakeUSD = useEthToUSD(Number(stake))
 
   const { maxAppraisal } = sessionData
   const ethCredit = claimPayout?.ethCredit ?? 0
@@ -130,9 +133,11 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
 
   useEffect(() => {
     if (pageState === 0) {
-      setInputHint(appraisal ? `${appraisal} ETH` : "Appraisal required")
+      setInputHint(
+        appraisal ? `${appraisal} ETH ($${appraisalUSD})` : "Appraisal required"
+      )
     } else {
-      setInputHint(stake ? `${stake} ETH` : "Stake required")
+      setInputHint(stake ? `${stake} ETH ($${stakeUSD})` : "Stake required")
     }
     if (appraisalValid.valid && stakeValid.valid) {
       setInputError("")
@@ -144,7 +149,15 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
         setInputError(stakeValid.message)
       }
     }
-  }, [appraisal, pageState, stake, appraisalValid, stakeValid])
+  }, [
+    appraisal,
+    pageState,
+    stake,
+    appraisalValid,
+    stakeValid,
+    appraisalUSD,
+    stakeUSD,
+  ])
 
   useEffect(() => {
     if (participation) {

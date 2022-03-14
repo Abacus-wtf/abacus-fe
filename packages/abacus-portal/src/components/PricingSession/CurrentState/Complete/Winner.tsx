@@ -1,15 +1,22 @@
-import React, { FunctionComponent, useRef, useState } from "react"
-import { Exa, Button, ButtonType } from "abacus-ui"
+import React, { FunctionComponent, useState } from "react"
+import { Exa, Button, ButtonType, MiniList } from "abacus-ui"
 import styled from "styled-components"
 import { useOnClaimPayout } from "@hooks/claim-pool"
 import { useClaimPayoutData } from "@state/miscData/hooks"
-import { FlexEndColumn, StyledMiniList, WinnerImage } from "./Complete.styled"
+import { FlexEndColumn, WinnerImage } from "./Complete.styled"
 import { TitleContainer, Description } from "../CurrentState.styled"
 import useEarningsAndBalance from "./useEarningsAndBalance"
 import WinnerModal from "./WinnerModal"
+import useHasSeenWinnerModal from "./useHasSeenWinnerModal"
+import Claimed from "./Claimed"
 
-const ButtonContainer = styled.div`
-  display: flex;
+export const StyledMiniList = styled(MiniList)<{ noClaim: boolean }>`
+  width: 100%;
+  margin-bottom: ${({ noClaim }) => (noClaim ? "16px" : "0")};
+`
+
+const ButtonContainer = styled.div<{ noClaim: boolean }>`
+  display: ${({ noClaim }) => (noClaim ? "none" : "flex")};
   justify-content: center;
   gap: 16px;
   width: 100%;
@@ -20,20 +27,33 @@ const StyledButton = styled(Button)`
 `
 
 const Winner: FunctionComponent = () => {
-  const shownModalRef = useRef(false)
   const claimData = useClaimPayoutData()
   const { onClaim, isPending } = useOnClaimPayout()
+  const [hasClaimed, setHasClaimed] = useState("")
   const [modalOpen, setModalOpen] = useState(true)
   const { ethBalance, balanceUSD, ethEarnings, earningsUSD, abcEarnings } =
     useEarningsAndBalance()
+  const { setHasSeenWinnerModal } = useHasSeenWinnerModal()
 
   const closeModal = () => {
     setModalOpen(false)
-    shownModalRef.current = true
+    setHasSeenWinnerModal()
   }
 
-  const claimEth = () => onClaim(true, String(claimData.ethPayout))
-  const claimAbc = () => onClaim(false, String(claimData.abcPayout))
+  const claimEth = () => {
+    onClaim(true, String(claimData.ethPayout))
+    setHasClaimed(`${String(claimData.ethPayout)} ETH`)
+  }
+  const claimAbc = () => {
+    onClaim(false, String(claimData.abcPayout))
+    setHasClaimed(`${String(claimData.abcPayout)} ABC`)
+  }
+
+  if (!isPending && hasClaimed) {
+    return <Claimed claimed={hasClaimed} />
+  }
+
+  const claimZero = ethEarnings === 0
 
   return (
     <FlexEndColumn>
@@ -42,30 +62,37 @@ const Winner: FunctionComponent = () => {
         <TitleContainer style={{ textAlign: "center", marginTop: "12px" }}>
           <Exa style={{ fontFamily: "Bluu Next" }}>You're a winner!</Exa>
         </TitleContainer>
-        <Description>Claim your reward for this appraisal 🎉</Description>
+        <Description>
+          {claimZero
+            ? "Looks like you've already claimed earnings 🎉"
+            : "Claim your reward for this appraisal 🎉"}
+        </Description>
       </div>
       <StyledMiniList
+        noClaim={claimZero}
         info={{
-          Earnings: `${ethEarnings} ETH or ${abcEarnings} ABC ($${earningsUSD})`,
+          Claim: `${ethEarnings} ETH or ${abcEarnings} ABC ($${earningsUSD})`,
           "Abacus Balance": `${ethBalance} ETH ($${balanceUSD})`,
         }}
         isDark
       />
-      <ButtonContainer>
+      <ButtonContainer noClaim={claimZero}>
         <StyledButton
           buttonType={ButtonType.Gray}
           onClick={claimAbc}
-          disabled={isPending}
+          disabled={isPending || claimZero}
         >
           Claim {abcEarnings} ABC
         </StyledButton>
-        <StyledButton onClick={claimEth} disabled={isPending}>
+        <StyledButton onClick={claimEth} disabled={isPending || claimZero}>
           Claim {ethEarnings} ETH
         </StyledButton>
       </ButtonContainer>
       <WinnerModal
-        isOpen={modalOpen && !shownModalRef.current}
+        claimZero={claimZero}
+        isOpen={modalOpen}
         closeModal={closeModal}
+        claimEth={claimEth}
       />
     </FlexEndColumn>
   )

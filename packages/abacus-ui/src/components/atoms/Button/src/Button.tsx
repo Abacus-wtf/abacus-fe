@@ -46,6 +46,10 @@ const Button = styled.button.attrs(({ disabled, ...rest }) => ({
   height: min-content;
 
   &:hover {
+    color: ${({ theme, buttonType }) =>
+      buttonType === ButtonType.White || buttonType === ButtonType.Gray
+        ? theme.colors.button.primary
+        : theme.colors.core.white};
     opacity: 0.6;
     box-shadow: none;
   }

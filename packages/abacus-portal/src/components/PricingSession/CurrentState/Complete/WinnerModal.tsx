@@ -3,8 +3,6 @@ import { Button, Exa, Modal } from "abacus-ui"
 import styled from "styled-components"
 import { useCurrentSessionData } from "@state/sessionData/hooks"
 import { useOnClaimPayout } from "@hooks/claim-pool"
-import { useClaimPayoutData } from "@state/miscData/hooks"
-import { Vote } from "@state/sessionData/reducer"
 import { round2Decimals } from "utils"
 import { useEthToUSD } from "@state/application/hooks"
 import {
@@ -17,10 +15,13 @@ import { FlexEndColumn, StyledMiniList, WinnerImage } from "./Complete.styled"
 import { TitleContainer, Description } from "../CurrentState.styled"
 import useEarningsAndBalance from "./useEarningsAndBalance"
 import useUserRanking from "./useUserRanking"
+import useHasSeenWinnerModal from "./useHasSeenWinnerModal"
 
 type WinnerModalProps = {
   isOpen: boolean
+  claimZero: boolean
   closeModal: () => void
+  claimEth: () => void
 }
 
 const ClaimButton = styled(Button)`
@@ -29,18 +30,23 @@ const ClaimButton = styled(Button)`
 
 const WinnerModal: FunctionComponent<WinnerModalProps> = ({
   isOpen,
+  claimZero,
   closeModal,
+  claimEth,
 }) => {
   const sessionData = useCurrentSessionData()
-  const claimData = useClaimPayoutData()
-  const { onClaim, isPending } = useOnClaimPayout()
-  const claimEth = () => onClaim(true, String(claimData.ethPayout))
+  const { isPending } = useOnClaimPayout()
   const { ethEarnings } = useEarningsAndBalance()
   const userRanking = useUserRanking()
   const appraisalEth = round2Decimals(Number(userRanking?.appraisal))
   const appraisalUSD = useEthToUSD(appraisalEth)
   const stakeEth = round2Decimals(Number(userRanking?.amountStaked))
   const stakeUSD = useEthToUSD(stakeEth)
+  const { hasSeen } = useHasSeenWinnerModal()
+
+  if (hasSeen) {
+    return null
+  }
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
@@ -66,8 +72,8 @@ const WinnerModal: FunctionComponent<WinnerModalProps> = ({
               }}
               isDark
             />
-            <ClaimButton claimEth={claimEth} disabled={isPending}>
-              Claim {ethEarnings} ETH
+            <ClaimButton claimEth={claimEth} disabled={isPending || claimZero}>
+              {claimZero ? "Already claimed" : `Claim ${ethEarnings} ETH`}
             </ClaimButton>
           </FlexEndColumn>
         </RightHalf>

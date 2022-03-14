@@ -357,10 +357,11 @@ var Button = styled__default["default"].button.attrs(function (_a) {
         type: "button",
         ...rest,
     });
-})(templateObject_2$t || (templateObject_2$t = __makeTemplateObject(["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n\n  ", "\n"], ["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ",
+})(templateObject_2$t || (templateObject_2$t = __makeTemplateObject(["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    color: ", ";\n    opacity: 0.6;\n    box-shadow: none;\n  }\n\n  ", "\n"], ["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ",
     ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ",
     ";\n  background-color: ",
-    ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    opacity: 0.6;\n    box-shadow: none;\n  }\n\n  ",
+    ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    color: ",
+    ";\n    opacity: 0.6;\n    box-shadow: none;\n  }\n\n  ",
     "\n"])), Font(), function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.section;
@@ -387,6 +388,11 @@ var Button = styled__default["default"].button.attrs(function (_a) {
             : buttonType === exports.ButtonType.Gray
                 ? theme.colors.button.gray
                 : theme.colors.utility.blue;
+}, function (_a) {
+    var theme = _a.theme, buttonType = _a.buttonType;
+    return buttonType === exports.ButtonType.White || buttonType === exports.ButtonType.Gray
+        ? theme.colors.button.primary
+        : theme.colors.core.white;
 }, function (_a) {
     var disabled = _a.disabled;
     return disabled

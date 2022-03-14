@@ -1,4 +1,3 @@
-import { useActiveWeb3React } from "@hooks/index"
 import React, { FunctionComponent } from "react"
 import {
   useCanUserInteract,
@@ -10,7 +9,7 @@ import Winner from "./Winner"
 import Loser from "./Loser"
 import useUserRanking from "./useUserRanking"
 
-const Weigh: FunctionComponent = () => {
+const Complete: FunctionComponent = () => {
   const sessionData = useCurrentSessionData()
   const isParticipant = useCanUserInteract()
 
@@ -28,10 +27,10 @@ const Weigh: FunctionComponent = () => {
   }
 
   return isWinner ? (
-    <Winner userRanking={userRanking} />
+    <Winner />
   ) : (
-    <Loser stake={Number(userRanking.amountStaked)} />
+    <Loser stake={Number(userRanking?.amountStaked)} />
   )
 }
 
-export default Weigh
+export default Complete

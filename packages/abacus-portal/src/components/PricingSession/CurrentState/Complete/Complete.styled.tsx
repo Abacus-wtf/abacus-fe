@@ -4,6 +4,7 @@ import { Flex, Media, MiniList } from "abacus-ui"
 export const FlexEndColumn = styled(Flex)`
   flex-direction: column;
   justify-content: flex-end;
+  height: 100%;
   align-items: center;
   gap: 20px;
   margin-top: 20px;

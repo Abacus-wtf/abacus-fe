@@ -10,29 +10,11 @@ import moment from "moment"
 import _ from "lodash"
 import Buttons from "@components/Button"
 import { useUnlockPosition } from "@hooks/vaultFunc"
+import { Stat, StatTitle, TicketContainer } from "./CurrentState.styles"
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-`
-
-const StatTitle = styled.div`
-  font-weight: 400;
-  font-size: 20px;
-  padding: 10px 0px;
-`
-
-const TicketContainer = styled.div`
-  max-height: 200px;
-  overflow: scroll;
-`
-
-const StatContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
-  border-bottom: 0.5px solid rgb(196, 196, 196);
 `
 
 const CurrentPosition = () => {
@@ -52,36 +34,13 @@ const CurrentPosition = () => {
 
   return (
     <Container>
-      <StatContainer>
-        <StatTitle>Number of Tokens Locked:</StatTitle>
-        <StatTitle>
-          <b>{traderData.tokensLocked}</b>
-        </StatTitle>
-      </StatContainer>
-      <StatContainer>
-        <StatTitle>Tickets Opened:</StatTitle>
-        <StatTitle>
-          <b>{traderData.ticketsOpen}</b>
-        </StatTitle>
-      </StatContainer>
-      <StatContainer>
-        <StatTitle>Credits Available on Unlock:</StatTitle>
-        <StatTitle>
-          <b>{traderData.finalCreditCount}</b>
-        </StatTitle>
-      </StatContainer>
-      <StatContainer>
-        <StatTitle>Credits Purchased:</StatTitle>
-        <StatTitle>
-          <b>{traderData.creditsPurchased}</b>
-        </StatTitle>
-      </StatContainer>
-      <StatContainer>
-        <StatTitle>Unlock Time:</StatTitle>
-        <StatTitle style={{ textAlign: "right" }}>
-          <b>{moment().add(traderData.timeUnlock).fromNow()}</b>
-        </StatTitle>
-      </StatContainer>
+      <Stat title="Number of Tokens Locked:" value={traderData.tokensLocked} />
+      <Stat title="Tickets Opened:" value={traderData.ticketsOpen} />
+      <Stat title="Credits Purchased:" value={traderData.creditsPurchased} />
+      <Stat
+        title="Unlock Time:"
+        value={moment().add(traderData.timeUnlock).fromNow()}
+      />
       <TicketContainer>
         {traderData.ticketsOwned &&
           _.map(Object.entries(traderData.ticketsOwned), ([ticket, amount]) => (

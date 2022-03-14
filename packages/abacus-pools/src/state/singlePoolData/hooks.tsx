@@ -4,17 +4,18 @@ import { useDispatch, useSelector } from "react-redux"
 import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
 import VAULT_ABI from "@config/contracts/ABC_VAULT_ABI.json"
+import BRIBE_ABI from "@config/contracts/ABC_BRIBE_FACTORY_ABI.json"
 import CLOSE_POOL_ABI from "@config/contracts/ABC_CLOSE_POOL_ABI.json"
 import ERC_721_ABI from "@config/contracts/ERC_721_ABI.json"
-import { ABC_FACTORY, ZERO_ADDRESS } from "@config/constants"
+import { ABC_BRIBE_FACTORY, ABC_FACTORY, ZERO_ADDRESS } from "@config/constants"
 import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
 import { formatEther } from "ethers/lib/utils"
 import moment from "moment"
 import { BigNumber } from "ethers"
 import _ from "lodash"
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"
-import { getPoolData, getTickets, getTraderProfile } from "./actions"
-import { Ticket } from "./reducer"
+import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
+import { Bribe, Ticket } from "./reducer"
 
 const getPoolDataSelector = (
   state: AppState
@@ -22,6 +23,13 @@ const getPoolDataSelector = (
 
 export const useGetPoolData = () =>
   useSelector<AppState, AppState["singlePoolData"]["data"]>(getPoolDataSelector)
+
+const getBribeSelector = (
+  state: AppState
+): AppState["singlePoolData"]["bribe"] => state.singlePoolData.bribe
+
+export const useBribeData = () =>
+  useSelector<AppState, AppState["singlePoolData"]["bribe"]>(getBribeSelector)
 
 const getTraderSelector = (
   state: AppState
@@ -41,6 +49,47 @@ export const useTickets = () =>
   useSelector<AppState, AppState["singlePoolData"]["tickets"]>(
     getTicketsSelector
   )
+
+export const useGetBribeData = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const bribeContract = useWeb3Contract(BRIBE_ABI)
+  const bribeMulti = useMultiCall(BRIBE_ABI)
+  const { account } = useActiveWeb3React()
+  const poolData = useGetPoolData()
+
+  return useCallback(async () => {
+    if (poolData.vaultAddress === undefined) return
+
+    const [desiredBribeSize, offeredBribeSize, bribePerUserIndex] =
+      await bribeMulti(
+        ABC_BRIBE_FACTORY,
+        ["desiredBribeSize", "offeredBribeSize", "bribePerUserIndex"],
+        [
+          [poolData.address, poolData.tokenId],
+          [poolData.address, poolData.tokenId],
+          [poolData.address, poolData.tokenId],
+        ]
+      )
+
+    let bribe: Bribe = {
+      offeredBribeSize: Number(formatEther(offeredBribeSize[0])),
+      desiredBribeSize: Number(formatEther(desiredBribeSize[0])),
+      bribeOfferedByUser: 0,
+    }
+    if (account) {
+      const accountBribe = await bribeContract(ABC_BRIBE_FACTORY)
+        .methods.bribePerAccount(
+          bribePerUserIndex[0],
+          poolData.address,
+          poolData.tokenId,
+          account
+        )
+        .call()
+      bribe.bribeOfferedByUser = Number(formatEther(accountBribe))
+    }
+    dispatch(getBribe(bribe))
+  }, [account, dispatch, bribeContract, bribeMulti, poolData])
+}
 
 export const useGetTraderProfileData = () => {
   const dispatch = useDispatch<AppDispatch>()

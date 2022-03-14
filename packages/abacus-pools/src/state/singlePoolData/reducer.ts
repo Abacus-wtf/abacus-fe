@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit"
-import { getPoolData, getTickets, getTraderProfile } from "./actions"
+import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
 import { Pool } from "../poolData/reducer"
 
 export interface TraderProfile {
@@ -20,9 +20,16 @@ export interface Ticket {
   amount: number
 }
 
+export interface Bribe {
+  offeredBribeSize: number
+  desiredBribeSize: number
+  bribeOfferedByUser: number
+}
+
 export interface PoolState {
   data?: Pool
   traderProfile?: TraderProfile
+  bribe?: Bribe
   tickets?: Ticket[]
 }
 
@@ -38,5 +45,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(getTickets, (state, action) => {
       state.tickets = action.payload
+    })
+    .addCase(getBribe, (state, action) => {
+      state.bribe = action.payload
     })
 )

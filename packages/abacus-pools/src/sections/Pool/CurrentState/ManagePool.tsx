@@ -5,6 +5,7 @@ import { useGetCurrentNetwork } from "@state/application/hooks"
 import { NetworkSymbolEnum } from "@config/constants"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { useOnExitPool, useOnStartEmissions } from "@hooks/vaultFunc"
+import { useAcceptBribe } from "@hooks/bribeFunc"
 import { ButtonContainer, VerticalContainer } from "../Pool.styles"
 import { StateComponent } from "./index"
 
@@ -16,6 +17,7 @@ const ManagePool = ({ refresh }: StateComponent) => {
   const { onExitPool, isPending } = useOnExitPool()
   const { onStartEmissions, isPending: isPendingStartEmissions } =
     useOnStartEmissions()
+  const { onAcceptBribe, isPending: isPendingAcceptBribe } = useAcceptBribe()
   const [isAuction, setIsAuction] = useState(false)
 
   return (
@@ -52,6 +54,20 @@ const ManagePool = ({ refresh }: StateComponent) => {
             }
           >
             {isPendingStartEmissions ? "Loading..." : `Start Emissions`}
+          </Button>
+        </ButtonContainer>
+        <ButtonContainer>
+          <Button
+            className="notConnected"
+            disabled={!isNetworkSymbolETH || isPendingAcceptBribe}
+            style={{ width: "100%", borderRadius: 5 }}
+            onClick={() =>
+              onAcceptBribe(async () => {
+                await refresh()
+              })
+            }
+          >
+            {isPendingAcceptBribe ? "Loading..." : "Accept Bribes"}
           </Button>
         </ButtonContainer>
         <Tooltip

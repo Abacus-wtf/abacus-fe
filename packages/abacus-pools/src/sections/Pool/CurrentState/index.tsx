@@ -7,6 +7,7 @@ import Auction from "./Auction"
 import ClosedPool from "./ClosedPool"
 import Tickets from "./Tickets"
 import { Page } from ".."
+import Bribe from "./Bribe"
 
 export interface StateComponent {
   refresh: () => void
@@ -27,6 +28,8 @@ const CurrentState = ({
         return <AMM refresh={refresh} />
       case Page.CurrentPositions:
         return <CurrentPosition />
+      case Page.Bribes:
+        return <Bribe refresh={refresh} />
       case Page.Tickets:
         return <Tickets refresh={refresh} />
       default:

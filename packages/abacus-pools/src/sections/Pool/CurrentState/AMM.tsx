@@ -8,8 +8,12 @@ import { formatEther } from "ethers/lib/utils"
 import { useActiveWeb3React } from "@hooks/index"
 import DatePicker from "react-datepicker"
 import moment from "moment"
-import { useOnPurchaseTokens } from "@hooks/vaultFunc"
+import {
+  useOnPurchaseIndividualTicket,
+  useOnPurchaseTokens,
+} from "@hooks/vaultFunc"
 import styled from "styled-components"
+import { Ticket } from "@state/singlePoolData/reducer"
 import {
   InfoSectionContainer,
   InputContainer,
@@ -32,7 +36,11 @@ const DatePickerStyled = styled(DatePicker)`
   font-weight: 400;
 `
 
-const AMM = (props: StateComponent) => {
+interface AMMProps extends StateComponent {
+  currentTicket?: Ticket
+}
+
+const AMM = (props: AMMProps) => {
   const { account } = useActiveWeb3React()
   const networkSymbol = useGetCurrentNetwork()
   const [isTokenFirst] = useState(false)
@@ -42,6 +50,8 @@ const AMM = (props: StateComponent) => {
   const [ethBalance, setEthBalance] = useState<number | null>(null)
   const [startDate, setStartDate] = useState(new Date())
   const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
+  const { onPurchaseIndividualTicket, isPending: isPendingIndividual } =
+    useOnPurchaseIndividualTicket()
 
   const getBalance = useCallback(async () => {
     const provider = web3(networkSymbol)
@@ -56,15 +66,28 @@ const AMM = (props: StateComponent) => {
   }, [account, ethBalance, networkSymbol, getBalance])
 
   const handleButtonClick = async () => {
-    await onPurchaseTokens(
-      outputAmount,
-      moment(startDate).unix() - moment().unix(),
-      async () => {
-        await getBalance()
-        await props.refresh()
-        setInputAmount("")
-      }
-    )
+    if (props.currentTicket) {
+      await onPurchaseIndividualTicket(
+        outputAmount,
+        props.currentTicket.order,
+        moment(startDate).unix() - moment().unix(),
+        async () => {
+          await getBalance()
+          await props.refresh()
+          setInputAmount("")
+        }
+      )
+    } else {
+      await onPurchaseTokens(
+        outputAmount,
+        moment(startDate).unix() - moment().unix(),
+        async () => {
+          await getBalance()
+          await props.refresh()
+          setInputAmount("")
+        }
+      )
+    }
   }
 
   const cardData = (
@@ -155,6 +178,9 @@ const AMM = (props: StateComponent) => {
         onClick={handleButtonClick}
         disabled={
           isPending ||
+          isPendingIndividual ||
+          (props.currentTicket &&
+            Number(outputAmount) > 3000 - props.currentTicket.amount) ||
           moment(startDate).unix() <= moment().add(7, "days").unix() ||
           Number.isNaN(Number(inputAmount)) ||
           Number(inputAmount) === 0 ||

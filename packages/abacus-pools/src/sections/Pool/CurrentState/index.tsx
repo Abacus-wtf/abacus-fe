@@ -28,7 +28,7 @@ const CurrentState = ({
       case Page.CurrentPositions:
         return <CurrentPosition />
       case Page.Tickets:
-        return <Tickets />
+        return <Tickets refresh={refresh} />
       default:
         return <ManagePool refresh={refresh} />
     }

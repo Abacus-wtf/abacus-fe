@@ -10,6 +10,9 @@ import _ from "lodash"
 import { Ticket as ITicket } from "@state/singlePoolData/reducer"
 import { Modal, ModalBody } from "shards-react"
 import { ButtonsWhite } from "@components/Button"
+import AMM from "./AMM"
+import { StateComponent } from "."
+import { ButtonContainer, Tab } from "../Pool.styles"
 
 const Container = styled.div`
   display: flex;
@@ -34,9 +37,16 @@ const Ticket = ({ order, amount, onClick }: TicketProps) => (
   </Button>
 )
 
-const Tickets = () => {
+enum Tabs {
+  Buy = "Purchase",
+  Sell = "Sell",
+  PendingOrder = "Create Bid",
+}
+
+const Tickets = ({ refresh }: StateComponent) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentTicket, setCurrentTicket] = useState<ITicket>(null)
+  const [tab, setTab] = useState<Tabs>(Tabs.Buy)
   const { account } = useActiveWeb3React()
   const getTickets = useGetTickets()
   const tickets = useTickets()
@@ -58,13 +68,33 @@ const Tickets = () => {
         toggle={() => setIsModalOpen(!isModalOpen)}
         centered
       >
-        <ModalBody
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gridGap: 10,
-          }}
-        />
+        <ModalBody>
+          <ButtonContainer style={{ marginBottom: 20 }}>
+            <Tab disabled={tab === Tabs.Buy} onClick={() => setTab(Tabs.Buy)}>
+              Buy
+            </Tab>
+            <Tab disabled={tab === Tabs.Sell} onClick={() => setTab(Tabs.Sell)}>
+              Sell
+            </Tab>
+            <Tab
+              disabled={tab === Tabs.PendingOrder}
+              onClick={() => setTab(Tabs.PendingOrder)}
+            >
+              Future Order
+            </Tab>
+          </ButtonContainer>
+          {tab === Tabs.Buy ? (
+            <AMM
+              refresh={async () => {
+                await refresh()
+                await getTickets()
+              }}
+              currentTicket={currentTicket}
+            />
+          ) : (
+            <></>
+          )}
+        </ModalBody>
       </Modal>
       {_.map(tickets, (ticket) => (
         <Ticket

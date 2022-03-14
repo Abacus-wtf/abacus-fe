@@ -224,3 +224,52 @@ export const useOnPurchaseTokens = () => {
     isPending,
   }
 }
+
+export const useOnPurchaseIndividualTicket = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+  const poolData = useGetPoolData()
+
+  const onPurchaseIndividualTicket = useCallback(
+    async (
+      tokenAmount: string,
+      ticket: number,
+      lockupPeriod: number,
+      cb: () => void
+    ) => {
+      const vaultContract = getContract(
+        poolData.vaultAddress,
+        VAULT_ABI,
+        library,
+        account
+      )
+
+      const method = vaultContract.purchaseToken
+      const estimate = vaultContract.estimateGas.purchaseToken
+      const args = [account, account, ticket, tokenAmount, lockupPeriod]
+      console.log(args)
+      const value = parseEther(`${(Number(tokenAmount) * 1.0025) / 1000}`)
+      console.log(value.toString())
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Purchase Locked Up Ticket",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [poolData, library, account, generalizedContractCall, addTransaction]
+  )
+  return {
+    onPurchaseIndividualTicket,
+    isPending,
+  }
+}

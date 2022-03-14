@@ -6,7 +6,6 @@ import { OutboundLink } from "gatsby-plugin-google-gtag"
 import { useGetPoolData, useSetPoolData } from "@state/singlePoolData/hooks"
 import { useActiveWeb3React } from "@hooks/index"
 import { PoolStatus } from "@state/poolData/reducer"
-import styled from "styled-components"
 import {
   SplitContainer,
   VerticalContainer,
@@ -14,14 +13,9 @@ import {
   FileContainer,
   SubText,
   ButtonContainer,
+  Tab,
 } from "./Pool.styles"
 import CurrentState from "./CurrentState/index"
-
-const Tab = styled(ButtonsWhite)`
-  border-radius: 8px;
-  width: 100%;
-  font-size: 0.75rem;
-`
 
 export enum Page {
   Main,

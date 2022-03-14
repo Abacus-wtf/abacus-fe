@@ -183,7 +183,7 @@ export const useOnPurchaseTokens = () => {
               runningTokenAmount -= spaceLeft
             }
             ticketArray.push(i)
-            purchaseAmount.push(spaceLeft)
+            purchaseAmount.push(parseEther(`${spaceLeft}`))
           }
         }
         cycle += 1
@@ -247,7 +247,13 @@ export const useOnPurchaseIndividualTicket = () => {
 
       const method = vaultContract.purchaseToken
       const estimate = vaultContract.estimateGas.purchaseToken
-      const args = [account, account, ticket, tokenAmount, lockupPeriod]
+      const args = [
+        account,
+        account,
+        ticket,
+        parseEther(tokenAmount),
+        lockupPeriod,
+      ]
       console.log(args)
       const value = parseEther(`${(Number(tokenAmount) * 1.0025) / 1000}`)
       console.log(value.toString())

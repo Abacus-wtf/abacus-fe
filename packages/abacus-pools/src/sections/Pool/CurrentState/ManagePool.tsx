@@ -56,7 +56,9 @@ const ManagePool = ({ refresh }: StateComponent) => {
             {isPendingStartEmissions ? "Loading..." : `Start Emissions`}
           </Button>
         </ButtonContainer>
-        <ButtonContainer>
+        <ButtonContainer
+          style={{ width: "100%", gridTemplateColumns: "1fr 1fr" }}
+        >
           <Button
             className="notConnected"
             disabled={!isNetworkSymbolETH || isPendingAcceptBribe}

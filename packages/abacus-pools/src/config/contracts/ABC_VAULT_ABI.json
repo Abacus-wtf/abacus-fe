@@ -253,18 +253,18 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_user",
+        "name": "_targetPositionHolder",
         "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "tickets",
-        "type": "uint256[]"
+        "internalType": "address",
+        "name": "_buyer",
+        "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "amountPerTicket",
-        "type": "uint256[]"
+        "internalType": "uint256",
+        "name": "ticket",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -273,11 +273,11 @@
       },
       {
         "internalType": "uint256",
-        "name": "executorRewardSize",
+        "name": "executorReward",
         "type": "uint256"
       }
     ],
-    "name": "createLimitOrder",
+    "name": "createPendingOrder",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -343,19 +343,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_user",
-        "type": "address"
-      }
-    ],
-    "name": "executeLimitOrder",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -390,6 +377,45 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_ticket",
+        "type": "uint256"
+      }
+    ],
+    "name": "getTicketsOwned",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokensOwnedPerTicket",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "currentBribe",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "ticketQueued",
+        "type": "bool"
+      },
+      {
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -439,7 +465,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "tokensLocked",
+        "name": "lockedTokens",
         "type": "uint256"
       },
       {
@@ -558,6 +584,11 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "name": "pendingOrder",
@@ -573,9 +604,14 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "purchasePayload",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "ticketQueued",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -628,6 +664,11 @@
         "type": "address"
       },
       {
+        "internalType": "address",
+        "name": "_buyer",
+        "type": "address"
+      },
+      {
         "internalType": "uint256[]",
         "name": "tickets",
         "type": "uint256[]"
@@ -643,7 +684,7 @@
         "type": "uint256"
       }
     ],
-    "name": "purchaseToken",
+    "name": "purchaseMulti",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -652,23 +693,23 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_user",
+        "name": "_caller",
         "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "prevTickets",
-        "type": "uint256[]"
+        "internalType": "address",
+        "name": "_buyer",
+        "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "tickets",
-        "type": "uint256[]"
+        "internalType": "uint256",
+        "name": "ticket",
+        "type": "uint256"
       },
       {
-        "internalType": "uint256[]",
-        "name": "amountPerTicket",
-        "type": "uint256[]"
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -676,7 +717,7 @@
         "type": "uint256"
       }
     ],
-    "name": "replacePosition",
+    "name": "purchaseToken",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"

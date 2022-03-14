@@ -92,12 +92,13 @@ const CurrentPosition = () => {
       </TicketContainer>
       {traderData.timeUnlock <= 0 && (
         <Buttons
+          style={{ marginTop: 20 }}
           onClick={() =>
             onUnlockPosition(Object.keys(traderData.ticketsOwned), () =>
               getTraderProfileData()
             )
           }
-          disabled={isUnlockPending}
+          disabled={isUnlockPending || Number(traderData.ticketsOpen) === 0}
         >
           Unlock Tickets
         </Buttons>

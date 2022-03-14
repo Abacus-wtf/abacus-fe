@@ -169,6 +169,10 @@ export const useOnPurchaseTokens = () => {
         )
 
         for (let i = 0; i < ticketFillings.length; i += 1) {
+          if (runningTokenAmount === 0) {
+            break
+          }
+
           const ticketFilled = parseFloat(formatEther(ticketFillings[i][0]))
           if (ticketFilled < 3000) {
             let spaceLeft = 3000 - ticketFilled
@@ -185,9 +189,9 @@ export const useOnPurchaseTokens = () => {
         cycle += 1
       }
 
-      const method = vaultContract.purchaseToken
-      const estimate = vaultContract.estimateGas.purchaseToken
-      const args = [account, ticketArray, purchaseAmount, lockupPeriod]
+      const method = vaultContract.purchaseMulti
+      const estimate = vaultContract.estimateGas.purchaseMulti
+      const args = [account, account, ticketArray, purchaseAmount, lockupPeriod]
       console.log(args)
       const value = parseEther(`${(Number(tokenAmount) * 1.0025) / 1000}`)
       console.log(value.toString())

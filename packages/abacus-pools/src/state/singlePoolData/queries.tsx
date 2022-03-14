@@ -1,16 +1,12 @@
 import { gql } from "graphql-request"
 
-export type SubgraphVault = {
-  id: string
-  nftAddress: string
-  tokenId: string
-  owner: string
-  status: number
-  nonce: number
+export type SubgraphTicket = {
+  ticketNumber: string
+  amount: string
 }
 
-export type GetVaultQueryResponse = {
-  vaults: SubgraphVault[]
+export type GetTicketQueryResponse = {
+  tickets: SubgraphTicket[]
 }
 
 export type GetVaultVariables = {
@@ -18,12 +14,12 @@ export type GetVaultVariables = {
   skip: number
 }
 
-export type VaultFilters = {
-  nftAddress?: string
-  tokenId?: number
+export type TicketFilters = {
+  owner?: string
+  vaultAddress?: string
 }
 
-export const vaultWhere = (filters: VaultFilters): string | null => {
+export const ticketWhere = (filters: TicketFilters): string | null => {
   const hasFilters = Object.values(filters).some((filter) =>
     Boolean(Array.isArray(filter) ? filter.length : filter)
   )
@@ -49,20 +45,17 @@ export const vaultWhere = (filters: VaultFilters): string | null => {
   return `{ ${filterString} }`
 }
 
-export const GET_VAULTS = (where: string | null) => gql`
-  query GetVaults($first: Int!, $skip: Int!) {
-    vaults(
+export const GET_TICKETS = (where: string | null) => gql`
+  query GetTickets($first: Int!, $skip: Int!) {
+    tickets(
       first: $first
       orderBy: timestamp
       orderDirection: desc
       skip: $skip
       where: ${where}
     ) {
-      id
-      nftAddress
-      tokenId
-      owner
-      status
+      ticketNumber
+      amount
     }
   }
 `

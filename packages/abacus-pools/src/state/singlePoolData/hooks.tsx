@@ -7,15 +7,27 @@ import VAULT_ABI from "@config/contracts/ABC_VAULT_ABI.json"
 import BRIBE_ABI from "@config/contracts/ABC_BRIBE_FACTORY_ABI.json"
 import CLOSE_POOL_ABI from "@config/contracts/ABC_CLOSE_POOL_ABI.json"
 import ERC_721_ABI from "@config/contracts/ERC_721_ABI.json"
-import { ABC_BRIBE_FACTORY, ABC_FACTORY, ZERO_ADDRESS } from "@config/constants"
+import {
+  ABC_BRIBE_FACTORY,
+  ABC_FACTORY,
+  GRAPHQL_ENDPOINT,
+  ZERO_ADDRESS,
+} from "@config/constants"
 import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
 import { formatEther } from "ethers/lib/utils"
 import moment from "moment"
 import { BigNumber } from "ethers"
 import _ from "lodash"
+import { PAGINATE_BY } from "@state/poolData/constants"
+import request from "graphql-request"
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"
 import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
 import { Bribe, Ticket } from "./reducer"
+import {
+  GetTicketQueryResponse,
+  GetVaultVariables,
+  GET_TICKETS,
+} from "./queries"
 
 const getPoolDataSelector = (
   state: AppState
@@ -100,10 +112,28 @@ export const useGetTraderProfileData = () => {
   return useCallback(async () => {
     if (poolData.vaultAddress === undefined) return
 
-    let traderProfile = await vault(poolData.vaultAddress)
-      .methods.traderProfile(account)
-      .call()
+    const variables: GetVaultVariables = {
+      first: PAGINATE_BY,
+      skip: 0 * PAGINATE_BY,
+    }
+
+    let [traderProfile, { tickets }] = await Promise.all([
+      vault(poolData.vaultAddress).methods.traderProfile(account).call(),
+      request<GetTicketQueryResponse>(
+        GRAPHQL_ENDPOINT,
+        GET_TICKETS(
+          `{ owner: "${account.toLowerCase()}", vaultAddress: "${poolData.vaultAddress.toLowerCase()}" }`
+        ),
+        variables
+      ),
+    ])
     traderProfile.tokensLocked = formatEther(traderProfile.tokensLocked)
+    traderProfile.ticketsOwned = []
+    _.forEach(tickets, (ticket) => {
+      traderProfile.ticketsOwned[
+        BigNumber.from(ticket.ticketNumber).toNumber()
+      ] = formatEther(ticket.amount)
+    })
     console.log(traderProfile)
     dispatch(getTraderProfile(traderProfile))
   }, [account, dispatch, vault, poolData])

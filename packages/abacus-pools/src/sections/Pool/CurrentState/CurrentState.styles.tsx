@@ -9,7 +9,7 @@ export const StatTitle = styled.div`
 
 export const TicketContainer = styled.div`
   max-height: 200px;
-  overflow: scroll;
+  overflow-y: scroll;
 `
 
 export const StatContainer = styled.div`

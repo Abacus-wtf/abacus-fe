@@ -100,9 +100,10 @@ export const useGetTraderProfileData = () => {
   return useCallback(async () => {
     if (poolData.vaultAddress === undefined) return
 
-    const traderProfile = await vault(poolData.vaultAddress)
+    let traderProfile = await vault(poolData.vaultAddress)
       .methods.traderProfile(account)
       .call()
+    traderProfile.tokensLocked = formatEther(traderProfile.tokensLocked)
     console.log(traderProfile)
     dispatch(getTraderProfile(traderProfile))
   }, [account, dispatch, vault, poolData])
@@ -123,7 +124,7 @@ export const useGetTickets = () => {
     for (let i = 0; i < ticketFillings.length; i += 1) {
       tickets.push({
         order: i,
-        amount: BigNumber.from(ticketFillings[i][0]).toNumber(),
+        amount: Number(formatEther(ticketFillings[i][0])),
       })
     }
     dispatch(getTickets(tickets))

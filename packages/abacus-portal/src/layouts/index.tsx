@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import { PortalNavbar, PersistentBanner, Button, ButtonType } from "abacus-ui"
+import { PersistentBanner, Button, ButtonType } from "abacus-ui"
 import Web3 from "web3"
-import { navigate, PageProps } from "gatsby"
+import { PageProps } from "gatsby"
 import { useActiveWeb3React } from "@hooks/index"
 import {
   useSelectNetwork,
@@ -13,7 +13,7 @@ import {
 } from "@state/application/hooks"
 import { NetworkSymbolEnum, NetworkSymbolAndId } from "@config/constants"
 import SEO, { SEOWithQueryProps } from "@components/SEO"
-import { Web3Modal, GeneralizedContractError } from "@components/index"
+import { Web3Modal, GeneralizedContractError, Navbar } from "@components/index"
 import { GlobalStyles, GlobalContainer, InnerContainer } from "./styles"
 
 type GlobalLayoutProps = {
@@ -108,13 +108,7 @@ const GlobalLayout: React.FC<GlobalLayoutProps> = ({ children, location }) => {
     <>
       <SEO {...seoProps} />
       <GlobalStyles />
-      <PortalNavbar
-        balance={0}
-        profileName="@bigint"
-        profileIcon="/temp_icon.png"
-        onClick={() => navigate("/")}
-        onBalanceClick={() => navigate("/claim-pool")}
-      />
+      <Navbar />
       <GlobalContainer>
         <InnerContainer>
           {!isArbitrumNetwork && !isNetworkSymbolNone ? (

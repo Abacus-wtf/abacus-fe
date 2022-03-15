@@ -1,24 +1,23 @@
-import { Button, ButtonType, Input } from "@atoms";
-import { CardWithTitle } from "components/molecules/CardWithTitle";
-import React, { FunctionComponent, useState } from "react";
-import styled from "styled-components";
+import React, { FunctionComponent, useState } from "react"
+import styled from "styled-components"
+import { Button, ButtonType, Input, CardWithTitle } from "abacus-ui"
 
 const FullWidthButton = styled(Button)`
   width: 100%;
-`;
+`
 
 type FundCardProps = {
-  title: string;
-  buttonTitle: string;
-  onClick: () => void;
-};
+  title: string
+  buttonTitle: string
+  onClick: () => void
+}
 
 const FundCard: FunctionComponent<FundCardProps> = ({
   title,
   buttonTitle,
   onClick,
 }) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("")
   return (
     <CardWithTitle
       noBorder
@@ -43,7 +42,7 @@ const FundCard: FunctionComponent<FundCardProps> = ({
         </FullWidthButton>
       </>
     </CardWithTitle>
-  );
-};
+  )
+}
 
-export default FundCard;
+export default FundCard

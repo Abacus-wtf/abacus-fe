@@ -15,5 +15,4 @@ export * from "./Accordion";
 export * from "./PricingSessionMainComponent";
 export * from "./PartOfCollection";
 export * from "./ActivitySection";
-export * from "./FundCard";
 export * from "./Modal";

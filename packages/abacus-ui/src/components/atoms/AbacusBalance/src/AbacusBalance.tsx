@@ -1,7 +1,7 @@
 import { Mega } from "@typography";
-import React, { FunctionComponent } from "react";
-import styled from "styled-components";
-import BlueEthLogo from "../../../../static/blue_eth_logo.svg";
+import React, { FunctionComponent, useContext } from "react";
+import styled, { ThemeContext } from "styled-components";
+import { ETH } from "@icons";
 
 type AbacusBalanceProps = {
   balance: number;
@@ -23,11 +23,14 @@ const MegaStyled = styled(Mega)`
   font-weight: 600;
 `;
 
-const AbacusBalance: FunctionComponent<AbacusBalanceProps> = ({ balance }) => (
-  <Container>
-    <img src={BlueEthLogo} alt="Blue Eth Logo" />
-    <MegaStyled>{balance} ETH</MegaStyled>
-  </Container>
-);
+const AbacusBalance: FunctionComponent<AbacusBalanceProps> = ({ balance }) => {
+  const theme = useContext(ThemeContext);
+  return (
+    <Container>
+      <ETH fill={theme.colors.utility.blue} />
+      <MegaStyled>{balance} ETH</MegaStyled>
+    </Container>
+  );
+};
 
 export default AbacusBalance;

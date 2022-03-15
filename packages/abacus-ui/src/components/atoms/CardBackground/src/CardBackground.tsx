@@ -13,7 +13,7 @@ const Container = styled.div<{ isHalfScreen: boolean }>`
   background-color: ${({ theme }) => theme.colors.core.white};
   box-shadow: ${({ theme }) => theme.boxShadow.section};
   width: auto;
-  height: fit-content;
+  height: 100%;
   padding: 20px;
   display: flex;
   flex-direction: row;

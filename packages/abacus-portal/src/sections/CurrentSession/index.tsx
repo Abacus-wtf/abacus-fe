@@ -4,7 +4,6 @@ import { createGlobalStyle } from "styled-components"
 import {
   CardBar,
   PriceHistory,
-  AboutSection,
   PartOfCollection,
   ActivitySection,
 } from "abacus-ui"
@@ -20,7 +19,7 @@ import { useEthToUSD, useGetCurrentNetwork } from "@state/application/hooks"
 import { useSetPayoutData } from "@state/miscData/hooks"
 import { IS_PRODUCTION, NetworkSymbolEnum } from "@config/constants"
 import { Container, SplitContainer } from "@layouts/styles"
-import PricingSession from "@components/PricingSession"
+import { PricingSession, About } from "@components/index"
 import DepositModal from "./DepositModal"
 
 const GlobalStyle = createGlobalStyle<{ url: string }>`
@@ -133,7 +132,7 @@ const CurrentSession = ({ location }) => {
           openseaLink={`https://${OPENSEA_LINK}/${sessionData.ownerAddress}`}
           etherscanLink={`https://${ETHERSCAN_LINK}/address/${sessionData.address}/${sessionData.tokenId}`}
         />
-        <AboutSection description="This is a description" />
+        <About traits={sessionData.traits} creator={sessionData.creator} />
       </SplitContainer>
       <ActivitySection
         activityList={[

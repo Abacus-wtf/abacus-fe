@@ -232,6 +232,8 @@ const parseSubgraphPricingSessions = async (
             : shortenAddress(asset?.owner?.address),
         maxAppraisal: Number(formatEther(session?.maxAppraisal)),
         currentStatus: session.sessionStatus,
+        traits: asset.traits,
+        creator: asset.creator,
       }
     }
   )
@@ -624,6 +626,8 @@ export const useGetCurrentSessionData = () => {
           src: asset.image_url,
           link: asset.permalink,
         })),
+        traits: pricingSessionMetadata.traits,
+        creator: pricingSessionMetadata.creator,
       }
 
       dispatch(setCurrentSessionData(sessionData))

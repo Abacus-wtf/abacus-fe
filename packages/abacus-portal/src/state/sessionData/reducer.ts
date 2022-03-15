@@ -1,5 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit"
 import { PromiseStatus } from "@models/PromiseStatus"
+import { OpenSeaAsset } from "@config/utils"
 import {
   setUserStatus,
   setMultipleSessionData,
@@ -72,6 +73,8 @@ export interface SessionData {
   rankings?: Vote[]
   winnerAmount?: number
   currentStatus?: SessionState
+  traits: OpenSeaAsset["traits"]
+  creator: OpenSeaAsset["creator"]
 }
 
 export interface CurrentSessionData extends SessionData {

@@ -27,7 +27,6 @@ const Container = styled.div`
   grid-gap: 15px;
   width: 100%;
   height: 100%;
-  height: 300px;
 `;
 
 const CardWithTitle: FunctionComponent<CardWithTitleProps> = ({

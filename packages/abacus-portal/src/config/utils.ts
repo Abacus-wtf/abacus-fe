@@ -101,6 +101,22 @@ export type OpenSeaAsset = {
       usd_price: string
     }[]
   }
+  traits: {
+    trait_type: string
+    value: number | string
+    display_type: string
+    max_value: string
+    trait_count: number
+    order: number
+  }[]
+  creator: {
+    user: {
+      username: string
+    }
+    profile_img_url: string
+    address: string
+    config: string
+  }
   token_id: string
   name: string
   owner?: {
@@ -119,6 +135,15 @@ const DEFAULT_ASSET: OpenSeaAsset = {
   asset_contract: {
     name: "",
     address: "",
+  },
+  traits: [],
+  creator: {
+    user: {
+      username: null,
+    },
+    profile_img_url: "",
+    address: "",
+    config: "",
   },
   collection: {
     name: "",

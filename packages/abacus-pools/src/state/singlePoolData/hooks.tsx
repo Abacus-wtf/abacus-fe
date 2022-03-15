@@ -143,22 +143,40 @@ export const useGetTickets = () => {
   const dispatch = useDispatch<AppDispatch>()
   const vault = useMultiCall(VAULT_ABI)
   const poolData = useGetPoolData()
+  const { account } = useActiveWeb3React()
 
   return useCallback(async () => {
     if (poolData.vaultAddress === undefined) return
+    const variables: GetVaultVariables = {
+      first: PAGINATE_BY,
+      skip: 0 * PAGINATE_BY,
+    }
 
     const methods = _.map(_.range(0, 50), () => "ticketsPurchased")
     const args = _.map(_.range(0, 50), (i) => [i])
     const ticketFillings = await vault(poolData.vaultAddress, methods, args)
-    const tickets: Ticket[] = []
+    const { tickets } = await request<GetTicketQueryResponse>(
+      GRAPHQL_ENDPOINT,
+      GET_TICKETS(`{ owner: "${account.toLowerCase()}" }`),
+      variables
+    )
+    const ticketsReturned: Ticket[] = []
     for (let i = 0; i < ticketFillings.length; i += 1) {
-      tickets.push({
+      const hasOwnerBought = !_.find(
+        tickets,
+        (ticket) =>
+          Number(ticket.ticketNumber) === i &&
+          ticket.vaultAddress.toLowerCase() ===
+            poolData.vaultAddress.toLowerCase()
+      )
+      ticketsReturned.push({
         order: i,
         amount: Number(formatEther(ticketFillings[i][0])),
+        ownToken: hasOwnerBought,
       })
     }
-    dispatch(getTickets(tickets))
-  }, [dispatch, vault, poolData])
+    dispatch(getTickets(ticketsReturned))
+  }, [dispatch, vault, poolData, account])
 }
 
 export const useSetPoolData = () => {

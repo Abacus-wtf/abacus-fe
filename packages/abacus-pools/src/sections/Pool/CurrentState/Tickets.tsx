@@ -4,15 +4,18 @@ import {
   useGetPoolData,
   useGetTickets,
   useTickets,
+  useTraderProfile,
 } from "@state/singlePoolData/hooks"
 import styled from "styled-components"
 import _ from "lodash"
 import { Ticket as ITicket } from "@state/singlePoolData/reducer"
 import { Modal, ModalBody } from "shards-react"
 import { ButtonsWhite } from "@components/Button"
+import { useOnSellToken } from "@hooks/vaultFunc"
 import AMM from "./AMM"
 import { StateComponent } from "."
 import { ButtonContainer, Tab } from "../Pool.styles"
+import FutureOrder from "./FutureOrder"
 
 const Container = styled.div`
   display: flex;
@@ -40,7 +43,8 @@ const Ticket = ({ order, amount, onClick }: TicketProps) => (
 enum Tabs {
   Buy = "Purchase",
   Sell = "Sell",
-  PendingOrder = "Create Bid",
+  FutureOrder = "Create Bid",
+  PendingOrders = "View Pending Orders",
 }
 
 const Tickets = ({ refresh }: StateComponent) => {
@@ -51,12 +55,14 @@ const Tickets = ({ refresh }: StateComponent) => {
   const getTickets = useGetTickets()
   const tickets = useTickets()
   const poolData = useGetPoolData()
+  const traderData = useTraderProfile()
+  const { onSellToken, isPending: isPendingSell } = useOnSellToken()
 
   useEffect(() => {
     getTickets()
   }, [account, getTickets, poolData])
 
-  if (!tickets) {
+  if (!tickets || !traderData) {
     return <div>Loading...</div>
   }
 
@@ -73,26 +79,60 @@ const Tickets = ({ refresh }: StateComponent) => {
             <Tab disabled={tab === Tabs.Buy} onClick={() => setTab(Tabs.Buy)}>
               Buy
             </Tab>
-            <Tab disabled={tab === Tabs.Sell} onClick={() => setTab(Tabs.Sell)}>
-              Sell
-            </Tab>
-            <Tab
-              disabled={tab === Tabs.PendingOrder}
-              onClick={() => setTab(Tabs.PendingOrder)}
-            >
-              Future Order
-            </Tab>
+            {(currentTicket && !currentTicket.ownToken) ||
+            Number(traderData.ticketsOpen) === 0 ? (
+              <></>
+            ) : (
+              <Tab
+                disabled={tab === Tabs.Sell}
+                onClick={() => setTab(Tabs.Sell)}
+              >
+                Sell
+              </Tab>
+            )}
+            {currentTicket && currentTicket.amount === 3000 ? (
+              <></>
+            ) : (
+              <Tab
+                disabled={tab === Tabs.FutureOrder}
+                onClick={() => setTab(Tabs.FutureOrder)}
+              >
+                Future Order
+              </Tab>
+            )}
           </ButtonContainer>
           {tab === Tabs.Buy ? (
             <AMM
               refresh={async () => {
                 await refresh()
                 await getTickets()
+                setIsModalOpen(false)
               }}
               currentTicket={currentTicket}
             />
+          ) : tab === Tabs.Sell ? (
+            <>
+              <Button
+                onClick={() => {
+                  onSellToken(currentTicket.order, async () => {
+                    await refresh()
+                    await getTickets()
+                    setIsModalOpen(false)
+                  })
+                }}
+              >
+                {isPendingSell ? "Loading..." : "Sell Ticket"}
+              </Button>
+            </>
           ) : (
-            <></>
+            <FutureOrder
+              currentTicket={currentTicket}
+              refresh={async () => {
+                await refresh()
+                await getTickets()
+                setIsModalOpen(false)
+              }}
+            />
           )}
         </ModalBody>
       </Modal>

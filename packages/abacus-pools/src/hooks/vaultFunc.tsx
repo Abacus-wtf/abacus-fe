@@ -317,7 +317,7 @@ export const useOnFutureOrder = () => {
       console.log(value.toString())
       const txnCb = async (response: any) => {
         addTransaction(response, {
-          summary: "Purchase Locked Up Ticket",
+          summary: "Purchase Future Order",
         })
         await response.wait()
         cb()
@@ -333,7 +333,51 @@ export const useOnFutureOrder = () => {
     [poolData, library, account, generalizedContractCall, addTransaction]
   )
   return {
-    useOnFutureOrder,
+    onFutureOrder,
+    isPending,
+  }
+}
+
+export const useOnSellToken = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+  const poolData = useGetPoolData()
+
+  const onSellToken = useCallback(
+    async (ticket: number, cb: () => void) => {
+      const vaultContract = getContract(
+        poolData.vaultAddress,
+        VAULT_ABI,
+        library,
+        account
+      )
+
+      const method = vaultContract.sellToken
+      const estimate = vaultContract.estimateGas.sellToken
+      const args = [account, [ticket]]
+      console.log(args)
+      const value = null
+      console.log(value.toString())
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Sell Token",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [poolData, library, account, generalizedContractCall, addTransaction]
+  )
+  return {
+    onSellToken,
     isPending,
   }
 }

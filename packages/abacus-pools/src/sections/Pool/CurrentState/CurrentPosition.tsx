@@ -1,7 +1,5 @@
-import React, { useEffect } from "react"
-import { useActiveWeb3React } from "@hooks/index"
+import React from "react"
 import {
-  useGetPoolData,
   useGetTraderProfileData,
   useTraderProfile,
 } from "@state/singlePoolData/hooks"
@@ -18,15 +16,9 @@ const Container = styled.div`
 `
 
 const CurrentPosition = () => {
-  const { account } = useActiveWeb3React()
-  const getTraderProfileData = useGetTraderProfileData()
-  const traderData = useTraderProfile()
-  const poolData = useGetPoolData()
   const { onUnlockPosition, isPending: isUnlockPending } = useUnlockPosition()
-
-  useEffect(() => {
-    getTraderProfileData()
-  }, [account, getTraderProfileData, poolData])
+  const traderData = useTraderProfile()
+  const getTraderProfileData = useGetTraderProfileData()
 
   if (!traderData) {
     return <div>Loading...</div>

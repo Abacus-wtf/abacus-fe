@@ -1,21 +1,21 @@
 import React, { useEffect, useState, useCallback } from "react"
 import Button from "@components/Button"
 import { NumericalInput } from "@components/Input"
-import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { web3 } from "@config/constants"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { formatEther } from "ethers/lib/utils"
 import { useActiveWeb3React } from "@hooks/index"
 import DatePicker from "react-datepicker"
 import moment from "moment"
-import {
-  useOnPurchaseIndividualTicket,
-  useOnPurchaseTokens,
-} from "@hooks/vaultFunc"
+import { useOnFutureOrder } from "@hooks/vaultFunc"
 import styled from "styled-components"
+import { FormSelect } from "shards-react"
+import { useGetPoolData } from "@state/singlePoolData/hooks"
+import { getTicketOwners } from "@state/singlePoolData/queries"
 import { Ticket } from "@state/singlePoolData/reducer"
+import _ from "lodash"
+import { shortenAddress } from "@config/utils"
 import {
-  InfoSectionContainer,
   InputContainer,
   BORDER,
   LabelRow,
@@ -36,22 +36,20 @@ const DatePickerStyled = styled(DatePicker)`
   font-weight: 400;
 `
 
-interface AMMProps extends StateComponent {
-  currentTicket?: Ticket
+interface FutureOrderProps extends StateComponent {
+  currentTicket: Ticket
 }
 
-const FutureOrder = (props: AMMProps) => {
+const FutureOrder = (props: FutureOrderProps) => {
   const { account } = useActiveWeb3React()
   const networkSymbol = useGetCurrentNetwork()
-  const [isTokenFirst] = useState(false)
-  const poolData = useGetPoolData()
   const [inputAmount, setInputAmount] = useState("")
-  const [outputAmount, setOutputAmount] = useState("0.0")
   const [ethBalance, setEthBalance] = useState<number | null>(null)
   const [startDate, setStartDate] = useState(new Date())
-  const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
-  const { onPurchaseIndividualTicket, isPending: isPendingIndividual } =
-    useOnPurchaseIndividualTicket()
+  const [ticketOwners, setTicketOwners] = useState([])
+  const [selectedTicketOwner, setTicketOwner] = useState(null)
+  const { onFutureOrder, isPending } = useOnFutureOrder()
+  const poolData = useGetPoolData()
 
   const getBalance = useCallback(async () => {
     const provider = web3(networkSymbol)
@@ -59,136 +57,92 @@ const FutureOrder = (props: AMMProps) => {
     setEthBalance(parseFloat(formatEther(balance)))
   }, [account, networkSymbol])
 
+  const getOwners = useCallback(async () => {
+    const tickets = await getTicketOwners(
+      poolData.vaultAddress,
+      props.currentTicket.order
+    )
+    if (tickets.length === 0) {
+      return
+    }
+    setTicketOwners(_.uniq(tickets.map((ticket) => ticket.owner)))
+    setTicketOwner(tickets[0].owner)
+  }, [poolData.vaultAddress, props.currentTicket.order])
+
   useEffect(() => {
     if (ethBalance === null) {
       getBalance()
     }
   }, [account, ethBalance, networkSymbol, getBalance])
 
+  useEffect(() => {
+    getOwners()
+  }, [account, getOwners])
+
   const handleButtonClick = async () => {
-    if (props.currentTicket) {
-      await onPurchaseIndividualTicket(
-        outputAmount,
-        props.currentTicket.order,
-        moment(startDate).unix() - moment().unix(),
-        async () => {
-          await getBalance()
-          await props.refresh()
-          setInputAmount("")
-        }
-      )
-    } else {
-      await onPurchaseTokens(
-        outputAmount,
-        moment(startDate).unix() - moment().unix(),
-        async () => {
-          await getBalance()
-          await props.refresh()
-          setInputAmount("")
-        }
-      )
-    }
+    await onFutureOrder(
+      selectedTicketOwner,
+      props.currentTicket.order,
+      moment(startDate).unix() - moment().unix(),
+      parseFloat(inputAmount),
+      async () => {
+        await getBalance()
+        await props.refresh()
+        setInputAmount("")
+      }
+    )
   }
 
   const cardData = (
     <CardContainer style={{ padding: 0 }}>
-      <InfoSectionContainer>
-        <InputContainer
-          style={{
-            border: BORDER,
-            borderRadius: 15,
-          }}
-        >
-          <LabelRow>
-            <BalanceContainer>
-              <TinyTitles>
-                From: {isTokenFirst ? poolData.symbol : "ETH"}
-              </TinyTitles>
-              <TinyTitles>
-                Balance: {isTokenFirst ? poolData.balance : ethBalance}
-              </TinyTitles>
-            </BalanceContainer>
-          </LabelRow>
-          <LabelRow>
-            <BalanceContainer>
-              <NumericalInput
-                placeholder="0.0"
-                value={inputAmount}
-                onChange={(e) => {
-                  setOutputAmount(
-                    isTokenFirst
-                      ? `${
-                          Number(e.target.value) * Number(poolData.tokenPrice)
-                        }`
-                      : `${
-                          Number(e.target.value) / Number(poolData.tokenPrice)
-                        }`
-                  )
-                  setInputAmount(e.target.value)
-                }}
-              />
-              <MaxButton
-                onClick={() => {
-                  setInputAmount(
-                    isTokenFirst ? `${poolData.balance}` : `${ethBalance}`
-                  )
-                  setOutputAmount(
-                    isTokenFirst
-                      ? `${
-                          Number(poolData.balance) * Number(poolData.tokenPrice)
-                        }`
-                      : `${Number(ethBalance) / Number(poolData.tokenPrice)}`
-                  )
-                }}
-              >
-                MAX
-              </MaxButton>
-            </BalanceContainer>
-          </LabelRow>
-        </InputContainer>
-        <InputContainer
-          style={{
-            border: BORDER,
-            borderRadius: 15,
-          }}
-        >
-          <LabelRow>
-            <BalanceContainer>
-              <TinyTitles>
-                To: {isTokenFirst ? "ETH" : poolData.symbol}
-              </TinyTitles>
-              <TinyTitles>
-                Balance: {isTokenFirst ? ethBalance : poolData.balance}
-              </TinyTitles>
-            </BalanceContainer>
-          </LabelRow>
-          <LabelRow>
-            <BalanceContainer>
-              <NumericalInput disabled value={outputAmount} />
-            </BalanceContainer>
-          </LabelRow>
-        </InputContainer>
-      </InfoSectionContainer>
+      <InputContainer
+        style={{
+          border: BORDER,
+          borderRadius: 15,
+          marginBottom: 20,
+        }}
+      >
+        <LabelRow>
+          <BalanceContainer>
+            <TinyTitles>Balance: {ethBalance}</TinyTitles>
+          </BalanceContainer>
+        </LabelRow>
+        <LabelRow>
+          <BalanceContainer>
+            <NumericalInput
+              placeholder="Incentive"
+              value={inputAmount}
+              onChange={(e) => {
+                setInputAmount(e.target.value)
+              }}
+            />
+            <MaxButton
+              onClick={() => {
+                setInputAmount(`${ethBalance}`)
+              }}
+            >
+              MAX
+            </MaxButton>
+          </BalanceContainer>
+        </LabelRow>
+      </InputContainer>
       <DatePickerStyled
         selected={startDate}
         onChange={(date: Date) => setStartDate(date)}
       />
+      <FormSelect style={{ marginBottom: 20 }}>
+        {_.map(ticketOwners, (ticket) => (
+          <option onSelect={() => setTicketOwner(ticket)} value={ticket}>
+            {shortenAddress(ticket)}
+          </option>
+        ))}
+      </FormSelect>
       <Button
         style={{ width: "100%", padding: 20, fontSize: "1rem" }}
         onClick={handleButtonClick}
-        disabled={
-          isPending ||
-          isPendingIndividual ||
-          (props.currentTicket &&
-            Number(outputAmount) > 3000 - props.currentTicket.amount) ||
-          moment(startDate).unix() <= moment().add(7, "days").unix() ||
-          Number.isNaN(Number(inputAmount)) ||
-          Number(inputAmount) === 0 ||
-          (isTokenFirst && Number(inputAmount) > Number(poolData.balance)) ||
-          (!isTokenFirst && Number(inputAmount) > Number(ethBalance))
-        }
+        disabled={isPending || selectedTicketOwner === null}
       >
-        {isPending ? "Loading..." : "Purchase Tokens"}
+        {isPending ? "Loading..." : "Create Future Order"}
       </Button>
     </CardContainer>
   )

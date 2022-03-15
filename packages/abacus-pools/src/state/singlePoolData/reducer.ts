@@ -18,6 +18,7 @@ export interface TraderProfile {
 export interface Ticket {
   order: number
   amount: number
+  ownToken: boolean
 }
 
 export interface Bribe {

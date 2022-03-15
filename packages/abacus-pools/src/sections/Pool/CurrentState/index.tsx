@@ -1,5 +1,10 @@
 import { PoolStatus } from "@state/poolData/reducer"
-import React from "react"
+import React, { useEffect } from "react"
+import {
+  useGetPoolData,
+  useGetTraderProfileData,
+} from "@state/singlePoolData/hooks"
+import { useActiveWeb3React } from "@hooks/index"
 import CurrentPosition from "./CurrentPosition"
 import AMM from "./AMM"
 import ManagePool from "./ManagePool"
@@ -22,6 +27,14 @@ const CurrentState = ({
   status: PoolStatus
   refresh: () => void
 }) => {
+  const { account } = useActiveWeb3React()
+  const poolData = useGetPoolData()
+  const getTraderProfileData = useGetTraderProfileData()
+
+  useEffect(() => {
+    getTraderProfileData()
+  }, [account, getTraderProfileData, poolData])
+
   if (status === PoolStatus.Normal) {
     switch (page) {
       case Page.Main:

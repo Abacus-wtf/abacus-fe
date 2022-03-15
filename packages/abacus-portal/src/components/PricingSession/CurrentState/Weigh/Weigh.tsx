@@ -49,6 +49,7 @@ const Weigh: FunctionComponent = () => {
   const votes = currentSessionData?.votes ?? null
   const { votesWeighted, hasUserWeighed } = useVotesWeighted(votes)
   const isWeighing = votesWeighted > 0
+  const canInteract = useCanUserInteract()
 
   return (
     <VerticallyCenteredContainer>
@@ -95,7 +96,11 @@ const Weigh: FunctionComponent = () => {
             <FullWidthButton
               onClick={weighVote}
               disabled={
-                notLoggedIn || isPending || !isParticipant || hasUserWeighed
+                notLoggedIn ||
+                isPending ||
+                !isParticipant ||
+                hasUserWeighed ||
+                !canInteract
               }
             >
               {isPending ? "Submitting" : "Start weighing"}

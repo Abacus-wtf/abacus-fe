@@ -21,6 +21,7 @@ export const BottomButtonContainer = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
+  margin-top: 20px;
 `
 
 export const LockOuterContainer = styled.div`

@@ -1,7 +1,7 @@
 import { useCallback, useRef } from "react"
 import { AppState, AppDispatch } from "@state/index"
 import { useDispatch, useSelector } from "react-redux"
-import axios, { AxiosResponse } from "axios"
+import axios from "axios"
 import { request } from "graphql-request"
 import {
   useWeb3Contract,
@@ -20,9 +20,9 @@ import _ from "lodash"
 import {
   formatPricingSessionCheckMulticall,
   formatPricingSessionCoreMulticall,
-  OpenSeaAsset,
   openseaGet,
   openseaGetMany,
+  openseaGetRelated,
   OpenSeaGetResponse,
   shortenAddress,
 } from "@config/utils"
@@ -479,10 +479,7 @@ export const useGetCurrentSessionData = () => {
           finalAppraisalResultToFormat,
         ],
         grtData,
-      ]: [
-        OpenSeaAsset,
-        any[][],
-        AxiosResponse<GetPricingSessionQueryResponse>
+        relatedAssets,
       ] = await Promise.all([
         openseaGet(URL),
         multicall(
@@ -511,6 +508,7 @@ export const useGetCurrentSessionData = () => {
             },
           }
         ),
+        openseaGetRelated("assets/", { asset_contract_address: address }),
       ])
       const pricingSessionCore = formatPricingSessionCoreMulticall(
         pricingSessionCoreToFormat
@@ -554,7 +552,6 @@ export const useGetCurrentSessionData = () => {
           })
         )
       }
-
       if (finalAppraisalValue !== undefined) {
         rankings = rankings.sort((a, b) => {
           const aVal = Number(a.appraisal)
@@ -623,6 +620,10 @@ export const useGetCurrentSessionData = () => {
             amountStaked: formatEther(amountStaked),
           })
         ),
+        relatedAssets: relatedAssets?.assets?.map((asset) => ({
+          src: asset.image_url,
+          link: asset.permalink,
+        })),
       }
 
       dispatch(setCurrentSessionData(sessionData))

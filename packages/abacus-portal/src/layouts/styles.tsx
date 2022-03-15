@@ -20,11 +20,13 @@ export const Container = styled.div`
 
   ${Media.md`
     padding: 0px 100px;
+    padding-bottom: 100px;
   `}
 
   ${Media.lg`
-      padding: 0px;
-    `}
+    padding: 0px;
+    padding-bottom: 100px;
+  `}
 
   ${Media.xl`
     padding: 0px;

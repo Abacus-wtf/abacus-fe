@@ -89,6 +89,17 @@ export type OpenSeaAsset = {
   }
   collection: {
     name: string
+    slug: string
+    payment_tokens: {
+      address: string
+      decimals: number
+      eth_price: number
+      id: number
+      image_url: string
+      name: string
+      symbol: string
+      usd_price: string
+    }[]
   }
   token_id: string
   name: string
@@ -111,6 +122,8 @@ const DEFAULT_ASSET: OpenSeaAsset = {
   },
   collection: {
     name: "",
+    slug: "",
+    payment_tokens: [],
   },
   token_id: "",
   name: "",
@@ -120,15 +133,28 @@ export type OpenSeaGetResponse = {
   assets: OpenSeaAsset[]
 }
 
-export async function openseaGet<T = OpenSeaAsset>(input: string) {
+type OpenSeaQueryParams = {
+  collection_slug?: string
+  asset_contract_address?: string
+}
+
+export async function openseaGet<T = OpenSeaAsset>(
+  input: string,
+  query?: OpenSeaQueryParams
+) {
   let result: T
   try {
-    const res = await fetch(OPENSEA_LINK + input, {
-      headers: OPENSEA_API_KEY
-        ? {
-            "X-API-KEY": OPENSEA_API_KEY,
-          }
-        : {},
+    const queryParams = query
+      ? Object.keys(query).reduce(
+          (acc, q, i) => `${acc}${i === 0 ? "" : "&"}${q}=${query[q]}`,
+          "?"
+        )
+      : ""
+    const url = `${OPENSEA_LINK}${input}${queryParams}`
+    const res = await fetch(url, {
+      headers: {
+        ...(OPENSEA_API_KEY ? { "X-API-KEY": OPENSEA_API_KEY } : {}),
+      },
     })
     result = await res.json()
     return result
@@ -162,6 +188,17 @@ export async function openseaGetMany(pricingSessions: OpenSeaGetManyParams) {
       })),
     }
     return DEFAULT_OPENSEA_GET_RESPONSE
+  }
+  return result
+}
+
+export async function openseaGetRelated(
+  input: string,
+  query: OpenSeaQueryParams
+) {
+  const result = await openseaGet<{ assets: OpenSeaAsset[] }>(input, query)
+  if (isOpenSeaAsset(result)) {
+    return { assets: [] }
   }
   return result
 }

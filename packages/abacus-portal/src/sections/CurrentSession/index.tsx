@@ -18,7 +18,7 @@ import { useActiveWeb3React, usePrevious } from "@hooks/index"
 import ConnectWalletAlert from "@components/ConnectWalletAlert"
 import { useEthToUSD, useGetCurrentNetwork } from "@state/application/hooks"
 import { useSetPayoutData } from "@state/miscData/hooks"
-import { NetworkSymbolEnum } from "@config/constants"
+import { IS_PRODUCTION, NetworkSymbolEnum } from "@config/constants"
 import { Container, SplitContainer } from "@layouts/styles"
 import PricingSession from "@components/PricingSession"
 import DepositModal from "./DepositModal"
@@ -34,6 +34,9 @@ body {
   }
 }
 `
+
+const OPENSEA_LINK = IS_PRODUCTION ? "opensea.io" : "testnets.opensea.io"
+const ETHERSCAN_LINK = IS_PRODUCTION ? "etherscan.io" : "rinkeby.etherscan.io"
 
 const CurrentSession = ({ location }) => {
   const isInitialized = useRef(false)
@@ -127,8 +130,8 @@ const CurrentSession = ({ location }) => {
       />
       <SplitContainer>
         <PriceHistory
-          openseaLink={`https://opensea.io/${sessionData.ownerAddress}`}
-          etherscanLink={`https://etherscan.io/${sessionData.address}/${sessionData.tokenId}`}
+          openseaLink={`https://${OPENSEA_LINK}/${sessionData.ownerAddress}`}
+          etherscanLink={`https://${ETHERSCAN_LINK}/address/${sessionData.address}/${sessionData.tokenId}`}
         />
         <AboutSection description="This is a description" />
       </SplitContainer>
@@ -185,58 +188,9 @@ const CurrentSession = ({ location }) => {
           },
         ]}
       />
-      <PartOfCollection
-        openseaObjects={[
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com/1",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com/2",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com/3",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com/4",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com/5",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com/6",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com/7",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com/8",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com/9",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com/10",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com/11",
-          },
-          {
-            src: "https://pbs.twimg.com/profile_images/1484416288097116160/xLR2e4eu_400x400.png",
-            link: "google.com/12",
-          },
-        ]}
-      />
+      {sessionData.relatedAssets?.length ? (
+        <PartOfCollection openseaObjects={sessionData.relatedAssets} />
+      ) : null}
     </Container>
   )
 }

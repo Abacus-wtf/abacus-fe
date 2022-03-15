@@ -76,6 +76,7 @@ export interface SessionData {
 
 export interface CurrentSessionData extends SessionData {
   votes: Vote[]
+  relatedAssets: { src: string; link: string }[]
 }
 
 export interface ClaimState {

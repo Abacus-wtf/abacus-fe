@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 import { ExploreCardProps } from "../../ExploreCard";
 export declare enum SessionState {
     Vote = 0,
@@ -12,6 +12,7 @@ declare type ExploreScrollableCardProps = {
     cardInfo: ExploreCardProps;
     currentStatus: SessionState;
     loading?: boolean;
+    linkComponent?: string | React.ComponentType<any>;
 };
 declare const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps>;
 export default ExploreScrollableCard;

@@ -27,6 +27,7 @@ export type ExploreCardProps = {
   imgs: string[];
   link: string;
   loading?: boolean;
+  linkComponent?: string | React.ComponentType<any>;
 };
 
 const ExploreCard: FunctionComponent<ExploreCardProps> = ({
@@ -39,6 +40,7 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
   imgs,
   link,
   loading,
+  linkComponent,
 }) => {
   if (loading) {
     return <Fallback />;
@@ -62,7 +64,12 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
             unit={`$${poolAmountDollars ?? "-"}`}
           />
         </ExploreInfoContainer>
-        <ButtonStyled buttonType={ButtonType.Standard} as="a" href={link}>
+        <ButtonStyled
+          buttonType={ButtonType.Standard}
+          as={linkComponent || "a"}
+          href={link}
+          to={link}
+        >
           Participate
         </ButtonStyled>
         <ProfileGroupContainer>

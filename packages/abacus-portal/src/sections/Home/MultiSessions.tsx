@@ -94,6 +94,7 @@ const MultiSessions: FunctionComponent<MultiSessionsProps> = ({ setPage }) => {
           <ExploreScrollableCard
             cardInfo={card}
             currentStatus={currentStatus}
+            linkComponent={card.linkComponent}
           />
         </CardContainer>
       ))}

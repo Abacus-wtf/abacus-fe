@@ -27,12 +27,14 @@ type ExploreScrollableCardProps = {
   cardInfo: ExploreCardProps;
   currentStatus: SessionState;
   loading?: boolean;
+  linkComponent?: string | React.ComponentType<any>;
 };
 
 const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
   cardInfo,
   currentStatus,
   loading,
+  linkComponent,
 }) => {
   const theme = useContext(ThemeContext);
 
@@ -74,7 +76,9 @@ const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
         </BadgeContainer>
       </div>
       <NFTImage src={cardInfo.nftSrc} alt={cardInfo.nftTitle} />
-      <Title href={cardInfo.link}>{cardInfo.nftTitle}</Title>
+      <Title as={linkComponent || "a"} href={cardInfo.link} to={cardInfo.link}>
+        {cardInfo.nftTitle}
+      </Title>
       <ExploreInfoContainer>
         <ExploreInfo
           title="Participants"

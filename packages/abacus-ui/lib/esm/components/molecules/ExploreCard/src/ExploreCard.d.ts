@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 export declare type ExploreCardProps = {
     nftSrc: string;
     nftTitle: string;
@@ -9,6 +9,7 @@ export declare type ExploreCardProps = {
     imgs: string[];
     link: string;
     loading?: boolean;
+    linkComponent?: string | React.ComponentType<any>;
 };
 declare const ExploreCard: FunctionComponent<ExploreCardProps>;
 export default ExploreCard;

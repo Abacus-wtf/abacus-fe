@@ -97,8 +97,13 @@ const StyledLink = styled(Link)`
   display: flex;
   text-decoration: none;
   align-items: center;
-  color: black;
+  color: ${({ theme }) => theme.colors.core.primary};
   gap: 6px;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.core.primary};
+    opacity: 0.6;
+  }
 `
 
 const ProfileButton = styled(Button)`

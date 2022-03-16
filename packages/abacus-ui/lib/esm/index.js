@@ -1021,7 +1021,7 @@ var Fallback$1 = function () { return (React.createElement(Container$e, null,
             React.createElement(ProfileGroup, { imgs: [], numParticipants: 0, loading: true }))))); };
 
 var ExploreCard = function (_a) {
-    var nftSrc = _a.nftSrc, nftTitle = _a.nftTitle, endTime = _a.endTime, numParticipants = _a.numParticipants, poolAmount = _a.poolAmount, poolAmountDollars = _a.poolAmountDollars, imgs = _a.imgs, link = _a.link, loading = _a.loading;
+    var nftSrc = _a.nftSrc, nftTitle = _a.nftTitle, endTime = _a.endTime, numParticipants = _a.numParticipants, poolAmount = _a.poolAmount, poolAmountDollars = _a.poolAmountDollars, imgs = _a.imgs, link = _a.link, loading = _a.loading, linkComponent = _a.linkComponent;
     if (loading) {
         return React.createElement(Fallback$1, null);
     }
@@ -1034,7 +1034,7 @@ var ExploreCard = function (_a) {
             React.createElement(ExploreInfoContainer, null,
                 React.createElement(ExploreInfo, { title: "Participants", text: "" + numParticipants, unit: "People" }),
                 React.createElement(ExploreInfo, { title: "Pool Amount", text: poolAmount.toFixed(2) + " \u039E", unit: "$" + (poolAmountDollars !== null && poolAmountDollars !== void 0 ? poolAmountDollars : "-") })),
-            React.createElement(ButtonStyled, { buttonType: ButtonType.Standard, as: "a", href: link }, "Participate"),
+            React.createElement(ButtonStyled, { buttonType: ButtonType.Standard, as: linkComponent || "a", href: link, to: link }, "Participate"),
             React.createElement(ProfileGroupContainer, null,
                 React.createElement(ProfileGroup, { imgs: imgs, numParticipants: numParticipants })))));
 };
@@ -1066,7 +1066,7 @@ var Divider$1 = styled.hr(templateObject_6$4 || (templateObject_6$4 = __makeTemp
     var theme = _a.theme;
     return theme.colors.core.border;
 });
-var Title$1 = styled.a(templateObject_7$2 || (templateObject_7$2 = __makeTemplateObject(["\n  ", "\n  text-align: center;\n  font-family: \"Bluu Next\";\n  overflow: \"hidden\";\n  text-decoration: none;\n  color: black;\n\n  &:focus,\n  &:hover,\n  &:visited {\n    color: black;\n  }\n\n  &::after {\n    transition: all ", ", opacity 0;\n    content: \"\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  &:hover {\n    text-decoration: underline;\n    &::after {\n      opacity: 0.2;\n      background-color: white;\n    }\n  }\n"], ["\n  ", "\n  text-align: center;\n  font-family: \"Bluu Next\";\n  overflow: \"hidden\";\n  text-decoration: none;\n  color: black;\n\n  &:focus,\n  &:hover,\n  &:visited {\n    color: black;\n  }\n\n  &::after {\n    transition: all ", ", opacity 0;\n    content: \"\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  &:hover {\n    text-decoration: underline;\n    &::after {\n      opacity: 0.2;\n      background-color: white;\n    }\n  }\n"])), Font("peta"), function (_a) {
+var Title$1 = styled.a(templateObject_7$2 || (templateObject_7$2 = __makeTemplateObject(["\n  ", "\n  text-align: center;\n  font-family: \"Bluu Next\";\n  overflow: \"hidden\";\n  text-decoration: none;\n  color: black;\n\n  &:focus,\n  &:hover,\n  &:visited {\n    color: black;\n  }\n\n  &::after {\n    transition: all ", ", opacity 0;\n    content: \"\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  &:hover {\n    &::after {\n      opacity: 0.2;\n      background-color: white;\n    }\n  }\n"], ["\n  ", "\n  text-align: center;\n  font-family: \"Bluu Next\";\n  overflow: \"hidden\";\n  text-decoration: none;\n  color: black;\n\n  &:focus,\n  &:hover,\n  &:visited {\n    color: black;\n  }\n\n  &::after {\n    transition: all ", ", opacity 0;\n    content: \"\";\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n  }\n\n  &:hover {\n    &::after {\n      opacity: 0.2;\n      background-color: white;\n    }\n  }\n"])), Font("peta"), function (_a) {
     var theme = _a.theme;
     return theme.transitionTime.main;
 });
@@ -1108,7 +1108,7 @@ var SessionState;
     SessionState[SessionState["Complete"] = 5] = "Complete";
 })(SessionState || (SessionState = {}));
 var ExploreScrollableCard = function (_a) {
-    var cardInfo = _a.cardInfo, currentStatus = _a.currentStatus, loading = _a.loading;
+    var cardInfo = _a.cardInfo, currentStatus = _a.currentStatus, loading = _a.loading, linkComponent = _a.linkComponent;
     var theme = useContext(ThemeContext);
     if (loading) {
         return React.createElement(Fallback, null);
@@ -1141,7 +1141,7 @@ var ExploreScrollableCard = function (_a) {
                 React.createElement(BadgeIndicator, { color: badgeColor }),
                 badgeTitle)),
         React.createElement(NFTImage, { src: cardInfo.nftSrc, alt: cardInfo.nftTitle }),
-        React.createElement(Title$1, { href: cardInfo.link }, cardInfo.nftTitle),
+        React.createElement(Title$1, { as: linkComponent || "a", href: cardInfo.link, to: cardInfo.link }, cardInfo.nftTitle),
         React.createElement(ExploreInfoContainer, null,
             React.createElement(ExploreInfo, { title: "Participants", text: "" + cardInfo.numParticipants, unit: "People" }),
             React.createElement(ExploreInfo, { title: "Pool Amount", text: cardInfo.poolAmount.toFixed(2) + " \u039E", unit: "$" + cardInfo.poolAmountDollars })),

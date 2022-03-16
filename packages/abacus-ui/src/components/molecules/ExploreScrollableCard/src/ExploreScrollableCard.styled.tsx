@@ -75,7 +75,6 @@ export const Title = styled.a`
   }
 
   &:hover {
-    text-decoration: underline;
     &::after {
       opacity: 0.2;
       background-color: white;

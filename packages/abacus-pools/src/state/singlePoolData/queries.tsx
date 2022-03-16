@@ -1,4 +1,5 @@
-import { gql } from "graphql-request"
+import { GRAPHQL_ENDPOINT } from "@config/constants"
+import request, { gql } from "graphql-request"
 
 export type SubgraphTicket = {
   ticketNumber: string
@@ -63,3 +64,19 @@ export const GET_TICKETS = (where: string | null) => gql`
     }
   }
 `
+
+export const getTicketOwners = async (vaultAddress: string, ticket: number) => {
+  const variables: GetVaultVariables = {
+    first: 50,
+    skip: 0,
+  }
+
+  const { tickets } = await request<GetTicketQueryResponse>(
+    GRAPHQL_ENDPOINT,
+    GET_TICKETS(
+      `{ vaultAddress: "${vaultAddress.toLowerCase()}", ticketNumber: ${ticket} }`
+    ),
+    variables
+  )
+  return tickets
+}

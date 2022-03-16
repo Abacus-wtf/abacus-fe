@@ -225,7 +225,7 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
       method: (...args: any) => Promise<TransactionResponse>
       args: Array<BigNumber | number | string>
       value: BigNumber | null
-      cb: (response: any) => void
+      cb: (response: TransactionResponse) => void
     }) => {
       setTxError(null)
       dispatch(setGeneralizedContractErrorMessage(null))
@@ -244,6 +244,7 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
         )
         return
       }
+      console.log(args)
       await estimate(...args, value ? { value } : {})
         .then((estimatedGasLimit) =>
           method(...args, {

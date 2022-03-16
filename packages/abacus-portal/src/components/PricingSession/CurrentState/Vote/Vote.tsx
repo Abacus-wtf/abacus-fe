@@ -169,6 +169,12 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
     }
   }, [participation])
 
+  useEffect(() => {
+    if (account && !participation) {
+      setPageState(PageState.APPRAISAL)
+    }
+  }, [account, participation])
+
   const notLoggedIn = !account
 
   return (

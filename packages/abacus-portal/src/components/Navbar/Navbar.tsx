@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, useEffect } from "react"
 import styled, { css } from "styled-components"
 import {
   Button,
@@ -12,11 +12,12 @@ import {
   ProfileIcon,
 } from "abacus-ui"
 import { Link } from "gatsby"
-import { useClaimPayoutData } from "@state/miscData/hooks"
+import { useClaimPayoutData, useSetPayoutData } from "@state/miscData/hooks"
 import { useActiveWeb3React } from "@hooks/index"
 import { shortenAddress } from "@config/utils"
 import { getUserIcon } from "@utils"
 import { useToggleWalletModal } from "@state/application/hooks"
+import CreateSessionModal from "./CreateSessionModal"
 
 const Container = styled.nav<{ menuOpen: boolean }>`
   display: flex;
@@ -117,11 +118,19 @@ const ProfileButton = styled(Button)`
 
 const Navbar: FunctionComponent = () => {
   const [menuOpen, setMenuOpen] = React.useState(false)
+  const [createNewSessionOpen, setCreateNewSessionOpen] = React.useState(false)
   const claimData = useClaimPayoutData()
+  const setPayoutData = useSetPayoutData()
   const { account } = useActiveWeb3React()
   const openWeb3Modal = useToggleWalletModal()
 
   const iconSource = getUserIcon(account)
+
+  useEffect(() => {
+    if (account) {
+      setPayoutData(account)
+    }
+  }, [setPayoutData, account])
 
   return (
     <Container menuOpen={menuOpen}>
@@ -152,7 +161,11 @@ const Navbar: FunctionComponent = () => {
             </Kilo>
           </StyledLink>
         ) : null}
-        <Button buttonType={ButtonType.White} disabled={!account}>
+        <Button
+          buttonType={ButtonType.White}
+          disabled={!account}
+          onClick={() => setCreateNewSessionOpen(true)}
+        >
           New Session
         </Button>
         <ProfileButton buttonType={ButtonType.Clear} onClick={openWeb3Modal}>
@@ -160,6 +173,10 @@ const Navbar: FunctionComponent = () => {
           <Kilo>{account ? shortenAddress(account) : "Connect"}</Kilo>
         </ProfileButton>
       </SideContainer>
+      <CreateSessionModal
+        isOpen={createNewSessionOpen}
+        closeModal={() => setCreateNewSessionOpen(false)}
+      />
     </Container>
   )
 }

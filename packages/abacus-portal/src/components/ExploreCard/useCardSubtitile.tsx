@@ -16,7 +16,6 @@ const useCardSubtitile = ({
   currentStatus,
 }: UseCardSubtitleProps) => {
   const subtitle = useMemo(() => {
-    console.log("currentStatus", currentStatus)
     switch (currentStatus) {
       case SessionState.Vote:
         return (

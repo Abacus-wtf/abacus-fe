@@ -86,19 +86,24 @@ const About: FunctionComponent<AboutProps> = ({ traits, creator }) => {
     creator?.user?.username || shortenAddress(creator?.address)
   return (
     <CardWithTitle title="About">
-      <StyledH4>Creator</StyledH4>
-      <Creator>
-        <StyledImg alt="" src={creator?.profile_img_url} />
-        <KiloStyled
-          as="a"
-          href={`https://opensea.io/${creator?.address}`}
-          target="_blank"
-          rel="noopener noreferer"
-        >
-          {creatorValue}
-          <LinkImage />
-        </KiloStyled>
-      </Creator>
+      {creatorValue && (
+        <>
+          <StyledH4>Creator</StyledH4>
+          <Creator>
+            <StyledImg alt="" src={creator?.profile_img_url} />
+            <KiloStyled
+              as="a"
+              href={`https://opensea.io/${creator?.address}`}
+              target="_blank"
+              rel="noopener noreferer"
+            >
+              {creatorValue}
+              <LinkImage />
+            </KiloStyled>
+          </Creator>
+        </>
+      )}
+
       <StyledH4>Traits</StyledH4>
       <Traits>
         {traits?.map((trait) => (

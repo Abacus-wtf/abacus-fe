@@ -30,6 +30,22 @@ import {
   GET_TICKETS,
 } from "./queries"
 
+export const getTicketOwners = async (vaultAddress: string, ticket: number) => {
+  const variables: GetVaultVariables = {
+    first: 50,
+    skip: 0,
+  }
+
+  const { tickets } = await request<GetTicketQueryResponse>(
+    GRAPHQL_ENDPOINT,
+    GET_TICKETS(
+      `{ vaultAddress: "${vaultAddress.toLowerCase()}", ticketNumber: ${ticket} }`
+    ),
+    variables
+  )
+  return tickets
+}
+
 const getPoolDataSelector = (
   state: AppState
 ): AppState["singlePoolData"]["data"] => state.singlePoolData.data

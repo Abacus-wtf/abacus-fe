@@ -235,7 +235,9 @@ export const useOnPurchaseTokens = () => {
       const estimate = vaultContract.estimateGas.purchaseMulti
       const args = [account, account, ticketArray, purchaseAmount, lockupPeriod]
       console.log(args)
-      const value = parseEther(`${(Number(tokenAmount) * 1.0025) / 1000}`)
+      const value = parseEther(
+        `${Number(tokenAmount) * 1.0025 * Number(poolData.tokenPrice)}`
+      )
       console.log(value.toString())
       const txnCb = async (response: any) => {
         addTransaction(response, {

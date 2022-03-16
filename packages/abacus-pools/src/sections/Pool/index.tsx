@@ -67,44 +67,48 @@ const Pool = ({ location }) => {
           </ButtonContainer>
         </VerticalContainer>
         <VerticalContainer>
-          <ButtonContainer>
-            <Tab
-              disabled={page === Page.Main}
-              onClick={() => setPage(Page.Main)}
-            >
-              {poolData.state === PoolStatus.Auction ? "Auction" : "Main"}
-            </Tab>
-            {account ? (
-              <Tab
-                disabled={page === Page.CurrentPositions}
-                onClick={() => setPage(Page.CurrentPositions)}
-              >
-                Current Positions
-              </Tab>
-            ) : null}
-            <Tab
-              disabled={page === Page.Tickets}
-              onClick={() => setPage(Page.Tickets)}
-            >
-              Tickets
-            </Tab>
-          </ButtonContainer>
-          <ButtonContainer>
-            {poolData.isManager && (
-              <Tab
-                disabled={page === Page.ManagePool}
-                onClick={() => setPage(Page.ManagePool)}
-              >
-                Manage Pool
-              </Tab>
-            )}
-            <Tab
-              disabled={page === Page.Bribes}
-              onClick={() => setPage(Page.Bribes)}
-            >
-              Bribes
-            </Tab>
-          </ButtonContainer>
+          {!poolData.auction ? (
+            <>
+              <ButtonContainer>
+                <Tab
+                  disabled={page === Page.Main}
+                  onClick={() => setPage(Page.Main)}
+                >
+                  {poolData.state === PoolStatus.Auction ? "Auction" : "Main"}
+                </Tab>
+                {account ? (
+                  <Tab
+                    disabled={page === Page.CurrentPositions}
+                    onClick={() => setPage(Page.CurrentPositions)}
+                  >
+                    Current Positions
+                  </Tab>
+                ) : null}
+                <Tab
+                  disabled={page === Page.Tickets}
+                  onClick={() => setPage(Page.Tickets)}
+                >
+                  Tickets
+                </Tab>
+              </ButtonContainer>
+              <ButtonContainer>
+                {poolData.isManager && (
+                  <Tab
+                    disabled={page === Page.ManagePool}
+                    onClick={() => setPage(Page.ManagePool)}
+                  >
+                    Manage Pool
+                  </Tab>
+                )}
+                <Tab
+                  disabled={page === Page.Bribes}
+                  onClick={() => setPage(Page.Bribes)}
+                >
+                  Bribes
+                </Tab>
+              </ButtonContainer>
+            </>
+          ) : null}
 
           <VerticalSmallGapContainer style={{ minHeight: 90 }}>
             <SubText>{poolData.collectionTitle}</SubText>

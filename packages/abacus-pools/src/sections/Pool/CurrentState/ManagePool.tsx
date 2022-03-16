@@ -4,7 +4,11 @@ import { Tooltip } from "shards-react"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { NetworkSymbolEnum } from "@config/constants"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import { useOnExitPool, useOnStartEmissions } from "@hooks/vaultFunc"
+import {
+  useOnApproveTransfer,
+  useOnExitPool,
+  useOnStartEmissions,
+} from "@hooks/vaultFunc"
 import { useAcceptBribe } from "@hooks/bribeFunc"
 import { ButtonContainer, VerticalContainer } from "../Pool.styles"
 import { StateComponent } from "./index"
@@ -18,7 +22,8 @@ const ManagePool = ({ refresh }: StateComponent) => {
   const { onStartEmissions, isPending: isPendingStartEmissions } =
     useOnStartEmissions()
   const { onAcceptBribe, isPending: isPendingAcceptBribe } = useAcceptBribe()
-  const [isAuction, setIsAuction] = useState(false)
+  const { onApproveTransfer, isPending: isPendingApproval } =
+    useOnApproveTransfer()
 
   return (
     <>
@@ -28,16 +33,25 @@ const ManagePool = ({ refresh }: StateComponent) => {
         >
           <Button
             className="notConnected"
-            disabled={!isNetworkSymbolETH || (isPending && isAuction)}
+            disabled={!isNetworkSymbolETH || isPending || isPendingApproval}
             style={{ width: "100%", borderRadius: 5 }}
-            onClick={() => {
-              setIsAuction(true)
-              return onExitPool(poolData.vaultAddress, async () => {
+            onClick={async () => {
+              if (!poolData.approved) {
+                await onApproveTransfer(async () => {
+                  await refresh()
+                })
+                return
+              }
+              await onExitPool(poolData.vaultAddress, async () => {
                 await refresh()
               })
             }}
           >
-            {isPending && isAuction ? "Loading..." : "Trigger Auction"}
+            {isPending || isPendingApproval
+              ? "Loading..."
+              : poolData.approved
+              ? "Trigger Auction"
+              : "Approve Transfer for Auction"}
           </Button>
           <Button
             className="notConnected"

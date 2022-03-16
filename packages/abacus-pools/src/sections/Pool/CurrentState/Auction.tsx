@@ -31,8 +31,7 @@ const Auction = ({ refresh }: StateComponent) => {
 
   if (
     poolData.auction.auctionEndTime * 1000 >= moment().unix() &&
-    isHighestBidderOwner &&
-    !poolData.auction.auctionComplete
+    isHighestBidderOwner
   ) {
     return (
       <>

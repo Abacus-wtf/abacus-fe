@@ -11,6 +11,7 @@ import {
   ABC_BRIBE_FACTORY,
   ABC_FACTORY,
   GRAPHQL_ENDPOINT,
+  IS_PRODUCTION,
   ZERO_ADDRESS,
 } from "@config/constants"
 import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
@@ -201,7 +202,6 @@ export const useSetPoolData = () => {
         const [
           owner,
           closePoolContract,
-          pricePerToken,
           tokensLocked,
           symbol,
           emissionsStarted,
@@ -210,52 +210,48 @@ export const useSetPoolData = () => {
           [
             "vaultOwner",
             "closePoolContract",
-            "pricePerToken",
             "tokensLocked",
             "symbol",
             "emissionsStarted",
           ],
-          [[], [], [], [], [], [], []]
+          [[], [], [], [], [], []]
         )
 
         let balance = BigNumber.from(0)
         let creditsAvailable = BigNumber.from(0)
+        let approved = false
         if (account) {
-          const multi = await vault(
-            vaultAddress,
-            ["getCreditsAvailableForPurchase", "balanceOf"],
-            [[account, moment().unix()], [account]]
-          )
+          const [multi, approval] = await Promise.all([
+            vault(
+              vaultAddress,
+              ["getCreditsAvailableForPurchase", "balanceOf"],
+              [[account, moment().unix()], [account]]
+            ),
+            erc721(address)
+              .methods.isApprovedForAll(account, vaultAddress)
+              .call(),
+          ])
           creditsAvailable = multi[0][0]
           balance = multi[1][0]
+          approved = approval
         }
 
         let auction: Auction
         if (closePoolContract[0] !== ZERO_ADDRESS) {
-          const [
-            auctionLive,
-            auctionComplete,
-            nftRedeemed,
-            auctionEndTime,
-            highestBid,
-            highestBidder,
-          ] = await closePool(
-            closePoolContract[0],
-            [
-              "auctionLive",
-              "auctionComplete",
-              "nftRedeemed",
-              "auctionEndTime",
-              "highestBid",
-              "highestBidder",
-            ],
-            [[], [], [], [], [], []]
-          )
+          const [auctionComplete, auctionEndTime, highestBid, highestBidder] =
+            await closePool(
+              closePoolContract[0],
+              [
+                "auctionComplete",
+                "auctionEndTime",
+                "highestBid",
+                "highestBidder",
+              ],
+              [[], [], [], []]
+            )
 
           auction = {
-            auctionLive: auctionLive[0],
             auctionComplete: auctionComplete[0],
-            nftRedeemed: nftRedeemed[0],
             auctionEndTime: BigNumber.from(auctionEndTime[0]).toNumber(),
             highestBid: Number(formatEther(highestBid[0])),
             highestBidder: highestBidder[0],
@@ -276,7 +272,7 @@ export const useSetPoolData = () => {
           ownerAddress: owner[0],
           symbol: symbol[0],
           tokensLocked: formatEther(tokensLocked[0]),
-          tokenPrice: formatEther(pricePerToken[0]),
+          tokenPrice: IS_PRODUCTION ? ".001" : "0.00001",
           isManager:
             String(owner[0]).toLowerCase() === account.toLowerCase() ||
             ownerOf.toLowerCase() === account.toLowerCase(),
@@ -285,11 +281,12 @@ export const useSetPoolData = () => {
           state:
             closePoolContract[0] === ZERO_ADDRESS
               ? PoolStatus.Normal
-              : auction && auction.auctionLive
+              : auction && !auction.auctionComplete
               ? PoolStatus.Auction
               : PoolStatus.Closed,
           auction,
           img: asset.image_url,
+          approved,
         }
         dispatch(getPoolData(pool))
       } catch (e) {

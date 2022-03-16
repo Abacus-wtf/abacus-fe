@@ -18,9 +18,7 @@ export interface NFTBasePool extends NFT {
 }
 
 export interface Auction {
-  auctionLive: boolean
   auctionComplete: boolean
-  nftRedeemed: boolean
   auctionEndTime: number
   highestBid: number
   highestBidder: string
@@ -49,6 +47,7 @@ export interface Pool extends NFT {
   state: PoolStatus
   hasPremiumPass?: boolean
   auction?: Auction
+  approved?: boolean
 }
 
 interface PoolState {

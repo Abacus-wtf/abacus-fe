@@ -10,6 +10,7 @@ import _ from "lodash"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { formatEther, parseEther } from "ethers/lib/utils"
 import VAULT_ABI from "../config/contracts/ABC_VAULT_ABI.json"
+import ERC_721_ABI from "../config/contracts/ERC_721_ABI.json"
 
 export const useOnExitPool = () => {
   const { account, library } = useActiveWeb3React()
@@ -47,6 +48,47 @@ export const useOnExitPool = () => {
   )
   return {
     onExitPool,
+    isPending,
+  }
+}
+
+export const useOnApproveTransfer = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+  const poolData = useGetPoolData()
+
+  const onApproveTransfer = useCallback(
+    async (cb: () => void) => {
+      const erc721 = getContract(
+        poolData.address,
+        ERC_721_ABI,
+        library,
+        account
+      )
+      const method = erc721.setApprovalForAll
+      const estimate = erc721.estimateGas.setApprovalForAll
+      const args = [poolData.vaultAddress, true]
+      const value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Approve Transfer",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [library, account, generalizedContractCall, addTransaction, poolData]
+  )
+  return {
+    onApproveTransfer,
     isPending,
   }
 }
@@ -183,7 +225,7 @@ export const useOnPurchaseTokens = () => {
               runningTokenAmount -= spaceLeft
             }
             ticketArray.push(i)
-            purchaseAmount.push(parseEther(`${spaceLeft}`))
+            purchaseAmount.push(parseEther(`${spaceLeft}`).toString())
           }
         }
         cycle += 1

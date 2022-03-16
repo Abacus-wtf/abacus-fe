@@ -7,6 +7,7 @@ import {
   useCurrentSessionData,
   useGetCurrentSessionData,
 } from "@state/sessionData/hooks"
+import { useEthToUSD } from "@state/application/hooks"
 import {
   TitleContainer,
   Description,
@@ -50,6 +51,7 @@ const Weigh: FunctionComponent = () => {
   const { votesWeighted, hasUserWeighed } = useVotesWeighted(votes)
   const isWeighing = votesWeighted > 0
   const canInteract = useCanUserInteract()
+  const finalAppraisalUSD = useEthToUSD(currentSessionData?.finalAppraisalValue)
 
   return (
     <VerticallyCenteredContainer>
@@ -80,7 +82,8 @@ const Weigh: FunctionComponent = () => {
           <InfoContainer>
             <Info>
               <InfoTitle>
-                {currentSessionData?.finalAppraisalValue ?? 0} ETH
+                {currentSessionData?.finalAppraisalValue ?? 0} ETH ($
+                {finalAppraisalUSD})
               </InfoTitle>
               <Kilo>Appraisal</Kilo>
             </Info>

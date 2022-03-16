@@ -8,7 +8,6 @@ export const mapSessionData = (session: SessionData): ExploreCardProps => ({
   endTime: session.endTime,
   numParticipants: session.numPpl,
   poolAmount: session.totalStaked,
-  poolAmountDollars: session.totalStakedInUSD,
   imgs: [
     "/temp_icon.png",
     "/temp_icon.png",

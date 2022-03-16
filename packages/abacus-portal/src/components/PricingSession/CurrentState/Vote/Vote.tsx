@@ -48,6 +48,9 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
   const claimPayout = useClaimPayoutData()
   const appraisalUSD = useEthToUSD(Number(appraisal))
   const stakeUSD = useEthToUSD(Number(stake))
+  const abacusBalanceUSD = useEthToUSD(claimPayout?.ethCredit)
+  const participationAppraisalUSD = useEthToUSD(participation?.appraisal)
+  const participationStakeUSD = useEthToUSD(participation?.stake)
 
   const { maxAppraisal } = sessionData
   const ethCredit = claimPayout?.ethCredit ?? 0
@@ -216,8 +219,8 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
         <>
           <MiniList
             info={{
-              Appraisal: `${participation?.appraisal} ETH`,
-              Stake: `${participation?.stake} ETH`,
+              Appraisal: `${participation?.appraisal} ETH ($${participationAppraisalUSD})`,
+              Stake: `${participation?.stake} ETH ($${participationStakeUSD})`,
               "Seed Number": <SeedNumber />,
             }}
             isDark
@@ -239,7 +242,9 @@ const Vote: FunctionComponent<VoteProps> = ({ openDepositModal }) => {
                   <Description>
                     {pageState === PageState.APPRAISAL
                       ? "Appraisals are anonymous until all submissions are in."
-                      : `${claimPayout?.ethCredit ?? 0} ETH`}
+                      : `${
+                          claimPayout?.ethCredit ?? 0
+                        } ETH ($${abacusBalanceUSD})`}
                   </Description>
                 </TitleContainer>
               </LockContainer>

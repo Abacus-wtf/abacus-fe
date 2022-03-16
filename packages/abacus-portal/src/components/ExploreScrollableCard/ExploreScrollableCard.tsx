@@ -2,6 +2,7 @@ import { ExploreInfo, ProfileGroup } from "abacus-ui"
 import React, { FunctionComponent, useContext } from "react"
 import { ThemeContext } from "styled-components"
 import { SessionState } from "@state/sessionData/reducer"
+import { useEthToUSD } from "@state/application/hooks"
 import {
   ExploreCardProps,
   ExploreInfoContainer,
@@ -36,6 +37,8 @@ const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
     link: cardInfo.link,
     currentStatus: cardInfo.currentStatus,
   })
+
+  const poolAmountUSD = useEthToUSD(cardInfo.poolAmount)
 
   if (loading) {
     return <Fallback />
@@ -87,7 +90,7 @@ const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
         <ExploreInfo
           title="Pool Amount"
           text={`${cardInfo.poolAmount.toFixed(2)} Ξ`}
-          unit={`$${cardInfo.poolAmountDollars}`}
+          unit={`$${poolAmountUSD}`}
         />
       </ExploreInfoContainer>
       <Divider />

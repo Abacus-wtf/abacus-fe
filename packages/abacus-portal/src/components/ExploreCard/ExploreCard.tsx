@@ -1,3 +1,4 @@
+import { useEthToUSD } from "@state/application/hooks"
 import { SessionState } from "@state/sessionData/reducer"
 import { ButtonType, ExploreImage, ExploreInfo, ProfileGroup } from "abacus-ui"
 import React, { FunctionComponent } from "react"
@@ -19,7 +20,6 @@ export type ExploreCardProps = {
   endTime: number
   numParticipants: number
   poolAmount: number
-  poolAmountDollars: number
   imgs: string[]
   link: string
   loading?: boolean
@@ -34,7 +34,6 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
   endTime,
   numParticipants,
   poolAmount,
-  poolAmountDollars,
   imgs,
   link,
   loading,
@@ -48,6 +47,8 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
     link,
     currentStatus,
   })
+
+  const poolAmountUSD = useEthToUSD(poolAmount)
 
   if (loading) {
     return <Fallback />
@@ -69,7 +70,7 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
           <ExploreInfo
             title="Pool Amount"
             text={`${poolAmount.toFixed(2)} Ξ`}
-            unit={`$${poolAmountDollars ?? "-"}`}
+            unit={`$${poolAmountUSD}`}
           />
         </ExploreInfoContainer>
         <ButtonStyled

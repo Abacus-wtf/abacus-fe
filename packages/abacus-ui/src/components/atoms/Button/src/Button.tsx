@@ -47,7 +47,9 @@ const Button = styled.button.attrs(({ disabled, ...rest }) => ({
 
   &:hover {
     color: ${({ theme, buttonType }) =>
-      buttonType === ButtonType.White || buttonType === ButtonType.Gray
+      buttonType === ButtonType.White ||
+      buttonType === ButtonType.Gray ||
+      buttonType === ButtonType.Clear
         ? theme.colors.button.primary
         : theme.colors.core.white};
     opacity: 0.6;

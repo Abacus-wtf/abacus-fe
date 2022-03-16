@@ -378,7 +378,9 @@ var Button = styled.button.attrs(function (_a) {
                 : theme.colors.utility.blue;
 }, function (_a) {
     var theme = _a.theme, buttonType = _a.buttonType;
-    return buttonType === ButtonType.White || buttonType === ButtonType.Gray
+    return buttonType === ButtonType.White ||
+        buttonType === ButtonType.Gray ||
+        buttonType === ButtonType.Clear
         ? theme.colors.button.primary
         : theme.colors.core.white;
 }, function (_a) {
@@ -708,13 +710,14 @@ var MegaStyled$2 = styled(Container$A)(templateObject_2$m || (templateObject_2$m
     return theme.colors.utility.blue;
 });
 var AbacusBalance = function (_a) {
-    var balance = _a.balance;
+    var balance = _a.balance, _b = _a.isEth, isEth = _b === void 0 ? true : _b;
     var theme = useContext(ThemeContext);
     return (React.createElement(Container$m, null,
-        React.createElement(Eth, { fill: theme.colors.utility.blue }),
+        isEth && React.createElement(Eth, { fill: theme.colors.utility.blue }),
         React.createElement(MegaStyled$2, null,
             balance,
-            " ETH")));
+            " ",
+            isEth ? "ETH" : "ABC")));
 };
 var templateObject_1$q, templateObject_2$m;
 

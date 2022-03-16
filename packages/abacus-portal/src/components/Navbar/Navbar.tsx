@@ -15,6 +15,8 @@ import { Link } from "gatsby"
 import { useClaimPayoutData } from "@state/miscData/hooks"
 import { useActiveWeb3React } from "@hooks/index"
 import { shortenAddress } from "@config/utils"
+import { getUserIcon } from "@utils"
+import { useToggleWalletModal } from "@state/application/hooks"
 
 const Container = styled.nav<{ menuOpen: boolean }>`
   display: flex;
@@ -32,7 +34,7 @@ const Container = styled.nav<{ menuOpen: boolean }>`
       bottom: 0;
       z-index: 100;
 
-      ${Media.sm`
+      ${Media.md`
         flex-direction: row;
         background: none;
         position: static;
@@ -91,14 +93,6 @@ const DropdownButton = styled(Button)<{ menuOpen: boolean }>`
   `}
 `
 
-const StyledKilo = styled(Kilo)`
-  cursor: pointer;
-  transition: ${({ theme }) => theme.transitionTime.main};
-  &:hover {
-    opacity: 0.7;
-  }
-`
-
 const StyledLink = styled(Link)`
   display: flex;
   text-decoration: none;
@@ -107,10 +101,11 @@ const StyledLink = styled(Link)`
   gap: 6px;
 `
 
-const ProfileContainer = styled.div`
+const ProfileButton = styled(Button)`
   grid-gap: 8px;
   display: flex;
   flex-direction: row;
+  align-items: center;
   color: black;
   padding: 0px;
 `
@@ -119,6 +114,9 @@ const Navbar: FunctionComponent = () => {
   const [menuOpen, setMenuOpen] = React.useState(false)
   const claimData = useClaimPayoutData()
   const { account } = useActiveWeb3React()
+  const openWeb3Modal = useToggleWalletModal()
+
+  const iconSource = getUserIcon(account)
 
   return (
     <Container menuOpen={menuOpen}>
@@ -138,20 +136,24 @@ const Navbar: FunctionComponent = () => {
         </DropdownButton>
       </SideContainer>
       <SideContainer style={{ gridGap: 32 }} isOptions menuOpen={menuOpen}>
-        <StyledLink to="/claim-pool">
-          <StyledKilo>
-            {claimData?.ethCredit.toLocaleString("en-us", {
-              maximumSignificantDigits: 2,
-              minimumSignificantDigits: 2,
-            }) ?? `...`}{" "}
-            ETH
-          </StyledKilo>
-        </StyledLink>
-        <Button buttonType={ButtonType.White}>New Session</Button>
-        <ProfileContainer>
-          <ProfileIcon src="/temp_icon.png" />
-          <Kilo>{shortenAddress(account)}</Kilo>
-        </ProfileContainer>
+        {claimData ? (
+          <StyledLink to="/claim-pool">
+            <Kilo>
+              {claimData.ethCredit.toLocaleString("en-us", {
+                maximumSignificantDigits: 2,
+                minimumSignificantDigits: 2,
+              })}{" "}
+              ETH
+            </Kilo>
+          </StyledLink>
+        ) : null}
+        <Button buttonType={ButtonType.White} disabled={!account}>
+          New Session
+        </Button>
+        <ProfileButton buttonType={ButtonType.Clear} onClick={openWeb3Modal}>
+          <ProfileIcon src={iconSource} />
+          <Kilo>{account ? shortenAddress(account) : "Connect"}</Kilo>
+        </ProfileButton>
       </SideContainer>
     </Container>
   )

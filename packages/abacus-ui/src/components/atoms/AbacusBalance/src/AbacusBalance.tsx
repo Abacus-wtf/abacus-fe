@@ -5,6 +5,7 @@ import { ETH } from "@icons";
 
 type AbacusBalanceProps = {
   balance: number;
+  isEth?: boolean;
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -23,12 +24,17 @@ const MegaStyled = styled(Mega)`
   font-weight: 600;
 `;
 
-const AbacusBalance: FunctionComponent<AbacusBalanceProps> = ({ balance }) => {
+const AbacusBalance: FunctionComponent<AbacusBalanceProps> = ({
+  balance,
+  isEth = true,
+}) => {
   const theme = useContext(ThemeContext);
   return (
     <Container>
-      <ETH fill={theme.colors.utility.blue} />
-      <MegaStyled>{balance} ETH</MegaStyled>
+      {isEth && <ETH fill={theme.colors.utility.blue} />}
+      <MegaStyled>
+        {balance} {isEth ? "ETH" : "ABC"}
+      </MegaStyled>
     </Container>
   );
 };

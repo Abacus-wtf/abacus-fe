@@ -390,7 +390,9 @@ var Button = styled__default["default"].button.attrs(function (_a) {
                 : theme.colors.utility.blue;
 }, function (_a) {
     var theme = _a.theme, buttonType = _a.buttonType;
-    return buttonType === exports.ButtonType.White || buttonType === exports.ButtonType.Gray
+    return buttonType === exports.ButtonType.White ||
+        buttonType === exports.ButtonType.Gray ||
+        buttonType === exports.ButtonType.Clear
         ? theme.colors.button.primary
         : theme.colors.core.white;
 }, function (_a) {
@@ -720,13 +722,14 @@ var MegaStyled$2 = styled__default["default"](Container$A)(templateObject_2$m ||
     return theme.colors.utility.blue;
 });
 var AbacusBalance = function (_a) {
-    var balance = _a.balance;
+    var balance = _a.balance, _b = _a.isEth, isEth = _b === void 0 ? true : _b;
     var theme = React.useContext(styled.ThemeContext);
     return (React__default["default"].createElement(Container$m, null,
-        React__default["default"].createElement(Eth, { fill: theme.colors.utility.blue }),
+        isEth && React__default["default"].createElement(Eth, { fill: theme.colors.utility.blue }),
         React__default["default"].createElement(MegaStyled$2, null,
             balance,
-            " ETH")));
+            " ",
+            isEth ? "ETH" : "ABC")));
 };
 var templateObject_1$q, templateObject_2$m;
 

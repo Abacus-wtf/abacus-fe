@@ -1,9 +1,13 @@
-import { ExploreInfo, SessionCountdown } from "@atoms";
-import React, { FunctionComponent, useContext } from "react";
-import { ThemeContext } from "styled-components";
-import { ExploreCardProps, ExploreInfoContainer } from "../../ExploreCard";
-import { ProfileGroup } from "../../ProfileGroup";
-import Fallback from "./Fallback";
+import { ExploreInfo, ProfileGroup } from "abacus-ui"
+import React, { FunctionComponent, useContext } from "react"
+import { ThemeContext } from "styled-components"
+import { SessionState } from "@state/sessionData/reducer"
+import {
+  ExploreCardProps,
+  ExploreInfoContainer,
+  useCardSubtitile,
+} from "../ExploreCard"
+import Fallback from "./Fallback"
 import {
   NFTImage,
   Container,
@@ -12,61 +16,56 @@ import {
   Title,
   Divider,
   BottomContainer,
-} from "./ExploreScrollableCard.styled";
-
-export enum SessionState {
-  Vote = 0,
-  Weigh = 1,
-  SetFinalAppraisal = 2,
-  Harvest = 3,
-  Claim = 4,
-  Complete = 5,
-}
+} from "./ExploreScrollableCard.styled"
 
 type ExploreScrollableCardProps = {
-  cardInfo: ExploreCardProps;
-  currentStatus: SessionState;
-  loading?: boolean;
-  linkComponent?: string | React.ComponentType<any>;
-};
+  cardInfo: ExploreCardProps
+  loading?: boolean
+  linkComponent?: string | React.ComponentType<any>
+}
 
 const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
   cardInfo,
-  currentStatus,
   loading,
   linkComponent,
 }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useContext(ThemeContext)
+  const subtitle = useCardSubtitile({
+    endTime: cardInfo.endTime,
+    finalAppraisalValue: cardInfo.finalAppraisalValue,
+    link: cardInfo.link,
+    currentStatus: cardInfo.currentStatus,
+  })
 
   if (loading) {
-    return <Fallback />;
+    return <Fallback />
   }
 
   const badgeTitle =
-    currentStatus === SessionState.Vote
+    cardInfo.currentStatus === SessionState.Vote
       ? "Voting Live"
-      : currentStatus === SessionState.Weigh
+      : cardInfo.currentStatus === SessionState.Weigh
       ? "Weighing Votes"
-      : currentStatus === SessionState.SetFinalAppraisal
+      : cardInfo.currentStatus === SessionState.SetFinalAppraisal
       ? "Setting Final Appraisal"
-      : currentStatus === SessionState.Harvest
+      : cardInfo.currentStatus === SessionState.Harvest
       ? "Harvesting"
-      : currentStatus === SessionState.Claim
+      : cardInfo.currentStatus === SessionState.Claim
       ? "Claiming"
-      : "Session Completed";
+      : "Session Completed"
 
   const badgeColor =
-    currentStatus === SessionState.Vote
+    cardInfo.currentStatus === SessionState.Vote
       ? theme.colors.utility.blue
-      : currentStatus === SessionState.Weigh
+      : cardInfo.currentStatus === SessionState.Weigh
       ? theme.colors.core[900]
-      : currentStatus === SessionState.SetFinalAppraisal
+      : cardInfo.currentStatus === SessionState.SetFinalAppraisal
       ? theme.colors.utility.yellow
-      : currentStatus === SessionState.Harvest
+      : cardInfo.currentStatus === SessionState.Harvest
       ? theme.colors.utility.purple
-      : currentStatus === SessionState.Claim
+      : cardInfo.currentStatus === SessionState.Claim
       ? theme.colors.utility.brown
-      : theme.colors.utility.green;
+      : theme.colors.utility.green
   return (
     <Container>
       <div style={{ width: "100%" }}>
@@ -77,7 +76,7 @@ const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
       </div>
       <NFTImage src={cardInfo.nftSrc} alt={cardInfo.nftTitle} />
       <Title as={linkComponent || "a"} href={cardInfo.link} to={cardInfo.link}>
-        {cardInfo.nftTitle}
+        {cardInfo.nftTitle || "Untitled"}
       </Title>
       <ExploreInfoContainer>
         <ExploreInfo
@@ -97,10 +96,10 @@ const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
           imgs={cardInfo.imgs}
           numParticipants={cardInfo.numParticipants}
         />
-        <SessionCountdown endTime={cardInfo.endTime} />
+        {subtitle}
       </BottomContainer>
     </Container>
-  );
-};
+  )
+}
 
-export default ExploreScrollableCard;
+export default ExploreScrollableCard

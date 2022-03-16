@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import { SessionState } from "../../ExploreScrollableCard/src/ExploreScrollableCard";
 export declare type ExploreCardProps = {
     nftSrc: string;
     nftTitle: string;
@@ -9,6 +10,8 @@ export declare type ExploreCardProps = {
     imgs: string[];
     link: string;
     loading?: boolean;
+    state: SessionState;
+    finalAppraisalValue?: number;
     linkComponent?: string | React.ComponentType<any>;
 };
 declare const ExploreCard: FunctionComponent<ExploreCardProps>;

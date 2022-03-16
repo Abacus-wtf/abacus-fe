@@ -4,6 +4,7 @@ declare type SessionCountdownProps = {
     loading?: boolean;
     key?: string;
     onComplete?: () => void;
+    completedText?: string;
 };
 declare const SessionCountdown: FunctionComponent<SessionCountdownProps>;
 export default SessionCountdown;

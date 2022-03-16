@@ -1,5 +1,5 @@
-import { Font, Media } from "@theme";
-import styled from "styled-components";
+import { Font, Media } from "abacus-ui"
+import styled from "styled-components"
 
 export const Container = styled.div`
   position: relative;
@@ -16,7 +16,7 @@ export const Container = styled.div`
   ${Media.lg`
     grid-gap: 28px;
   `}
-`;
+`
 
 export const BadgeContainer = styled.div`
   border: 2px solid ${({ theme }) => theme.colors.core.border};
@@ -29,26 +29,26 @@ export const BadgeContainer = styled.div`
   font-weight: 500;
   ${Font("nano")};
   align-items: center;
-`;
+`
 
 export const BadgeIndicator = styled.div<{ color: string }>`
   border-radius: 50%;
   height: 8px;
   width: 8px;
   background-color: ${({ color }) => color};
-`;
+`
 
 export const NFTImage = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.section};
   width: 100%;
   aspect-ratio: 1 / 1;
   max-width: 200px;
-`;
+`
 
 export const Divider = styled.hr`
   width: 100%;
   border-color: ${({ theme }) => theme.colors.core.border};
-`;
+`
 
 export const Title = styled.a`
   ${Font("peta")}
@@ -80,7 +80,7 @@ export const Title = styled.a`
       background-color: white;
     }
   }
-`;
+`
 
 export const BottomContainer = styled.div`
   grid-gap: 30px;
@@ -92,4 +92,4 @@ export const BottomContainer = styled.div`
   ${Media.lg`
     margin-bottom: 28px;
   `}
-`;
+`

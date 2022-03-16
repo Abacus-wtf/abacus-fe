@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useState, useMemo } from "react"
 import styled from "styled-components"
-import { ExploreCarousel, H2, P, AbacusBar, Media } from "abacus-ui"
+import { H2, P, AbacusBar, Media } from "abacus-ui"
 import {
   useFeaturedSessionState,
   useGetFeaturedSessionData,
 } from "@state/sessionData/hooks"
 import { PromiseStatus } from "@models/PromiseStatus"
+import { ExploreCarousel } from "@components/index"
 import { mapSessionData } from "./helpers"
 import useInitializeData from "./useInitializeData"
 

@@ -1,12 +1,12 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent } from "react"
 import {
   LoadingShimmer,
   ExploreImage,
   ButtonType,
   ExploreInfo,
   SessionCountdown,
-} from "@atoms";
-import { ProfileGroup } from "../../ProfileGroup";
+  ProfileGroup,
+} from "abacus-ui"
 import {
   Container,
   SecondHalf,
@@ -15,7 +15,7 @@ import {
   ExploreInfoContainer,
   ButtonStyled,
   ProfileGroupContainer,
-} from "./ExploreCard.styled";
+} from "./ExploreCard.styled"
 
 const Fallback: FunctionComponent = () => (
   <Container>
@@ -44,6 +44,6 @@ const Fallback: FunctionComponent = () => (
       </ProfileGroupContainer>
     </SecondHalf>
   </Container>
-);
+)
 
-export default Fallback;
+export default Fallback

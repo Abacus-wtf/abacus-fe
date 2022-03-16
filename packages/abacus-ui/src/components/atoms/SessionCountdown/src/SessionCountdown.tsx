@@ -8,6 +8,7 @@ type SessionCountdownProps = {
   loading?: boolean;
   key?: string;
   onComplete?: () => void;
+  completedText?: string;
 };
 
 const SessionCountdown: FunctionComponent<SessionCountdownProps> = ({
@@ -15,6 +16,7 @@ const SessionCountdown: FunctionComponent<SessionCountdownProps> = ({
   loading,
   key,
   onComplete,
+  completedText,
 }) => {
   if (loading) {
     return <Fallback />;
@@ -26,7 +28,7 @@ const SessionCountdown: FunctionComponent<SessionCountdownProps> = ({
       onComplete={onComplete}
       renderer={({ hours, minutes, seconds, completed }) => {
         if (completed) {
-          return <Text>Session Completed</Text>;
+          return <Text>{completedText || "Session Completed"}</Text>;
         }
         return (
           <div style={{ display: "flex" }}>

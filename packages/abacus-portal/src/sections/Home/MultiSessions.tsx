@@ -1,12 +1,13 @@
 import React, { FunctionComponent, useMemo } from "react"
 import styled from "styled-components"
-import { ExploreScrollableCard, ExploreCardProps, Media } from "abacus-ui"
+import { Media } from "abacus-ui"
 import {
   useGetMultiSessionData,
   useMultiSessionState,
 } from "@state/sessionData/hooks"
-import { InfinteScroll } from "@components/index"
+import { InfinteScroll, ExploreScrollableCard } from "@components/index"
 import { PromiseStatus } from "@models/PromiseStatus"
+import { ExploreCardProps } from "@components/ExploreCard"
 import { mapSessionData } from "./helpers"
 import useInitializeData from "./useInitializeData"
 
@@ -47,6 +48,7 @@ const LOADING_CARD_INFO: ExploreCardProps = {
   poolAmountDollars: 0,
   imgs: [],
   link: "",
+  currentStatus: -1,
 }
 
 type MultiSessionsProps = {
@@ -74,11 +76,7 @@ const MultiSessions: FunctionComponent<MultiSessionsProps> = ({ setPage }) => {
   if (multiSessionCards.length === 0 && isMultiSessionLoading) {
     return (
       <CardContainer>
-        <ExploreScrollableCard
-          cardInfo={LOADING_CARD_INFO}
-          currentStatus={0}
-          loading
-        />
+        <ExploreScrollableCard cardInfo={LOADING_CARD_INFO} loading />
       </CardContainer>
     )
   }
@@ -89,11 +87,10 @@ const MultiSessions: FunctionComponent<MultiSessionsProps> = ({ setPage }) => {
 
   return (
     <>
-      {multiSessionCards.map(({ currentStatus, ...card }) => (
+      {multiSessionCards.map(({ ...card }) => (
         <CardContainer key={card.link}>
           <ExploreScrollableCard
             cardInfo={card}
-            currentStatus={currentStatus}
             linkComponent={card.linkComponent}
           />
         </CardContainer>

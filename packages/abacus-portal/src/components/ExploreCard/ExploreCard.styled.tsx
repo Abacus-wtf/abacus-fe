@@ -1,6 +1,5 @@
-import { Button } from "@atoms";
-import { Font, Media } from "@theme";
-import styled from "styled-components";
+import { Button, Font, Media } from "abacus-ui"
+import styled from "styled-components"
 
 export const Container = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.section};
@@ -10,7 +9,7 @@ export const Container = styled.div`
   flex-direction: column;
   padding: 0px;
   position: relative;
-`;
+`
 
 export const SecondHalf = styled.div`
   width: 100%;
@@ -20,7 +19,7 @@ export const SecondHalf = styled.div`
   align-items: center;
   padding: 15px 20px;
   box-sizing: border-box;
-`;
+`
 
 export const Title = styled.h3`
   text-align: center;
@@ -34,13 +33,13 @@ export const Title = styled.h3`
   ${Media.md`
     ${Font("zetta", "Bluu Next")}
   `}
-`;
+`
 
 export const Divider = styled.hr`
   margin: 18px 0px;
   width: 100%;
   border-color: ${({ theme }) => theme.colors.core.border};
-`;
+`
 
 export const ExploreInfoContainer = styled.div`
   display: grid;
@@ -54,14 +53,14 @@ export const ExploreInfoContainer = styled.div`
     grid-column-gap: 50px;
     width: max-content;
   `}
-`;
+`
 
 export const ButtonStyled = styled(Button)`
   display: flex;
   text-align: center;
   justify-content: center;
   width: 100%;
-`;
+`
 
 export const ProfileGroupContainer = styled.div`
   display: none;
@@ -70,4 +69,4 @@ export const ProfileGroupContainer = styled.div`
   ${Media.md`
     display: block;
   `}
-`;
+`

@@ -1,17 +1,14 @@
-import { ExploreImage } from "@atoms";
-import ExploreCard, {
-  ExploreCardProps,
-} from "components/molecules/ExploreCard/src/ExploreCard";
-import React, { FunctionComponent } from "react";
-import styled from "styled-components";
-import { Media } from "@theme";
+import { ExploreImage, Media } from "abacus-ui"
+import React, { FunctionComponent } from "react"
+import styled from "styled-components"
+import { ExploreCardProps, ExploreCard } from "../ExploreCard"
 
 type ExploreCarouselProps = {
-  cards: ExploreCardProps[];
-  currentMid: number;
-  setCurrentMid: (next: number) => void;
-  loading?: boolean;
-};
+  cards: ExploreCardProps[]
+  currentMid: number
+  setCurrentMid: (next: number) => void
+  loading?: boolean
+}
 
 const Wrapper = styled.div`
   position: relative;
@@ -24,7 +21,7 @@ const Wrapper = styled.div`
   ${Media.xl`
     overflow: visible;
   `}
-`;
+`
 
 const Container = styled.div`
   position: relative;
@@ -45,7 +42,7 @@ const Container = styled.div`
   ${Media.md`
     grid-template-columns: 50% 480px 50%;
   `}
-`;
+`
 
 const CarouselItem = styled.div`
   max-width: 480px;
@@ -59,7 +56,7 @@ const CarouselItem = styled.div`
   &:last-of-type {
     justify-self: flex-start;
   }
-`;
+`
 
 const ExploreCarousel: FunctionComponent<ExploreCarouselProps> = ({
   cards,
@@ -68,7 +65,7 @@ const ExploreCarousel: FunctionComponent<ExploreCarouselProps> = ({
   loading,
 }) => {
   if (!loading && cards.length < 1) {
-    return null;
+    return null
   }
 
   return (
@@ -79,9 +76,9 @@ const ExploreCarousel: FunctionComponent<ExploreCarouselProps> = ({
             loading={loading}
             onClick={() => {
               if (currentMid === 0) {
-                setCurrentMid(cards.length - 1);
+                setCurrentMid(cards.length - 1)
               } else {
-                setCurrentMid(currentMid - 1);
+                setCurrentMid(currentMid - 1)
               }
             }}
             enableFullBorderRadius
@@ -99,9 +96,9 @@ const ExploreCarousel: FunctionComponent<ExploreCarouselProps> = ({
             loading={loading}
             onClick={() => {
               if (currentMid === cards.length - 1) {
-                setCurrentMid(0);
+                setCurrentMid(0)
               } else {
-                setCurrentMid(currentMid + 1);
+                setCurrentMid(currentMid + 1)
               }
             }}
             enableFullBorderRadius
@@ -113,7 +110,7 @@ const ExploreCarousel: FunctionComponent<ExploreCarouselProps> = ({
         </CarouselItem>
       </Container>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default ExploreCarousel;
+export default ExploreCarousel

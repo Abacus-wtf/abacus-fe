@@ -1,10 +1,6 @@
-import {
-  ButtonType,
-  ExploreImage,
-  ExploreInfo,
-  SessionCountdown,
-} from "@atoms";
-import React, { FunctionComponent } from "react";
+import { SessionState } from "@state/sessionData/reducer"
+import { ButtonType, ExploreImage, ExploreInfo, ProfileGroup } from "abacus-ui"
+import React, { FunctionComponent } from "react"
 import {
   Container,
   SecondHalf,
@@ -13,22 +9,24 @@ import {
   ExploreInfoContainer,
   ButtonStyled,
   ProfileGroupContainer,
-} from "./ExploreCard.styled";
-import { ProfileGroup } from "../../ProfileGroup";
-import Fallback from "./Fallback";
+} from "./ExploreCard.styled"
+import Fallback from "./Fallback"
+import useCardSubtitile from "./useCardSubtitile"
 
 export type ExploreCardProps = {
-  nftSrc: string;
-  nftTitle: string;
-  endTime: number;
-  numParticipants: number;
-  poolAmount: number;
-  poolAmountDollars: number;
-  imgs: string[];
-  link: string;
-  loading?: boolean;
-  linkComponent?: string | React.ComponentType<any>;
-};
+  nftSrc: string
+  nftTitle: string
+  endTime: number
+  numParticipants: number
+  poolAmount: number
+  poolAmountDollars: number
+  imgs: string[]
+  link: string
+  loading?: boolean
+  currentStatus: SessionState
+  finalAppraisalValue: number | null
+  linkComponent?: string | React.ComponentType<any>
+}
 
 const ExploreCard: FunctionComponent<ExploreCardProps> = ({
   nftSrc,
@@ -41,16 +39,26 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
   link,
   loading,
   linkComponent,
+  currentStatus,
+  finalAppraisalValue,
 }) => {
+  const subtitle = useCardSubtitile({
+    endTime,
+    finalAppraisalValue,
+    link,
+    currentStatus,
+  })
+
   if (loading) {
-    return <Fallback />;
+    return <Fallback />
   }
+
   return (
     <Container>
       <ExploreImage imgSrc={nftSrc} />
       <SecondHalf>
         <Title>{nftTitle}</Title>
-        <SessionCountdown endTime={endTime} key={link} />
+        {subtitle}
         <Divider />
         <ExploreInfoContainer>
           <ExploreInfo
@@ -77,7 +85,7 @@ const ExploreCard: FunctionComponent<ExploreCardProps> = ({
         </ProfileGroupContainer>
       </SecondHalf>
     </Container>
-  );
-};
+  )
+}
 
-export default ExploreCard;
+export default ExploreCard

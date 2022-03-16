@@ -79,10 +79,10 @@ const CreateSessionModal: FunctionComponent<CreateSessionModalProps> = ({
                 response?.wait().then((r) => {
                   // TODO: Get the nonce somehow...
                   console.log("TODO: GET THE NONCE", r)
-                  const nonce = 1
-                  navigate(
-                    `/current-session?address=${formValues.nftAddress}&tokenId=${formValues.tokenId}&nonce=${nonce}`
-                  )
+                  // const nonce = 1
+                  // navigate(
+                  //   `/current-session?address=${formValues.nftAddress}&tokenId=${formValues.tokenId}&nonce=${nonce}`
+                  // )
                 })
               },
               formValues.bounty

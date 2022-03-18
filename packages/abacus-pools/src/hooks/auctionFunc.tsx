@@ -112,7 +112,11 @@ export const useOnCloseAccount = () => {
 
       const method = closePoolContract.closeAccount
       const estimate = closePoolContract.estimateGas.closeAccount
-      const args = [parseEther(amountCredits), parseEther(amountOfProfitsToUse)]
+      const args = [
+        parseEther(amountCredits).toString(),
+        parseEther(amountOfProfitsToUse).toString(),
+      ]
+      console.log(args)
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {

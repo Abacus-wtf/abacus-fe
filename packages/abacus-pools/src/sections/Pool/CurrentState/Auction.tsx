@@ -89,17 +89,15 @@ const Auction = ({ refresh }: StateComponent) => {
               >
                 <BalanceContainer>
                   <NumericalInput
-                    placeholder="Specify Credits to Purchase"
-                    value={amountCredits}
+                    placeholder="Specify Amount of Existing Profit to Purchase Credits"
+                    value={amountOfProfitToUse}
                     onChange={(e) => {
-                      setAmountCredits(e.target.value)
+                      setAmountOfProfitToUse(e.target.value)
                     }}
                   />
                   <MaxButton
                     onClick={() => {
-                      setAmountCredits(
-                        `${poolData.auction.creditsAvailableForPurchase}`
-                      )
+                      setAmountOfProfitToUse(`${poolData.auction.profit}`)
                     }}
                   >
                     MAX
@@ -116,15 +114,21 @@ const Auction = ({ refresh }: StateComponent) => {
               >
                 <BalanceContainer>
                   <NumericalInput
-                    placeholder="Specify Amount of Existing Profit to Purchase Credits"
-                    value={amountOfProfitToUse}
+                    placeholder="Specify Credits to Purchase"
+                    value={amountCredits}
                     onChange={(e) => {
-                      setAmountOfProfitToUse(e.target.value)
+                      setAmountCredits(e.target.value)
                     }}
                   />
                   <MaxButton
                     onClick={() => {
-                      setAmountOfProfitToUse(`${poolData.auction.profit}`)
+                      setAmountCredits(
+                        `${
+                          amountOfProfitToUse !== ""
+                            ? amountOfProfitToUse
+                            : poolData.auction.profit
+                        }`
+                      )
                     }}
                   >
                     MAX

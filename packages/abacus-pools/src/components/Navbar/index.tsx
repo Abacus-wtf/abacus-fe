@@ -148,6 +148,14 @@ const Navbar = ({ location }) => {
             >
               My Pools
             </HeaderLink>
+            <HeaderLink
+              as="a"
+              disable={!account}
+              href="/claim"
+              active={(location.pathname === "/claim").toString()}
+            >
+              Claim
+            </HeaderLink>
             <HeaderLink as="a" href="https://app.abacus.wtf/" active={false}>
               Crowds
             </HeaderLink>

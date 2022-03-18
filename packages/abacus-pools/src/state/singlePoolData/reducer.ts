@@ -23,7 +23,6 @@ export interface Ticket {
 
 export interface Bribe {
   offeredBribeSize: number
-  desiredBribeSize: number
   bribeOfferedByUser: number
 }
 

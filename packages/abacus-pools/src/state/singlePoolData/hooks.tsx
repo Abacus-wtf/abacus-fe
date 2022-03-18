@@ -73,20 +73,17 @@ export const useGetBribeData = () => {
   return useCallback(async () => {
     if (poolData.vaultAddress === undefined) return
 
-    const [desiredBribeSize, offeredBribeSize, bribePerUserIndex] =
-      await bribeMulti(
-        ABC_BRIBE_FACTORY,
-        ["desiredBribeSize", "offeredBribeSize", "bribePerUserIndex"],
-        [
-          [poolData.address, poolData.tokenId],
-          [poolData.address, poolData.tokenId],
-          [poolData.address, poolData.tokenId],
-        ]
-      )
+    const [offeredBribeSize, bribePerUserIndex] = await bribeMulti(
+      ABC_BRIBE_FACTORY,
+      ["offeredBribeSize", "bribePerUserIndex"],
+      [
+        [poolData.address, poolData.tokenId],
+        [poolData.address, poolData.tokenId],
+      ]
+    )
 
     let bribe: Bribe = {
       offeredBribeSize: Number(formatEther(offeredBribeSize[0])),
-      desiredBribeSize: Number(formatEther(desiredBribeSize[0])),
       bribeOfferedByUser: 0,
     }
     if (account) {
@@ -190,6 +187,10 @@ export const useSetPoolData = () => {
 
   return useCallback(
     async (address: string, tokenId: string, nonce: number) => {
+      const variables: GetVaultVariables = {
+        first: PAGINATE_BY,
+        skip: 0 * PAGINATE_BY,
+      }
       try {
         const [vaultAddress, os, ownerOf] = await Promise.all([
           factory(ABC_FACTORY).methods.nftVault(nonce, address, tokenId).call(),
@@ -220,22 +221,32 @@ export const useSetPoolData = () => {
         let balance = BigNumber.from(0)
         let creditsAvailable = BigNumber.from(0)
         let approved = false
+        let tickets = []
+        let ownerOfNFT = ""
         if (account) {
-          const [multi, approval] = await Promise.all([
-            vault(
-              vaultAddress,
-              ["getCreditsAvailableForPurchase", "balanceOf"],
-              [[account, moment().unix()], [account]]
-            ),
-            erc721(address)
-              .methods.isApprovedForAll(account, vaultAddress)
-              .call(),
-          ])
+          const [multi, approval, _ownerOfNFT, { tickets: _tickets }] =
+            await Promise.all([
+              vault(
+                vaultAddress,
+                ["getCreditsAvailableForPurchase", "balanceOf"],
+                [[account, moment().unix()], [account]]
+              ),
+              erc721(address)
+                .methods.isApprovedForAll(account, vaultAddress)
+                .call(),
+              erc721(address).methods.ownerOf(tokenId).call(),
+              request<GetTicketQueryResponse>(
+                GRAPHQL_ENDPOINT,
+                GET_TICKETS(`{ owner: "${account.toLowerCase()}" }`),
+                variables
+              ),
+            ])
+          ownerOfNFT = _ownerOfNFT
+          tickets = _tickets
           creditsAvailable = multi[0][0]
           balance = multi[1][0]
           approved = approval
         }
-
         let auction: Auction
         if (closePoolContract[0] !== ZERO_ADDRESS) {
           const [auctionComplete, auctionEndTime, highestBid, highestBidder] =
@@ -256,6 +267,47 @@ export const useSetPoolData = () => {
             highestBid: Number(formatEther(highestBid[0])),
             highestBidder: highestBidder[0],
             closePoolAddress: closePoolContract[0],
+            profit: 0,
+            principalCalculated: false,
+            hasTickets: tickets.length > 0,
+            creditsAvailableForPurchase: 0,
+            ownedTickets: _.map(tickets, (ticket) => ticket.ticketNumber),
+            isNFTClaimed:
+              ownerOfNFT !== "" &&
+              ownerOfNFT.toLowerCase() !== vaultAddress.toLowerCase(),
+            isAccountClaimed: false,
+          }
+
+          if (account) {
+            const [
+              [principalCalculated, auctionPremium, isAccountClaimed],
+              [getTokensLocked, tokensLocked, creditsAvailableForPurchase],
+            ] = await Promise.all([
+              closePool(
+                closePoolContract[0],
+                ["principalCalculated", "auctionPremium", "claimed"],
+                [[account], [], [account]]
+              ),
+              vault(
+                vaultAddress,
+                [
+                  "getTokensLocked",
+                  "tokensLocked",
+                  "getCreditsAvailableForPurchase",
+                ],
+                [[account], [], [account, moment().unix()]]
+              ),
+            ])
+
+            auction.isAccountClaimed = isAccountClaimed[0]
+            auction.principalCalculated = principalCalculated[0]
+            auction.profit =
+              (Number(formatEther(auctionPremium[0])) *
+                Number(formatEther(getTokensLocked[0]))) /
+              Number(formatEther(tokensLocked[0]))
+            auction.creditsAvailableForPurchase = Number(
+              formatEther(creditsAvailableForPurchase[0])
+            )
           }
         }
 
@@ -291,6 +343,7 @@ export const useSetPoolData = () => {
         dispatch(getPoolData(pool))
       } catch (e) {
         console.log("Look into this")
+        console.error(e)
       }
     },
     [factory, vault, closePool, account, dispatch, erc721]

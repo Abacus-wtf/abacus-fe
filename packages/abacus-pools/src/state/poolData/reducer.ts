@@ -23,6 +23,13 @@ export interface Auction {
   highestBid: number
   highestBidder: string
   closePoolAddress: string
+  profit: number
+  principalCalculated: boolean
+  hasTickets: boolean
+  creditsAvailableForPurchase: number
+  isNFTClaimed: boolean
+  isAccountClaimed: boolean
+  ownedTickets: number[]
 }
 
 export enum PoolStatus {

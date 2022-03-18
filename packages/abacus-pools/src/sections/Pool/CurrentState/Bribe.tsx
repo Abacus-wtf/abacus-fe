@@ -64,10 +64,6 @@ const Bribe = ({ refresh }: StateComponent) => {
           title="Current Bribe Offered:"
           value={bribeData.offeredBribeSize}
         />
-        <Stat
-          title="Current Bribe Desired:"
-          value={bribeData.desiredBribeSize}
-        />
         {account && (
           <Stat
             title="Your Bribe Submitted"

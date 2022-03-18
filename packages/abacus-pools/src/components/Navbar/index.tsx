@@ -127,7 +127,7 @@ const Navbar = ({ location }) => {
   return (
     <RowStyled>
       <NavbarContainer>
-        <Logo href="/">ABC Pools</Logo>
+        <Logo href="/">Abacus Spot</Logo>
         <MobileNavButton onClick={() => setMenuOpen((open) => !open)}>
           {menuOpen ? <X /> : <Menu />}
         </MobileNavButton>

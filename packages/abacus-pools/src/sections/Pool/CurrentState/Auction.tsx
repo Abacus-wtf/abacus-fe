@@ -4,10 +4,15 @@ import { Label } from "@components/global.styles"
 import Button from "@components/Button"
 import { HorizontalListGroup, ListGroupHeader } from "@components/ListGroupMods"
 import { Form, Tooltip, ListGroupItem } from "shards-react"
-import { InputWithTitle } from "@components/Input"
+import { InputWithTitle, NumericalInput } from "@components/Input"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { NetworkSymbolEnum } from "@config/constants"
-import { useOnBid, useOnEndAuction } from "@hooks/auctionFunc"
+import {
+  useOnBid,
+  useOnCalculatePrincipal,
+  useOnCloseAccount,
+  useOnEndAuction,
+} from "@hooks/auctionFunc"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { shortenAddress } from "@config/utils"
 import { useActiveWeb3React } from "@hooks/index"
@@ -15,6 +20,14 @@ import moment from "moment"
 import AuctionCountdown from "./AuctionCountdown"
 import { VerticalContainer } from "../Pool.styles"
 import { StateComponent } from "./index"
+import {
+  LabelRow,
+  BalanceContainer,
+  MaxButton,
+  BORDER,
+  InfoSectionContainer,
+  InputContainer,
+} from "./AMM.styles"
 
 const Auction = ({ refresh }: StateComponent) => {
   const { account } = useActiveWeb3React()
@@ -22,6 +35,11 @@ const Auction = ({ refresh }: StateComponent) => {
   const poolData = useGetPoolData()
   const { onBid, isPending } = useOnBid()
   const { onEndAuction, isPending: isPendingAuction } = useOnEndAuction()
+  const { onCalculatePrincipal, isPending: isPendingProfit } =
+    useOnCalculatePrincipal()
+  const { onCloseAccount, isPending: isPendingClose } = useOnCloseAccount()
+  const [amountCredits, setAmountCredits] = useState("")
+  const [amountOfProfitToUse, setAmountOfProfitToUse] = useState("")
   const theme = useContext(ThemeContext)
   const [purchaseAmount, setPurchaseAmount] = useState("")
   const networkSymbol = useGetCurrentNetwork()
@@ -31,7 +49,8 @@ const Auction = ({ refresh }: StateComponent) => {
 
   if (
     poolData.auction.auctionEndTime * 1000 >= moment().unix() &&
-    isHighestBidderOwner
+    isHighestBidderOwner &&
+    !poolData.auction.isNFTClaimed
   ) {
     return (
       <>
@@ -48,6 +67,97 @@ const Auction = ({ refresh }: StateComponent) => {
       </>
     )
   }
+
+  if (poolData.auction.hasTickets && !poolData.auction.isAccountClaimed) {
+    return (
+      <div>
+        {poolData.auction.principalCalculated && (
+          <LabelRow
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gridGap: 20,
+              marginBottom: 20,
+            }}
+          >
+            <InfoSectionContainer>
+              <InputContainer
+                style={{
+                  border: BORDER,
+                  borderRadius: 15,
+                }}
+              >
+                <BalanceContainer>
+                  <NumericalInput
+                    placeholder="Specify Credits to Purchase"
+                    value={amountCredits}
+                    onChange={(e) => {
+                      setAmountCredits(e.target.value)
+                    }}
+                  />
+                  <MaxButton
+                    onClick={() => {
+                      setAmountCredits(
+                        `${poolData.auction.creditsAvailableForPurchase}`
+                      )
+                    }}
+                  >
+                    MAX
+                  </MaxButton>
+                </BalanceContainer>
+              </InputContainer>
+            </InfoSectionContainer>
+            <InfoSectionContainer>
+              <InputContainer
+                style={{
+                  border: BORDER,
+                  borderRadius: 15,
+                }}
+              >
+                <BalanceContainer>
+                  <NumericalInput
+                    placeholder="Specify Amount of Existing Profit to Purchase Credits"
+                    value={amountOfProfitToUse}
+                    onChange={(e) => {
+                      setAmountOfProfitToUse(e.target.value)
+                    }}
+                  />
+                  <MaxButton
+                    onClick={() => {
+                      setAmountOfProfitToUse(`${poolData.auction.profit}`)
+                    }}
+                  >
+                    MAX
+                  </MaxButton>
+                </BalanceContainer>
+              </InputContainer>
+            </InfoSectionContainer>
+          </LabelRow>
+        )}
+        <Button
+          disabled={isPendingProfit || isPendingClose}
+          onClick={() => {
+            if (poolData.auction.principalCalculated) {
+              onCloseAccount(amountCredits, amountOfProfitToUse, async () => {
+                await refresh()
+              })
+            } else {
+              onCalculatePrincipal(async () => {
+                await refresh()
+              })
+            }
+          }}
+        >
+          {isPendingProfit || isPendingClose
+            ? "Loading..."
+            : poolData.auction.principalCalculated
+            ? "Close Account"
+            : "Calculate Principal"}
+        </Button>
+      </div>
+    )
+  }
+
   if (poolData.auction.auctionComplete) {
     return <Label>The auction for this pool has ended.</Label>
   }

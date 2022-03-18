@@ -9,7 +9,6 @@ import CurrentPosition from "./CurrentPosition"
 import AMM from "./AMM"
 import ManagePool from "./ManagePool"
 import Auction from "./Auction"
-import ClosedPool from "./ClosedPool"
 import Tickets from "./Tickets"
 import { Page } from ".."
 import Bribe from "./Bribe"
@@ -48,10 +47,8 @@ const CurrentState = ({
       default:
         return <ManagePool refresh={refresh} />
     }
-  } else if (status === PoolStatus.Auction) {
-    return <Auction refresh={refresh} />
   }
-  return <ClosedPool />
+  return <Auction refresh={refresh} />
 }
 
 export default CurrentState

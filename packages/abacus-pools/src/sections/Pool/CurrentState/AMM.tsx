@@ -120,9 +120,9 @@ const AMM = (props: AMMProps) => {
                       ? `${
                           Number(e.target.value) * Number(poolData.tokenPrice)
                         }`
-                      : `${
+                      : `${Math.round(
                           Number(e.target.value) / Number(poolData.tokenPrice)
-                        }`
+                        )}`
                   )
                   setInputAmount(e.target.value)
                 }}

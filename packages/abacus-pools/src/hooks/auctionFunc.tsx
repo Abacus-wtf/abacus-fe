@@ -90,3 +90,91 @@ export const useOnEndAuction = () => {
     isPending,
   }
 }
+
+export const useOnCloseAccount = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+  const poolData = useGetPoolData()
+
+  const onCloseAccount = useCallback(
+    async (
+      amountCredits: string,
+      amountOfProfitsToUse: string,
+      cb: () => void
+    ) => {
+      const closePoolContract = getContract(
+        poolData.auction.closePoolAddress,
+        CLOSE_POOL_ABI,
+        library,
+        account
+      )
+
+      const method = closePoolContract.closeAccount
+      const estimate = closePoolContract.estimateGas.closeAccount
+      const args = [parseEther(amountCredits), parseEther(amountOfProfitsToUse)]
+      const value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Close Account",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [poolData, library, account, generalizedContractCall, addTransaction]
+  )
+  return {
+    onCloseAccount,
+    isPending,
+  }
+}
+
+export const useOnCalculatePrincipal = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+  const poolData = useGetPoolData()
+
+  const onCalculatePrincipal = useCallback(
+    async (cb: () => void) => {
+      const closePoolContract = getContract(
+        poolData.auction.closePoolAddress,
+        CLOSE_POOL_ABI,
+        library,
+        account
+      )
+
+      const method = closePoolContract.calculatePrincipal
+      const estimate = closePoolContract.estimateGas.calculatePrincipal
+      const args = [poolData.auction.ownedTickets]
+      const value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Calculate Principal",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [poolData, library, account, generalizedContractCall, addTransaction]
+  )
+  return {
+    onCalculatePrincipal,
+    isPending,
+  }
+}

@@ -3,18 +3,17 @@ import { Button, ButtonType, Input, MiniList, Exa, Lock, ETH } from "abacus-ui"
 import { useOnSubmitVote, useOnUpdateVote } from "@hooks/current-session"
 import { genRanHex, hashValues } from "@config/utils"
 import { parseEther } from "ethers/lib/utils"
-import { useActiveWeb3React } from "@hooks/index"
+import { useActiveWeb3React, useValidate, ValidationFn } from "@hooks/index"
 import { useClaimPayoutData } from "@state/miscData/hooks"
 import { useCurrentSessionData } from "@state/sessionData/hooks"
 import { BigNumber } from "ethers"
 import { useEthToUSD } from "@state/application/hooks"
+import { InputError } from "@components/index"
 import useParticipation from "../useParticipation"
-import useValidate, { ValidationFn } from "../useValidate"
 import SeedNumber from "./SeedNumber"
 import {
   TitleContainer,
   Description,
-  InputError,
   BottomButtonContainer,
   LockOuterContainer,
   LockContainer,

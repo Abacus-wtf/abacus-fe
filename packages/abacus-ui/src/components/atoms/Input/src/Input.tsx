@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import styled, { css } from "styled-components";
 import { getUniqueId } from "@utils";
 import { Font, WithTheme } from "@theme";
@@ -16,6 +16,7 @@ type InputProps = {
   className?: string;
   hint?: React.ReactNode | string;
   disabled?: boolean;
+  required?: boolean;
 };
 
 type Disableable = {
@@ -24,9 +25,16 @@ type Disableable = {
 
 const Container = styled.div`
   width: 100%;
+  margin-bottom: 2px;
 `;
 
-const InputContainer = styled.div<Disableable>`
+type InputContainerProps = Disableable & {
+  pristine: boolean;
+  required?: boolean;
+  value: string;
+};
+
+const InputContainer = styled.div<InputContainerProps>`
   background-color: white;
   display: flex;
   width: 100%;
@@ -47,6 +55,13 @@ const InputContainer = styled.div<Disableable>`
   &:focus-within {
     box-shadow: 0px 2px 0px #6b6b6b;
   }
+
+  ${({ required, pristine, theme, value }) =>
+    required && !pristine && !value
+      ? css`
+          box-shadow: 0px 2px 0px ${theme.colors.utility.red};
+        `
+      : ""}
 `;
 
 const StyledLabel = styled.label<WithTheme>`
@@ -102,11 +117,18 @@ const Input: FunctionComponent<InputProps> = ({
   className,
   hint,
   disabled,
+  required,
 }) => {
+  const [pristine, setPristine] = useState(true);
   const ID = typeof id === "string" ? id : getUniqueId("input");
   return (
     <Container className={className}>
-      <InputContainer disabled={disabled}>
+      <InputContainer
+        disabled={disabled}
+        pristine={pristine}
+        required={required}
+        value={value}
+      >
         {showEth ? <EthLogo>ETH</EthLogo> : null}
         {typeof label === "string" && label && (
           <StyledLabel htmlFor={ID}>{label}</StyledLabel>
@@ -120,6 +142,8 @@ const Input: FunctionComponent<InputProps> = ({
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
           aria-disabled={disabled}
+          required={required}
+          onFocus={() => setPristine(false)}
         />
       </InputContainer>
       {hint && <StyledKilo>{hint}</StyledKilo>}

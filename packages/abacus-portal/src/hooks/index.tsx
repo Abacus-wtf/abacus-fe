@@ -244,7 +244,6 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
         )
         return
       }
-      console.log(args)
       await estimate(...args, value ? { value } : {})
         .then((estimatedGasLimit) =>
           method(...args, {
@@ -296,3 +295,6 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
     txError,
   }
 }
+
+export { default as useValidate } from "./useValidate"
+export * from "./useValidate"

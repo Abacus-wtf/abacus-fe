@@ -11,6 +11,7 @@ declare type InputProps = {
     className?: string;
     hint?: React.ReactNode | string;
     disabled?: boolean;
+    required?: boolean;
 };
 declare const Input: FunctionComponent<InputProps>;
 export default Input;

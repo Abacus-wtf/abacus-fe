@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled, { css, keyframes, ThemeContext } from 'styled-components';
 import CrossfadeImage from 'react-crossfade-image';
 import Countdown from 'react-countdown';
@@ -268,31 +268,36 @@ var templateObject_1$A;
 var Container$q = styled.div(templateObject_1$z || (templateObject_1$z = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("zetta"));
 var templateObject_1$z;
 
-var Container$p = styled.div(templateObject_1$y || (templateObject_1$y = __makeTemplateObject(["\n  width: 100%;\n"], ["\n  width: 100%;\n"])));
-var InputContainer = styled.div(templateObject_3$g || (templateObject_3$g = __makeTemplateObject(["\n  background-color: white;\n  display: flex;\n  width: 100%;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: stretch;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  ", "\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n"], ["\n  background-color: white;\n  display: flex;\n  width: 100%;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: stretch;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  ",
-    "\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n"])), function (_a) {
+var Container$p = styled.div(templateObject_1$y || (templateObject_1$y = __makeTemplateObject(["\n  width: 100%;\n  margin-bottom: 2px;\n"], ["\n  width: 100%;\n  margin-bottom: 2px;\n"])));
+var InputContainer = styled.div(templateObject_4$9 || (templateObject_4$9 = __makeTemplateObject(["\n  background-color: white;\n  display: flex;\n  width: 100%;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: stretch;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  ", "\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n\n  ", "\n"], ["\n  background-color: white;\n  display: flex;\n  width: 100%;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: stretch;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  ",
+    "\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n\n  ",
+    "\n"])), function (_a) {
     var disabled = _a.disabled;
     return disabled
         ? css(templateObject_2$q || (templateObject_2$q = __makeTemplateObject(["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "], ["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "]))) : "";
+}, function (_a) {
+    var required = _a.required, pristine = _a.pristine, theme = _a.theme, value = _a.value;
+    return required && !pristine && !value
+        ? css(templateObject_3$g || (templateObject_3$g = __makeTemplateObject(["\n          box-shadow: 0px 2px 0px ", ";\n        "], ["\n          box-shadow: 0px 2px 0px ", ";\n        "])), theme.colors.utility.red) : "";
 });
-var StyledLabel$1 = styled.label(templateObject_4$9 || (templateObject_4$9 = __makeTemplateObject(["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: 10px;\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"], ["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: 10px;\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"])), Font("milli"), function (_a) {
+var StyledLabel$1 = styled.label(templateObject_5$7 || (templateObject_5$7 = __makeTemplateObject(["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: 10px;\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"], ["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: 10px;\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"])), Font("milli"), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.label;
 }, function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.main;
 });
-var StyledInput$1 = styled.input(templateObject_6$5 || (templateObject_6$5 = __makeTemplateObject(["\n  ", "\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ", "\n"], ["\n  ", "\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ",
+var StyledInput$1 = styled.input(templateObject_7$3 || (templateObject_7$3 = __makeTemplateObject(["\n  ", "\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ", "\n"], ["\n  ", "\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ",
     "\n"])), Font("mega"), function (_a) {
     var disabled = _a.disabled;
     return disabled
-        ? css(templateObject_5$7 || (templateObject_5$7 = __makeTemplateObject(["\n          background: unset;\n          cursor: not-allowed;\n        "], ["\n          background: unset;\n          cursor: not-allowed;\n        "]))) : "";
+        ? css(templateObject_6$5 || (templateObject_6$5 = __makeTemplateObject(["\n          background: unset;\n          cursor: not-allowed;\n        "], ["\n          background: unset;\n          cursor: not-allowed;\n        "]))) : "";
 });
-var StyledKilo$3 = styled(StyledDiv)(templateObject_7$3 || (templateObject_7$3 = __makeTemplateObject(["\n  color: ", ";\n  margin-top: 10px;\n"], ["\n  color: ", ";\n  margin-top: 10px;\n"])), function (_a) {
+var StyledKilo$3 = styled(StyledDiv)(templateObject_8$1 || (templateObject_8$1 = __makeTemplateObject(["\n  color: ", ";\n  margin-top: 10px;\n"], ["\n  color: ", ";\n  margin-top: 10px;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core["900"];
 });
-var EthLogo = styled(Container$v)(templateObject_8$1 || (templateObject_8$1 = __makeTemplateObject(["\n  background-color: ", ";\n  padding: 10px;\n  color: ", ";\n  border-radius: ", ";\n  font-weight: 600;\n  margin-bottom: 7px;\n"], ["\n  background-color: ", ";\n  padding: 10px;\n  color: ", ";\n  border-radius: ", ";\n  font-weight: 600;\n  margin-bottom: 7px;\n"])), function (_a) {
+var EthLogo = styled(Container$v)(templateObject_9$1 || (templateObject_9$1 = __makeTemplateObject(["\n  background-color: ", ";\n  padding: 10px;\n  color: ", ";\n  border-radius: ", ";\n  font-weight: 600;\n  margin-bottom: 7px;\n"], ["\n  background-color: ", ";\n  padding: 10px;\n  color: ", ";\n  border-radius: ", ";\n  font-weight: 600;\n  margin-bottom: 7px;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.border;
 }, function (_a) {
@@ -303,16 +308,17 @@ var EthLogo = styled(Container$v)(templateObject_8$1 || (templateObject_8$1 = __
     return theme.borderRadius.main;
 });
 var Input = function (_a) {
-    var value = _a.value, onChange = _a.onChange, type = _a.type, label = _a.label, name = _a.name, id = _a.id, placeholder = _a.placeholder, showEth = _a.showEth, className = _a.className, hint = _a.hint, disabled = _a.disabled;
+    var value = _a.value, onChange = _a.onChange, type = _a.type, label = _a.label, name = _a.name, id = _a.id, placeholder = _a.placeholder, showEth = _a.showEth, className = _a.className, hint = _a.hint, disabled = _a.disabled, required = _a.required;
+    var _b = useState(true), pristine = _b[0], setPristine = _b[1];
     var ID = typeof id === "string" ? id : getUniqueId("input");
     return (React.createElement(Container$p, { className: className },
-        React.createElement(InputContainer, { disabled: disabled },
+        React.createElement(InputContainer, { disabled: disabled, pristine: pristine, required: required, value: value },
             showEth ? React.createElement(EthLogo, null, "ETH") : null,
             typeof label === "string" && label && (React.createElement(StyledLabel$1, { htmlFor: ID }, label)),
-            React.createElement(StyledInput$1, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); }, disabled: disabled, "aria-disabled": disabled })),
+            React.createElement(StyledInput$1, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); }, disabled: disabled, "aria-disabled": disabled, required: required, onFocus: function () { return setPristine(false); } })),
         hint && React.createElement(StyledKilo$3, null, hint)));
 };
-var templateObject_1$y, templateObject_2$q, templateObject_3$g, templateObject_4$9, templateObject_5$7, templateObject_6$5, templateObject_7$3, templateObject_8$1;
+var templateObject_1$y, templateObject_2$q, templateObject_3$g, templateObject_4$9, templateObject_5$7, templateObject_6$5, templateObject_7$3, templateObject_8$1, templateObject_9$1;
 
 var Container$o = styled.section(templateObject_2$p || (templateObject_2$p = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ",
     "\n"])), function (_a) {

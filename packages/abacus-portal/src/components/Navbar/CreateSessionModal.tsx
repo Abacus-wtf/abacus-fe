@@ -3,6 +3,9 @@ import styled from "styled-components"
 import { Modal, Button, Input, H2 } from "abacus-ui"
 import { navigate } from "gatsby"
 import { useOnCreateNewSession } from "@hooks/create-sessions"
+import useValidate from "@hooks/useValidate"
+import { InputError } from "@components/index"
+import { initialAppraisalChecks, votingTimeChecks } from "./validators"
 
 type CreateSessionModalProps = {
   isOpen: boolean
@@ -56,8 +59,19 @@ const CreateSessionModal: FunctionComponent<CreateSessionModalProps> = ({
   const { onCreateNewSession, isPending } = useOnCreateNewSession()
   const [formValues, setFormValues] = useState<FormValues>(INITIAL_FORM_VALUES)
 
+  const initialAppraisalValid = useValidate(
+    formValues.initialAppraisal,
+    initialAppraisalChecks
+  )
+  const votingTimeValid = useValidate(formValues.votingTime, votingTimeChecks)
+
   const submitDisabled =
-    isPending || Object.values(formValues).some((value) => !value)
+    isPending ||
+    Object.keys(formValues).some(
+      (key) => key !== "bounty" && !formValues[key]
+    ) ||
+    !initialAppraisalValid.valid ||
+    !votingTimeValid.valid
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
@@ -110,6 +124,7 @@ const CreateSessionModal: FunctionComponent<CreateSessionModalProps> = ({
             onChange={(value) =>
               setFormValues({ ...formValues, nftAddress: value })
             }
+            required
           />
           <Input
             placeholder="420"
@@ -121,6 +136,7 @@ const CreateSessionModal: FunctionComponent<CreateSessionModalProps> = ({
             onChange={(value) =>
               setFormValues({ ...formValues, tokenId: value })
             }
+            required
           />
           <Input
             placeholder="69 ETH"
@@ -132,6 +148,12 @@ const CreateSessionModal: FunctionComponent<CreateSessionModalProps> = ({
             onChange={(value) =>
               setFormValues({ ...formValues, initialAppraisal: value })
             }
+            required
+            hint={
+              !initialAppraisalValid.valid && (
+                <InputError>{initialAppraisalValid.message}</InputError>
+              )
+            }
           />
           <Input
             placeholder="24 Hours"
@@ -142,6 +164,12 @@ const CreateSessionModal: FunctionComponent<CreateSessionModalProps> = ({
             value={formValues.votingTime}
             onChange={(value) =>
               setFormValues({ ...formValues, votingTime: value })
+            }
+            required
+            hint={
+              !votingTimeValid.valid && (
+                <InputError>{votingTimeValid.message}</InputError>
+              )
             }
           />
           <Button

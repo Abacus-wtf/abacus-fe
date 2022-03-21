@@ -31,11 +31,16 @@ const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
   linkComponent,
 }) => {
   const theme = useContext(ThemeContext)
+  const status =
+    cardInfo.currentStatus === SessionState.Vote &&
+    cardInfo.endTime < +new Date()
+      ? SessionState.Weigh
+      : cardInfo.currentStatus
   const subtitle = useCardSubtitile({
     endTime: cardInfo.endTime,
     finalAppraisalValue: cardInfo.finalAppraisalValue,
     link: cardInfo.link,
-    currentStatus: cardInfo.currentStatus,
+    currentStatus: status,
   })
 
   const poolAmountUSD = useEthToUSD(cardInfo.poolAmount)
@@ -45,28 +50,28 @@ const ExploreScrollableCard: FunctionComponent<ExploreScrollableCardProps> = ({
   }
 
   const badgeTitle =
-    cardInfo.currentStatus === SessionState.Vote
+    status === SessionState.Vote
       ? "Voting Live"
-      : cardInfo.currentStatus === SessionState.Weigh
+      : status === SessionState.Weigh
       ? "Weighing Votes"
-      : cardInfo.currentStatus === SessionState.SetFinalAppraisal
+      : status === SessionState.SetFinalAppraisal
       ? "Setting Final Appraisal"
-      : cardInfo.currentStatus === SessionState.Harvest
+      : status === SessionState.Harvest
       ? "Harvesting"
-      : cardInfo.currentStatus === SessionState.Claim
+      : status === SessionState.Claim
       ? "Claiming"
       : "Session Completed"
 
   const badgeColor =
-    cardInfo.currentStatus === SessionState.Vote
+    status === SessionState.Vote
       ? theme.colors.utility.blue
-      : cardInfo.currentStatus === SessionState.Weigh
+      : status === SessionState.Weigh
       ? theme.colors.core[900]
-      : cardInfo.currentStatus === SessionState.SetFinalAppraisal
+      : status === SessionState.SetFinalAppraisal
       ? theme.colors.utility.yellow
-      : cardInfo.currentStatus === SessionState.Harvest
+      : status === SessionState.Harvest
       ? theme.colors.utility.purple
-      : cardInfo.currentStatus === SessionState.Claim
+      : status === SessionState.Claim
       ? theme.colors.utility.brown
       : theme.colors.utility.green
   return (

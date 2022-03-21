@@ -234,6 +234,10 @@ const parseSubgraphPricingSessions = async (
         currentStatus: session.sessionStatus,
         traits: asset.traits,
         creator: asset.creator,
+        rankings: session.participants.map((participant) => ({
+          ...participant,
+          user: participant.user.id,
+        })),
       }
     }
   )

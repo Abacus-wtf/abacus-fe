@@ -20,6 +20,7 @@ import { useSetPayoutData } from "@state/miscData/hooks"
 import { IS_PRODUCTION, NetworkSymbolEnum } from "@config/constants"
 import { Container, SplitContainer } from "@layouts/styles"
 import { PricingSession, About } from "@components/index"
+import { getUserIcon } from "@utils"
 import DepositModal from "./DepositModal"
 
 const GlobalStyle = createGlobalStyle<{ url: string }>`
@@ -104,6 +105,9 @@ const CurrentSession = ({ location }) => {
     )
   }
 
+  const participantImages =
+    sessionData.rankings?.map((ranking) => getUserIcon(ranking.user)) ?? []
+
   return (
     <Container>
       <DepositModal
@@ -115,7 +119,7 @@ const CurrentSession = ({ location }) => {
         title={sessionData.collectionTitle}
         poolAmount={sessionData.totalStaked}
         poolAmountUSD={totalStakedUSD}
-        participants={sessionData.numPpl}
+        participants={participantImages}
         owner={sessionData.owner}
       />
       <PricingSession

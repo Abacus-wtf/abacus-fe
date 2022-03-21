@@ -48,6 +48,7 @@ const ProfileGroup: FunctionComponent<ProfileGroupProps> = ({
           <ProfileIcon
             key={i}
             src={imgs[i]}
+            alt=""
             style={{
               border: "2px solid #fff",
               height: 36,

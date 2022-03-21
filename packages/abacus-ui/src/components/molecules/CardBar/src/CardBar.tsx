@@ -3,12 +3,13 @@ import { Peta } from "@typography";
 import { Media } from "@theme";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
+import { ProfileGroup } from "../../ProfileGroup";
 
 type CardBarProps = {
   title: string;
   poolAmount: number;
   poolAmountUSD: number;
-  participants: number;
+  participants: string[];
   owner: string;
 };
 
@@ -41,10 +42,11 @@ const InfoWrapper = styled.div`
   `}
 `;
 
-const Title = styled(Peta)`
+const TitleContainer = styled.div`
   display: flex;
-  font-family: "Bluu Next";
-  text-align: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 
   ${Media.lg`
     text-align: left;
@@ -52,6 +54,12 @@ const Title = styled(Peta)`
     padding: 0 36px;
     width: 35%;
   `}
+`;
+
+const Title = styled(Peta)`
+  display: flex;
+  font-family: "Bluu Next";
+  text-align: center;
 `;
 
 const StyledExploreInfo = styled(ExploreInfo)`
@@ -75,7 +83,13 @@ const CardBar: FunctionComponent<CardBarProps> = ({
 }) => (
   <Section>
     <Container>
-      <Title>{title}</Title>
+      <TitleContainer>
+        <Title>{title}</Title>
+        <ProfileGroup
+          imgs={participants}
+          numParticipants={participants.length ?? 0}
+        />
+      </TitleContainer>
       <InfoWrapper>
         <StyledExploreInfo
           title="Pool Amount"
@@ -85,7 +99,7 @@ const CardBar: FunctionComponent<CardBarProps> = ({
         />
         <StyledExploreInfo
           title="Participants"
-          text={`${participants}`}
+          text={`${participants?.length ?? 0}`}
           unit="People"
           isCardBar
         />

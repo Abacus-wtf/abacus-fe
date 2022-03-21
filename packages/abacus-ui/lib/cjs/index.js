@@ -984,7 +984,7 @@ var ProfileGroup = function (_a) {
                 "+",
                 numParticipants - 9);
         }
-        return (React__default["default"].createElement(ProfileIcon, { key: i, src: imgs[i], style: {
+        return (React__default["default"].createElement(ProfileIcon, { key: i, src: imgs[i], alt: "", style: {
                 border: "2px solid #fff",
                 height: 36,
                 width: 36,
@@ -1000,21 +1000,25 @@ var Container$9 = styled__default["default"].div(templateObject_2$8 || (template
 var InfoWrapper = styled__default["default"].div(templateObject_5$2 || (templateObject_5$2 = __makeTemplateObject(["\n  display: grid;\n  grid-template-columns: 50% 50%;\n  align-items: center;\n\n  ", "\n\n  ", "\n"], ["\n  display: grid;\n  grid-template-columns: 50% 50%;\n  align-items: center;\n\n  ",
     "\n\n  ",
     "\n"])), Media.sm(templateObject_3$6 || (templateObject_3$6 = __makeTemplateObject(["\n    grid-template-columns: repeat(3, calc(100%/3));\n  "], ["\n    grid-template-columns: repeat(3, calc(100%/3));\n  "]))), Media.lg(templateObject_4$3 || (templateObject_4$3 = __makeTemplateObject(["\n    width: 65%;\n    justfy-content: space-evenly;\n  "], ["\n    width: 65%;\n    justfy-content: space-evenly;\n  "]))));
-var Title = styled__default["default"](Container$u)(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  display: flex;\n  font-family: \"Bluu Next\";\n  text-align: center;\n\n  ", "\n"], ["\n  display: flex;\n  font-family: \"Bluu Next\";\n  text-align: center;\n\n  ",
+var TitleContainer = styled__default["default"].div(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: flex-start;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: flex-start;\n\n  ",
     "\n"])), Media.lg(templateObject_6$1 || (templateObject_6$1 = __makeTemplateObject(["\n    text-align: left;\n    flex: 1 0 auto;\n    padding: 0 36px;\n    width: 35%;\n  "], ["\n    text-align: left;\n    flex: 1 0 auto;\n    padding: 0 36px;\n    width: 35%;\n  "]))));
-var StyledExploreInfo = styled__default["default"](ExploreInfo)(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n  margin-top: 16px;\n\n  &:first-of-type {\n    margin-right: 16px;\n  }\n\n  ", "\n"], ["\n  margin-top: 16px;\n\n  &:first-of-type {\n    margin-right: 16px;\n  }\n\n  ",
-    "\n"])), Media.lg(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n    margin: 0;\n  "], ["\n    margin: 0;\n  "]))));
+var Title = styled__default["default"](Container$u)(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n  display: flex;\n  font-family: \"Bluu Next\";\n  text-align: center;\n"], ["\n  display: flex;\n  font-family: \"Bluu Next\";\n  text-align: center;\n"])));
+var StyledExploreInfo = styled__default["default"](ExploreInfo)(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n  margin-top: 16px;\n\n  &:first-of-type {\n    margin-right: 16px;\n  }\n\n  ", "\n"], ["\n  margin-top: 16px;\n\n  &:first-of-type {\n    margin-right: 16px;\n  }\n\n  ",
+    "\n"])), Media.lg(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n    margin: 0;\n  "], ["\n    margin: 0;\n  "]))));
 var CardBar = function (_a) {
+    var _b, _c;
     var title = _a.title, poolAmount = _a.poolAmount, poolAmountUSD = _a.poolAmountUSD, participants = _a.participants, owner = _a.owner;
     return (React__default["default"].createElement(Section, null,
         React__default["default"].createElement(Container$9, null,
-            React__default["default"].createElement(Title, null, title),
+            React__default["default"].createElement(TitleContainer, null,
+                React__default["default"].createElement(Title, null, title),
+                React__default["default"].createElement(ProfileGroup, { imgs: participants, numParticipants: (_b = participants.length) !== null && _b !== void 0 ? _b : 0 })),
             React__default["default"].createElement(InfoWrapper, null,
                 React__default["default"].createElement(StyledExploreInfo, { title: "Pool Amount", text: poolAmount + " \u039E", unit: "$" + poolAmountUSD, isCardBar: true }),
-                React__default["default"].createElement(StyledExploreInfo, { title: "Participants", text: "" + participants, unit: "People", isCardBar: true }),
+                React__default["default"].createElement(StyledExploreInfo, { title: "Participants", text: "" + ((_c = participants === null || participants === void 0 ? void 0 : participants.length) !== null && _c !== void 0 ? _c : 0), unit: "People", isCardBar: true }),
                 React__default["default"].createElement(StyledExploreInfo, { title: "Owner", text: "" + owner, isCardBar: true })))));
 };
-var templateObject_1$a, templateObject_2$8, templateObject_3$6, templateObject_4$3, templateObject_5$2, templateObject_6$1, templateObject_7, templateObject_8, templateObject_9;
+var templateObject_1$a, templateObject_2$8, templateObject_3$6, templateObject_4$3, templateObject_5$2, templateObject_6$1, templateObject_7, templateObject_8, templateObject_9, templateObject_10;
 
 var KiloStyled$2 = styled__default["default"](StyledDiv)(templateObject_1$9 || (templateObject_1$9 = __makeTemplateObject(["\n  color: ", ";\n  font-weight: 600;\n"], ["\n  color: ", ";\n  font-weight: 600;\n"])), function (_a) {
     var theme = _a.theme;

@@ -12,6 +12,7 @@ export const Container = styled.div`
   grid-gap: 20px;
   align-items: center;
   color: black;
+  height: 100%;
 
   ${Media.lg`
     grid-gap: 28px;

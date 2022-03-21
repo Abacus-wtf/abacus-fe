@@ -9,6 +9,7 @@ export const Container = styled.div`
   flex-direction: column;
   padding: 0px;
   position: relative;
+  height: 100%;
 `
 
 export const SecondHalf = styled.div`

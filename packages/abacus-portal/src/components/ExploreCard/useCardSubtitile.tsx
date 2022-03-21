@@ -1,5 +1,5 @@
 import { SessionState } from "@state/sessionData/reducer"
-import { SessionCountdown } from "abacus-ui"
+import { SessionCountdown, Giga } from "abacus-ui"
 import React, { useMemo } from "react"
 
 type UseCardSubtitleProps = {
@@ -26,15 +26,16 @@ const useCardSubtitile = ({
           />
         )
       case SessionState.Weigh:
-        return "Weigh Your Appraisal!"
       case SessionState.Claim:
-        return "Claim Appraisals"
       case SessionState.Harvest:
-        return "Harvest Appraisals"
       case SessionState.SetFinalAppraisal:
-        return "Set Final Appraisals"
+        return ""
       case SessionState.Complete:
-        return `Final Appraisal ${finalAppraisalValue} ETH`
+        return (
+          <Giga style={{ fontFamily: "Bluu next" }}>
+            Final Appraisal {finalAppraisalValue} ETH
+          </Giga>
+        )
       default:
         return null
     }

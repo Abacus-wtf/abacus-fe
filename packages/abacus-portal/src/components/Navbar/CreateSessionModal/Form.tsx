@@ -21,6 +21,7 @@ const StyledForm = styled.form`
   width: 100%;
   padding: 8px;
   margin-top: 16px;
+  gap: 40px;
 `
 
 const GridContainer = styled.div`
@@ -61,6 +62,7 @@ const Form: FunctionComponent<FormProps> = ({
         type="text"
         name={NewSessionInputs.NFT_ADDRESS}
         label="NFT Address"
+        exteriorLabel
         value={formValues.nftAddress}
         onChange={(value) =>
           setFormValues({ ...formValues, nftAddress: value })
@@ -72,6 +74,7 @@ const Form: FunctionComponent<FormProps> = ({
         type="text"
         name={NewSessionInputs.TOKEN_ID}
         label="Token ID"
+        exteriorLabel
         value={formValues.tokenId}
         onChange={(value) => setFormValues({ ...formValues, tokenId: value })}
         required
@@ -82,6 +85,7 @@ const Form: FunctionComponent<FormProps> = ({
           type="number"
           name={NewSessionInputs.INITIAL_APPRAISAL}
           label="Initial Appraisal"
+          exteriorLabel
           value={formValues.initialAppraisal}
           onChange={(value) =>
             setFormValues({ ...formValues, initialAppraisal: value })
@@ -98,6 +102,7 @@ const Form: FunctionComponent<FormProps> = ({
           type="number"
           name={NewSessionInputs.BOUNTY}
           label="Initial Bounty"
+          exteriorLabel
           value={String(formValues.bounty)}
           onChange={(value) => setFormValues({ ...formValues, bounty: value })}
         />
@@ -107,6 +112,7 @@ const Form: FunctionComponent<FormProps> = ({
         type="number"
         name={NewSessionInputs.VOTING_TIME}
         label="Voting Time"
+        exteriorLabel
         value={formValues.votingTime}
         onChange={(value) =>
           setFormValues({ ...formValues, votingTime: value })

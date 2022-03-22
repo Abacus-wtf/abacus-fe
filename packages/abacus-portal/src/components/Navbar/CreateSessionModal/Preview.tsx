@@ -23,7 +23,7 @@ const Container = styled.div`
 `
 
 const ImageContainer = styled.div`
-  width: 75%;
+  max-width: 320px;
 `
 
 const StyledMiniList = styled(MiniList)`

@@ -85,7 +85,7 @@ const About: FunctionComponent<AboutProps> = ({ traits, creator }) => {
   const creatorValue =
     creator?.user?.username || shortenAddress(creator?.address)
   return (
-    <CardWithTitle title="About">
+    <CardWithTitle title="Traits">
       {creatorValue && (
         <>
           <StyledH4>Creator</StyledH4>
@@ -104,7 +104,6 @@ const About: FunctionComponent<AboutProps> = ({ traits, creator }) => {
         </>
       )}
 
-      <StyledH4>Traits</StyledH4>
       <Traits>
         {traits?.map((trait) => (
           <>

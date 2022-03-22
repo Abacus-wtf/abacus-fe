@@ -30,7 +30,7 @@ const Container = styled.div`
 const InfoWrapper = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
-  align-items: center;
+  align-items: flex-start;
 
   ${Media.sm`
     grid-template-columns: repeat(3, calc(100%/3));

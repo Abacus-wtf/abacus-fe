@@ -1,8 +1,7 @@
-import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Media } from "@theme";
 
-const Container = styled.section`
+const Section = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -17,9 +16,5 @@ const Container = styled.section`
     justify-content: flex-start;
   `}
 `;
-
-const Section: FunctionComponent = ({ children }) => (
-  <Container>{children}</Container>
-);
 
 export default Section;

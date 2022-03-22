@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect } from "react";
 import styled from "styled-components";
-import { Section } from "@atoms";
 import { Media } from "@theme";
+import { Section } from "@atoms";
 
 const Container = styled.div<{ isOpen: boolean }>`
   display: ${({ isOpen }) => (isOpen ? "unset" : "none")};
@@ -31,9 +31,11 @@ const Container = styled.div<{ isOpen: boolean }>`
 
 const ModalBody = styled.div`
   margin: 0;
-  height: max-content;
   max-width: 1040px;
+  height: max-content;
+  max-height: 90vh;
   opacity: 1;
+  overflow: auto;
 `;
 
 type OpenAppModalProps = {

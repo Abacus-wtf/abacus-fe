@@ -1,6 +1,14 @@
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
-import { Modal, H2 } from "abacus-ui"
+import {
+  Modal,
+  H2,
+  ChevronLeft,
+  Close,
+  VisuallyHidden,
+  Button,
+  ButtonType,
+} from "abacus-ui"
 import { useOnCreateNewSession } from "@hooks/create-sessions"
 import Form from "./Form"
 import Preview from "./Preview"
@@ -16,13 +24,23 @@ const Container = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
-  max-width: 400px;
+  max-width: 525px;
 `
 
 const StyledH2 = styled(H2)`
   width: 100%;
   text-align: center;
   font-family: "Bluu next";
+`
+
+const ButtonRow = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`
+
+const StyledButton = styled(Button)`
+  padding: 8px;
 `
 
 export type FormValues = {
@@ -105,6 +123,25 @@ const CreateSessionModal: FunctionComponent<CreateSessionModalProps> = ({
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <Container>
+        <ButtonRow>
+          {modalState === ModalState.Preview && (
+            <StyledButton
+              onClick={() => setModalState(ModalState.Form)}
+              buttonType={ButtonType.Clear}
+            >
+              <ChevronLeft />
+              <VisuallyHidden>Back</VisuallyHidden>
+            </StyledButton>
+          )}
+          <StyledButton
+            onClick={closeModal}
+            buttonType={ButtonType.Clear}
+            style={{ marginLeft: "auto" }}
+          >
+            <Close />
+            <VisuallyHidden>Close</VisuallyHidden>
+          </StyledButton>
+        </ButtonRow>
         <StyledH2 as="label" htmlFor="create_new_session">
           {heading}
         </StyledH2>

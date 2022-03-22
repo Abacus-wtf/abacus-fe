@@ -23,7 +23,8 @@ const Container = styled.div`
 `
 
 const ImageContainer = styled.div`
-  max-width: 320px;
+  max-width: 250px;
+  margin: 20px 0;
 `
 
 const StyledMiniList = styled(MiniList)`
@@ -37,7 +38,7 @@ const BalanceContainer = styled.div`
   align-items: center;
   grid-gap: 16px;
   margin-top: 8px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 
   ${Media.sm`
     flex-direction: row;
@@ -79,7 +80,7 @@ const Preview: FunctionComponent<PreviewProps> = ({
   return (
     <Container>
       <ImageContainer>
-        <ExploreImage imgSrc={asset} loading={!asset} />
+        <ExploreImage imgSrc={asset} loading={!asset} enableFullBorderRadius />
       </ImageContainer>
       <SessionCountdown
         endTime={
@@ -107,7 +108,7 @@ const Preview: FunctionComponent<PreviewProps> = ({
         </StyledButton>
       </BalanceContainer>
       <Button
-        style={{ marginTop: "16px", width: "100%" }}
+        style={{ width: "100%" }}
         disabled={isPendingCreateSession}
         onClick={createSession}
       >

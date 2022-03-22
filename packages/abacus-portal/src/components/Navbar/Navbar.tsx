@@ -17,7 +17,7 @@ import { useActiveWeb3React } from "@hooks/index"
 import { shortenAddress } from "@config/utils"
 import { getUserIcon } from "@utils"
 import { useToggleWalletModal } from "@state/application/hooks"
-import CreateSessionModal from "./CreateSessionModal"
+import { CreateSessionModal } from "./CreateSessionModal"
 
 const Container = styled.nav<{ menuOpen: boolean }>`
   display: flex;

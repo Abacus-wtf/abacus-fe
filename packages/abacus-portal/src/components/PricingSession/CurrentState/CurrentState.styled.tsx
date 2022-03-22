@@ -42,10 +42,6 @@ export const FullWidthButton = styled(Button)`
   width: 100%;
 `
 
-export const InputError = styled.span`
-  color: ${({ theme }) => theme.colors.utility.red};
-`
-
 export const VerticallyCenteredContainer = styled.div`
   display: flex;
   flex-direction: column;

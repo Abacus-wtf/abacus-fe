@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from "react";
 import styled, { css } from "styled-components";
 import { getUniqueId } from "@utils";
-import { Font, WithTheme } from "@theme";
+import { Font } from "@theme";
 import { Milli, Kilo } from "@typography";
 
 type InputProps = {
@@ -17,6 +17,7 @@ type InputProps = {
   hint?: React.ReactNode | string;
   disabled?: boolean;
   required?: boolean;
+  exteriorLabel?: boolean;
 };
 
 type Disableable = {
@@ -26,6 +27,8 @@ type Disableable = {
 const Container = styled.div`
   width: 100%;
   margin-bottom: 2px;
+  display: flex;
+  flex-direction: column;
 `;
 
 type InputContainerProps = Disableable & {
@@ -64,7 +67,14 @@ const InputContainer = styled.div<InputContainerProps>`
       : ""}
 `;
 
-const StyledLabel = styled.label<WithTheme>`
+const ExteriorLabel = styled.label`
+  ${Font("mega")}
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 10px;
+`;
+
+const StyledLabel = styled.label`
   ${Font("milli")}
   text-align: center;
   background-color: ${({ theme }) => theme.colors.core.label};
@@ -76,6 +86,7 @@ const StyledLabel = styled.label<WithTheme>`
 
 const StyledInput = styled.input<Disableable>`
   ${Font("mega")}
+  font-size: 22px;
   border: none;
   outline: none;
   padding: 0;
@@ -116,13 +127,17 @@ const Input: FunctionComponent<InputProps> = ({
   showEth,
   className,
   hint,
-  disabled,
-  required,
+  disabled = false,
+  required = false,
+  exteriorLabel = false,
 }) => {
   const [pristine, setPristine] = useState(true);
   const ID = typeof id === "string" ? id : getUniqueId("input");
   return (
     <Container className={className}>
+      {exteriorLabel && label && (
+        <ExteriorLabel htmlFor={ID}>{label}</ExteriorLabel>
+      )}
       <InputContainer
         disabled={disabled}
         pristine={pristine}
@@ -130,7 +145,7 @@ const Input: FunctionComponent<InputProps> = ({
         value={value}
       >
         {showEth ? <EthLogo>ETH</EthLogo> : null}
-        {typeof label === "string" && label && (
+        {!exteriorLabel && typeof label === "string" && label && (
           <StyledLabel htmlFor={ID}>{label}</StyledLabel>
         )}
         <StyledInput

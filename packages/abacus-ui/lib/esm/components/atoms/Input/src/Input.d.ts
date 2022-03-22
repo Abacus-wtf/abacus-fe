@@ -12,6 +12,7 @@ declare type InputProps = {
     hint?: React.ReactNode | string;
     disabled?: boolean;
     required?: boolean;
+    exteriorLabel?: boolean;
 };
 declare const Input: FunctionComponent<InputProps>;
 export default Input;

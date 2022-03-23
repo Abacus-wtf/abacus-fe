@@ -18,6 +18,7 @@ type InputProps = {
   disabled?: boolean;
   required?: boolean;
   exteriorLabel?: boolean;
+  step?: string;
 };
 
 type Disableable = {
@@ -130,6 +131,7 @@ const Input: FunctionComponent<InputProps> = ({
   disabled = false,
   required = false,
   exteriorLabel = false,
+  step = "0.1",
 }) => {
   const [pristine, setPristine] = useState(true);
   const ID = typeof id === "string" ? id : getUniqueId("input");
@@ -159,6 +161,7 @@ const Input: FunctionComponent<InputProps> = ({
           aria-disabled={disabled}
           required={required}
           onFocus={() => setPristine(false)}
+          step={step}
         />
       </InputContainer>
       {hint && <StyledKilo>{hint}</StyledKilo>}

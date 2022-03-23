@@ -13,6 +13,7 @@ declare type InputProps = {
     disabled?: boolean;
     required?: boolean;
     exteriorLabel?: boolean;
+    step?: string;
 };
 declare const Input: FunctionComponent<InputProps>;
 export default Input;

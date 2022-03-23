@@ -9,7 +9,11 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof Loader>;
 
-const Template: ComponentStory<typeof Loader> = (args) => <Loader {...args} />;
+const Template: ComponentStory<typeof Loader> = (args) => (
+  <div style={{ height: "300px", width: "300px" }}>
+    <Loader {...args} />
+  </div>
+);
 
 export const Primary = Template.bind({});
 Primary.args = {};

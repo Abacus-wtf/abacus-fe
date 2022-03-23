@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react"
 import styled, { keyframes } from "styled-components"
-import { AbacusIcon } from "abacus-ui"
+import { Loader } from "abacus-ui"
 import { useInView } from "react-intersection-observer"
 import { usePrevious } from "@hooks/index"
 
@@ -68,7 +68,7 @@ const InfiniteScroll: FunctionComponent<InfiniteScrollProps> = ({
     <Container ref={ref} className={className}>
       {loading && (
         <StyledIconContainer>
-          <AbacusIcon fill="black" />
+          <Loader />
         </StyledIconContainer>
       )}
     </Container>

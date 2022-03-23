@@ -1,6 +1,6 @@
 import { useActiveWeb3React } from "@hooks/index"
 import React, { FunctionComponent } from "react"
-import { Exa, Kilo, AbacusIcon } from "abacus-ui"
+import { Exa, Kilo, Loader } from "abacus-ui"
 import { useOnWeightVote } from "@hooks/current-session"
 import {
   useCanUserInteract,
@@ -57,7 +57,7 @@ const Weigh: FunctionComponent = () => {
     <VerticallyCenteredContainer>
       {isWeighing && canUserInteract && (
         <LoadingIconContainer>
-          <AbacusIcon fill="black" />
+          <Loader />
         </LoadingIconContainer>
       )}
       <TitleContainer style={{ textAlign: "center" }}>

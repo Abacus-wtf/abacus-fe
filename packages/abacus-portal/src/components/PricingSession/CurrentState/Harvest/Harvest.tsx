@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import styled from "styled-components"
-import { AbacusIcon, Exa, P } from "abacus-ui"
+import { Loader, Exa, P } from "abacus-ui"
 import {
   useCanUserInteract,
   useCurrentSessionData,
@@ -52,7 +52,7 @@ const Harvest: FunctionComponent = () => {
     <VerticallyCenteredContainer>
       {isPending && (
         <LoadingIconContainer>
-          <AbacusIcon fill="black" />
+          <Loader />
         </LoadingIconContainer>
       )}
       <TitleContainer style={{ textAlign: "center" }}>

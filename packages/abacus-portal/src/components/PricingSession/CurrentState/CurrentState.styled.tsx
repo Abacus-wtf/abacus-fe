@@ -56,7 +56,7 @@ export const LoadingIconContainer = styled.div`
   margin-bottom: 16px;
 
   & svg {
-    height: 40px;
-    width: 40px;
+    height: 200px;
+    width: 200px;
   }
 `

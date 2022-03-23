@@ -49,13 +49,14 @@ const Weigh: FunctionComponent = () => {
   const isParticipant = Boolean(participation)
   const votes = currentSessionData?.votes ?? null
   const { votesWeighted, hasUserWeighed } = useVotesWeighted(votes)
-  const isWeighing = votesWeighted > 0
+  const isWeighing = votesWeighted > 0 || participation.hasWeighted
   const canInteract = useCanUserInteract()
+  const finalAppraisal = currentSessionData?.finalAppraisalValue ?? 0
   const finalAppraisalUSD = useEthToUSD(currentSessionData?.finalAppraisalValue)
 
   return (
     <VerticallyCenteredContainer>
-      {isWeighing && canUserInteract && (
+      {isWeighing && (
         <LoadingIconContainer>
           <Loader />
         </LoadingIconContainer>
@@ -82,7 +83,7 @@ const Weigh: FunctionComponent = () => {
           <InfoContainer>
             <Info>
               <InfoTitle>
-                {currentSessionData?.finalAppraisalValue ?? 0} ETH ($
+                {finalAppraisal} ETH ($
                 {finalAppraisalUSD})
               </InfoTitle>
               <Kilo>Appraisal</Kilo>

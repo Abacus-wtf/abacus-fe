@@ -60,6 +60,10 @@ const Title = styled(Peta)`
   display: flex;
   font-family: "Bluu Next";
   text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const StyledExploreInfo = styled(ExploreInfo)`

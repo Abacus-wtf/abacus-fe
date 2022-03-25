@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Peta } from "../src";
 
 export default {
-  title: "atom/Peta",
+  title: "typography/Peta",
   component: Peta,
   argTypes: {},
 } as ComponentMeta<typeof Peta>;

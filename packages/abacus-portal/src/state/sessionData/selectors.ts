@@ -19,7 +19,16 @@ const defaultSessionData: AppState["sessionData"]["currentSessionData"]["session
     maxAppraisal: 0,
     bounty: 0,
     votingTime: 0,
+    votes: [],
+    relatedAssets: [],
+    traits: [],
+    creator: null,
   }
+
+export const featuredSessionStateSelector = (
+  state: AppState
+): AppState["sessionData"]["featuredSessionState"] =>
+  state?.sessionData?.featuredSessionState ?? initialState.featuredSessionState
 
 export const multiSessionStateSelector = (
   state: AppState

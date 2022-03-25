@@ -1,16 +1,13 @@
 import { getAddress } from "@ethersproject/address"
 import { OPENSEA_API_KEY, OPENSEA_LINK, web3Eth } from "@config/constants"
-import axios, { AxiosResponse } from "axios"
-import axiosRetry from "axios-retry"
 import { BigNumber } from "@ethersproject/bignumber"
 import { Web3Provider, JsonRpcSigner } from "@ethersproject/providers"
 import { Contract } from "@ethersproject/contracts"
 import { AddressZero } from "@ethersproject/constants"
 import { keccak256 } from "@ethersproject/keccak256"
 import { formatEther } from "ethers/lib/utils"
+import "whatwg-fetch"
 import _ from "lodash"
-
-axiosRetry(axios, { retries: 3 })
 
 export const formatPricingSessionCoreMulticall = (pricingSessionCore: any) => ({
   endTime: parseInt(pricingSessionCore[0].hex, 16),
@@ -92,6 +89,33 @@ export type OpenSeaAsset = {
   }
   collection: {
     name: string
+    slug: string
+    payment_tokens: {
+      address: string
+      decimals: number
+      eth_price: number
+      id: number
+      image_url: string
+      name: string
+      symbol: string
+      usd_price: string
+    }[]
+  }
+  traits: {
+    trait_type: string
+    value: number | string
+    display_type: string
+    max_value: string
+    trait_count: number
+    order: number
+  }[]
+  creator: {
+    user: {
+      username: string
+    }
+    profile_img_url: string
+    address: string
+    config: string
   }
   token_id: string
   name: string
@@ -112,8 +136,19 @@ const DEFAULT_ASSET: OpenSeaAsset = {
     name: "",
     address: "",
   },
+  traits: [],
+  creator: {
+    user: {
+      username: null,
+    },
+    profile_img_url: "",
+    address: "",
+    config: "",
+  },
   collection: {
     name: "",
+    slug: "",
+    payment_tokens: [],
   },
   token_id: "",
   name: "",
@@ -123,28 +158,38 @@ export type OpenSeaGetResponse = {
   assets: OpenSeaAsset[]
 }
 
-async function openseaRequest(input: string) {
-  let result: AxiosResponse<OpenSeaAsset | OpenSeaGetResponse>
+type OpenSeaQueryParams = {
+  collection_slug?: string
+  asset_contract_address?: string
+}
+
+export async function openseaRequest<T = OpenSeaAsset>(
+  input: string,
+  query?: OpenSeaQueryParams
+) {
+  let result: T
   try {
-    result = await axios.get<OpenSeaAsset | OpenSeaGetResponse>(
-      OPENSEA_LINK + input,
-      {
-        decompress: false,
-        headers: OPENSEA_API_KEY
-          ? {
-              "X-API-KEY": OPENSEA_API_KEY,
-            }
-          : {},
-      }
-    )
-    return result.data
+    const queryParams = query
+      ? Object.keys(query).reduce(
+          (acc, q, i) => `${acc}${i === 0 ? "" : "&"}${q}=${query[q]}`,
+          "?"
+        )
+      : ""
+    const url = `${OPENSEA_LINK}${input}${queryParams}`
+    const res = await fetch(url, {
+      headers: {
+        ...(OPENSEA_API_KEY ? { "X-API-KEY": OPENSEA_API_KEY } : {}),
+      },
+    })
+    result = await res.json()
+    return result
   } catch (e) {
     console.log("e", e)
     return DEFAULT_ASSET
   }
 }
 
-export const openseaGet = _.throttle(openseaRequest, 1500)
+export const openseaGet = openseaRequest
 
 function isOpenSeaAsset(
   asset: OpenSeaAsset | OpenSeaGetResponse
@@ -170,6 +215,17 @@ export async function openseaGetMany(pricingSessions: OpenSeaGetManyParams) {
       })),
     }
     return DEFAULT_OPENSEA_GET_RESPONSE
+  }
+  return result
+}
+
+export async function openseaGetRelated(
+  input: string,
+  query: OpenSeaQueryParams
+) {
+  const result = await openseaGet<{ assets: OpenSeaAsset[] }>(input, query)
+  if (isOpenSeaAsset(result)) {
+    return { assets: [] }
   }
   return result
 }

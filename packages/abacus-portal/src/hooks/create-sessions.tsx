@@ -10,6 +10,7 @@ import {
 } from "@hooks/index"
 import { useTransactionAdder } from "@state/transactions/hooks"
 import { useGetCurrentNetwork } from "@state/application/hooks"
+import { TransactionResponse } from "@ethersproject/providers"
 
 export const useOnCreateNewSession = () => {
   const { account, library } = useActiveWeb3React()
@@ -25,7 +26,7 @@ export const useOnCreateNewSession = () => {
       tokenId: string,
       initAppraisal: string,
       votingTime: number,
-      cb: () => void,
+      cb: (response: TransactionResponse) => void,
       bounty?: string
     ) => {
       const pricingSessionContract = getContract(
@@ -38,12 +39,12 @@ export const useOnCreateNewSession = () => {
       const estimate = pricingSessionContract.estimateGas.createNewSession
       const args = [nftAddress, tokenId, parseEther(initAppraisal), votingTime]
       const value = bounty ? parseEther(bounty) : null
-      const txnCb = async (response: any) => {
+      const txnCb = async (response: TransactionResponse) => {
         addTransaction(response, {
           summary: "Create New Session",
         })
         await response.wait()
-        cb()
+        cb(response)
       }
       await generalizedContractCall({
         method,

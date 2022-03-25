@@ -128,6 +128,7 @@ export const useSetPayoutData = () => {
       const ethCredit = Number(formatEther(principalStored[0]))
       dispatch(setClaimData({ ethPayout: eth, abcPayout: abc, ethCredit }))
     },
+    // want chainID here as well
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [networkSymbol, dispatch, multicall, chainId]
   )

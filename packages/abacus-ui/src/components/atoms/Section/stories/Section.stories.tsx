@@ -9,10 +9,30 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof Section>;
 
+const Placeholder = ({ copy }: { copy: string }) => (
+  <div
+    style={{
+      height: "200px",
+      width: "100%",
+      background: "gray",
+      margin: "4px",
+      color: "white",
+      fontSize: "4rem",
+      fontFamily: "sans-serif",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      textTransform: "uppercase",
+    }}
+  >
+    {copy}
+  </div>
+);
+
 const Template: ComponentStory<typeof Section> = (args) => (
   <Section {...args}>
-    <div style={{ height: "200px", width: "200px" }}>Hello</div>
-    <div style={{ height: "200px", width: "200px" }}>World</div>
+    <Placeholder copy="Hello" />
+    <Placeholder copy="World" />
   </Section>
 );
 

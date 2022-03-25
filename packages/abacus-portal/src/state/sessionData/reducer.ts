@@ -1,7 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit"
 import { PromiseStatus } from "@models/PromiseStatus"
+import { OpenSeaAsset } from "@config/utils"
 import {
-  getCurrentSessionData,
   setUserStatus,
   setMultipleSessionData,
   setMultipleSessionFetchStatus,
@@ -20,14 +20,18 @@ import {
   setMultipleSessionIsLastPage,
   setMySessionsIsLastPage,
   setActiveSessionsIsLastPage,
+  setFeaturedSessionData,
+  setFeaturedSessionFetchStatus,
+  setFeaturedSessionErrorMessage,
+  setCurrentSessionData,
+  setCurrentSessionStatus,
 } from "./actions"
 
 export interface Vote {
-  user: {
-    id: string
-  }
+  user: string
   appraisal: string
   amountStaked: string
+  weight: string
 }
 
 export enum SessionState {
@@ -68,6 +72,14 @@ export interface SessionData {
   totalStakedInUSD?: number
   rankings?: Vote[]
   winnerAmount?: number
+  currentStatus?: SessionState
+  traits: OpenSeaAsset["traits"]
+  creator: OpenSeaAsset["creator"]
+}
+
+export interface CurrentSessionData extends SessionData {
+  votes: Vote[]
+  relatedAssets: { src: string; link: string }[]
 }
 
 export interface ClaimState {
@@ -77,11 +89,17 @@ export interface ClaimState {
 }
 
 export interface CurrentSessionState {
-  sessionData: SessionData
+  sessionData: CurrentSessionData
   sessionStatus: SessionState
   userStatus: UserState
   fetchStatus?: PromiseStatus
   errorMessage?: string | null
+}
+
+export interface FeaturedSessionState {
+  featuredSessionData: SessionData[] | null
+  fetchStatus: PromiseStatus
+  errorMessage: string | null
 }
 
 export interface MultiSessionState {
@@ -110,13 +128,19 @@ export interface ActiveSessionsState {
 
 interface SessionDataState {
   currentSessionData: CurrentSessionState | null
+  featuredSessionState: FeaturedSessionState
   multiSessionState: MultiSessionState
   mySessionsState: MySessionsState
   activeSessionsState: ActiveSessionsState
 }
 
 export const initialState = {
-  currentSessionData: null,
+  currentSessionData: {},
+  featuredSessionState: {
+    featuredSessionData: [],
+    fetchStatus: PromiseStatus.Idle,
+    errorMessage: null,
+  },
   multiSessionState: {
     multiSessionData: [],
     fetchStatus: PromiseStatus.Idle,
@@ -142,8 +166,11 @@ export const initialState = {
 
 export default createReducer(initialState, (builder) =>
   builder
-    .addCase(getCurrentSessionData, (state, action) => {
-      state.currentSessionData = action.payload
+    .addCase(setCurrentSessionData, (state, action) => {
+      state.currentSessionData.sessionData = action.payload
+    })
+    .addCase(setCurrentSessionStatus, (state, action) => {
+      state.currentSessionData.sessionStatus = action.payload
     })
     .addCase(setUserStatus, (state, action) => {
       state.currentSessionData.userStatus = action.payload
@@ -157,6 +184,20 @@ export default createReducer(initialState, (builder) =>
       if (state.currentSessionData !== null) {
         state.currentSessionData.errorMessage = action.payload
       }
+    })
+    .addCase(setFeaturedSessionData, (state, action) => {
+      state.featuredSessionState.featuredSessionData = action.payload
+    })
+    .addCase(setFeaturedSessionFetchStatus, (state, action) => {
+      if (action.payload === PromiseStatus.Rejected) {
+        state.featuredSessionState.errorMessage = "Failed to get Session Data"
+      } else if (action.payload === PromiseStatus.Resolved) {
+        state.featuredSessionState.errorMessage = null
+      }
+      state.featuredSessionState.fetchStatus = action.payload
+    })
+    .addCase(setFeaturedSessionErrorMessage, (state, action) => {
+      state.featuredSessionState.errorMessage = action.payload
     })
     .addCase(setMultipleSessionData, (state, action) => {
       state.multiSessionState.multiSessionData = action.payload

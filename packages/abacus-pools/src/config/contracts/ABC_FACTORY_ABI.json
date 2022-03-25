@@ -182,17 +182,60 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "toTreasury",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
         "name": "toVeHolders",
         "type": "uint256"
       }
     ],
     "name": "FeesRedeemed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_callingContract",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_bidAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_bidder",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_closePoolContract",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_vault",
+        "type": "address"
+      }
+    ],
+    "name": "NewBid",
     "type": "event"
   },
   {
@@ -409,9 +452,9 @@
     "name": "beta",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "uint256",
         "name": "",
-        "type": "bool"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -596,16 +639,49 @@
       },
       {
         "internalType": "uint256",
-        "name": "toTreasury",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "toVeHolders",
         "type": "uint256"
       }
     ],
     "name": "emitFeeRedemption",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_callerToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_callerId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_bid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_bidder",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_closePoolContract",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_vault",
+        "type": "address"
+      }
+    ],
+    "name": "emitNewBid",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -718,6 +794,30 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "nft",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getVaultAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "vaultAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
       },
@@ -776,6 +876,19 @@
       }
     ],
     "name": "setAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "stage",
+        "type": "uint256"
+      }
+    ],
+    "name": "setBeta",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

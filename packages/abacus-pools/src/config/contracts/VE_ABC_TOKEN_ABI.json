@@ -14,6 +14,31 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_collection",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amountAdded",
+        "type": "uint256"
+      }
+    ],
+    "name": "AllocatedToCollection",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "owner",
@@ -33,6 +58,226 @@
       }
     ],
     "name": "Approval",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amountAdded",
+        "type": "uint256"
+      }
+    ],
+    "name": "AutoAllocated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_collection",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "BribePaid",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_reward",
+        "type": "uint256"
+      }
+    ],
+    "name": "BribeRewardClaimed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_oldCollection",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_newCollection",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amountChanged",
+        "type": "uint256"
+      }
+    ],
+    "name": "ChangedAllocation",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_collection",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amountRemoved",
+        "type": "uint256"
+      }
+    ],
+    "name": "RemovedAllocation",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amountRemoved",
+        "type": "uint256"
+      }
+    ],
+    "name": "RemovedAutoAllocation",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_reward",
+        "type": "uint256"
+      }
+    ],
+    "name": "StakeRewardClaimed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amountLocked",
+        "type": "uint256"
+      }
+    ],
+    "name": "TokensAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_lockTime",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amountLocked",
+        "type": "uint256"
+      }
+    ],
+    "name": "TokensLocked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amountUnlocked",
+        "type": "uint256"
+      }
+    ],
+    "name": "TokensUnlocked",
     "type": "event"
   },
   {
@@ -255,25 +500,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_user",
-        "type": "address"
-      }
-    ],
-    "name": "calculateVotingPower",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "votingPower",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "_currentCollection",
         "type": "address"
       },
@@ -365,7 +591,7 @@
     "name": "controller",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "contract AbacusController",
         "name": "",
         "type": "address"
       }
@@ -449,12 +675,50 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "epochStartTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "fundsForTreasury",
     "outputs": [
       {
         "internalType": "uint256",
         "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getAmountAllocated",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
         "type": "uint256"
       }
     ],
@@ -550,6 +814,19 @@
       }
     ],
     "name": "removeAutoAllocation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_controller",
+        "type": "address"
+      }
+    ],
+    "name": "setController",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -762,6 +1039,13 @@
   {
     "inputs": [],
     "name": "updateAuto",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "updateStartTime",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

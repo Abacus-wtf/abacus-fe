@@ -90,6 +90,11 @@
         "internalType": "uint256",
         "name": "principal",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "profit",
+        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",
@@ -181,8 +186,33 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_caller",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_finalNftVal",
+        "type": "uint256"
+      }
+    ],
+    "name": "calculatePositionPremiums",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "claimFindersFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "claimKeeperFees",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -574,12 +604,57 @@
   },
   {
     "inputs": [],
+    "name": "keeperReward",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "keeperRewardPoints",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "name",
     "outputs": [
       {
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "overBidsSlashed",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -601,6 +676,11 @@
     "name": "pendingOrder",
     "outputs": [
       {
+        "internalType": "bool",
+        "name": "ticketQueued",
+        "type": "bool"
+      },
+      {
         "internalType": "uint64",
         "name": "lockTime",
         "type": "uint64"
@@ -614,11 +694,6 @@
         "internalType": "address",
         "name": "buyer",
         "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "ticketQueued",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -651,6 +726,77 @@
         "internalType": "bool",
         "name": "",
         "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "positionCheckpoint",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "positionPointCheckpoint",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "positionPoints",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "positionPremiumsCalculated",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "profitGenerated",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -754,6 +900,35 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_caller",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "overBidTickets",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_finalNftVal",
+        "type": "uint256"
+      }
+    ],
+    "name": "slashOverBidders",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "addition",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "startEmissions",
     "outputs": [],
@@ -807,7 +982,46 @@
   },
   {
     "inputs": [],
+    "name": "tokensAccountedFor",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "tokensLocked",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalKeeperRewardPoints",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalPositionPoints",
     "outputs": [
       {
         "internalType": "uint256",

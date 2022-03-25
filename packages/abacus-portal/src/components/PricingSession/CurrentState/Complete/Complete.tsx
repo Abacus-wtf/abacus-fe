@@ -1,8 +1,5 @@
 import React, { FunctionComponent } from "react"
-import {
-  useCanUserInteract,
-  useCurrentSessionData,
-} from "@state/sessionData/hooks"
+import { useCurrentSessionData } from "@state/sessionData/hooks"
 import { isWithinWinRange } from "@config/utils"
 import NonParticipant from "./NonParticipant"
 import Winner from "./Winner"
@@ -11,9 +8,9 @@ import useUserRanking from "./useUserRanking"
 
 const Complete: FunctionComponent = () => {
   const sessionData = useCurrentSessionData()
-  const isParticipant = useCanUserInteract()
 
   const userRanking = useUserRanking()
+  console.log("userRanking", userRanking)
   const isWinner = userRanking
     ? isWithinWinRange(
         Number(userRanking.appraisal),
@@ -22,7 +19,8 @@ const Complete: FunctionComponent = () => {
       )
     : false
 
-  if (!isParticipant) {
+  console.log("isWinner", isWinner)
+  if (!userRanking) {
     return <NonParticipant />
   }
 

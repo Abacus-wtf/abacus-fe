@@ -19,7 +19,6 @@ import useHasSeenWinnerModal from "./useHasSeenWinnerModal"
 
 type WinnerModalProps = {
   isOpen: boolean
-  claimZero: boolean
   closeModal: () => void
   claimEth: () => void
 }
@@ -30,7 +29,6 @@ const ClaimButton = styled(Button)`
 
 const WinnerModal: FunctionComponent<WinnerModalProps> = ({
   isOpen,
-  claimZero,
   closeModal,
   claimEth,
 }) => {
@@ -72,8 +70,9 @@ const WinnerModal: FunctionComponent<WinnerModalProps> = ({
               }}
               isDark
             />
-            <ClaimButton claimEth={claimEth} disabled={isPending || claimZero}>
-              {claimZero ? "Already claimed" : `Claim ${ethEarnings} ETH`}
+            Your earnings might take a moment to populate.
+            <ClaimButton claimEth={claimEth} disabled={isPending}>
+              Claim {ethEarnings} ETH
             </ClaimButton>
           </FlexEndColumn>
         </RightHalf>

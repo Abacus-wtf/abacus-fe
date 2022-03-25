@@ -22,6 +22,8 @@ const Container = styled.div`
   align-items: center;
 
   ${Media.lg`
+    display: grid;
+    grid-template-columns: 40% 60%;
     flex-direction: row;
     justify-content: flex-start;
   `}
@@ -37,7 +39,7 @@ const InfoWrapper = styled.div`
   `}
 
   ${Media.lg`
-    width: 65%;
+    width: 100%;
     justfy-content: space-evenly;
   `}
 `;
@@ -46,13 +48,16 @@ const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
 
   ${Media.lg`
+    align-items: flex-start;
     text-align: left;
     flex: 1 0 auto;
     padding: 0 36px;
-    width: 35%;
+    width: 100%;
   `}
 `;
 
@@ -60,7 +65,6 @@ const Title = styled(Peta)`
   display: flex;
   font-family: "Bluu Next";
   text-align: center;
-  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

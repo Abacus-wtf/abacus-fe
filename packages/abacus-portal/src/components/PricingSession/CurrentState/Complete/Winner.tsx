@@ -89,7 +89,6 @@ const Winner: FunctionComponent = () => {
         </StyledButton>
       </ButtonContainer>
       <WinnerModal
-        claimZero={claimZero}
         isOpen={modalOpen}
         closeModal={closeModal}
         claimEth={claimEth}

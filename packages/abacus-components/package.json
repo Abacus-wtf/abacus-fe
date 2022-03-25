@@ -55,6 +55,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "abacus-ui": "^1.1.0",
     "react-feather": "^2.0.9",
     "react-iconly": "^2.2.5",
     "shards-react": "^1.0.3",

@@ -50,7 +50,6 @@ export interface Pool extends NFT {
   isManager?: boolean
   emissionsStarted?: boolean
   creditsAvailable?: string
-  balance?: number
   state: PoolStatus
   hasPremiumPass?: boolean
   auction?: Auction

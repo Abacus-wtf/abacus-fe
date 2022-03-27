@@ -199,7 +199,6 @@ export const useSetPoolData = () => {
           ),
           erc721(address).methods.ownerOf(tokenId).call(),
         ])
-
         const [
           owner,
           closePoolContract,
@@ -218,7 +217,6 @@ export const useSetPoolData = () => {
           [[], [], [], [], [], []]
         )
 
-        let balance = BigNumber.from(0)
         let creditsAvailable = BigNumber.from(0)
         let approved = false
         let tickets = []
@@ -228,8 +226,8 @@ export const useSetPoolData = () => {
             await Promise.all([
               vault(
                 vaultAddress,
-                ["getCreditsAvailableForPurchase", "balanceOf"],
-                [[account, moment().unix()], [account]]
+                ["getCreditsAvailableForPurchase"],
+                [[account, moment().unix()]]
               ),
               erc721(address)
                 .methods.isApprovedForAll(account, vaultAddress)
@@ -244,7 +242,6 @@ export const useSetPoolData = () => {
           ownerOfNFT = _ownerOfNFT
           tickets = _tickets
           creditsAvailable = multi[0][0]
-          balance = multi[1][0]
           approved = approval
         }
         let auction: Auction
@@ -328,7 +325,6 @@ export const useSetPoolData = () => {
           isManager:
             String(owner[0]).toLowerCase() === account.toLowerCase() ||
             ownerOf.toLowerCase() === account.toLowerCase(),
-          balance: parseFloat(formatEther(balance)),
           creditsAvailable: BigNumber.from(creditsAvailable).toString(),
           state:
             closePoolContract[0] === ZERO_ADDRESS

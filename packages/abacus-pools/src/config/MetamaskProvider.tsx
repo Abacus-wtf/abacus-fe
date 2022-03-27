@@ -10,7 +10,7 @@ function MetamaskProvider({
   const [injectedConnector] = useState(
     () =>
       new InjectedConnector({
-        supportedChainIds: [/* 1, 3, 5, 42, 56, 137, 80001, */ 4],
+        supportedChainIds: [1, 3, 5, 42, 56, 137, 80001, 4],
       })
   )
   const {

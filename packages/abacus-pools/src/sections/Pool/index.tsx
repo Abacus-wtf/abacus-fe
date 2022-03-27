@@ -34,6 +34,8 @@ const Pool = ({ location }) => {
 
   useEffect(() => {
     setPool(String(address), String(tokenId), Number(nonce))
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
   }, [address, tokenId, nonce, setPool])
 
   if (!poolData) {

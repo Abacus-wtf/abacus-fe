@@ -204,7 +204,9 @@ export const useOnPurchaseTokens = () => {
           () => "ticketsPurchased"
         )
         const args = _.map(_.range(cycle * 20, cycle * 20 + 20), (i) => [i])
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
+        // eslint-disable-next-line no-await-in-loop
         const ticketFillings = await multicall(
           poolData.vaultAddress,
           methods,

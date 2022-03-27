@@ -1,219 +1,200 @@
-import React, { useEffect, useState } from "react"
-import { Title, SmallUniversalContainer, ButtonsWhite } from "abacus-components"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import * as queryString from "query-string"
+import { createGlobalStyle } from "styled-components"
+import {
+  CardBar,
+  PriceHistory,
+  PartOfCollection,
+  ActivitySection,
+} from "abacus-ui"
 import { navigate } from "gatsby"
 import {
   useCurrentSessionData,
-  useCurrentSessionFetchStatus,
-  useCurrentSessionStatus,
-  useCurrentSessionUserStatus,
   useGetCurrentSessionData,
   useGetUserStatus,
 } from "@state/sessionData/hooks"
-import { PromiseStatus } from "@models/PromiseStatus"
 import { useActiveWeb3React, usePrevious } from "@hooks/index"
 import ConnectWalletAlert from "@components/ConnectWalletAlert"
-import { useGetCurrentNetwork } from "@state/application/hooks"
-import { OutboundLink } from "gatsby-plugin-google-gtag"
-import { useSetPayoutData, useClaimPayoutData } from "@state/miscData/hooks"
-import RankingsModal from "@components/RankingsModal"
-import { NetworkSymbolEnum } from "@config/constants"
-import { SessionState } from "@state/sessionData/reducer"
-import { isWithinWinRange } from "@config/utils"
-import {
-  SplitContainer,
-  VerticalContainer,
-  VerticalSmallGapContainer,
-  FileContainer,
-  SubText,
-} from "./CurrentSession.styles"
-import CurrentState from "./CurrentState"
-import CongratsModal from "./CongratsModal"
-import SubscribeModal from "./SubscribeModal"
-import LostModal from "./LostModal"
+import { useEthToUSD, useGetCurrentNetwork } from "@state/application/hooks"
+import { useSetPayoutData } from "@state/miscData/hooks"
+import { IS_PRODUCTION, NetworkSymbolEnum } from "@config/constants"
+import { Container, SplitContainer } from "@layouts/styles"
+import { PricingSession, About } from "@components/index"
+import { getUserIcon } from "@utils"
+import DepositModal from "./DepositModal"
+
+const GlobalStyle = createGlobalStyle<{ url: string }>`
+body {
+  &::before {
+    background-image: ${({ url }) =>
+      url ? `url('${url}')` : `url('/background.png')`};
+    filter: blur(100px);
+    opacity: 1;
+    height: 100%;
+  }
+}
+`
+
+const OPENSEA_LINK = IS_PRODUCTION ? "opensea.io" : "testnets.opensea.io"
+const ETHERSCAN_LINK = IS_PRODUCTION ? "etherscan.io" : "rinkeby.etherscan.io"
 
 const CurrentSession = ({ location }) => {
-  const status = useCurrentSessionStatus()
+  const isInitialized = useRef(false)
   const { address, tokenId, nonce } = queryString.parse(location.search)
   const getCurrentSessionData = useGetCurrentSessionData()
   const { account, chainId } = useActiveWeb3React()
-  const previousAccount = usePrevious(account)
+  const prevAccount = usePrevious(account)
   const sessionData = useCurrentSessionData()
-  const fetchStatus = useCurrentSessionFetchStatus()
-  const isLoading = fetchStatus === PromiseStatus.Pending
   const networkSymbol = useGetCurrentNetwork()
+  const prevNetworkSymbol = usePrevious(networkSymbol)
   const isNetworkSymbolNone = networkSymbol === NetworkSymbolEnum.NONE
-  const claimData = useClaimPayoutData()
+  const isNewNetworkSymbol =
+    networkSymbol !== prevNetworkSymbol
+      ? !(
+          (networkSymbol === NetworkSymbolEnum.ARBITRUM &&
+            prevNetworkSymbol === NetworkSymbolEnum.NONE) ||
+          (networkSymbol === NetworkSymbolEnum.NONE &&
+            prevNetworkSymbol === NetworkSymbolEnum.ARBITRUM)
+        )
+      : false
   const setPayoutData = useSetPayoutData()
   const getUserStatus = useGetUserStatus()
-  const userStatus = useCurrentSessionUserStatus()
-  const [isRankingsModalOpen, setIsRankingsModalOpen] = useState(false)
-  const [isSubscribeModalOpen, setSubscribeModalOpen] = useState(false)
-  const [isLostModalOpen, setIsLostModalOpen] = useState(false)
-  const [congratsOpen, setCongratsOpen] = useState(false)
+  const [isDepositModalOpen, setIsDepositModalOpen] = useState(false)
+  const totalStakedUSD = useEthToUSD(sessionData.totalStaked)
 
   useEffect(() => {
-    const loadData = async () => {
-      if (sessionData.address === "" || account !== previousAccount) {
-        await getCurrentSessionData(
-          String(address),
-          String(tokenId),
-          Number(nonce)
-        )
-      }
-      if (claimData === null) {
-        await setPayoutData(account)
-      }
-      if (userStatus === -1) {
-        await getUserStatus(String(address), String(tokenId))
-      }
-    }
-
     if (!address || !tokenId || !nonce) {
       alert("This is a broken link, we are redirecting you to the home page.")
       navigate("/")
-    } else if ((account && chainId && networkSymbol) || isNetworkSymbolNone) {
-      loadData()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [claimData, sessionData, userStatus, account, previousAccount])
+  }, [address, nonce, tokenId])
 
   useEffect(() => {
-    if (
-      (sessionData.address !== "" && sessionData.address !== address) ||
-      (sessionData.tokenId !== "" && sessionData.tokenId !== tokenId) ||
-      (sessionData.nonce !== 0 && sessionData.nonce !== Number(nonce))
-    ) {
-      getCurrentSessionData(String(address), String(tokenId), Number(nonce))
+    const validSession = address && tokenId
+    const newAccount = account && account !== prevAccount
+    if (validSession && newAccount) {
+      getUserStatus(String(address), String(tokenId))
+      setPayoutData(account)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sessionData, address, tokenId, nonce])
+  }, [account, address, getUserStatus, prevAccount, setPayoutData, tokenId])
+
+  const loadSessionData = useCallback(async () => {
+    await getCurrentSessionData(String(address), String(tokenId), Number(nonce))
+  }, [address, getCurrentSessionData, nonce, tokenId])
 
   useEffect(() => {
-    const localString = `${sessionData.address}${sessionData.tokenId}${sessionData.nonce}`
-    const wasShown = localStorage.getItem(localString)
-    if (
-      wasShown === null &&
-      sessionData &&
-      sessionData.finalAppraisalValue &&
-      sessionData.guessedAppraisal &&
-      sessionData.guessedAppraisal !== -1 &&
-      sessionData.winnerAmount &&
-      !isWithinWinRange(
-        sessionData.guessedAppraisal,
-        sessionData.finalAppraisalValue,
-        sessionData.winnerAmount
-      )
-    ) {
-      console.log("guessed", sessionData.guessedAppraisal)
-      setIsLostModalOpen(true)
-
-      localStorage.setItem(localString, "true")
+    if ((chainId && isNewNetworkSymbol) || !isInitialized.current) {
+      isInitialized.current = true
+      loadSessionData()
     }
-  }, [sessionData])
+  }, [chainId, isNewNetworkSymbol, loadSessionData])
 
   if (!account && !isNetworkSymbolNone) {
     return (
-      <SmallUniversalContainer
-        style={{ alignItems: "center", justifyContent: "center" }}
-      >
+      <Container style={{ alignItems: "center", justifyContent: "center" }}>
         <ConnectWalletAlert />
-      </SmallUniversalContainer>
+      </Container>
     )
   }
 
-  if (isLoading || sessionData === null) {
+  if (sessionData === null) {
     return (
-      <SmallUniversalContainer
-        style={{ alignItems: "center", justifyContent: "center" }}
-      >
+      <Container style={{ alignItems: "center", justifyContent: "center" }}>
         Loading... {/* TODO: find a loader */}
-      </SmallUniversalContainer>
+      </Container>
     )
   }
+
+  const participantImages =
+    sessionData.rankings?.map((ranking) => getUserIcon(ranking.user)) ?? []
 
   return (
-    <SmallUniversalContainer style={{ alignItems: "center" }}>
-      <RankingsModal
-        isOpen={isRankingsModalOpen}
-        toggle={() => setIsRankingsModalOpen(!isRankingsModalOpen)}
+    <Container>
+      <DepositModal
+        isOpen={isDepositModalOpen}
+        closeModal={() => setIsDepositModalOpen(false)}
+      />
+      <GlobalStyle url={sessionData.image_url} />
+      <CardBar
+        title={sessionData.collectionTitle}
+        poolAmount={sessionData.totalStaked}
+        poolAmountUSD={totalStakedUSD}
+        participants={participantImages}
+        owner={sessionData.owner}
+      />
+      <PricingSession
+        nftSrc={sessionData.image_url}
+        endTime={sessionData.endTime}
+        nftName={sessionData.nftName}
+        openDepositModal={() => setIsDepositModalOpen(true)}
+        getCurrentSessionData={() => {
+          getCurrentSessionData(String(address), String(tokenId), Number(nonce))
+        }}
       />
       <SplitContainer>
-        <VerticalContainer>
-          <FileContainer {...sessionData} />
-          <div style={{ display: "flex", gridGap: 15 }}>
-            <ButtonsWhite
-              style={{ borderRadius: 8 }}
-              target="_blank"
-              href={`https://opensea.io/assets/${sessionData.address}/${sessionData.tokenId}`}
-              as={OutboundLink}
-            >
-              OpenSea
-            </ButtonsWhite>
-            <ButtonsWhite
-              style={{ borderRadius: 8 }}
-              target="_blank"
-              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-                `https://app.abacus.wtf/current-session?address=${sessionData.address}&tokenId=${sessionData.tokenId}&nonce=${sessionData.nonce}`
-              )}&text=Just%20submitted%20my%20appraisal%20for%20${
-                sessionData.collectionTitle
-              }%20%23${sessionData.tokenId}%20on%20Abacus!&via=abacus_wtf`}
-              as={OutboundLink}
-            >
-              Share
-            </ButtonsWhite>
-            {sessionData.rankings && status !== SessionState.Harvest && (
-              <ButtonsWhite
-                onClick={() => setIsRankingsModalOpen(true)}
-                style={{ borderRadius: 8 }}
-              >
-                Rankings
-              </ButtonsWhite>
-            )}
-            {(status === SessionState.Vote ||
-              status === SessionState.Weigh) && (
-              <ButtonsWhite
-                onClick={() => setSubscribeModalOpen(true)}
-                style={{ borderRadius: 8 }}
-              >
-                Subscribe
-              </ButtonsWhite>
-            )}
-          </div>
-        </VerticalContainer>
-        <VerticalContainer>
-          <VerticalSmallGapContainer>
-            <SubText>{sessionData.collectionTitle}</SubText>
-            <Title>
-              {sessionData.nftName} #{sessionData.tokenId}
-            </Title>
-            <SubText>
-              Owned by{" "}
-              <OutboundLink
-                target="_blank"
-                href={`https://opensea.io/${sessionData.ownerAddress}`}
-              >
-                {sessionData.owner}
-              </OutboundLink>
-            </SubText>
-          </VerticalSmallGapContainer>
-          <CurrentState setCongratsOpen={(input) => setCongratsOpen(input)} />
-          <CongratsModal
-            open={congratsOpen}
-            toggle={() => setCongratsOpen(!congratsOpen)}
-            openSubscribeModal={() => setSubscribeModalOpen(true)}
-          />
-          <SubscribeModal
-            open={isSubscribeModalOpen}
-            toggle={() => setSubscribeModalOpen(!isSubscribeModalOpen)}
-          />
-          <LostModal
-            open={isLostModalOpen}
-            toggle={() => setIsLostModalOpen(!isLostModalOpen)}
-          />
-        </VerticalContainer>
+        <PriceHistory
+          openseaLink={`https://${OPENSEA_LINK}/${sessionData.ownerAddress}`}
+          etherscanLink={`https://${ETHERSCAN_LINK}/address/${sessionData.address}/${sessionData.tokenId}`}
+        />
+        <About traits={sessionData.traits} creator={sessionData.creator} />
       </SplitContainer>
-    </SmallUniversalContainer>
+      <ActivitySection
+        activityList={[
+          {
+            id: "1",
+            img: "/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+          {
+            id: "2",
+            img: "/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+          {
+            id: "3",
+            img: "/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+          {
+            id: "4",
+            img: "/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+          {
+            id: "5",
+            img: "/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+          {
+            id: "6",
+            img: "/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+          {
+            id: "7",
+            img: "/prof.jpeg",
+            appraisalAmount: 1,
+            stakeAmount: 1,
+            appraisorAddress: "0x1234541234123",
+          },
+        ]}
+      />
+      {sessionData.relatedAssets?.length ? (
+        <PartOfCollection openseaObjects={sessionData.relatedAssets} />
+      ) : null}
+    </Container>
   )
 }
 

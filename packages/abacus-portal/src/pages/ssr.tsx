@@ -8,7 +8,6 @@ type PageProps = {
 const Page = ({ serverData }: PageProps) => {
   const { dogImage } = serverData
   // Use dogImage in your page...
-  console.log(serverData)
   return (
     <div>
       <p>It's a dog</p>

@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Kilo } from "../src";
 
 export default {
-  title: "atom/Kilo",
+  title: "typography/Kilo",
   component: Kilo,
   argTypes: {},
 } as ComponentMeta<typeof Kilo>;

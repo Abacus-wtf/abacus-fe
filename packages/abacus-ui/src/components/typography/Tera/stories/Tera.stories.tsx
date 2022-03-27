@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Tera } from "../src";
 
 export default {
-  title: "atom/Tera",
+  title: "typography/Tera",
   component: Tera,
   argTypes: {},
 } as ComponentMeta<typeof Tera>;

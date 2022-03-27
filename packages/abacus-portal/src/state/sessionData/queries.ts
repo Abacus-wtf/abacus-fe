@@ -1,5 +1,14 @@
 import { gql } from "graphql-request"
-import { Vote } from "./reducer"
+import { isBigNumberish } from "@ethersproject/bignumber/lib/bignumber"
+
+export interface SubgraphVote {
+  user: {
+    id: string
+  }
+  appraisal: string
+  amountStaked: string
+  weight: string
+}
 
 export type SubgraphPricingSession = {
   id: string
@@ -15,7 +24,7 @@ export type SubgraphPricingSession = {
   numParticipants: number
   timeFinalAppraisalSet: number
   maxAppraisal: number
-  participants: Vote[]
+  participants: SubgraphVote[]
 }
 
 export type GetPricingSessionsQueryResponse = {
@@ -25,6 +34,8 @@ export type GetPricingSessionsQueryResponse = {
 export type GetPricingSessionsVariables = {
   first: number
   skip: number
+  orderBy?: string
+  orderDirection?: string
 }
 
 export type PricingSessionFilters = {
@@ -53,6 +64,9 @@ export const pricingSessionWhere = (
         if (Array.isArray(filterValue)) {
           return `${acc}${filter}_in: [${filterValue}],`
         }
+        if (isBigNumberish(filterValue)) {
+          return `${acc}${filter}: ${filterValue.toString()},`
+        }
         return acc
       default:
         return acc
@@ -60,13 +74,53 @@ export const pricingSessionWhere = (
   }, "")
   return `{ ${filterString} }`
 }
-
-export const GET_PRICING_SESSIONS = (where: string | null) => gql`
+/*
+  will want to change the where clause to `where: { sessionStatus_lt: 5 }` when we have active sessions
+*/
+export const GET_FEATURED_SESSIONS = gql`
   query GetPricingSessions($first: Int!, $skip: Int!) {
     pricingSessions(
       first: $first
-      orderBy: createdAt
+      orderBy: endTime
       orderDirection: desc
+      skip: $skip
+      where: { sessionStatus_gt: -1 }
+    ) {
+      id
+      nftAddress
+      tokenId
+      nonce
+      finalAppraisalValue
+      totalStaked
+      bounty
+      votingTime
+      endTime
+      sessionStatus
+      timeFinalAppraisalSet
+      numParticipants
+      maxAppraisal
+      participants {
+        user {
+          id
+        }
+        amountStaked
+        appraisal
+      }
+    }
+  }
+`
+
+export const GET_PRICING_SESSIONS = (where: string | null) => gql`
+  query GetPricingSessions(
+    $first: Int!
+    $skip: Int!
+    $orderBy: String!
+    $orderDirection: String!
+  ) {
+    pricingSessions(
+      first: $first
+      orderBy: $orderBy
+      orderDirection: $orderDirection
       skip: $skip
       where: ${where}
     ) {
@@ -122,6 +176,7 @@ export const GET_PRICING_SESSION = (id: string) => `
         }
         amountStaked
         appraisal
+        weight
       }
     }
   }

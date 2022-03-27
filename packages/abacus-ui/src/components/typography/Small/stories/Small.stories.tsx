@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Small } from "../src";
 
 export default {
-  title: "atom/Small",
+  title: "typography/Small",
   component: Small,
   argTypes: {},
 } as ComponentMeta<typeof Small>;

@@ -1,9 +1,4 @@
-import React, { useEffect } from "react"
-import { faMediumM } from "@fortawesome/free-brands-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Button } from "abacus-components"
-import { ArrowUpRight } from "react-feather"
-import Link from "gatsby-link"
+import React, { useCallback, useEffect, useState } from "react"
 import {
   ABC_TREASURY_ADDRESS,
   useWeb3Contract,
@@ -12,23 +7,16 @@ import {
 import { formatEther } from "ethers/lib/utils"
 import ABC_TREASURY from "@components/contracts/ABC_TREASURY.json"
 import { request, gql } from "graphql-request"
-import Notion from "../../images/notion.svg"
-import Twitter from "../../images/twitter.svg"
-import Discord from "../../images/discord.svg"
-import EthSymbol from "../../images/eth.svg"
-import {
-  HomeContainer,
-  UpperContainer,
-  MassiveTitle,
-  TitleBackground,
-  DataContainer,
-  DataPair,
-  DataValueBlue,
-  LaunchButtonContainer,
-  LowerContainer,
-  SocialButton,
-  SocialIMG,
-} from "./Home.styles"
+import Superhero from "@components/Superhero"
+import styled from "styled-components"
+import { StatInfo, Media } from "abacus-ui"
+import Navbar from "@components/Navbar"
+import Infographics from "@components/Infographics"
+import PreviousSessions from "@components/PreviousSessions"
+import JoinUs from "@components/JoinUs"
+import OpenAppModal from "@components/OpenAppModal"
+import { Session, SubgraphPricingSession } from "@models/index"
+import { mapSessions } from "./mapSessions"
 
 const GET_NFT_PRICE_DATA = gql`
   query {
@@ -38,12 +26,62 @@ const GET_NFT_PRICE_DATA = gql`
   }
 `
 
+const GET_PREVIOUS_SESSIONS = gql`
+  query {
+    pricingSessions(
+      first: 20
+      orderBy: createdAt
+      orderDirection: desc
+      where: { sessionStatus: 5 }
+    ) {
+      id
+      nftAddress
+      tokenId
+      nonce
+      finalAppraisalValue
+      totalStaked
+      bounty
+      numParticipants
+      maxAppraisal
+    }
+  }
+`
+
+const StatInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+
+  ${Media.sm`
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 800px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 200px;
+  `}
+`
+
+const StyledStatInfo = styled(StatInfo)`
+  margin-top: 1rem;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+
+  ${Media.sm`
+    margin: 0;
+  `}
+`
+
 const Home: React.FC = () => {
+  const [modalOpen, setModalOpen] = useState(false)
   const treasuryContract = useWeb3Contract(ABC_TREASURY)
   const [nftsPriced, setNftsPriced] = React.useState("-")
+  const [previousSessions, setPreviousSessions] = React.useState<Session[]>([])
   const [earned, setEarned] = React.useState("-")
-  const [riskFactor, setRiskFactor] = React.useState("-")
-  const [spread, setSpread] = React.useState("-")
   const [defender, setDefender] = React.useState("-")
 
   useEffect(() => {
@@ -51,14 +89,16 @@ const Home: React.FC = () => {
       const [
         profitGenerated,
         nftsPricedContract,
-        riskFactorContract,
-        spreadContract,
+        pricingSessions,
         defenderContract,
       ] = await Promise.all([
         treasuryContract(ABC_TREASURY_ADDRESS).methods.profitGenerated().call(),
         request(SUBGRAPH, GET_NFT_PRICE_DATA, {}),
-        treasuryContract(ABC_TREASURY_ADDRESS).methods.riskFactor().call(),
-        treasuryContract(ABC_TREASURY_ADDRESS).methods.spread().call(),
+        request<{ pricingSessions: SubgraphPricingSession[] }>(
+          SUBGRAPH,
+          GET_PREVIOUS_SESSIONS,
+          {}
+        ),
         treasuryContract(ABC_TREASURY_ADDRESS).methods.defender().call(),
       ])
       setEarned(
@@ -67,106 +107,36 @@ const Home: React.FC = () => {
           maximumFractionDigits: 2,
         })
       )
+      setDefender(defenderContract)
       setNftsPriced(
         nftsPricedContract.nftsPriced ? nftsPricedContract.nftsPriced.total : 0
       )
-      setRiskFactor(riskFactorContract)
-      setSpread(spreadContract)
-      setDefender(defenderContract)
+      const sessions = await mapSessions(pricingSessions.pricingSessions)
+      setPreviousSessions(sessions)
     }
     loadData()
   }, [treasuryContract])
 
+  const openModal = useCallback(() => setModalOpen(true), [])
+  const closeModal = useCallback(() => setModalOpen(false), [])
+
   return (
-    <HomeContainer>
-      <UpperContainer>
-        <MassiveTitle>Decentralized appraisal tool for NFTs</MassiveTitle>
-        <TitleBackground />
-        <DataContainer>
-          <DataPair
-            value={earned}
-            title="Earned"
-            symbol={<img src={EthSymbol} alt="" />}
-          />
-          <DataPair
-            value={nftsPriced}
-            title="NFTs Priced"
-            symbol={<DataValueBlue>+</DataValueBlue>}
-          />
-          <DataPair
-            value={spread}
-            title="Spread"
-            symbol={<DataValueBlue>🎯</DataValueBlue>}
-            tooltipId="spread"
-            tooltipText="The acceptable margin of error in which an appraiser is considered correct"
-          />
-          <DataPair
-            value={defender}
-            title="Defender"
-            symbol={<DataValueBlue>🛡️</DataValueBlue>}
-            tooltipId="defender"
-            tooltipText="The tightness of appraisals allowed is determined by this value"
-          />
-          <DataPair
-            value={riskFactor}
-            title="Risk Factor"
-            symbol={<DataValueBlue>⚖️</DataValueBlue>}
-            tooltipId="riskfactor"
-            tooltipText="The multiplier applied to amount harvested and sent to the profit pool"
-          />
-          <LaunchButtonContainer>
-            <Button
-              data-tip="Launch App"
-              as="a"
-              href="https://app.abacus.wtf"
-              style={{
-                borderRadius: "50%",
-                height: 65,
-                width: 65,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <ArrowUpRight />
-            </Button>
-          </LaunchButtonContainer>
-        </DataContainer>
-      </UpperContainer>
-      <LowerContainer>
-        <SocialButton
-          target="_blank"
-          to="https://medium.com/abacus-wtf"
-          as={Link}
-        >
-          <FontAwesomeIcon
-            style={{ fontSize: 20, marginTop: -2 }}
-            icon={faMediumM}
-          />
-        </SocialButton>
-        <SocialButton
-          target="_blank"
-          to="https://twitter.com/abacus_wtf"
-          as={Link}
-        >
-          <SocialIMG src={Twitter} alt="" />
-        </SocialButton>
-        <SocialButton
-          target="_blank"
-          to="http://discord.com/invite/abacus"
-          as={Link}
-        >
-          <SocialIMG src={Discord} />
-        </SocialButton>
-        <SocialButton
-          target="_blank"
-          to="https://abcdao.notion.site/Knowledge-Center-903c10f39eb24efb8e55644a992f859b"
-          as={Link}
-        >
-          <SocialIMG src={Notion} />
-        </SocialButton>
-      </LowerContainer>
-    </HomeContainer>
+    <>
+      <Navbar openModal={openModal} />
+      <Superhero openModal={openModal} previousSessions={previousSessions} />
+      <StatInfoContainer>
+        <StyledStatInfo stat={earned} title="Earned" showEthIcon />
+        <StyledStatInfo stat={nftsPriced} title="NFTs appraised" />
+        <StyledStatInfo stat={defender} title="Defender" />
+      </StatInfoContainer>
+      <Infographics />
+      <PreviousSessions previousSessions={previousSessions} />
+      <JoinUs />
+      <Navbar footer openModal={openModal} />
+      <div style={{ paddingBottom: "15px" }} />
+
+      <OpenAppModal isOpen={modalOpen} toggle={closeModal} />
+    </>
   )
 }
 

@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Milli } from "../src";
 
 export default {
-  title: "atom/Milli",
+  title: "typography/Milli",
   component: Milli,
   argTypes: {},
 } as ComponentMeta<typeof Milli>;

@@ -43,6 +43,13 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "calculatePositionPremiums",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256[]",
@@ -212,6 +219,38 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "profit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "ticketNumbers",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "slashOverBidders",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

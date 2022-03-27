@@ -1,35 +1,76 @@
 import { useGeneralizedContractError } from "@state/application/hooks"
-import React, { FunctionComponent } from "react"
-import { Alert } from "shards-react"
-import styled from "styled-components"
-import { AlertCircle } from "react-feather"
-import { theme } from "@config/theme"
+import React, { FunctionComponent, useEffect, useState } from "react"
+import styled, { keyframes } from "styled-components"
+import {
+  PersistentBanner,
+  Close,
+  Button,
+  ButtonType,
+  VisuallyHidden,
+  Media,
+} from "abacus-ui"
 
-const StyledAlert = styled(Alert)`
-  padding: 25px;
-  border-radius: 20px;
-  margin-top: 35px;
-  margin-bottom: 0px;
-  max-width: ${theme.layout.maxWidth};
-  margin-right: auto;
-  margin-left: auto;
-  & p {
-    color: white !important;
-    margin: 0;
-    margin-top: 15px;
+const SlideUpThenDisappear = keyframes`
+  0% {
+    bottom: -100%
+  }
+  100% {
+    bottom: 0%
   }
 `
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`
+
+const CloseButton = styled(Button)`
+  align-self: flex-end;
+`
+
+const StyledPersistentBanner = styled(PersistentBanner)`
+  bottom: -100%;
+  animation: ${SlideUpThenDisappear} 1s forwards;
+`
+
+const Message = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  ${Media.sm`
+    flex-direction: row;
+  `}
+`
+
 const GeneralizedContractError: FunctionComponent = () => {
-  const errorMessage = useGeneralizedContractError()
-  if (!errorMessage) {
+  const txError = useGeneralizedContractError()
+  const [dismissed, setDismissed] = useState(false)
+
+  useEffect(() => {
+    if (txError) {
+      setDismissed(false)
+    }
+  }, [txError])
+
+  if (!txError || dismissed) {
     return null
   }
+
   return (
-    <StyledAlert theme="danger">
-      <AlertCircle style={{ marginTop: -9, marginRight: 15 }} />
-      {errorMessage}
-    </StyledAlert>
+    <StyledPersistentBanner type="error">
+      <Container>
+        <CloseButton
+          buttonType={ButtonType.Clear}
+          onClick={() => setDismissed(true)}
+        >
+          <Close />
+          <VisuallyHidden>Close Error Banner</VisuallyHidden>
+        </CloseButton>
+        <Message>{txError}</Message>
+      </Container>
+    </StyledPersistentBanner>
   )
 }
 

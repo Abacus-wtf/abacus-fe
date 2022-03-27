@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { H1 } from "../src";
 
 export default {
-  title: "atom/H1",
+  title: "typography/H1",
   component: H1,
   argTypes: {},
 } as ComponentMeta<typeof H1>;

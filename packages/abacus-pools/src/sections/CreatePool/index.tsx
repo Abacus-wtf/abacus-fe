@@ -12,6 +12,7 @@ import { NFT, NFTBasePool } from "@state/poolData/reducer"
 import _ from "lodash"
 import { useOnCreatePool } from "@hooks/createPool"
 import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
+import { Media } from "abacus-ui"
 import {
   SplitContainer,
   VerticalSmallGapContainer,
@@ -21,6 +22,10 @@ import {
 
 const ListGroupStyled = styled(ListGroup)`
   margin: 45px 0px;
+
+  & img {
+    width: 100%;
+  }
 
   @media ${theme.mediaMin.splitCenter} {
     min-width: 450px;
@@ -41,6 +46,18 @@ const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
+
+  & * {
+    text-align: center;
+  }
+
+  ${Media.sm`
+    flex-direction: row;
+    & * {
+      text-align: unset;
+    }
+  `}
 `
 
 const ModalPair = ({ title, value }: { title: string; value: string }) => (

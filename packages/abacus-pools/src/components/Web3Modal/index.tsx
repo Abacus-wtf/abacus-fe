@@ -67,7 +67,7 @@ export default () => {
               link={option.href}
               header={option.name}
               subheader={null}
-              icon={require(`../../images/${option.iconName}`)}
+              icon={require(`../../images/${option.iconName}`).default}
             />
           )
         })}

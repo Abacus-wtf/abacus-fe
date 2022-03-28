@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { getContract } from "@config/utils"
 import {
   useActiveWeb3React,
@@ -10,8 +10,11 @@ import _ from "lodash"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { formatEther, parseEther } from "ethers/lib/utils"
 import { BigNumber } from "ethers"
+import { MaxUint256 } from "@ethersproject/constants"
+import { ABC_TOKEN } from "../config/constants"
 import VAULT_ABI from "../config/contracts/ABC_VAULT_ABI.json"
 import ERC_721_ABI from "../config/contracts/ERC_721_ABI.json"
+import ABC_TOKEN_ABI from "../config/contracts/ABC_TOKEN_ABI.json"
 
 export const useOnExitPool = () => {
   const { account, library } = useActiveWeb3React()
@@ -176,6 +179,60 @@ export const useOnStartEmissions = () => {
   }
 }
 
+export const useOnApprovePurchaseTokens = () => {
+  const { account, library } = useActiveWeb3React()
+  const [hasApproved, setHasApproved] = useState(false)
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+  const poolData = useGetPoolData()
+
+  const vaultAddress = poolData.vaultAddress
+  const tokenContract = useMemo(
+    () => getContract(ABC_TOKEN, ABC_TOKEN_ABI, library, account),
+    [account, library]
+  )
+
+  useEffect(() => {
+    const checkAllowance = async () => {
+      const allowance: BigNumber = await tokenContract.allowance(
+        account,
+        vaultAddress
+      )
+
+      setHasApproved(!allowance.isZero())
+    }
+    checkAllowance()
+  }, [account, tokenContract, vaultAddress])
+
+  const onApprovePurchaseTokens = useCallback(async () => {
+    const method = tokenContract.approve
+    const estimate = tokenContract.estimateGas.approve
+    const args = [vaultAddress, MaxUint256]
+    console.log(args)
+    const value = null
+    const txnCb = async (response: any) => {
+      addTransaction(response, {
+        summary: "Approve Token Purchase",
+      })
+      await response.wait()
+      setHasApproved(true)
+    }
+    await generalizedContractCall({
+      method,
+      estimate,
+      args,
+      value,
+      cb: txnCb,
+    })
+  }, [addTransaction, generalizedContractCall, vaultAddress, tokenContract])
+
+  return {
+    hasApproved,
+    onApprovePurchaseTokens,
+    isPending,
+  }
+}
+
 export const useOnPurchaseTokens = () => {
   const { account, library } = useActiveWeb3React()
   const { generalizedContractCall, isPending } = useGeneralizedContractCall()
@@ -191,8 +248,6 @@ export const useOnPurchaseTokens = () => {
         library,
         account
       )
-
-      console.log(poolData.vaultAddress)
 
       let runningTokenAmount = Number(tokenAmount)
       const ticketArray = []
@@ -236,7 +291,7 @@ export const useOnPurchaseTokens = () => {
 
       const method = vaultContract.purchaseMulti
       const estimate = vaultContract.estimateGas.purchaseMulti
-      const args = [account, account, ticketArray, purchaseAmount, lockupPeriod]
+      const args = [account, ticketArray, purchaseAmount, lockupPeriod]
       console.log(args)
       const value = parseEther(
         `${Number(tokenAmount) * Number(poolData.tokenPrice)}`

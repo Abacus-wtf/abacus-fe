@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react"
+import React, { useEffect, useState, useCallback, useMemo } from "react"
 import Button from "@components/Button"
 import { NumericalInput } from "@components/Input"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
@@ -11,6 +11,7 @@ import moment from "moment"
 import {
   useOnPurchaseIndividualTicket,
   useOnPurchaseTokens,
+  useOnApprovePurchaseTokens,
 } from "@hooks/vaultFunc"
 import styled from "styled-components"
 import { Ticket } from "@state/singlePoolData/reducer"
@@ -49,6 +50,11 @@ const AMM = (props: AMMProps) => {
   const [outputAmount, setOutputAmount] = useState("0.0")
   const [ethBalance, setEthBalance] = useState<number | null>(null)
   const [startDate, setStartDate] = useState(new Date())
+  const {
+    hasApproved,
+    onApprovePurchaseTokens,
+    isPending: isPendingApproval,
+  } = useOnApprovePurchaseTokens()
   const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
   const { onPurchaseIndividualTicket, isPending: isPendingIndividual } =
     useOnPurchaseIndividualTicket()
@@ -90,7 +96,54 @@ const AMM = (props: AMMProps) => {
     }
   }
 
-  const cardData = (
+  const button = useMemo(() => {
+    if (hasApproved) {
+      return (
+        <Button
+          style={{ width: "100%", padding: 20, fontSize: "1rem" }}
+          onClick={handleButtonClick}
+          disabled={
+            isPending ||
+            isPendingIndividual ||
+            (props.currentTicket &&
+              Number(outputAmount) > 3000 - props.currentTicket.amount) ||
+            moment(startDate).unix() <= moment().add(7, "days").unix() ||
+            Number.isNaN(Number(inputAmount)) ||
+            Number(inputAmount) === 0 ||
+            (isTokenFirst && Number(inputAmount) > Number(poolData.balance)) ||
+            (!isTokenFirst && Number(inputAmount) > Number(ethBalance))
+          }
+        >
+          {isPending ? "Loading..." : "Purchase Tokens"}
+        </Button>
+      )
+    }
+    return (
+      <Button
+        style={{ width: "100%", padding: 20, fontSize: "1rem" }}
+        onClick={onApprovePurchaseTokens}
+        disabled={isPendingApproval}
+      >
+        {isPendingApproval ? "Loading..." : "Approve Purchase"}
+      </Button>
+    )
+  }, [
+    ethBalance,
+    handleButtonClick,
+    hasApproved,
+    inputAmount,
+    isPending,
+    isPendingApproval,
+    isPendingIndividual,
+    isTokenFirst,
+    onApprovePurchaseTokens,
+    outputAmount,
+    poolData.balance,
+    props.currentTicket,
+    startDate,
+  ])
+
+  return (
     <CardContainer style={{ padding: 0 }}>
       <InfoSectionContainer>
         <InputContainer
@@ -173,26 +226,9 @@ const AMM = (props: AMMProps) => {
         selected={startDate}
         onChange={(date: Date) => setStartDate(date)}
       />
-      <Button
-        style={{ width: "100%", padding: 20, fontSize: "1rem" }}
-        onClick={handleButtonClick}
-        disabled={
-          isPending ||
-          isPendingIndividual ||
-          (props.currentTicket &&
-            Number(outputAmount) > 3000 - props.currentTicket.amount) ||
-          moment(startDate).unix() <= moment().add(7, "days").unix() ||
-          Number.isNaN(Number(inputAmount)) ||
-          Number(inputAmount) === 0 ||
-          (isTokenFirst && Number(inputAmount) > Number(poolData.balance)) ||
-          (!isTokenFirst && Number(inputAmount) > Number(ethBalance))
-        }
-      >
-        {isPending ? "Loading..." : "Purchase Tokens"}
-      </Button>
+      {button}
     </CardContainer>
   )
-  return cardData
 }
 
 export default AMM

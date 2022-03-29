@@ -6,6 +6,7 @@ import {
   selectNetwork,
   setGeneralizedContractErrorMessage,
   setEthToUSD,
+  setAbcBalance,
 } from "./actions"
 
 type GeneralizedContractState = {
@@ -16,6 +17,7 @@ interface ApplicationState {
   networkSymbol: NetworkSymbolEnum | null
   generalizedContract: GeneralizedContractState
   ethToUSD: number
+  abcBalance: number
 }
 
 export const initialState: ApplicationState = {
@@ -25,6 +27,7 @@ export const initialState: ApplicationState = {
     errorMessage: null,
   },
   ethToUSD: null,
+  abcBalance: null,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -40,5 +43,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(setEthToUSD, (state, action) => {
       state.ethToUSD = action.payload
+    })
+    .addCase(setAbcBalance, (state, action) => {
+      state.abcBalance = action.payload
     })
 )

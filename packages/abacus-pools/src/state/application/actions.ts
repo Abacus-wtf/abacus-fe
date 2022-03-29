@@ -11,3 +11,4 @@ export const setGeneralizedContractErrorMessage = createAction<any>(
   "application/generalizedContract/errorMessage"
 )
 export const setEthToUSD = createAction<number>("application/ethToUSD")
+export const setAbcBalance = createAction<number>("application/abcBalance")

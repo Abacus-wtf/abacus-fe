@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback } from "react"
 import { getContract } from "@config/utils"
 import {
   useActiveWeb3React,
@@ -10,11 +10,8 @@ import _ from "lodash"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { formatEther, parseEther } from "ethers/lib/utils"
 import { BigNumber } from "ethers"
-import { MaxUint256 } from "@ethersproject/constants"
-import { ABC_TOKEN } from "../config/constants"
 import VAULT_ABI from "../config/contracts/ABC_VAULT_ABI.json"
 import ERC_721_ABI from "../config/contracts/ERC_721_ABI.json"
-import ABC_TOKEN_ABI from "../config/contracts/ABC_TOKEN_ABI.json"
 
 export const useOnExitPool = () => {
   const { account, library } = useActiveWeb3React()

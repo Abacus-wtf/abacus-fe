@@ -16,7 +16,7 @@ import { useClaimPayoutData } from "@state/miscData/hooks"
 import { useActiveWeb3React } from "@hooks/index"
 import { shortenAddress } from "@config/utils"
 import { getUserIcon } from "@utils"
-import { useToggleWalletModal } from "@state/application/hooks"
+import { useAbcBalance, useToggleWalletModal } from "@state/application/hooks"
 
 const Container = styled.nav<{ menuOpen: boolean }>`
   display: flex;
@@ -120,6 +120,7 @@ const Navbar: FunctionComponent = () => {
   const claimData = useClaimPayoutData()
   const { account } = useActiveWeb3React()
   const openWeb3Modal = useToggleWalletModal()
+  const abcBalance = useAbcBalance()
 
   const iconSource = getUserIcon(account)
 
@@ -141,17 +142,18 @@ const Navbar: FunctionComponent = () => {
         </DropdownButton>
       </SideContainer>
       <SideContainer style={{ gridGap: 32 }} isOptions menuOpen={menuOpen}>
-        {claimData ? (
-          <StyledLink to="/claim-pool">
-            <Kilo>
-              {claimData.ethCredit.toLocaleString("en-us", {
-                maximumSignificantDigits: 2,
-                minimumSignificantDigits: 2,
-              })}{" "}
-              ETH
-            </Kilo>
-          </StyledLink>
-        ) : null}
+        <StyledLink to="/claim-pool">
+          <Kilo>
+            {abcBalance
+              ? abcBalance.toLocaleString("en-us", {
+                  maximumSignificantDigits: 8,
+                  minimumSignificantDigits: 2,
+                })
+              : "..."}{" "}
+            ABC
+          </Kilo>
+        </StyledLink>
+
         <ProfileButton buttonType={ButtonType.Clear} onClick={openWeb3Modal}>
           <ProfileIcon src={iconSource} />
           <Kilo>{account ? shortenAddress(account) : "Connect"}</Kilo>

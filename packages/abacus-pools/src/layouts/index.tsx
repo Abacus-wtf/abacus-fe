@@ -9,6 +9,7 @@ import {
   useSelectNetwork,
   useToggleWalletModal,
   useGetEthToUSD,
+  useGetAbcBalance,
 } from "@state/application/hooks"
 import { NetworkSymbolEnum, NetworkSymbolAndId } from "@config/constants"
 import SEO, { SEOWithQueryProps } from "@components/SEO"
@@ -28,10 +29,15 @@ const GlobalLayout: React.FC<GlobalLayoutProps> = ({ children, location }) => {
   const selectNetwork = useSelectNetwork()
   const toggleWalletModal = useToggleWalletModal()
   const getEthToUSD = useGetEthToUSD()
+  const getAbcBalance = useGetAbcBalance()
 
   useEffect(() => {
     getEthToUSD()
   }, [getEthToUSD])
+
+  useEffect(() => {
+    getAbcBalance()
+  }, [getAbcBalance])
 
   useEffect(() => {
     const checkConnection = async () => {

@@ -1,10 +1,20 @@
 import { useCallback } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { NetworkSymbolEnum } from "@config/constants"
+import { ABC_TOKEN, NetworkSymbolEnum } from "@config/constants"
 import axios from "axios"
+import { getContract } from "@config/utils"
+import ABC_TOKEN_ABI from "@config/contracts/ABC_TOKEN_ABI.json"
+import { useActiveWeb3React } from "@hooks/index"
+import { formatEther } from "ethers/lib/utils"
 import { AppDispatch, AppState } from "../index"
-import { toggleWalletModal, selectNetwork, setEthToUSD } from "./actions"
 import {
+  toggleWalletModal,
+  selectNetwork,
+  setEthToUSD,
+  setAbcBalance,
+} from "./actions"
+import {
+  abcBalanceSelector,
   ethToUSDCalculationSelector,
   generalizedContractErrorMessageSelector,
   networkSymbolSelector,
@@ -72,3 +82,31 @@ export const useGetEthToUSD = () => {
     }
   }, [dispatch])
 }
+
+export const useGetAbcBalance = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const { account, library, chainId } = useActiveWeb3React()
+
+  return useCallback(async () => {
+    try {
+      const tokenContract = getContract(
+        ABC_TOKEN,
+        ABC_TOKEN_ABI,
+        library,
+        account
+      )
+      const balance = await tokenContract.balanceOf(account)
+      const parsedBalance = formatEther(balance)
+      dispatch(setAbcBalance(Number(parsedBalance)))
+    } catch {
+      console.log(`Unable to get current ABC Balance for ${account}`)
+    }
+    // We want to update on chainId change as well
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, dispatch, library, chainId])
+}
+
+export const useAbcBalance = () =>
+  useSelector<AppState, AppState["application"]["abcBalance"]>(
+    abcBalanceSelector
+  )

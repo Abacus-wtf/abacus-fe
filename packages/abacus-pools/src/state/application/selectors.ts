@@ -19,3 +19,7 @@ export const ethToUSDCalculationSelector = createSelector(
     return round2Decimals(value)
   }
 )
+
+export const abcBalanceSelector = (
+  state: AppState
+): AppState["application"]["abcBalance"] => state.application.abcBalance

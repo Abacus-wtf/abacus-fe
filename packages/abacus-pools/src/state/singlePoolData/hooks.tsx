@@ -321,7 +321,7 @@ export const useSetPoolData = () => {
           ownerAddress: owner[0],
           symbol: symbol[0],
           tokensLocked: formatEther(tokensLocked[0]),
-          tokenPrice: IS_PRODUCTION ? ".001" : "0.00001",
+          tokenPrice: IS_PRODUCTION ? ".001" : "0.001",
           isManager:
             String(owner[0]).toLowerCase() === account.toLowerCase() ||
             ownerOf.toLowerCase() === account.toLowerCase(),

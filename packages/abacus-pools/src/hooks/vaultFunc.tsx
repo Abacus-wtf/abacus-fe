@@ -179,60 +179,6 @@ export const useOnStartEmissions = () => {
   }
 }
 
-export const useOnApprovePurchaseTokens = () => {
-  const { account, library } = useActiveWeb3React()
-  const [hasApproved, setHasApproved] = useState(false)
-  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
-  const addTransaction = useTransactionAdder()
-  const poolData = useGetPoolData()
-
-  const vaultAddress = poolData.vaultAddress
-  const tokenContract = useMemo(
-    () => getContract(ABC_TOKEN, ABC_TOKEN_ABI, library, account),
-    [account, library]
-  )
-
-  useEffect(() => {
-    const checkAllowance = async () => {
-      const allowance: BigNumber = await tokenContract.allowance(
-        account,
-        vaultAddress
-      )
-
-      setHasApproved(!allowance.isZero())
-    }
-    checkAllowance()
-  }, [account, tokenContract, vaultAddress])
-
-  const onApprovePurchaseTokens = useCallback(async () => {
-    const method = tokenContract.approve
-    const estimate = tokenContract.estimateGas.approve
-    const args = [vaultAddress, MaxUint256]
-    console.log(args)
-    const value = null
-    const txnCb = async (response: any) => {
-      addTransaction(response, {
-        summary: "Approve Token Purchase",
-      })
-      await response.wait()
-      setHasApproved(true)
-    }
-    await generalizedContractCall({
-      method,
-      estimate,
-      args,
-      value,
-      cb: txnCb,
-    })
-  }, [addTransaction, generalizedContractCall, vaultAddress, tokenContract])
-
-  return {
-    hasApproved,
-    onApprovePurchaseTokens,
-    isPending,
-  }
-}
-
 export const useOnPurchaseTokens = () => {
   const { account, library } = useActiveWeb3React()
   const { generalizedContractCall, isPending } = useGeneralizedContractCall()
@@ -254,11 +200,9 @@ export const useOnPurchaseTokens = () => {
       const purchaseAmount = []
       let cycle = 0
       while (runningTokenAmount !== 0) {
-        const methods = _.map(
-          _.range(cycle * 20, cycle * 20 + 20),
-          () => "ticketsPurchased"
-        )
-        const args = _.map(_.range(cycle * 20, cycle * 20 + 20), (i) => [i])
+        const range = _.range(cycle * 20, cycle * 20 + 20)
+        const methods = _.map(range, () => "ticketsPurchased")
+        const args = _.map(range, (i) => [i])
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // eslint-disable-next-line no-await-in-loop
@@ -291,14 +235,12 @@ export const useOnPurchaseTokens = () => {
 
       const method = vaultContract.purchaseMulti
       const estimate = vaultContract.estimateGas.purchaseMulti
-      const args = [account, ticketArray, purchaseAmount, lockupPeriod]
-      console.log(args)
+      const args = [account, account, ticketArray, purchaseAmount, lockupPeriod]
       const value = parseEther(
         `${Number(tokenAmount) * Number(poolData.tokenPrice)}`
       )
         .mul(BigNumber.from(10025))
         .div(BigNumber.from(10000))
-      console.log(value)
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Purchase Locked Up Tokens",

@@ -1,17 +1,25 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { AbstractConnector } from "@web3-react/abstract-connector"
-import React from "react"
+import React, { FunctionComponent } from "react"
 import { useSelector } from "react-redux"
+import styled from "styled-components"
+import { map, keys } from "lodash"
+import { graphql, useStaticQuery } from "gatsby"
+import { Modal, Media } from "abacus-ui"
+import { AbstractConnector } from "@web3-react/abstract-connector"
 import { AppState } from "@state/index"
 import { useToggleWalletModal } from "@state/application/hooks"
-import { Modal, ModalBody } from "shards-react"
 import { SUPPORTED_WALLETS } from "@config/constants"
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core"
-import _ from "lodash"
 import Option from "./Option"
 
-export default () => {
+const OptionsContainer = styled.div`
+  display: grid;
+
+  ${Media.sm`
+    grid-template-columns: 50% 50%;
+  `}
+`
+
+const Web3Modal: FunctionComponent = () => {
   const { connector, activate } = useWeb3React()
   const isWalletModalOpen = useSelector<
     AppState,
@@ -39,19 +47,34 @@ export default () => {
           }
         })
   }
-
+  const {
+    allFile: { edges },
+  } = useStaticQuery<{
+    allFile: {
+      edges: { node: { publicURL: string; name: string; extension: string } }[]
+    }
+  }>(graphql`
+    {
+      allFile {
+        edges {
+          node {
+            publicURL
+            name
+            extension
+          }
+        }
+      }
+    }
+  `)
   return (
-    <Modal
-      size="md"
-      open={isWalletModalOpen}
-      toggle={toggleWalletModal}
-      centered
-    >
-      <ModalBody
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridGap: 10 }}
-      >
-        {_.map(_.keys(SUPPORTED_WALLETS), (key) => {
+    <Modal isOpen={isWalletModalOpen} closeModal={toggleWalletModal}>
+      <OptionsContainer>
+        {map(keys(SUPPORTED_WALLETS), (key) => {
           const option = SUPPORTED_WALLETS[key]
+          const iconUrl = edges.find(
+            (edge) =>
+              `${edge.node.name}.${edge.node.extension}` === option.iconName
+          )
           return (
             <Option
               onClick={() => {
@@ -67,11 +90,13 @@ export default () => {
               link={option.href}
               header={option.name}
               subheader={null}
-              icon={require(`../../images/${option.iconName}`).default}
+              icon={iconUrl?.node.publicURL}
             />
           )
         })}
-      </ModalBody>
+      </OptionsContainer>
     </Modal>
   )
 }
+
+export default Web3Modal

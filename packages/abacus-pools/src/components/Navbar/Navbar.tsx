@@ -21,6 +21,20 @@ import { useAbcBalance, useToggleWalletModal } from "@state/application/hooks"
 const Container = styled.nav<{ menuOpen: boolean }>`
   display: flex;
   padding: 16px;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1020px;
+
+  ${Media.md`
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 100px;
+  `}
+
+  ${Media.lg`
+    padding: 28px 0px;
+  `}
 
   ${({ menuOpen, theme }) =>
     menuOpen &&
@@ -40,13 +54,6 @@ const Container = styled.nav<{ menuOpen: boolean }>`
         position: static;
       `}
     `}
-
-  ${Media.md`
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 28px;
-  `}
 `
 
 const SideContainer = styled.div<{ isOptions?: boolean; menuOpen?: boolean }>`

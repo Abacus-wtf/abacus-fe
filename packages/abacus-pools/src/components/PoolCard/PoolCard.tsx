@@ -2,22 +2,12 @@ import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { Section, Kilo, Mega } from "abacus-ui"
 import { Link } from "gatsby"
+import { NFTImage } from "../NFTImage"
 
 const StyledSection = styled(Section)`
   position: relative;
   display: flex;
   flex-direction: column;
-`
-
-const ImageContainer = styled.div`
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  display: grid;
-`
-
-const StyledImg = styled.img`
-  width: 100%;
-  align-self: center;
 `
 
 const CardInfo = styled.div`
@@ -83,9 +73,7 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
   link,
 }) => (
   <StyledSection>
-    <ImageContainer>
-      <StyledImg src={imgSrc} alt="" />
-    </ImageContainer>
+    <NFTImage src={imgSrc} />
     <CardInfoRow>
       <CardInfo>
         <CardTitle as={Link} to={link}>

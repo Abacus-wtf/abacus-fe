@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, useState } from "react"
 import styled, { css } from "styled-components"
 import {
   Button,
@@ -12,11 +12,11 @@ import {
   ProfileIcon,
 } from "abacus-ui"
 import { Link } from "gatsby"
-import { useClaimPayoutData } from "@state/miscData/hooks"
 import { useActiveWeb3React } from "@hooks/index"
 import { shortenAddress } from "@config/utils"
 import { getUserIcon } from "@utils"
 import { useAbcBalance, useToggleWalletModal } from "@state/application/hooks"
+import { CreatePoolModal } from "./CreatePoolModal"
 
 const Container = styled.nav<{ menuOpen: boolean }>`
   display: flex;
@@ -123,11 +123,11 @@ const ProfileButton = styled(Button)`
 `
 
 const Navbar: FunctionComponent = () => {
-  const [menuOpen, setMenuOpen] = React.useState(false)
-  const claimData = useClaimPayoutData()
+  const [menuOpen, setMenuOpen] = useState(false)
   const { account } = useActiveWeb3React()
   const openWeb3Modal = useToggleWalletModal()
   const abcBalance = useAbcBalance()
+  const [createModalOpen, setCreateModalOpen] = useState(false)
 
   const iconSource = getUserIcon(account)
 
@@ -165,7 +165,17 @@ const Navbar: FunctionComponent = () => {
           <ProfileIcon src={iconSource} />
           <Kilo>{account ? shortenAddress(account) : "Connect"}</Kilo>
         </ProfileButton>
+        <Button
+          buttonType={ButtonType.Gray}
+          onClick={() => setCreateModalOpen(true)}
+        >
+          New Pool
+        </Button>
       </SideContainer>
+      <CreatePoolModal
+        isOpen={createModalOpen}
+        closeModal={() => setCreateModalOpen(false)}
+      />
     </Container>
   )
 }

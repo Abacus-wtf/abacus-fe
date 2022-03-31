@@ -1,3 +1,3 @@
-import { FunctionComponent } from "react";
-declare const Loader: FunctionComponent;
-export default Loader;
+import React from "react";
+declare const _default: React.NamedExoticComponent<{}>;
+export default _default;

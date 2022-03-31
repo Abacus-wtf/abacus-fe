@@ -845,6 +845,7 @@ var Loader = function () { return (React__default["default"].createElement(Style
             React__default["default"].createElement("feColorMatrix", { values: "0 0 0 0 0.681333 0 0 0 0 0.646667 0 0 0 0 0.82 0 0 0 0.15 0" }),
             React__default["default"].createElement("feBlend", { in2: "effect1_dropShadow_1_208", result: "effect2_dropShadow_1_208" }),
             React__default["default"].createElement("feBlend", { in: "SourceGraphic", in2: "effect2_dropShadow_1_208", result: "shape" }))))); };
+var Loader$1 = React__default["default"].memo(Loader);
 var templateObject_1$k, templateObject_2$h, templateObject_3$b, templateObject_4$6, templateObject_5$4, templateObject_6$3, templateObject_7$2, templateObject_8$1, templateObject_9$1, templateObject_10$1;
 
 var PetaModified = styled__default["default"].div(templateObject_1$j || (templateObject_1$j = __makeTemplateObject(["\n  ", ";\n  margin-left: 8px;\n  color: ", ";\n"], ["\n  ", ";\n  margin-left: 8px;\n  color: ",
@@ -1324,7 +1325,7 @@ exports.Infographic = Infographic;
 exports.Input = Input;
 exports.Kilo = StyledDiv;
 exports.LinkImage = LinkImage;
-exports.Loader = Loader;
+exports.Loader = Loader$1;
 exports.LoadingShimmer = LoadingShimmer;
 exports.Lock = Lock;
 exports.Logo = Logo;

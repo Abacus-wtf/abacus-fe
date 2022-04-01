@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { Section, Kilo, Mega } from "abacus-ui"
 import { Link } from "gatsby"
 import { NFTImage } from "../NFTImage"
@@ -8,6 +8,12 @@ const StyledSection = styled(Section)`
   position: relative;
   display: flex;
   flex-direction: column;
+  transition: all 0.2s ease-in-out;
+
+  &:focus-within,
+  &:hover {
+    transform: scale(1.01);
+  }
 `
 
 const CardInfo = styled.div`
@@ -18,6 +24,7 @@ const CardInfo = styled.div`
 
 const CardInfoContent = styled(Mega)`
   font-size: 22px;
+  display: flex;
 `
 
 const CardInfoRow = styled.div`
@@ -27,7 +34,7 @@ const CardInfoRow = styled.div`
   margin-top: 24px;
 
   & ${CardInfo}:last-of-type {
-    text-align: right;
+    align-items: flex-end;
   }
 `
 
@@ -52,7 +59,24 @@ const CardTitle = styled(CardInfoContent)`
     left: 0;
     bottom: 0;
     right: 0;
+    border-radius: ${({ theme }) => theme.borderRadius.section};
   }
+`
+
+const Variation = styled.div<{ variation: number }>`
+  margin-right: 4px;
+  ${({ variation }) =>
+    variation < 0
+      ? css`
+          color: ${({ theme }) => theme.colors.utility.red};
+        `
+      : ""}
+  ${({ variation }) =>
+    variation > 0
+      ? css`
+          color: ${({ theme }) => theme.colors.utility.green};
+        `
+      : ""}
 `
 
 type PoolCardProps = {
@@ -88,7 +112,13 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
     </CardInfoRow>
     <CardInfoRow>
       <CardInfo>
-        <CardInfoContent>{variation}</CardInfoContent>
+        <CardInfoContent>
+          <Variation variation={variation}>
+            {variation > 0 ? "+" : ""}
+            {variation}
+          </Variation>
+          ETH
+        </CardInfoContent>
         <Kilo>Pool Variation (7d)</Kilo>
       </CardInfo>
       <CardInfo>

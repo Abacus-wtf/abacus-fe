@@ -29,6 +29,7 @@ export interface Auction {
   creditsAvailableForPurchase: number
   isNFTClaimed: boolean
   isAccountClaimed: boolean
+  claimPreviousBid: boolean
   ownedTickets: number[]
 }
 
@@ -54,6 +55,7 @@ export interface Pool extends NFT {
   hasPremiumPass?: boolean
   auction?: Auction
   approved?: boolean
+  approvedBribeFactory?: boolean
 }
 
 interface PoolState {

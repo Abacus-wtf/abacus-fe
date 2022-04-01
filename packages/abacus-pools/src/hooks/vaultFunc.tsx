@@ -60,7 +60,7 @@ export const useOnApproveTransfer = () => {
   const poolData = useGetPoolData()
 
   const onApproveTransfer = useCallback(
-    async (cb: () => void) => {
+    async (address: string, cb: () => void) => {
       const erc721 = getContract(
         poolData.address,
         ERC_721_ABI,
@@ -69,7 +69,7 @@ export const useOnApproveTransfer = () => {
       )
       const method = erc721.setApprovalForAll
       const estimate = erc721.estimateGas.setApprovalForAll
-      const args = [poolData.vaultAddress, true]
+      const args = [address, true]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {

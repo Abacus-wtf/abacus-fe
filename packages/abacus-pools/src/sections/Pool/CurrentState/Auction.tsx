@@ -10,6 +10,7 @@ import { NetworkSymbolEnum } from "@config/constants"
 import {
   useOnBid,
   useOnCalculatePrincipal,
+  useOnClaimPreviousBid,
   useOnCloseAccount,
   useOnEndAuction,
 } from "@hooks/auctionFunc"
@@ -34,6 +35,8 @@ const Auction = ({ refresh }: StateComponent) => {
   const [isToolTipOpen, setIsToolTipOpen] = useState(false)
   const poolData = useGetPoolData()
   const { onBid, isPending } = useOnBid()
+  const { onClaimPreviousBid, isPending: isClaimPreviousPending } =
+    useOnClaimPreviousBid()
   const { onEndAuction, isPending: isPendingAuction } = useOnEndAuction()
   const { onCalculatePrincipal, isPending: isPendingProfit } =
     useOnCalculatePrincipal()
@@ -184,36 +187,49 @@ const Auction = ({ refresh }: StateComponent) => {
         disabled={!isNetworkSymbolETH}
         onSubmit={async (e: FormEvent<HTMLDivElement>) => {
           e.preventDefault()
-
-          onBid(purchaseAmount, () => refresh())
+          if (poolData.auction.claimPreviousBid) {
+            onClaimPreviousBid(() => refresh())
+          } else {
+            onBid(purchaseAmount, () => refresh())
+          }
         }}
       >
-        <HorizontalListGroup style={{ width: "100%" }}>
-          <ListGroupItem style={{ width: "100%" }}>
-            <InputWithTitle
-              title="Bid"
-              id="bid"
-              placeholder="0"
-              value={purchaseAmount}
-              onChange={(e) => setPurchaseAmount(e.target.value)}
-              infoText="Input a bid amount"
-            />
-          </ListGroupItem>
-        </HorizontalListGroup>
+        {!poolData.auction.claimPreviousBid && (
+          <HorizontalListGroup style={{ width: "100%" }}>
+            <ListGroupItem style={{ width: "100%" }}>
+              <InputWithTitle
+                title="Bid"
+                id="bid"
+                placeholder="0"
+                value={purchaseAmount}
+                onChange={(e) => setPurchaseAmount(e.target.value)}
+                infoText="Input a bid amount"
+              />
+            </ListGroupItem>
+          </HorizontalListGroup>
+        )}
         <VerticalContainer style={{ marginTop: 35, alignItems: "center" }}>
           <div style={{ width: "100%" }} id="submitBid">
             <Button
               disabled={
                 isPending ||
+                isClaimPreviousPending ||
                 !isNetworkSymbolETH ||
                 Number.isNaN(purchaseAmount) ||
                 Number(purchaseAmount) < poolData.auction.highestBid ||
-                purchaseAmount === ""
+                purchaseAmount === "" ||
+                (poolData.auction.claimPreviousBid &&
+                  poolData.auction.highestBidder.toLowerCase() ===
+                    account.toLowerCase())
               }
               style={{ width: "100%" }}
               type="submit"
             >
-              {isPending ? "Loading..." : "Bid"}
+              {isPending || isClaimPreviousPending
+                ? "Loading..."
+                : poolData.auction.claimPreviousBid
+                ? "Claim Previous Bid"
+                : "Bid"}
             </Button>
           </div>
           <Tooltip

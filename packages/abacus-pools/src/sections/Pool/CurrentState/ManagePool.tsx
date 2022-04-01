@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import Button from "@components/Button"
 import { Tooltip } from "shards-react"
 import { useGetCurrentNetwork } from "@state/application/hooks"
-import { NetworkSymbolEnum } from "@config/constants"
+import { ABC_BRIBE_FACTORY, NetworkSymbolEnum } from "@config/constants"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import {
   useOnApproveTransfer,
@@ -37,7 +37,7 @@ const ManagePool = ({ refresh }: StateComponent) => {
             style={{ width: "100%", borderRadius: 5 }}
             onClick={async () => {
               if (!poolData.approved) {
-                await onApproveTransfer(async () => {
+                await onApproveTransfer(poolData.vaultAddress, async () => {
                   await refresh()
                 })
                 return
@@ -77,13 +77,23 @@ const ManagePool = ({ refresh }: StateComponent) => {
             className="notConnected"
             disabled={!isNetworkSymbolETH || isPendingAcceptBribe}
             style={{ width: "100%", borderRadius: 5 }}
-            onClick={() =>
-              onAcceptBribe(async () => {
-                await refresh()
-              })
-            }
+            onClick={() => {
+              if (!poolData.approvedBribeFactory) {
+                onApproveTransfer(ABC_BRIBE_FACTORY, async () => {
+                  await refresh()
+                })
+              } else {
+                onAcceptBribe(async () => {
+                  await refresh()
+                })
+              }
+            }}
           >
-            {isPendingAcceptBribe ? "Loading..." : "Accept Bribes"}
+            {isPendingAcceptBribe || isPendingApproval
+              ? "Loading..."
+              : !poolData.approvedBribeFactory
+              ? "Approve Bribe Factory"
+              : "Accept Bribes"}
           </Button>
         </ButtonContainer>
         <Tooltip

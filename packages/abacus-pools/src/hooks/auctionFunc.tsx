@@ -49,6 +49,48 @@ export const useOnBid = () => {
   }
 }
 
+export const useOnClaimPreviousBid = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+  const poolData = useGetPoolData()
+
+  const onClaimPreviousBid = useCallback(
+    async (cb: () => void) => {
+      const closePoolContract = getContract(
+        poolData.auction.closePoolAddress,
+        CLOSE_POOL_ABI,
+        library,
+        account
+      )
+
+      const method = closePoolContract.reclaimBid
+      const estimate = closePoolContract.estimateGas.reclaimBid
+      const args = []
+      const value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Reclaim Bid",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [poolData, library, account, generalizedContractCall, addTransaction]
+  )
+  return {
+    onClaimPreviousBid,
+    isPending,
+  }
+}
+
 export const useOnEndAuction = () => {
   const { account, library } = useActiveWeb3React()
   const { generalizedContractCall, isPending } = useGeneralizedContractCall()

@@ -436,15 +436,9 @@
   },
   {
     "inputs": [],
-    "name": "admin",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
+    "name": "approveControllerChange",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -868,16 +862,16 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "pendingController",
+    "outputs": [
       {
         "internalType": "address",
-        "name": "_admin",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "setAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {

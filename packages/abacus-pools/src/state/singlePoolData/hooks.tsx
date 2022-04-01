@@ -219,33 +219,44 @@ export const useSetPoolData = () => {
 
         let creditsAvailable = BigNumber.from(0)
         let approved = false
+        let approvedBribeFactory = false
         let tickets = []
         let ownerOfNFT = ""
         if (account) {
-          const [multi, approval, _ownerOfNFT, { tickets: _tickets }] =
-            await Promise.all([
-              vault(
-                vaultAddress,
-                ["getCreditsAvailableForPurchase"],
-                [[account, moment().unix()]]
-              ),
-              erc721(address)
-                .methods.isApprovedForAll(account, vaultAddress)
-                .call(),
-              erc721(address).methods.ownerOf(tokenId).call(),
-              request<GetTicketQueryResponse>(
-                GRAPHQL_ENDPOINT,
-                GET_TICKETS(`{ owner: "${account.toLowerCase()}" }`),
-                variables
-              ),
-            ])
+          const [
+            multi,
+            approval,
+            approvalBribe,
+            _ownerOfNFT,
+            { tickets: _tickets },
+          ] = await Promise.all([
+            vault(
+              vaultAddress,
+              ["getCreditsAvailableForPurchase"],
+              [[account, moment().unix()]]
+            ),
+            erc721(address)
+              .methods.isApprovedForAll(account, vaultAddress)
+              .call(),
+            erc721(address)
+              .methods.isApprovedForAll(account, ABC_BRIBE_FACTORY)
+              .call(),
+            erc721(address).methods.ownerOf(tokenId).call(),
+            request<GetTicketQueryResponse>(
+              GRAPHQL_ENDPOINT,
+              GET_TICKETS(`{ owner: "${account.toLowerCase()}" }`),
+              variables
+            ),
+          ])
           ownerOfNFT = _ownerOfNFT
           tickets = _tickets
           creditsAvailable = multi[0][0]
           approved = approval
+          approvedBribeFactory = approvalBribe
         }
         let auction: Auction
         if (closePoolContract[0] !== ZERO_ADDRESS) {
+          console.log("here")
           const [auctionComplete, auctionEndTime, highestBid, highestBidder] =
             await closePool(
               closePoolContract[0],
@@ -257,7 +268,6 @@ export const useSetPoolData = () => {
               ],
               [[], [], [], []]
             )
-
           auction = {
             auctionComplete: auctionComplete[0],
             auctionEndTime: BigNumber.from(auctionEndTime[0]).toNumber(),
@@ -273,17 +283,28 @@ export const useSetPoolData = () => {
               ownerOfNFT !== "" &&
               ownerOfNFT.toLowerCase() !== vaultAddress.toLowerCase(),
             isAccountClaimed: false,
+            claimPreviousBid: false,
           }
 
           if (account) {
             const [
-              [principalCalculated, auctionPremium, isAccountClaimed],
+              [
+                principalCalculated,
+                auctionPremium,
+                isAccountClaimed,
+                claimPreviousBid,
+              ],
               [getTokensLocked, tokensLocked, creditsAvailableForPurchase],
             ] = await Promise.all([
               closePool(
                 closePoolContract[0],
-                ["principalCalculated", "auctionPremium", "claimed"],
-                [[account], [], [account]]
+                [
+                  "principalCalculated",
+                  "auctionPremium",
+                  "claimed",
+                  "claimedPreviousBid",
+                ],
+                [[account], [], [account], [account]]
               ),
               vault(
                 vaultAddress,
@@ -305,6 +326,7 @@ export const useSetPoolData = () => {
             auction.creditsAvailableForPurchase = Number(
               formatEther(creditsAvailableForPurchase[0])
             )
+            auction.claimPreviousBid = claimPreviousBid[0]
           }
         }
 
@@ -335,6 +357,7 @@ export const useSetPoolData = () => {
           auction,
           img: asset.image_url,
           approved,
+          approvedBribeFactory,
         }
         dispatch(getPoolData(pool))
       } catch (e) {

@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { Loader, Section, Kilo, Mega, Media } from "abacus-ui"
 import { useSetPools, useGetPools } from "@state/poolData/hooks"
 import { PoolCard } from "@components/PoolCard"
+import ExploreFilters from "@components/ExploreFilters"
 import { Container } from "../../layouts/styles"
 
 const LoadingContainer = styled.div`
@@ -95,6 +96,7 @@ const Home: React.FC = () => {
           <InfoBarContent>121,324</InfoBarContent>
         </InfoBarItem>
       </InfoBarContainer>
+      <ExploreFilters page={0} />
 
       <PoolGrid>
         {pools.map((pool, index) => (

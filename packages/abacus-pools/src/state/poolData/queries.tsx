@@ -16,6 +16,9 @@ export type GetVaultQueryResponse = {
 export type GetVaultVariables = {
   first: number
   skip: number
+  orderBy?: string
+  orderDirection?: string
+  where?: string
 }
 
 export type VaultFilters = {
@@ -49,20 +52,31 @@ export const vaultWhere = (filters: VaultFilters): string | null => {
   return `{ ${filterString} }`
 }
 
-export const GET_VAULTS = (where: string | null) => gql`
-  query GetVaults($first: Int!, $skip: Int!) {
+export const GET_VAULTS = gql`
+  query GetVaults(
+    $first: Int!
+    $skip: Int!
+    $orderBy: String!
+    $orderDirection: String!
+    $where: String
+  ) {
     vaults(
       first: $first
-      orderBy: timestamp
-      orderDirection: desc
+      orderBy: $orderBy
+      orderDirection: $orderDirection
       skip: $skip
-      where: ${where}
+      where: $where
     ) {
       id
       nftAddress
       tokenId
       owner
       status
+      tickets {
+        id
+        owner
+        amount
+      }
     }
   }
 `

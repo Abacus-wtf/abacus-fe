@@ -31,7 +31,7 @@ const StyledLabel = styled.label`
   padding: 8px 14px;
   text-align: center;
   position: relative;
-  background-color: ${({ theme }) => theme.colors.core.white};
+  background-color: transparent;
 `;
 
 const StyledInput = styled.input`

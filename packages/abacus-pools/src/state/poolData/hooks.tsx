@@ -64,16 +64,18 @@ export const useSetPools = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   return useCallback(
-    async (where: string | null) => {
+    async (where: string | null, orderBy?: string, orderDirection?: string) => {
       // @TODO: Fix for multipage
       const variables: GetVaultVariables = {
         first: PAGINATE_BY,
         skip: 0 * PAGINATE_BY,
+        orderBy: orderBy || "timestamp",
+        orderDirection: orderDirection || "desc",
       }
 
       const { vaults } = await request<GetVaultQueryResponse>(
         GRAPHQL_ENDPOINT,
-        GET_VAULTS(where),
+        GET_VAULTS,
         variables
       )
       const pools = await parseSubgraphVaults(vaults)
@@ -93,11 +95,14 @@ export const useSetMyPools = () => {
     const variables: GetVaultVariables = {
       first: PAGINATE_BY,
       skip: 0 * PAGINATE_BY,
+      orderBy: "timestamp",
+      orderDirection: "desc",
+      where: `{ owner: "${account.toLowerCase()}" }`,
     }
 
     const { vaults } = await request<GetVaultQueryResponse>(
       GRAPHQL_ENDPOINT,
-      GET_VAULTS(`{ owner: "${account.toLowerCase()}" }`),
+      GET_VAULTS,
       variables
     )
     const pools = await parseSubgraphVaults(vaults)

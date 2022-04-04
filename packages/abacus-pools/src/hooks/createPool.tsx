@@ -8,7 +8,8 @@ import FACTORY_ABI from "../config/contracts/ABC_FACTORY_ABI.json"
 
 export const useOnApproveNFT = () => {
   const { account, library } = useActiveWeb3React()
-  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const { generalizedContractCall, isPending, txError } =
+    useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
 
   const onApproveNFT = useCallback(
@@ -38,12 +39,14 @@ export const useOnApproveNFT = () => {
   return {
     onApproveNFT,
     isPending,
+    txError,
   }
 }
 
 export const useOnCreatePool = () => {
   const { account, library } = useActiveWeb3React()
-  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const { generalizedContractCall, isPending, txError } =
+    useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
 
   const onCreatePool = useCallback(
@@ -85,5 +88,6 @@ export const useOnCreatePool = () => {
   return {
     onCreatePool,
     isPending,
+    txError,
   }
 }

@@ -168,6 +168,7 @@ export const useGeneralizedContractCall = () => {
   const dispatch = useDispatch()
 
   const [isPending, setIsPending] = useState(false)
+  const [txError, setTxError] = useState<string>(null)
 
   const generalizedContractCall = useCallback(
     async ({
@@ -183,6 +184,7 @@ export const useGeneralizedContractCall = () => {
       value: BigNumber | null
       cb: (response: any) => void
     }) => {
+      setTxError(null)
       dispatch(setGeneralizedContractErrorMessage(null))
       if (account === undefined || account === null) {
         toggleWalletModal()
@@ -212,37 +214,37 @@ export const useGeneralizedContractCall = () => {
           })
         )
         .catch((error) => {
-          if (error?.code === -32603) {
-            const ErrorMessage = (
-              <>
-                <ErrorMessageLabel>
-                  The transaction was reverted.
-                </ErrorMessageLabel>
-                <div style={{ marginLeft: 42 }}>
-                  <p style={{ marginTop: 10 }}>
-                    You may not have enough ABC or ETH to complete this
-                    transaction.
-                  </p>{" "}
-                  {error?.data?.message ? (
-                    <p style={{ marginTop: 5 }}>
-                      The error message from MetaMask was: "
-                      <i>{error.data.message}</i>"
-                    </p>
-                  ) : null}
-                </div>
-              </>
-            )
+          const ErrorMessage = (
+            <>
+              <ErrorMessageLabel>
+                The transaction was reverted.
+              </ErrorMessageLabel>
+              <div>
+                <p>
+                  You may not have enough ABC or ETH to complete this
+                  transaction.
+                </p>{" "}
+                {error?.data?.message ? (
+                  <p>
+                    The error message from MetaMask was: "
+                    <i>{error.data.message}</i>"
+                  </p>
+                ) : null}
+              </div>
+            </>
+          )
 
-            dispatch(setGeneralizedContractErrorMessage(ErrorMessage))
-          }
-          console.error(error)
+          setTxError((error?.data?.message || error?.error?.message) ?? null)
+          dispatch(setGeneralizedContractErrorMessage(ErrorMessage))
         })
     },
     [account, chainId, dispatch, library, toggleWalletModal]
   )
 
+  console.log("txError", txError)
   return {
     generalizedContractCall,
     isPending,
+    txError,
   }
 }

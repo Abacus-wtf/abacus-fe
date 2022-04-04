@@ -24,7 +24,6 @@ const Container = styled.div`
 const StyledLabel = styled.label`
   ${Font()};
   cursor: pointer;
-  z-index: 1;
   display: block;
   border: 2px solid ${({ theme }) => theme.colors.core.border};
   border-radius: 70px;

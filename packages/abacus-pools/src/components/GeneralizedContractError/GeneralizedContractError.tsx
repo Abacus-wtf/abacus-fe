@@ -23,10 +23,17 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 8px;
 `
 
 const CloseButton = styled(Button)`
-  align-self: flex-end;
+  position: absolute;
+  padding: 8px;
+  right: 0;
+  top: 0;
 `
 
 const StyledPersistentBanner = styled(PersistentBanner)`
@@ -37,7 +44,10 @@ const StyledPersistentBanner = styled(PersistentBanner)`
 const Message = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px;
+  width: 100%;
+  padding-right: 30px;
 
   ${Media.sm`
     flex-direction: row;
@@ -65,7 +75,7 @@ const GeneralizedContractError: FunctionComponent = () => {
           buttonType={ButtonType.Clear}
           onClick={() => setDismissed(true)}
         >
-          <Close />
+          <Close stroke="#FFF" />
           <VisuallyHidden>Close Error Banner</VisuallyHidden>
         </CloseButton>
         <Message>{txError}</Message>

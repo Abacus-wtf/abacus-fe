@@ -1,5 +1,8 @@
-import { useGeneralizedContractError } from "@state/application/hooks"
-import React, { FunctionComponent, useEffect, useState } from "react"
+import {
+  useGeneralizedContractError,
+  useSetGeneralizedContractError,
+} from "@state/application/hooks"
+import React, { FunctionComponent } from "react"
 import styled, { keyframes } from "styled-components"
 import {
   PersistentBanner,
@@ -56,25 +59,20 @@ const Message = styled.div`
 
 const GeneralizedContractError: FunctionComponent = () => {
   const txError = useGeneralizedContractError()
-  const [dismissed, setDismissed] = useState(false)
+  const setGeneralizedContractError = useSetGeneralizedContractError()
 
-  useEffect(() => {
-    if (txError) {
-      setDismissed(false)
-    }
-  }, [txError])
+  const dismiss = () => {
+    setGeneralizedContractError(null)
+  }
 
-  if (!txError || dismissed) {
+  if (!txError) {
     return null
   }
 
   return (
     <StyledPersistentBanner type="error">
       <Container>
-        <CloseButton
-          buttonType={ButtonType.Clear}
-          onClick={() => setDismissed(true)}
-        >
+        <CloseButton buttonType={ButtonType.Clear} onClick={dismiss}>
           <Close stroke="#FFF" />
           <VisuallyHidden>Close Error Banner</VisuallyHidden>
         </CloseButton>

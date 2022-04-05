@@ -12,6 +12,7 @@ import {
   selectNetwork,
   setEthToUSD,
   setAbcBalance,
+  setGeneralizedContractErrorMessage,
 } from "./actions"
 import {
   abcBalanceSelector,
@@ -19,6 +20,7 @@ import {
   generalizedContractErrorMessageSelector,
   networkSymbolSelector,
 } from "./selectors"
+import { GeneralizedContractState } from "./reducer"
 
 export const useToggleWalletModal = () => {
   const isWalletModalOpen = useSelector<
@@ -53,6 +55,16 @@ export const useGeneralizedContractError = () =>
     AppState,
     AppState["application"]["generalizedContract"]["errorMessage"]
   >(generalizedContractErrorMessageSelector)
+
+export const useSetGeneralizedContractError = () => {
+  const dispatch = useDispatch()
+  return useCallback(
+    (error: GeneralizedContractState["errorMessage"]) => {
+      dispatch(setGeneralizedContractErrorMessage(error))
+    },
+    [dispatch]
+  )
+}
 
 const COINGECKO_URL =
   "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"

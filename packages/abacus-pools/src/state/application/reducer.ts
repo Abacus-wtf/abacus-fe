@@ -9,7 +9,7 @@ import {
   setAbcBalance,
 } from "./actions"
 
-type GeneralizedContractState = {
+export type GeneralizedContractState = {
   errorMessage: string | null | ReactNode
 }
 interface ApplicationState {

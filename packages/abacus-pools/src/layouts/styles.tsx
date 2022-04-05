@@ -10,7 +10,7 @@ export const GlobalContainer = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 1020px;
+  max-width: 1120px;
   grid-gap: 32px;
   width: 100%;
   padding-top: 50px;

@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit"
 import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
-import { Pool } from "../poolData/reducer"
+import { INITIAL_POOL, Pool } from "../poolData/reducer"
 
 export interface TraderProfile {
   creditPurchasePercentage: number
@@ -27,13 +27,15 @@ export interface Bribe {
 }
 
 export interface PoolState {
-  data?: Pool
+  data: Pool
   traderProfile?: TraderProfile
   bribe?: Bribe
   tickets?: Ticket[]
 }
 
-const initialState: PoolState = {}
+const initialState: PoolState = {
+  data: INITIAL_POOL,
+}
 
 export default createReducer(initialState, (builder) =>
   builder

@@ -74,7 +74,6 @@ const Details: FunctionComponent<DetailsProps> = ({
         type="text"
         value={tokenName}
         onChange={setTokenName}
-        exteriorLabel
       />
       <StyledInput
         label="Pool Token Symbol"
@@ -83,7 +82,6 @@ const Details: FunctionComponent<DetailsProps> = ({
         type="text"
         value={tokenSymbol}
         onChange={setTokenSymbol}
-        exteriorLabel
       />
       <StyledButton onClick={createPool} disabled={isPending}>
         {isPending ? "Creating Pool..." : "Create Pool"}

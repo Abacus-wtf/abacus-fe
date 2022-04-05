@@ -241,7 +241,6 @@ export const useGeneralizedContractCall = () => {
     [account, chainId, dispatch, library, toggleWalletModal]
   )
 
-  console.log("txError", txError)
   return {
     generalizedContractCall,
     isPending,

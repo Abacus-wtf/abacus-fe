@@ -603,7 +603,7 @@ var templateObject_1$o;
 
 // You probably want to change this to something semantic or abandon it all together
 var Container$j = styled.div(templateObject_1$n || (templateObject_1$n = __makeTemplateObject(["\n  margin: 0;\n  position: relative;\n  width: max-content;\n  margin-right: 6px;\n  margin-bottom: 12px;\n"], ["\n  margin: 0;\n  position: relative;\n  width: max-content;\n  margin-right: 6px;\n  margin-bottom: 12px;\n"])));
-var StyledLabel = styled.label(templateObject_2$k || (templateObject_2$k = __makeTemplateObject(["\n  ", ";\n  cursor: pointer;\n  z-index: 0;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"], ["\n  ", ";\n  cursor: pointer;\n  z-index: 0;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"])), Font(), function (_a) {
+var StyledLabel = styled.label(templateObject_2$k || (templateObject_2$k = __makeTemplateObject(["\n  ", ";\n  cursor: pointer;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"], ["\n  ", ";\n  cursor: pointer;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"])), Font(), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.border;
 });
@@ -705,6 +705,12 @@ var ChevronLeft = function (_a) {
     var _b = _a.fill, fill = _b === void 0 ? "#1C2333" : _b;
     return (React.createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 8 14", width: "14", height: "14" },
         React.createElement("path", { d: "M7 13 1 7l6-6", stroke: fill, strokeOpacity: ".72", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })));
+};
+
+var Checkmark = function (_a) {
+    var _b = _a.stroke, stroke = _b === void 0 ? "#23CE7C" : _b;
+    return (React.createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 13 11" },
+        React.createElement("path", { d: "m.958 6.292 3.167 3.167 7.917-7.917", stroke: stroke, strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" })));
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -1276,5 +1282,5 @@ var PreviousSessionsAutoScroll = function (_a) {
 };
 var templateObject_1, templateObject_2;
 
-export { AbacusBalance, AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, Accordion, ActivitySection, Button, ButtonType, CardBackground, CardBar, CardWithTitle, Checkbox, ChevronLeft, Close, Dropdown, Eth as ETH, Container$C as Exa, ExploreImage, ExploreInfo, Extras, Flex, Font, FontImport, Container$B as Giga, Container$A as H1, Container$z as H2, Container$y as H3, Container$x as H4, Container$w as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, LinkImage, Loader$1 as Loader, LoadingShimmer, Lock, Logo, Media, Container$v as Mega, Container$u as Milli, MiniList, OpenAppModal as Modal, Navbar, StyledP as P, PartOfCollection, PersistentBanner, Container$t as Peta, PreviousSessionsAutoScroll, PriceHistory, ProfileGroup, ProfileIcon, ProfileInfo, Section, SessionCard, SessionCountdown, Container$s as Small, SocialLinks, SplitSection, StatInfo, Container$r as Tera, VisuallyHidden, Container$q as Yotta, Container$p as Zetta, breakpoints, defaultTheme };
+export { AbacusBalance, AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, Accordion, ActivitySection, Button, ButtonType, CardBackground, CardBar, CardWithTitle, Checkbox, Checkmark, ChevronLeft, Close, Dropdown, Eth as ETH, Container$C as Exa, ExploreImage, ExploreInfo, Extras, Flex, Font, FontImport, Container$B as Giga, Container$A as H1, Container$z as H2, Container$y as H3, Container$x as H4, Container$w as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, LinkImage, Loader$1 as Loader, LoadingShimmer, Lock, Logo, Media, Container$v as Mega, Container$u as Milli, MiniList, OpenAppModal as Modal, Navbar, StyledP as P, PartOfCollection, PersistentBanner, Container$t as Peta, PreviousSessionsAutoScroll, PriceHistory, ProfileGroup, ProfileIcon, ProfileInfo, Section, SessionCard, SessionCountdown, Container$s as Small, SocialLinks, SplitSection, StatInfo, Container$r as Tera, VisuallyHidden, Container$q as Yotta, Container$p as Zetta, breakpoints, defaultTheme };
 //# sourceMappingURL=index.js.map

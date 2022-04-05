@@ -615,7 +615,7 @@ var templateObject_1$o;
 
 // You probably want to change this to something semantic or abandon it all together
 var Container$j = styled__default["default"].div(templateObject_1$n || (templateObject_1$n = __makeTemplateObject(["\n  margin: 0;\n  position: relative;\n  width: max-content;\n  margin-right: 6px;\n  margin-bottom: 12px;\n"], ["\n  margin: 0;\n  position: relative;\n  width: max-content;\n  margin-right: 6px;\n  margin-bottom: 12px;\n"])));
-var StyledLabel = styled__default["default"].label(templateObject_2$k || (templateObject_2$k = __makeTemplateObject(["\n  ", ";\n  cursor: pointer;\n  z-index: 0;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"], ["\n  ", ";\n  cursor: pointer;\n  z-index: 0;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"])), Font(), function (_a) {
+var StyledLabel = styled__default["default"].label(templateObject_2$k || (templateObject_2$k = __makeTemplateObject(["\n  ", ";\n  cursor: pointer;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"], ["\n  ", ";\n  cursor: pointer;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"])), Font(), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.border;
 });
@@ -717,6 +717,12 @@ var ChevronLeft = function (_a) {
     var _b = _a.fill, fill = _b === void 0 ? "#1C2333" : _b;
     return (React__default["default"].createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 8 14", width: "14", height: "14" },
         React__default["default"].createElement("path", { d: "M7 13 1 7l6-6", stroke: fill, strokeOpacity: ".72", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })));
+};
+
+var Checkmark = function (_a) {
+    var _b = _a.stroke, stroke = _b === void 0 ? "#23CE7C" : _b;
+    return (React__default["default"].createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 13 11" },
+        React__default["default"].createElement("path", { d: "m.958 6.292 3.167 3.167 7.917-7.917", stroke: stroke, strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" })));
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -1300,6 +1306,7 @@ exports.CardBackground = CardBackground;
 exports.CardBar = CardBar;
 exports.CardWithTitle = CardWithTitle;
 exports.Checkbox = Checkbox;
+exports.Checkmark = Checkmark;
 exports.ChevronLeft = ChevronLeft;
 exports.Close = Close;
 exports.Dropdown = Dropdown;

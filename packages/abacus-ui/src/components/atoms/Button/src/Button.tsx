@@ -31,7 +31,9 @@ const Button = styled.button.attrs(({ disabled, ...rest }) => ({
   cursor: pointer;
   transition: ${({ theme }) => theme.transitionTime.main};
   color: ${({ theme, buttonType }) =>
-    buttonType === ButtonType.White || buttonType === ButtonType.Gray
+    buttonType === ButtonType.White ||
+    buttonType === ButtonType.Gray ||
+    buttonType === ButtonType.Clear
       ? theme.colors.button.primary
       : theme.colors.core.white};
   background-color: ${({ theme, buttonType }) =>

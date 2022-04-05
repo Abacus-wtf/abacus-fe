@@ -14,3 +14,4 @@ export * from "./AbacusBalance";
 export * from "./LoadingShimmer";
 export * from "./PersistentBanner";
 export * from "./Loader";
+export * from "./ProgressBar";

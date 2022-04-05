@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from "react";
 import styled, { css } from "styled-components";
 import { getUniqueId } from "@utils";
 import { Font } from "@theme";
-import { Milli, Kilo } from "@typography";
+import { Kilo } from "@typography";
 
 type InputProps = {
   value: string;
@@ -10,14 +10,13 @@ type InputProps = {
   type: "text" | "number";
   name: string;
   label?: string;
+  pill?: string;
   id?: string;
   placeholder?: string;
-  showEth?: boolean;
   className?: string;
   hint?: React.ReactNode | string;
   disabled?: boolean;
   required?: boolean;
-  exteriorLabel?: boolean;
   step?: string;
 };
 
@@ -75,7 +74,7 @@ const ExteriorLabel = styled.label`
   margin-bottom: 10px;
 `;
 
-const StyledLabel = styled.label`
+const Pill = styled.span`
   ${Font("milli")}
   text-align: center;
   background-color: ${({ theme }) => theme.colors.core.label};
@@ -108,48 +107,33 @@ const StyledKilo = styled(Kilo)`
   margin-top: 10px;
 `;
 
-const EthLogo = styled(Milli)`
-  background-color: ${({ theme }) => theme.colors.core.border};
-  padding: 10px;
-  color: ${({ theme }) => theme.colors.core[700]};
-  border-radius: ${({ theme }) => theme.borderRadius.main};
-  font-weight: 600;
-  margin-bottom: 7px;
-`;
-
 const Input: FunctionComponent<InputProps> = ({
   value,
   onChange,
   type,
   label,
+  pill,
   name,
   id,
   placeholder,
-  showEth,
   className,
   hint,
   disabled = false,
   required = false,
-  exteriorLabel = false,
   step = "0.1",
 }) => {
   const [pristine, setPristine] = useState(true);
   const ID = typeof id === "string" ? id : getUniqueId("input");
   return (
     <Container className={className}>
-      {exteriorLabel && label && (
-        <ExteriorLabel htmlFor={ID}>{label}</ExteriorLabel>
-      )}
+      {label && <ExteriorLabel htmlFor={ID}>{label}</ExteriorLabel>}
       <InputContainer
         disabled={disabled}
         pristine={pristine}
         required={required}
         value={value}
       >
-        {showEth ? <EthLogo>ETH</EthLogo> : null}
-        {!exteriorLabel && typeof label === "string" && label && (
-          <StyledLabel htmlFor={ID}>{label}</StyledLabel>
-        )}
+        {pill && <Pill>{pill}</Pill>}
         <StyledInput
           id={ID}
           name={name}

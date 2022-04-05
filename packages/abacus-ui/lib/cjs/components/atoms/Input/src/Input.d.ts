@@ -5,14 +5,13 @@ declare type InputProps = {
     type: "text" | "number";
     name: string;
     label?: string;
+    pill?: string;
     id?: string;
     placeholder?: string;
-    showEth?: boolean;
     className?: string;
     hint?: React.ReactNode | string;
     disabled?: boolean;
     required?: boolean;
-    exteriorLabel?: boolean;
     step?: string;
 };
 declare const Input: FunctionComponent<InputProps>;

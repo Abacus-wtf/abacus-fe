@@ -11,7 +11,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 1020px;
-  grid-gap: 50px;
+  grid-gap: 32px;
   width: 100%;
   padding-top: 50px;
   padding: 0px 16px;
@@ -121,7 +121,6 @@ export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
   a {
     transition: 0.15s;
     &:hover {
-      color: ${defaultTheme.colors.core.lightWhite};
       text-decoration: none;
     }
   }

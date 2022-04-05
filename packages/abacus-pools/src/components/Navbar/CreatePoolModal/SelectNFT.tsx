@@ -58,7 +58,6 @@ const SelectNFT: FunctionComponent<SelectNFTProps> = ({
         label="NFT Address"
         placeholder="Copy/Paste NFT Address"
         hint={error && <InputError>{error}</InputError>}
-        exteriorLabel
       />
       <StyledButton onClick={selectNft}>Preview</StyledButton>
     </>

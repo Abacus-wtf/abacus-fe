@@ -1,9 +1,15 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import { Loader, Section, Kilo, Mega, Media } from "abacus-ui"
+import { Loader, Media } from "abacus-ui"
 import { useSetPools, useGetPools } from "@state/poolData/hooks"
-import { PoolCard } from "@components/PoolCard"
-import ExploreFilters from "@components/ExploreFilters"
+import {
+  PoolCard,
+  ExploreFilters,
+  InfoBarContainer,
+  InfoBarContent,
+  InfoBarItem,
+  InfoBarTitle,
+} from "@components/index"
 import { Container } from "../../layouts/styles"
 
 const LoadingContainer = styled.div`
@@ -20,35 +26,6 @@ const LoadingContainer = styled.div`
   & > * {
     height: 200px;
   }
-`
-
-const InfoBarContainer = styled(Section)`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
-  gap: 16px;
-
-  ${Media.sm`
-    flex-direction: row;  
-    gap: 80px;
-  `}
-`
-const InfoBarItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-`
-
-const InfoBarTitle = styled(Kilo)`
-  text-align: left;
-`
-
-const InfoBarContent = styled(Mega)`
-  font-size: 22px;
-  font-weight: bold;
-  text-align: left;
 `
 
 const PoolGrid = styled.div`

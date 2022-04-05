@@ -23,7 +23,7 @@ const Container = styled.nav<{ menuOpen: boolean }>`
   padding: 16px;
   width: 100%;
   margin: 0 auto;
-  max-width: 1020px;
+  max-width: 1120px;
 
   ${Media.md`
     flex-direction: row;

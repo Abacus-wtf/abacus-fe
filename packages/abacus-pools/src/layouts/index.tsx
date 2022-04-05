@@ -78,15 +78,15 @@ const GlobalLayout: React.FC<GlobalLayoutProps> = ({ children, location }) => {
         return {
           title: "Abacus Protocol",
         }
-      case "/auctions/":
+      case "/auctions":
         return {
           title: "Abacus Protocol | Auctions",
         }
-      case "/create-pool/":
+      case "/create-pool":
         return {
           title: "Abacus Protocol | Create Pool",
         }
-      case "/pool/":
+      case "/pool":
         return {
           title: "Abacus Protocol | Current Pool",
         }

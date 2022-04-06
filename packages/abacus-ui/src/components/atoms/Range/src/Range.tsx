@@ -3,11 +3,14 @@ import styled from "styled-components";
 
 const Container = styled.div`
   position: relative;
+  height: 48px;
+  margin-top: 16px;
+  margin-bottom: -14px;
 `;
 
 const StyledInput = styled.input`
   &[type="range"] {
-    height: calc(100% + 26px);
+    height: 100%;
     -webkit-appearance: none;
     margin: 0;
     width: 100%;
@@ -19,7 +22,6 @@ const StyledInput = styled.input`
     width: 100%;
     height: 0px;
     cursor: pointer;
-    animate: 0.2s;
     box-shadow: none;
     background: ${({ theme }) => theme.colors.core.primary};
     border-radius: 0px;
@@ -43,7 +45,6 @@ const StyledInput = styled.input`
     width: 100%;
     height: 0px;
     cursor: pointer;
-    animate: 0.2s;
     box-shadow: none;
     background: ${({ theme }) => theme.colors.core.primary};
     border-radius: 0px;
@@ -62,7 +63,6 @@ const StyledInput = styled.input`
     width: 100%;
     height: 0px;
     cursor: pointer;
-    animate: 0.2s;
     background: transparent;
     border-color: transparent;
     color: transparent;
@@ -106,7 +106,7 @@ const StyledOutput = styled.output<{ visible: boolean }>`
   font-size: 14px;
   line-height: 140%;
   left: 0;
-  bottom: 12px;
+  bottom: 40px;
   transform: translateX(-50%);
   visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
 

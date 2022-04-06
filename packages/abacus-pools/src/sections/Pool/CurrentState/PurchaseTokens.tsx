@@ -1,6 +1,6 @@
 import { useOnPurchaseTokens } from "@hooks/vaultFunc"
 import { useEthToUSD } from "@state/application/hooks"
-import { useGetPoolData, useTickets } from "@state/singlePoolData/hooks"
+import { useGetPoolData } from "@state/singlePoolData/hooks"
 import {
   Button,
   Checkbox,
@@ -11,10 +11,12 @@ import {
   Kilo,
   ProgressBar,
   ButtonType,
+  Range,
 } from "abacus-ui"
 import { Link } from "gatsby"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
+import Loading from "../Loading"
 
 const UpperContainer = styled.div`
   display: flex;
@@ -102,12 +104,12 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
 }) => {
   const [eth, setEth] = useState("")
   const [lockDuration, setLockDuration] = useState<number>(null)
-  const [, setIsCustomDuration] = useState(false)
+  const [isCustomDuration, setIsCustomDuration] = useState(false)
   const ethUSD = useEthToUSD(Number(eth))
-  const { tokenPrice, nftName } = useGetPoolData()
+  const { tokenPrice, nftName, tokensLocked } = useGetPoolData()
   const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
-  const tickets = useTickets()
-  const numTickets = tickets?.length ?? 0
+
+  const numTickets = Number(tokensLocked ?? 0)
   const percentTicketsSold = numTickets / 3000
   const numTokens = String(Number(eth) / Number(tokenPrice))
 
@@ -138,6 +140,7 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
 
   return (
     <>
+      <Loading loading={isPending} />
       <UpperContainer>
         <TitleContainer>
           <CurrentTicket>
@@ -183,50 +186,52 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
           </LockRadioLabel>
           <Link to="/learn-more">{"Learn More >"}</Link>
         </Flex>
-        <LockRadioGroup>
-          <Checkbox
-            type="radio"
-            name="lock_duration"
-            label="7 Days"
-            id="7_day_duration"
-            value="7"
-            checked={lockDuration === 7}
-            onChange={() => setLockDuration(7)}
+        {isCustomDuration ? (
+          <Range
+            id="lock_duration"
+            value={lockDuration}
+            setValue={setLockDuration}
+            min={15}
+            max={90}
+            outputFormatter={(value: number) => `${value}d`}
           />
-          <Checkbox
-            type="radio"
-            name="lock_duration"
-            label="14 Days"
-            id="14_day_duration"
-            value="14"
-            checked={lockDuration === 14}
-            onChange={() => setLockDuration(14)}
-          />
-          <Checkbox
-            type="radio"
-            name="lock_duration"
-            label="21 Days"
-            id="21_day_duration"
-            value="21"
-            checked={lockDuration === 21}
-            onChange={() => setLockDuration(21)}
-          />
-          <Checkbox
-            type="radio"
-            name="lock_duration"
-            label="30 Days"
-            id="30_day_duration"
-            value="30"
-            checked={lockDuration === 30}
-            onChange={() => setLockDuration(30)}
-          />
-          <CustomDurationButton
-            buttonType={ButtonType.Clear}
-            onClick={() => setIsCustomDuration(true)}
-          >
-            Custom
-          </CustomDurationButton>
-        </LockRadioGroup>
+        ) : (
+          <LockRadioGroup>
+            <Checkbox
+              type="radio"
+              name="lock_duration"
+              label="15 Days"
+              id="15_day_duration"
+              value="15"
+              checked={lockDuration === 15}
+              onChange={() => setLockDuration(15)}
+            />
+            <Checkbox
+              type="radio"
+              name="lock_duration"
+              label="21 Days"
+              id="21_day_duration"
+              value="21"
+              checked={lockDuration === 21}
+              onChange={() => setLockDuration(21)}
+            />
+            <Checkbox
+              type="radio"
+              name="lock_duration"
+              label="30 Days"
+              id="30_day_duration"
+              value="30"
+              checked={lockDuration === 30}
+              onChange={() => setLockDuration(30)}
+            />
+            <CustomDurationButton
+              buttonType={ButtonType.Clear}
+              onClick={() => setIsCustomDuration(true)}
+            >
+              Customer
+            </CustomDurationButton>
+          </LockRadioGroup>
+        )}
       </LockRadioContainer>
       <ConfirmButton disabled={confirmDisabled} onClick={purchaseTokens}>
         {isPending ? "Pending..." : "Confirm Purchase"}

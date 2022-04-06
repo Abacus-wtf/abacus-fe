@@ -215,8 +215,8 @@ export const useOnPurchaseTokens = () => {
           }
 
           const ticketFilled = parseFloat(formatEther(ticketFillings[i][0]))
-          if (ticketFilled < 3000) {
-            let spaceLeft = 3000 - ticketFilled
+          if (ticketFilled < TICKET_SIZE) {
+            let spaceLeft = TICKET_SIZE - ticketFilled
             if (spaceLeft > runningTokenAmount) {
               spaceLeft = runningTokenAmount
               runningTokenAmount = 0
@@ -354,7 +354,7 @@ export const useOnFutureOrder = () => {
         parseEther(`${reward}`),
       ]
       console.log(args)
-      const value = parseEther(`${(3000 * 1.0025) / 1000}`).add(
+      const value = parseEther(`${(TICKET_SIZE * 1.0025) / 1000}`).add(
         parseEther(`${reward}`)
       )
       console.log(value.toString())

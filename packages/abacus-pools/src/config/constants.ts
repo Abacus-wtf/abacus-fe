@@ -71,6 +71,8 @@ export const ETH_USD_ORACLE_ADDRESS =
 
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
+export const TICKET_SIZE = 1000
+
 export interface NetworkInfo {
   rpc: any
   chainId: number

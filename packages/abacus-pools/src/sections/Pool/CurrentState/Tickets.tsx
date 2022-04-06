@@ -12,6 +12,7 @@ import { Ticket as ITicket } from "@state/singlePoolData/reducer"
 import { Modal, ModalBody } from "shards-react"
 import { ButtonsWhite } from "@components/Button"
 import { useOnSellToken } from "@hooks/vaultFunc"
+import { TICKET_SIZE } from "@config/constants"
 import AMM from "./AMM"
 import { StateComponent } from "."
 import { ButtonContainer, Tab } from "../Pool.styles"
@@ -36,7 +37,7 @@ interface TicketProps extends ITicket {
 
 const Ticket = ({ order, amount, onClick }: TicketProps) => (
   <Button onClick={onClick} style={{ borderRadius: 8 }}>
-    #{order}. {3000 - amount} space available
+    #{order}. {TICKET_SIZE - amount} space available
   </Button>
 )
 
@@ -90,7 +91,7 @@ const Tickets = ({ refresh }: StateComponent) => {
                 Sell
               </Tab>
             )}
-            {currentTicket && currentTicket.amount === 3000 ? (
+            {currentTicket && currentTicket.amount === TICKET_SIZE ? (
               <></>
             ) : (
               <Tab

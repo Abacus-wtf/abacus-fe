@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react"
 import Button from "@components/Button"
 import { NumericalInput } from "@components/Input"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import { web3 } from "@config/constants"
+import { TICKET_SIZE, web3 } from "@config/constants"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { formatEther } from "ethers/lib/utils"
 import { useActiveWeb3React } from "@hooks/index"
@@ -180,7 +180,7 @@ const AMM = (props: AMMProps) => {
           isPending ||
           isPendingIndividual ||
           (props.currentTicket &&
-            Number(outputAmount) > 3000 - props.currentTicket.amount) ||
+            Number(outputAmount) > TICKET_SIZE - props.currentTicket.amount) ||
           moment(startDate).unix() <= moment().add(7, "days").unix() ||
           Number.isNaN(Number(inputAmount)) ||
           Number(inputAmount) === 0 ||

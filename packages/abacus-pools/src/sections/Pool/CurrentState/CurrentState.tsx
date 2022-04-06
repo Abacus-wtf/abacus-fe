@@ -18,6 +18,7 @@ const Container = styled(Section)`
   grid-template-columns: 100%;
   grid-column-gap: 55px;
   grid-row-gap: 12px;
+  position: relative;
 
   ${Media.sm`
     grid-template-columns: repeat(2, calc(50% - 27.5px));

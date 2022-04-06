@@ -35,6 +35,16 @@ export interface PoolState {
 
 const initialState: PoolState = {
   data: INITIAL_POOL,
+  traderProfile: {
+    creditPurchasePercentage: 0,
+    ticketsOpen: 0,
+    startTime: 0,
+    timeUnlock: 0,
+    tokensLocked: 0,
+    finalCreditCount: 0,
+    creditsPurchased: 0,
+    ticketsOwned: {},
+  },
 }
 
 export default createReducer(initialState, (builder) =>

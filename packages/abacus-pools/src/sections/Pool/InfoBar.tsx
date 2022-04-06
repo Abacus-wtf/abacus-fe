@@ -37,9 +37,16 @@ const PoolTitle = styled(InfoBarContent)`
 `
 
 const InfoBar: FunctionComponent = () => {
-  const { tokensLocked, owner, ownerAddress, emissionsStarted, nftName } =
-    useGetPoolData()
-  const tokensLockedUSD = useEthToUSD(Number(tokensLocked))
+  const {
+    tokensLocked,
+    owner,
+    ownerAddress,
+    emissionsStarted,
+    nftName,
+    tokenPrice,
+  } = useGetPoolData()
+  const tokensLockedEth = Number(tokensLocked) * Number(tokenPrice)
+  const tokensLockedUSD = useEthToUSD(Number(tokensLockedEth))
   const theme = useTheme()
   return (
     <InfoBarContainer>
@@ -49,7 +56,7 @@ const InfoBar: FunctionComponent = () => {
       </InfoBarItem>
       <InfoBarItem>
         <InfoBarTitle># Tokens Locked</InfoBarTitle>
-        <InfoBarContent>{tokensLocked} ETH</InfoBarContent>
+        <InfoBarContent>{tokensLockedEth} ETH</InfoBarContent>
         <InfoBarTitle>${tokensLockedUSD}</InfoBarTitle>
       </InfoBarItem>
       <InfoBarItem>

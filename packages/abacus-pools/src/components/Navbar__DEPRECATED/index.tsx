@@ -156,9 +156,9 @@ const Navbar = ({ location }) => {
             >
               Claim
             </HeaderLink>
-            <HeaderLink as="a" href="https://app.abacus.wtf/" active={false}>
+            {/* <HeaderLink as="a" href="https://app.abacus.wtf/" active={false}>
               Crowds
-            </HeaderLink>
+  </HeaderLink> */}
           </ListSection>
           <ListSectionSelector>
             <NetworkSelectorButton />

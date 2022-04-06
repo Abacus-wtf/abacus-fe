@@ -228,7 +228,7 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
               buttonType={ButtonType.Clear}
               onClick={() => setIsCustomDuration(true)}
             >
-              Customer
+              Custom
             </CustomDurationButton>
           </LockRadioGroup>
         )}

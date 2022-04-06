@@ -15,3 +15,4 @@ export * from "./LoadingShimmer";
 export * from "./PersistentBanner";
 export * from "./Loader";
 export * from "./ProgressBar";
+export * from "./Range";

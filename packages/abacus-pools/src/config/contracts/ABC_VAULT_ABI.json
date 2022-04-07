@@ -199,7 +199,13 @@
       }
     ],
     "name": "calculatePositionPremiums",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "addition",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -228,7 +234,7 @@
     "inputs": [],
     "name": "closePool",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -390,6 +396,19 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getClosePoolContract",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "contractAddress",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -587,6 +606,11 @@
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
+        "name": "_vaultVersion",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
         "name": "_controller",
         "type": "address"
@@ -732,32 +756,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "positionCheckpoint",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "positionPointCheckpoint",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -896,35 +894,6 @@
     ],
     "name": "sellToken",
     "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_caller",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "overBidTickets",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_finalNftVal",
-        "type": "uint256"
-      }
-    ],
-    "name": "slashOverBidders",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "addition",
-        "type": "uint256"
-      }
-    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1149,12 +1118,12 @@
   },
   {
     "inputs": [],
-    "name": "vaultOwner",
+    "name": "vaultVersion",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "uint8",
         "name": "",
-        "type": "address"
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",

@@ -42,8 +42,6 @@ export enum PoolStatus {
 export interface Pool extends NFT {
   vaultAddress?: string
   nftName: string
-  owner: string
-  ownerAddress: string
   nonce: number
   symbol?: string
   tokensLocked?: string

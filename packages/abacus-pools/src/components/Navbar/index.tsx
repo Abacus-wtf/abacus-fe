@@ -156,6 +156,14 @@ const Navbar = ({ location }) => {
             >
               Claim
             </HeaderLink>
+            <HeaderLink
+              as="a"
+              disable={!account}
+              href="/faucet"
+              active={(location.pathname === "/faucet").toString()}
+            >
+              Faucet
+            </HeaderLink>
             {/* <HeaderLink as="a" href="https://app.abacus.wtf/" active={false}>
               Crowds
   </HeaderLink> */}

@@ -234,6 +234,7 @@ export const useOnPurchaseTokens = () => {
       const method = vaultContract.purchaseMulti
       const estimate = vaultContract.estimateGas.purchaseMulti
       const args = [account, account, ticketArray, purchaseAmount, lockupPeriod]
+      console.log(args)
       const value = parseEther(
         `${Number(tokenAmount) * Number(poolData.tokenPrice)}`
       )

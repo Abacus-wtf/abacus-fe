@@ -23,7 +23,6 @@ const CurrentPosition = () => {
   if (!traderData) {
     return <div>Loading...</div>
   }
-
   return (
     <Container>
       <Stat title="Number of Tokens Locked:" value={traderData.tokensLocked} />
@@ -41,7 +40,7 @@ const CurrentPosition = () => {
             </StatTitle>
           ))}
       </TicketContainer>
-      {traderData.timeUnlock <= 0 && (
+      {Number(traderData.timeUnlock) <= moment().unix() && (
         <Buttons
           style={{ marginTop: 20 }}
           onClick={() =>

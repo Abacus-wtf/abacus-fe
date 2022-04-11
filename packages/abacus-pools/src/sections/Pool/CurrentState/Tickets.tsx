@@ -66,7 +66,8 @@ const Tickets = ({ refresh }: StateComponent) => {
   if (!tickets || !traderData) {
     return <div>Loading...</div>
   }
-
+  console.log("ticket: ", currentTicket)
+  console.log("traderdata: ", Number(traderData.ticketsOpen) === 0)
   return (
     <Container>
       <Modal
@@ -80,7 +81,8 @@ const Tickets = ({ refresh }: StateComponent) => {
             <Tab disabled={tab === Tabs.Buy} onClick={() => setTab(Tabs.Buy)}>
               Buy
             </Tab>
-            {(currentTicket && !currentTicket.ownToken) ||
+            {currentTicket &&
+            !currentTicket.ownToken &&
             Number(traderData.ticketsOpen) === 0 ? (
               <></>
             ) : (

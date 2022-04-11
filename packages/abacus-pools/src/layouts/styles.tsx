@@ -79,6 +79,12 @@ export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
     font-style: normal;
     }
 
+  @font-face {
+    font-family: "Bluu Next";
+    src: url("/fonts/BluuNext-Bold.otf") format("opentype");
+    font-weight: bold;
+  }
+
   
   html { 
     font-family: 'Inter', sans-serif;

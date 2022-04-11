@@ -1,3 +1,4 @@
+import { useTraderProfile } from "@state/singlePoolData/hooks"
 import { Button, ButtonType, Section } from "abacus-ui"
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
@@ -8,13 +9,18 @@ const SeeAllButton = styled(Button)`
   color: ${({ theme }) => theme.colors.utility.blue};
 `
 
-const Activity: FunctionComponent = () => (
-  <Section>
-    <SectionHeader>
-      <SectionTitle>Activity</SectionTitle>
-      <SeeAllButton buttonType={ButtonType.Clear}>See All</SeeAllButton>
-    </SectionHeader>
-  </Section>
-)
+const Activity: FunctionComponent = () => {
+  const traderProfile = useTraderProfile()
+
+  console.log("traderProfile", traderProfile)
+  return (
+    <Section>
+      <SectionHeader>
+        <SectionTitle>Activity</SectionTitle>
+        <SeeAllButton buttonType={ButtonType.Clear}>See All</SeeAllButton>
+      </SectionHeader>
+    </Section>
+  )
+}
 
 export default Activity

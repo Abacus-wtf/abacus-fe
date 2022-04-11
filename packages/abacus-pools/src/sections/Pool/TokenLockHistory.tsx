@@ -17,7 +17,12 @@ const CurrentCurrency = styled.div`
 
 const TokenLockHistory: FunctionComponent = () => {
   const { tokenPrice, tokensLocked } = useGetPoolData()
-  const tokensLockedEth = Number(tokensLocked) * Number(tokenPrice)
+  const tokensLockedEth = (
+    Number(tokensLocked) * Number(tokenPrice)
+  ).toLocaleString("en-US", {
+    maximumSignificantDigits: 5,
+    minimumSignificantDigits: 2,
+  })
   return (
     <Section>
       <SectionHeader>

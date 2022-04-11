@@ -17,6 +17,7 @@ import { Link } from "gatsby"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
 import Loading from "../Loading"
+import { customDurationConfig, durations } from "./constants"
 
 const UpperContainer = styled.div`
   display: flex;
@@ -191,39 +192,25 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
             id="lock_duration"
             value={lockDuration}
             setValue={setLockDuration}
-            min={15}
-            max={90}
+            min={customDurationConfig.min}
+            max={customDurationConfig.max}
             outputFormatter={(value: number) => `${value}d`}
           />
         ) : (
           <LockRadioGroup>
-            <Checkbox
-              type="radio"
-              name="lock_duration"
-              label="15 Days"
-              id="15_day_duration"
-              value="15"
-              checked={lockDuration === 15}
-              onChange={() => setLockDuration(15)}
-            />
-            <Checkbox
-              type="radio"
-              name="lock_duration"
-              label="21 Days"
-              id="21_day_duration"
-              value="21"
-              checked={lockDuration === 21}
-              onChange={() => setLockDuration(21)}
-            />
-            <Checkbox
-              type="radio"
-              name="lock_duration"
-              label="30 Days"
-              id="30_day_duration"
-              value="30"
-              checked={lockDuration === 30}
-              onChange={() => setLockDuration(30)}
-            />
+            {durations.map((duration) => (
+              <Checkbox
+                key={duration.id}
+                type="radio"
+                name="lock_duration"
+                label={duration.label}
+                id={duration.id}
+                value={duration.value}
+                checked={lockDuration === Number(duration.value)}
+                onChange={() => setLockDuration(Number(duration.value))}
+              />
+            ))}
+
             <CustomDurationButton
               buttonType={ButtonType.Clear}
               onClick={() => setIsCustomDuration(true)}

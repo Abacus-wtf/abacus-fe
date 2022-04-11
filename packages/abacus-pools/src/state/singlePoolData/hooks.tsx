@@ -14,7 +14,7 @@ import {
   IS_PRODUCTION,
   ZERO_ADDRESS,
 } from "@config/constants"
-import { OpenSeaAsset, openseaGet } from "@config/utils"
+import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
 import { formatEther } from "ethers/lib/utils"
 import moment from "moment"
 import { BigNumber } from "ethers"
@@ -120,19 +120,27 @@ export const useGetTraderProfileData = () => {
       request<GetTicketQueryResponse>(
         GRAPHQL_ENDPOINT,
         GET_TICKETS(
-          `{ owner: "${account.toLowerCase()}", vaultAddress: "${poolData.vaultAddress.toLowerCase()}" }`
+          `{ vaultAddress: "${poolData.vaultAddress.toLowerCase()}" }`
         ),
         variables
       ),
     ])
+    console.log("data.tickets", tickets)
     traderProfile.tokensLocked = formatEther(traderProfile.tokensLocked)
     traderProfile.ticketsOwned = []
     _.forEach(tickets, (ticket) => {
+      const totalTicketAmount = ticket.tokenPurchases.reduce(
+        (acc, tokenPurchase) =>
+          tokenPurchase.owner.toLowerCase() === account.toLowerCase()
+            ? acc.add(tokenPurchase.amount)
+            : acc,
+        BigNumber.from("0")
+      )
       traderProfile.ticketsOwned[
         BigNumber.from(ticket.ticketNumber).toNumber()
-      ] = formatEther(ticket.amount)
+      ] = formatEther(totalTicketAmount)
     })
-    console.log(traderProfile)
+    console.log("traderProfile", traderProfile)
     dispatch(getTraderProfile(traderProfile))
   }, [account, dispatch, vault, poolData])
 }
@@ -153,10 +161,15 @@ export const useGetTickets = () => {
     const methods = _.map(_.range(0, 50), () => "ticketsPurchased")
     const args = _.map(_.range(0, 50), (i) => [i])
     const ticketFillings = await vault(poolData.vaultAddress, methods, args)
-    const { tickets } = await request<GetTicketQueryResponse>(
+    const { tickets: _tickets } = await request<GetTicketQueryResponse>(
       GRAPHQL_ENDPOINT,
-      GET_TICKETS(`{ owner: "${account.toLowerCase()}" }`),
+      GET_TICKETS(null),
       variables
+    )
+    const tickets = _tickets.filter((ticket) =>
+      ticket.tokenPurchases.some(
+        (token) => token.owner.toLowerCase() === account.toLowerCase()
+      )
     )
     const ticketsReturned: Ticket[] = []
     for (let i = 0; i < ticketFillings.length; i += 1) {
@@ -167,6 +180,7 @@ export const useGetTickets = () => {
           ticket.vaultAddress.toLowerCase() ===
             poolData.vaultAddress.toLowerCase()
       )
+      console.log("hasOwnerBought", hasOwnerBought)
       ticketsReturned.push({
         order: i,
         amount: Number(formatEther(ticketFillings[i][0])),
@@ -233,12 +247,16 @@ export const useSetPoolData = () => {
             erc721(address).methods.ownerOf(tokenId).call(),
             request<GetTicketQueryResponse>(
               GRAPHQL_ENDPOINT,
-              GET_TICKETS(`{ owner: "${account.toLowerCase()}" }`),
+              GET_TICKETS(null),
               variables
             ),
           ])
           ownerOfNFT = _ownerOfNFT
-          tickets = _tickets
+          tickets = _tickets.filter((ticket) =>
+            ticket.tokenPurchases.some(
+              (token) => token.owner === account.toLowerCase()
+            )
+          )
           creditsAvailable = multi[0][0]
           approved = approval
           approvedBribeFactory = approvalBribe
@@ -343,6 +361,15 @@ export const useSetPoolData = () => {
           img: asset.image_url,
           approved,
           approvedBribeFactory,
+          owner:
+            asset?.owner?.user && asset?.owner?.user?.username
+              ? asset.owner.user.username
+              : shortenAddress(asset?.owner?.address),
+          ownerLink: asset?.owner?.address
+            ? `https://${IS_PRODUCTION ? "" : "testnets."}opensea.io/${
+                asset.owner.address
+              }`
+            : "",
         }
         dispatch(getPoolData(pool))
       } catch (e) {

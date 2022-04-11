@@ -6,6 +6,8 @@ export interface NFT {
   tokenId: string
   img?: string
   collectionTitle?: string
+  owner?: string
+  ownerLink?: string
 }
 
 export interface NFTBasePool extends NFT {
@@ -59,7 +61,7 @@ export interface Pool extends NFT {
 export const INITIAL_POOL: Pool = {
   nftName: "",
   owner: "",
-  ownerAddress: "",
+  ownerLink: "",
   address: "",
   nonce: -1,
   tokenId: "",

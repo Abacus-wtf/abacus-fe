@@ -40,12 +40,17 @@ const InfoBar: FunctionComponent = () => {
   const {
     tokensLocked,
     owner,
-    ownerAddress,
+    ownerLink,
     emissionsStarted,
     nftName,
     tokenPrice,
   } = useGetPoolData()
-  const tokensLockedEth = Number(tokensLocked) * Number(tokenPrice)
+  const tokensLockedEth = (
+    Number(tokensLocked) * Number(tokenPrice)
+  ).toLocaleString("en-US", {
+    maximumSignificantDigits: 5,
+    minimumSignificantDigits: 2,
+  })
   const tokensLockedUSD = useEthToUSD(Number(tokensLockedEth))
   const theme = useTheme()
   return (
@@ -66,10 +71,7 @@ const InfoBar: FunctionComponent = () => {
       <InfoBarItem>
         <InfoBarTitle>Owner</InfoBarTitle>
         <InfoBarContent>
-          <StyledOutboundLink
-            target="_blank"
-            href={`https://opensea.io/${ownerAddress}`}
-          >
+          <StyledOutboundLink target="_blank" href={ownerLink}>
             {owner}
           </StyledOutboundLink>
         </InfoBarContent>

@@ -3,7 +3,11 @@ import { PageProps, Link } from "gatsby"
 import * as queryString from "query-string"
 import { Media } from "abacus-ui"
 import styled, { createGlobalStyle } from "styled-components"
-import { useGetPoolData, useSetPoolData } from "@state/singlePoolData/hooks"
+import {
+  useGetPoolData,
+  useGetTraderProfileData,
+  useSetPoolData,
+} from "@state/singlePoolData/hooks"
 import { Container } from "../../layouts/styles"
 import InfoBar from "./InfoBar"
 import { CurrentState } from "./CurrentState"
@@ -50,10 +54,15 @@ const Pool: FunctionComponent<PoolProps> = ({ location }) => {
   const { address, tokenId, nonce } = queryString.parse(location.search)
   const poolData = useGetPoolData()
   const setPool = useSetPoolData()
+  const getTraderProfileData = useGetTraderProfileData()
 
   useEffect(() => {
     setPool(String(address), String(tokenId), Number(nonce))
   }, [address, tokenId, nonce, setPool, refresh])
+
+  useEffect(() => {
+    getTraderProfileData()
+  }, [getTraderProfileData])
 
   return (
     <Container>

@@ -1,11 +1,18 @@
 import { GRAPHQL_ENDPOINT } from "@config/constants"
 import request, { gql } from "graphql-request"
 
+export type SubgraphTokenPurchases = {
+  owner: string
+  amount: string
+  soldAt: number
+  timestamp: number
+}
+
 export type SubgraphTicket = {
   ticketNumber: string
-  amount: string
+
   vaultAddress: string
-  owner: string
+  tokenPurchases: SubgraphTokenPurchases[]
 }
 
 export type GetTicketQueryResponse = {
@@ -52,15 +59,19 @@ export const GET_TICKETS = (where: string | null) => gql`
   query GetTickets($first: Int!, $skip: Int!) {
     tickets(
       first: $first
-      orderBy: timestamp
+      orderBy: ticketNumber
       orderDirection: desc
       skip: $skip
       where: ${where}
     ) {
       ticketNumber
-      amount
       vaultAddress
-      owner
+    	tokenPurchases {
+        owner
+        amount
+        soldAt
+        timestamp
+      }
     }
   }
 `

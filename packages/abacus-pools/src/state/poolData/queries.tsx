@@ -1,5 +1,15 @@
 import { gql } from "graphql-request"
 
+export type SubgraphTokenPurchase = {
+  owner
+  amount
+}
+
+export type SubgraphTicket = {
+  id: string
+  tokenPurchases: SubgraphTokenPurchase[]
+}
+
 export type SubgraphVault = {
   id: string
   nftAddress: string
@@ -7,6 +17,7 @@ export type SubgraphVault = {
   owner: string
   status: number
   nonce: number
+  tickets: SubgraphTicket[]
 }
 
 export type GetVaultQueryResponse = {
@@ -72,10 +83,13 @@ export const GET_VAULTS = gql`
       tokenId
       owner
       status
+      nonce
       tickets {
         id
-        owner
-        amount
+        tokenPurchases {
+          owner
+          amount
+        }
       }
     }
   }

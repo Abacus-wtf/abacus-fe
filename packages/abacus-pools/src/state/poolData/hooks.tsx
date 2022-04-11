@@ -30,7 +30,7 @@ const findAsset = (
 
 const parseSubgraphVaults = async (vaults: SubgraphVault[]) => {
   const { assets } = await openseaGetMany(vaults)
-  const poolData: Pool[] = _.map(vaults, (session): Pool => {
+  const poolData: Pool[] = _.map(vaults, (session) => {
     const asset = findAsset(assets, session)
     return {
       img: (asset?.image_preview_url || asset?.image_url) ?? "",

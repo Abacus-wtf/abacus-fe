@@ -224,7 +224,7 @@ export const useOnPurchaseTokens = () => {
             } else {
               runningTokenAmount -= spaceLeft
             }
-            ticketArray.push(i)
+            ticketArray.push(parseEther(`${i}`))
             purchaseAmount.push(parseEther(`${spaceLeft}`).toString())
           }
         }
@@ -295,7 +295,7 @@ export const useOnPurchaseIndividualTicket = () => {
       const args = [
         account,
         account,
-        ticket,
+        parseEther(`${ticket}`),
         parseEther(tokenAmount),
         lockupPeriod,
       ]

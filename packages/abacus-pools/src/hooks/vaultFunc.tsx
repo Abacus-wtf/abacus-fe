@@ -240,6 +240,7 @@ export const useOnPurchaseTokens = () => {
       )
         .mul(BigNumber.from(10025))
         .div(BigNumber.from(10000))
+      console.log(value)
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Purchase Locked Up Tokens",

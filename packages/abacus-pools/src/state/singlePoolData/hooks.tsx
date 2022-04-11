@@ -181,6 +181,7 @@ export const useSetPoolData = () => {
   const dispatch = useDispatch<AppDispatch>()
   const factory = useWeb3Contract(FACTORY_ABI)
   const erc721 = useWeb3Contract(ERC_721_ABI)
+  const vaultIndividual = useWeb3Contract(VAULT_ABI)
   const vault = useMultiCall(VAULT_ABI)
   const closePool = useMultiCall(CLOSE_POOL_ABI)
   const { account } = useActiveWeb3React()
@@ -199,12 +200,14 @@ export const useSetPoolData = () => {
           ),
           erc721(address).methods.ownerOf(tokenId).call(),
         ])
+        console.log("here")
         const [closePoolContract, tokensLocked, symbol, emissionsStarted] =
           await vault(
             vaultAddress,
             ["closePoolContract", "tokensLocked", "symbol", "emissionsStarted"],
             [[], [], [], [], [], []]
           )
+        console.log(vaultAddress)
 
         let creditsAvailable = BigNumber.from(0)
         let approved = false
@@ -213,17 +216,21 @@ export const useSetPoolData = () => {
         let ownerOfNFT = ""
         if (account) {
           const [
-            multi,
+            finalCreditCount,
+            getTokensLocked,
+            traderProfile,
             approval,
             approvalBribe,
             _ownerOfNFT,
             { tickets: _tickets },
           ] = await Promise.all([
-            vault(
-              vaultAddress,
-              ["getCreditsAvailableForPurchase"],
-              [[account, moment().unix()]]
-            ),
+            vaultIndividual(vaultAddress)
+              .methods.getFinalCreditCount(account)
+              .call(),
+            vaultIndividual(vaultAddress)
+              .methods.getTokensLocked(account)
+              .call(),
+            vaultIndividual(vaultAddress).methods.traderProfile(account).call(),
             erc721(address)
               .methods.isApprovedForAll(account, vaultAddress)
               .call(),
@@ -239,7 +246,24 @@ export const useSetPoolData = () => {
           ])
           ownerOfNFT = _ownerOfNFT
           tickets = _tickets
-          creditsAvailable = multi[0][0]
+          const tokensLockedBigNumb = BigNumber.from(getTokensLocked)
+            .mul(BigNumber.from("1000000000000000"))
+            .div(BigNumber.from("1000000000000000000"))
+          creditsAvailable = tokensLockedBigNumb.add(
+            BigNumber.from(finalCreditCount).sub(
+              tokensLockedBigNumb.mul(
+                BigNumber.from(moment().unix())
+                  .sub(BigNumber.from(traderProfile.startTime))
+                  .div(BigNumber.from(43200))
+                  .div(
+                    BigNumber.from(traderProfile.timeUnlock).sub(
+                      BigNumber.from(traderProfile.startTime)
+                    )
+                  )
+                  .div(BigNumber.from(43200))
+              )
+            )
+          )
           approved = approval
           approvedBribeFactory = approvalBribe
         }
@@ -266,7 +290,7 @@ export const useSetPoolData = () => {
             profit: 0,
             principalCalculated: false,
             hasTickets: tickets.length > 0,
-            creditsAvailableForPurchase: 0,
+            creditsAvailableForPurchase: "0",
             ownedTickets: _.map(tickets, (ticket) => ticket.ticketNumber),
             isNFTClaimed:
               ownerOfNFT !== "" &&
@@ -283,7 +307,7 @@ export const useSetPoolData = () => {
                 isAccountClaimed,
                 claimPreviousBid,
               ],
-              [getTokensLocked, tokensLocked, creditsAvailableForPurchase],
+              [getTokensLocked, tokensLocked],
             ] = await Promise.all([
               closePool(
                 closePoolContract[0],
@@ -297,12 +321,8 @@ export const useSetPoolData = () => {
               ),
               vault(
                 vaultAddress,
-                [
-                  "getTokensLocked",
-                  "tokensLocked",
-                  "getCreditsAvailableForPurchase",
-                ],
-                [[account], [], [account, moment().unix()]]
+                ["getTokensLocked", "tokensLocked"],
+                [[account], []]
               ),
             ])
 
@@ -312,10 +332,8 @@ export const useSetPoolData = () => {
               (Number(formatEther(auctionPremium[0])) *
                 Number(formatEther(getTokensLocked[0]))) /
               Number(formatEther(tokensLocked[0]))
-            auction.creditsAvailableForPurchase = Number(
-              formatEther(creditsAvailableForPurchase[0])
-            )
             auction.claimPreviousBid = claimPreviousBid[0]
+            auction.creditsAvailableForPurchase = creditsAvailable.toString()
           }
         }
 

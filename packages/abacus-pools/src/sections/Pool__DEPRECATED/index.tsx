@@ -112,12 +112,12 @@ const Pool = ({ location }) => {
             </>
           ) : null}
 
-          <VerticalSmallGapContainer style={{ minHeight: 90 }}>
+          <VerticalSmallGapContainer style={{ minHeight: 60 }}>
             <SubText>{poolData.collectionTitle}</SubText>
             <Title>
               {poolData.nftName} #{poolData.tokenId}
             </Title>
-            <SubText>
+            {/* <SubText>
               Owned by{" "}
               <OutboundLink
                 target="_blank"
@@ -125,7 +125,7 @@ const Pool = ({ location }) => {
               >
                 {poolData.owner}
               </OutboundLink>
-            </SubText>
+                </SubText> */}
           </VerticalSmallGapContainer>
           <CurrentState
             page={page}

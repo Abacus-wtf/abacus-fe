@@ -181,7 +181,7 @@ const AMM = (props: AMMProps) => {
           isPendingIndividual ||
           (props.currentTicket &&
             Number(outputAmount) > TICKET_SIZE - props.currentTicket.amount) ||
-          moment(startDate).unix() <= moment().add(7, "days").unix() ||
+          moment(startDate).unix() <= moment().add(12, "hours").unix() ||
           Number.isNaN(Number(inputAmount)) ||
           Number(inputAmount) === 0 ||
           (isTokenFirst && Number(inputAmount) > Number(poolData.balance)) ||

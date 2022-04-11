@@ -31,7 +31,7 @@ const CurrentPosition = () => {
       <Stat title="Credits Purchased:" value={traderData.creditsPurchased} />
       <Stat
         title="Unlock Time:"
-        value={moment().add(traderData.timeUnlock).fromNow()}
+        value={moment(traderData.timeUnlock * 1000).fromNow()}
       />
       <TicketContainer>
         {traderData.ticketsOwned &&

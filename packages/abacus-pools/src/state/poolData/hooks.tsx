@@ -3,11 +3,7 @@ import { AppDispatch, AppState } from "@state/index"
 import { useDispatch, useSelector } from "react-redux"
 import request from "graphql-request"
 import { GRAPHQL_ENDPOINT } from "@config/constants"
-import {
-  openseaGetMany,
-  OpenSeaGetResponse,
-  shortenAddress,
-} from "@config/utils"
+import { openseaGetMany, OpenSeaGetResponse } from "@config/utils"
 import _ from "lodash"
 import { useActiveWeb3React } from "@hooks/index"
 import { getPools, getMyPools } from "./actions"
@@ -49,11 +45,6 @@ const parseSubgraphVaults = async (vaults: SubgraphVault[]) => {
       nftName: asset?.name ?? "",
       address: session.nftAddress,
       tokenId: session.tokenId,
-      ownerAddress: asset?.owner?.address ?? "",
-      owner:
-        asset?.owner?.user && asset?.owner?.user?.username
-          ? asset?.owner?.user?.username
-          : shortenAddress(asset?.owner?.address),
       vaultAddress: session.id,
     }
   })

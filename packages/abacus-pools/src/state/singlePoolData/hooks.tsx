@@ -14,7 +14,7 @@ import {
   IS_PRODUCTION,
   ZERO_ADDRESS,
 } from "@config/constants"
-import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
+import { OpenSeaAsset, openseaGet } from "@config/utils"
 import { formatEther } from "ethers/lib/utils"
 import moment from "moment"
 import { BigNumber } from "ethers"
@@ -199,23 +199,12 @@ export const useSetPoolData = () => {
           ),
           erc721(address).methods.ownerOf(tokenId).call(),
         ])
-        const [
-          owner,
-          closePoolContract,
-          tokensLocked,
-          symbol,
-          emissionsStarted,
-        ] = await vault(
-          vaultAddress,
-          [
-            "vaultOwner",
-            "closePoolContract",
-            "tokensLocked",
-            "symbol",
-            "emissionsStarted",
-          ],
-          [[], [], [], [], [], []]
-        )
+        const [closePoolContract, tokensLocked, symbol, emissionsStarted] =
+          await vault(
+            vaultAddress,
+            ["closePoolContract", "tokensLocked", "symbol", "emissionsStarted"],
+            [[], [], [], [], [], []]
+          )
 
         let creditsAvailable = BigNumber.from(0)
         let approved = false
@@ -339,14 +328,10 @@ export const useSetPoolData = () => {
           nonce,
           collectionTitle: asset.collection.name,
           nftName: asset.name || "",
-          owner: shortenAddress(owner[0]),
-          ownerAddress: owner[0],
           symbol: symbol[0],
           tokensLocked: formatEther(tokensLocked[0]),
           tokenPrice: IS_PRODUCTION ? ".001" : "0.001",
-          isManager:
-            String(owner[0]).toLowerCase() === account.toLowerCase() ||
-            ownerOf.toLowerCase() === account.toLowerCase(),
+          isManager: ownerOf.toLowerCase() === account.toLowerCase(),
           creditsAvailable: BigNumber.from(creditsAvailable).toString(),
           state:
             closePoolContract[0] === ZERO_ADDRESS

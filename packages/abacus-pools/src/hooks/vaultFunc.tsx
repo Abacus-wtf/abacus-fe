@@ -10,6 +10,7 @@ import _ from "lodash"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { formatEther, parseEther } from "ethers/lib/utils"
 import { BigNumber } from "ethers"
+import { TICKET_SIZE } from "@config/constants"
 import VAULT_ABI from "../config/contracts/ABC_VAULT_ABI.json"
 import ERC_721_ABI from "../config/contracts/ERC_721_ABI.json"
 
@@ -223,7 +224,7 @@ export const useOnPurchaseTokens = () => {
             } else {
               runningTokenAmount -= spaceLeft
             }
-            ticketArray.push(i)
+            ticketArray.push(parseEther(`${i}`))
             purchaseAmount.push(parseEther(`${spaceLeft}`).toString())
           }
         }
@@ -233,6 +234,7 @@ export const useOnPurchaseTokens = () => {
       const method = vaultContract.purchaseMulti
       const estimate = vaultContract.estimateGas.purchaseMulti
       const args = [account, account, ticketArray, purchaseAmount, lockupPeriod]
+      console.log(args)
       const value = parseEther(
         `${Number(tokenAmount) * Number(poolData.tokenPrice)}`
       )
@@ -293,7 +295,7 @@ export const useOnPurchaseIndividualTicket = () => {
       const args = [
         account,
         account,
-        ticket,
+        parseEther(`${ticket}`),
         parseEther(tokenAmount),
         lockupPeriod,
       ]

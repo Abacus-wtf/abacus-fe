@@ -128,9 +128,8 @@ export const useGetTraderProfileData = () => {
     traderProfile.tokensLocked = formatEther(traderProfile.tokensLocked)
     traderProfile.ticketsOwned = []
     _.forEach(tickets, (ticket) => {
-      traderProfile.ticketsOwned[
-        BigNumber.from(ticket.ticketNumber).toNumber()
-      ] = formatEther(ticket.amount)
+      traderProfile.ticketsOwned[formatEther(ticket.ticketNumber)] =
+        formatEther(ticket.amount)
     })
     console.log(traderProfile)
     dispatch(getTraderProfile(traderProfile))

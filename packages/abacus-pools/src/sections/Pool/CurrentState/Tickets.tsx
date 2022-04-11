@@ -11,7 +11,7 @@ import _ from "lodash"
 import { Ticket as ITicket } from "@state/singlePoolData/reducer"
 import { Modal, ModalBody } from "shards-react"
 import { ButtonsWhite } from "@components/Button"
-import { useOnSellToken } from "@hooks/vaultFunc"
+// import { useOnSellToken } from "@hooks/vaultFunc"
 import { TICKET_SIZE } from "@config/constants"
 import AMM from "./AMM"
 import { StateComponent } from "."
@@ -43,7 +43,6 @@ const Ticket = ({ order, amount, onClick }: TicketProps) => (
 
 enum Tabs {
   Buy = "Purchase",
-  Sell = "Sell",
   FutureOrder = "Create Bid",
   PendingOrders = "View Pending Orders",
 }
@@ -57,7 +56,7 @@ const Tickets = ({ refresh }: StateComponent) => {
   const tickets = useTickets()
   const poolData = useGetPoolData()
   const traderData = useTraderProfile()
-  const { onSellToken, isPending: isPendingSell } = useOnSellToken()
+  // const { onSellToken, isPending: isPendingSell } = useOnSellToken()
 
   useEffect(() => {
     getTickets()
@@ -81,7 +80,7 @@ const Tickets = ({ refresh }: StateComponent) => {
             <Tab disabled={tab === Tabs.Buy} onClick={() => setTab(Tabs.Buy)}>
               Buy
             </Tab>
-            {currentTicket &&
+            {/* currentTicket &&
             !currentTicket.ownToken &&
             Number(traderData.ticketsOpen) === 0 ? (
               <></>
@@ -92,7 +91,7 @@ const Tickets = ({ refresh }: StateComponent) => {
               >
                 Sell
               </Tab>
-            )}
+            ) */}
             {currentTicket && currentTicket.amount === TICKET_SIZE ? (
               <></>
             ) : (
@@ -112,8 +111,7 @@ const Tickets = ({ refresh }: StateComponent) => {
                 setIsModalOpen(false)
               }}
               currentTicket={currentTicket}
-            />
-          ) : tab === Tabs.Sell ? (
+            /> /*: tab === Tabs.Sell ? (
             <>
               <Button
                 onClick={() => {
@@ -127,6 +125,7 @@ const Tickets = ({ refresh }: StateComponent) => {
                 {isPendingSell ? "Loading..." : "Sell Ticket"}
               </Button>
             </>
+          ) */
           ) : (
             <FutureOrder
               currentTicket={currentTicket}

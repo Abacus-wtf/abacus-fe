@@ -23,6 +23,7 @@ const CurrentPosition = () => {
   if (!traderData) {
     return <div>Loading...</div>
   }
+  console.log("tickets", Object.keys(traderData.ticketsOwned))
   return (
     <Container>
       <Stat title="Number of Tokens Locked:" value={traderData.tokensLocked} />

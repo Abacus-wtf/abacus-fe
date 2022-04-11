@@ -7,6 +7,9 @@ import { useGetPoolData, useSetPoolData } from "@state/singlePoolData/hooks"
 import { Container } from "../../layouts/styles"
 import InfoBar from "./InfoBar"
 import { CurrentState } from "./CurrentState"
+import TokenLockHistory from "./TokenLockHistory"
+import EntryLevels from "./EntryLevels"
+import Activity from "./Activity"
 
 const BackLink = styled(Link)`
   display: none;
@@ -15,6 +18,7 @@ const BackLink = styled(Link)`
     display: flex;
   `}
 `
+
 const GlobalStyle = createGlobalStyle<{ url: string }>`
 body {
   &::before {
@@ -25,6 +29,15 @@ body {
     height: 100%;
   }
 }
+`
+
+const SplitSection = styled.div`
+  display: grid;
+  gap: 32px;
+
+  ${Media.md`
+    grid-template-columns: repeat(2, calc(50% - 16px));
+  `}
 `
 
 type PoolProps = {
@@ -48,6 +61,11 @@ const Pool: FunctionComponent<PoolProps> = ({ location }) => {
       <BackLink to="/">{"< Back to Spot"}</BackLink>
       <InfoBar />
       <CurrentState refreshPoolData={refreshPoolData} />
+      <SplitSection>
+        <TokenLockHistory />
+        <EntryLevels />
+      </SplitSection>
+      <Activity />
     </Container>
   )
 }

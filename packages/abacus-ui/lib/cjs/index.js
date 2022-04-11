@@ -192,7 +192,7 @@ var FontImport = function () { return styled.css(templateObject_1$T || (template
 var Font = function (size, fontFamily) {
     if (size === void 0) { size = "kilo"; }
     if (fontFamily === void 0) { fontFamily = "Inter"; }
-    return styled.css(templateObject_2$u || (templateObject_2$u = __makeTemplateObject(["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ", ";\n"], ["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ",
+    return styled.css(templateObject_2$t || (templateObject_2$t = __makeTemplateObject(["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ", ";\n"], ["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ",
         ";\n"])), fontFamily, function (_a) {
         var theme = _a.theme;
         return (theme === null || theme === void 0 ? void 0 : theme.copy) ? theme.copy[size] : defaultTheme.copy[size];
@@ -228,7 +228,7 @@ var Media = breakpoints.reduce(function (accumulator, _a) {
     lg: styled.css,
     xl: styled.css,
 });
-var templateObject_1$T, templateObject_2$u, templateObject_3$k;
+var templateObject_1$T, templateObject_2$t, templateObject_3$k;
 
 var Container$E = styled__default["default"].div(templateObject_1$S || (templateObject_1$S = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("exa"));
 var templateObject_1$S;
@@ -287,7 +287,7 @@ var InputContainer = styled__default["default"].div(templateObject_4$a || (templ
     "\n"])), function (_a) {
     var disabled = _a.disabled;
     return disabled
-        ? styled.css(templateObject_2$t || (templateObject_2$t = __makeTemplateObject(["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "], ["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "]))) : "";
+        ? styled.css(templateObject_2$s || (templateObject_2$s = __makeTemplateObject(["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "], ["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "]))) : "";
 }, function (_a) {
     var required = _a.required, pristine = _a.pristine, theme = _a.theme, value = _a.value;
     return required && !pristine && !value
@@ -322,10 +322,9 @@ var Input = function (_a) {
             React__default["default"].createElement(StyledInput$2, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); }, disabled: disabled, "aria-disabled": disabled, required: required, onFocus: function () { return setPristine(false); }, step: step })),
         hint && React__default["default"].createElement(StyledKilo$3, null, hint)));
 };
-var templateObject_1$B, templateObject_2$t, templateObject_3$j, templateObject_4$a, templateObject_5$8, templateObject_6$6, templateObject_7$4, templateObject_8$2, templateObject_9$2;
+var templateObject_1$B, templateObject_2$s, templateObject_3$j, templateObject_4$a, templateObject_5$8, templateObject_6$6, templateObject_7$4, templateObject_8$2, templateObject_9$2;
 
-var Section = styled__default["default"].section(templateObject_2$s || (templateObject_2$s = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ",
-    "\n"])), function (_a) {
+var Section = styled__default["default"].section(templateObject_1$A || (templateObject_1$A = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.utility.white;
 }, function (_a) {
@@ -334,8 +333,8 @@ var Section = styled__default["default"].section(templateObject_2$s || (template
 }, function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.section;
-}, Media.sm(templateObject_1$A || (templateObject_1$A = __makeTemplateObject(["\n    flex-direction: row;\n    align-items: center;\n    justify-content: flex-start;\n  "], ["\n    flex-direction: row;\n    align-items: center;\n    justify-content: flex-start;\n  "]))));
-var templateObject_1$A, templateObject_2$s;
+});
+var templateObject_1$A;
 
 exports.ButtonType = void 0;
 (function (ButtonType) {

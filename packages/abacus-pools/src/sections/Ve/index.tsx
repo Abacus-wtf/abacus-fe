@@ -174,7 +174,11 @@ const Ve: React.FC = () => {
       Number(formatEther(veHolderHistory[3])) === 0 &&
         BigNumber.from(veHolderHistory[0]).toNumber() < moment().unix()
     )
-    setVeAbcBalance(formatEther(veBalance[0]))
+    setVeAbcBalance(
+      BigNumber.from(veBalance[0])
+        .sub(BigNumber.from(veHolderHistory[3]))
+        .toString()
+    )
     setABCMaxBalance(balance)
     setHolderData({
       timeUnlock: BigNumber.from(veHolderHistory[0]).mul(1000).toNumber(),

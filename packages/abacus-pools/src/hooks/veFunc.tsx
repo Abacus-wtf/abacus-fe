@@ -3,6 +3,7 @@ import { getContract } from "@config/utils"
 import { VE_ABC_TOKEN } from "@config/constants"
 import { useActiveWeb3React, useGeneralizedContractCall } from "@hooks/index"
 import { useTransactionAdder } from "@state/transactions/hooks"
+import { parseEther } from "ethers/lib/utils"
 import VE_ABC_TOKEN_ABI from "../config/contracts/VE_ABC_TOKEN_ABI.json"
 
 export const useOnLockTokens = () => {
@@ -140,8 +141,9 @@ export const useOnAllocateTokens = () => {
       )
       const method = veContract.allocateToCollection
       const estimate = veContract.estimateGas.allocateToCollection
-      const args = [collection, amount]
+      const args = [collection, parseEther(`${amount}`)]
       const value = null
+      console.log(args)
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Allocate Tokens",
@@ -185,7 +187,7 @@ export const useOnChangeAllocation = () => {
       )
       const method = veContract.changeAllocationTarget
       const estimate = veContract.estimateGas.changeAllocationTarget
-      const args = [currentCollection, newCollection, amount]
+      const args = [currentCollection, newCollection, parseEther(`${amount}`)]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -225,7 +227,7 @@ export const useOnRemoveAllocation = () => {
       )
       const method = veContract.removeAllocation
       const estimate = veContract.estimateGas.removeAllocation
-      const args = [collection, amount]
+      const args = [collection, parseEther(`${amount}`)]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -286,46 +288,6 @@ export const useOnAddAutoAllocation = () => {
   )
   return {
     onAddAutoAllocation,
-    isPending,
-  }
-}
-
-export const useOnAddAllocation = () => {
-  const { account, library } = useActiveWeb3React()
-  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
-  const addTransaction = useTransactionAdder()
-
-  const onAddAllocation = useCallback(
-    async (amount: number, contract: string, cb: () => void) => {
-      const veContract = getContract(
-        VE_ABC_TOKEN,
-        VE_ABC_TOKEN_ABI,
-        library,
-        account
-      )
-      const method = veContract.allocateToCollection
-      const estimate = veContract.estimateGas.allocateToCollection
-      const args = [contract, amount]
-      const value = null
-      const txnCb = async (response: any) => {
-        addTransaction(response, {
-          summary: "Add Allocation",
-        })
-        await response.wait()
-        cb()
-      }
-      await generalizedContractCall({
-        method,
-        estimate,
-        args,
-        value,
-        cb: txnCb,
-      })
-    },
-    [library, account, generalizedContractCall, addTransaction]
-  )
-  return {
-    onAddAllocation,
     isPending,
   }
 }

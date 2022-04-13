@@ -272,11 +272,6 @@
       },
       {
         "internalType": "uint256",
-        "name": "_time",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
       }
@@ -420,11 +415,6 @@
         "internalType": "address",
         "name": "_user",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_time",
-        "type": "uint256"
       }
     ],
     "name": "getCreditsAvailableForPurchase",

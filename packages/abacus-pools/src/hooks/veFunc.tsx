@@ -215,7 +215,7 @@ export const useOnRemoveAllocation = () => {
   const { generalizedContractCall, isPending } = useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
 
-  const onRemoveAlloction = useCallback(
+  const onRemoveAllocation = useCallback(
     async (collection: string, amount: number, cb: () => void) => {
       const veContract = getContract(
         VE_ABC_TOKEN,
@@ -245,7 +245,7 @@ export const useOnRemoveAllocation = () => {
     [library, account, generalizedContractCall, addTransaction]
   )
   return {
-    onRemoveAlloction,
+    onRemoveAllocation,
     isPending,
   }
 }
@@ -286,6 +286,46 @@ export const useOnAddAutoAllocation = () => {
   )
   return {
     onAddAutoAllocation,
+    isPending,
+  }
+}
+
+export const useOnAddAllocation = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+
+  const onAddAllocation = useCallback(
+    async (amount: number, contract: string, cb: () => void) => {
+      const veContract = getContract(
+        VE_ABC_TOKEN,
+        VE_ABC_TOKEN_ABI,
+        library,
+        account
+      )
+      const method = veContract.allocateToCollection
+      const estimate = veContract.estimateGas.allocateToCollection
+      const args = [contract, amount]
+      const value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Add Allocation",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [library, account, generalizedContractCall, addTransaction]
+  )
+  return {
+    onAddAllocation,
     isPending,
   }
 }

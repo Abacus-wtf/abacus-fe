@@ -27,7 +27,7 @@ import {
 import "react-datepicker/dist/react-datepicker.css"
 import { StateComponent } from "./index"
 
-const DatePickerStyled = styled(DatePicker)`
+export const DatePickerStyled = styled(DatePicker)`
   padding: 10px 15px;
   width: 100%;
   margin: 0px 0px 15px 0px;

@@ -266,7 +266,7 @@ export const useSetPoolData = () => {
             profit: 0,
             principalCalculated: false,
             hasTickets: tickets.length > 0,
-            creditsAvailableForPurchase: 0,
+            creditsAvailableForPurchase: "0",
             ownedTickets: _.map(tickets, (ticket) => ticket.ticketNumber),
             isNFTClaimed:
               ownerOfNFT !== "" &&
@@ -312,9 +312,10 @@ export const useSetPoolData = () => {
               (Number(formatEther(auctionPremium[0])) *
                 Number(formatEther(getTokensLocked[0]))) /
               Number(formatEther(tokensLocked[0]))
-            auction.creditsAvailableForPurchase = Number(
-              formatEther(creditsAvailableForPurchase[0])
+            auction.creditsAvailableForPurchase = formatEther(
+              creditsAvailableForPurchase[0]
             )
+
             auction.claimPreviousBid = claimPreviousBid[0]
           }
         }

@@ -111,8 +111,9 @@ export const useUnlockPosition = () => {
       )
       const method = vaultContract.sellToken
       const estimate = vaultContract.estimateGas.sellToken
-      const args = [account, tokens]
+      const args = [account, _.map(tokens, (token) => parseEther(token))]
       const value = null
+      console.log(args)
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Unlock Position",
@@ -224,7 +225,7 @@ export const useOnPurchaseTokens = () => {
             } else {
               runningTokenAmount -= spaceLeft
             }
-            ticketArray.push(i)
+            ticketArray.push(parseEther(`${i}`))
             purchaseAmount.push(parseEther(`${spaceLeft}`).toString())
           }
         }
@@ -240,6 +241,7 @@ export const useOnPurchaseTokens = () => {
       )
         .mul(BigNumber.from(10025))
         .div(BigNumber.from(10000))
+      console.log(value)
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Purchase Locked Up Tokens",
@@ -295,7 +297,7 @@ export const useOnPurchaseIndividualTicket = () => {
       const args = [
         account,
         account,
-        ticket,
+        parseEther(`${ticket}`),
         parseEther(tokenAmount),
         lockupPeriod,
       ]
@@ -390,7 +392,7 @@ export const useOnSellToken = () => {
   const poolData = useGetPoolData()
 
   const onSellToken = useCallback(
-    async (ticket: number, cb: () => void) => {
+    async (ticket: string, cb: () => void) => {
       const vaultContract = getContract(
         poolData.vaultAddress,
         VAULT_ABI,

@@ -206,6 +206,8 @@ const Ve: React.FC = () => {
         console.error(e)
       }
     }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
   }, [epoch, account])
 
   if (holderData === null || epochData === null) {

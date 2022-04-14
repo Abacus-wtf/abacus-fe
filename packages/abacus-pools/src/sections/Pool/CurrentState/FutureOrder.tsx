@@ -128,6 +128,7 @@ const FutureOrder = (props: FutureOrderProps) => {
         </LabelRow>
       </InputContainer>
       <DatePickerStyled
+        showTimeSelect
         selected={startDate}
         onChange={(date: Date) => setStartDate(date)}
       />

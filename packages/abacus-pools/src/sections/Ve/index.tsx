@@ -373,6 +373,7 @@ const Ve: React.FC = () => {
           </InfoSectionContainer>
           {Number(veAbcBalance) === 0 && (
             <DatePickerStyled
+              showTimeSelect
               selected={startDate}
               onChange={(date: Date) => setStartDate(date)}
             />

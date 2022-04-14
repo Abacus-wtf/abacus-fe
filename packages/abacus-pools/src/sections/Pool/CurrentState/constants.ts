@@ -21,7 +21,7 @@ export const durations = IS_PRODUCTION
       {
         label: "5 Minutes",
         id: "5_hour_duration",
-        value: "0.00347222222",
+        value: Math.round(5 / 24 / 60).toString(),
       },
       {
         label: "12 Hours",

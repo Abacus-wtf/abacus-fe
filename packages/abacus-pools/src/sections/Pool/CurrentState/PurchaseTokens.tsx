@@ -126,9 +126,7 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
   }, [numTickets, percentTicketsSold])
 
   const purchaseTokens = async () => {
-    const endDate = new Date().setDate(new Date().getDate() + lockDuration)
-    const now = +new Date()
-    const duration = (endDate - now) / 1000
+    const duration = Math.round(lockDuration * 24 * 60 * 60)
 
     await onPurchaseTokens(numTokens, duration, async () => {
       // await getBalance()

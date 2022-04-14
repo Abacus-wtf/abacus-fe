@@ -28,7 +28,7 @@ export interface Auction {
   profit: number
   principalCalculated: boolean
   hasTickets: boolean
-  creditsAvailableForPurchase: number
+  creditsAvailableForPurchase: string
   isNFTClaimed: boolean
   isAccountClaimed: boolean
   claimPreviousBid: boolean

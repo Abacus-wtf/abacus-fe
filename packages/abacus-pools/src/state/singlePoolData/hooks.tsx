@@ -16,17 +16,17 @@ import {
 } from "@config/constants"
 import { OpenSeaAsset, openseaGet } from "@config/utils"
 import { formatEther } from "ethers/lib/utils"
-import moment from "moment"
 import { BigNumber } from "ethers"
 import _ from "lodash"
 import { PAGINATE_BY } from "@state/poolData/constants"
 import request from "graphql-request"
+import { createSelector } from "@reduxjs/toolkit"
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"
 import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
-import { Bribe, Ticket } from "./reducer"
+import { Bribe } from "./reducer"
 import {
   GetTicketQueryResponse,
-  GetVaultVariables,
+  GetTicketVariables,
   GET_TICKETS,
 } from "./queries"
 
@@ -62,6 +62,23 @@ export const useTickets = () =>
   useSelector<AppState, AppState["singlePoolData"]["tickets"]>(
     getTicketsSelector
   )
+
+export const useEntryLevels = () => {
+  const entryLevelsSelector = createSelector(
+    getTicketsSelector,
+    (tickets) =>
+      tickets?.map((ticket) => ({
+        ticketNumber: ticket.ticketNumber,
+        amount: ticket.tokenPurchases.reduce(
+          (acc, tokenPurchase) =>
+            acc + Number.parseFloat(formatEther(tokenPurchase.amount)),
+
+          0
+        ),
+      })) ?? []
+  )
+  return useSelector(entryLevelsSelector)
+}
 
 export const useGetBribeData = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -110,71 +127,60 @@ export const useGetTraderProfileData = () => {
   return useCallback(async () => {
     if (poolData.vaultAddress === undefined) return
 
-    const variables: GetVaultVariables = {
+    const variables: GetTicketVariables = {
       first: PAGINATE_BY,
       skip: 0 * PAGINATE_BY,
+      where: {
+        vaultAddress: poolData.vaultAddress.toLowerCase(),
+      },
     }
 
     let [traderProfile, { tickets }] = await Promise.all([
       vault(poolData.vaultAddress).methods.traderProfile(account).call(),
-      request<GetTicketQueryResponse>(
-        GRAPHQL_ENDPOINT,
-        GET_TICKETS(
-          `{ owner: "${account.toLowerCase()}", vaultAddress: "${poolData.vaultAddress.toLowerCase()}" }`
-        ),
-        variables
-      ),
+      request<GetTicketQueryResponse>(GRAPHQL_ENDPOINT, GET_TICKETS, variables),
     ])
+    console.log("data.tickets", tickets)
     traderProfile.tokensLocked = formatEther(traderProfile.tokensLocked)
     traderProfile.ticketsOwned = []
     _.forEach(tickets, (ticket) => {
+      const totalTicketAmount = ticket.tokenPurchases.reduce(
+        (acc, tokenPurchase) =>
+          tokenPurchase.owner.toLowerCase() === account.toLowerCase()
+            ? acc.add(tokenPurchase.amount)
+            : acc,
+        BigNumber.from("0")
+      )
       traderProfile.ticketsOwned[
         BigNumber.from(ticket.ticketNumber).toNumber()
-      ] = formatEther(ticket.amount)
+      ] = formatEther(totalTicketAmount)
     })
-    console.log(traderProfile)
+    console.log("traderProfile", traderProfile)
     dispatch(getTraderProfile(traderProfile))
   }, [account, dispatch, vault, poolData])
 }
 
 export const useGetTickets = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const vault = useMultiCall(VAULT_ABI)
   const poolData = useGetPoolData()
-  const { account } = useActiveWeb3React()
 
   return useCallback(async () => {
-    if (poolData.vaultAddress === undefined) return
-    const variables: GetVaultVariables = {
+    if (poolData.vaultAddress === undefined) {
+      return
+    }
+    const variables: GetTicketVariables = {
       first: PAGINATE_BY,
       skip: 0 * PAGINATE_BY,
+      where: { vaultAddress: poolData.vaultAddress.toLowerCase() },
     }
-
-    const methods = _.map(_.range(0, 50), () => "ticketsPurchased")
-    const args = _.map(_.range(0, 50), (i) => [i])
-    const ticketFillings = await vault(poolData.vaultAddress, methods, args)
+    console.log("GetTickets", variables)
     const { tickets } = await request<GetTicketQueryResponse>(
       GRAPHQL_ENDPOINT,
-      GET_TICKETS(`{ owner: "${account.toLowerCase()}" }`),
+      GET_TICKETS,
       variables
     )
-    const ticketsReturned: Ticket[] = []
-    for (let i = 0; i < ticketFillings.length; i += 1) {
-      const hasOwnerBought = !_.find(
-        tickets,
-        (ticket) =>
-          Number(ticket.ticketNumber) === i &&
-          ticket.vaultAddress.toLowerCase() ===
-            poolData.vaultAddress.toLowerCase()
-      )
-      ticketsReturned.push({
-        order: i,
-        amount: Number(formatEther(ticketFillings[i][0])),
-        ownToken: hasOwnerBought,
-      })
-    }
-    dispatch(getTickets(ticketsReturned))
-  }, [dispatch, vault, poolData, account])
+
+    dispatch(getTickets(tickets))
+  }, [dispatch, poolData])
 }
 
 export const useSetPoolData = () => {
@@ -187,9 +193,10 @@ export const useSetPoolData = () => {
 
   return useCallback(
     async (address: string, tokenId: string, nonce: number) => {
-      const variables: GetVaultVariables = {
+      const variables: GetTicketVariables = {
         first: PAGINATE_BY,
         skip: 0 * PAGINATE_BY,
+        where: null,
       }
       try {
         const [vaultAddress, os, ownerOf] = await Promise.all([
@@ -211,6 +218,7 @@ export const useSetPoolData = () => {
         let approvedBribeFactory = false
         let tickets = []
         let ownerOfNFT = ""
+
         if (account) {
           const [
             multi,
@@ -233,19 +241,22 @@ export const useSetPoolData = () => {
             erc721(address).methods.ownerOf(tokenId).call(),
             request<GetTicketQueryResponse>(
               GRAPHQL_ENDPOINT,
-              GET_TICKETS(`{ owner: "${account.toLowerCase()}" }`),
+              GET_TICKETS,
               variables
             ),
           ])
           ownerOfNFT = _ownerOfNFT
-          tickets = _tickets
+          tickets = _tickets.filter((ticket) =>
+            ticket.tokenPurchases.some(
+              (token) => token.owner === account.toLowerCase()
+            )
+          )
           creditsAvailable = multi[0][0]
           approved = approval
           approvedBribeFactory = approvalBribe
         }
         let auction: Auction
         if (closePoolContract[0] !== ZERO_ADDRESS) {
-          console.log("here")
           const [auctionComplete, auctionEndTime, highestBid, highestBidder] =
             await closePool(
               closePoolContract[0],
@@ -302,7 +313,7 @@ export const useSetPoolData = () => {
                   "tokensLocked",
                   "getCreditsAvailableForPurchase",
                 ],
-                [[account], [], [account, moment().unix()]]
+                [[account], [], [account]]
               ),
             ])
 

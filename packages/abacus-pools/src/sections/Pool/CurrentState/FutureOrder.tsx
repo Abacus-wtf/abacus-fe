@@ -11,8 +11,7 @@ import { useOnFutureOrder } from "@hooks/vaultFunc"
 import styled from "styled-components"
 import { FormSelect } from "shards-react"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import { getTicketOwners } from "@state/singlePoolData/queries"
-import { Ticket } from "@state/singlePoolData/reducer"
+import { getTicketOwners, SubgraphTicket } from "@state/singlePoolData/queries"
 import _ from "lodash"
 import { shortenAddress } from "@config/utils"
 import {
@@ -37,7 +36,7 @@ const DatePickerStyled = styled(DatePicker)`
 `
 
 interface FutureOrderProps extends StateComponent {
-  currentTicket: Ticket
+  currentTicket: SubgraphTicket
 }
 
 const FutureOrder = (props: FutureOrderProps) => {
@@ -58,16 +57,18 @@ const FutureOrder = (props: FutureOrderProps) => {
   }, [account, networkSymbol])
 
   const getOwners = useCallback(async () => {
-    const tickets = await getTicketOwners(
-      poolData.vaultAddress,
-      props.currentTicket.order
-    )
+    const tickets = await getTicketOwners(poolData.vaultAddress)
     if (tickets.length === 0) {
       return
     }
-    setTicketOwners(_.uniq(tickets.map((ticket) => ticket.owner)))
-    setTicketOwner(tickets[0].owner)
-  }, [poolData.vaultAddress, props.currentTicket.order])
+    const owners = _.uniq(
+      tickets.map((ticket) =>
+        _.map(ticket.tokenPurchases, (tokenPurchases) => tokenPurchases.owner)
+      )
+    )
+    setTicketOwners(owners)
+    setTicketOwner(owners[0])
+  }, [poolData.vaultAddress, props.currentTicket])
 
   useEffect(() => {
     if (ethBalance === null) {
@@ -82,7 +83,7 @@ const FutureOrder = (props: FutureOrderProps) => {
   const handleButtonClick = async () => {
     await onFutureOrder(
       selectedTicketOwner,
-      props.currentTicket.order,
+      props.currentTicket.ticketNumber,
       moment(startDate).unix() - moment().unix(),
       parseFloat(inputAmount),
       async () => {

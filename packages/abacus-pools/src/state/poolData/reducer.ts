@@ -56,6 +56,14 @@ export interface Pool extends NFT {
   approvedBribeFactory?: boolean
 }
 
+export const INITIAL_POOL: Pool = {
+  nftName: "",
+  address: "",
+  nonce: -1,
+  tokenId: "",
+  state: PoolStatus.Normal,
+}
+
 interface PoolState {
   pools?: Pool[]
   myPools?: Pool[]

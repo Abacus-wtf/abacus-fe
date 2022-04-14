@@ -1,6 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit"
+import { SubgraphTicket } from "./queries"
 import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
-import { Pool } from "../poolData/reducer"
+import { INITIAL_POOL, Pool } from "../poolData/reducer"
 
 export interface TraderProfile {
   creditPurchasePercentage: number
@@ -15,25 +16,31 @@ export interface TraderProfile {
   }
 }
 
-export interface Ticket {
-  order: number
-  amount: number
-  ownToken: boolean
-}
-
 export interface Bribe {
   offeredBribeSize: number
   bribeOfferedByUser: number
 }
 
 export interface PoolState {
-  data?: Pool
+  data: Pool
   traderProfile?: TraderProfile
   bribe?: Bribe
-  tickets?: Ticket[]
+  tickets?: SubgraphTicket[]
 }
 
-const initialState: PoolState = {}
+const initialState: PoolState = {
+  data: INITIAL_POOL,
+  traderProfile: {
+    creditPurchasePercentage: 0,
+    ticketsOpen: 0,
+    startTime: 0,
+    timeUnlock: 0,
+    tokensLocked: 0,
+    finalCreditCount: 0,
+    creditsPurchased: 0,
+    ticketsOwned: {},
+  },
+}
 
 export default createReducer(initialState, (builder) =>
   builder

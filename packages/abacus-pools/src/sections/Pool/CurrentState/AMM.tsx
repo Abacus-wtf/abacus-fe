@@ -1,8 +1,9 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { useEffect, useState, useCallback } from "react"
 import Button from "@components/Button"
 import { NumericalInput } from "@components/Input"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import { TICKET_SIZE, web3 } from "@config/constants"
+import { NetworkSymbolEnum, TICKET_SIZE, web3 } from "@config/constants"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { formatEther } from "ethers/lib/utils"
 import { useActiveWeb3React } from "@hooks/index"
@@ -13,7 +14,7 @@ import {
   useOnPurchaseTokens,
 } from "@hooks/vaultFunc"
 import styled from "styled-components"
-import { Ticket } from "@state/singlePoolData/reducer"
+import { SubgraphTicket } from "@state/singlePoolData/queries"
 import {
   InfoSectionContainer,
   InputContainer,
@@ -37,7 +38,7 @@ export const DatePickerStyled = styled(DatePicker)`
 `
 
 interface AMMProps extends StateComponent {
-  currentTicket?: Ticket
+  currentTicket?: SubgraphTicket
 }
 
 const AMM = (props: AMMProps) => {
@@ -54,22 +55,28 @@ const AMM = (props: AMMProps) => {
     useOnPurchaseIndividualTicket()
 
   const getBalance = useCallback(async () => {
-    const provider = web3(networkSymbol)
-    const balance = await provider.eth.getBalance(account)
-    setEthBalance(parseFloat(formatEther(balance)))
+    if (
+      networkSymbol !== NetworkSymbolEnum.NONE &&
+      account !== null &&
+      account !== undefined
+    ) {
+      const provider = web3(networkSymbol)
+      const balance = await provider.eth.getBalance(account)
+      setEthBalance(parseFloat(formatEther(balance)))
+    }
   }, [account, networkSymbol])
 
   useEffect(() => {
     if (ethBalance === null) {
       getBalance()
     }
-  }, [account, ethBalance, networkSymbol, getBalance])
+  }, [account, ethBalance, networkSymbol])
 
   const handleButtonClick = async () => {
     if (props.currentTicket) {
       await onPurchaseIndividualTicket(
         outputAmount,
-        props.currentTicket.order,
+        props.currentTicket.ticketNumber,
         moment(startDate).unix() - moment().unix(),
         async () => {
           await getBalance()
@@ -104,9 +111,7 @@ const AMM = (props: AMMProps) => {
               <TinyTitles>
                 From: {isTokenFirst ? poolData.symbol : "ETH"}
               </TinyTitles>
-              <TinyTitles>
-                Balance: {isTokenFirst ? poolData.balance : ethBalance}
-              </TinyTitles>
+              <TinyTitles>Balance: {ethBalance}</TinyTitles>
             </BalanceContainer>
           </LabelRow>
           <LabelRow>
@@ -129,15 +134,9 @@ const AMM = (props: AMMProps) => {
               />
               <MaxButton
                 onClick={() => {
-                  setInputAmount(
-                    isTokenFirst ? `${poolData.balance}` : `${ethBalance}`
-                  )
+                  setInputAmount(`${ethBalance}`)
                   setOutputAmount(
-                    isTokenFirst
-                      ? `${
-                          Number(poolData.balance) * Number(poolData.tokenPrice)
-                        }`
-                      : `${Number(ethBalance) / Number(poolData.tokenPrice)}`
+                    `${Number(ethBalance) / Number(poolData.tokenPrice)}`
                   )
                 }}
               >
@@ -156,9 +155,6 @@ const AMM = (props: AMMProps) => {
             <BalanceContainer>
               <TinyTitles>
                 To: {isTokenFirst ? "ETH" : poolData.symbol}
-              </TinyTitles>
-              <TinyTitles>
-                Balance: {isTokenFirst ? ethBalance : poolData.balance}
               </TinyTitles>
             </BalanceContainer>
           </LabelRow>
@@ -180,12 +176,11 @@ const AMM = (props: AMMProps) => {
           isPending ||
           isPendingIndividual ||
           (props.currentTicket &&
-            Number(outputAmount) > TICKET_SIZE - props.currentTicket.amount) ||
+            Number(outputAmount) >
+              TICKET_SIZE - props.currentTicket.tokenPurchasesLength) ||
           moment(startDate).unix() <= moment().add(12, "hours").unix() ||
           Number.isNaN(Number(inputAmount)) ||
-          Number(inputAmount) === 0 ||
-          (isTokenFirst && Number(inputAmount) > Number(poolData.balance)) ||
-          (!isTokenFirst && Number(inputAmount) > Number(ethBalance))
+          Number(inputAmount) === 0
         }
       >
         {isPending ? "Loading..." : "Purchase Tokens"}

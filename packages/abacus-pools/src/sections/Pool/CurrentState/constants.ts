@@ -19,6 +19,11 @@ export const durations = IS_PRODUCTION
     ]
   : [
       {
+        label: "5 Minutes",
+        id: "5_hour_duration",
+        value: "0.00347222222",
+      },
+      {
         label: "12 Hours",
         id: "12_hour_duration",
         value: "0.5",

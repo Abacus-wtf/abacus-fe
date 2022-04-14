@@ -65,16 +65,18 @@ export const useTickets = () =>
   )
 
 export const useEntryLevels = () => {
-  const entryLevelsSelector = createSelector(getTicketsSelector, (tickets) =>
-    tickets.map((ticket) => ({
-      ticketNumber: ticket.ticketNumber,
-      amount: ticket.tokenPurchases.reduce(
-        (acc, tokenPurchase) =>
-          acc + Number.parseFloat(formatEther(tokenPurchase.amount)),
+  const entryLevelsSelector = createSelector(
+    getTicketsSelector,
+    (tickets) =>
+      tickets?.map((ticket) => ({
+        ticketNumber: ticket.ticketNumber,
+        amount: ticket.tokenPurchases.reduce(
+          (acc, tokenPurchase) =>
+            acc + Number.parseFloat(formatEther(tokenPurchase.amount)),
 
-        0
-      ),
-    }))
+          0
+        ),
+      })) ?? []
   )
   return useSelector(entryLevelsSelector)
 }
@@ -217,6 +219,7 @@ export const useSetPoolData = () => {
         let approvedBribeFactory = false
         let tickets = []
         let ownerOfNFT = ""
+
         if (account) {
           const [
             multi,
@@ -228,7 +231,7 @@ export const useSetPoolData = () => {
             vault(
               vaultAddress,
               ["getCreditsAvailableForPurchase"],
-              [[account, moment().unix()]]
+              [[account]]
             ),
             erc721(address)
               .methods.isApprovedForAll(account, vaultAddress)

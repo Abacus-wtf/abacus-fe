@@ -5,7 +5,7 @@ import { Media } from "abacus-ui"
 import styled, { createGlobalStyle } from "styled-components"
 import {
   useGetPoolData,
-  useGetTraderProfileData,
+  useGetTickets,
   useSetPoolData,
 } from "@state/singlePoolData/hooks"
 import { Container } from "../../layouts/styles"
@@ -54,15 +54,15 @@ const Pool: FunctionComponent<PoolProps> = ({ location }) => {
   const { address, tokenId, nonce } = queryString.parse(location.search)
   const poolData = useGetPoolData()
   const setPool = useSetPoolData()
-  const getTraderProfileData = useGetTraderProfileData()
+  const getTickets = useGetTickets()
 
   useEffect(() => {
     setPool(String(address), String(tokenId), Number(nonce))
   }, [address, tokenId, nonce, setPool, refresh])
 
   useEffect(() => {
-    getTraderProfileData()
-  }, [getTraderProfileData])
+    getTickets()
+  }, [getTickets])
 
   return (
     <Container>

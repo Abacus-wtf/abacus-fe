@@ -21,12 +21,13 @@ import { BigNumber } from "ethers"
 import _ from "lodash"
 import { PAGINATE_BY } from "@state/poolData/constants"
 import request from "graphql-request"
+import { createSelector } from "@reduxjs/toolkit"
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"
 import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
-import { Bribe, Ticket } from "./reducer"
+import { Bribe } from "./reducer"
 import {
   GetTicketQueryResponse,
-  GetVaultVariables,
+  GetTicketVariables,
   GET_TICKETS,
 } from "./queries"
 
@@ -62,6 +63,21 @@ export const useTickets = () =>
   useSelector<AppState, AppState["singlePoolData"]["tickets"]>(
     getTicketsSelector
   )
+
+export const useEntryLevels = () => {
+  const entryLevelsSelector = createSelector(getTicketsSelector, (tickets) =>
+    tickets.map((ticket) => ({
+      ticketNumber: ticket.ticketNumber,
+      amount: ticket.tokenPurchases.reduce(
+        (acc, tokenPurchase) =>
+          acc + Number.parseFloat(formatEther(tokenPurchase.amount)),
+
+        0
+      ),
+    }))
+  )
+  return useSelector(entryLevelsSelector)
+}
 
 export const useGetBribeData = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -110,20 +126,17 @@ export const useGetTraderProfileData = () => {
   return useCallback(async () => {
     if (poolData.vaultAddress === undefined) return
 
-    const variables: GetVaultVariables = {
+    const variables: GetTicketVariables = {
       first: PAGINATE_BY,
       skip: 0 * PAGINATE_BY,
+      where: {
+        vaultAddress: poolData.vaultAddress.toLowerCase(),
+      },
     }
 
     let [traderProfile, { tickets }] = await Promise.all([
       vault(poolData.vaultAddress).methods.traderProfile(account).call(),
-      request<GetTicketQueryResponse>(
-        GRAPHQL_ENDPOINT,
-        GET_TICKETS(
-          `{ vaultAddress: "${poolData.vaultAddress.toLowerCase()}" }`
-        ),
-        variables
-      ),
+      request<GetTicketQueryResponse>(GRAPHQL_ENDPOINT, GET_TICKETS, variables),
     ])
     console.log("data.tickets", tickets)
     traderProfile.tokensLocked = formatEther(traderProfile.tokensLocked)
@@ -147,48 +160,26 @@ export const useGetTraderProfileData = () => {
 
 export const useGetTickets = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const vault = useMultiCall(VAULT_ABI)
   const poolData = useGetPoolData()
-  const { account } = useActiveWeb3React()
 
   return useCallback(async () => {
-    if (poolData.vaultAddress === undefined) return
-    const variables: GetVaultVariables = {
+    if (poolData.vaultAddress === undefined) {
+      return
+    }
+    const variables: GetTicketVariables = {
       first: PAGINATE_BY,
       skip: 0 * PAGINATE_BY,
+      where: { vaultAddress: poolData.vaultAddress.toLowerCase() },
     }
-
-    const methods = _.map(_.range(0, 50), () => "ticketsPurchased")
-    const args = _.map(_.range(0, 50), (i) => [i])
-    const ticketFillings = await vault(poolData.vaultAddress, methods, args)
-    const { tickets: _tickets } = await request<GetTicketQueryResponse>(
+    console.log("GetTickets", variables)
+    const { tickets } = await request<GetTicketQueryResponse>(
       GRAPHQL_ENDPOINT,
-      GET_TICKETS(null),
+      GET_TICKETS,
       variables
     )
-    const tickets = _tickets.filter((ticket) =>
-      ticket.tokenPurchases.some(
-        (token) => token.owner.toLowerCase() === account.toLowerCase()
-      )
-    )
-    const ticketsReturned: Ticket[] = []
-    for (let i = 0; i < ticketFillings.length; i += 1) {
-      const hasOwnerBought = !_.find(
-        tickets,
-        (ticket) =>
-          Number(ticket.ticketNumber) === i &&
-          ticket.vaultAddress.toLowerCase() ===
-            poolData.vaultAddress.toLowerCase()
-      )
-      console.log("hasOwnerBought", hasOwnerBought)
-      ticketsReturned.push({
-        order: i,
-        amount: Number(formatEther(ticketFillings[i][0])),
-        ownToken: hasOwnerBought,
-      })
-    }
-    dispatch(getTickets(ticketsReturned))
-  }, [dispatch, vault, poolData, account])
+
+    dispatch(getTickets(tickets))
+  }, [dispatch, poolData])
 }
 
 export const useSetPoolData = () => {
@@ -201,9 +192,10 @@ export const useSetPoolData = () => {
 
   return useCallback(
     async (address: string, tokenId: string, nonce: number) => {
-      const variables: GetVaultVariables = {
+      const variables: GetTicketVariables = {
         first: PAGINATE_BY,
         skip: 0 * PAGINATE_BY,
+        where: null,
       }
       try {
         const [vaultAddress, os, ownerOf] = await Promise.all([
@@ -247,7 +239,7 @@ export const useSetPoolData = () => {
             erc721(address).methods.ownerOf(tokenId).call(),
             request<GetTicketQueryResponse>(
               GRAPHQL_ENDPOINT,
-              GET_TICKETS(null),
+              GET_TICKETS,
               variables
             ),
           ])

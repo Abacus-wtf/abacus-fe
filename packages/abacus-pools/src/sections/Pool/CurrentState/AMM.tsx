@@ -179,7 +179,6 @@ const AMM = (props: AMMProps) => {
           (props.currentTicket &&
             Number(outputAmount) >
               TICKET_SIZE - props.currentTicket.tokenPurchasesLength) ||
-          moment(startDate).unix() <= moment().add(12, "hours").unix() ||
           Number.isNaN(Number(inputAmount)) ||
           Number(inputAmount) === 0
         }

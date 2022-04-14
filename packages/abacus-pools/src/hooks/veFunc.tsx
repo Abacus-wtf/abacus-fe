@@ -21,7 +21,7 @@ export const useOnLockTokens = () => {
       )
       const method = veContract.lockTokens
       const estimate = veContract.estimateGas.lockTokens
-      const args = [amount, time]
+      const args = [parseEther(`${amount}`), time]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -61,7 +61,7 @@ export const useOnAddTokens = () => {
       )
       const method = veContract.addTokens
       const estimate = veContract.estimateGas.addTokens
-      const args = [amount]
+      const args = [parseEther(`${amount}`)]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -267,7 +267,7 @@ export const useOnAddAutoAllocation = () => {
       )
       const method = veContract.addAutoAllocation
       const estimate = veContract.estimateGas.addAutoAllocation
-      const args = [amount]
+      const args = [parseEther(`${amount}`)]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -307,7 +307,7 @@ export const useOnRemoveAutoAllocation = () => {
       )
       const method = veContract.removeAutoAllocation
       const estimate = veContract.estimateGas.removeAutoAllocation
-      const args = [amount]
+      const args = [parseEther(`${amount}`)]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {

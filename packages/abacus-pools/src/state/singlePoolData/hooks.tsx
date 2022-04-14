@@ -203,7 +203,7 @@ export const useSetPoolData = () => {
           await vault(
             vaultAddress,
             ["closePoolContract", "tokensLocked", "symbol", "emissionsStarted"],
-            [[], [], [], [], [], []]
+            [[], [], [], []]
           )
 
         let creditsAvailable = BigNumber.from(0)
@@ -222,7 +222,7 @@ export const useSetPoolData = () => {
             vault(
               vaultAddress,
               ["getCreditsAvailableForPurchase"],
-              [[account, moment().unix()]]
+              [[account]]
             ),
             erc721(address)
               .methods.isApprovedForAll(account, vaultAddress)

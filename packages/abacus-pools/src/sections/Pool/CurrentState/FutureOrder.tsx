@@ -129,6 +129,7 @@ const FutureOrder = (props: FutureOrderProps) => {
       </InputContainer>
       <DatePickerStyled
         showTimeSelect
+        timeIntervals={5}
         selected={startDate}
         onChange={(date: Date) => setStartDate(date)}
       />

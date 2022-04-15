@@ -376,6 +376,7 @@ const Ve: React.FC = () => {
           {Number(veAbcBalance) === 0 && (
             <DatePickerStyled
               showTimeSelect
+              timeIntervals={5}
               selected={startDate}
               onChange={(date: Date) => setStartDate(date)}
             />

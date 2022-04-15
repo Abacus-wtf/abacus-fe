@@ -149,19 +149,20 @@ const CurrentPosition = () => {
             </StatTitle>
           ))}
       </TicketContainer>
-      {Number(traderData.timeUnlock) <= moment().unix() && (
-        <Buttons
-          style={{ marginTop: 20 }}
-          onClick={() =>
-            onUnlockPosition(Object.keys(traderData.ticketsOwned), () =>
-              getTraderProfileData()
-            )
-          }
-          disabled={isUnlockPending || Number(traderData.ticketsOpen) === 0}
-        >
-          Unlock Tickets
-        </Buttons>
-      )}
+      {Number(traderData.timeUnlock) <= moment().unix() &&
+        Number(traderData.ticketsOwned) !== 0 && (
+          <Buttons
+            style={{ marginTop: 20 }}
+            onClick={() =>
+              onUnlockPosition(Object.keys(traderData.ticketsOwned), () =>
+                getTraderProfileData()
+              )
+            }
+            disabled={isUnlockPending || Number(traderData.ticketsOwned) === 0}
+          >
+            {isUnlockPending ? "Loading..." : "Unlock Tickets"}
+          </Buttons>
+        )}
     </Container>
   )
 }

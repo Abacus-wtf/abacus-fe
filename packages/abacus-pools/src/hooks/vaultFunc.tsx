@@ -110,25 +110,36 @@ export const useUnlockPosition = () => {
         library,
         account
       )
-      const method = vaultContract.sellToken
-      const estimate = vaultContract.estimateGas.sellToken
-      const args = [account, _.map(tokens, (token) => parseEther(token))]
-      const value = null
-      console.log(args)
-      const txnCb = async (response: any) => {
-        addTransaction(response, {
-          summary: "Unlock Position",
-        })
-        await response.wait()
-        cb()
+      let max = 0
+      for (let i = 0; i < tokens.length; i += 1) {
+        if (max < Number(tokens[i])) {
+          max = Number(tokens[i])
+        }
       }
-      await generalizedContractCall({
-        method,
-        estimate,
-        args,
-        value,
-        cb: txnCb,
-      })
+      let min = 0
+      while (min < max) {
+        const method = vaultContract.sellToken
+        const estimate = vaultContract.estimateGas.sellToken
+        const args = [account, min]
+        const value = null
+        console.log(args)
+        const txnCb = async (response: any) => {
+          addTransaction(response, {
+            summary: "Unlock Position",
+          })
+          await response.wait()
+          cb()
+        }
+        // eslint-disable-next-line no-await-in-loop
+        await generalizedContractCall({
+          method,
+          estimate,
+          args,
+          value,
+          cb: txnCb,
+        })
+        min += 100
+      }
     },
     [library, account, generalizedContractCall, addTransaction, poolData]
   )

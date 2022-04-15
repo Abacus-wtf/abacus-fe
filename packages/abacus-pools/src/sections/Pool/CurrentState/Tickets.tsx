@@ -70,7 +70,7 @@ const Tickets = ({ refresh }: StateComponent) => {
     return <div>Loading...</div>
   }
   console.log("ticket: ", currentTicket)
-  console.log("traderdata: ", Number(traderData.ticketsOpen) === 0)
+  console.log("traderdata: ", Number(traderData.ticketsOwned) === 0)
   return (
     <Container>
       <Modal

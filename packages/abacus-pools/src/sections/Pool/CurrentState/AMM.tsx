@@ -167,6 +167,7 @@ const AMM = (props: AMMProps) => {
       </InfoSectionContainer>
       <DatePickerStyled
         showTimeSelect
+        timeIntervals={5}
         selected={startDate}
         onChange={(date: Date) => setStartDate(date)}
       />

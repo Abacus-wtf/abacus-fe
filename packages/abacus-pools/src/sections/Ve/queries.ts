@@ -36,13 +36,13 @@ export const getAllocs = async (userAddress: string) => {
     skip: 0,
   }
 
-  const {
-    user: { allocations },
-  } = await request<GetAllocsQueryResponse>(
+  const { user } = await request<GetAllocsQueryResponse>(
     GRAPHQL_ENDPOINT,
     GET_ALLOCS(userAddress.toLowerCase()),
     variables
   )
-  console.log(allocations)
-  return allocations
+  if (user === null) {
+    return undefined
+  }
+  return user.allocations
 }

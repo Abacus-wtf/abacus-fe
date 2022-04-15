@@ -28,6 +28,7 @@ import {
   GetTicketQueryResponse,
   GetTicketVariables,
   GET_TICKETS,
+  SubgraphTicket,
 } from "./queries"
 
 const getPoolDataSelector = (
@@ -162,25 +163,27 @@ export const useGetTraderProfileData = () => {
 export const useGetTickets = () => {
   const dispatch = useDispatch<AppDispatch>()
   const poolData = useGetPoolData()
+  const vault = useMultiCall(VAULT_ABI)
 
   return useCallback(async () => {
-    if (poolData.vaultAddress === undefined) {
-      return
-    }
-    const variables: GetTicketVariables = {
-      first: PAGINATE_BY,
-      skip: 0 * PAGINATE_BY,
-      where: { vaultAddress: poolData.vaultAddress.toLowerCase() },
-    }
-    console.log("GetTickets", variables)
-    const { tickets } = await request<GetTicketQueryResponse>(
-      GRAPHQL_ENDPOINT,
-      GET_TICKETS,
-      variables
-    )
+    if (poolData.vaultAddress === undefined) return
 
-    dispatch(getTickets(tickets))
-  }, [dispatch, poolData])
+    const methods = _.map(_.range(0, 50), () => "ticketsPurchased")
+    const args = _.map(_.range(0, 50), (i) => [i])
+    const ticketFillings = await vault(poolData.vaultAddress, methods, args)
+
+    const ticketsReturned: SubgraphTicket[] = []
+    for (let i = 0; i < ticketFillings.length; i += 1) {
+      ticketsReturned.push({
+        id: "",
+        vaultAddress: poolData.vaultAddress,
+        tokenPurchasesLength: Number(formatEther(ticketFillings[i][0])),
+        ticketNumber: i,
+        tokenPurchases: [],
+      })
+    }
+    dispatch(getTickets(ticketsReturned))
+  }, [dispatch, poolData, vault])
 }
 
 export const useSetPoolData = () => {

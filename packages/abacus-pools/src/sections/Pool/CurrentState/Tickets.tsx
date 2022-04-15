@@ -63,7 +63,7 @@ const Tickets = ({ refresh }: StateComponent) => {
   // const { onSellToken, isPending: isPendingSell } = useOnSellToken()
 
   useEffect(() => {
-    // getTickets()
+    getTickets()
   }, [account, getTickets, poolData])
 
   if (!tickets || !traderData) {

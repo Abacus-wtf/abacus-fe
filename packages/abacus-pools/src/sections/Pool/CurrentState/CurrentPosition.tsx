@@ -66,54 +66,51 @@ const CurrentPosition = () => {
           ))}
       </TicketContainer>
       {poolData.emissionsStarted &&
-        Number(traderData.timeUnlock) >
-          moment().unix()(
-            <>
-              <InputContainer
-                style={{
-                  border: BORDER,
-                  borderRadius: 15,
-                  marginTop: 20,
-                }}
-              >
-                <LabelRow>
-                  <BalanceContainer>
-                    <NumericalInput
-                      placeholder="0.0"
-                      value={inputAvailableCredits}
-                      onChange={(e) =>
-                        setInputsAvailableCredits(e.target.value)
-                      }
-                    />
-                    <MaxButton
-                      onClick={() => {
-                        setInputsAvailableCredits(
-                          formatEther(poolData.creditsAvailable)
-                        )
-                      }}
-                    >
-                      MAX
-                    </MaxButton>
-                  </BalanceContainer>
-                </LabelRow>
-              </InputContainer>
-              <Buttons
-                style={{ marginTop: 20, marginBottom: 20 }}
-                onClick={() =>
-                  onPurchaseCredits(inputAvailableCredits, () =>
-                    getTraderProfileData()
-                  )
-                }
-                disabled={
-                  isPendingPurchaseCredits || inputAvailableCredits === ""
-                }
-              >
-                {isPendingPurchaseCredits
-                  ? "Loading..."
-                  : "Purchase Available Credits"}
-              </Buttons>
-            </>
-          )}
+        Number(traderData.timeUnlock) > moment().unix() && (
+          <>
+            <InputContainer
+              style={{
+                border: BORDER,
+                borderRadius: 15,
+                marginTop: 20,
+              }}
+            >
+              <LabelRow>
+                <BalanceContainer>
+                  <NumericalInput
+                    placeholder="0.0"
+                    value={inputAvailableCredits}
+                    onChange={(e) => setInputsAvailableCredits(e.target.value)}
+                  />
+                  <MaxButton
+                    onClick={() => {
+                      setInputsAvailableCredits(
+                        formatEther(poolData.creditsAvailable)
+                      )
+                    }}
+                  >
+                    MAX
+                  </MaxButton>
+                </BalanceContainer>
+              </LabelRow>
+            </InputContainer>
+            <Buttons
+              style={{ marginTop: 20, marginBottom: 20 }}
+              onClick={() =>
+                onPurchaseCredits(inputAvailableCredits, () =>
+                  getTraderProfileData()
+                )
+              }
+              disabled={
+                isPendingPurchaseCredits || inputAvailableCredits === ""
+              }
+            >
+              {isPendingPurchaseCredits
+                ? "Loading..."
+                : "Purchase Available Credits"}
+            </Buttons>
+          </>
+        )}
       <InputContainer
         style={{
           border: BORDER,

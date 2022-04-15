@@ -4,6 +4,7 @@ import {
   useActiveWeb3React,
   useGeneralizedContractCall,
   useMultiCall,
+  useWeb3Contract,
 } from "@hooks/index"
 import { useTransactionAdder } from "@state/transactions/hooks"
 import _ from "lodash"
@@ -425,6 +426,96 @@ export const useOnSellToken = () => {
   )
   return {
     onSellToken,
+    isPending,
+  }
+}
+
+export const usePurchaseCredits = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+  const vault = useWeb3Contract(VAULT_ABI)
+  const poolData = useGetPoolData()
+
+  const onPurchaseCredits = useCallback(
+    async (amount: string, cb: () => void) => {
+      const vaultContract = getContract(
+        poolData.vaultAddress,
+        VAULT_ABI,
+        library,
+        account
+      )
+
+      const ethAmount = await vault(poolData.vaultAddress)
+        .methods.costToPurchaseCredits(account, parseEther(amount))
+        .call()
+
+      const method = vaultContract.purchaseCredits
+      const estimate = vaultContract.estimateGas.purchaseCredits
+      const args = [parseEther(amount)]
+      const value = ethAmount
+      console.log(args)
+      console.log(ethAmount)
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Purchase Credits",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [library, account, generalizedContractCall, addTransaction, poolData, vault]
+  )
+  return {
+    onPurchaseCredits,
+    isPending,
+  }
+}
+
+export const useChangePayoutRatio = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+  const poolData = useGetPoolData()
+
+  const onChangePayoutRatio = useCallback(
+    async (ratio: string, cb: () => void) => {
+      const vaultContract = getContract(
+        poolData.vaultAddress,
+        VAULT_ABI,
+        library,
+        account
+      )
+      const method = vaultContract.adjustPayoutRatio
+      const estimate = vaultContract.estimateGas.adjustPayoutRatio
+      const args = [ratio]
+      const value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Change Payout Ratio",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [library, account, generalizedContractCall, addTransaction, poolData]
+  )
+  return {
+    onChangePayoutRatio,
     isPending,
   }
 }

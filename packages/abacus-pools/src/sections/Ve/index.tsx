@@ -12,7 +12,7 @@ import {
 import { ABC_TOKEN, VE_ABC_TOKEN, ZERO_ADDRESS } from "@config/constants"
 import _ from "lodash"
 import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
-import { formatEther } from "ethers/lib/utils"
+import { formatEther, parseEther } from "ethers/lib/utils"
 import { Stat } from "@sections/Pool/CurrentState/CurrentState.styles"
 import { BigNumber } from "@ethersproject/bignumber"
 import moment from "moment"
@@ -128,7 +128,7 @@ const Ve: React.FC = () => {
   const [openModal, setOpenModal] = useState(false)
   const [open, setOpen] = useState(false)
   const [epoch, setEpoch] = useState(0)
-  const [abcMaxBalance, setABCMaxBalance] = useState(0)
+  const [abcMaxBalance, setABCMaxBalance] = useState("")
   const [veAbcBalance, setVeAbcBalance] = useState("")
   const [abcInput, setABCInput] = useState("")
   const [holderData, setHolderData] = useState<Holder | null>(null)
@@ -177,7 +177,7 @@ const Ve: React.FC = () => {
         BigNumber.from(veHolderHistory[0]).toNumber() < moment().unix()
     )
     setVeAbcBalance(formatEther(veBalance[0]))
-    setABCMaxBalance(balance)
+    setABCMaxBalance(BigNumber.from(balance).sub(parseEther("10")).toString())
     setHolderData({
       timeUnlock: BigNumber.from(veHolderHistory[0]).mul(1000).toNumber(),
       amountLocked: Number(formatEther(veHolderHistory[1])),

@@ -58,16 +58,19 @@ const FutureOrder = (props: FutureOrderProps) => {
 
   const getOwners = useCallback(async () => {
     const tickets = await getTicketOwners(
-      poolData.vaultAddress,
+      poolData.vaultAddress.toLowerCase(),
       props.currentTicket.ticketNumber
     )
-    console.log(tickets)
     if (tickets.length === 0) {
       return
     }
     const owners = _.uniq(
-      tickets.map((ticket) =>
-        _.map(ticket.tokenPurchases, (tokenPurchases) => tokenPurchases.owner)
+      _.map(
+        _.filter(
+          tickets[0].tokenPurchases,
+          (tokenPurchase) => tokenPurchase.soldAt === null
+        ),
+        (tokenPurchases) => tokenPurchases.owner
       )
     )
     console.log("owners", owners)

@@ -44,6 +44,7 @@ const CurrentPosition = () => {
   if (!traderData) {
     return <div>Loading...</div>
   }
+  console.log("ticketsopened", traderData.ticketsOwned)
   return (
     <Container>
       <Stat title="Number of Tokens Locked:" value={traderData.tokensLocked} />
@@ -150,7 +151,7 @@ const CurrentPosition = () => {
           ))}
       </TicketContainer>
       {Number(traderData.timeUnlock) <= moment().unix() &&
-        Number(traderData.ticketsOwned) !== 0 && (
+        Number(traderData.tokensLocked) !== 0 && (
           <Buttons
             style={{ marginTop: 20 }}
             onClick={() =>
@@ -158,7 +159,7 @@ const CurrentPosition = () => {
                 getTraderProfileData()
               )
             }
-            disabled={isUnlockPending || Number(traderData.ticketsOwned) === 0}
+            disabled={isUnlockPending}
           >
             {isUnlockPending ? "Loading..." : "Unlock Tickets"}
           </Buttons>

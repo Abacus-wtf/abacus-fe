@@ -15,7 +15,7 @@ import {
   ZERO_ADDRESS,
 } from "@config/constants"
 import { OpenSeaAsset, openseaGet } from "@config/utils"
-import { formatEther } from "ethers/lib/utils"
+import { formatEther, parseEther } from "ethers/lib/utils"
 import { BigNumber } from "ethers"
 import _ from "lodash"
 import { PAGINATE_BY } from "@state/poolData/constants"
@@ -173,11 +173,12 @@ export const useGetTickets = () => {
     if (poolData.vaultAddress === undefined) return
 
     const methods = _.map(_.range(0, 50), () => "ticketsPurchased")
-    const args = _.map(_.range(0, 50), (i) => [i])
+    const args = _.map(_.range(0, 50), (i) => [parseEther(`${i}`)])
     const ticketFillings = await vault(poolData.vaultAddress, methods, args)
 
     const ticketsReturned: SubgraphTicket[] = []
     for (let i = 0; i < ticketFillings.length; i += 1) {
+      console.log(Number(formatEther(ticketFillings[i][0])))
       ticketsReturned.push({
         id: "",
         vaultAddress: poolData.vaultAddress,

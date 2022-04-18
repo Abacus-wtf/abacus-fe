@@ -39,7 +39,7 @@ export type GetTicketVariables = {
 
 export type TicketFilter = {
   vaultAddress: string
-  ticketNumber: number
+  ticketNumber?: number
 }
 
 export const GET_TICKETS = gql`

@@ -368,7 +368,7 @@ const Ve: React.FC = () => {
                 onChange={(e) => setABCInput(e.target.value)}
                 disabled={!account}
                 buttonText="Max"
-                onClick={() => setABCInput(`${abcMaxBalance}`)}
+                onClick={() => setABCInput(formatEther(`${abcMaxBalance}`))}
                 id="abcAmount"
               />
             </InputContainer>

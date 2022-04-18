@@ -12,7 +12,7 @@ export const useOnLockTokens = () => {
   const addTransaction = useTransactionAdder()
 
   const onLockTokens = useCallback(
-    async (amount: number, time: number, cb: () => void) => {
+    async (amount: string, time: number, cb: () => void) => {
       const veContract = getContract(
         VE_ABC_TOKEN,
         VE_ABC_TOKEN_ABI,
@@ -21,7 +21,7 @@ export const useOnLockTokens = () => {
       )
       const method = veContract.lockTokens
       const estimate = veContract.estimateGas.lockTokens
-      const args = [parseEther(`${amount}`), time]
+      const args = [parseEther(amount), time]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {

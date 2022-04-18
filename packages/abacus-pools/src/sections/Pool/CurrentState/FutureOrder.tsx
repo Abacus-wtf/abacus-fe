@@ -57,7 +57,11 @@ const FutureOrder = (props: FutureOrderProps) => {
   }, [account, networkSymbol])
 
   const getOwners = useCallback(async () => {
-    const tickets = await getTicketOwners(poolData.vaultAddress)
+    const tickets = await getTicketOwners(
+      poolData.vaultAddress,
+      props.currentTicket.ticketNumber
+    )
+    console.log(tickets)
     if (tickets.length === 0) {
       return
     }
@@ -66,6 +70,7 @@ const FutureOrder = (props: FutureOrderProps) => {
         _.map(ticket.tokenPurchases, (tokenPurchases) => tokenPurchases.owner)
       )
     )
+    console.log("owners", owners)
     setTicketOwners(owners)
     setTicketOwner(owners[0])
   }, [poolData.vaultAddress, props.currentTicket])

@@ -386,7 +386,7 @@ const Ve: React.FC = () => {
             onClick={() =>
               Number(veAbcBalance) === 0
                 ? onLockTokens(
-                    Number(abcInput),
+                    abcInput,
                     moment(startDate).unix() - moment().unix(),
                     () => getClaimData()
                   )

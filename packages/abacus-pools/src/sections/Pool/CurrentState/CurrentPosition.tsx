@@ -146,11 +146,12 @@ const CurrentPosition = () => {
         Number(traderData.tokensLocked) !== 0 && (
           <Buttons
             style={{ marginTop: 20 }}
-            onClick={() =>
+            onClick={() => {
+              console.log(Object.keys(traderData.ticketsOwned))
               onUnlockPosition(Object.keys(traderData.ticketsOwned), () =>
                 getTraderProfileData()
               )
-            }
+            }}
             disabled={isUnlockPending}
           >
             {isUnlockPending ? "Loading..." : "Unlock Tickets"}

@@ -117,7 +117,7 @@ export const useUnlockPosition = () => {
         }
       }
       let min = 0
-      while (min < max) {
+      while (min <= max) {
         const method = vaultContract.sellToken
         const estimate = vaultContract.estimateGas.sellToken
         const args = [account, min]

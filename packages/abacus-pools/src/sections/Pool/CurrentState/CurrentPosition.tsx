@@ -142,14 +142,6 @@ const CurrentPosition = () => {
       >
         {isPendingPayoutRatio ? "Loading..." : "Adjust Payout Ratio"}
       </Buttons>
-      <TicketContainer>
-        {traderData.ticketsOwned &&
-          _.map(Object.entries(traderData.ticketsOwned), ([ticket, amount]) => (
-            <StatTitle>
-              Ticket #{ticket}: <b>{amount}</b>
-            </StatTitle>
-          ))}
-      </TicketContainer>
       {Number(traderData.timeUnlock) <= moment().unix() &&
         Number(traderData.tokensLocked) !== 0 && (
           <Buttons

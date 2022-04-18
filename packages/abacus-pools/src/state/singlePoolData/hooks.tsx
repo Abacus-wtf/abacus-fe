@@ -140,17 +140,21 @@ export const useGetTraderProfileData = () => {
       vault(poolData.vaultAddress).methods.traderProfile(account).call(),
       request<GetTicketQueryResponse>(GRAPHQL_ENDPOINT, GET_TICKETS, variables),
     ])
-    console.log("data.tickets", tickets)
     traderProfile.tokensLocked = formatEther(traderProfile.tokensLocked)
     traderProfile.ticketsOwned = []
     _.forEach(tickets, (ticket) => {
       const totalTicketAmount = ticket.tokenPurchases.reduce(
         (acc, tokenPurchase) =>
-          tokenPurchase.owner.toLowerCase() === account.toLowerCase()
+          tokenPurchase.soldAt !== null
+            ? BigNumber.from("0")
+            : tokenPurchase.owner.toLowerCase() === account.toLowerCase()
             ? acc.add(tokenPurchase.amount)
             : acc,
         BigNumber.from("0")
       )
+      if (totalTicketAmount.eq(BigNumber.from(0))) {
+        return
+      }
       traderProfile.ticketsOwned[
         BigNumber.from(ticket.ticketNumber).toNumber()
       ] = formatEther(totalTicketAmount)

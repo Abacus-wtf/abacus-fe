@@ -13,6 +13,7 @@ import Buttons from "@components/Button"
 import { useActiveWeb3React, useMultiCall } from "@hooks/index"
 import { formatEther } from "ethers/lib/utils"
 import { Stat } from "@sections/Pool/CurrentState/CurrentState.styles"
+import { BigNumber } from "ethers"
 import EPOCH_VAULT_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
 
 interface EpochData {
@@ -30,14 +31,17 @@ const Claim: React.FC = () => {
 
   useEffect(() => {
     const getClaimData = async () => {
+      const [currentEpoch] = await epochVault(ABC_EPOCH, ["currentEpoch"], [[]])
+
       const [abcEmissions, userCredits] = await epochVault(
         ABC_EPOCH,
         ["getAbcEmission", "getUserCredits"],
-        [[epoch], [epoch, account]]
+        [[currentEpoch[0]], [currentEpoch[0], account]]
       )
 
       console.log(Number(formatEther(userCredits[0])))
       console.log(Number(formatEther(abcEmissions[0])))
+      setEpoch(BigNumber.from(currentEpoch[0]).toNumber())
       setUserData({
         userCredits: Number(formatEther(userCredits[0])),
         abcEmissions: Number(formatEther(abcEmissions[0])),

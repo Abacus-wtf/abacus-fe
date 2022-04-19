@@ -13,6 +13,7 @@ import {
   usePurchaseCredits,
   useUnlockPosition,
 } from "@hooks/vaultFunc"
+import { useOnClaimReward } from "@hooks/veFunc"
 import { NumericalInput } from "@components/Input"
 import { formatEther } from "ethers/lib/utils"
 import { Stat, StatTitle, TicketContainer } from "./CurrentState.styles"
@@ -40,6 +41,7 @@ const CurrentPosition = () => {
     usePurchaseCredits()
   const { onChangePayoutRatio, isPending: isPendingPayoutRatio } =
     useChangePayoutRatio()
+  const { onClaimReward, isPending: isPendingClaimReward } = useOnClaimReward()
 
   if (!traderData) {
     return <div>Loading...</div>
@@ -157,6 +159,17 @@ const CurrentPosition = () => {
             {isUnlockPending ? "Loading..." : "Unlock Tickets"}
           </Buttons>
         )}
+      {traderData.showClaimButton && (
+        <Buttons
+          style={{ marginTop: 20 }}
+          onClick={() => {
+            onClaimReward(() => getTraderProfileData())
+          }}
+          disabled={isPendingClaimReward}
+        >
+          {isPendingClaimReward ? "Loading..." : "Claim Rewards"}
+        </Buttons>
+      )}
     </Container>
   )
 }

@@ -11,6 +11,7 @@ export interface TraderProfile {
   tokensLocked: number
   finalCreditCount: number
   creditsPurchased: number
+  showClaimButton: boolean
   ticketsOwned: {
     [ticket: number]: number
   }
@@ -39,6 +40,7 @@ const initialState: PoolState = {
     finalCreditCount: 0,
     creditsPurchased: 0,
     ticketsOwned: {},
+    showClaimButton: false,
   },
 }
 

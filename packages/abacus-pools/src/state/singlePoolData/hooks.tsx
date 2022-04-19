@@ -4,14 +4,18 @@ import { useDispatch, useSelector } from "react-redux"
 import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
 import VAULT_ABI from "@config/contracts/ABC_VAULT_ABI.json"
+import VE_ABC_ABI from "@config/contracts/VE_ABC_TOKEN_ABI.json"
 import BRIBE_ABI from "@config/contracts/ABC_BRIBE_FACTORY_ABI.json"
 import CLOSE_POOL_ABI from "@config/contracts/ABC_CLOSE_POOL_ABI.json"
+import ABC_EPOCH_ABI from "@config/contracts/ABC_EPOCH_ABI.json"
 import ERC_721_ABI from "@config/contracts/ERC_721_ABI.json"
 import {
   ABC_BRIBE_FACTORY,
+  ABC_EPOCH,
   ABC_FACTORY,
   GRAPHQL_ENDPOINT,
   IS_PRODUCTION,
+  VE_ABC_TOKEN,
   ZERO_ADDRESS,
 } from "@config/constants"
 import { OpenSeaAsset, openseaGet } from "@config/utils"
@@ -122,6 +126,8 @@ export const useGetBribeData = () => {
 export const useGetTraderProfileData = () => {
   const dispatch = useDispatch<AppDispatch>()
   const vault = useWeb3Contract(VAULT_ABI)
+  const ve = useWeb3Contract(VE_ABC_ABI)
+  const epoch = useWeb3Contract(ABC_EPOCH_ABI)
   const { account } = useActiveWeb3React()
   const poolData = useGetPoolData()
 
@@ -136,7 +142,16 @@ export const useGetTraderProfileData = () => {
       },
     }
 
-    let [traderProfile, { tickets }] = await Promise.all([
+    let [
+      recentVeUpdateCleared,
+      recentAutoUpdateCleared,
+      currentEpoch,
+      traderProfile,
+      { tickets },
+    ] = await Promise.all([
+      ve(VE_ABC_TOKEN).methods.recentVeUpdateCleared(account).call(),
+      ve(VE_ABC_TOKEN).methods.recentAutoUpdateCleared(account).call(),
+      epoch(ABC_EPOCH).methods.currentEpoch().call(),
       vault(poolData.vaultAddress).methods.traderProfile(account).call(),
       request<GetTicketQueryResponse>(GRAPHQL_ENDPOINT, GET_TICKETS, variables),
     ])
@@ -160,9 +175,12 @@ export const useGetTraderProfileData = () => {
         BigNumber.from(ticket.ticketNumber).toNumber()
       ] = formatEther(totalTicketAmount)
     })
+    traderProfile.showClaimButton =
+      recentVeUpdateCleared < currentEpoch ||
+      recentAutoUpdateCleared < currentEpoch
     console.log("traderProfile", traderProfile)
     dispatch(getTraderProfile(traderProfile))
-  }, [account, dispatch, vault, poolData])
+  }, [poolData, ve, account, epoch, vault, dispatch])
 }
 
 export const useGetTickets = () => {

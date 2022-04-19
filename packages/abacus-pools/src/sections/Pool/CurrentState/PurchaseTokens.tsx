@@ -135,6 +135,7 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
     })
   }
 
+  console.log(lockDuration)
   const confirmDisabled = !eth || !lockDuration || isPending
 
   return (

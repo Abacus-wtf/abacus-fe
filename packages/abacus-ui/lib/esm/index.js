@@ -865,11 +865,11 @@ var Label = styled(StyledDiv)(templateObject_3$c || (templateObject_3$c = __make
     return theme.colors.core.primary;
 });
 var ProgressBar = function (_a) {
-    var progress = _a.progress, label = _a.label;
+    var progress = _a.progress, label = _a.label, className = _a.className;
     if (progress < 0 || progress > 1) {
         console.warn("Abacus UI | Progress Bar", "Progress should be a number between 0 and 1 representing the percentage of progress, you passed: " + progress);
     }
-    return (React.createElement(Container$i, null,
+    return (React.createElement(Container$i, { className: className },
         React.createElement(Progress, { progress: progress }),
         React.createElement(Label, null, label)));
 };

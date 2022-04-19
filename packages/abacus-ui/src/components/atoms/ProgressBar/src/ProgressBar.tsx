@@ -5,6 +5,7 @@ import styled from "styled-components";
 type ProgressBarProps = {
   progress: number;
   label: string | React.ReactNode;
+  className?: string;
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -45,6 +46,7 @@ const Label = styled(Kilo)`
 const ProgressBar: FunctionComponent<ProgressBarProps> = ({
   progress,
   label,
+  className,
 }) => {
   if (progress < 0 || progress > 1) {
     console.warn(
@@ -53,7 +55,7 @@ const ProgressBar: FunctionComponent<ProgressBarProps> = ({
     );
   }
   return (
-    <Container>
+    <Container className={className}>
       <Progress progress={progress} />
       <Label>{label}</Label>
     </Container>

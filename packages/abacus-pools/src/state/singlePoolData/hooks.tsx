@@ -69,19 +69,19 @@ export const useTickets = () =>
   )
 
 export const useEntryLevels = () => {
-  const entryLevelsSelector = createSelector(
-    getTicketsSelector,
-    (tickets) =>
+  console.log("useEntryLEvel")
+  const entryLevelsSelector = createSelector(getTicketsSelector, (tickets) => {
+    console.log("tickets", tickets)
+    return (
       tickets?.map((ticket) => ({
         ticketNumber: ticket.ticketNumber,
-        amount: ticket.tokenPurchases.reduce(
-          (acc, tokenPurchase) =>
-            acc + Number.parseFloat(formatEther(tokenPurchase.amount)),
-
-          0
-        ),
+        amount: ticket.tokenPurchases.reduce((acc, tokenPurchase) => {
+          console.log("tokenPurchase", tokenPurchase)
+          return acc + Number.parseFloat(formatEther(tokenPurchase.amount))
+        }, 0),
       })) ?? []
-  )
+    )
+  })
   return useSelector(entryLevelsSelector)
 }
 

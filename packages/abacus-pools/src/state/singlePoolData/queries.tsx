@@ -28,6 +28,7 @@ export const GET_TICKETS = gql`
     ) {
       ticketNumber
       vaultAddress
+      tokenPurchasesLength
       tokenPurchases {
         owner
         amount

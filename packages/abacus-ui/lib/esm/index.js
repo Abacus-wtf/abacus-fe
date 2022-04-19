@@ -831,7 +831,7 @@ var Loader$1 = React.memo(Loader);
 var templateObject_1$m, templateObject_2$j, templateObject_3$d, templateObject_4$6, templateObject_5$4, templateObject_6$3, templateObject_7$2, templateObject_8$1, templateObject_9$1, templateObject_10$1;
 
 // You probably want to change this to something semantic or abandon it all together
-var Container$i = styled.div(templateObject_1$l || (templateObject_1$l = __makeTemplateObject(["\n  background: ", ";\n  border-radius: ", ";\n  position: relative;\n  min-height: 24px;\n"], ["\n  background: ", ";\n  border-radius: ", ";\n  position: relative;\n  min-height: 24px;\n"])), function (_a) {
+var Container$i = styled.div(templateObject_1$l || (templateObject_1$l = __makeTemplateObject(["\n  background: ", ";\n  border-radius: ", ";\n  position: relative;\n  min-height: 24px;\n  overflow: hidden;\n"], ["\n  background: ", ";\n  border-radius: ", ";\n  position: relative;\n  min-height: 24px;\n  overflow: hidden;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.utility.gray;
 }, function (_a) {

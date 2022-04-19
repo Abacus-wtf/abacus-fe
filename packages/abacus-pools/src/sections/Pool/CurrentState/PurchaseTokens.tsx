@@ -111,12 +111,12 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
   const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
 
   const numTickets = Number(tokensLocked ?? 0)
-  const percentTicketsSold = numTickets / 3000
+  const percentTicketsSold = numTickets / 1000
   const numTokens = String(Number(eth) / Number(tokenPrice))
 
   const progressLabel = useMemo(() => {
     const percentForDislplay = Math.round(percentTicketsSold * 100)
-    const numLeft = 3000 - numTickets
+    const numLeft = 1000 - numTickets
     return (
       <ProgressLabel>
         <ProgressValue>{percentForDislplay}</ProgressValue>% filled /&nbsp;

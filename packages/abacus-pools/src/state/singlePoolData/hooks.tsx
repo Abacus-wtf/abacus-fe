@@ -19,7 +19,7 @@ import {
   ZERO_ADDRESS,
 } from "@config/constants"
 import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
-import { formatEther, parseEther } from "ethers/lib/utils"
+import { formatEther } from "ethers/lib/utils"
 import { BigNumber } from "ethers"
 import _ from "lodash"
 import { PAGINATE_BY } from "@state/poolData/constants"
@@ -69,20 +69,58 @@ export const useTickets = () =>
   )
 
 export const useEntryLevels = () => {
-  console.log("useEntryLEvel")
-  const entryLevelsSelector = createSelector(getTicketsSelector, (tickets) => {
-    console.log("tickets", tickets)
-    return (
+  const entryLevelsSelector = createSelector(
+    getTicketsSelector,
+    (tickets) =>
       tickets?.map((ticket) => ({
         ticketNumber: ticket.ticketNumber,
-        amount: ticket.tokenPurchases.reduce((acc, tokenPurchase) => {
-          console.log("tokenPurchase", tokenPurchase)
-          return acc + Number.parseFloat(formatEther(tokenPurchase.amount))
-        }, 0),
+        amount: ticket.tokenPurchases.reduce(
+          (acc, tokenPurchase) =>
+            acc + Number.parseFloat(formatEther(tokenPurchase.amount)),
+          0
+        ),
       })) ?? []
-    )
-  })
+  )
   return useSelector(entryLevelsSelector)
+}
+
+type Activity = {
+  user: string
+  action: "purchase" | "sale"
+  timestamp: number
+}
+
+export const useActivity = () => {
+  const initial: Activity[] = []
+  const activitySelector = createSelector(getTicketsSelector, (tickets) =>
+    tickets
+      ?.reduce((acc, ticket) => {
+        if (!ticket.tokenPurchasesLength) {
+          return acc
+        }
+        const nextActivities: Activity[] = ticket.tokenPurchases.reduce(
+          (tokenAcc, tokenPurchase) => {
+            const purchase: Activity = {
+              user: tokenPurchase.owner,
+              action: "purchase",
+              timestamp: Number(tokenPurchase.timestamp),
+            }
+            const sale: Activity = tokenPurchase.soldAt
+              ? {
+                  user: tokenPurchase.owner,
+                  action: "purchase",
+                  timestamp: Number(tokenPurchase.soldAt),
+                }
+              : null
+            return [...tokenAcc, purchase, sale]
+          },
+          initial
+        )
+        return [...acc, ...nextActivities]
+      }, initial)
+      .sort((a, b) => a.timestamp - b.timestamp)
+  )
+  return useSelector(activitySelector)
 }
 
 export const useGetBribeData = () => {
@@ -186,28 +224,40 @@ export const useGetTraderProfileData = () => {
 export const useGetTickets = () => {
   const dispatch = useDispatch<AppDispatch>()
   const poolData = useGetPoolData()
-  const vault = useMultiCall(VAULT_ABI)
 
   return useCallback(async () => {
     if (poolData.vaultAddress === undefined) return
-
-    const methods = _.map(_.range(0, 50), () => "ticketsPurchased")
-    const args = _.map(_.range(0, 50), (i) => [parseEther(`${i}`)])
-    const ticketFillings = await vault(poolData.vaultAddress, methods, args)
-
-    const ticketsReturned: SubgraphTicket[] = []
-    for (let i = 0; i < ticketFillings.length; i += 1) {
-      console.log(Number(formatEther(ticketFillings[i][0])))
-      ticketsReturned.push({
-        id: "",
-        vaultAddress: poolData.vaultAddress,
-        tokenPurchasesLength: Number(formatEther(ticketFillings[i][0])),
-        ticketNumber: i,
-        tokenPurchases: [],
-      })
+    const variables: GetTicketVariables = {
+      first: PAGINATE_BY,
+      skip: 0 * PAGINATE_BY,
+      where: { vaultAddress: poolData.vaultAddress.toLowerCase() },
     }
+
+    const { tickets } = await request<GetTicketQueryResponse>(
+      GRAPHQL_ENDPOINT,
+      GET_TICKETS,
+      variables
+    )
+
+    const ticketsReturned: SubgraphTicket[] = _.map(_.range(0, 50), (i) => {
+      const ticket = tickets.find((ticket) => Number(ticket.ticketNumber) === i)
+      if (!ticket) {
+        return {
+          id: "",
+          vaultAddress: poolData.vaultAddress,
+          tokenPurchasesLength: 0,
+          ticketNumber: i,
+          tokenPurchases: [],
+        }
+      }
+
+      return {
+        ...ticket,
+        ticketNumber: i,
+      }
+    })
     dispatch(getTickets(ticketsReturned))
-  }, [dispatch, poolData, vault])
+  }, [dispatch, poolData])
 }
 
 export const useSetPoolData = () => {

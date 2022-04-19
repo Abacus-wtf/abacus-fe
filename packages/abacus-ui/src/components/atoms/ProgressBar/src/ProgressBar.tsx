@@ -14,6 +14,7 @@ const Container = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.section};
   position: relative;
   min-height: 24px;
+  overflow: hidden;
 `;
 
 const Progress = styled.div<{ progress: number }>`

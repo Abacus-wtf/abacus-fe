@@ -74,11 +74,6 @@
         "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "tickets",
-        "type": "uint256[]"
-      },
-      {
         "internalType": "uint256",
         "name": "_finalNftVal",
         "type": "uint256"
@@ -95,6 +90,11 @@
         "internalType": "uint256",
         "name": "profit",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "accountClosed",
+        "type": "bool"
       }
     ],
     "stateMutability": "nonpayable",
@@ -245,6 +245,25 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "closureCheckpoint",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -819,9 +838,9 @@
         "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "tickets",
-        "type": "uint256[]"
+        "internalType": "uint256",
+        "name": "startingTicket",
+        "type": "uint256"
       }
     ],
     "name": "sellToken",

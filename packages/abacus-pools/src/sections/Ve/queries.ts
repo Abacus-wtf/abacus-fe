@@ -8,7 +8,9 @@ export type SubgraphAllocs = {
 }
 
 export type GetAllocsQueryResponse = {
-  allocs: SubgraphAllocs[]
+  user: {
+    allocations: SubgraphAllocs[]
+  }
 }
 
 export type GetVaultVariables = {
@@ -19,7 +21,7 @@ export type GetVaultVariables = {
 export const GET_ALLOCS = (user: string | null) => gql`
   query GetAllocs($first: Int!, $skip: Int!) {
     user(id: \"${user}\") {
-      allocs {
+      allocations {
         epoch
         collection
         amount
@@ -34,10 +36,13 @@ export const getAllocs = async (userAddress: string) => {
     skip: 0,
   }
 
-  const { allocs } = await request<GetAllocsQueryResponse>(
+  const { user } = await request<GetAllocsQueryResponse>(
     GRAPHQL_ENDPOINT,
-    GET_ALLOCS(userAddress),
+    GET_ALLOCS(userAddress.toLowerCase()),
     variables
   )
-  return allocs
+  if (user === null) {
+    return undefined
+  }
+  return user.allocations
 }

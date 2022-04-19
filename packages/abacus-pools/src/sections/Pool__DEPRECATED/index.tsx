@@ -36,7 +36,7 @@ const Pool = ({ location }) => {
     setPool(String(address), String(tokenId), Number(nonce))
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-  }, [address, tokenId, nonce, setPool])
+  }, [account, address, tokenId, nonce])
 
   if (!poolData) {
     return (
@@ -54,7 +54,7 @@ const Pool = ({ location }) => {
         <VerticalContainer>
           <FileContainer
             {...poolData}
-            img={poolData.img || "s"}
+            img={poolData.img || ""}
             animation_url={null}
           />
           <ButtonContainer>

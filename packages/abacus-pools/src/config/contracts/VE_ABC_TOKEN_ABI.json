@@ -540,35 +540,12 @@
   {
     "inputs": [
       {
-        "internalType": "uint256[]",
-        "name": "epoch",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "associatedUpdateNumber",
-        "type": "uint256[]"
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
       }
     ],
-    "name": "claimAutoReward",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "epoch",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "associatedUpdateNumber",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "claimVeHolderReward",
+    "name": "claimRewards",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -889,6 +866,44 @@
     "name": "receiveFees",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "recentAutoUpdateCleared",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "recentVeUpdateCleared",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

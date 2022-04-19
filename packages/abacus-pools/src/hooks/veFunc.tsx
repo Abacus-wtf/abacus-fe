@@ -12,7 +12,7 @@ export const useOnLockTokens = () => {
   const addTransaction = useTransactionAdder()
 
   const onLockTokens = useCallback(
-    async (amount: number, time: number, cb: () => void) => {
+    async (amount: string, time: number, cb: () => void) => {
       const veContract = getContract(
         VE_ABC_TOKEN,
         VE_ABC_TOKEN_ABI,
@@ -21,7 +21,7 @@ export const useOnLockTokens = () => {
       )
       const method = veContract.lockTokens
       const estimate = veContract.estimateGas.lockTokens
-      const args = [amount, time]
+      const args = [parseEther(amount), time]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -61,7 +61,7 @@ export const useOnAddTokens = () => {
       )
       const method = veContract.addTokens
       const estimate = veContract.estimateGas.addTokens
-      const args = [amount]
+      const args = [parseEther(`${amount}`)]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -267,7 +267,7 @@ export const useOnAddAutoAllocation = () => {
       )
       const method = veContract.addAutoAllocation
       const estimate = veContract.estimateGas.addAutoAllocation
-      const args = [amount]
+      const args = [parseEther(`${amount}`)]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -307,7 +307,7 @@ export const useOnRemoveAutoAllocation = () => {
       )
       const method = veContract.removeAutoAllocation
       const estimate = veContract.estimateGas.removeAutoAllocation
-      const args = [amount]
+      const args = [parseEther(`${amount}`)]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -328,6 +328,47 @@ export const useOnRemoveAutoAllocation = () => {
   )
   return {
     onRemoveAutoAllocation,
+    isPending,
+  }
+}
+
+export const useOnClaimReward = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+
+  const onClaimReward = useCallback(
+    async (cb: () => void) => {
+      const veContract = getContract(
+        VE_ABC_TOKEN,
+        VE_ABC_TOKEN_ABI,
+        library,
+        account
+      )
+
+      const method = veContract.claimRewards
+      const estimate = veContract.estimateGas.claimRewards
+      const args = []
+      const value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Claim Rewards",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [library, account, generalizedContractCall, addTransaction]
+  )
+  return {
+    onClaimReward,
     isPending,
   }
 }

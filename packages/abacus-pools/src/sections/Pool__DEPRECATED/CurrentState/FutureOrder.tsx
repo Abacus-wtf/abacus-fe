@@ -11,8 +11,7 @@ import { useOnFutureOrder } from "@hooks/vaultFunc"
 import styled from "styled-components"
 import { FormSelect } from "shards-react"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import { getTicketOwners } from "@state/singlePoolData/queries"
-import { Ticket } from "@state/singlePoolData/reducer"
+import { getTicketOwners, SubgraphTicket } from "@state/singlePoolData/queries"
 import _ from "lodash"
 import { shortenAddress } from "@config/utils"
 import {
@@ -37,7 +36,7 @@ const DatePickerStyled = styled(DatePicker)`
 `
 
 interface FutureOrderProps extends StateComponent {
-  currentTicket: Ticket
+  currentTicket: SubgraphTicket
 }
 
 const FutureOrder = (props: FutureOrderProps) => {
@@ -59,15 +58,25 @@ const FutureOrder = (props: FutureOrderProps) => {
 
   const getOwners = useCallback(async () => {
     const tickets = await getTicketOwners(
-      poolData.vaultAddress,
-      props.currentTicket.order
+      poolData.vaultAddress.toLowerCase(),
+      props.currentTicket.ticketNumber
     )
     if (tickets.length === 0) {
       return
     }
-    setTicketOwners(_.uniq(tickets.map((ticket) => ticket.owner)))
-    setTicketOwner(tickets[0].owner)
-  }, [poolData.vaultAddress, props.currentTicket.order])
+    const owners = _.uniq(
+      _.map(
+        _.filter(
+          tickets[0].tokenPurchases,
+          (tokenPurchase) => tokenPurchase.soldAt === null
+        ),
+        (tokenPurchases) => tokenPurchases.owner
+      )
+    )
+    console.log("owners", owners)
+    setTicketOwners(owners)
+    setTicketOwner(owners[0])
+  }, [poolData.vaultAddress, props.currentTicket])
 
   useEffect(() => {
     if (ethBalance === null) {
@@ -82,7 +91,7 @@ const FutureOrder = (props: FutureOrderProps) => {
   const handleButtonClick = async () => {
     await onFutureOrder(
       selectedTicketOwner,
-      props.currentTicket.order,
+      props.currentTicket.ticketNumber,
       moment(startDate).unix() - moment().unix(),
       parseFloat(inputAmount),
       async () => {
@@ -127,6 +136,8 @@ const FutureOrder = (props: FutureOrderProps) => {
         </LabelRow>
       </InputContainer>
       <DatePickerStyled
+        showTimeSelect
+        timeIntervals={5}
         selected={startDate}
         onChange={(date: Date) => setStartDate(date)}
       />

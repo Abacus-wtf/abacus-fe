@@ -12,19 +12,17 @@ import {
 import { ABC_TOKEN, VE_ABC_TOKEN, ZERO_ADDRESS } from "@config/constants"
 import _ from "lodash"
 import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
-import { formatEther } from "ethers/lib/utils"
+import { formatEther, parseEther } from "ethers/lib/utils"
 import { Stat } from "@sections/Pool/CurrentState/CurrentState.styles"
 import { BigNumber } from "@ethersproject/bignumber"
 import moment from "moment"
 import { SplitContainer, ButtonContainer } from "@sections/Pool/Pool.styles"
 import Button from "@components/Button"
 import {
-  useOnAddAllocation,
   useOnAddAutoAllocation,
   useOnAddTokens,
   useOnAllocateTokens,
   useOnChangeAllocation,
-  // useOnChangeAllocation,
   useOnLockTokens,
   useOnRemoveAllocation,
   useOnRemoveAutoAllocation,
@@ -93,26 +91,29 @@ const Allocation = (props: AllocInterface) => {
       style={{
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
+        alignItems: "center",
         width: "100%",
       }}
     >
       <div>
         {props.collection} - {formatEther(props.amount)}
       </div>
-      <Button onClick={() => props.onChange()}>Change</Button>
-      <Button
-        disabled={isPendingRemoveAllocation}
-        onClick={() =>
-          onRemoveAllocation(
-            props.collection,
-            Number(formatEther(props.amount)),
-            () => props.reset()
-          )
-        }
-      >
-        {isPendingRemoveAllocation ? "Loading..." : "Remove"}
-      </Button>
+      <div style={{ display: "flex", flexDirection: "row", gridGap: 8 }}>
+        <Button onClick={() => props.onChange()}>Change</Button>
+        <Button
+          disabled={isPendingRemoveAllocation}
+          onClick={() =>
+            onRemoveAllocation(
+              props.collection,
+              Number(formatEther(props.amount)),
+              () => props.reset()
+            )
+          }
+        >
+          {isPendingRemoveAllocation ? "Loading..." : "Remove"}
+        </Button>
+      </div>
     </div>
   )
 }
@@ -127,7 +128,7 @@ const Ve: React.FC = () => {
   const [openModal, setOpenModal] = useState(false)
   const [open, setOpen] = useState(false)
   const [epoch, setEpoch] = useState(0)
-  const [abcMaxBalance, setABCMaxBalance] = useState(0)
+  const [abcMaxBalance, setABCMaxBalance] = useState("")
   const [veAbcBalance, setVeAbcBalance] = useState("")
   const [abcInput, setABCInput] = useState("")
   const [holderData, setHolderData] = useState<Holder | null>(null)
@@ -166,6 +167,7 @@ const Ve: React.FC = () => {
         abcCall(ABC_TOKEN).methods.balanceOf(account).call(),
         getAllocs(account),
       ])
+    console.log("allocs", allocs)
     if (allocs !== undefined && allocs.length > 0) {
       setCurrentAllocation(allocs[0])
       setAllocs(allocs)
@@ -174,20 +176,14 @@ const Ve: React.FC = () => {
       Number(formatEther(veHolderHistory[3])) === 0 &&
         BigNumber.from(veHolderHistory[0]).toNumber() < moment().unix()
     )
-    setVeAbcBalance(
-      BigNumber.from(veBalance[0])
-        .sub(BigNumber.from(veHolderHistory[3]))
-        .toString()
-    )
-    setABCMaxBalance(balance)
+    setVeAbcBalance(formatEther(veBalance[0]))
+    setABCMaxBalance(BigNumber.from(balance).sub(parseEther("10")).toString())
     setHolderData({
       timeUnlock: BigNumber.from(veHolderHistory[0]).mul(1000).toNumber(),
-      amountLocked: Number(BigNumber.from(veHolderHistory[1]).toNumber()),
+      amountLocked: Number(formatEther(veHolderHistory[1])),
       multiplier: BigNumber.from(veHolderHistory[2]).toNumber(),
-      amountAllocated: Number(BigNumber.from(veHolderHistory[3]).toNumber()),
-      amountAutoAllocated: Number(
-        BigNumber.from(veHolderHistory[4]).toNumber()
-      ),
+      amountAllocated: Number(formatEther(veHolderHistory[3])),
+      amountAutoAllocated: Number(formatEther(veHolderHistory[4])),
       veBalanceUpdates: Number(BigNumber.from(veHolderHistory[5]).toNumber()),
       autoUpdates: Number(BigNumber.from(veHolderHistory[6]).toNumber()),
     })
@@ -210,6 +206,8 @@ const Ve: React.FC = () => {
         console.error(e)
       }
     }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
   }, [epoch, account])
 
   if (holderData === null || epochData === null) {
@@ -233,65 +231,66 @@ const Ve: React.FC = () => {
             display: "flex",
             flexDirection: "column",
           }}
-        />
-        <InfoSectionContainer>
-          <InputContainer
-            style={{
-              border: BORDER,
-              borderRadius: 15,
-            }}
-          >
-            <InputWithTitleAndButton
-              title="Amount to Change"
-              placeholder="0"
-              type="number"
-              name="amount"
-              value={amountToChange}
-              onChange={(e) => setAmountToChange(e.target.value)}
-              disabled={!account}
-              buttonText="Max"
-              onClick={() =>
-                setAmountToChange(`${formatEther(currentAllocation.amount)}`)
-              }
-              id="amountToChange"
-            />
-          </InputContainer>
-          <InputContainer
-            style={{
-              border: BORDER,
-              borderRadius: 15,
-            }}
-          >
-            <InputWithTitle
-              title="Address to Change"
-              placeholder={ZERO_ADDRESS}
-              type="text"
-              name="amount"
-              value={addressToChange}
-              onChange={(e) => setAddressToChange(e.target.value)}
-              disabled={!account}
-              id="addressToChange"
-            />
-          </InputContainer>
-        </InfoSectionContainer>
-        <FullWidthButton
-          disabled={
-            !amountToChange || !addressToChange || isPendingChangeAllocation
-          }
-          onClick={() =>
-            onChangeAllocation(
-              currentAllocation.collection,
-              addressToChange,
-              Number(amountToChange),
-              async () => {
-                await getClaimData()
-                setOpenModal(false)
-              }
-            )
-          }
         >
-          {isPendingChangeAllocation ? "Loading..." : "Change Allocation"}
-        </FullWidthButton>
+          <InfoSectionContainer>
+            <InputContainer
+              style={{
+                border: BORDER,
+                borderRadius: 15,
+              }}
+            >
+              <InputWithTitleAndButton
+                title="Amount to Change"
+                placeholder="0"
+                type="number"
+                name="amount"
+                value={amountToChange}
+                onChange={(e) => setAmountToChange(e.target.value)}
+                disabled={!account}
+                buttonText="Max"
+                onClick={() =>
+                  setAmountToChange(`${formatEther(currentAllocation.amount)}`)
+                }
+                id="amountToChange"
+              />
+            </InputContainer>
+            <InputContainer
+              style={{
+                border: BORDER,
+                borderRadius: 15,
+              }}
+            >
+              <InputWithTitle
+                title="Address to Change"
+                placeholder={ZERO_ADDRESS}
+                type="text"
+                name="amount"
+                value={addressToChange}
+                onChange={(e) => setAddressToChange(e.target.value)}
+                disabled={!account}
+                id="addressToChange"
+              />
+            </InputContainer>
+          </InfoSectionContainer>
+          <FullWidthButton
+            disabled={
+              !amountToChange || !addressToChange || isPendingChangeAllocation
+            }
+            onClick={() =>
+              onChangeAllocation(
+                currentAllocation.collection,
+                addressToChange,
+                Number(amountToChange),
+                async () => {
+                  await getClaimData()
+                  setOpenModal(false)
+                }
+              )
+            }
+          >
+            {isPendingChangeAllocation ? "Loading..." : "Change Allocation"}
+          </FullWidthButton>
+        </ModalBody>
       </Modal>
       <div style={{ display: "flex", gridGap: 30 }}>
         <Dropdown open={open} toggle={() => setOpen(!open)}>
@@ -337,7 +336,8 @@ const Ve: React.FC = () => {
         />
       </StyledSplitContainer>
       {allocs !== null && allocs.length > 0 && (
-        <Card>
+        <Card style={{ width: "100%" }}>
+          <h4>Allocations</h4>
           {_.map(allocs, (alloc) => (
             <Allocation
               {...alloc}
@@ -368,13 +368,15 @@ const Ve: React.FC = () => {
                 onChange={(e) => setABCInput(e.target.value)}
                 disabled={!account}
                 buttonText="Max"
-                onClick={() => setABCInput(`${abcMaxBalance}`)}
+                onClick={() => setABCInput(formatEther(`${abcMaxBalance}`))}
                 id="abcAmount"
               />
             </InputContainer>
           </InfoSectionContainer>
           {Number(veAbcBalance) === 0 && (
             <DatePickerStyled
+              showTimeSelect
+              timeIntervals={5}
               selected={startDate}
               onChange={(date: Date) => setStartDate(date)}
             />
@@ -384,11 +386,11 @@ const Ve: React.FC = () => {
             onClick={() =>
               Number(veAbcBalance) === 0
                 ? onLockTokens(
-                    Number(abcInput),
+                    abcInput,
                     moment(startDate).unix() - moment().unix(),
                     () => getClaimData()
                   )
-                : onAddTokens(Number(amount), () => getClaimData())
+                : onAddTokens(Number(abcInput), () => getClaimData())
             }
           >
             {isPendingAddTokens || isPendingLockTokens

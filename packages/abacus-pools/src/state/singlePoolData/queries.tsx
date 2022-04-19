@@ -2,13 +2,6 @@ import { GRAPHQL_ENDPOINT } from "@config/constants"
 import { SubgraphTicket } from "@models/Subgraph"
 import request, { gql } from "graphql-request"
 
-export type SubgraphTokenPurchases = {
-  owner: string
-  amount: string
-  soldAt: number
-  timestamp: number
-}
-
 export type GetTicketQueryResponse = {
   tickets: SubgraphTicket[]
 }
@@ -21,6 +14,7 @@ export type GetTicketVariables = {
 
 export type TicketFilter = {
   vaultAddress: string
+  ticketNumber?: number
 }
 
 export const GET_TICKETS = gql`
@@ -44,17 +38,21 @@ export const GET_TICKETS = gql`
   }
 `
 
-export const getTicketOwners = async (vaultAddress: string) => {
+export const getTicketOwners = async (
+  vaultAddress: string,
+  ticketNumber: number
+) => {
   const variables: GetTicketVariables = {
     first: 50,
     skip: 0,
-    where: { vaultAddress },
+    where: { vaultAddress, ticketNumber },
   }
-
+  console.log(variables)
   const { tickets } = await request<GetTicketQueryResponse>(
     GRAPHQL_ENDPOINT,
     GET_TICKETS,
     variables
   )
+  console.log(tickets)
   return tickets
 }

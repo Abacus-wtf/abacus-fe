@@ -8,7 +8,7 @@ import {
 } from "@state/singlePoolData/hooks"
 import styled from "styled-components"
 import _ from "lodash"
-import { Ticket as ITicket } from "@state/singlePoolData/reducer"
+import { SubgraphTicket as ITicket } from "@state/singlePoolData/queries"
 import { Modal, ModalBody } from "shards-react"
 import { ButtonsWhite } from "@components/Button"
 // import { useOnSellToken } from "@hooks/vaultFunc"
@@ -35,9 +35,13 @@ interface TicketProps extends ITicket {
   onClick: () => void
 }
 
-const Ticket = ({ order, amount, onClick }: TicketProps) => (
+const Ticket = ({
+  ticketNumber,
+  tokenPurchasesLength,
+  onClick,
+}: TicketProps) => (
   <Button onClick={onClick} style={{ borderRadius: 8 }}>
-    #{order}. {TICKET_SIZE - amount} space available
+    #{ticketNumber}. {TICKET_SIZE - tokenPurchasesLength} space available
   </Button>
 )
 
@@ -66,7 +70,7 @@ const Tickets = ({ refresh }: StateComponent) => {
     return <div>Loading...</div>
   }
   console.log("ticket: ", currentTicket)
-  console.log("traderdata: ", Number(traderData.ticketsOpen) === 0)
+  console.log("traderdata: ", Number(traderData.ticketsOwned) === 0)
   return (
     <Container>
       <Modal
@@ -92,7 +96,8 @@ const Tickets = ({ refresh }: StateComponent) => {
                 Sell
               </Tab>
             ) */}
-            {currentTicket && currentTicket.amount === TICKET_SIZE ? (
+            {currentTicket &&
+            currentTicket.tokenPurchasesLength === TICKET_SIZE ? (
               <></>
             ) : (
               <Tab

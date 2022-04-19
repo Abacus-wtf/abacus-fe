@@ -80,12 +80,13 @@ export type OpenSeaAsset = {
   asset_contract: {
     name: string
     address: string
+    schema_name?: string
   }
   collection: {
     name: string
   }
   token_id: string
-  name: string
+  name: string | null
   owner?: {
     address: string
     user?: {
@@ -102,6 +103,7 @@ const DEFAULT_ASSET: OpenSeaAsset = {
   asset_contract: {
     name: "",
     address: "",
+    schema_name: "",
   },
   collection: {
     name: "",
@@ -114,7 +116,9 @@ export type OpenSeaGetResponse = {
   assets: OpenSeaAsset[]
 }
 
-export async function openseaGet<T = OpenSeaAsset>(input: string) {
+export async function openseaGet<T = OpenSeaAsset | { assets: OpenSeaAsset[] }>(
+  input: string
+) {
   let result: AxiosResponse<T>
   try {
     result = await axios.get<T>(OPENSEA_LINK + input, {

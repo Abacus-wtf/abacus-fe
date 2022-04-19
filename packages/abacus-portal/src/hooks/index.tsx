@@ -30,7 +30,7 @@ import {
 } from "ethereum-multicall"
 import _ from "lodash"
 
-const ErrorMessageLabel = styled.label`
+const ErrorMessageLabel = styled.span`
   font-size: 1.4rem;
   font-weight: bold;
   margin-left: 2px;
@@ -184,6 +184,7 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
   const setPayoutData = useSetPayoutData()
   const setAuctionData = useSetAuctionData()
   const [isPending, setIsPending] = useState(false)
+  const [txError, setTxError] = useState<string>(null)
   const previousIsPending = usePrevious(isPending)
 
   useEffect(() => {
@@ -224,8 +225,9 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
       method: (...args: any) => Promise<TransactionResponse>
       args: Array<BigNumber | number | string>
       value: BigNumber | null
-      cb: (response: any) => void
+      cb: (response: TransactionResponse) => void
     }) => {
+      setTxError(null)
       dispatch(setGeneralizedContractErrorMessage(null))
       if (account === undefined || account === null) {
         toggleWalletModal()
@@ -261,24 +263,27 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
                 <ErrorMessageLabel>
                   The transaction was reverted.
                 </ErrorMessageLabel>
-                <div style={{ marginLeft: 42 }}>
-                  <p style={{ marginTop: 10 }}>
+                <span>
+                  <p>
                     You may not have enough ABC or ETH to complete this
                     transaction.
                   </p>{" "}
                   {error?.data?.message ? (
-                    <p style={{ marginTop: 5 }}>
-                      The error message from MetaMask was: "
-                      <i>{error.data.message}</i>"
+                    <p>
+                      The error message from received was: "
+                      <pre style={{ display: "inline-block" }}>
+                        {error.data.message}
+                      </pre>
+                      "
                     </p>
                   ) : null}
-                </div>
+                </span>
               </>
             )
 
             dispatch(setGeneralizedContractErrorMessage(ErrorMessage))
+            setTxError(error?.data?.message ?? null)
           }
-          console.error(error)
         })
     },
     [account, chainId, dispatch, library, toggleWalletModal]
@@ -287,5 +292,9 @@ export const useGeneralizedContractCall = (reloadType?: ReloadDataType) => {
   return {
     generalizedContractCall,
     isPending,
+    txError,
   }
 }
+
+export { default as useValidate } from "./useValidate"
+export * from "./useValidate"

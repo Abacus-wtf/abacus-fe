@@ -1,46 +1,99 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { useState } from "react"
 import Button from "@components/Button"
 import { Tooltip } from "shards-react"
 import { useGetCurrentNetwork } from "@state/application/hooks"
-import { NetworkSymbolEnum } from "@config/constants"
+import { ABC_BRIBE_FACTORY, NetworkSymbolEnum } from "@config/constants"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
+import {
+  useOnApproveTransfer,
+  useOnExitPool,
+  useOnStartEmissions,
+} from "@hooks/vaultFunc"
+import { useAcceptBribe } from "@hooks/bribeFunc"
 import { ButtonContainer, VerticalContainer } from "../Pool.styles"
+import { StateComponent } from "./index"
 
-const ManagePool: FunctionComponent = () => {
+const ManagePool = ({ refresh }: StateComponent) => {
   const [isToolTipOpen, setIsToolTipOpen] = useState(false)
   const networkSymbol = useGetCurrentNetwork()
   const isNetworkSymbolETH = networkSymbol === NetworkSymbolEnum.ETH
   const poolData = useGetPoolData()
+  const { onExitPool, isPending } = useOnExitPool()
+  const { onStartEmissions, isPending: isPendingStartEmissions } =
+    useOnStartEmissions()
+  const { onAcceptBribe, isPending: isPendingAcceptBribe } = useAcceptBribe()
+  const { onApproveTransfer, isPending: isPendingApproval } =
+    useOnApproveTransfer()
 
   return (
     <>
       <VerticalContainer style={{ marginTop: 10, alignItems: "center" }}>
-        <ButtonContainer style={{ width: "100%" }}>
+        <ButtonContainer
+          style={{ width: "100%", gridTemplateColumns: "1fr 1fr" }}
+        >
           <Button
             className="notConnected"
-            disabled={!isNetworkSymbolETH}
+            disabled={!isNetworkSymbolETH || isPending || isPendingApproval}
             style={{ width: "100%", borderRadius: 5 }}
-            type="submit"
+            onClick={async () => {
+              if (!poolData.approved) {
+                await onApproveTransfer(poolData.vaultAddress, async () => {
+                  await refresh()
+                })
+                return
+              }
+              await onExitPool(poolData.vaultAddress, async () => {
+                await refresh()
+              })
+            }}
           >
-            Trigger Auction
+            {isPending || isPendingApproval
+              ? "Loading..."
+              : poolData.approved
+              ? "Trigger Auction"
+              : "Approve Transfer for Auction"}
           </Button>
           <Button
             className="notConnected"
-            disabled={!isNetworkSymbolETH}
+            disabled={
+              !isNetworkSymbolETH ||
+              poolData.emissionsStarted ||
+              isPendingStartEmissions
+            }
             style={{ width: "100%", borderRadius: 5 }}
-            type="submit"
+            onClick={() =>
+              onStartEmissions(() => {
+                refresh()
+              })
+            }
           >
-            Exit Position (Pay {poolData.exitFee}% of Total)
+            {isPendingStartEmissions ? "Loading..." : `Start Emissions`}
           </Button>
         </ButtonContainer>
-        <ButtonContainer style={{ width: "100%" }}>
+        <ButtonContainer
+          style={{ width: "100%", gridTemplateColumns: "1fr 1fr" }}
+        >
           <Button
             className="notConnected"
-            disabled={!isNetworkSymbolETH}
+            disabled={!isNetworkSymbolETH || isPendingAcceptBribe}
             style={{ width: "100%", borderRadius: 5 }}
-            type="submit"
+            onClick={() => {
+              if (!poolData.approvedBribeFactory) {
+                onApproveTransfer(ABC_BRIBE_FACTORY, async () => {
+                  await refresh()
+                })
+              } else {
+                onAcceptBribe(async () => {
+                  await refresh()
+                })
+              }
+            }}
           >
-            End Auction
+            {isPendingAcceptBribe || isPendingApproval
+              ? "Loading..."
+              : !poolData.approvedBribeFactory
+              ? "Approve Bribe Factory"
+              : "Accept Bribes"}
           </Button>
         </ButtonContainer>
         <Tooltip

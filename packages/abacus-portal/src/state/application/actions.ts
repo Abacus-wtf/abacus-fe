@@ -10,3 +10,4 @@ export const selectNetwork = createAction<NetworkSymbolEnum>(
 export const setGeneralizedContractErrorMessage = createAction<any>(
   "application/generalizedContract/errorMessage"
 )
+export const setEthToUSD = createAction<number>("application/ethToUSD")

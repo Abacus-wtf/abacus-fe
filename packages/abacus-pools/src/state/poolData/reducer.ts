@@ -1,22 +1,67 @@
 import { createReducer } from "@reduxjs/toolkit"
 import { getPools, getMyPools } from "./actions"
 
-export interface Pool {
+export interface NFT {
   address: string
   tokenId: string
-  img: string
-  animation_url: string | null
-  collectionTitle: string
+  img?: string
+  collectionTitle?: string
+}
+
+export interface NFTBasePool extends NFT {
+  poolTokenName?: string
+  poolTokenSymbol?: string
+  exitFeePercentage?: number
+  exitFeeStatic?: number
+  ownershipSymbol?: string
+  ownershipToken?: string
+}
+
+export interface Auction {
+  auctionComplete: boolean
+  auctionEndTime: number
+  highestBid: number
+  highestBidder: string
+  closePoolAddress: string
+  profit: number
+  principalCalculated: boolean
+  hasTickets: boolean
+  creditsAvailableForPurchase: string
+  isNFTClaimed: boolean
+  isAccountClaimed: boolean
+  claimPreviousBid: boolean
+  ownedTickets: number[]
+}
+
+export enum PoolStatus {
+  Normal,
+  Closed,
+  Auction,
+}
+
+export interface Pool extends NFT {
+  vaultAddress?: string
   nftName: string
-  owner: string
-  ownerAddress: string
+  nonce: number
   symbol?: string
-  endTime?: string
-  tokensLeft?: string
-  tokensClaimed?: string
+  tokensLocked?: string
   tokenPrice?: string
   isManager?: boolean
-  exitFee?: string
+  emissionsStarted?: boolean
+  creditsAvailable?: string
+  state: PoolStatus
+  hasPremiumPass?: boolean
+  auction?: Auction
+  approved?: boolean
+  approvedBribeFactory?: boolean
+}
+
+export const INITIAL_POOL: Pool = {
+  nftName: "",
+  address: "",
+  nonce: -1,
+  tokenId: "",
+  state: PoolStatus.Normal,
 }
 
 interface PoolState {

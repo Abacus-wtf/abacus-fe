@@ -21,11 +21,11 @@ import {
   useOnAddToBid,
   useOnEndAuction,
 } from "@hooks/auction"
-import SessionCountdown from "../CurrentSession/CurrentState/SessionCountdown"
+import SessionCountdown from "../CurrentSession_dep/CurrentState/SessionCountdown"
 import {
   VerticalContainer,
   ListGroupItemMinWidth,
-} from "../CurrentSession/CurrentSession.styles"
+} from "../CurrentSession_dep/CurrentSession.styles"
 
 const RightSection: FunctionComponent = () => {
   const { account } = useActiveWeb3React()

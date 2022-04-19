@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { ImageContainer } from "@components/global.styles"
-import { Pool } from "@state/poolData/reducer"
+import { NFT } from "@state/poolData/reducer"
 
 export const CardContainer = styled.div`
   width: 100%;
@@ -17,11 +17,11 @@ export const CardContainer = styled.div`
   overflow: hidden;
 
   &:hover {
-    opacity: 0.6;
+    opacity: 0.75;
   }
 `
 
-export default ({ img }: Pool) => (
+export default ({ img }: NFT) => (
   <CardContainer>
     <ImageContainer src={img} />
   </CardContainer>

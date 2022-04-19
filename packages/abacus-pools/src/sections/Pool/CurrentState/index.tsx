@@ -1,25 +1,54 @@
-import React from "react"
-import { useGetPoolStatus } from "@state/singlePoolData/hooks"
-import { PoolStateStatus } from "@state/singlePoolData/reducer"
+import { PoolStatus } from "@state/poolData/reducer"
+import React, { useEffect } from "react"
+import {
+  useGetPoolData,
+  useGetTraderProfileData,
+} from "@state/singlePoolData/hooks"
+import { useActiveWeb3React } from "@hooks/index"
+import CurrentPosition from "./CurrentPosition"
 import AMM from "./AMM"
-import Auction from "./Auction"
 import ManagePool from "./ManagePool"
+import Auction from "./Auction"
+import Tickets from "./Tickets"
+import { Page } from ".."
+import Bribe from "./Bribe"
 
-const CurrentState = ({ isOnManage }: { isOnManage: boolean }) => {
-  const status = useGetPoolStatus()
+export interface StateComponent {
+  refresh: () => void
+}
 
-  if (isOnManage) {
-    return <ManagePool />
+const CurrentState = ({
+  page,
+  status,
+  refresh,
+}: {
+  page: number
+  status: PoolStatus
+  refresh: () => void
+}) => {
+  const { account } = useActiveWeb3React()
+  const poolData = useGetPoolData()
+  const getTraderProfileData = useGetTraderProfileData()
+
+  useEffect(() => {
+    getTraderProfileData()
+  }, [account, getTraderProfileData, poolData])
+
+  if (status === PoolStatus.Normal) {
+    switch (page) {
+      case Page.Main:
+        return <AMM refresh={refresh} />
+      case Page.CurrentPositions:
+        return <CurrentPosition />
+      case Page.Bribes:
+        return <Bribe refresh={refresh} />
+      case Page.Tickets:
+        return <Tickets refresh={refresh} />
+      default:
+        return <ManagePool refresh={refresh} />
+    }
   }
-
-  switch (status) {
-    case PoolStateStatus.AMM:
-      return <AMM />
-    case PoolStateStatus.Auction:
-      return <Auction />
-    default:
-      return null
-  }
+  return <Auction refresh={refresh} />
 }
 
 export default CurrentState

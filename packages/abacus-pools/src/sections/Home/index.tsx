@@ -23,7 +23,7 @@ const Home: React.FC = () => {
   const pools = useGetPools()
 
   useEffect(() => {
-    setPools()
+    setPools(null)
   }, [setPools])
 
   if (!pools) {
@@ -35,7 +35,6 @@ const Home: React.FC = () => {
       </SmallUniversalContainer>
     )
   }
-
   return (
     <UniversalContainer>
       <BackgroundIMG />
@@ -54,8 +53,8 @@ const Home: React.FC = () => {
       <CardContainer>
         {_.map(pools, (i) => (
           <a
-            href={`/pool?address=${i.address}&tokenId=${i.tokenId}`}
-            key={`${i.address}-${i.tokenId}`}
+            href={`/pool?address=${i.address}&tokenId=${i.tokenId}&nonce=${i.nonce}`}
+            key={`${i.address}-${i.tokenId}-${i.nonce}`}
           >
             <Card {...i} />
           </a>

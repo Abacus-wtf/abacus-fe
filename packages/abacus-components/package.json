@@ -1,6 +1,6 @@
 {
   "name": "abacus-components",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Shared react components for all abacus-fe projects",
   "keywords": [
     "abacus",
@@ -52,9 +52,10 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.31.1",
     "ts-jest": "^27.1.3",
-    "typescript": "^4.5.4"
+    "typescript": "^3.8.3"
   },
   "dependencies": {
+    "abacus-ui": "^1.1.0",
     "react-feather": "^2.0.9",
     "react-iconly": "^2.2.5",
     "shards-react": "^1.0.3",

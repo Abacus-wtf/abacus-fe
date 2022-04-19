@@ -127,7 +127,7 @@ const Navbar = ({ location }) => {
   return (
     <RowStyled>
       <NavbarContainer>
-        <Logo href="/">ABC Pools</Logo>
+        <Logo href="/">Abacus Spot</Logo>
         <MobileNavButton onClick={() => setMenuOpen((open) => !open)}>
           {menuOpen ? <X /> : <Menu />}
         </MobileNavButton>
@@ -142,21 +142,39 @@ const Navbar = ({ location }) => {
             </HeaderLink>
             <HeaderLink
               as="a"
-              href="/auctions"
-              active={(location.pathname === "/auctions").toString()}
-            >
-              Auctions
-            </HeaderLink>
-            <HeaderLink
-              as="a"
+              disable={!account}
               href="/my-pools"
               active={(location.pathname === "/my-pools").toString()}
             >
               My Pools
             </HeaderLink>
-            <HeaderLink as="a" href="https://app.abacus.wtf/" active={false}>
-              Crowds
+            <HeaderLink
+              as="a"
+              disable={!account}
+              href="/claim"
+              active={(location.pathname === "/claim").toString()}
+            >
+              Claim
             </HeaderLink>
+            <HeaderLink
+              as="a"
+              disable={!account}
+              href="/faucet"
+              active={(location.pathname === "/faucet").toString()}
+            >
+              Faucet
+            </HeaderLink>
+            <HeaderLink
+              as="a"
+              disable={!account}
+              href="/ve"
+              active={(location.pathname === "/ve").toString()}
+            >
+              veABC
+            </HeaderLink>
+            {/* <HeaderLink as="a" href="https://app.abacus.wtf/" active={false}>
+              Crowds
+  </HeaderLink> */}
           </ListSection>
           <ListSectionSelector>
             <NetworkSelectorButton />

@@ -4,9 +4,17 @@ import { ListGroupItem } from "shards-react"
 import { Text, ImageContainer } from "@components/global.styles"
 import { HorizontalListGroup } from "@components/ListGroupMods"
 import { theme } from "@config/theme"
+import { ButtonsWhite } from "@components/Button"
+
+export const Tab = styled(ButtonsWhite)`
+  border-radius: 8px;
+  width: 100%;
+  font-size: 0.75rem;
+`
 
 export const ButtonContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 15px;
 `
 

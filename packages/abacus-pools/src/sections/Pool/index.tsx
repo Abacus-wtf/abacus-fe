@@ -4,6 +4,8 @@ import * as queryString from "query-string"
 import { ButtonsWhite } from "@components/Button"
 import { OutboundLink } from "gatsby-plugin-google-gtag"
 import { useGetPoolData, useSetPoolData } from "@state/singlePoolData/hooks"
+import { useActiveWeb3React } from "@hooks/index"
+import { PoolStatus } from "@state/poolData/reducer"
 import {
   SplitContainer,
   VerticalContainer,
@@ -11,18 +13,30 @@ import {
   FileContainer,
   SubText,
   ButtonContainer,
+  Tab,
 } from "./Pool.styles"
 import CurrentState from "./CurrentState/index"
 
+export enum Page {
+  Main,
+  CurrentPositions,
+  ManagePool,
+  Tickets,
+  Bribes,
+}
+
 const Pool = ({ location }) => {
-  const { address, tokenId } = queryString.parse(location.search)
+  const { address, tokenId, nonce } = queryString.parse(location.search)
   const setPool = useSetPoolData()
   const poolData = useGetPoolData()
-  const [isManagerPage, setIsOnManagerPage] = useState(true)
+  const [page, setPage] = useState(Page.Main)
+  const { account } = useActiveWeb3React()
 
   useEffect(() => {
-    setPool(String(address), String(tokenId))
-  }, [address, setPool, tokenId])
+    setPool(String(address), String(tokenId), Number(nonce))
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+  }, [account, address, tokenId, nonce])
 
   if (!poolData) {
     return (
@@ -38,7 +52,11 @@ const Pool = ({ location }) => {
     <SmallUniversalContainer style={{ alignItems: "center" }}>
       <SplitContainer>
         <VerticalContainer>
-          <FileContainer {...poolData} />
+          <FileContainer
+            {...poolData}
+            img={poolData.img || ""}
+            animation_url={null}
+          />
           <ButtonContainer>
             <ButtonsWhite
               style={{ borderRadius: 8 }}
@@ -51,30 +69,55 @@ const Pool = ({ location }) => {
           </ButtonContainer>
         </VerticalContainer>
         <VerticalContainer>
-          {poolData.isManager ? (
-            <ButtonContainer>
-              <ButtonsWhite
-                disabled={isManagerPage}
-                onClick={() => setIsOnManagerPage(true)}
-                style={{ borderRadius: 8 }}
-              >
-                Manage
-              </ButtonsWhite>
-              <ButtonsWhite
-                disabled={!isManagerPage}
-                onClick={() => setIsOnManagerPage(false)}
-                style={{ borderRadius: 8 }}
-              >
-                Main
-              </ButtonsWhite>
-            </ButtonContainer>
+          {!poolData.auction ? (
+            <>
+              <ButtonContainer>
+                <Tab
+                  disabled={page === Page.Main}
+                  onClick={() => setPage(Page.Main)}
+                >
+                  {poolData.state === PoolStatus.Auction ? "Auction" : "Main"}
+                </Tab>
+                {account ? (
+                  <Tab
+                    disabled={page === Page.CurrentPositions}
+                    onClick={() => setPage(Page.CurrentPositions)}
+                  >
+                    Current Positions
+                  </Tab>
+                ) : null}
+                <Tab
+                  disabled={page === Page.Tickets}
+                  onClick={() => setPage(Page.Tickets)}
+                >
+                  Tickets
+                </Tab>
+              </ButtonContainer>
+              <ButtonContainer>
+                {poolData.isManager && (
+                  <Tab
+                    disabled={page === Page.ManagePool}
+                    onClick={() => setPage(Page.ManagePool)}
+                  >
+                    Manage Pool
+                  </Tab>
+                )}
+                <Tab
+                  disabled={page === Page.Bribes}
+                  onClick={() => setPage(Page.Bribes)}
+                >
+                  Bribes
+                </Tab>
+              </ButtonContainer>
+            </>
           ) : null}
-          <VerticalSmallGapContainer style={{ minHeight: 90 }}>
+
+          <VerticalSmallGapContainer style={{ minHeight: 60 }}>
             <SubText>{poolData.collectionTitle}</SubText>
             <Title>
               {poolData.nftName} #{poolData.tokenId}
             </Title>
-            <SubText>
+            {/* <SubText>
               Owned by{" "}
               <OutboundLink
                 target="_blank"
@@ -82,9 +125,15 @@ const Pool = ({ location }) => {
               >
                 {poolData.owner}
               </OutboundLink>
-            </SubText>
+                </SubText> */}
           </VerticalSmallGapContainer>
-          <CurrentState isOnManage={poolData.isManager && isManagerPage} />
+          <CurrentState
+            page={page}
+            status={poolData.state}
+            refresh={() =>
+              setPool(String(address), String(tokenId), Number(nonce))
+            }
+          />
         </VerticalContainer>
       </SplitContainer>
     </SmallUniversalContainer>

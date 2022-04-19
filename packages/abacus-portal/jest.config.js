@@ -29,8 +29,9 @@ module.exports = {
     "<rootDir>/packages/abacus-portal/**/?(*.)+(spec|test).(ts|js)?(x)",
   ],
   testEnvironment: "jsdom",
+  preset: "ts-jest",
   transform: {
-    "\\.(ts|tsx)$": "ts-jest",
+    "^.+\\.(ts|tsx)?$": "ts-jest",
   },
   globals: {
     // we must specify a custom tsconfig for tests because we need the typescript transform

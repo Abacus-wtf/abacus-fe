@@ -5,6 +5,7 @@ import {
   toggleWalletModal,
   selectNetwork,
   setGeneralizedContractErrorMessage,
+  setEthToUSD,
 } from "./actions"
 
 type GeneralizedContractState = {
@@ -14,6 +15,7 @@ interface ApplicationState {
   isWalletModalOpen: boolean
   networkSymbol: NetworkSymbolEnum | null
   generalizedContract: GeneralizedContractState
+  ethToUSD: number
 }
 
 export const initialState: ApplicationState = {
@@ -22,6 +24,7 @@ export const initialState: ApplicationState = {
   generalizedContract: {
     errorMessage: null,
   },
+  ethToUSD: null,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -34,5 +37,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(setGeneralizedContractErrorMessage, (state, action) => {
       state.generalizedContract.errorMessage = action.payload
+    })
+    .addCase(setEthToUSD, (state, action) => {
+      state.ethToUSD = action.payload
     })
 )

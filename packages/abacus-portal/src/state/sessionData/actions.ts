@@ -8,11 +8,23 @@ export const setCurrentSessionFetchStatus = createAction<PromiseStatus>(
 export const setCurrentSessionErrorMessage = createAction<string>(
   "sessionData/setCurrentSessionErrorMessage"
 )
-export const getCurrentSessionData = createAction<CurrentSessionState>(
-  "sessionData/getCurrentSessionData"
-)
+export const setCurrentSessionData = createAction<
+  CurrentSessionState["sessionData"]
+>("sessionData/setCurrentSessionData")
+export const setCurrentSessionStatus = createAction<
+  CurrentSessionState["sessionStatus"]
+>("sessionData/setCurrentSessionStatus")
 export const setUserStatus = createAction<CurrentSessionState["userStatus"]>(
   "sessionData/setUserStatus"
+)
+export const setFeaturedSessionData = createAction<SessionData[]>(
+  "sessionData/setFeaturedSessionData"
+)
+export const setFeaturedSessionFetchStatus = createAction<PromiseStatus>(
+  "sessionData/setFeaturedSessionFetchStatus"
+)
+export const setFeaturedSessionErrorMessage = createAction<string | null>(
+  "sessionData/setFeaturedSessionErrorMessage"
 )
 export const setMultipleSessionData = createAction<SessionData[]>(
   "sessionData/setMultipleSessionData"

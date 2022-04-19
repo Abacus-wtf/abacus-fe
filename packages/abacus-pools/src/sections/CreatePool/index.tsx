@@ -1,19 +1,18 @@
-import React, { useState, FormEvent } from "react"
-import {
-  Title,
-  Subheader,
-  UniversalContainer,
-  SubText,
-} from "@components/global.styles"
+import React, { useState, FormEvent, useEffect } from "react"
+import { Title, Subheader, UniversalContainer } from "@components/global.styles"
 import { ListGroup, ListGroupItem, Form, Modal, ModalBody } from "shards-react"
 import { InputWithTitle } from "@components/Input"
-import Button, { ButtonsWhite } from "@components/Button"
+import Button from "@components/Button"
 import styled from "styled-components"
-import { useActiveWeb3React } from "@hooks/index"
-import { ZERO_ADDRESS } from "@config/constants"
-import { shortenAddress } from "@config/utils"
+import { useActiveWeb3React, useWeb3Contract } from "@hooks/index"
+import { ABC_FACTORY } from "@config/constants"
+import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
 import { theme } from "@config/theme"
-import { Pool } from "@state/poolData/reducer"
+import { NFT, NFTBasePool } from "@state/poolData/reducer"
+import _ from "lodash"
+import { useOnCreatePool } from "@hooks/createPool"
+import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
+import { Media } from "abacus-ui"
 import {
   SplitContainer,
   VerticalSmallGapContainer,
@@ -23,6 +22,10 @@ import {
 
 const ListGroupStyled = styled(ListGroup)`
   margin: 45px 0px;
+
+  & img {
+    width: 100%;
+  }
 
   @media ${theme.mediaMin.splitCenter} {
     min-width: 450px;
@@ -39,6 +42,24 @@ const ModalTitle = styled(Title)`
   font-size: 1.2rem;
 `
 
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+
+  & * {
+    text-align: center;
+  }
+
+  ${Media.sm`
+    flex-direction: row;
+    & * {
+      text-align: unset;
+    }
+  `}
+`
+
 const ModalPair = ({ title, value }: { title: string; value: string }) => (
   <div style={{ marginBottom: 10 }}>
     <ModalSubtitle>{title}</ModalSubtitle>
@@ -46,39 +67,105 @@ const ModalPair = ({ title, value }: { title: string; value: string }) => (
   </div>
 )
 
+type CreatePoolForm<Elements> = Elements & {
+  poolTokenName: HTMLInputElement
+  poolTokenSymbol: HTMLInputElement
+  exitFeePercentage: HTMLInputElement
+  exitFeeStatic: HTMLInputElement
+  openseaLink: HTMLInputElement
+}
+
 const CreatePool: React.FC = () => {
   const { account } = useActiveWeb3React()
+  const factory = useWeb3Contract(FACTORY_ABI)
+  const { onCreatePool } = useOnCreatePool()
   const [openModal, setOpenModal] = useState(false)
-  const [newSesh /* , setNewSesh */] = useState<Pool | null>(null)
+  const [newSesh, setNewSesh] = useState<NFTBasePool | null>(null)
+  const [chosePool, setChosePool] = useState(false)
+  const [isButtonLoading, setIsButtonLoading] = useState(false)
+  const [nfts, setNFTs] = useState<NFT[] | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [currentNonce, setCurrentNonce] = useState(0)
+
+  useEffect(() => {
+    const loadNFTs = async () => {
+      setIsLoading(true)
+      const opensea = await openseaGet(`assets?owner=${account}`)
+      const filteredAssets = _.filter(
+        (opensea as { assets: OpenSeaAsset[] }).assets,
+        (asset) => asset.asset_contract.schema_name === "ERC721"
+      )
+      const ownerNFTs = _.map(filteredAssets, (os) => ({
+        tokenId: os.token_id,
+        img: os.image_url,
+        collectionTitle: os.collection.name,
+        address: os.asset_contract.address,
+      }))
+      setNFTs(ownerNFTs)
+      setIsLoading(false)
+    }
+
+    if (account && nfts === null) {
+      loadNFTs()
+    }
+  }, [account, nfts])
 
   const toggle = () => setOpenModal(!openModal)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    /* const pricingSession = getPricingSessionContract(
-      ABC_PRICING_SESSION_ADDRESS(networkSymbol)
-    )
-    const formElements = e.target as CreateSessionForm<typeof e.target>
-    const nftAddress = formElements.nftAddress.value
-    const tokenId = formElements.tokenId.value
-    const initAppraisal = formElements.initAppraisal.value
-    const votingTime = Number(formElements.votingTime.value)
-    const bounty =
-      formElements.initBounty.value === "" ||
-      Number(formElements.initBounty.value) === 0
-        ? undefined
-        : formElements.initBounty.value
+    const formElements = e.target as CreatePoolForm<typeof e.target>
 
-    const meta = await openseaGet(`asset/${nftAddress}/${tokenId}`)
+    if (!chosePool) {
+      const link = formElements.openseaLink.value
+      const addressIndex = link.indexOf("assets/") + "assets/".length
+      const tokenIndex = addressIndex + 43
+      const address = link.slice(addressIndex, tokenIndex - 1)
+      const tokenId = link.slice(tokenIndex, link.length)
 
-    if (!meta.token_id) {
-      alert("The NFT Address and Token ID you have entered is not valid")
-      return
+      try {
+        const os = (await openseaGet(
+          `asset/${address}/${tokenId}`
+        )) as OpenSeaAsset
+
+        if (os.asset_contract.schema_name !== "ERC721") {
+          alert("The NFT must be an ERC-721!")
+          return
+        }
+        setNewSesh({
+          address,
+          tokenId,
+          img: os.image_url,
+          collectionTitle: os.collection.name,
+        })
+        setChosePool(true)
+      } catch (e) {
+        alert("Invalid link")
+      }
+    } else {
+      const poolTokenName = formElements.poolTokenName.value
+      const poolTokenSymbol = formElements.poolTokenSymbol.value
+
+      setIsButtonLoading(true)
+      const nonce = await factory(ABC_FACTORY)
+        .methods.nextVaultIndex(newSesh.address, newSesh.tokenId)
+        .call()
+      setCurrentNonce(nonce)
+      await onCreatePool(
+        newSesh.address,
+        newSesh.tokenId,
+        poolTokenName,
+        poolTokenSymbol,
+        () => {
+          setIsButtonLoading(false)
+          toggle()
+        }
+      )
     }
+  }
 
-    if (votingTime > 24) {
-      alert("You must choose a voting time that is 24 hours or below")
-    } */
+  if (isLoading) {
+    return <div>Loading...</div>
   }
 
   return (
@@ -88,12 +175,17 @@ const CreatePool: React.FC = () => {
           {newSesh === null ? null : (
             <SplitContainer>
               <VerticalSmallGapContainer>
-                <FileContainer {...newSesh} />
+                <FileContainer
+                  img={newSesh.img || ""}
+                  animation_url={null}
+                  {...newSesh}
+                />
                 <SubTitle style={{ marginTop: 15 }}>
                   {newSesh.collectionTitle}
                 </SubTitle>
                 <Title>
-                  {newSesh.nftName} #{newSesh.tokenId}
+                  {newSesh.collectionTitle || newSesh.address} #
+                  {newSesh.tokenId}
                 </Title>
               </VerticalSmallGapContainer>
               <VerticalSmallGapContainer
@@ -105,7 +197,7 @@ const CreatePool: React.FC = () => {
                     marginBottom: "15px !important",
                   }}
                 >
-                  Session Created!
+                  Vault Created!
                 </Title>
                 <ModalPair
                   title="NFT Address"
@@ -113,7 +205,7 @@ const CreatePool: React.FC = () => {
                 />
                 <ModalPair title="Token ID" value={newSesh.tokenId} />
                 <a
-                  href={`/pool?address=${newSesh.address}&tokenId=${newSesh.tokenId}`}
+                  href={`/pool?address=${newSesh.address}&tokenId=${newSesh.tokenId}&nonce=${currentNonce}`}
                 >
                   <Button style={{ width: "100%", textAlign: "center" }}>
                     Go to pool
@@ -124,62 +216,60 @@ const CreatePool: React.FC = () => {
           )}
         </ModalBody>
       </Modal>
-      <div>
-        <Title style={{ marginBottom: 3 }}>Create a Pool</Title>
-        <Subheader>Create an Abacus Nuclear Pool</Subheader>
+      <div style={{ width: !chosePool ? "100%" : "auto" }}>
         <Form onSubmit={handleSubmit}>
-          <ListGroupStyled>
-            <ListGroupItem>
-              <InputWithTitle
-                title="Pool Token Name"
-                id="poolTokenName"
-                placeholder="BAYC Vault"
-              />
-            </ListGroupItem>
-            <ListGroupItem>
-              <InputWithTitle
-                title="Pool Token Symbol"
-                id="poolTokenSymbol"
-                placeholder="BAYC"
-              />
-            </ListGroupItem>
-            <ListGroupItem>
-              <InputWithTitle
-                title="NFT address"
-                id="nftAddress"
-                placeholder={ZERO_ADDRESS}
-              />
-            </ListGroupItem>
-            <ListGroupItem>
-              <InputWithTitle title="Token ID" id="tokenId" placeholder="10" />
-            </ListGroupItem>
-            <ListGroupItem>
-              <InputWithTitle
-                title="Initial Value of NFT (ETH)"
-                id="initMC"
-                placeholder="100"
-              />
-            </ListGroupItem>
-            <ListGroupItem>
-              <InputWithTitle
-                title="Exit Fee (%)"
-                id="exitFee"
-                placeholder="5"
-              />
-            </ListGroupItem>
-          </ListGroupStyled>
-          <div
-            style={{ display: "flex", flexDirection: "column", gridGap: 10 }}
-          >
-            <ButtonsWhite
+          <TitleContainer>
+            <div>
+              <Title style={{ marginBottom: 3 }}>Create a Pool</Title>
+              <Subheader>
+                Create an Abacus Spot Pool {!chosePool && "- Choose an NFT"}
+              </Subheader>
+            </div>
+            <Button
               type="submit"
-              style={{ maxWidth: "fit-content" }}
-              disabled={!account}
+              style={{ maxWidth: "fit-content", height: 40 }}
+              disabled={
+                !account || isButtonLoading || (newSesh === null && chosePool)
+              }
             >
-              Create Pool
-            </ButtonsWhite>
-            {!account && <SubText>Connect your wallet first</SubText>}
-          </div>
+              {isButtonLoading
+                ? "Loading..."
+                : newSesh === null
+                ? "Select NFT"
+                : "Create Pool"}
+            </Button>
+          </TitleContainer>
+          {!chosePool ? (
+            <ListGroupStyled>
+              <ListGroupItem>
+                <InputWithTitle
+                  title="NFT Link (OpenSea)"
+                  id="openseaLink"
+                  placeholder="https://opensea.io/assets/0x0000000000000000000000000000000000000000/1"
+                />
+              </ListGroupItem>
+            </ListGroupStyled>
+          ) : (
+            <>
+              <ListGroupStyled>
+                <img src={newSesh.img} alt="NFT for Spot Pool" />
+                <ListGroupItem>
+                  <InputWithTitle
+                    title="Pool Token Name"
+                    id="poolTokenName"
+                    placeholder="BAYC Vault"
+                  />
+                </ListGroupItem>
+                <ListGroupItem>
+                  <InputWithTitle
+                    title="Pool Token Symbol"
+                    id="poolTokenSymbol"
+                    placeholder="BAYC"
+                  />
+                </ListGroupItem>
+              </ListGroupStyled>
+            </>
+          )}
         </Form>
       </div>
     </UniversalContainer>

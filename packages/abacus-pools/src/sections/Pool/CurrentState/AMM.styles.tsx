@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { ButtonsWhite } from "@components/Button"
 import { Text } from "@components/global.styles"
+import { theme } from "@config/theme"
 
 export const BORDER = "0.5px solid #C4C4C4"
 
@@ -19,7 +20,7 @@ export const InfoSectionContainer = styled.div`
 
 export const LabelRow = styled.div`
   align-items: center;
-  color: ${({ theme }) => theme.colors.text1};
+  color: ${theme.colors.text1};
   font-size: 0.75rem;
   line-height: 1rem;
   span:hover {

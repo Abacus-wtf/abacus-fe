@@ -1,14 +1,13 @@
 import { createWeb3ReactRoot, Web3ReactProvider } from "@web3-react/core"
 import { Provider } from "react-redux"
-import React, { Fragment } from "react"
+// eslint-disable-next-line no-unused-vars
+import React from "react"
 import { ThemeProvider } from "styled-components"
 import { Web3Provider } from "@ethersproject/providers"
+import { defaultTheme } from "abacus-ui"
 import MetamaskProvider from "./src/config/MetamaskProvider"
 import { NetworkContextName } from "./src/config/constants"
-import { theme } from "./src/config/theme"
 import store from "./src/state"
-import "bootstrap/dist/css/bootstrap.min.css"
-import "shards-ui/dist/css/shards.min.css"
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 const getLibrary = (provider) => {
@@ -25,7 +24,7 @@ const wrapper = ({ element }) => {
           <Web3ProviderNetwork getLibrary={getLibrary}>
             <Provider store={store}>
               <MetamaskProvider>
-                <ThemeProvider theme={theme}>{element}</ThemeProvider>
+                <ThemeProvider theme={defaultTheme}>{element}</ThemeProvider>
               </MetamaskProvider>
             </Provider>
           </Web3ProviderNetwork>
@@ -33,7 +32,11 @@ const wrapper = ({ element }) => {
       </>
     )
   }
-  return <Provider store={store}>{element}</Provider>
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <Provider store={store}>{element}</Provider>
+    </ThemeProvider>
+  )
 }
 
 export default wrapper

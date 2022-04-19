@@ -506,7 +506,7 @@ export const useChangePayoutRatio = () => {
       )
       const method = vaultContract.adjustPayoutRatio
       const estimate = vaultContract.estimateGas.adjustPayoutRatio
-      const args = [ratio]
+      const args = [Number(ratio) * 10]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {

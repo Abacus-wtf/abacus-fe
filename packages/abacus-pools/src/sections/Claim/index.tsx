@@ -35,8 +35,8 @@ const Claim: React.FC = () => {
 
       const [abcEmissions, userCredits] = await epochVault(
         ABC_EPOCH,
-        ["getAbcEmission", "getUserCredits"],
-        [[currentEpoch[0]], [currentEpoch[0], account]]
+        ["getCurrentAbcEmission", "getUserCredits"],
+        [[], [currentEpoch[0], account]]
       )
 
       console.log(Number(formatEther(userCredits[0])))

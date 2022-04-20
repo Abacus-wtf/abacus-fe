@@ -2,50 +2,51 @@ import React, { useCallback, useEffect, useState } from "react"
 import {
   ABC_TREASURY_ADDRESS,
   useWeb3Contract,
-  SUBGRAPH,
+  // SUBGRAPH,
 } from "@components/useWeb3Contract"
 import { formatEther } from "ethers/lib/utils"
 import ABC_TREASURY from "@components/contracts/ABC_TREASURY.json"
-import { request, gql } from "graphql-request"
+// import { request, gql } from "graphql-request"
 import Superhero from "@components/Superhero"
 import styled from "styled-components"
 import { StatInfo, Media } from "abacus-ui"
 import Navbar from "@components/Navbar"
 import Infographics from "@components/Infographics"
-import PreviousSessions from "@components/PreviousSessions"
+// import PreviousSessions from "@components/PreviousSessions"
 import JoinUs from "@components/JoinUs"
 import OpenAppModal from "@components/OpenAppModal"
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Session, SubgraphPricingSession } from "@models/index"
-import { mapSessions } from "./mapSessions"
+// import { mapSessions } from "./mapSessions"
 
-const GET_NFT_PRICE_DATA = gql`
-  query {
-    nftsPriced(id: "0") {
-      total
-    }
-  }
-`
+// const GET_NFT_PRICE_DATA = gql`
+//   query {
+//     nftsPriced(id: "0") {
+//       total
+//     }
+//   }
+// `
 
-const GET_PREVIOUS_SESSIONS = gql`
-  query {
-    pricingSessions(
-      first: 20
-      orderBy: createdAt
-      orderDirection: desc
-      where: { sessionStatus: 5 }
-    ) {
-      id
-      nftAddress
-      tokenId
-      nonce
-      finalAppraisalValue
-      totalStaked
-      bounty
-      numParticipants
-      maxAppraisal
-    }
-  }
-`
+// const GET_PREVIOUS_SESSIONS = gql`
+//   query {
+//     pricingSessions(
+//       first: 20
+//       orderBy: createdAt
+//       orderDirection: desc
+//       where: { sessionStatus: 5 }
+//     ) {
+//       id
+//       nftAddress
+//       tokenId
+//       nonce
+//       finalAppraisalValue
+//       totalStaked
+//       bounty
+//       numParticipants
+//       maxAppraisal
+//     }
+//   }
+// `
 
 const StatInfoContainer = styled.div`
   display: flex;
@@ -79,7 +80,9 @@ const StyledStatInfo = styled(StatInfo)`
 const Home: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const treasuryContract = useWeb3Contract(ABC_TREASURY)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [nftsPriced, setNftsPriced] = React.useState("-")
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [previousSessions, setPreviousSessions] = React.useState<Session[]>([])
   const [earned, setEarned] = React.useState("-")
   const [defender, setDefender] = React.useState("-")
@@ -88,17 +91,17 @@ const Home: React.FC = () => {
     const loadData = async () => {
       const [
         profitGenerated,
-        nftsPricedContract,
-        pricingSessions,
+        // nftsPricedContract,
+        // pricingSessions,
         defenderContract,
       ] = await Promise.all([
         treasuryContract(ABC_TREASURY_ADDRESS).methods.profitGenerated().call(),
-        request(SUBGRAPH, GET_NFT_PRICE_DATA, {}),
-        request<{ pricingSessions: SubgraphPricingSession[] }>(
-          SUBGRAPH,
-          GET_PREVIOUS_SESSIONS,
-          {}
-        ),
+        // request(SUBGRAPH, GET_NFT_PRICE_DATA, {}),
+        // request<{ pricingSessions: SubgraphPricingSession[] }>(
+        //   SUBGRAPH,
+        //   GET_PREVIOUS_SESSIONS,
+        //   {}
+        // ),
         treasuryContract(ABC_TREASURY_ADDRESS).methods.defender().call(),
       ])
       setEarned(
@@ -108,11 +111,11 @@ const Home: React.FC = () => {
         })
       )
       setDefender(defenderContract)
-      setNftsPriced(
-        nftsPricedContract.nftsPriced ? nftsPricedContract.nftsPriced.total : 0
-      )
-      const sessions = await mapSessions(pricingSessions.pricingSessions)
-      setPreviousSessions(sessions)
+      // setNftsPriced(
+      //   nftsPricedContract.nftsPriced ? nftsPricedContract.nftsPriced.total : 0
+      // )
+      // const sessions = await mapSessions(pricingSessions.pricingSessions)
+      // setPreviousSessions(sessions)
     }
     loadData()
   }, [treasuryContract])
@@ -130,7 +133,7 @@ const Home: React.FC = () => {
         <StyledStatInfo stat={defender} title="Defender" />
       </StatInfoContainer>
       <Infographics />
-      <PreviousSessions previousSessions={previousSessions} />
+      {/* <PreviousSessions previousSessions={previousSessions} /> */}
       <JoinUs />
       <Navbar footer openModal={openModal} />
       <div style={{ paddingBottom: "15px" }} />

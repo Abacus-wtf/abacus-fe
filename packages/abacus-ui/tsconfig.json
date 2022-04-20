@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.json",
-  "exclude": ["node_modules", "lib", "**/*.story*"],
+  "exclude": ["node_modules", "lib", "**/*.story*", "**/*.config.*"],
   "compilerOptions": {
     "typeRoots": ["./src/styled.d.ts"],
     "baseUrl": "./src",
@@ -16,7 +16,14 @@
     "suppressImplicitAnyIndexErrors": true,
     "paths": {
       "@utils": ["utils/index"],
-      "@theme": ["components/theme/index"]
+      "@theme": ["components/theme/index"],
+      "@static/*": ["static/*"],
+      "@atoms": ["components/atoms/index"],
+      "@molecules": ["components/molecules/index"],
+      "@typography": ["components/typography/index"],
+      "@organisms": ["components/organisms/index"],
+      "@templates": ["components/templates/index"],
+      "@icons": ["components/icons/index"]
     }
   }
 }

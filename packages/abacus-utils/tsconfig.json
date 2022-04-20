@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "exclude": ["node_modules", "lib", "**/*.config.*"],
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "lib",
+    "declaration": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "paths": {}
+  }
+}

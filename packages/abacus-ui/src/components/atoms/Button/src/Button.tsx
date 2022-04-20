@@ -1,5 +1,5 @@
 import { Font } from "@theme";
-import React, { FunctionComponent } from "react";
+import React from "react";
 import styled from "styled-components";
 
 export enum ButtonType {
@@ -9,14 +9,15 @@ export enum ButtonType {
 }
 
 type ButtonProps = {
-  children: any;
-  onClick?: () => void;
+  children: React.ReactNode;
   disabled?: boolean;
-  type?: ButtonType;
+  buttonType?: ButtonType;
+  className?: string;
 };
 
-const Container = styled.button<{ buttonType: ButtonType }>`
+const Button = styled.button<ButtonProps>`
   ${Font()}
+  text-decoration: none;
   border-radius: ${({ theme }) => theme.borderRadius.section};
   padding: ${({ theme }) => theme.padding.main};
   box-shadow: ${({ theme, buttonType }) =>
@@ -29,28 +30,18 @@ const Container = styled.button<{ buttonType: ButtonType }>`
       ? theme.colors.button.primary
       : theme.colors.core.white};
   background-color: ${({ theme, buttonType }) =>
-    buttonType === ButtonType.Standard
-      ? theme.colors.utility.blue
+    buttonType === ButtonType.Clear
+      ? "transparent"
       : buttonType === ButtonType.White
       ? theme.colors.core.white
-      : "transparent"};
-  width: 100%;
+      : theme.colors.utility.blue};
+  width: max-content;
+  height: min-content;
 
   &:hover {
     opacity: 0.6;
     box-shadow: none;
   }
 `;
-
-const Button: FunctionComponent<ButtonProps> = ({
-  children,
-  onClick,
-  disabled,
-  type = ButtonType.Standard,
-}: ButtonProps) => (
-  <Container buttonType={type} disabled={disabled} onClick={onClick}>
-    {children}
-  </Container>
-);
 
 export default Button;

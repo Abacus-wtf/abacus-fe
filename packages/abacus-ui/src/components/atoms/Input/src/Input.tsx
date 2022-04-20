@@ -28,7 +28,7 @@ const InputContainer = styled.div`
 const StyledLabel = styled.label<WithTheme>`
   ${Font("milli")}
   text-align: center;
-  background-color: ${({ theme }) => theme.colors.background2};
+  background-color: ${({ theme }) => theme.colors.utility.white};
   padding: 10px;
   height: calc(100% - 17px);
   margin: 8.5px 0;

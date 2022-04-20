@@ -22,6 +22,7 @@ const defaultTheme = {
       red: "#F33636",
       yellow: "#FFC93E",
       white: "#FFFFFF",
+      black: "#000000",
     },
   },
   layout: {
@@ -50,47 +51,47 @@ const defaultTheme = {
     micro: {},
     milli: {
       "font-size": "14px",
-      "line-height": "17px",
+      "line-height": "132%",
     },
     kilo: {
       "font-size": "16px",
-      "line-height": "19px",
+      "line-height": "132%",
     },
     mega: {
       "font-size": "20px",
-      "line-height": "24px",
+      "line-height": "132%",
     },
     giga: {
       "font-size": "24px",
-      "line-height": "29px",
+      "line-height": "132%",
     },
     tera: {
-      "font-size": "26px",
-      "line-height": "31.47px",
+      "font-size": "28px",
+      "line-height": "132%",
     },
     peta: {
-      "font-size": "30px",
-      "line-height": "36px",
+      "font-size": "32px",
+      "line-height": "132%",
     },
     exa: {
-      "font-size": "32px",
-      "line-height": "38.73px",
+      "font-size": "38px",
+      "line-height": "132%",
     },
     zetta: {
-      "font-size": "34px",
-      "line-height": "40.8px",
+      "font-size": "42px",
+      "line-height": "120%",
     },
     yotta: {
-      "font-size": "38px",
-      "line-height": "45.6px",
+      "font-size": "52px",
+      "line-height": "120%",
     },
     nina: {
-      "font-size": "48px",
-      "line-height": "57.6px",
+      "font-size": "62px",
+      "line-height": "120%",
     },
     tena: {
       "font-size": "72px",
-      "line-height": "78.6px",
+      "line-height": "120%",
     },
   },
 } as const;
@@ -101,13 +102,11 @@ export type WithTheme = {
   theme: Theme;
 };
 
-export const Font = (size = "kilo", fontFamily = "Inter") => css`
+export const FontImport = () => css`
   @import url("https://rsms.me/inter/inter.css");
-  @font-face {
-    font-family: "Bluu Next";
-    src: url("../../static/BluuNext-Bold.otf");
-    font-weight: bold;
-  }
+`;
+
+export const Font = (size = "kilo", fontFamily = "Inter") => css`
   font-family: "${fontFamily}", sans-serif;
   font-style: normal;
   font-weight: normal;

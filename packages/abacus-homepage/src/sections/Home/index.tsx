@@ -127,11 +127,11 @@ const Home: React.FC = () => {
     <>
       <Navbar openModal={openModal} />
       <Superhero openModal={openModal} previousSessions={previousSessions} />
-      <StatInfoContainer>
+      {/* <StatInfoContainer>
         <StyledStatInfo stat={earned} title="Earned" showEthIcon />
         <StyledStatInfo stat={nftsPriced} title="NFTs appraised" />
         <StyledStatInfo stat={defender} title="Defender" />
-      </StatInfoContainer>
+  </StatInfoContainer> */}
       <Infographics />
       {/* <PreviousSessions previousSessions={previousSessions} /> */}
       <JoinUs />

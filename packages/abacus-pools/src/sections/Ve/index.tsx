@@ -9,7 +9,12 @@ import {
   Modal,
   ModalBody,
 } from "shards-react"
-import { ABC_TOKEN, VE_ABC_TOKEN, ZERO_ADDRESS } from "@config/constants"
+import {
+  ABC_EPOCH,
+  ABC_TOKEN,
+  VE_ABC_TOKEN,
+  ZERO_ADDRESS,
+} from "@config/constants"
 import _ from "lodash"
 import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import { formatEther, parseEther } from "ethers/lib/utils"
@@ -23,6 +28,7 @@ import {
   useOnAddTokens,
   useOnAllocateTokens,
   useOnChangeAllocation,
+  useOnClaimReward,
   useOnLockTokens,
   useOnRemoveAllocation,
   useOnRemoveAutoAllocation,
@@ -36,6 +42,7 @@ import {
   BORDER,
 } from "@sections/Pool/CurrentState/AMM.styles"
 import { DatePickerStyled } from "@sections/Pool/CurrentState/AMM"
+import ABC_EPOCH_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
 import VE_ABC_ABI from "../../config/contracts/VE_ABC_TOKEN_ABI.json"
 import ABC_ABI from "../../config/contracts/ABC_TOKEN_ABI.json"
 import { getAllocs, SubgraphAllocs } from "./queries"
@@ -137,10 +144,12 @@ const Ve: React.FC = () => {
   const [amount, setAmount] = useState("")
   const [allocs, setAllocs] = useState<SubgraphAllocs[]>([])
   const [startDate, setStartDate] = useState(new Date())
+  const [showClaimButton, setShowClaimButton] = useState(false)
   const [showUnlockTokensButton, setShowUnlockTokensButton] = useState(false)
 
   const veAbcCall = useMultiCall(VE_ABC_ABI)
   const abcCall = useWeb3Contract(ABC_ABI)
+  const epochCall = useWeb3Contract(ABC_EPOCH_ABI)
   const { onAddAutoAllocation, isPending: isPendingAddAuto } =
     useOnAddAutoAllocation()
   const { onAddTokens, isPending: isPendingAddTokens } = useOnAddTokens()
@@ -155,18 +164,36 @@ const Ve: React.FC = () => {
     useOnUnlockTokens()
   const { onChangeAllocation, isPending: isPendingChangeAllocation } =
     useOnChangeAllocation()
+  const { onClaimReward, isPending: isPendingClaimReward } = useOnClaimReward()
 
   const getClaimData = async () => {
-    const [[veHolderHistory, getHolderEpochInfo, veBalance], balance, allocs] =
-      await Promise.all([
-        veAbcCall(
-          VE_ABC_TOKEN,
-          ["veHolderHistory", "getHolderEpochInfo", "balanceOf"],
-          [[account], [account, epoch], [account]]
-        ),
-        abcCall(ABC_TOKEN).methods.balanceOf(account).call(),
-        getAllocs(account),
-      ])
+    const [
+      [
+        veHolderHistory,
+        getHolderEpochInfo,
+        veBalance,
+        recentVeUpdateCleared,
+        recentAutoUpdateCleared,
+      ],
+      currentEpoch,
+      balance,
+      allocs,
+    ] = await Promise.all([
+      veAbcCall(
+        VE_ABC_TOKEN,
+        [
+          "veHolderHistory",
+          "getHolderEpochInfo",
+          "balanceOf",
+          "recentVeUpdateCleared",
+          "recentAutoUpdateCleared",
+        ],
+        [[account], [account, epoch], [account], [account], [account]]
+      ),
+      epochCall(ABC_EPOCH).methods.currentEpoch().call(),
+      abcCall(ABC_TOKEN).methods.balanceOf(account).call(),
+      getAllocs(account),
+    ])
     console.log("allocs", allocs)
     if (allocs !== undefined && allocs.length > 0) {
       setCurrentAllocation(allocs[0])
@@ -188,6 +215,11 @@ const Ve: React.FC = () => {
       autoUpdates: Number(BigNumber.from(veHolderHistory[6]).toNumber()),
     })
 
+    setShowClaimButton(
+      BigNumber.from(recentVeUpdateCleared[0]).toNumber() < currentEpoch ||
+        BigNumber.from(recentAutoUpdateCleared[0]).toNumber() < currentEpoch
+    )
+
     setEpochData({
       epochClaimedVe: getHolderEpochInfo[0],
       epochClaimedAuto: getHolderEpochInfo[1],
@@ -196,6 +228,7 @@ const Ve: React.FC = () => {
       autoStartEpoch: BigNumber.from(getHolderEpochInfo[4]).toNumber(),
       autoStartEpochAmount: Number(formatEther(getHolderEpochInfo[5])),
     })
+    setEpoch(currentEpoch)
   }
 
   useEffect(() => {
@@ -206,9 +239,8 @@ const Ve: React.FC = () => {
         console.error(e)
       }
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-  }, [epoch, account])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account])
 
   if (holderData === null || epochData === null) {
     return (
@@ -311,6 +343,16 @@ const Ve: React.FC = () => {
             onClick={() => onUnlockTokens(() => getClaimData())}
           >
             {isPendingUnlockTokens ? "Loading..." : "Unlock Tokens"}
+          </FullWidthButton>
+        )}
+        {showClaimButton && (
+          <FullWidthButton
+            onClick={() => {
+              onClaimReward(() => getClaimData())
+            }}
+            disabled={isPendingClaimReward}
+          >
+            {isPendingClaimReward ? "Loading..." : "Claim Rewards"}
           </FullWidthButton>
         )}
       </div>

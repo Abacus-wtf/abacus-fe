@@ -63,7 +63,7 @@ const Claim: React.FC = () => {
         console.error(e)
       }
     }
-  }, [epoch, account, epochVault])
+  }, [account, epochVault])
 
   if (userData === null) {
     return (

@@ -96,8 +96,7 @@ const Tickets = ({ refresh }: StateComponent) => {
                 Sell
               </Tab>
             ) */}
-            {currentTicket &&
-            currentTicket.tokenPurchasesLength === TICKET_SIZE ? (
+            {currentTicket && currentTicket.tokenPurchasesLength === 0 ? (
               <></>
             ) : (
               <Tab

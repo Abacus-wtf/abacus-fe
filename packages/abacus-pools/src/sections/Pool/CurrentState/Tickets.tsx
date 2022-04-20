@@ -17,6 +17,7 @@ import AMM from "./AMM"
 import { StateComponent } from "."
 import { ButtonContainer, Tab } from "../Pool.styles"
 import FutureOrder from "./FutureOrder"
+import Sell from "./Sell"
 
 const Container = styled.div`
   display: flex;
@@ -49,6 +50,7 @@ enum Tabs {
   Buy = "Purchase",
   FutureOrder = "Create Bid",
   PendingOrders = "View Pending Orders",
+  Sell = "Sell",
 }
 
 const Tickets = ({ refresh }: StateComponent) => {
@@ -60,7 +62,6 @@ const Tickets = ({ refresh }: StateComponent) => {
   const tickets = useTickets()
   const poolData = useGetPoolData()
   const traderData = useTraderProfile()
-  // const { onSellToken, isPending: isPendingSell } = useOnSellToken()
 
   useEffect(() => {
     getTickets()
@@ -84,9 +85,7 @@ const Tickets = ({ refresh }: StateComponent) => {
             <Tab disabled={tab === Tabs.Buy} onClick={() => setTab(Tabs.Buy)}>
               Buy
             </Tab>
-            {/* currentTicket &&
-            !currentTicket.ownToken &&
-            Number(traderData.ticketsOpen) === 0 ? (
+            {currentTicket && Number(traderData.ticketsOpen) !== 0 ? (
               <></>
             ) : (
               <Tab
@@ -95,7 +94,7 @@ const Tickets = ({ refresh }: StateComponent) => {
               >
                 Sell
               </Tab>
-            ) */}
+            )}
             {currentTicket && currentTicket.tokenPurchasesLength === 0 ? (
               <></>
             ) : (
@@ -115,21 +114,18 @@ const Tickets = ({ refresh }: StateComponent) => {
                 setIsModalOpen(false)
               }}
               currentTicket={currentTicket}
-            /> /*: tab === Tabs.Sell ? (
+            />
+          ) : tab === Tabs.Sell ? (
             <>
-              <Button
-                onClick={() => {
-                  onSellToken(currentTicket.order, async () => {
-                    await refresh()
-                    await getTickets()
-                    setIsModalOpen(false)
-                  })
+              <Sell
+                currentTicket={currentTicket}
+                refresh={async () => {
+                  await refresh()
+                  await getTickets()
+                  setIsModalOpen(false)
                 }}
-              >
-                {isPendingSell ? "Loading..." : "Sell Ticket"}
-              </Button>
+              />
             </>
-          ) */
           ) : (
             <FutureOrder
               currentTicket={currentTicket}

@@ -8,7 +8,7 @@ type SocialLinksProps = {
   twitter: string;
   discord: string;
   medium: string;
-  className: string;
+  className?: string;
   size?: string;
 };
 

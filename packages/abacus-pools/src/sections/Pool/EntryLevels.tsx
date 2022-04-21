@@ -45,8 +45,6 @@ const EntryLevels: FunctionComponent = () => {
   const [visibleLevels] = useState(3)
   const entryLevels = useEntryLevels()
 
-  console.log("entryLevels", entryLevels)
-
   const visibleEntryLevels: typeof entryLevels = entryLevels.reduce(
     (acc, entryLevel, i) => (i < visibleLevels ? [...acc, entryLevel] : acc),
     []
@@ -60,6 +58,10 @@ const EntryLevels: FunctionComponent = () => {
       <EntryLevelsWrapper>
         {visibleEntryLevels.map((entryLevel) => {
           const progress = entryLevel.amount / 1000
+          const displayProgress = (progress * 100).toLocaleString("en-us", {
+            maximumSignificantDigits: 8,
+            minimumSignificantDigits: 2,
+          })
           return (
             <EntryLevelWrapper key={entryLevel.ticketNumber}>
               <TicketNumber>{entryLevel.ticketNumber}</TicketNumber>
@@ -67,7 +69,7 @@ const EntryLevels: FunctionComponent = () => {
                 progress={progress}
                 label={
                   <ProgressLabel>
-                    <span>{progress * 100}</span> % filled / <span>2</span> ETH
+                    <span>{displayProgress}</span> % filled / <span>2</span> ETH
                     left
                   </ProgressLabel>
                 }

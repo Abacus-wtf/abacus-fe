@@ -81,9 +81,11 @@ export const useEntryLevels = () => {
 }
 
 type Activity = {
+  id: string
   user: string
   action: "purchase" | "sale"
   timestamp: number
+  amount: BigNumber
 }
 
 export const useActivity = () => {
@@ -96,25 +98,33 @@ export const useActivity = () => {
         }
         const nextActivities: Activity[] = ticket.tokenPurchases.reduce(
           (tokenAcc, tokenPurchase) => {
+            const timestamp = Number(tokenPurchase.timestamp) * 1000
             const purchase: Activity = {
+              id: tokenPurchase.id,
               user: tokenPurchase.owner,
               action: "purchase",
-              timestamp: Number(tokenPurchase.timestamp),
+              timestamp,
+              amount: tokenPurchase.amount,
             }
             const sale: Activity = tokenPurchase.soldAt
               ? {
+                  id: tokenPurchase.id,
                   user: tokenPurchase.owner,
                   action: "purchase",
-                  timestamp: Number(tokenPurchase.soldAt),
+                  timestamp,
+                  amount: tokenPurchase.amount,
                 }
               : null
-            return [...tokenAcc, purchase, sale]
+            if (sale) {
+              return [...tokenAcc, purchase, sale]
+            }
+            return [...tokenAcc, purchase]
           },
           initial
         )
         return [...acc, ...nextActivities]
       }, initial)
-      .sort((a, b) => a.timestamp - b.timestamp)
+      .sort((a, b) => b.timestamp - a.timestamp)
   )
   return useSelector(activitySelector)
 }

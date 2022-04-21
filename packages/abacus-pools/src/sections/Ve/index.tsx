@@ -4,7 +4,6 @@ import { UniversalContainer } from "@components/global.styles"
 import {
   Dropdown,
   DropdownToggle,
-  DropdownMenu,
   DropdownItem,
   Modal,
   ModalBody,
@@ -42,6 +41,7 @@ import {
   BORDER,
 } from "@sections/Pool/CurrentState/AMM.styles"
 import { DatePickerStyled } from "@sections/Pool/CurrentState/AMM"
+import { DropdownMenuStyled } from "../Claim/index"
 import ABC_EPOCH_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
 import VE_ABC_ABI from "../../config/contracts/VE_ABC_TOKEN_ABI.json"
 import ABC_ABI from "../../config/contracts/ABC_TOKEN_ABI.json"
@@ -329,13 +329,13 @@ const Ve: React.FC = () => {
           <DropdownToggle style={{ minWidth: 130 }}>
             Epoch #{epoch}
           </DropdownToggle>
-          <DropdownMenu>
+          <DropdownMenuStyled>
             {_.map(_.range(0, 100), (i) => (
               <DropdownItem onClick={() => setEpoch(i)}>
                 Epoch #{i}
               </DropdownItem>
             ))}
-          </DropdownMenu>
+          </DropdownMenuStyled>
         </Dropdown>
         {showUnlockTokensButton && (
           <FullWidthButton

@@ -46,6 +46,7 @@ const parseSubgraphVaults = async (vaults: SubgraphVault[]) => {
       address: session.nftAddress,
       tokenId: session.tokenId,
       vaultAddress: session.id,
+      emissionsStarted: false,
     }
   })
   return poolData

@@ -7,7 +7,7 @@ type ButtonLinkProps = {
 
 const ButtonLinks: FunctionComponent<ButtonLinkProps> = ({ openModal }) => (
   <>
-    <Button as="a" href="/Abacus_White_Paper.pdf" buttonType={ButtonType.Clear}>
+    <Button as="a" href="/Abacus_Whitepaper.pdf" buttonType={ButtonType.Clear}>
       Whitepaper
     </Button>
     <Button buttonType={ButtonType.White} onClick={openModal}>

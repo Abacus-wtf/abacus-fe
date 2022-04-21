@@ -404,7 +404,7 @@ export const useOnSellToken = () => {
   const poolData = useGetPoolData()
 
   const onSellToken = useCallback(
-    async (ticket: string, cb: () => void) => {
+    async (user: string, startingTicket: number, cb: () => void) => {
       const vaultContract = getContract(
         poolData.vaultAddress,
         VAULT_ABI,
@@ -414,10 +414,9 @@ export const useOnSellToken = () => {
 
       const method = vaultContract.sellToken
       const estimate = vaultContract.estimateGas.sellToken
-      const args = [account, [ticket]]
+      const args = [user, startingTicket]
       console.log(args)
       const value = null
-      console.log(value.toString())
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Sell Token",
@@ -506,7 +505,7 @@ export const useChangePayoutRatio = () => {
       )
       const method = vaultContract.adjustPayoutRatio
       const estimate = vaultContract.estimateGas.adjustPayoutRatio
-      const args = [ratio]
+      const args = [Number(ratio) * 10]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {

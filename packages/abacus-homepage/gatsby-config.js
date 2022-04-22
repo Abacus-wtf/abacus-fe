@@ -1,11 +1,30 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 const path = require(`path`)
+const config = require("./website")
 
 module.exports = {
   siteMetadata: {
-    title: `Abacus Protocol`,
-    description: ``,
+    siteUrl: config.siteUrl,
+    title: config.siteTitle,
+    twitterHandle: config.twitterHandle,
+    description: config.siteDescription,
+    keywords: [],
+    canonicalUrl: config.siteUrl,
     author: {
-      name: "Abacus",
+      name: config.author,
+      minibio: config.minibio,
+    },
+    organization: {
+      name: config.organization,
+      url: config.siteUrl,
+    },
+    social: {
+      twitter: config.twitterHandle,
+      fbAppID: "",
     },
   },
   plugins: [

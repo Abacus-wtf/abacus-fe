@@ -857,8 +857,8 @@ var Container$g = styled__default["default"].div(templateObject_2$g || (template
     return theme.transitionTime.main;
 });
 var Logo = function (_a) {
-    var onClick = _a.onClick, _b = _a.isDark, isDark = _b === void 0 ? false : _b;
-    return (React__default["default"].createElement(Container$g, { onClick: onClick },
+    var onClick = _a.onClick, _b = _a.isDark, isDark = _b === void 0 ? false : _b, className = _a.className;
+    return (React__default["default"].createElement(Container$g, { onClick: onClick, className: className },
         React__default["default"].createElement(Abacus, { fill: isDark ? "white" : "black" }),
         React__default["default"].createElement(PetaModified, { isDark: isDark }, "Abacus")));
 };

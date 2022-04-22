@@ -1,20 +1,38 @@
-import * as React from "react"
-import Helmet from "react-helmet"
-import styled from "styled-components"
-import { GlobalStyles } from "./styles"
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import React from "react"
+import { PageProps } from "gatsby"
 
-const StyledContainer = styled.div`
-  width: 100%;
-  margin: 0;
-  padding: 0;
-`
+import { Navbar, SEO, SEOWithQueryProps } from "@components/index"
+import { GlobalStyles, GlobalContainer, InnerContainer } from "./styles"
 
-const GlobalLayout: React.FC = ({ children }: any) => (
-  <>
-    <GlobalStyles />
-    <Helmet title="Abacus Protocol" />
-    <StyledContainer>{children}</StyledContainer>
-  </>
-)
+type GlobalLayoutProps = {
+  location: PageProps["location"]
+}
+
+const GlobalLayout: React.FC<GlobalLayoutProps> = ({ children, location }) => {
+  const seoProps = React.useMemo<SEOWithQueryProps>(() => {
+    switch (location.pathname) {
+      case "/":
+        return {
+          title: "Abacus Protocol",
+        }
+      default:
+        return {
+          title: "Abacus Protocol",
+        }
+    }
+  }, [location.pathname])
+
+  return (
+    <>
+      <SEO {...seoProps} />
+      <GlobalStyles />
+      <Navbar />
+      <GlobalContainer>
+        <InnerContainer>{children}</InnerContainer>
+      </GlobalContainer>
+    </>
+  )
+}
 
 export default GlobalLayout

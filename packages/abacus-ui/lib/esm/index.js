@@ -845,8 +845,8 @@ var Container$g = styled.div(templateObject_2$g || (templateObject_2$g = __makeT
     return theme.transitionTime.main;
 });
 var Logo = function (_a) {
-    var onClick = _a.onClick, _b = _a.isDark, isDark = _b === void 0 ? false : _b;
-    return (React.createElement(Container$g, { onClick: onClick },
+    var onClick = _a.onClick, _b = _a.isDark, isDark = _b === void 0 ? false : _b, className = _a.className;
+    return (React.createElement(Container$g, { onClick: onClick, className: className },
         React.createElement(Abacus, { fill: isDark ? "white" : "black" }),
         React.createElement(PetaModified, { isDark: isDark }, "Abacus")));
 };

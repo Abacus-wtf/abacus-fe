@@ -119,11 +119,6 @@ export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
       background-position: 50% 0;
       background-size: cover;
       background-color: ${defaultTheme.colors.core.background};
-      mask-image: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 1),
-        rgba(0, 0, 0, 0)
-      );
     }
   }
 

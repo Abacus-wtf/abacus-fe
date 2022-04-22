@@ -7,6 +7,7 @@ const Container = styled.section`
   position: relative;
   width: 100%;
   overflow: hidden;
+  min-height: calc(100vh - 100px);
 `
 
 const Wrapper = styled.div`

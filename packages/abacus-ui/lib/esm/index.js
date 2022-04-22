@@ -853,13 +853,13 @@ var Logo = function (_a) {
 var templateObject_1$j, templateObject_2$g;
 
 var Container$f = styled.div(templateObject_1$i || (templateObject_1$i = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  width: fit-content;\n"], ["\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  width: fit-content;\n"])));
-var StatText = styled.div(templateObject_2$f || (templateObject_2$f = __makeTemplateObject(["\n  ", ";\n  color: ", ";\n  text-align: center;\n  display: flex;\n  justify-content: center;\n"], ["\n  ", ";\n  color: ", ";\n  text-align: center;\n  display: flex;\n  justify-content: center;\n"])), Font("tena", "Bluu Next"), function (_a) {
+var StatText = styled.div(templateObject_2$f || (templateObject_2$f = __makeTemplateObject(["\n  ", ";\n  color: ", ";\n  text-align: center;\n  display: flex;\n  justify-content: center;\n"], ["\n  ", ";\n  color: ", ";\n  text-align: center;\n  display: flex;\n  justify-content: center;\n"])), Font("yotta", "Bluu Next"), function (_a) {
     var theme = _a.theme;
-    return theme.colors.core.white;
+    return theme.colors.core.primary;
 });
-var Title$1 = styled(Container$v)(templateObject_3$a || (templateObject_3$a = __makeTemplateObject(["\n  color: ", ";\n  text-align: center;\n"], ["\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var Title$1 = styled(Container$v)(templateObject_3$a || (templateObject_3$a = __makeTemplateObject(["\n  color: ", ";\n  font-size: 22px;\n  text-align: center;\n"], ["\n  color: ", ";\n  font-size: 22px;\n  text-align: center;\n"])), function (_a) {
     var theme = _a.theme;
-    return theme.colors.core.lightWhite;
+    return theme.colors.core[900];
 });
 var StatInfo = function (_a) {
     var stat = _a.stat, title = _a.title, _b = _a.showEthIcon, showEthIcon = _b === void 0 ? false : _b, className = _a.className;

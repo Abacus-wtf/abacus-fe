@@ -1,4 +1,4 @@
-import { Superhero, Statistics, HotPools } from "@components/index"
+import { Superhero, Statistics, HotPools, HowItWorks } from "@components/index"
 import { PoolCardProps } from "@components/PoolCard"
 import { BigNumber } from "@ethersproject/bignumber"
 
@@ -34,6 +34,7 @@ const Home: React.FC = () => {
       <Superhero openModal={() => setModalOpen(true)} />
       <Statistics />
       <HotPools pools={TEMP_POOLS} />
+      <HowItWorks />
     </>
   )
 }

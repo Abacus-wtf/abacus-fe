@@ -97,6 +97,7 @@ var defaultTheme = {
             gray: "#CCCCCC",
             black: "#000000",
             brown: "#964B00",
+            lightBlue: "#F3FCFF",
         },
     },
     layout: {
@@ -458,7 +459,7 @@ var LoadingShimmer = styled.div(templateObject_2$n || (templateObject_2$n = __ma
 });
 var templateObject_1$t, templateObject_2$n;
 
-var ImageContainer$2 = styled.div(templateObject_1$s || (templateObject_1$s = __makeTemplateObject(["\n  width: 100%;\n  height: 0;\n  padding-bottom: 100%;\n  background-color: ", ";\n  border-radius: ", ";\n  transition: transform ", ";\n\n  &:hover {\n    transform: ", ";\n  }\n"], ["\n  width: 100%;\n  height: 0;\n  padding-bottom: 100%;\n  background-color: ", ";\n  border-radius: ",
+var ImageContainer$1 = styled.div(templateObject_1$s || (templateObject_1$s = __makeTemplateObject(["\n  width: 100%;\n  height: 0;\n  padding-bottom: 100%;\n  background-color: ", ";\n  border-radius: ", ";\n  transition: transform ", ";\n\n  &:hover {\n    transform: ", ";\n  }\n"], ["\n  width: 100%;\n  height: 0;\n  padding-bottom: 100%;\n  background-color: ", ";\n  border-radius: ",
     ";\n  transition: transform ", ";\n\n  &:hover {\n    transform: ",
     ";\n  }\n"])), function (_a) {
     var theme = _a.theme;
@@ -478,9 +479,9 @@ var ExploreImage = function (_a) {
     var theme = useContext(ThemeContext);
     if (loading) {
         return (React.createElement(LoadingShimmer, null,
-            React.createElement(ImageContainer$2, { enableFullBorderRadius: true })));
+            React.createElement(ImageContainer$1, { enableFullBorderRadius: true })));
     }
-    return (React.createElement(ImageContainer$2, { enableFullBorderRadius: true, onClick: onClick },
+    return (React.createElement(ImageContainer$1, { enableFullBorderRadius: true, onClick: onClick },
         React.createElement(CrossfadeImage, { src: imgSrc, enableFullBorderRadius: enableFullBorderRadius || false, alt: "Featured Explorer", style: {
                 cursor: onClick !== undefined ? "pointer" : "default",
                 maxWidth: "auto",
@@ -872,28 +873,26 @@ var StatInfo = function (_a) {
 };
 var templateObject_1$i, templateObject_2$f, templateObject_3$a;
 
-var ImageContainer$1 = styled.div(templateObject_2$e || (templateObject_2$e = __makeTemplateObject(["\n  position: relative; /* If you want text inside of it */\n  max-width: 400px;\n  width: 70%;\n\n  ", "\n"], ["\n  position: relative; /* If you want text inside of it */\n  max-width: 400px;\n  width: 70%;\n\n  ",
-    "\n"])), Media.lg(templateObject_1$h || (templateObject_1$h = __makeTemplateObject(["\n    height: 350px;\n  "], ["\n    height: 350px;\n  "]))));
-var ImageStyled = styled.img(templateObject_3$9 || (templateObject_3$9 = __makeTemplateObject(["\n  transform: rotate(15deg);\n  width: 100%;\n"], ["\n  transform: rotate(15deg);\n  width: 100%;\n"])));
-var Container$e = styled.div(templateObject_5$3 || (templateObject_5$3 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ",
-    "\n"])), Media.sm(templateObject_4$5 || (templateObject_4$5 = __makeTemplateObject(["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "], ["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "]))));
-var ZettaStyled = styled(Container$p)(templateObject_6$2 || (templateObject_6$2 = __makeTemplateObject(["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"], ["\n  font-family: \"Bluu Next\";\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var Container$e = styled.div(templateObject_2$e || (templateObject_2$e = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ",
+    "\n"])), Media.sm(templateObject_1$h || (templateObject_1$h = __makeTemplateObject(["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "], ["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "]))));
+var PetaStyled = styled(Container$t)(templateObject_3$9 || (templateObject_3$9 = __makeTemplateObject(["\n  color: ", ";\n  text-align: center;\n  font-weight: bold;\n"], ["\n  color: ", ";\n  text-align: center;\n  font-weight: bold;\n"])), function (_a) {
     var theme = _a.theme;
-    return theme.colors.core.white;
+    return theme.colors.core.primary;
 });
-var MegaStyled$1 = styled(Container$v)(templateObject_7$1 || (templateObject_7$1 = __makeTemplateObject(["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"], ["\n  flex: 1 0 auto;\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var MegaStyled$1 = styled(Container$v)(templateObject_4$5 || (templateObject_4$5 = __makeTemplateObject(["\n  flex: 1 0 auto;\n  font-size: 22px;\n  color: ", ";\n  text-align: center;\n"], ["\n  flex: 1 0 auto;\n  font-size: 22px;\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
     var theme = _a.theme;
-    return theme.colors.core.lightWhite;
+    return theme.colors.core.primary;
 });
+var IconContainer = styled.div(templateObject_5$3 || (templateObject_5$3 = __makeTemplateObject(["\n  height: 100px;\n  aspect-ratio: 1 / 1;\n"], ["\n  height: 100px;\n  aspect-ratio: 1 / 1;\n"])));
+var StyledButton = styled(Button)(templateObject_7$1 || (templateObject_7$1 = __makeTemplateObject(["\n  border-radius: 35px;\n  margin: 0 auto;\n  margin-top: 4px;\n  padding: 22px 30px;\n\n  ", "\n"], ["\n  border-radius: 35px;\n  margin: 0 auto;\n  margin-top: 4px;\n  padding: 22px 30px;\n\n  ",
+    "\n"])), Media.sm(templateObject_6$2 || (templateObject_6$2 = __makeTemplateObject(["\n    padding: 22px 100px;\n  "], ["\n    padding: 22px 100px;\n  "]))));
 var Infographic = function (_a) {
-    var imgSrc = _a.imgSrc, icon = _a.icon, title = _a.title, description = _a.description, link = _a.link;
+    var icon = _a.icon, title = _a.title, description = _a.description, link = _a.link;
     return (React.createElement(Container$e, null,
-        React.createElement(ImageContainer$1, null,
-            React.createElement(ImageStyled, { src: imgSrc })),
-        icon,
-        React.createElement(ZettaStyled, null, title),
+        React.createElement(IconContainer, null, icon),
+        React.createElement(PetaStyled, null, title),
         React.createElement(MegaStyled$1, null, description),
-        React.createElement(Button, { as: "a", href: link }, title)));
+        React.createElement(StyledButton, { as: "a", href: link }, title)));
 };
 var templateObject_1$h, templateObject_2$e, templateObject_3$9, templateObject_4$5, templateObject_5$3, templateObject_6$2, templateObject_7$1;
 

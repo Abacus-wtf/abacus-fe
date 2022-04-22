@@ -1,8 +1,9 @@
 import { PoolCardProps } from "@components/PoolCard"
 import PoolCard from "@components/PoolCard/PoolCard"
-import { Button, Font, H2, Media } from "abacus-ui"
+import { Button, Media } from "abacus-ui"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
+import { SectionTitle } from "../SectionTitle"
 
 type HotPoolsProps = {
   pools: PoolCardProps[]
@@ -16,10 +17,6 @@ const Container = styled.section`
   flex-direction: column;
   align-items: center;
   max-width: 1120px;
-`
-
-const StyledH2 = styled(H2)`
-  ${Font("yotta", "Bluu next")};
 `
 
 const CardContainer = styled.div`
@@ -50,7 +47,7 @@ const HotPools: FunctionComponent<HotPoolsProps> = ({ pools }) => {
   )
   return (
     <Container>
-      <StyledH2>Hot Pools</StyledH2>
+      <SectionTitle>Hot Pools</SectionTitle>
       <CardContainer>
         {poolsForDisplay.map((pool) => (
           <PoolCard {...pool} />

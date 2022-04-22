@@ -30,6 +30,7 @@ const defaultTheme = {
       gray: "#CCCCCC",
       black: "#000000",
       brown: "#964B00",
+      lightBlue: "#F3FCFF",
     },
   },
   layout: {

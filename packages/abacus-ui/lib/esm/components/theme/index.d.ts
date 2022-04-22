@@ -29,6 +29,7 @@ declare const defaultTheme: {
             readonly gray: "#CCCCCC";
             readonly black: "#000000";
             readonly brown: "#964B00";
+            readonly lightBlue: "#F3FCFF";
         };
     };
     readonly layout: {

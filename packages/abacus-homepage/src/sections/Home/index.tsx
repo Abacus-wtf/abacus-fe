@@ -1,4 +1,5 @@
-import { Superhero } from "@components/index"
+import { Superhero, Statistics } from "@components/index"
+
 import React, { useState } from "react"
 
 const Home: React.FC = () => {
@@ -6,6 +7,7 @@ const Home: React.FC = () => {
   return (
     <>
       <Superhero openModal={() => setModalOpen(true)} />
+      <Statistics />
     </>
   )
 }

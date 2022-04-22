@@ -59,7 +59,7 @@ const SideContainer = styled.div<{ isOptions?: boolean; menuOpen?: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  column-gap: 24px;
+  column-gap: 8px;
 
   ${({ isOptions, menuOpen }) =>
     isOptions &&
@@ -74,24 +74,25 @@ const SideContainer = styled.div<{ isOptions?: boolean; menuOpen?: boolean }>`
     display: flex;
     position: inherit;
     flex: 0 0 auto;
+    column-gap: 24px;
   `}
 `
 
-const DropdownButton = styled(Button)<{ menuOpen: boolean }>`
-  height: 38px;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-  transition: transform 0.25s linear;
+// const DropdownButton = styled(Button)<{ menuOpen: boolean }>`
+//   height: 38px;
+//   justify-content: center;
+//   display: flex;
+//   align-items: center;
+//   padding: 0 10px;
+//   transition: transform 0.25s linear;
 
-  transform: ${({ menuOpen }) =>
-    menuOpen ? "rotateZ(-180deg)" : "rotateZ(0)"};
+//   transform: ${({ menuOpen }) =>
+//     menuOpen ? "rotateZ(-180deg)" : "rotateZ(0)"};
 
-  ${Media.md`
-    display: none;
-  `}
-`
+//   ${Media.md`
+//     display: none;
+//   `}
+// `
 
 const StyledLink = styled(Link)`
   display: flex;
@@ -107,7 +108,9 @@ const StyledLink = styled(Link)`
 `
 
 const StyledLogo = styled(Logo)`
-  margin-right: 16px;
+  ${Media.md`
+    margin-right: 16px;
+  `};
 `
 
 const StyledTera = styled(Tera)`
@@ -144,14 +147,14 @@ const Navbar: FunctionComponent = () => {
         <StyledLink to="https://testnet.abacus.wtf/">
           <StyledTera>Spot</StyledTera>
         </StyledLink>
-        <DropdownButton
+        {/* <DropdownButton
           menuOpen={menuOpen}
           buttonType={ButtonType.Clear}
           onClick={() => setMenuOpen((open) => !open)}
         >
           <Dropdown />
           <VisuallyHidden>Dropdown</VisuallyHidden>
-        </DropdownButton>
+        </DropdownButton> */}
       </SideContainer>
       <SideContainer style={{ gridGap: 32 }} isOptions menuOpen={menuOpen}>
         {/* <StyledLink to="/claim-pool">

@@ -1,4 +1,4 @@
-import Superhero from "@components/Superhero"
+import { Superhero } from "@components/index"
 import React, { useState } from "react"
 
 const Home: React.FC = () => {

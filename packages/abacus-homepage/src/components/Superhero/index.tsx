@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { H1, P, Button, ButtonType, Mega, Media, Yotta } from "abacus-ui"
 
-const Container = styled.div`
+const Container = styled.section`
   padding-top: 110px;
   position: relative;
   width: 100%;
@@ -110,4 +110,4 @@ const Superhero: FunctionComponent<SuperheroProps> = ({ openModal }) => (
   </Container>
 )
 
-export default Superhero
+export { Superhero }

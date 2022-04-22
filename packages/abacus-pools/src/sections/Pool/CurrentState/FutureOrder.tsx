@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react"
 import Button from "@components/Button"
 import { NumericalInput } from "@components/Input"
-import { web3 } from "@config/constants"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { formatEther } from "ethers/lib/utils"
 import { useActiveWeb3React } from "@hooks/index"
@@ -40,7 +39,7 @@ interface FutureOrderProps extends StateComponent {
 }
 
 const FutureOrder = (props: FutureOrderProps) => {
-  const { account } = useActiveWeb3React()
+  const { account, library } = useActiveWeb3React()
   const networkSymbol = useGetCurrentNetwork()
   const [inputAmount, setInputAmount] = useState("")
   const [ethBalance, setEthBalance] = useState<number | null>(null)
@@ -51,10 +50,9 @@ const FutureOrder = (props: FutureOrderProps) => {
   const poolData = useGetPoolData()
 
   const getBalance = useCallback(async () => {
-    const provider = web3(networkSymbol)
-    const balance = await provider.eth.getBalance(account)
+    const balance = await library.getBalance(account)
     setEthBalance(parseFloat(formatEther(balance)))
-  }, [account, networkSymbol])
+  }, [account, library])
 
   const getOwners = useCallback(async () => {
     const tickets = await getTicketOwners(

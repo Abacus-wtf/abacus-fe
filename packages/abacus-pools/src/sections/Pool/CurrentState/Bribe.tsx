@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react"
 import Button from "@components/Button"
 import { Tooltip } from "shards-react"
 import { useGetCurrentNetwork } from "@state/application/hooks"
-import { NetworkSymbolEnum, web3 } from "@config/constants"
+import { NetworkSymbolEnum } from "@config/constants"
 import {
   useBribeData,
   useGetBribeData,
@@ -25,7 +25,7 @@ import {
 } from "./AMM.styles"
 
 const Bribe = ({ refresh }: StateComponent) => {
-  const { account } = useActiveWeb3React()
+  const { account, library } = useActiveWeb3React()
   const getBribeData = useGetBribeData()
   const bribeData = useBribeData()
   const { onWithdrawBribe, isPending: isPendingWithdraw } = useWithdrawBribe()
@@ -38,10 +38,9 @@ const Bribe = ({ refresh }: StateComponent) => {
   const poolData = useGetPoolData()
 
   const getBalance = useCallback(async () => {
-    const provider = web3(networkSymbol)
-    const balance = await provider.eth.getBalance(account)
+    const balance = await library.getBalance(account)
     setEthBalance(parseFloat(formatEther(balance)))
-  }, [account, networkSymbol])
+  }, [account, library])
 
   useEffect(() => {
     if (ethBalance === null) {

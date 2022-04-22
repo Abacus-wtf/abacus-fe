@@ -15,7 +15,13 @@ import { formatEther } from "ethers/lib/utils"
 import { Stat } from "@sections/Pool/CurrentState/CurrentState.styles"
 import { BigNumber } from "ethers"
 import moment from "moment"
+import styled from "styled-components"
 import EPOCH_VAULT_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
+
+export const DropdownMenuStyled = styled(DropdownMenu)`
+  max-height: 400px;
+  overflow: scroll;
+`
 
 interface EpochData {
   userCredits: number
@@ -28,12 +34,13 @@ const Claim: React.FC = () => {
   const [epoch, setEpoch] = useState(0)
   const [showEndEpoch, setShowEndEpoch] = useState(false)
   const [userData, setUserData] = useState<EpochData | null>(null)
+  const [currentEpochSet, setCurrentEpochSet] = useState(false)
   const { onClaimABCReward, isPending } = useClaimABCReward()
   const { onEndEpoch, isPending: isPendingEndEpoch } = useEndEpoch()
   const epochVault = useMultiCall(EPOCH_VAULT_ABI)
 
   useEffect(() => {
-    const getClaimData = async () => {
+    const startData = async () => {
       const [currentEpoch] = await epochVault(ABC_EPOCH, ["currentEpoch"], [[]])
 
       const [abcEmissions, userCredits, getEpochEndTime] = await epochVault(
@@ -55,15 +62,34 @@ const Claim: React.FC = () => {
         userCredits: Number(formatEther(userCredits[0])),
         abcEmissions: Number(formatEther(abcEmissions[0])),
       })
+      setCurrentEpochSet(true)
+    }
+    const getClaimData = async () => {
+      const [abcEmissions, userCredits, getEpochEndTime] = await epochVault(
+        ABC_EPOCH,
+        ["getCurrentAbcEmission", "getUserCredits", "getEpochEndTime"],
+        [[], [epoch, account], [epoch]]
+      )
+      setShowEndEpoch(
+        moment().unix() > BigNumber.from(getEpochEndTime[0]).toNumber()
+      )
+      setUserData({
+        userCredits: Number(formatEther(userCredits[0])),
+        abcEmissions: Number(formatEther(abcEmissions[0])),
+      })
     }
     if (account) {
       try {
-        getClaimData()
+        if (!currentEpochSet) {
+          startData()
+        } else {
+          getClaimData()
+        }
       } catch (e) {
         console.error(e)
       }
     }
-  }, [epoch, account, epochVault])
+  }, [account, epochVault, epoch, currentEpochSet])
 
   if (userData === null) {
     return (
@@ -80,20 +106,24 @@ const Claim: React.FC = () => {
       <div style={{ display: "flex", gridGap: 30 }}>
         <Dropdown open={open} toggle={() => setOpen(!open)}>
           <DropdownToggle>Epoch #{epoch}</DropdownToggle>
-          <DropdownMenu>
+          <DropdownMenuStyled>
             {_.map(_.range(0, 100), (i) => (
               <DropdownItem onClick={() => setEpoch(i)}>
                 Epoch #{i}
               </DropdownItem>
             ))}
-          </DropdownMenu>
+          </DropdownMenuStyled>
         </Dropdown>
         <Buttons
           disabled={isPending || userData?.userCredits === 0}
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           onClick={() => onClaimABCReward(epoch, () => {})}
         >
-          {isPending ? "Loading..." : "Claim ABC Reward"}
+          {isPending
+            ? "Loading..."
+            : userData?.userCredits === 0
+            ? "Credits Claimed or No Credits Earned This Epoch"
+            : "Claim ABC Reward"}
         </Buttons>
         {showEndEpoch && (
           <Buttons

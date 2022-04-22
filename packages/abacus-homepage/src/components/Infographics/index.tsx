@@ -63,7 +63,7 @@ const Infographics: FunctionComponent = () => (
           assets.
         </>
       }
-      link="https://medium.com/abacus-wtf/introducing-abacus-spot-96ab14ed016a?source=collection_home---4------5-----------------------"
+      link="https://testnet.abacus.wtf"
     />
   </InfographicContainer>
 )

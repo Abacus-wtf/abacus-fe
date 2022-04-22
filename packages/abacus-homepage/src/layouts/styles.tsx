@@ -108,7 +108,7 @@ export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
       content: "";
       display: block;
       position: absolute;
-      height: 100vh;
+      height: 100%;
       left: 0;
       top: 0;
       right: 0;

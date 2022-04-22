@@ -1,13 +1,13 @@
 import React, { FunctionComponent, useState } from "react"
 import styled, { css } from "styled-components"
 import {
-  Button,
-  ButtonType,
-  VisuallyHidden,
+  // Button,
+  // ButtonType,
+  // VisuallyHidden,
   Logo,
   // Kilo,
   Tera,
-  Dropdown,
+  // Dropdown,
   Media,
   // ProfileIcon,
 } from "abacus-ui"
@@ -128,7 +128,7 @@ const StyledTera = styled(Tera)`
 // `
 
 const Navbar: FunctionComponent = () => {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen] = useState(false)
   // const { account } = useActiveWeb3React()
   // const openWeb3Modal = useToggleWalletModal()
   // const abcBalance = useAbcBalance()

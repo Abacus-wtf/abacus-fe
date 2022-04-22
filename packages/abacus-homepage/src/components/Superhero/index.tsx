@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { H1, P, Button, ButtonType, Mega, Media, Yotta } from "abacus-ui"
-import { Link } from "gatsby"
 
 const Container = styled.div`
   padding-top: 110px;

@@ -6,7 +6,7 @@ import { OutboundLink } from "gatsby-plugin-google-gtag"
 import { useGetPoolData, useSetPoolData } from "@state/singlePoolData/hooks"
 import { useActiveWeb3React } from "@hooks/index"
 import { PoolStatus } from "@state/poolData/reducer"
-import styled from "styled-components"
+import { EmissionsIndicator } from "@components/EmissionsIndicator"
 import {
   SplitContainer,
   VerticalContainer,
@@ -25,21 +25,6 @@ export enum Page {
   Tickets,
   Bribes,
 }
-
-const EmissionsIndicator = styled(ButtonsWhite)<{ start: boolean }>`
-  &:disabled {
-    ${({ start }) =>
-      start
-        ? `
-    color: #00FF00 !important;
-    border-color: #00FF00 !important;
-  `
-        : `
-    color: #FF0000 !important;
-    border-color: #FF0000 !important;
-  `};
-  }
-`
 
 const Pool = ({ location }) => {
   const { address, tokenId, nonce } = queryString.parse(location.search)

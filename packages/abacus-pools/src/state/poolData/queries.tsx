@@ -7,6 +7,7 @@ export type SubgraphVault = {
   owner: string
   status: number
   nonce: number
+  emissionsSigned: boolean
 }
 
 export type GetVaultQueryResponse = {
@@ -63,6 +64,7 @@ export const GET_VAULTS = (where: string | null) => gql`
       tokenId
       owner
       status
+      emissionsSigned
     }
   }
 `

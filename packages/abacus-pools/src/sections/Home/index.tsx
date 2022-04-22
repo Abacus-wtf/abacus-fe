@@ -56,7 +56,7 @@ const Home: React.FC = () => {
             href={`/pool?address=${i.address}&tokenId=${i.tokenId}&nonce=${i.nonce}`}
             key={`${i.address}-${i.tokenId}-${i.nonce}`}
           >
-            <Card {...i} />
+            <Card emissionsStarted={i.emissionsStarted} {...i} />
           </a>
         ))}
       </CardContainer>

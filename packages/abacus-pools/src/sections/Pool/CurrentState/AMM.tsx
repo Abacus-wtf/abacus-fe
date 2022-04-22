@@ -1,9 +1,9 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useEffect, useState, useCallback } from "react"
+import React, { useEffect, useState } from "react"
 import Button from "@components/Button"
 import { NumericalInput } from "@components/Input"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import { NetworkSymbolEnum, TICKET_SIZE, web3 } from "@config/constants"
+import { TICKET_SIZE } from "@config/constants"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { formatEther } from "ethers/lib/utils"
 import { useActiveWeb3React } from "@hooks/index"
@@ -42,7 +42,7 @@ interface AMMProps extends StateComponent {
 }
 
 const AMM = (props: AMMProps) => {
-  const { account } = useActiveWeb3React()
+  const { account, library } = useActiveWeb3React()
   const networkSymbol = useGetCurrentNetwork()
   const [isTokenFirst] = useState(false)
   const poolData = useGetPoolData()
@@ -54,23 +54,16 @@ const AMM = (props: AMMProps) => {
   const { onPurchaseIndividualTicket, isPending: isPendingIndividual } =
     useOnPurchaseIndividualTicket()
 
-  const getBalance = useCallback(async () => {
-    if (
-      networkSymbol !== NetworkSymbolEnum.NONE &&
-      account !== null &&
-      account !== undefined
-    ) {
-      const provider = web3(networkSymbol)
-      const balance = await provider.eth.getBalance(account)
-      setEthBalance(parseFloat(formatEther(balance)))
-    }
-  }, [account, networkSymbol])
+  const getBalance = async () => {
+    const balance = await library.getBalance(account)
+    setEthBalance(parseFloat(formatEther(balance)))
+  }
 
   useEffect(() => {
-    if (ethBalance === null) {
+    if (ethBalance === null && !account && library) {
       getBalance()
     }
-  }, [account, ethBalance, networkSymbol])
+  }, [account, ethBalance, library, networkSymbol])
 
   const handleButtonClick = async () => {
     if (props.currentTicket) {

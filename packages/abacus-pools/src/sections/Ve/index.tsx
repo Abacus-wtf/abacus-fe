@@ -40,7 +40,7 @@ import VE_ABC_ABI from "../../config/contracts/VE_ABC_TOKEN_ABI.json"
 import ABC_ABI from "../../config/contracts/ABC_TOKEN_ABI.json"
 import { getAllocs, SubgraphAllocs } from "./queries"
 
-const Card = styled.div`
+export const Card = styled.div`
   display: flex;
   flex-direction: column;
   grid-gap: 10px;

@@ -5,16 +5,12 @@
     "baseUrl": "./src",
     "noEmit": true,
     "paths": {
-      "@state/*": ["state/*"],
-      "@hooks/*": ["hooks/*"],
       "@images/*": ["images/*"],
       "@components/*": ["components/*"],
       "@sections/*": ["sections/*"],
       "@config/*": ["config/*"],
-      "@templates/*": ["templates/*"],
       "@layouts/*": ["layouts/*"],
-      "@models/*": ["models/*"],
-      "@test-utils/*": ["test-utils/*"]
+      "@contracts/*": ["contracts/*"]
     }
   }
 }

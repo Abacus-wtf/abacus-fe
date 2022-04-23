@@ -74,8 +74,8 @@ const BackgroundText = styled(Yotta)`
   color: ${({ theme }) => theme.colors.utility.blue};
   opacity: 0.05;
   overflow: hidden;
-  transform: translateX(-25%);
-  left: 0;
+  transform: translateX(-50%);
+  left: 50%;
 
   ${Media.md`
     font-size: 500px;

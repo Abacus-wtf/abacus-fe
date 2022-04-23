@@ -6,6 +6,7 @@ import { Pools, Diving } from "../Icons"
 
 const Container = styled.section`
   padding: 80px 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,7 +19,7 @@ const InfographicDivider = styled.hr`
   width: 100%;
   margin: 4rem auto;
 
-  ${Media.sm`
+  ${Media.md`
     height: unset;
     width: 0;
     margin: 0;
@@ -28,13 +29,13 @@ const InfographicDivider = styled.hr`
 const InfographicContainer = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 1020px;
-  margin: 0 auto;
+  margin: 0;
   margin-top: 40px;
   padding: 0 20px;
 
-  ${Media.sm`
+  ${Media.md`
     flex-direction: row;
+    padding: 0 50px;
   `}
 `
 

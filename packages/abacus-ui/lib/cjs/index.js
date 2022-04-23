@@ -301,13 +301,13 @@ var StyledLabel$1 = styled__default["default"].label(templateObject_6$6 || (temp
     var theme = _a.theme;
     return theme.borderRadius.main;
 });
-var StyledInput$1 = styled__default["default"].input(templateObject_8$2 || (templateObject_8$2 = __makeTemplateObject(["\n  ", "\n  font-size: 22px;\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ", "\n"], ["\n  ", "\n  font-size: 22px;\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ",
+var StyledInput$1 = styled__default["default"].input(templateObject_8$3 || (templateObject_8$3 = __makeTemplateObject(["\n  ", "\n  font-size: 22px;\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ", "\n"], ["\n  ", "\n  font-size: 22px;\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ",
     "\n"])), Font("mega"), function (_a) {
     var disabled = _a.disabled;
     return disabled
         ? styled.css(templateObject_7$4 || (templateObject_7$4 = __makeTemplateObject(["\n          background: unset;\n          cursor: not-allowed;\n        "], ["\n          background: unset;\n          cursor: not-allowed;\n        "]))) : "";
 });
-var StyledKilo$3 = styled__default["default"](StyledDiv)(templateObject_9$2 || (templateObject_9$2 = __makeTemplateObject(["\n  color: ", ";\n  margin-top: 10px;\n"], ["\n  color: ", ";\n  margin-top: 10px;\n"])), function (_a) {
+var StyledKilo$3 = styled__default["default"](StyledDiv)(templateObject_9$3 || (templateObject_9$3 = __makeTemplateObject(["\n  color: ", ";\n  margin-top: 10px;\n"], ["\n  color: ", ";\n  margin-top: 10px;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core["900"];
 });
@@ -333,7 +333,7 @@ var Input = function (_a) {
             React__default["default"].createElement(StyledInput$1, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); }, disabled: disabled, "aria-disabled": disabled, required: required, onFocus: function () { return setPristine(false); }, step: step })),
         hint && React__default["default"].createElement(StyledKilo$3, null, hint)));
 };
-var templateObject_1$z, templateObject_2$r, templateObject_3$h, templateObject_4$a, templateObject_5$8, templateObject_6$6, templateObject_7$4, templateObject_8$2, templateObject_9$2, templateObject_10$2;
+var templateObject_1$z, templateObject_2$r, templateObject_3$h, templateObject_4$a, templateObject_5$8, templateObject_6$6, templateObject_7$4, templateObject_8$3, templateObject_9$3, templateObject_10$2;
 
 var Section = styled__default["default"].section(templateObject_2$q || (templateObject_2$q = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ",
     "\n"])), function (_a) {
@@ -797,8 +797,8 @@ var BarIIBeadII = styled.keyframes(templateObject_4$6 || (templateObject_4$6 = _
 var BarIIIBeadII = styled.keyframes(templateObject_5$4 || (templateObject_5$4 = __makeTemplateObject(["\n  0% {\n    transform: translateX(0);\n  }\n  50% {\n    transform: translateX(-", "px)\n  }\n  100% {\n    transform: translateX(-", "px)\n  }\n"], ["\n  0% {\n    transform: translateX(0);\n  }\n  50% {\n    transform: translateX(-", "px)\n  }\n  100% {\n    transform: translateX(-", "px)\n  }\n"])), BEAD_GAP, BEAD_GAP);
 var BarIIIBeadIII = styled.keyframes(templateObject_6$3 || (templateObject_6$3 = __makeTemplateObject(["\n  0% {\n    transform: translateX(-", "px);\n  }\n  50% {\n    transform: translateX(0)\n  }\n  100% {\n    transform: translateX(0)\n  }\n"], ["\n  0% {\n    transform: translateX(-", "px);\n  }\n  50% {\n    transform: translateX(0)\n  }\n  100% {\n    transform: translateX(0)\n  }\n"])), BEAD_GAP);
 var BarIVBeadI = styled.keyframes(templateObject_7$2 || (templateObject_7$2 = __makeTemplateObject(["\n  0% {\n    transform: translateX(0);\n  }\n  25% {\n    transform: translateX(0);\n  }\n  50% {\n    transform: translateX(0);\n  }\n  75% {\n    transform: translateX(", "px);\n  }\n  100% {\n    transform: translateX(0);\n  }\n"], ["\n  0% {\n    transform: translateX(0);\n  }\n  25% {\n    transform: translateX(0);\n  }\n  50% {\n    transform: translateX(0);\n  }\n  75% {\n    transform: translateX(", "px);\n  }\n  100% {\n    transform: translateX(0);\n  }\n"])), BEAD_GAP);
-var BarIVBeadII = styled.keyframes(templateObject_8$1 || (templateObject_8$1 = __makeTemplateObject(["\n  0% {\n    transform: translateX(0);\n  }\n  25% {\n    transform: translateX(0);\n  }\n  50% {\n    transform: translateX(", "px);\n  }\n  75% {\n    transform: translateX(", "px);\n  }\n  100% {\n    transform: translateX(0);\n  }\n"], ["\n  0% {\n    transform: translateX(0);\n  }\n  25% {\n    transform: translateX(0);\n  }\n  50% {\n    transform: translateX(", "px);\n  }\n  75% {\n    transform: translateX(", "px);\n  }\n  100% {\n    transform: translateX(0);\n  }\n"])), BEAD_GAP, BEAD_GAP);
-var BarIVBeadIII = styled.keyframes(templateObject_9$1 || (templateObject_9$1 = __makeTemplateObject(["\n  0% {\n    transform: translateX(0);\n  }\n  25% {\n    transform: translateX(", "px);\n  }\n  50% {\n    transform: translateX(", "px);\n  }\n  75% {\n    transform: translateX(", "px);\n  }\n  100% {\n    transform: translateX(0);\n  }\n"], ["\n  0% {\n    transform: translateX(0);\n  }\n  25% {\n    transform: translateX(", "px);\n  }\n  50% {\n    transform: translateX(", "px);\n  }\n  75% {\n    transform: translateX(", "px);\n  }\n  100% {\n    transform: translateX(0);\n  }\n"])), BEAD_GAP, BEAD_GAP, BEAD_GAP);
+var BarIVBeadII = styled.keyframes(templateObject_8$2 || (templateObject_8$2 = __makeTemplateObject(["\n  0% {\n    transform: translateX(0);\n  }\n  25% {\n    transform: translateX(0);\n  }\n  50% {\n    transform: translateX(", "px);\n  }\n  75% {\n    transform: translateX(", "px);\n  }\n  100% {\n    transform: translateX(0);\n  }\n"], ["\n  0% {\n    transform: translateX(0);\n  }\n  25% {\n    transform: translateX(0);\n  }\n  50% {\n    transform: translateX(", "px);\n  }\n  75% {\n    transform: translateX(", "px);\n  }\n  100% {\n    transform: translateX(0);\n  }\n"])), BEAD_GAP, BEAD_GAP);
+var BarIVBeadIII = styled.keyframes(templateObject_9$2 || (templateObject_9$2 = __makeTemplateObject(["\n  0% {\n    transform: translateX(0);\n  }\n  25% {\n    transform: translateX(", "px);\n  }\n  50% {\n    transform: translateX(", "px);\n  }\n  75% {\n    transform: translateX(", "px);\n  }\n  100% {\n    transform: translateX(0);\n  }\n"], ["\n  0% {\n    transform: translateX(0);\n  }\n  25% {\n    transform: translateX(", "px);\n  }\n  50% {\n    transform: translateX(", "px);\n  }\n  75% {\n    transform: translateX(", "px);\n  }\n  100% {\n    transform: translateX(0);\n  }\n"])), BEAD_GAP, BEAD_GAP, BEAD_GAP);
 var BeadsX;
 (function (BeadsX) {
     BeadsX[BeadsX["I"] = FIRST_BEAD_POSITION] = "I";
@@ -846,7 +846,7 @@ var Loader = function () { return (React__default["default"].createElement(Style
             React__default["default"].createElement("feColorMatrix", { values: "0 0 0 0 0.681333 0 0 0 0 0.646667 0 0 0 0 0.82 0 0 0 0.15 0" }),
             React__default["default"].createElement("feBlend", { in2: "effect1_dropShadow_1_208", result: "effect2_dropShadow_1_208" }),
             React__default["default"].createElement("feBlend", { in: "SourceGraphic", in2: "effect2_dropShadow_1_208", result: "shape" }))))); };
-var templateObject_1$k, templateObject_2$h, templateObject_3$b, templateObject_4$6, templateObject_5$4, templateObject_6$3, templateObject_7$2, templateObject_8$1, templateObject_9$1, templateObject_10$1;
+var templateObject_1$k, templateObject_2$h, templateObject_3$b, templateObject_4$6, templateObject_5$4, templateObject_6$3, templateObject_7$2, templateObject_8$2, templateObject_9$2, templateObject_10$1;
 
 var PetaModified = styled__default["default"].div(templateObject_1$j || (templateObject_1$j = __makeTemplateObject(["\n  ", ";\n  margin-left: 8px;\n  color: ", ";\n"], ["\n  ", ";\n  margin-left: 8px;\n  color: ",
     ";\n"])), Font("peta", "Bluu Next"), function (_a) {
@@ -885,28 +885,30 @@ var StatInfo = function (_a) {
 };
 var templateObject_1$i, templateObject_2$f, templateObject_3$a;
 
-var Container$e = styled__default["default"].div(templateObject_2$e || (templateObject_2$e = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ",
-    "\n"])), Media.sm(templateObject_1$h || (templateObject_1$h = __makeTemplateObject(["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "], ["\n    padding: 0 90px;\n    width: calc(100% - 180px);\n  "]))));
-var PetaStyled = styled__default["default"](Container$t)(templateObject_3$9 || (templateObject_3$9 = __makeTemplateObject(["\n  color: ", ";\n  text-align: center;\n  font-weight: bold;\n"], ["\n  color: ", ";\n  text-align: center;\n  font-weight: bold;\n"])), function (_a) {
+var Container$e = styled__default["default"].div(templateObject_3$9 || (templateObject_3$9 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ", "\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  grid-gap: 20px;\n  width: 100%;\n  justify-content: space-evenly;\n\n  ",
+    "\n\n  ",
+    "\n"])), Media.sm(templateObject_1$h || (templateObject_1$h = __makeTemplateObject(["\n    padding: 0 50px;\n  "], ["\n    padding: 0 50px;\n  "]))), Media.lg(templateObject_2$e || (templateObject_2$e = __makeTemplateObject(["\n    padding: 0 110px;\n  "], ["\n    padding: 0 110px;\n  "]))));
+var PetaStyled = styled__default["default"](Container$t)(templateObject_4$5 || (templateObject_4$5 = __makeTemplateObject(["\n  color: ", ";\n  text-align: center;\n  font-weight: bold;\n"], ["\n  color: ", ";\n  text-align: center;\n  font-weight: bold;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.primary;
 });
-var MegaStyled$1 = styled__default["default"](Container$v)(templateObject_4$5 || (templateObject_4$5 = __makeTemplateObject(["\n  flex: 1 0 auto;\n  font-size: 22px;\n  color: ", ";\n  text-align: center;\n"], ["\n  flex: 1 0 auto;\n  font-size: 22px;\n  color: ", ";\n  text-align: center;\n"])), function (_a) {
+var MegaStyled$1 = styled__default["default"](Container$v)(templateObject_6$2 || (templateObject_6$2 = __makeTemplateObject(["\n  flex: 1 0 auto;\n  font-size: 1.375rem;\n  color: ", ";\n  text-align: center;\n\n  ", "\n"], ["\n  flex: 1 0 auto;\n  font-size: 1.375rem;\n  color: ", ";\n  text-align: center;\n\n  ",
+    "\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.primary;
-});
-var IconContainer = styled__default["default"].div(templateObject_5$3 || (templateObject_5$3 = __makeTemplateObject(["\n  height: 100px;\n  aspect-ratio: 1 / 1;\n"], ["\n  height: 100px;\n  aspect-ratio: 1 / 1;\n"])));
-var StyledButton = styled__default["default"](Button)(templateObject_7$1 || (templateObject_7$1 = __makeTemplateObject(["\n  border-radius: 35px;\n  margin: 0 auto;\n  margin-top: 4px;\n  padding: 22px 30px;\n\n  ", "\n"], ["\n  border-radius: 35px;\n  margin: 0 auto;\n  margin-top: 4px;\n  padding: 22px 30px;\n\n  ",
-    "\n"])), Media.sm(templateObject_6$2 || (templateObject_6$2 = __makeTemplateObject(["\n    padding: 22px 100px;\n  "], ["\n    padding: 22px 100px;\n  "]))));
+}, Media.md(templateObject_5$3 || (templateObject_5$3 = __makeTemplateObject(["\n    text-align: left;\n  "], ["\n    text-align: left;\n  "]))));
+var IconContainer = styled__default["default"].div(templateObject_7$1 || (templateObject_7$1 = __makeTemplateObject(["\n  height: 100px;\n  aspect-ratio: 1 / 1;\n"], ["\n  height: 100px;\n  aspect-ratio: 1 / 1;\n"])));
+var StyledButton = styled__default["default"](Button)(templateObject_9$1 || (templateObject_9$1 = __makeTemplateObject(["\n  border-radius: 35px;\n  margin: 0 auto;\n  margin-top: 4px;\n  padding: 22px 30px;\n\n  ", "\n"], ["\n  border-radius: 35px;\n  margin: 0 auto;\n  margin-top: 4px;\n  padding: 22px 30px;\n\n  ",
+    "\n"])), Media.md(templateObject_8$1 || (templateObject_8$1 = __makeTemplateObject(["\n    padding: 22px 100px;\n  "], ["\n    padding: 22px 100px;\n  "]))));
 var Infographic = function (_a) {
     var icon = _a.icon, title = _a.title, description = _a.description, link = _a.link;
     return (React__default["default"].createElement(Container$e, null,
-        React__default["default"].createElement(IconContainer, null, icon),
         React__default["default"].createElement(PetaStyled, null, title),
+        React__default["default"].createElement(IconContainer, null, icon),
         React__default["default"].createElement(MegaStyled$1, null, description),
         React__default["default"].createElement(StyledButton, { as: "a", href: link }, title)));
 };
-var templateObject_1$h, templateObject_2$e, templateObject_3$9, templateObject_4$5, templateObject_5$3, templateObject_6$2, templateObject_7$1;
+var templateObject_1$h, templateObject_2$e, templateObject_3$9, templateObject_4$5, templateObject_5$3, templateObject_6$2, templateObject_7$1, templateObject_8$1, templateObject_9$1;
 
 var ImageSection = styled__default["default"].img(templateObject_1$g || (templateObject_1$g = __makeTemplateObject(["\n  width: 280px;\n  height: 280px;\n  border-top-left-radius: ", ";\n  border-top-right-radius: ", ";\n  object-fit: cover;\n"], ["\n  width: 280px;\n  height: 280px;\n  border-top-left-radius: ", ";\n  border-top-right-radius: ", ";\n  object-fit: cover;\n"])), function (_a) {
     var theme = _a.theme;

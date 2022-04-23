@@ -20,8 +20,11 @@ const Container = styled.div`
   justify-content: space-evenly;
 
   ${Media.sm`
-    padding: 0 90px;
-    width: calc(100% - 180px);
+    padding: 0 50px;
+  `}
+
+  ${Media.lg`
+    padding: 0 110px;
   `}
 `;
 
@@ -33,9 +36,13 @@ const PetaStyled = styled(Peta)`
 
 const MegaStyled = styled(Mega)`
   flex: 1 0 auto;
-  font-size: 22px;
+  font-size: 1.375rem;
   color: ${({ theme }) => theme.colors.core.primary};
   text-align: center;
+
+  ${Media.md`
+    text-align: left;
+  `}
 `;
 
 const IconContainer = styled.div`
@@ -49,7 +56,7 @@ const StyledButton = styled(Button)`
   margin-top: 4px;
   padding: 22px 30px;
 
-  ${Media.sm`
+  ${Media.md`
     padding: 22px 100px;
   `}
 `;
@@ -61,8 +68,8 @@ const Infographic: FunctionComponent<InfographicProps> = ({
   link,
 }) => (
   <Container>
-    <IconContainer>{icon}</IconContainer>
     <PetaStyled>{title}</PetaStyled>
+    <IconContainer>{icon}</IconContainer>
     <MegaStyled>{description}</MegaStyled>
     <StyledButton as="a" href={link}>
       {title}

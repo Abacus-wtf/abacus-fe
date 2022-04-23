@@ -26,6 +26,10 @@ const CardContainer = styled.div`
   row-gap: 20px;
   column-gap: 32px;
 
+  ${Media.sm`
+    grid-template-columns: repeat(2, 1fr);  
+  `}
+
   ${Media.md`
     grid-template-columns: repeat(3, 1fr);  
   `}

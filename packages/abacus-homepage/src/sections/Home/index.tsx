@@ -1,4 +1,10 @@
-import { Superhero, Statistics, HotPools, HowItWorks } from "@components/index"
+import {
+  Superhero,
+  Statistics,
+  HotPools,
+  HowItWorks,
+  Tokenomics,
+} from "@components/index"
 import { PoolCardProps } from "@components/PoolCard"
 import { BigNumber } from "@ethersproject/bignumber"
 
@@ -35,6 +41,7 @@ const Home: React.FC = () => {
       <Statistics />
       <HotPools pools={TEMP_POOLS} />
       <HowItWorks />
+      <Tokenomics />
     </>
   )
 }

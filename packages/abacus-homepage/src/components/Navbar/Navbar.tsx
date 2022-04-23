@@ -6,7 +6,7 @@ import {
   // VisuallyHidden,
   Logo,
   // Kilo,
-  Tera,
+  // Tera,
   // Dropdown,
   Media,
   // ProfileIcon,
@@ -113,10 +113,10 @@ const StyledLogo = styled(Logo)`
   `};
 `
 
-const StyledTera = styled(Tera)`
-  font-size: 26px;
-  font-weight: 400;
-`
+// const StyledTera = styled(Tera)`
+//   font-size: 26px;
+//   font-weight: 400;
+// `
 
 // const ProfileButton = styled(Button)`
 //   grid-gap: 8px;
@@ -141,12 +141,12 @@ const Navbar: FunctionComponent = () => {
         <StyledLink to="/">
           <StyledLogo />
         </StyledLink>
-        <StyledLink to="https://app.abacus.wtf/">
+        {/* <StyledLink to="https://app.abacus.wtf/">
           <StyledTera>Crowds</StyledTera>
         </StyledLink>
         <StyledLink to="https://testnet.abacus.wtf/">
           <StyledTera>Spot</StyledTera>
-        </StyledLink>
+        </StyledLink> */}
         {/* <DropdownButton
           menuOpen={menuOpen}
           buttonType={ButtonType.Clear}

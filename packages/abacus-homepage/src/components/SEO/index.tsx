@@ -56,7 +56,11 @@ const SEO: FunctionComponent<SEOProps> = ({
     : seo.canonicalUrl
   return (
     <>
-      <Helmet>
+      <Helmet
+        htmlAttributes={{
+          lang: "en",
+        }}
+      >
         {/* General tags */}
         <title>{title}</title>
         <meta name="description" content={description} />

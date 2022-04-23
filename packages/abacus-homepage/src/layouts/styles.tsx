@@ -114,7 +114,7 @@ export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
       right: 0;
       opacity: 0.25;
       z-index: -1;
-      background-image: url('/background.png');
+      background-image: url('/background.webp');
       background-repeat: no-repeat;
       background-position: 50% 0;
       background-size: cover;

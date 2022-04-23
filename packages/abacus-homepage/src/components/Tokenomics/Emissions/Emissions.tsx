@@ -1,4 +1,5 @@
-import { H3, Font, Media } from "abacus-ui"
+import { SectionSubTitle } from "@components/SectionTitle"
+import { Media } from "abacus-ui"
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { EmissionsCard, EmissionsCardProps } from "./EmissionsCard"
@@ -9,12 +10,6 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   margin-top: 40px;
-`
-
-const Title = styled(H3)`
-  ${Font("peta")}
-  font-weight: bold;
-  text-align: center;
 `
 
 const EmissionCardContainer = styled.div`
@@ -68,7 +63,7 @@ const emissions: EmissionsCardProps[] = [
 
 const Emissions: FunctionComponent = () => (
   <Container>
-    <Title>Token Emission Schedule</Title>
+    <SectionSubTitle>Token Emission Schedule</SectionSubTitle>
     <EmissionCardContainer>
       <EmissionsCardContainerLine />
       {emissions.map((emission) => (

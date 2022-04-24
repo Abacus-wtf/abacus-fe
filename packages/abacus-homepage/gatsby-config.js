@@ -44,17 +44,6 @@ module.exports = {
         path: path.join(__dirname, `src`, `images`),
       },
     },
-
-    {
-      resolve: `gatsby-plugin-nprogress`,
-      options: {
-        // Setting a color is optional.
-        color: `#E85D75`,
-        // Disable the loading spinner.
-        showSpinner: true,
-      },
-    },
-
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-typescript`,

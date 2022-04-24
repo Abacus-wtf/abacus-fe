@@ -1,6 +1,6 @@
-import { formatEther } from "ethers/lib/utils"
+import { LoadingShimmer } from "abacus-ui"
 import React, { FunctionComponent } from "react"
-import { PoolCardProps } from "./models"
+
 import {
   Container,
   Image,
@@ -10,25 +10,26 @@ import {
   InfoTitle,
 } from "./PoolCard.styled"
 
-const PoolCard: FunctionComponent<PoolCardProps> = ({
-  imgSrc,
-  alt = "",
-  poolName,
-  poolSize,
-}) => (
+const Fallback: FunctionComponent = () => (
   <Container>
-    <Image src={imgSrc} alt={alt} />
+    <Image as="div">
+      <LoadingShimmer />
+    </Image>
     <InfoContainer>
       <Info>
-        <InfoData>{poolName}</InfoData>
+        <InfoData>
+          <LoadingShimmer>Loading</LoadingShimmer>
+        </InfoData>
         <InfoTitle>Pool Name</InfoTitle>
       </Info>
       <Info right>
-        <InfoData>{formatEther(poolSize)}</InfoData>
+        <InfoData>
+          <LoadingShimmer>Loading</LoadingShimmer>
+        </InfoData>
         <InfoTitle>Pool Size</InfoTitle>
       </Info>
     </InfoContainer>
   </Container>
 )
 
-export default PoolCard
+export { Fallback }

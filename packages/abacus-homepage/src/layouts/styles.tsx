@@ -63,6 +63,7 @@ export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
     src: url("/fonts/Inter-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
   }
 
   @font-face {
@@ -70,6 +71,7 @@ export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
     src: url("/fonts/Inter-SemiBold.ttf") format("truetype");
     font-weight: bold;
     font-style: normal;
+    font-display: swap;
   }
 
   @font-face {
@@ -77,12 +79,14 @@ export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
     src: url("/fonts/Inter-Bold.ttf") format("truetype");
     font-weight: 900;
     font-style: normal;
+    font-display: swap;
     }
 
   @font-face {
     font-family: "Bluu Next";
     src: url("/fonts/BluuNext-Bold.otf") format("opentype");
     font-weight: bold;
+    font-display: swap;
   }
 
   

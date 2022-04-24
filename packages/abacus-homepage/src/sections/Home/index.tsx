@@ -5,22 +5,20 @@ import {
   HowItWorks,
   Tokenomics,
   JoinUs,
+  CurrentAuctions,
 } from "@components/index"
+import React from "react"
 
-import React, { useState } from "react"
-
-const Home: React.FC = () => {
-  const [modalOpen, setModalOpen] = useState(false)
-  return (
-    <>
-      <Superhero openModal={() => setModalOpen(true)} />
-      <Statistics />
-      <HotPools />
-      <HowItWorks />
-      <Tokenomics />
-      <JoinUs />
-    </>
-  )
-}
+const Home: React.FC = () => (
+  <>
+    <Superhero />
+    <Statistics />
+    <HotPools />
+    <HowItWorks />
+    <Tokenomics />
+    <JoinUs />
+    <CurrentAuctions />
+  </>
+)
 
 export default Home

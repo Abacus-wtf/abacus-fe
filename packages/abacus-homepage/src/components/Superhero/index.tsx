@@ -80,11 +80,7 @@ const BackgroundText = styled(Yotta)`
   `}
 `
 
-type SuperheroProps = {
-  openModal: () => void
-}
-
-const Superhero: FunctionComponent<SuperheroProps> = ({ openModal }) => (
+const Superhero: FunctionComponent = () => (
   <Container>
     <BackgroundText>Abacus</BackgroundText>
     <Wrapper>
@@ -101,7 +97,8 @@ const Superhero: FunctionComponent<SuperheroProps> = ({ openModal }) => (
       <StyledButton
         buttonType={ButtonType.Standard}
         type="button"
-        onClick={openModal}
+        as="a"
+        href="https://testnet.abacus.wtf"
       >
         <Mega>Launch App</Mega>
       </StyledButton>

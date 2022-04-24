@@ -1,4 +1,4 @@
-import { formatEther } from "ethers/lib/utils"
+import { formatEther } from "ethers/lib.esm/utils"
 import React, { FunctionComponent } from "react"
 import { PoolCardProps } from "./models"
 import {

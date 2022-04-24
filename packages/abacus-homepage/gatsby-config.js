@@ -29,11 +29,17 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: `gatsby-plugin-google-gtag`,
       options: {
-        trackingId: "G-RQL9BMSZ1Y",
-        head: true,
-        anonymize: true,
+        trackingIds: ["G-RQL9BMSZ1Y"],
+        gtagConfig: {
+          anonymize_ip: true,
+          cookie_expires: 0,
+        },
+        pluginConfig: {
+          head: true,
+          respectDNT: true,
+        },
       },
     },
     `gatsby-plugin-react-helmet`,

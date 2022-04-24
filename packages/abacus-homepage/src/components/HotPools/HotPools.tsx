@@ -4,7 +4,6 @@ import { Button, Media } from "abacus-ui"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
 import loadable from "@loadable/component"
-import { BigNumber } from "@ethersproject/bignumber"
 import { SectionTitle } from "../SectionTitle"
 
 const PoolCard = loadable(() => import("../PoolCard/PoolCard"))
@@ -47,25 +46,25 @@ const HotPools: FunctionComponent = () => {
         id: "0x1",
         imgSrc: "/temp_pool_src.png",
         poolName: "Doodle #2324",
-        poolSize: BigNumber.from("23450000000000000000"),
+        poolSize: "23450000000000000000",
       },
       {
         id: "0x2",
         imgSrc: "/temp_pool_src.png",
         poolName: "Doodle #2324",
-        poolSize: BigNumber.from("23450000000000000000"),
+        poolSize: "23450000000000000000",
       },
       {
         id: "0x3",
         imgSrc: "/temp_pool_src.png",
         poolName: "Doodle #2324",
-        poolSize: BigNumber.from("23450000000000000000"),
+        poolSize: "23450000000000000000",
       },
       {
         id: "0x4",
         imgSrc: "/temp_pool_src.png",
         poolName: "Doodle #2324",
-        poolSize: BigNumber.from("23450000000000000000"),
+        poolSize: "23450000000000000000",
       },
     ],
     []

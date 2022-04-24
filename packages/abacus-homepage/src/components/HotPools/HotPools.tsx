@@ -1,5 +1,6 @@
 import { PoolCardProps } from "@components/PoolCard"
 import PoolCard from "@components/PoolCard/PoolCard"
+import { Section } from "@components/Section"
 import { Button, Media } from "abacus-ui"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
@@ -9,12 +10,8 @@ type HotPoolsProps = {
   pools: PoolCardProps[]
 }
 
-const Container = styled.section`
+const Container = styled(Section)`
   padding-top: 120px;
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   max-width: 1120px;
 `

@@ -1,14 +1,12 @@
 import { Media, Infographic } from "abacus-ui"
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
+import { Section } from "@components/Section"
 import { SectionTitle } from "../SectionTitle"
 import { Pools, Diving } from "../Icons"
 
-const Container = styled.section`
+const Container = styled(Section)`
   padding: 80px 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.utility.lightBlue};
 `

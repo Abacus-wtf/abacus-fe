@@ -4,6 +4,7 @@ import {
   HotPools,
   HowItWorks,
   Tokenomics,
+  JoinUs,
 } from "@components/index"
 import { PoolCardProps } from "@components/PoolCard"
 import { BigNumber } from "@ethersproject/bignumber"
@@ -42,6 +43,7 @@ const Home: React.FC = () => {
       <HotPools pools={TEMP_POOLS} />
       <HowItWorks />
       <Tokenomics />
+      <JoinUs />
     </>
   )
 }

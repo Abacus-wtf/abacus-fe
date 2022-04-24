@@ -8,3 +8,4 @@ export { default as ETH } from "./Eth";
 export { default as Close } from "./Close";
 export { default as Lock } from "./Lock";
 export { default as ChevronLeft } from "./ChevronLeft";
+export * from "./Social";

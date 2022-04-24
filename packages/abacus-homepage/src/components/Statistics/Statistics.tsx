@@ -1,11 +1,9 @@
+import { Section } from "@components/Section"
 import { Media, StatInfo } from "abacus-ui"
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 
-const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+const Container = styled(Section)`
   background: ${({ theme }) => theme.colors.utility.white};
   padding: 16px 0;
   justify-content: center;

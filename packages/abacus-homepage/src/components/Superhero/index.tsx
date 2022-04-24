@@ -1,12 +1,10 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { H1, P, Button, ButtonType, Mega, Media, Yotta } from "abacus-ui"
+import { Section } from "@components/Section"
 
-const Container = styled.section`
+const Container = styled(Section)`
   padding-top: 110px;
-  position: relative;
-  width: 100%;
-  overflow: hidden;
   min-height: calc(100vh - 100px);
 `
 

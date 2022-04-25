@@ -6,6 +6,7 @@
   "author": "Abacus Team",
   "dependencies": {
     "@loadable/component": "^5.15.0",
+    "abacus-graph": "^1.1.0",
     "abacus-ui": "^1.1.0",
     "ethers": "^5.6.4",
     "gatsby": "^4.4.0",

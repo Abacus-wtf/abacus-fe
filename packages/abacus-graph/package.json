@@ -43,6 +43,7 @@
     "@graphql-codegen/typed-document-node": "^2.2.8",
     "@graphql-codegen/typescript": "^2.4.8",
     "@graphql-codegen/typescript-operations": "^2.3.5",
+    "ethers": "^5.6.4",
     "graphql": "^16.2.0"
   },
   "devDependencies": {

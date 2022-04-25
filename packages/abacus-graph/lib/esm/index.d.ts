@@ -19,8 +19,8 @@ export declare type Scalars = {
     Boolean: boolean;
     Int: number;
     Float: number;
-    BigDecimal: any;
-    BigInt: any;
+    BigDecimal: TheGraph_BigDecimal;
+    BigInt: TheGraph_BigInt;
     Bytes: any;
 };
 export declare type Allocation = {
@@ -621,12 +621,12 @@ export declare type GetPoolsQuery = {
         id: string;
         owner: string;
         nftAddress: string;
-        tokenId: any;
+        tokenId: TheGraph_BigInt;
         nonce: number;
         status: number;
-        timestamp: any;
+        timestamp: TheGraph_BigInt;
         emissionsSigned: boolean;
-        size: any;
+        size: TheGraph_BigInt;
     }>;
 };
 export declare type GetTicketsQueryVariables = Exact<{
@@ -639,17 +639,17 @@ export declare type GetTicketsQuery = {
     tickets: Array<{
         __typename?: 'Ticket';
         id: string;
-        ticketNumber: any;
+        ticketNumber: TheGraph_BigInt;
         vaultAddress: string;
         tokenPurchasesLength: number;
         tokenPurchases: Array<{
             __typename?: 'TokenPurchase';
-            amount: any;
+            amount: TheGraph_BigInt;
             id: string;
-            length: any;
+            length: TheGraph_BigInt;
             owner: string;
-            soldAt?: any | null;
-            timestamp: any;
+            soldAt?: TheGraph_BigInt | null;
+            timestamp: TheGraph_BigInt;
         }>;
     }>;
 };

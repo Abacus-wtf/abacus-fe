@@ -11,13 +11,16 @@
   "author": "lauchness <lauchlanchisholm@gmail.com>",
   "homepage": "https://github.com/Abacus-wtf/abacus-fe#readme",
   "license": "MIT",
-  "main": "lib/abacus-graph.js",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
   "directories": {
     "lib": "lib"
   },
-  "files": [
-    "lib"
-  ],
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
   },
@@ -27,7 +30,10 @@
   },
   "scripts": {
     "generate": "graphql-codegen",
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "prepack": "yarn build",
+    "build": "rollup -c",
+    "watch": "rollup -cw"
   },
   "bugs": {
     "url": "https://github.com/Abacus-wtf/abacus-fe/issues"
@@ -37,6 +43,13 @@
     "@graphql-codegen/typed-document-node": "^2.2.8",
     "@graphql-codegen/typescript": "^2.4.8",
     "@graphql-codegen/typescript-operations": "^2.3.5",
-    "graphql": "^16.3.0"
+    "graphql": "^16.2.0"
+  },
+  "devDependencies": {
+    "rollup": "^2.64.0",
+    "rollup-plugin-dts": "^4.1.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.31.1",
+    "typescript": "^3.8.3"
   }
 }

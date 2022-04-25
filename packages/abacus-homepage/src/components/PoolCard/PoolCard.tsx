@@ -55,7 +55,7 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
           <InfoTitle>Pool Name</InfoTitle>
         </Info>
         <Info right>
-          <InfoData>{parseFloat(formatEther(poolSize)) / 1000} ETH</InfoData>
+          <InfoData>{parseFloat(formatEther(poolSize)) / 1000}ETH</InfoData>
           <InfoTitle>Pool Size</InfoTitle>
         </Info>
       </InfoContainer>

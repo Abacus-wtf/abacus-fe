@@ -17,14 +17,18 @@ const usePools = () => {
 
   useEffect(() => {
     const getMetadata = async () => {
-      const vaults = data?.vaults ?? null
+      const vaults =
+        data?.vaults.map((vault) => ({
+          ...vault,
+          tokenId: vault.tokenId.toString(),
+        })) ?? null
       if (vaults) {
-        const { assets } = await openseaGetMany(data.vaults, {
+        const { assets } = await openseaGetMany(vaults, {
           url: OpenSeaURL,
         })
 
         const mappedPools: PoolCardProps[] =
-          data?.vaults.map((vault) => {
+          vaults.map((vault) => {
             const asset = matchOpenSeaAssetToNFT(assets, vault)
 
             return {
@@ -32,7 +36,7 @@ const usePools = () => {
               imgSrc: asset.image_preview_url || asset.image_url,
               alt: `${asset.name} in NFT Collection: ${asset.collection}`,
               poolName: asset.name,
-              poolSize: String(vault.size),
+              poolSize: vault.size.toString(),
               link: `${process.env.GATSBY_APP_URL}/pool/?address=${vault.nftAddress}&tokenId=${vault.tokenId}&nonce=${vault.nonce}`,
               fetching,
             }

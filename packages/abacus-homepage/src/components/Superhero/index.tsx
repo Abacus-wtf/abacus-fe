@@ -98,7 +98,7 @@ const Superhero: FunctionComponent = () => (
         buttonType={ButtonType.Standard}
         type="button"
         as="a"
-        href="https://testnet.abacus.wtf"
+        href={process.env.GATSBY_APP_URL}
       >
         <Mega>Launch App</Mega>
       </StyledButton>

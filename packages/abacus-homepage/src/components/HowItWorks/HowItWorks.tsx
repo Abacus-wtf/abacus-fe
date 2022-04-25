@@ -45,14 +45,14 @@ const HowItWorks: FunctionComponent = () => (
         icon={<Pools />}
         title="Open a Pool"
         description="Anyone can create a spot pool for any NFT in an allowed collection. However, in order to receive emissions, the owner of the NFT must sign the pool as proof of life."
-        link="https://testnet.abacus.wtf"
+        link={process.env.GATSBY_APP_URL}
       />
       <InfographicDivider />
       <Infographic
         icon={<Diving />}
         title="Buy into a Pool"
         description="Pools are separated into ticketed positions that have 1000 tokens which are worth 0.001 ETH each (positions are limited to 1 ETH in size)."
-        link="https://testnet.abacus.wtf"
+        link={process.env.GATSBY_APP_URL}
       />
     </InfographicContainer>
   </Container>

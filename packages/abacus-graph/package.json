@@ -46,6 +46,7 @@
     "graphql": "^16.2.0"
   },
   "devDependencies": {
+    "dotenv": "^16.0.0",
     "rollup": "^2.64.0",
     "rollup-plugin-dts": "^4.1.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",

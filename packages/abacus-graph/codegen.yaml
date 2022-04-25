@@ -1,8 +1,0 @@
-schema: https://api.studio.thegraph.com/query/13937/abacusspotgraphrinkeby/v0.0.16
-documents: "./src/**/*.graphql"
-generates:
-  ./src/index.ts:
-    plugins:
-      - typescript
-      - typescript-operations
-      - typed-document-node

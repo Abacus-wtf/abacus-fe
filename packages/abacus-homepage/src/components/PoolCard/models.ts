@@ -4,4 +4,6 @@ export type PoolCardProps = {
   alt?: string
   poolName: string
   poolSize: string
+  link: string
+  fetching: boolean
 }

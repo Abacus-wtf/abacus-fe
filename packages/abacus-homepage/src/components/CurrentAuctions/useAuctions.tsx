@@ -6,11 +6,11 @@ import { useEffect, useState } from "react"
 
 const OpenSeaURL = process.env.GATSBY_OPENSEA_API
 
-const usePools = () => {
+const useAuctions = () => {
   const [pools, setPools] = useState<PoolCardProps[]>([])
   const [result] = useQuery({
     query: GetPoolsDocument,
-    variables: { first: 3, skip: 0, where: { status_lt: 3 } },
+    variables: { first: 3, skip: 0, where: { status: 3 } },
   })
 
   const { data, fetching } = result
@@ -29,7 +29,7 @@ const usePools = () => {
 
             return {
               id: vault.id,
-              imgSrc: asset.image_preview_url || asset.image_url,
+              imgSrc: asset.image_url,
               alt: `${asset.name} in NFT Collection: ${asset.collection}`,
               poolName: asset.name,
               poolSize: String(vault.size),
@@ -48,4 +48,4 @@ const usePools = () => {
   return { pools, fetching }
 }
 
-export { usePools }
+export { useAuctions }

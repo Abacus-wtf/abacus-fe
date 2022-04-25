@@ -4,16 +4,19 @@ import styled from "styled-components"
 export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.core.white};
   box-shadow: ${({ theme }) => theme.boxShadow.section};
-  border-radius: 24px;
+  border-radius: ${({ theme }) => theme.borderRadius.section};
   display: flex;
   flex-direction: column;
   padding: 16px;
+  position: relative;
+  width: 100%;
 `
 
 export const Image = styled.img`
   aspect-ratio: 1 / 1;
   border-radius: 24px;
   width: 100%;
+  max-width: 310px;
 `
 
 export const InfoContainer = styled.div`

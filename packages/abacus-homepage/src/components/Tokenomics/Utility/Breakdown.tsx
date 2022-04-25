@@ -6,6 +6,11 @@ const Container = styled.table`
   margin-top: 40px;
   display: flex;
   flex-direction: column;
+`
+
+const TBody = styled.tbody`
+  display: flex;
+  flex-direction: column;
   gap: 24px;
 `
 
@@ -42,7 +47,7 @@ const RowData = styled.td`
 
 const Breakdown: FunctionComponent = () => (
   <Container>
-    <tbody>
+    <TBody>
       <Row>
         <RowHead>
           <RowHeadNumber>01.</RowHeadNumber>Revenue Share
@@ -70,7 +75,7 @@ const Breakdown: FunctionComponent = () => (
           veABC holders.
         </RowData>
       </Row>
-    </tbody>
+    </TBody>
   </Container>
 )
 

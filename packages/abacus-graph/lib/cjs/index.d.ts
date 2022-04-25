@@ -477,6 +477,7 @@ export declare type Vault = {
     nftAddress: Scalars['ID'];
     nonce: Scalars['Int'];
     owner: Scalars['ID'];
+    size: Scalars['BigInt'];
     status: Scalars['Int'];
     tickets: Array<Ticket>;
     timestamp: Scalars['BigInt'];
@@ -528,6 +529,14 @@ export declare type Vault_Filter = {
     owner_lte?: InputMaybe<Scalars['ID']>;
     owner_not?: InputMaybe<Scalars['ID']>;
     owner_not_in?: InputMaybe<Array<Scalars['ID']>>;
+    size?: InputMaybe<Scalars['BigInt']>;
+    size_gt?: InputMaybe<Scalars['BigInt']>;
+    size_gte?: InputMaybe<Scalars['BigInt']>;
+    size_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    size_lt?: InputMaybe<Scalars['BigInt']>;
+    size_lte?: InputMaybe<Scalars['BigInt']>;
+    size_not?: InputMaybe<Scalars['BigInt']>;
+    size_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     status?: InputMaybe<Scalars['Int']>;
     status_gt?: InputMaybe<Scalars['Int']>;
     status_gte?: InputMaybe<Scalars['Int']>;
@@ -565,6 +574,7 @@ export declare enum Vault_OrderBy {
     NftAddress = "nftAddress",
     Nonce = "nonce",
     Owner = "owner",
+    Size = "size",
     Status = "status",
     Tickets = "tickets",
     Timestamp = "timestamp",
@@ -616,6 +626,7 @@ export declare type GetPoolsQuery = {
         status: number;
         timestamp: any;
         emissionsSigned: boolean;
+        size: any;
     }>;
 };
 export declare type GetTicketsQueryVariables = Exact<{

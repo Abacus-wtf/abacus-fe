@@ -1,4 +1,4 @@
-schema: https://api.thegraph.com/subgraphs/name/0xinsanity/abacusspotgraphrinkeby
+schema: https://api.studio.thegraph.com/query/13937/abacusspotgraphrinkeby/v0.0.16
 documents: "./src/**/*.graphql"
 generates:
   ./src/index.ts:

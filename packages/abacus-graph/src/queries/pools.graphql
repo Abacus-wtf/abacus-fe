@@ -14,5 +14,6 @@ query GetPools($first: Int!, $skip: Int!, $where: Vault_filter) {
     	status
     	timestamp
     	emissionsSigned
+      size
     }
   }

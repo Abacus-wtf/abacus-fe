@@ -2,15 +2,15 @@ require("dotenv").config();
 
 module.exports = {
   schema: process.env.GRAPH_API,
-  documents: ["./src/**/*.graphql"],
+  documents: ["./**/*.graphql"],
   generates: {
-    "./src/index.ts": {
+    "./index.ts": {
       plugins: ["typescript", "typescript-operations", "typed-document-node"],
       config: {
         withHooks: true,
         scalars: {
-          BigInt: "TheGraph_BigInt",
-          BigDecimal: "TheGraph_BigDecimal",
+          BigInt: "string",
+          BigDecimal: "string",
         },
       },
     },

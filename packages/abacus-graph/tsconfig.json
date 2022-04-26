@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "exclude": ["node_modules", "lib", "**/*.story*", "**/*.config.*"],
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "outDir": "lib",
     "jsx": "react",
     "declaration": true,

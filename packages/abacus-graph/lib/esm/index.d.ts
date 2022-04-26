@@ -19,10 +19,59 @@ export declare type Scalars = {
     Boolean: boolean;
     Int: number;
     Float: number;
-    BigDecimal: TheGraph_BigDecimal;
-    BigInt: TheGraph_BigInt;
+    BigDecimal: string;
+    BigInt: string;
     Bytes: any;
 };
+export declare type Aggregate = {
+    __typename?: 'Aggregate';
+    TVL: Scalars['BigInt'];
+    id: Scalars['ID'];
+    totalParticipants: Scalars['Int'];
+    totalPools: Scalars['Int'];
+};
+export declare type Aggregate_Filter = {
+    TVL?: InputMaybe<Scalars['BigInt']>;
+    TVL_gt?: InputMaybe<Scalars['BigInt']>;
+    TVL_gte?: InputMaybe<Scalars['BigInt']>;
+    TVL_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    TVL_lt?: InputMaybe<Scalars['BigInt']>;
+    TVL_lte?: InputMaybe<Scalars['BigInt']>;
+    TVL_not?: InputMaybe<Scalars['BigInt']>;
+    TVL_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    /** Filter for the block changed event. */
+    _change_block?: InputMaybe<BlockChangedFilter>;
+    id?: InputMaybe<Scalars['ID']>;
+    id_gt?: InputMaybe<Scalars['ID']>;
+    id_gte?: InputMaybe<Scalars['ID']>;
+    id_in?: InputMaybe<Array<Scalars['ID']>>;
+    id_lt?: InputMaybe<Scalars['ID']>;
+    id_lte?: InputMaybe<Scalars['ID']>;
+    id_not?: InputMaybe<Scalars['ID']>;
+    id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+    totalParticipants?: InputMaybe<Scalars['Int']>;
+    totalParticipants_gt?: InputMaybe<Scalars['Int']>;
+    totalParticipants_gte?: InputMaybe<Scalars['Int']>;
+    totalParticipants_in?: InputMaybe<Array<Scalars['Int']>>;
+    totalParticipants_lt?: InputMaybe<Scalars['Int']>;
+    totalParticipants_lte?: InputMaybe<Scalars['Int']>;
+    totalParticipants_not?: InputMaybe<Scalars['Int']>;
+    totalParticipants_not_in?: InputMaybe<Array<Scalars['Int']>>;
+    totalPools?: InputMaybe<Scalars['Int']>;
+    totalPools_gt?: InputMaybe<Scalars['Int']>;
+    totalPools_gte?: InputMaybe<Scalars['Int']>;
+    totalPools_in?: InputMaybe<Array<Scalars['Int']>>;
+    totalPools_lt?: InputMaybe<Scalars['Int']>;
+    totalPools_lte?: InputMaybe<Scalars['Int']>;
+    totalPools_not?: InputMaybe<Scalars['Int']>;
+    totalPools_not_in?: InputMaybe<Array<Scalars['Int']>>;
+};
+export declare enum Aggregate_OrderBy {
+    Tvl = "TVL",
+    Id = "id",
+    TotalParticipants = "totalParticipants",
+    TotalPools = "totalPools"
+}
 export declare type Allocation = {
     __typename?: 'Allocation';
     amount: Scalars['BigInt'];
@@ -117,12 +166,35 @@ export declare enum OrderDirection {
     Asc = "asc",
     Desc = "desc"
 }
+export declare type Participant = {
+    __typename?: 'Participant';
+    id: Scalars['ID'];
+};
+export declare type Participant_Filter = {
+    /** Filter for the block changed event. */
+    _change_block?: InputMaybe<BlockChangedFilter>;
+    id?: InputMaybe<Scalars['ID']>;
+    id_gt?: InputMaybe<Scalars['ID']>;
+    id_gte?: InputMaybe<Scalars['ID']>;
+    id_in?: InputMaybe<Array<Scalars['ID']>>;
+    id_lt?: InputMaybe<Scalars['ID']>;
+    id_lte?: InputMaybe<Scalars['ID']>;
+    id_not?: InputMaybe<Scalars['ID']>;
+    id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+};
+export declare enum Participant_OrderBy {
+    Id = "id"
+}
 export declare type Query = {
     __typename?: 'Query';
     /** Access to subgraph metadata */
     _meta?: Maybe<_Meta_>;
+    aggregate?: Maybe<Aggregate>;
+    aggregates: Array<Aggregate>;
     allocation?: Maybe<Allocation>;
     allocations: Array<Allocation>;
+    participant?: Maybe<Participant>;
+    participants: Array<Participant>;
     ticket?: Maybe<Ticket>;
     tickets: Array<Ticket>;
     tokenPurchase?: Maybe<TokenPurchase>;
@@ -134,6 +206,20 @@ export declare type Query = {
 };
 export declare type Query_MetaArgs = {
     block?: InputMaybe<Block_Height>;
+};
+export declare type QueryAggregateArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type QueryAggregatesArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<Aggregate_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<Aggregate_Filter>;
 };
 export declare type QueryAllocationArgs = {
     block?: InputMaybe<Block_Height>;
@@ -148,6 +234,20 @@ export declare type QueryAllocationsArgs = {
     skip?: InputMaybe<Scalars['Int']>;
     subgraphError?: _SubgraphErrorPolicy_;
     where?: InputMaybe<Allocation_Filter>;
+};
+export declare type QueryParticipantArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type QueryParticipantsArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<Participant_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<Participant_Filter>;
 };
 export declare type QueryTicketArgs = {
     block?: InputMaybe<Block_Height>;
@@ -209,8 +309,12 @@ export declare type Subscription = {
     __typename?: 'Subscription';
     /** Access to subgraph metadata */
     _meta?: Maybe<_Meta_>;
+    aggregate?: Maybe<Aggregate>;
+    aggregates: Array<Aggregate>;
     allocation?: Maybe<Allocation>;
     allocations: Array<Allocation>;
+    participant?: Maybe<Participant>;
+    participants: Array<Participant>;
     ticket?: Maybe<Ticket>;
     tickets: Array<Ticket>;
     tokenPurchase?: Maybe<TokenPurchase>;
@@ -222,6 +326,20 @@ export declare type Subscription = {
 };
 export declare type Subscription_MetaArgs = {
     block?: InputMaybe<Block_Height>;
+};
+export declare type SubscriptionAggregateArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type SubscriptionAggregatesArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<Aggregate_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<Aggregate_Filter>;
 };
 export declare type SubscriptionAllocationArgs = {
     block?: InputMaybe<Block_Height>;
@@ -236,6 +354,20 @@ export declare type SubscriptionAllocationsArgs = {
     skip?: InputMaybe<Scalars['Int']>;
     subgraphError?: _SubgraphErrorPolicy_;
     where?: InputMaybe<Allocation_Filter>;
+};
+export declare type SubscriptionParticipantArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type SubscriptionParticipantsArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<Participant_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<Participant_Filter>;
 };
 export declare type SubscriptionTicketArgs = {
     block?: InputMaybe<Block_Height>;
@@ -609,6 +741,19 @@ export declare enum _SubgraphErrorPolicy_ {
     /** If the subgraph has indexing errors, data will be omitted. The default. */
     Deny = "deny"
 }
+export declare type GetAggregatesQueryVariables = Exact<{
+    [key: string]: never;
+}>;
+export declare type GetAggregatesQuery = {
+    __typename?: 'Query';
+    aggregate?: {
+        __typename?: 'Aggregate';
+        id: string;
+        totalPools: number;
+        TVL: string;
+        totalParticipants: number;
+    } | null;
+};
 export declare type GetPoolsQueryVariables = Exact<{
     first: Scalars['Int'];
     skip: Scalars['Int'];
@@ -621,12 +766,12 @@ export declare type GetPoolsQuery = {
         id: string;
         owner: string;
         nftAddress: string;
-        tokenId: TheGraph_BigInt;
+        tokenId: string;
         nonce: number;
         status: number;
-        timestamp: TheGraph_BigInt;
+        timestamp: string;
         emissionsSigned: boolean;
-        size: TheGraph_BigInt;
+        size: string;
     }>;
 };
 export declare type GetTicketsQueryVariables = Exact<{
@@ -639,20 +784,23 @@ export declare type GetTicketsQuery = {
     tickets: Array<{
         __typename?: 'Ticket';
         id: string;
-        ticketNumber: TheGraph_BigInt;
+        ticketNumber: string;
         vaultAddress: string;
         tokenPurchasesLength: number;
         tokenPurchases: Array<{
             __typename?: 'TokenPurchase';
-            amount: TheGraph_BigInt;
+            amount: string;
             id: string;
-            length: TheGraph_BigInt;
+            length: string;
             owner: string;
-            soldAt?: TheGraph_BigInt | null;
-            timestamp: TheGraph_BigInt;
+            soldAt?: string | null;
+            timestamp: string;
         }>;
     }>;
 };
+export declare const GetAggregatesDocument: DocumentNode<GetAggregatesQuery, Exact<{
+    [key: string]: never;
+}>>;
 export declare const GetPoolsDocument: DocumentNode<GetPoolsQuery, Exact<{
     first: Scalars['Int'];
     skip: Scalars['Int'];

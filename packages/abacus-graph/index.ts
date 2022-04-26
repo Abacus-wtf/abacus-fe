@@ -11,10 +11,62 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  BigDecimal: TheGraph_BigDecimal;
-  BigInt: TheGraph_BigInt;
+  BigDecimal: string;
+  BigInt: string;
   Bytes: any;
 };
+
+export type Aggregate = {
+  __typename?: 'Aggregate';
+  TVL: Scalars['BigInt'];
+  id: Scalars['ID'];
+  totalParticipants: Scalars['Int'];
+  totalPools: Scalars['Int'];
+};
+
+export type Aggregate_Filter = {
+  TVL?: InputMaybe<Scalars['BigInt']>;
+  TVL_gt?: InputMaybe<Scalars['BigInt']>;
+  TVL_gte?: InputMaybe<Scalars['BigInt']>;
+  TVL_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  TVL_lt?: InputMaybe<Scalars['BigInt']>;
+  TVL_lte?: InputMaybe<Scalars['BigInt']>;
+  TVL_not?: InputMaybe<Scalars['BigInt']>;
+  TVL_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  totalParticipants?: InputMaybe<Scalars['Int']>;
+  totalParticipants_gt?: InputMaybe<Scalars['Int']>;
+  totalParticipants_gte?: InputMaybe<Scalars['Int']>;
+  totalParticipants_in?: InputMaybe<Array<Scalars['Int']>>;
+  totalParticipants_lt?: InputMaybe<Scalars['Int']>;
+  totalParticipants_lte?: InputMaybe<Scalars['Int']>;
+  totalParticipants_not?: InputMaybe<Scalars['Int']>;
+  totalParticipants_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  totalPools?: InputMaybe<Scalars['Int']>;
+  totalPools_gt?: InputMaybe<Scalars['Int']>;
+  totalPools_gte?: InputMaybe<Scalars['Int']>;
+  totalPools_in?: InputMaybe<Array<Scalars['Int']>>;
+  totalPools_lt?: InputMaybe<Scalars['Int']>;
+  totalPools_lte?: InputMaybe<Scalars['Int']>;
+  totalPools_not?: InputMaybe<Scalars['Int']>;
+  totalPools_not_in?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+export enum Aggregate_OrderBy {
+  Tvl = 'TVL',
+  Id = 'id',
+  TotalParticipants = 'totalParticipants',
+  TotalPools = 'totalPools'
+}
 
 export type Allocation = {
   __typename?: 'Allocation';
@@ -116,12 +168,38 @@ export enum OrderDirection {
   Desc = 'desc'
 }
 
+export type Participant = {
+  __typename?: 'Participant';
+  id: Scalars['ID'];
+};
+
+export type Participant_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export enum Participant_OrderBy {
+  Id = 'id'
+}
+
 export type Query = {
   __typename?: 'Query';
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
+  aggregate?: Maybe<Aggregate>;
+  aggregates: Array<Aggregate>;
   allocation?: Maybe<Allocation>;
   allocations: Array<Allocation>;
+  participant?: Maybe<Participant>;
+  participants: Array<Participant>;
   ticket?: Maybe<Ticket>;
   tickets: Array<Ticket>;
   tokenPurchase?: Maybe<TokenPurchase>;
@@ -135,6 +213,24 @@ export type Query = {
 
 export type Query_MetaArgs = {
   block?: InputMaybe<Block_Height>;
+};
+
+
+export type QueryAggregateArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryAggregatesArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Aggregate_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Aggregate_Filter>;
 };
 
 
@@ -153,6 +249,24 @@ export type QueryAllocationsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<Allocation_Filter>;
+};
+
+
+export type QueryParticipantArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryParticipantsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Participant_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Participant_Filter>;
 };
 
 
@@ -231,8 +345,12 @@ export type Subscription = {
   __typename?: 'Subscription';
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
+  aggregate?: Maybe<Aggregate>;
+  aggregates: Array<Aggregate>;
   allocation?: Maybe<Allocation>;
   allocations: Array<Allocation>;
+  participant?: Maybe<Participant>;
+  participants: Array<Participant>;
   ticket?: Maybe<Ticket>;
   tickets: Array<Ticket>;
   tokenPurchase?: Maybe<TokenPurchase>;
@@ -246,6 +364,24 @@ export type Subscription = {
 
 export type Subscription_MetaArgs = {
   block?: InputMaybe<Block_Height>;
+};
+
+
+export type SubscriptionAggregateArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionAggregatesArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Aggregate_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Aggregate_Filter>;
 };
 
 
@@ -264,6 +400,24 @@ export type SubscriptionAllocationsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<Allocation_Filter>;
+};
+
+
+export type SubscriptionParticipantArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionParticipantsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Participant_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Participant_Filter>;
 };
 
 
@@ -675,6 +829,11 @@ export enum _SubgraphErrorPolicy_ {
   Deny = 'deny'
 }
 
+export type GetAggregatesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAggregatesQuery = { __typename?: 'Query', aggregate?: { __typename?: 'Aggregate', id: string, totalPools: number, TVL: string, totalParticipants: number } | null };
+
 export type GetPoolsQueryVariables = Exact<{
   first: Scalars['Int'];
   skip: Scalars['Int'];
@@ -682,7 +841,7 @@ export type GetPoolsQueryVariables = Exact<{
 }>;
 
 
-export type GetPoolsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', id: string, owner: string, nftAddress: string, tokenId: TheGraph_BigInt, nonce: number, status: number, timestamp: TheGraph_BigInt, emissionsSigned: boolean, size: TheGraph_BigInt }> };
+export type GetPoolsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', id: string, owner: string, nftAddress: string, tokenId: string, nonce: number, status: number, timestamp: string, emissionsSigned: boolean, size: string }> };
 
 export type GetTicketsQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -691,8 +850,9 @@ export type GetTicketsQueryVariables = Exact<{
 }>;
 
 
-export type GetTicketsQuery = { __typename?: 'Query', tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: TheGraph_BigInt, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: TheGraph_BigInt, id: string, length: TheGraph_BigInt, owner: string, soldAt?: TheGraph_BigInt | null, timestamp: TheGraph_BigInt }> }> };
+export type GetTicketsQuery = { __typename?: 'Query', tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, length: string, owner: string, soldAt?: string | null, timestamp: string }> }> };
 
 
+export const GetAggregatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAggregates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"StringValue","value":"MEDICI_RULES","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"totalPools"}},{"kind":"Field","name":{"kind":"Name","value":"TVL"}},{"kind":"Field","name":{"kind":"Name","value":"totalParticipants"}}]}}]}}]} as unknown as DocumentNode<GetAggregatesQuery, GetAggregatesQueryVariables>;
 export const GetPoolsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPools"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Vault_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vaults"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"EnumValue","value":"timestamp"}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"EnumValue","value":"desc"}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"nftAddress"}},{"kind":"Field","name":{"kind":"Name","value":"tokenId"}},{"kind":"Field","name":{"kind":"Name","value":"nonce"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"emissionsSigned"}},{"kind":"Field","name":{"kind":"Name","value":"size"}}]}}]}}]} as unknown as DocumentNode<GetPoolsQuery, GetPoolsQueryVariables>;
 export const GetTicketsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTickets"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Ticket_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tickets"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"EnumValue","value":"ticketNumber"}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"EnumValue","value":"desc"}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ticketNumber"}},{"kind":"Field","name":{"kind":"Name","value":"vaultAddress"}},{"kind":"Field","name":{"kind":"Name","value":"tokenPurchasesLength"}},{"kind":"Field","name":{"kind":"Name","value":"tokenPurchases"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"length"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"soldAt"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}}]}}]}}]} as unknown as DocumentNode<GetTicketsQuery, GetTicketsQueryVariables>;

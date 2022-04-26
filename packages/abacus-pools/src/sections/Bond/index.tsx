@@ -78,7 +78,7 @@ const Bond: React.FC = () => {
 
   return (
     <UniversalContainer style={{ gridGap: 30, alignItems: "center" }}>
-      <Stat title="ABC Credit Stored:" value={userData.creditStored} />
+      <Stat title="ABC Bonded:" value={userData.creditStored} />
       <div style={{ display: "flex", gridGap: 30, width: "100%" }}>
         <Card style={{ width: "100%" }}>
           <InfoSectionContainer>

@@ -5,7 +5,12 @@ import { Section } from "@components/Section"
 
 const Container = styled(Section)`
   padding-top: 110px;
-  min-height: calc(100vh - 100px);
+  padding-bottom: 110px;
+  min-height: calc(100vh - 70px);
+
+  ${Media.md`
+    min-height: unset;
+  `}
 `
 
 const Wrapper = styled.div`
@@ -88,7 +93,7 @@ const Superhero: FunctionComponent = () => (
         NFT Valuation<GradientText>Reimagined</GradientText>
       </StyledH1>
       <StyledP>
-        Abacus is a revolutionary NFT valutaion system combining optimistic
+        Abacus is a revolutionary NFT valuation system combining optimistic
         rollups and proof of stake logic.{" "}
       </StyledP>
       <StyledP>

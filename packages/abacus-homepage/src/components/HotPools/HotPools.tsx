@@ -57,7 +57,7 @@ const HotPools: FunctionComponent = () => {
             ))}
       </CardContainer>
       <StyledButton as="a" href={process.env.GATSBY_APP_URL}>
-        See More pools
+        See more Pools
       </StyledButton>
     </Container>
   )

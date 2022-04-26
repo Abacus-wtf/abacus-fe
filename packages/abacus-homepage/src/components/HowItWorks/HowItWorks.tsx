@@ -44,7 +44,7 @@ const HowItWorks: FunctionComponent = () => (
       <Infographic
         icon={<Pools />}
         title="Open a Pool"
-        description="Anyone can create a spot pool for any NFT in an allowed collection. However, in order to receive emissions, the owner of the NFT must sign the pool as proof of life."
+        description="Anyone can create a spot pool for any NFT in an allowed collection. However, in order to receive emissions, the owner of the NFT must sign the pool as proof of ownership."
         link={process.env.GATSBY_APP_URL}
       />
       <InfographicDivider />

@@ -62,7 +62,7 @@ const CurrentAuctions: FunctionComponent = () => {
             ))}
       </CardContainer>
       <StyledButton as="a" href={process.env.GATSBY_APP_URL}>
-        See More Auctions
+        See more Auctions
       </StyledButton>
     </Container>
   )

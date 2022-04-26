@@ -71,7 +71,7 @@ const Breakdown: FunctionComponent = () => (
           <RowHeadNumber>03. </RowHeadNumber>Governance
         </RowHead>
         <RowData>
-          voting participation in Abacus governance decisions will be limited to
+          Voting participation in Abacus governance decisions will be limited to
           veABC holders.
         </RowData>
       </Row>

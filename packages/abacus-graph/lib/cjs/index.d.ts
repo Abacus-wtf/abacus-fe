@@ -757,6 +757,8 @@ export declare type GetAggregatesQuery = {
 export declare type GetPoolsQueryVariables = Exact<{
     first: Scalars['Int'];
     skip: Scalars['Int'];
+    orderBy?: InputMaybe<Vault_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
     where?: InputMaybe<Vault_Filter>;
 }>;
 export declare type GetPoolsQuery = {
@@ -764,14 +766,23 @@ export declare type GetPoolsQuery = {
     vaults: Array<{
         __typename?: 'Vault';
         id: string;
-        owner: string;
         nftAddress: string;
         tokenId: string;
-        nonce: number;
+        owner: string;
         status: number;
+        nonce: number;
         timestamp: string;
         emissionsSigned: boolean;
         size: string;
+        tickets: Array<{
+            __typename?: 'Ticket';
+            id: string;
+            tokenPurchases: Array<{
+                __typename?: 'TokenPurchase';
+                owner: string;
+                amount: string;
+            }>;
+        }>;
     }>;
 };
 export declare type GetTicketsQueryVariables = Exact<{
@@ -804,6 +815,8 @@ export declare const GetAggregatesDocument: DocumentNode<GetAggregatesQuery, Exa
 export declare const GetPoolsDocument: DocumentNode<GetPoolsQuery, Exact<{
     first: Scalars['Int'];
     skip: Scalars['Int'];
+    orderBy?: Vault_OrderBy | null | undefined;
+    orderDirection?: OrderDirection | null | undefined;
     where?: Vault_Filter | null | undefined;
 }>>;
 export declare const GetTicketsDocument: DocumentNode<GetTicketsQuery, Exact<{

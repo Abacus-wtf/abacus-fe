@@ -1,19 +1,32 @@
-query GetPools($first: Int!, $skip: Int!, $where: Vault_filter) {
+query GetPools(
+    $first: Int!
+    $skip: Int!
+    $orderBy: Vault_orderBy = timestamp
+    $orderDirection: OrderDirection = desc
+    $where: Vault_filter
+  ) {
     vaults(
       first: $first
-      orderBy: timestamp
-      orderDirection: desc
+      orderBy: $orderBy
+      orderDirection: $orderDirection
       skip: $skip
       where: $where
     ) {
       id
-    	owner
       nftAddress
-    	tokenId
-    	nonce
-    	status
-    	timestamp
+      tokenId
+      owner
+      status
+      nonce
+      timestamp
     	emissionsSigned
       size
+      tickets {
+        id
+        tokenPurchases {
+          owner
+          amount
+        }
+      }
     }
   }

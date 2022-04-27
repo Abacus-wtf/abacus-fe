@@ -10,6 +10,9 @@ import {
   InfoBarItem,
   InfoBarTitle,
 } from "@components/index"
+import { useAggregate, useGetAggregate } from "@state/application/hooks"
+import { formatEther } from "ethers/lib/utils"
+import { BigNumber } from "ethers"
 import { Container } from "../../layouts/styles"
 
 const LoadingContainer = styled.div`
@@ -45,6 +48,12 @@ const PoolGrid = styled.div`
 const Home: React.FC = () => {
   const setPools = useSetPools()
   const pools = useGetPools()
+  const aggregate = useAggregate()
+  const getAggregate = useGetAggregate()
+
+  useEffect(() => {
+    getAggregate()
+  }, [getAggregate])
 
   useEffect(() => {
     setPools(null)
@@ -57,20 +66,24 @@ const Home: React.FC = () => {
       </LoadingContainer>
     )
   }
+
+  const TVL = aggregate
+    ? formatEther(BigNumber.from(aggregate.TVL).div(BigNumber.from("1000")))
+    : "-"
   return (
     <Container>
       <InfoBarContainer>
         <InfoBarItem>
           <InfoBarTitle>Active Spot Pools</InfoBarTitle>
-          <InfoBarContent>1234</InfoBarContent>
+          <InfoBarContent>{aggregate?.totalPools ?? "-"}</InfoBarContent>
         </InfoBarItem>
         <InfoBarItem>
           <InfoBarTitle>Amount in Pools</InfoBarTitle>
-          <InfoBarContent>121,324,343.34 ETH</InfoBarContent>
+          <InfoBarContent>{TVL}ETH</InfoBarContent>
         </InfoBarItem>
         <InfoBarItem>
           <InfoBarTitle>Total Participants</InfoBarTitle>
-          <InfoBarContent>121,324</InfoBarContent>
+          <InfoBarContent>{aggregate?.totalParticipants ?? "-"}</InfoBarContent>
         </InfoBarItem>
       </InfoBarContainer>
       <ExploreFilters page={0} />

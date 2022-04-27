@@ -169,6 +169,7 @@ export declare enum OrderDirection {
 export declare type Participant = {
     __typename?: 'Participant';
     id: Scalars['ID'];
+    vaults: Array<Scalars['ID']>;
 };
 export declare type Participant_Filter = {
     /** Filter for the block changed event. */
@@ -181,9 +182,16 @@ export declare type Participant_Filter = {
     id_lte?: InputMaybe<Scalars['ID']>;
     id_not?: InputMaybe<Scalars['ID']>;
     id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+    vaults?: InputMaybe<Array<Scalars['ID']>>;
+    vaults_contains?: InputMaybe<Array<Scalars['ID']>>;
+    vaults_contains_nocase?: InputMaybe<Array<Scalars['ID']>>;
+    vaults_not?: InputMaybe<Array<Scalars['ID']>>;
+    vaults_not_contains?: InputMaybe<Array<Scalars['ID']>>;
+    vaults_not_contains_nocase?: InputMaybe<Array<Scalars['ID']>>;
 };
 export declare enum Participant_OrderBy {
-    Id = "id"
+    Id = "id",
+    Vaults = "vaults"
 }
 export declare type Query = {
     __typename?: 'Query';
@@ -614,6 +622,7 @@ export declare type Vault = {
     tickets: Array<Ticket>;
     timestamp: Scalars['BigInt'];
     tokenId: Scalars['BigInt'];
+    totalParticipants: Scalars['Int'];
 };
 export declare type VaultTicketsArgs = {
     first?: InputMaybe<Scalars['Int']>;
@@ -699,6 +708,14 @@ export declare type Vault_Filter = {
     tokenId_lte?: InputMaybe<Scalars['BigInt']>;
     tokenId_not?: InputMaybe<Scalars['BigInt']>;
     tokenId_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    totalParticipants?: InputMaybe<Scalars['Int']>;
+    totalParticipants_gt?: InputMaybe<Scalars['Int']>;
+    totalParticipants_gte?: InputMaybe<Scalars['Int']>;
+    totalParticipants_in?: InputMaybe<Array<Scalars['Int']>>;
+    totalParticipants_lt?: InputMaybe<Scalars['Int']>;
+    totalParticipants_lte?: InputMaybe<Scalars['Int']>;
+    totalParticipants_not?: InputMaybe<Scalars['Int']>;
+    totalParticipants_not_in?: InputMaybe<Array<Scalars['Int']>>;
 };
 export declare enum Vault_OrderBy {
     EmissionsSigned = "emissionsSigned",
@@ -710,7 +727,8 @@ export declare enum Vault_OrderBy {
     Status = "status",
     Tickets = "tickets",
     Timestamp = "timestamp",
-    TokenId = "tokenId"
+    TokenId = "tokenId",
+    TotalParticipants = "totalParticipants"
 }
 export declare type _Block_ = {
     __typename?: '_Block_';
@@ -774,6 +792,7 @@ export declare type GetPoolsQuery = {
         timestamp: string;
         emissionsSigned: boolean;
         size: string;
+        totalParticipants: number;
         tickets: Array<{
             __typename?: 'Ticket';
             id: string;

@@ -21,6 +21,7 @@ query GetPools(
       timestamp
     	emissionsSigned
       size
+      totalParticipants
       tickets {
         id
         tokenPurchases {

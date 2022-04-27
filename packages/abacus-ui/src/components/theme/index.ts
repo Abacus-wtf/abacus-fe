@@ -30,6 +30,8 @@ const defaultTheme = {
       gray: "#CCCCCC",
       black: "#000000",
       brown: "#964B00",
+      lightBlue: "#F3FCFF",
+      lightGreen: "#DDFFF1",
     },
   },
   layout: {
@@ -37,8 +39,7 @@ const defaultTheme = {
   },
   borderRadius: {
     main: "10px",
-    section: "26px",
-    progressBar: "24px",
+    section: "24px",
   },
   boxShadow: {
     button: "0px 5px 60px rgba(0, 0, 0, 0.1)",

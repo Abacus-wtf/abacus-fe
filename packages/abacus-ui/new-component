@@ -32,14 +32,16 @@ echo "export { default as ${COMPONENT} } from \"./${COMPONENT}\";" > "$DIRECTORY
 echo "import React, { FunctionComponent } from \"react\";
 import styled from \"styled-components\";
 
-type ${COMPONENT}Props = {};
+type ${COMPONENT}Props = {
+  className?: string;
+};
 
 // You probably want to change this to something semantic or abandon it all together
 const Container = styled.div``;
 
-const ${COMPONENT}: FunctionComponent<${COMPONENT}Props> = ({}) => {
+const ${COMPONENT}: FunctionComponent<${COMPONENT}Props> = ({ className }) => {
   return (
-    <Container>
+    <Container className={className}>
     </Container>
   );
 };

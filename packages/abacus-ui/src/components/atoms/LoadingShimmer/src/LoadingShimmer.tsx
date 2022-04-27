@@ -25,6 +25,7 @@ const LoadingShimmer = styled.div`
   background-size: 300% 100%;
   border-radius: ${({ theme }) => theme.borderRadius.section};
   min-height: 16px;
+  height: 100%;
   font-size: inherit;
   line-height: inherit;
   font-weight: inherit;

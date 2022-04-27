@@ -9,3 +9,4 @@ export { default as Close } from "./Close";
 export { default as Lock } from "./Lock";
 export { default as ChevronLeft } from "./ChevronLeft";
 export { default as Checkmark } from "./Checkmark";
+export * from "./Social";

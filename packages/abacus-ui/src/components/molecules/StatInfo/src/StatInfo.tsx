@@ -11,15 +11,16 @@ const Container = styled.div`
 `;
 
 const StatText = styled.div`
-  ${Font("tena", "Bluu Next")};
-  color: ${({ theme }) => theme.colors.core.white};
+  ${Font("yotta", "Bluu Next")};
+  color: ${({ theme }) => theme.colors.core.primary};
   text-align: center;
   display: flex;
   justify-content: center;
 `;
 
 const Title = styled(Mega)`
-  color: ${({ theme }) => theme.colors.core.lightWhite};
+  color: ${({ theme }) => theme.colors.core[900]};
+  font-size: 22px;
   text-align: center;
 `;
 

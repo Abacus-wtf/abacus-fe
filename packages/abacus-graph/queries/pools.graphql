@@ -1,0 +1,19 @@
+query GetPools($first: Int!, $skip: Int!, $where: Vault_filter) {
+    vaults(
+      first: $first
+      orderBy: timestamp
+      orderDirection: desc
+      skip: $skip
+      where: $where
+    ) {
+      id
+    	owner
+      nftAddress
+    	tokenId
+    	nonce
+    	status
+    	timestamp
+    	emissionsSigned
+      size
+    }
+  }

@@ -1,0 +1,8 @@
+query GetAggregates {
+  aggregate(id: "MEDICI_RULES") {
+    id
+    totalPools
+    TVL
+    totalParticipants
+  }
+}

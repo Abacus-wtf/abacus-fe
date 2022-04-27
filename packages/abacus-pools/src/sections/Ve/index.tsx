@@ -17,10 +17,10 @@ import {
 import _ from "lodash"
 import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import { formatEther, parseEther } from "ethers/lib/utils"
-import { Stat } from "@sections/Pool/CurrentState/CurrentState.styles"
+// import { Stat } from "@sections/Pool/CurrentState/CurrentState.styles"
 import { BigNumber } from "@ethersproject/bignumber"
 import moment from "moment"
-import { SplitContainer, ButtonContainer } from "@sections/Pool/Pool.styles"
+// import { SplitContainer, ButtonContainer } from "@sections/Pool/Pool.styles"
 import Button from "@components/Button"
 import {
   useOnAddAutoAllocation,
@@ -35,12 +35,12 @@ import {
 } from "@hooks/veFunc"
 import styled from "styled-components"
 import { InputWithTitle, InputWithTitleAndButton } from "@components/Input"
-import {
-  InfoSectionContainer,
-  InputContainer,
-  BORDER,
-} from "@sections/Pool/CurrentState/AMM.styles"
-import { DatePickerStyled } from "@sections/Pool/CurrentState/AMM"
+// import {
+//   InfoSectionContainer,
+//   InputContainer,
+//   BORDER,
+// } from "@sections/Pool/CurrentState/AMM.styles"
+// import { DatePickerStyled } from "@sections/Pool/CurrentState/AMM"
 import { DropdownMenuStyled } from "../Claim/index"
 import ABC_EPOCH_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
 import VE_ABC_ABI from "../../config/contracts/VE_ABC_TOKEN_ABI.json"
@@ -252,7 +252,7 @@ const Ve: React.FC = () => {
 
   return (
     <UniversalContainer style={{ gridGap: 30, alignItems: "center" }}>
-      <Modal
+      {/* <Modal
         size="md"
         open={openModal}
         toggle={() => setOpenModal(!openModal)}
@@ -528,7 +528,7 @@ const Ve: React.FC = () => {
             </FullWidthButton>
           </ButtonContainer>
         </Card>
-      </StyledSplitContainer>
+      </StyledSplitContainer> */}
     </UniversalContainer>
   )
 }

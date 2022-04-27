@@ -1,5 +1,5 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import Button from "@components/Button"
 import { NumericalInput } from "@components/Input"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
@@ -54,16 +54,16 @@ const AMM = (props: AMMProps) => {
   const { onPurchaseIndividualTicket, isPending: isPendingIndividual } =
     useOnPurchaseIndividualTicket()
 
-  const getBalance = async () => {
+  const getBalance = useCallback(async () => {
     const balance = await library.getBalance(account)
     setEthBalance(parseFloat(formatEther(balance)))
-  }
+  }, [account, library])
 
   useEffect(() => {
-    if (ethBalance === null && !account && library) {
+    if (ethBalance === null && account && library) {
       getBalance()
     }
-  }, [account, ethBalance, library, networkSymbol])
+  }, [account, ethBalance, getBalance, library, networkSymbol])
 
   const handleButtonClick = async () => {
     if (props.currentTicket) {

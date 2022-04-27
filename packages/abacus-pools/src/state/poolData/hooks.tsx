@@ -47,6 +47,7 @@ const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
       address: session.nftAddress,
       tokenId: session.tokenId,
       vaultAddress: session.id,
+      emissionsStarted: session.emissionsSigned,
     }
   })
   return poolData

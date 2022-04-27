@@ -6,6 +6,7 @@ import { OutboundLink } from "gatsby-plugin-google-gtag"
 import { useGetPoolData, useSetPoolData } from "@state/singlePoolData/hooks"
 import { useActiveWeb3React } from "@hooks/index"
 import { PoolStatus } from "@state/poolData/reducer"
+import { EmissionsIndicator } from "@components/EmissionsIndicator"
 import {
   SplitContainer,
   VerticalContainer,
@@ -71,6 +72,11 @@ const Pool = ({ location }) => {
         <VerticalContainer>
           {!poolData.auction ? (
             <>
+              <EmissionsIndicator started={poolData.emissionsStarted} disabled>
+                {poolData.emissionsStarted
+                  ? "Emissions Started"
+                  : "Emissions Not Started"}
+              </EmissionsIndicator>
               <ButtonContainer>
                 <Tab
                   disabled={page === Page.Main}

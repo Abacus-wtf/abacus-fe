@@ -6,19 +6,20 @@ import { GRAPHQL_ENDPOINT } from "@config/constants"
 import { openseaGetMany, OpenSeaGetResponse } from "@config/utils"
 import _ from "lodash"
 import { useActiveWeb3React } from "@hooks/index"
+import {
+  GetPoolsDocument,
+  GetPoolsQuery,
+  GetPoolsQueryVariables,
+  OrderDirection,
+  Vault_OrderBy,
+} from "abacus-graph"
 import { getPools, getMyPools } from "./actions"
 import { Pool, PoolStatus } from "./reducer"
-import {
-  GetVaultQueryResponse,
-  GetVaultVariables,
-  GET_VAULTS,
-  SubgraphVault,
-} from "./queries"
 import { PAGINATE_BY } from "./constants"
 
 const findAsset = (
   assets: OpenSeaGetResponse["assets"],
-  vault: SubgraphVault
+  vault: GetPoolsQuery["vaults"][number]
 ) => {
   const ret = assets.find(
     (asset) =>
@@ -28,7 +29,7 @@ const findAsset = (
   return ret
 }
 
-const parseSubgraphVaults = async (vaults: SubgraphVault[]) => {
+const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
   const { assets } = await openseaGetMany(vaults)
   const poolData: Pool[] = _.map(vaults, (session) => {
     const asset = findAsset(assets, session)
@@ -55,18 +56,22 @@ export const useSetPools = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   return useCallback(
-    async (where: string | null, orderBy?: string, orderDirection?: string) => {
+    async (
+      where: string | null,
+      orderBy?: Vault_OrderBy,
+      orderDirection?: OrderDirection
+    ) => {
       // @TODO: Fix for multipage
-      const variables: GetVaultVariables = {
+      const variables: GetPoolsQueryVariables = {
         first: PAGINATE_BY,
         skip: 0 * PAGINATE_BY,
-        orderBy: orderBy || "timestamp",
-        orderDirection: orderDirection || "desc",
+        orderBy: orderBy || Vault_OrderBy.Timestamp,
+        orderDirection: orderDirection || OrderDirection.Desc,
       }
 
-      const { vaults } = await request<GetVaultQueryResponse>(
+      const { vaults } = await request<GetPoolsQuery>(
         GRAPHQL_ENDPOINT,
-        GET_VAULTS,
+        GetPoolsDocument,
         variables
       )
       const pools = await parseSubgraphVaults(vaults)
@@ -83,17 +88,17 @@ export const useSetMyPools = () => {
 
   return useCallback(async () => {
     if (!account) return
-    const variables: GetVaultVariables = {
+    const variables: GetPoolsQueryVariables = {
       first: PAGINATE_BY,
       skip: 0 * PAGINATE_BY,
-      orderBy: "timestamp",
-      orderDirection: "desc",
-      where: `{ owner: "${account.toLowerCase()}" }`,
+      orderBy: Vault_OrderBy.Timestamp,
+      orderDirection: OrderDirection.Desc,
+      where: { owner: account.toLowerCase() },
     }
 
-    const { vaults } = await request<GetVaultQueryResponse>(
+    const { vaults } = await request<GetPoolsQuery>(
       GRAPHQL_ENDPOINT,
-      GET_VAULTS,
+      GetPoolsDocument,
       variables
     )
     const pools = await parseSubgraphVaults(vaults)

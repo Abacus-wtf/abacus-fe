@@ -1,12 +1,14 @@
 import { createReducer } from "@reduxjs/toolkit"
 import { NetworkSymbolEnum } from "@config/constants"
 import { ReactNode } from "react"
+import { Aggregate } from "abacus-graph"
 import {
   toggleWalletModal,
   selectNetwork,
   setGeneralizedContractErrorMessage,
   setEthToUSD,
   setAbcBalance,
+  setAggregate,
 } from "./actions"
 
 export type GeneralizedContractState = {
@@ -18,6 +20,7 @@ interface ApplicationState {
   generalizedContract: GeneralizedContractState
   ethToUSD: number
   abcBalance: number
+  aggregate: Aggregate | null
 }
 
 export const initialState: ApplicationState = {
@@ -28,6 +31,7 @@ export const initialState: ApplicationState = {
   },
   ethToUSD: null,
   abcBalance: null,
+  aggregate: null,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -46,5 +50,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(setAbcBalance, (state, action) => {
       state.abcBalance = action.payload
+    })
+    .addCase(setAggregate, (state, action) => {
+      state.aggregate = action.payload
     })
 )

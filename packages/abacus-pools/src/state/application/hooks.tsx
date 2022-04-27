@@ -1,11 +1,17 @@
 import { useCallback } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { ABC_TOKEN, NetworkSymbolEnum } from "@config/constants"
+import {
+  ABC_TOKEN,
+  GRAPHQL_ENDPOINT,
+  NetworkSymbolEnum,
+} from "@config/constants"
 import axios from "axios"
 import { getContract } from "@config/utils"
 import ABC_TOKEN_ABI from "@config/contracts/ABC_TOKEN_ABI.json"
 import { useActiveWeb3React } from "@hooks/index"
 import { formatEther } from "ethers/lib/utils"
+import request from "graphql-request"
+import { GetAggregatesDocument, GetAggregatesQuery } from "abacus-graph"
 import { AppDispatch, AppState } from "../index"
 import {
   toggleWalletModal,
@@ -13,9 +19,11 @@ import {
   setEthToUSD,
   setAbcBalance,
   setGeneralizedContractErrorMessage,
+  setAggregate,
 } from "./actions"
 import {
   abcBalanceSelector,
+  aggregateSelector,
   ethToUSDCalculationSelector,
   generalizedContractErrorMessageSelector,
   networkSymbolSelector,
@@ -118,7 +126,22 @@ export const useGetAbcBalance = () => {
   }, [account, dispatch, library, chainId])
 }
 
-export const useAbcBalance = () =>
-  useSelector<AppState, AppState["application"]["abcBalance"]>(
-    abcBalanceSelector
-  )
+export const useAbcBalance = () => useSelector(abcBalanceSelector)
+
+export const useGetAggregate = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(async () => {
+    try {
+      const { aggregate } = await request<GetAggregatesQuery>(
+        GRAPHQL_ENDPOINT,
+        GetAggregatesDocument
+      )
+      dispatch(setAggregate(aggregate))
+    } catch {
+      console.log("Unable to fetch Aggregate data")
+    }
+  }, [dispatch])
+}
+
+export const useAggregate = () => useSelector(aggregateSelector)

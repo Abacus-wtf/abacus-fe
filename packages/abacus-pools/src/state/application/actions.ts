@@ -1,5 +1,6 @@
 import { NetworkSymbolEnum } from "@config/constants"
 import { createAction } from "@reduxjs/toolkit"
+import { Aggregate } from "abacus-graph"
 import { GeneralizedContractState } from "./reducer"
 
 export const toggleWalletModal = createAction<boolean>(
@@ -13,3 +14,4 @@ export const setGeneralizedContractErrorMessage = createAction<
 >("application/generalizedContract/errorMessage")
 export const setEthToUSD = createAction<number>("application/ethToUSD")
 export const setAbcBalance = createAction<number>("application/abcBalance")
+export const setAggregate = createAction<Aggregate>("application/aggregate")

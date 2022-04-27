@@ -2,13 +2,10 @@ import { createSelector } from "@reduxjs/toolkit"
 import { AppState } from "@state/index"
 import { round2Decimals } from "@utils"
 
-export const networkSymbolSelector = (
-  state: AppState
-): AppState["application"]["networkSymbol"] => state.application.networkSymbol
+export const networkSymbolSelector = (state: AppState) =>
+  state.application.networkSymbol
 
-export const generalizedContractErrorMessageSelector = (
-  state: AppState
-): AppState["application"]["generalizedContract"]["errorMessage"] =>
+export const generalizedContractErrorMessageSelector = (state: AppState) =>
   state.application.generalizedContract.errorMessage
 
 export const ethToUSDCalculationSelector = createSelector(
@@ -20,6 +17,8 @@ export const ethToUSDCalculationSelector = createSelector(
   }
 )
 
-export const abcBalanceSelector = (
-  state: AppState
-): AppState["application"]["abcBalance"] => state.application.abcBalance
+export const abcBalanceSelector = (state: AppState) =>
+  state.application.abcBalance
+
+export const aggregateSelector = (state: AppState) =>
+  state.application.aggregate

@@ -95,8 +95,8 @@ const Home: React.FC = () => {
             link={`/pool?address=${pool.address}&tokenId=${pool.tokenId}&nonce=${pool.nonce}`}
             imgSrc={pool.img}
             title={pool.nftName}
-            participants={45}
-            poolSize={Number(pool.tokensLocked)}
+            participants={pool.totalParticipants}
+            poolSize={formatEther(pool.size.div(BigNumber.from("1000")))}
             variation={3.2 * (index % 2 === 0 ? -1 : 1)}
           />
         ))}

@@ -13,6 +13,7 @@ import {
   OrderDirection,
   Vault_OrderBy,
 } from "abacus-graph"
+import { BigNumber } from "ethers"
 import { getPools, getMyPools } from "./actions"
 import { Pool, PoolStatus } from "./reducer"
 import { PAGINATE_BY } from "./constants"
@@ -31,23 +32,25 @@ const findAsset = (
 
 const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
   const { assets } = await openseaGetMany(vaults)
-  const poolData: Pool[] = _.map(vaults, (session) => {
-    const asset = findAsset(assets, session)
+  const poolData: Pool[] = _.map(vaults, (vault) => {
+    const asset = findAsset(assets, vault)
     return {
       img: (asset?.image_preview_url || asset?.image_url) ?? "",
-      nonce: session.nonce || 0,
+      nonce: vault.nonce || 0,
       state:
-        session.status === 0
+        vault.status === 0
           ? PoolStatus.Normal
-          : session.status === 1
+          : vault.status === 1
           ? PoolStatus.Auction
           : PoolStatus.Closed,
       collectionTitle: asset?.asset_contract.name ?? "",
       nftName: asset?.name ?? "",
-      address: session.nftAddress,
-      tokenId: session.tokenId,
-      vaultAddress: session.id,
-      emissionsStarted: session.emissionsSigned,
+      address: vault.nftAddress,
+      tokenId: vault.tokenId,
+      vaultAddress: vault.id,
+      emissionsStarted: vault.emissionsSigned,
+      size: BigNumber.from(vault.size),
+      totalParticipants: vault.totalParticipants,
     }
   })
   return poolData

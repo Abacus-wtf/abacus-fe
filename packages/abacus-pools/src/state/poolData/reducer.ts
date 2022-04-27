@@ -1,4 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit"
+import { BigNumber } from "ethers"
 import { getPools, getMyPools } from "./actions"
 
 export interface NFT {
@@ -56,6 +57,8 @@ export interface Pool extends NFT {
   auction?: Auction
   approved?: boolean
   approvedBribeFactory?: boolean
+  size: BigNumber
+  totalParticipants: number
 }
 
 export const INITIAL_POOL: Pool = {
@@ -66,6 +69,8 @@ export const INITIAL_POOL: Pool = {
   nonce: -1,
   tokenId: "",
   state: PoolStatus.Normal,
+  size: BigNumber.from("0"),
+  totalParticipants: 0,
 }
 
 interface PoolState {

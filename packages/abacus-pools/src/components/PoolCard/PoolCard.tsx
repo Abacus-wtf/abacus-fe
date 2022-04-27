@@ -82,7 +82,7 @@ const Variation = styled.div<{ variation: number }>`
 type PoolCardProps = {
   title: string
   imgSrc: string
-  poolSize: number
+  poolSize: string
   variation: number
   participants: number
   link: string
@@ -106,7 +106,7 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
         <Kilo>Pool Name</Kilo>
       </CardInfo>
       <CardInfo>
-        <CardInfoContent>{poolSize}</CardInfoContent>
+        <CardInfoContent>{poolSize}ETH</CardInfoContent>
         <Kilo>Pool Size</Kilo>
       </CardInfo>
     </CardInfoRow>

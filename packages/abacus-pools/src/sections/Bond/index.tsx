@@ -40,11 +40,10 @@ const Bond: React.FC = () => {
   const [epoch, setEpoch] = useState(0)
   const networkSymbol = useGetCurrentNetwork()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getBalance = async () => {
+  const getBalance = useCallback(async () => {
     const balance = await library.getBalance(account)
     setEthBalance(parseFloat(formatEther(balance)))
-  }
+  }, [account, library])
 
   const getCreditData = useCallback(async () => {
     const [[creditStored, currentEpoch], [balance]] = await Promise.all([

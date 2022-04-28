@@ -60,11 +60,7 @@ export const useSetPools = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   return useCallback(
-    async (
-      where: string | null,
-      orderBy?: Vault_OrderBy,
-      orderDirection?: OrderDirection
-    ) => {
+    async (orderBy?: Vault_OrderBy, orderDirection?: OrderDirection) => {
       // @TODO: Fix for multipage
       const variables: GetPoolsQueryVariables = {
         first: PAGINATE_BY,

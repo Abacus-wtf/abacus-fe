@@ -56,7 +56,7 @@ const Home: React.FC = () => {
   }, [getAggregate])
 
   useEffect(() => {
-    setPools(null)
+    setPools()
   }, [setPools])
 
   if (!pools) {

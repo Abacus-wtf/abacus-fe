@@ -23,25 +23,31 @@ const TokenLockHistoryChart = ({
   data,
   showYAxis = false,
   className,
-}: TokenLockHistoryChartProps) => (
-  <Container className={className}>
-    <ResponsiveContainer width="100%" height="100%">
-      <BarChart data={data}>
-        {showYAxis && (
-          <YAxis
-            axisLine={false}
-            tickLine={false}
-            domain={[0, "dataMax"]}
-            tickCount={16}
-          />
-        )}
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore */}
-        <Tooltip content={<CustomTooltip />} />
-        <Bar dataKey="uv" fill="#C5D5FF" radius={2} width="4px" />
-      </BarChart>
-    </ResponsiveContainer>
-  </Container>
-)
+}: TokenLockHistoryChartProps) => {
+  const hasData = data.some((value) => value.uv > 0)
+  if (!hasData) {
+    return <Container>No purchases in the last 4 weeks</Container>
+  }
+  return (
+    <Container className={className}>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data}>
+          {showYAxis && (
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              domain={[0, "dataMax"]}
+              tickCount={16}
+            />
+          )}
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          <Tooltip content={<CustomTooltip />} />
+          <Bar dataKey="uv" fill="#C5D5FF" radius={2} width="4px" />
+        </BarChart>
+      </ResponsiveContainer>
+    </Container>
+  )
+}
 
 export { TokenLockHistoryChart }

@@ -17,6 +17,7 @@ import { BigNumber } from "ethers"
 import { getPools, getMyPools } from "./actions"
 import { Pool, PoolStatus } from "./reducer"
 import { PAGINATE_BY } from "./constants"
+import { tokenLockHistorySelector } from "./selectors"
 
 const findAsset = (
   assets: OpenSeaGetResponse["assets"],
@@ -51,6 +52,7 @@ const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
       emissionsStarted: vault.emissionsSigned,
       size: BigNumber.from(vault.size),
       totalParticipants: vault.totalParticipants,
+      tickets: vault.tickets,
     }
   })
   return poolData
@@ -117,3 +119,8 @@ const getMyPoolsSelector = (state: AppState): AppState["poolData"]["myPools"] =>
 
 export const useGetMyPools = () =>
   useSelector<AppState, AppState["poolData"]["myPools"]>(getMyPoolsSelector)
+
+export const useTokenLockHistory = (vaultId: string) =>
+  useSelector<AppState, { uv: number; date: number }[]>((state) =>
+    tokenLockHistorySelector(state, vaultId)
+  )

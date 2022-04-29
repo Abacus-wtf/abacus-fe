@@ -3,6 +3,7 @@ import styled, { css } from "styled-components"
 import { Section, Kilo, Mega } from "abacus-ui"
 import { Link } from "gatsby"
 import { useTokenLockHistory } from "@state/poolData/hooks"
+import { calculateVariance } from "utils/stats"
 import { TokenLockHistoryChart } from "../TokenLockHistoryChart"
 import { NFTImage } from "../NFTImage"
 
@@ -95,7 +96,6 @@ type PoolCardProps = {
   title: string
   imgSrc: string
   poolSize: string
-  variation: number
   participants: number
   link: string
   vaultId: string
@@ -105,12 +105,21 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
   imgSrc,
   title,
   poolSize,
-  variation,
   participants,
   link,
   vaultId,
 }) => {
-  const data = useTokenLockHistory(vaultId)
+  const tokenLockHistory = useTokenLockHistory(vaultId)
+  const lockHistoryValues: number[] =
+    tokenLockHistory
+      ?.map((lockedValues) => lockedValues.uv)
+      .slice(tokenLockHistory.length - 7) ?? []
+  const variation = parseFloat(
+    calculateVariance(lockHistoryValues).toLocaleString("en-US", {
+      maximumSignificantDigits: 2,
+      minimumSignificantDigits: 2,
+    })
+  )
   return (
     <StyledSection>
       <NFTImage src={imgSrc} />
@@ -142,7 +151,7 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
           <Kilo>Participants</Kilo>
         </CardInfo>
       </CardInfoRow>
-      <StyledTokenLockHistoryChart data={data} showYAxis />
+      <StyledTokenLockHistoryChart data={tokenLockHistory} showYAxis />
     </StyledSection>
   )
 }

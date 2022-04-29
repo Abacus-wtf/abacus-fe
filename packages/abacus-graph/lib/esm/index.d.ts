@@ -796,10 +796,17 @@ export declare type GetPoolsQuery = {
         tickets: Array<{
             __typename?: 'Ticket';
             id: string;
+            ticketNumber: string;
+            vaultAddress: string;
+            tokenPurchasesLength: number;
             tokenPurchases: Array<{
                 __typename?: 'TokenPurchase';
-                owner: string;
                 amount: string;
+                id: string;
+                length: string;
+                owner: string;
+                soldAt?: string | null;
+                timestamp: string;
             }>;
         }>;
     }>;

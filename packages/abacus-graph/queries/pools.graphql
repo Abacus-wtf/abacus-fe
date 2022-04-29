@@ -24,9 +24,16 @@ query GetPools(
       totalParticipants
       tickets {
         id
+        ticketNumber
+        vaultAddress
+        tokenPurchasesLength
         tokenPurchases {
-          owner
           amount
+          id
+          length
+          owner
+          soldAt
+          timestamp
         }
       }
     }

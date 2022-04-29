@@ -2,6 +2,8 @@ import React, { FunctionComponent } from "react"
 import styled, { css } from "styled-components"
 import { Section, Kilo, Mega } from "abacus-ui"
 import { Link } from "gatsby"
+import { useTokenLockHistory } from "@state/poolData/hooks"
+import { TokenLockHistoryChart } from "../TokenLockHistoryChart"
 import { NFTImage } from "../NFTImage"
 
 const StyledSection = styled(Section)`
@@ -9,6 +11,7 @@ const StyledSection = styled(Section)`
   display: flex;
   flex-direction: column;
   transition: all 0.2s ease-in-out;
+  row-gap: 24px;
 
   &:focus-within,
   &:hover {
@@ -20,6 +23,7 @@ const CardInfo = styled.div`
   display: flex;
   flex-direction: column;
   text-align: left;
+  max-width: 66%;
 `
 
 const CardInfoContent = styled(Mega)`
@@ -31,7 +35,6 @@ const CardInfoRow = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 24px;
 
   & ${CardInfo}:last-of-type {
     align-items: flex-end;
@@ -41,6 +44,11 @@ const CardInfoRow = styled.div`
 const CardTitle = styled(CardInfoContent)`
   color: ${({ theme }) => theme.colors.core.primary};
   text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  width: 100%;
 
   &:hover,
   &:focus {
@@ -79,6 +87,10 @@ const Variation = styled.div<{ variation: number }>`
       : ""}
 `
 
+const StyledTokenLockHistoryChart = styled(TokenLockHistoryChart)`
+  justify-self: flex-end;
+`
+
 type PoolCardProps = {
   title: string
   imgSrc: string
@@ -86,6 +98,7 @@ type PoolCardProps = {
   variation: number
   participants: number
   link: string
+  vaultId: string
 }
 
 const PoolCard: FunctionComponent<PoolCardProps> = ({
@@ -95,38 +108,43 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
   variation,
   participants,
   link,
-}) => (
-  <StyledSection>
-    <NFTImage src={imgSrc} />
-    <CardInfoRow>
-      <CardInfo>
-        <CardTitle as={Link} to={link}>
-          {title}
-        </CardTitle>
-        <Kilo>Pool Name</Kilo>
-      </CardInfo>
-      <CardInfo>
-        <CardInfoContent>{poolSize}ETH</CardInfoContent>
-        <Kilo>Pool Size</Kilo>
-      </CardInfo>
-    </CardInfoRow>
-    <CardInfoRow>
-      <CardInfo>
-        <CardInfoContent>
-          <Variation variation={variation}>
-            {variation > 0 ? "+" : ""}
-            {variation}
-          </Variation>
-          ETH
-        </CardInfoContent>
-        <Kilo>Pool Variation (7d)</Kilo>
-      </CardInfo>
-      <CardInfo>
-        <CardInfoContent>{participants}</CardInfoContent>
-        <Kilo>Participants</Kilo>
-      </CardInfo>
-    </CardInfoRow>
-  </StyledSection>
-)
+  vaultId,
+}) => {
+  const data = useTokenLockHistory(vaultId)
+  return (
+    <StyledSection>
+      <NFTImage src={imgSrc} />
+      <CardInfoRow>
+        <CardInfo>
+          <CardTitle as={Link} to={link}>
+            {title}
+          </CardTitle>
+          <Kilo>Pool Name</Kilo>
+        </CardInfo>
+        <CardInfo>
+          <CardInfoContent>{poolSize}ETH</CardInfoContent>
+          <Kilo>Pool Size</Kilo>
+        </CardInfo>
+      </CardInfoRow>
+      <CardInfoRow>
+        <CardInfo>
+          <CardInfoContent>
+            <Variation variation={variation}>
+              {variation > 0 ? "+" : ""}
+              {variation}
+            </Variation>
+            ETH
+          </CardInfoContent>
+          <Kilo>Pool Variation (7d)</Kilo>
+        </CardInfo>
+        <CardInfo>
+          <CardInfoContent>{participants}</CardInfoContent>
+          <Kilo>Participants</Kilo>
+        </CardInfo>
+      </CardInfoRow>
+      <StyledTokenLockHistoryChart data={data} showYAxis />
+    </StyledSection>
+  )
+}
 
 export default PoolCard

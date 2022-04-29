@@ -1,1 +1,1 @@
-export * from "./TokenLockHistoryChart"
+export { TokenLockHistoryChart } from "./TokenLockHistoryChart"

@@ -37,11 +37,11 @@ const PoolGrid = styled.div`
   grid-column-gap: 32px;
 
   ${Media.sm`
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, calc(50% - 16px));
   `}
 
-  ${Media.md`
-    grid-template-columns: repeat(3, 1fr);
+  ${Media.lg`
+    grid-template-columns: repeat(3, calc(calc(100% / 3) - calc(64px / 3)));
   `}
 `
 
@@ -98,6 +98,7 @@ const Home: React.FC = () => {
             participants={pool.totalParticipants}
             poolSize={formatEther(pool.size.div(BigNumber.from("1000")))}
             variation={3.2 * (index % 2 === 0 ? -1 : 1)}
+            vaultId={pool.vaultAddress}
           />
         ))}
       </PoolGrid>

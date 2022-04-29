@@ -1,4 +1,8 @@
-import { useGetPoolData } from "@state/singlePoolData/hooks"
+import { TokenLockHistoryChart } from "@components/TokenLockHistoryChart"
+import {
+  useGetPoolData,
+  useTokenLockHistory,
+} from "@state/singlePoolData/hooks"
 import { Section } from "abacus-ui"
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
@@ -17,12 +21,14 @@ const CurrentCurrency = styled.div`
 
 const TokenLockHistory: FunctionComponent = () => {
   const { tokenPrice, tokensLocked } = useGetPoolData()
+  const data = useTokenLockHistory()
   const tokensLockedEth = (
     Number(tokensLocked) * Number(tokenPrice)
   ).toLocaleString("en-US", {
     maximumSignificantDigits: 5,
     minimumSignificantDigits: 2,
   })
+
   return (
     <Section>
       <SectionHeader>
@@ -31,7 +37,7 @@ const TokenLockHistory: FunctionComponent = () => {
           Current: {tokensLockedEth} <CurrentCurrency>ETH</CurrentCurrency>
         </CurrentContainer>
       </SectionHeader>
-      <div style={{ height: "240px" }} />
+      <TokenLockHistoryChart data={data} />
     </Section>
   )
 }

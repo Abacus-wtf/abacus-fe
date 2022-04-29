@@ -21,7 +21,11 @@ import _ from "lodash"
 import { PAGINATE_BY } from "@state/poolData/constants"
 import request from "graphql-request"
 import { createSelector } from "@reduxjs/toolkit"
-import { SubgraphTicket } from "@models/Subgraph"
+import {
+  GetTicketsDocument,
+  GetTicketsQuery,
+  GetTicketsQueryVariables,
+} from "abacus-graph"
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"
 import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
 import { Bribe } from "./reducer"
@@ -72,7 +76,9 @@ export const useEntryLevels = () => {
         ticketNumber: ticket.ticketNumber,
         amount: ticket.tokenPurchases.reduce(
           (acc, tokenPurchase) =>
-            acc + Number.parseFloat(formatEther(tokenPurchase.amount)),
+            tokenPurchase.soldAt
+              ? 0
+              : acc + Number.parseFloat(formatEther(tokenPurchase.amount)),
           0
         ),
       })) ?? []
@@ -104,7 +110,7 @@ export const useActivity = () => {
               user: tokenPurchase.owner,
               action: "purchase",
               timestamp,
-              amount: tokenPurchase.amount,
+              amount: BigNumber.from(tokenPurchase.amount),
             }
             const sale: Activity = tokenPurchase.soldAt
               ? {
@@ -112,7 +118,7 @@ export const useActivity = () => {
                   user: tokenPurchase.owner,
                   action: "purchase",
                   timestamp,
-                  amount: tokenPurchase.amount,
+                  amount: BigNumber.from(tokenPurchase.amount),
                 }
               : null
             if (sale) {
@@ -127,6 +133,49 @@ export const useActivity = () => {
       .sort((a, b) => b.timestamp - a.timestamp)
   )
   return useSelector(activitySelector)
+}
+
+export const useTokenLockHistory = () => {
+  const past7Days = _.range(28)
+    .reverse()
+    .map((offset) => {
+      const date = new Date()
+      date.setDate(date.getDate() - offset)
+
+      return date
+    })
+  const tokenLockHistorySelector = createSelector(
+    getTicketsSelector,
+    (tickets) =>
+      past7Days.map((day) => {
+        const thisDay = day.getTime()
+        const valuation = {
+          date: thisDay,
+          uv: tickets?.reduce((acc, ticket) => {
+            if (!ticket.tokenPurchasesLength) {
+              return acc
+            }
+            const thisDayValue = ticket.tokenPurchases.reduce(
+              (value, token) => {
+                // eslint-disable-next-line no-underscore-dangle
+                const _timestamp = Number(token.timestamp) * 1000
+                // eslint-disable-next-line no-underscore-dangle
+                const _soldAt = Number(token.soldAt ?? Infinity) * 1000
+                if (_timestamp <= thisDay && _soldAt > thisDay) {
+                  return value.add(BigNumber.from(token.amount))
+                }
+                return value
+              },
+              BigNumber.from("0")
+            )
+            return acc + Number(formatEther(thisDayValue)) / 1000
+          }, 0),
+        }
+        return valuation
+      })
+  )
+
+  return useSelector(tokenLockHistorySelector)
 }
 
 export const useGetBribeData = () => {
@@ -219,33 +268,33 @@ export const useGetTickets = () => {
 
   return useCallback(async () => {
     if (poolData.vaultAddress === undefined) return
-    const variables: GetTicketVariables = {
+    const variables: GetTicketsQueryVariables = {
       first: PAGINATE_BY,
       skip: 0 * PAGINATE_BY,
       where: { vaultAddress: poolData.vaultAddress.toLowerCase() },
     }
 
-    const { tickets } = await request<GetTicketQueryResponse>(
+    const { tickets } = await request<GetTicketsQuery>(
       GRAPHQL_ENDPOINT,
-      GET_TICKETS,
+      GetTicketsDocument,
       variables
     )
 
-    const ticketsReturned: SubgraphTicket[] = _.map(_.range(0, 50), (i) => {
+    const ticketsReturned = _.map(_.range(0, 50), (i) => {
       const ticket = tickets.find((ticket) => Number(ticket.ticketNumber) === i)
+
       if (!ticket) {
         return {
           id: "",
-          vaultAddress: poolData.vaultAddress,
+          vaultAddress: poolData.vaultAddress ?? "",
           tokenPurchasesLength: 0,
-          ticketNumber: i,
+          ticketNumber: String(i),
           tokenPurchases: [],
         }
       }
 
       return {
         ...ticket,
-        ticketNumber: i,
       }
     })
     dispatch(getTickets(ticketsReturned))
@@ -262,7 +311,7 @@ export const useSetPoolData = () => {
 
   return useCallback(
     async (address: string, tokenId: string, nonce: number) => {
-      const variables: GetTicketVariables = {
+      const variables: GetTicketsQueryVariables = {
         first: PAGINATE_BY,
         skip: 0 * PAGINATE_BY,
         where: null,
@@ -308,9 +357,9 @@ export const useSetPoolData = () => {
               .methods.isApprovedForAll(account, ABC_BRIBE_FACTORY)
               .call(),
             erc721(address).methods.ownerOf(tokenId).call(),
-            request<GetTicketQueryResponse>(
+            request<GetTicketsQuery>(
               GRAPHQL_ENDPOINT,
-              GET_TICKETS,
+              GetTicketsDocument,
               variables
             ),
           ])
@@ -433,6 +482,8 @@ export const useSetPoolData = () => {
                 asset.owner.address
               }`
             : "",
+          size: BigNumber.from("0"), // TODO: This data needs to come from subgraph
+          totalParticipants: 0,
         }
         dispatch(getPoolData(pool))
       } catch (e) {

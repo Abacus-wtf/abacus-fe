@@ -55,6 +55,46 @@ export const useOnExitPool = () => {
   }
 }
 
+export const useOnCollectEmissions = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+
+  const onCollectEmissions = useCallback(
+    async (vaultAddress: string, cb: () => void) => {
+      const vaultContract = getContract(
+        vaultAddress,
+        VAULT_ABI,
+        library,
+        account
+      )
+      const method = vaultContract.claimOwnersReward
+      const estimate = vaultContract.estimateGas.claimOwnersReward
+      const args = []
+      const value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Collect Emissions",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [library, account, generalizedContractCall, addTransaction]
+  )
+  return {
+    onCollectEmissions,
+    isPending,
+  }
+}
+
 export const useOnApproveTransfer = () => {
   const { account, library } = useActiveWeb3React()
   const { generalizedContractCall, isPending } = useGeneralizedContractCall()

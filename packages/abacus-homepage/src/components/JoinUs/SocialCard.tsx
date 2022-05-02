@@ -1,4 +1,4 @@
-import { Exa, Mega, VisuallyHidden } from "abacus-ui"
+import { Button, Font, ButtonType, OutboundLink } from "abacus-ui"
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 
@@ -9,10 +9,9 @@ const Container = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.section};
   background-color: ${({ theme }) => theme.colors.utility.white};
   padding: 16px;
-  padding-bottom: 100px;
   flex: 0 1 auto;
   width: 100%;
-  column-gap: 8px;
+  row-gap: 16px;
   position: relative;
 `
 
@@ -29,6 +28,17 @@ const IconContainer = styled.a`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+`
+
+const Title = styled(Button)`
+  ${Font("kilo")}
+  /* font-size: 22px; */
+  color: ${({ theme }) => theme.colors.core[900]};
+  padding: 13px 20px;
+  border-radius: 80px;
+  display: flex;
+  column-gap: 12px;
+  align-items: center;
 
   &::after {
     content: "";
@@ -47,38 +57,29 @@ const IconContainer = styled.a`
   }
 `
 
-const Statistic = styled(Exa)`
-  font-size: 40px;
-  font-weight: bold;
-`
-
-const Title = styled(Mega)`
-  /* font-size: 22px; */
-  color: ${({ theme }) => theme.colors.core[900]};
-`
-
 export type SocialCardProps = {
   icon: React.ReactNode
-  statistic: string
   title: string
   link: string
-  linkDescription: string
 }
 
 const SocialCard: FunctionComponent<SocialCardProps> = ({
   icon,
-  statistic,
   title,
   link,
-  linkDescription,
 }) => (
   <Container>
-    <IconContainer href={link}>
-      {icon}
-      <VisuallyHidden>{linkDescription}</VisuallyHidden>
-    </IconContainer>
-    <Statistic>{statistic}</Statistic>
-    <Title>{title}</Title>
+    <IconContainer>{icon}</IconContainer>
+    <Title
+      href={link}
+      as="a"
+      target="_blank"
+      rel="noopener noreferrer"
+      buttonType={ButtonType.Gray}
+    >
+      {title}
+      <OutboundLink />
+    </Title>
   </Container>
 )
 

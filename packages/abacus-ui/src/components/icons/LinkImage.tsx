@@ -4,6 +4,10 @@ type LinkImageProps = {
   stroke?: string;
 };
 
+/**
+ * @deprecated
+ * @description This icon has been deprecated in favour of OutboundLink
+ */
 const LinkImage: FunctionComponent<LinkImageProps> = ({
   stroke = "#1C2333",
 }) => (

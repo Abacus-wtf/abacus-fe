@@ -692,6 +692,10 @@ var Extras = function (_a) {
         React__default["default"].createElement("circle", { cx: "19", cy: "12", r: "2", fill: fill })));
 };
 
+/**
+ * @deprecated
+ * @description This icon has been deprecated in favour of OutboundLink
+ */
 var LinkImage = function (_a) {
     var _b = _a.stroke, stroke = _b === void 0 ? "#1C2333" : _b;
     return (React__default["default"].createElement("svg", { width: "15", height: "16", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
@@ -738,6 +742,12 @@ var Medium = function (_a) {
     var _b = _a.size, size = _b === void 0 ? "20" : _b, _c = _a.brandedColor, brandedColor = _c === void 0 ? false : _c;
     return (React__default["default"].createElement("svg", { width: size, height: size, viewBox: "0 0 24 14", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
         React__default["default"].createElement("path", { d: "M13.488 6.895c0 3.727-3.002 6.749-6.704 6.749S.081 10.622.081 6.894C.081 3.168 3.082.146 6.784.146c3.703 0 6.704 3.022 6.704 6.75ZM20.841 6.895c0 3.508-1.5 6.354-3.351 6.354s-3.352-2.846-3.352-6.354c0-3.509 1.5-6.354 3.351-6.354s3.352 2.844 3.352 6.354ZM23.85 6.895c0 3.143-.529 5.692-1.18 5.692-.65 0-1.178-2.549-1.178-5.692 0-3.144.527-5.693 1.178-5.693.651 0 1.18 2.549 1.18 5.693Z", fill: brandedColor ? "#1C2333" : "#6C7388" })));
+};
+
+var OutboundLink = function (_a) {
+    var _b = _a.fill, fill = _b === void 0 ? "#323232" : _b, _c = _a.size, size = _c === void 0 ? 12 : _c;
+    return (React__default["default"].createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 12 13", height: size },
+        React__default["default"].createElement("path", { d: "M10.667 11.167H1.333V1.833H6V.5H1.333C.593.5 0 1.1 0 1.833v9.334C0 11.9.593 12.5 1.333 12.5h9.334c.733 0 1.333-.6 1.333-1.333V6.5h-1.333v4.667ZM7.333.5v1.333h2.394L3.173 8.387l.94.94 6.554-6.554v2.394H12V.5H7.333Z", fill: fill })));
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -1338,6 +1348,7 @@ exports.Milli = Container$u;
 exports.MiniList = MiniList;
 exports.Modal = OpenAppModal;
 exports.Navbar = Navbar;
+exports.OutboundLink = OutboundLink;
 exports.P = StyledP;
 exports.PartOfCollection = PartOfCollection;
 exports.PersistentBanner = PersistentBanner;

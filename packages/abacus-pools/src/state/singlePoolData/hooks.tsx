@@ -176,10 +176,8 @@ export const useGetTickets = () => {
     const methods = _.map(_.range(0, 50), () => "ticketsPurchased")
     const args = _.map(_.range(0, 50), (i) => [parseEther(`${i}`)])
     const ticketFillings = await vault(poolData.vaultAddress, methods, args)
-
     const ticketsReturned: SubgraphTicket[] = []
     for (let i = 0; i < ticketFillings.length; i += 1) {
-      console.log(Number(formatEther(ticketFillings[i][0])))
       ticketsReturned.push({
         id: "",
         vaultAddress: poolData.vaultAddress,

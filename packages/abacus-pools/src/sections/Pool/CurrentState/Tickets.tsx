@@ -70,8 +70,6 @@ const Tickets = ({ refresh }: StateComponent) => {
   if (!tickets || !traderData) {
     return <div>Loading...</div>
   }
-  console.log("ticket: ", currentTicket)
-  console.log("traderdata: ", Number(traderData.ticketsOwned) === 0)
   return (
     <Container>
       <Modal
@@ -138,15 +136,18 @@ const Tickets = ({ refresh }: StateComponent) => {
           )}
         </ModalBody>
       </Modal>
-      {_.map(tickets, (ticket) => (
-        <Ticket
-          {...ticket}
-          onClick={() => {
-            setIsModalOpen(true)
-            setCurrentTicket(ticket)
-          }}
-        />
-      ))}
+      {_.map(tickets, (ticket) => {
+        console.log("tickets", ticket)
+        return (
+          <Ticket
+            {...ticket}
+            onClick={() => {
+              setIsModalOpen(true)
+              setCurrentTicket(ticket)
+            }}
+          />
+        )
+      })}
     </Container>
   )
 }

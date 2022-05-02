@@ -2,13 +2,13 @@ import React, { useCallback, useEffect, useState } from "react"
 import Button from "@components/Button"
 import { Tooltip } from "shards-react"
 import { useGetCurrentNetwork } from "@state/application/hooks"
-import { NetworkSymbolEnum } from "@config/constants"
+import { DN_TOKEN, NetworkSymbolEnum } from "@config/constants"
 import {
   useBribeData,
   useGetBribeData,
   useGetPoolData,
 } from "@state/singlePoolData/hooks"
-import { useActiveWeb3React } from "@hooks/index"
+import { useActiveWeb3React, useWeb3Contract } from "@hooks/index"
 import { NumericalInput } from "@components/Input"
 import { formatEther } from "ethers/lib/utils"
 import { useOnAddToBribe, useWithdrawBribe } from "@hooks/bribeFunc"
@@ -23,6 +23,7 @@ import {
   TinyTitles,
   MaxButton,
 } from "./AMM.styles"
+import DN_TOKEN_ABI from "../../../config/contracts/DN_TOKEN_ABI.json"
 
 const Bribe = ({ refresh }: StateComponent) => {
   const { account, library } = useActiveWeb3React()
@@ -30,15 +31,16 @@ const Bribe = ({ refresh }: StateComponent) => {
   const bribeData = useBribeData()
   const { onWithdrawBribe, isPending: isPendingWithdraw } = useWithdrawBribe()
   const { onAddToBribe, isPending: isPendingAdd } = useOnAddToBribe()
-  const [ethBalance, setEthBalance] = useState(null)
   const [input, setInput] = useState("")
   const [isToolTipOpen, setIsToolTipOpen] = useState(false)
   const networkSymbol = useGetCurrentNetwork()
   const isNetworkSymbolETH = networkSymbol === NetworkSymbolEnum.ETH
   const poolData = useGetPoolData()
 
+  const [ethBalance, setEthBalance] = useState<number | null>(null)
+  const dnContract = useWeb3Contract(DN_TOKEN_ABI)
   const getBalance = useCallback(async () => {
-    const balance = await library.getBalance(account)
+    const balance = await dnContract(DN_TOKEN).methods.balanceOf(account).call()
     setEthBalance(parseFloat(formatEther(balance)))
   }, [account, library])
 

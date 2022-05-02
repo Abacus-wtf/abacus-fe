@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react"
 import { UniversalContainer } from "@components/global.styles"
-import { useActiveWeb3React, useMultiCall } from "@hooks/index"
+import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import { formatEther } from "ethers/lib/utils"
 import {
   Stat,
   StatWithEpoch,
 } from "@sections/Pool/CurrentState/CurrentState.styles"
-import { ABC_CREDIT_BONDS, ABC_TOKEN } from "@config/constants"
+import { ABC_CREDIT_BONDS, ABC_TOKEN, DN_TOKEN } from "@config/constants"
 import { useOnAddABCCredit, useOnBond } from "@hooks/bondFunc"
 import { InputWithTitleAndButton } from "@components/Input"
 import {
@@ -20,6 +20,7 @@ import { Card } from "@sections/Ve"
 import { BigNumber } from "ethers"
 import ABC_BOND_ABI from "../../config/contracts/ABC_CREDIT_BONDS_ABI.json"
 import ERC_721_ABI from "../../config/contracts/ERC_721_ABI.json"
+import DN_TOKEN_ABI from "../../config/contracts/DN_TOKEN_ABI.json"
 
 interface CreditData {
   creditStored: string
@@ -36,12 +37,13 @@ const Bond: React.FC = () => {
   const { onAddABCCredit, isPending: isPendingABCCredit } = useOnAddABCCredit()
   const bondContracts = useMultiCall(ABC_BOND_ABI)
   const erc721 = useMultiCall(ERC_721_ABI)
-  const [ethBalance, setEthBalance] = useState(null)
   const [epoch, setEpoch] = useState(0)
   const networkSymbol = useGetCurrentNetwork()
 
+  const [ethBalance, setEthBalance] = useState<number | null>(null)
+  const dnContract = useWeb3Contract(DN_TOKEN_ABI)
   const getBalance = useCallback(async () => {
-    const balance = await library.getBalance(account)
+    const balance = await dnContract(DN_TOKEN).methods.balanceOf(account).call()
     setEthBalance(parseFloat(formatEther(balance)))
   }, [account, library])
 
@@ -134,7 +136,7 @@ const Bond: React.FC = () => {
                 onChange={(e) => setBondAmount(e.target.value)}
                 disabled={!account}
                 buttonText="Max"
-                onClick={() => setBondAmount(ethBalance)}
+                onClick={() => setBondAmount(`${ethBalance}`)}
                 id="bondAmount"
               />
             </InputContainer>

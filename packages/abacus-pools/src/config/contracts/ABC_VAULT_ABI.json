@@ -327,6 +327,11 @@
       },
       {
         "internalType": "uint256",
+        "name": "dnAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "ticket",
         "type": "uint256"
       },
@@ -794,6 +799,11 @@
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "dnAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
       }
@@ -814,6 +824,11 @@
         "internalType": "address",
         "name": "_buyer",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "dnAmount",
+        "type": "uint256"
       },
       {
         "internalType": "uint256[]",
@@ -847,6 +862,11 @@
         "internalType": "address",
         "name": "_buyer",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "dnAmount",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",

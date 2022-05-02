@@ -23,8 +23,8 @@ export const useOnAddToBribe = () => {
       )
       const method = bribeContract.addToBribe
       const estimate = bribeContract.estimateGas.addToBribe
-      const args = [poolData.address, poolData.tokenId]
-      const value = parseEther(amount)
+      const args = [poolData.address, poolData.tokenId, parseEther(amount)]
+      const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Add to Bribe",

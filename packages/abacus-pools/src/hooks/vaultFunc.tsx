@@ -286,13 +286,18 @@ export const useOnPurchaseTokens = () => {
 
       const method = vaultContract.purchaseMulti
       const estimate = vaultContract.estimateGas.purchaseMulti
-      const args = [account, account, ticketArray, purchaseAmount, lockupPeriod]
+      const args = [
+        account,
+        account,
+        parseEther(`${Number(tokenAmount) * Number(poolData.tokenPrice)}`)
+          .mul(BigNumber.from(10125))
+          .div(BigNumber.from(10000)),
+        ticketArray,
+        purchaseAmount,
+        lockupPeriod,
+      ]
       console.log(args)
-      const value = parseEther(
-        `${Number(tokenAmount) * Number(poolData.tokenPrice)}`
-      )
-        .mul(BigNumber.from(10025))
-        .div(BigNumber.from(10000))
+      const value = null
       console.log(value)
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -349,13 +354,14 @@ export const useOnPurchaseIndividualTicket = () => {
       const args = [
         account,
         account,
-        parseEther(`${ticket}`),
-        parseEther(tokenAmount),
+        parseEther(`${(Number(tokenAmount) * 1.0125) / 1000}`).toString(),
+        parseEther(`${ticket}`).toString(),
+        parseEther(tokenAmount).toString(),
         lockupPeriod,
       ]
       console.log(args)
-      const value = parseEther(`${(Number(tokenAmount) * 1.0025) / 1000}`)
-      console.log(value.toString())
+      const value = null
+      // console.log(value.toString())
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Purchase Locked Up Ticket",
@@ -405,14 +411,15 @@ export const useOnFutureOrder = () => {
       const args = [
         positionHolder,
         account,
+        parseEther(`${(TICKET_SIZE * 1.0125) / 1000}`).add(
+          parseEther(`${reward}`)
+        ),
         ticket,
         lockupPeriod,
         parseEther(`${reward}`),
       ]
       console.log(args)
-      const value = parseEther(`${(TICKET_SIZE * 1.0025) / 1000}`).add(
-        parseEther(`${reward}`)
-      )
+      const value = null
       console.log(value.toString())
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -502,8 +509,8 @@ export const usePurchaseCredits = () => {
 
       const method = vaultContract.purchaseCredits
       const estimate = vaultContract.estimateGas.purchaseCredits
-      const args = [parseEther(amount)]
-      const value = ethAmount
+      const args = [ethAmount, parseEther(amount)]
+      const value = null
       console.log(args)
       console.log(ethAmount)
       const txnCb = async (response: any) => {

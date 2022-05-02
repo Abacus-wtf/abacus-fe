@@ -24,8 +24,8 @@ export const useOnBid = () => {
 
       const method = closePoolContract.newBid
       const estimate = closePoolContract.estimateGas.newBid
-      const args = []
-      const value = parseEther(bidAmount)
+      const args = [parseEther(bidAmount)]
+      const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Bid on Auction",

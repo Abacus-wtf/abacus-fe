@@ -171,7 +171,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "dnAmount",
+        "type": "uint256"
+      }
+    ],
     "name": "bond",
     "outputs": [],
     "stateMutability": "payable",
@@ -233,6 +239,11 @@
         "internalType": "address",
         "name": "_user",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "epoch",
+        "type": "uint256"
       }
     ],
     "name": "getPersonalBoost",

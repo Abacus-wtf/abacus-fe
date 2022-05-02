@@ -21,9 +21,9 @@ export const useOnBond = () => {
       )
       const method = bondContract.bond
       const estimate = bondContract.estimateGas.bond
-      const args = []
+      const args = [parseEther(_value)]
       console.log(args)
-      const value = parseEther(_value)
+      const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Bond",

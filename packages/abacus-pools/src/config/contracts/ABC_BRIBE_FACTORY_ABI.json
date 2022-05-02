@@ -47,7 +47,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "owner",
+        "name": "briber",
         "type": "address"
       },
       {
@@ -78,7 +78,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "owner",
+        "name": "briber",
         "type": "address"
       },
       {
@@ -138,6 +138,25 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "abcCredit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "token",
         "type": "address"
       },
@@ -162,6 +181,11 @@
       {
         "internalType": "uint256",
         "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "dnAmount",
         "type": "uint256"
       }
     ],
@@ -287,19 +311,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "purchaseCreditsWithBribeMoney",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "_controller",
         "type": "address"
@@ -324,24 +335,11 @@
       },
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "dnAmount",
         "type": "uint256"
       }
     ],
     "name": "withdrawBribe",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "withdrawBribesEarned",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

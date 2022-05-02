@@ -3,10 +3,10 @@ import React, { useCallback, useEffect, useState } from "react"
 import Button from "@components/Button"
 import { NumericalInput } from "@components/Input"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import { TICKET_SIZE } from "@config/constants"
+import { DN_TOKEN, TICKET_SIZE } from "@config/constants"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { formatEther } from "ethers/lib/utils"
-import { useActiveWeb3React } from "@hooks/index"
+import { useActiveWeb3React, useWeb3Contract } from "@hooks/index"
 import DatePicker from "react-datepicker"
 import moment from "moment"
 import {
@@ -27,6 +27,7 @@ import {
 } from "./AMM.styles"
 import "react-datepicker/dist/react-datepicker.css"
 import { StateComponent } from "./index"
+import DN_TOKEN_ABI from "../../../config/contracts/DN_TOKEN_ABI.json"
 
 export const DatePickerStyled = styled(DatePicker)`
   padding: 10px 15px;
@@ -48,14 +49,15 @@ const AMM = (props: AMMProps) => {
   const poolData = useGetPoolData()
   const [inputAmount, setInputAmount] = useState("")
   const [outputAmount, setOutputAmount] = useState("0.0")
-  const [ethBalance, setEthBalance] = useState<number | null>(null)
   const [startDate, setStartDate] = useState(new Date())
   const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
   const { onPurchaseIndividualTicket, isPending: isPendingIndividual } =
     useOnPurchaseIndividualTicket()
 
+  const [ethBalance, setEthBalance] = useState<number | null>(null)
+  const dnContract = useWeb3Contract(DN_TOKEN_ABI)
   const getBalance = useCallback(async () => {
-    const balance = await library.getBalance(account)
+    const balance = await dnContract(DN_TOKEN).methods.balanceOf(account).call()
     setEthBalance(parseFloat(formatEther(balance)))
   }, [account, library])
 
@@ -102,7 +104,7 @@ const AMM = (props: AMMProps) => {
           <LabelRow>
             <BalanceContainer>
               <TinyTitles>
-                From: {isTokenFirst ? poolData.symbol : "ETH"}
+                From: {isTokenFirst ? poolData.symbol : "DN"}
               </TinyTitles>
               <TinyTitles>Balance: {ethBalance}</TinyTitles>
             </BalanceContainer>

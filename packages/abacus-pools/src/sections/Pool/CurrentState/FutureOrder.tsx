@@ -3,7 +3,7 @@ import Button from "@components/Button"
 import { NumericalInput } from "@components/Input"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 import { formatEther } from "ethers/lib/utils"
-import { useActiveWeb3React } from "@hooks/index"
+import { useActiveWeb3React, useWeb3Contract } from "@hooks/index"
 import DatePicker from "react-datepicker"
 import moment from "moment"
 import { useOnFutureOrder } from "@hooks/vaultFunc"
@@ -13,6 +13,8 @@ import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { getTicketOwners, SubgraphTicket } from "@state/singlePoolData/queries"
 import _ from "lodash"
 import { shortenAddress } from "@config/utils"
+import { DN_TOKEN } from "@config/constants"
+import DN_TOKEN_ABI from "../../../config/contracts/DN_TOKEN_ABI.json"
 import {
   InputContainer,
   BORDER,
@@ -42,15 +44,16 @@ const FutureOrder = (props: FutureOrderProps) => {
   const { account, library } = useActiveWeb3React()
   const networkSymbol = useGetCurrentNetwork()
   const [inputAmount, setInputAmount] = useState("")
-  const [ethBalance, setEthBalance] = useState<number | null>(null)
   const [startDate, setStartDate] = useState(new Date())
   const [ticketOwners, setTicketOwners] = useState([])
   const [selectedTicketOwner, setTicketOwner] = useState(null)
   const { onFutureOrder, isPending } = useOnFutureOrder()
   const poolData = useGetPoolData()
 
+  const [ethBalance, setEthBalance] = useState<number | null>(null)
+  const dnContract = useWeb3Contract(DN_TOKEN_ABI)
   const getBalance = useCallback(async () => {
-    const balance = await library.getBalance(account)
+    const balance = await dnContract(DN_TOKEN).methods.balanceOf(account).call()
     setEthBalance(parseFloat(formatEther(balance)))
   }, [account, library])
 

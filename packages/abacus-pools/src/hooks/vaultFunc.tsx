@@ -291,7 +291,7 @@ export const useOnPurchaseTokens = () => {
       const value = parseEther(
         `${Number(tokenAmount) * Number(poolData.tokenPrice)}`
       )
-        .mul(BigNumber.from(10025))
+        .mul(BigNumber.from(10125))
         .div(BigNumber.from(10000))
       console.log(value)
       const txnCb = async (response: any) => {
@@ -354,7 +354,7 @@ export const useOnPurchaseIndividualTicket = () => {
         lockupPeriod,
       ]
       console.log(args)
-      const value = parseEther(`${(Number(tokenAmount) * 1.0025) / 1000}`)
+      const value = parseEther(`${(Number(tokenAmount) * 1.0125) / 1000}`)
       console.log(value.toString())
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -410,7 +410,7 @@ export const useOnFutureOrder = () => {
         parseEther(`${reward}`),
       ]
       console.log(args)
-      const value = parseEther(`${(TICKET_SIZE * 1.0025) / 1000}`).add(
+      const value = parseEther(`${(TICKET_SIZE * 1.0125) / 1000}`).add(
         parseEther(`${reward}`)
       )
       console.log(value.toString())

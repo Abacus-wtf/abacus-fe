@@ -140,11 +140,7 @@ export const useOnCloseAccount = () => {
   const poolData = useGetPoolData()
 
   const onCloseAccount = useCallback(
-    async (
-      amountCredits: string,
-      amountOfProfitsToUse: string,
-      cb: () => void
-    ) => {
+    async (amountCredits: string, cb: () => void) => {
       const closePoolContract = getContract(
         poolData.auction.closePoolAddress,
         CLOSE_POOL_ABI,
@@ -154,10 +150,7 @@ export const useOnCloseAccount = () => {
 
       const method = closePoolContract.closeAccount
       const estimate = closePoolContract.estimateGas.closeAccount
-      const args = [
-        parseEther(amountCredits).toString(),
-        parseEther(amountOfProfitsToUse).toString(),
-      ]
+      const args = [parseEther(amountCredits).toString()]
       console.log(args)
       const value = null
       const txnCb = async (response: any) => {

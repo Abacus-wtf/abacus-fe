@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import {
-  useGetPoolData,
   useGetTraderProfileData,
   useTraderProfile,
 } from "@state/singlePoolData/hooks"
@@ -8,20 +7,14 @@ import styled from "styled-components"
 import moment from "moment"
 import _ from "lodash"
 import Buttons from "@components/Button"
-import {
-  useChangePayoutRatio,
-  usePurchaseCredits,
-  useUnlockPosition,
-} from "@hooks/vaultFunc"
+import { useChangePayoutRatio, useUnlockPosition } from "@hooks/vaultFunc"
 import { NumericalInput } from "@components/Input"
-import { formatEther } from "ethers/lib/utils"
 import { Stat, StatTitle, TicketContainer } from "./CurrentState.styles"
 import {
   InputContainer,
   BORDER,
   LabelRow,
   BalanceContainer,
-  MaxButton,
 } from "./AMM.styles"
 
 const Container = styled.div`
@@ -33,11 +26,7 @@ const CurrentPosition = () => {
   const { onUnlockPosition, isPending: isUnlockPending } = useUnlockPosition()
   const traderData = useTraderProfile()
   const getTraderProfileData = useGetTraderProfileData()
-  const poolData = useGetPoolData()
-  const [inputAvailableCredits, setInputsAvailableCredits] = useState("")
   const [payoutRatioInput, setPayoutRatio] = useState("")
-  const { onPurchaseCredits, isPending: isPendingPurchaseCredits } =
-    usePurchaseCredits()
   const { onChangePayoutRatio, isPending: isPendingPayoutRatio } =
     useChangePayoutRatio()
 
@@ -66,52 +55,6 @@ const CurrentPosition = () => {
             </StatTitle>
           ))}
       </TicketContainer>
-      {poolData.emissionsStarted &&
-        Number(traderData.timeUnlock) > moment().unix() && (
-          <>
-            <InputContainer
-              style={{
-                border: BORDER,
-                borderRadius: 15,
-                marginTop: 20,
-              }}
-            >
-              <LabelRow>
-                <BalanceContainer>
-                  <NumericalInput
-                    placeholder="0.0"
-                    value={inputAvailableCredits}
-                    onChange={(e) => setInputsAvailableCredits(e.target.value)}
-                  />
-                  <MaxButton
-                    onClick={() => {
-                      setInputsAvailableCredits(
-                        formatEther(poolData.creditsAvailable)
-                      )
-                    }}
-                  >
-                    MAX
-                  </MaxButton>
-                </BalanceContainer>
-              </LabelRow>
-            </InputContainer>
-            <Buttons
-              style={{ marginTop: 20, marginBottom: 20 }}
-              onClick={() =>
-                onPurchaseCredits(inputAvailableCredits, () =>
-                  getTraderProfileData()
-                )
-              }
-              disabled={
-                isPendingPurchaseCredits || inputAvailableCredits === ""
-              }
-            >
-              {isPendingPurchaseCredits
-                ? "Loading..."
-                : "Purchase Available Credits"}
-            </Buttons>
-          </>
-        )}
       <InputContainer
         style={{
           border: BORDER,

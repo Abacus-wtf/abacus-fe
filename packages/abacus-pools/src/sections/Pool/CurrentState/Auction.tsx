@@ -42,7 +42,6 @@ const Auction = ({ refresh }: StateComponent) => {
     useOnCalculatePrincipal()
   const { onCloseAccount, isPending: isPendingClose } = useOnCloseAccount()
   const [amountCredits, setAmountCredits] = useState("")
-  const [amountOfProfitToUse, setAmountOfProfitToUse] = useState("")
   const theme = useContext(ThemeContext)
   const [purchaseAmount, setPurchaseAmount] = useState("")
   const networkSymbol = useGetCurrentNetwork()
@@ -92,31 +91,6 @@ const Auction = ({ refresh }: StateComponent) => {
               >
                 <BalanceContainer>
                   <NumericalInput
-                    placeholder="Specify Amount of Existing Profit to Purchase Credits"
-                    value={amountOfProfitToUse}
-                    onChange={(e) => {
-                      setAmountOfProfitToUse(e.target.value)
-                    }}
-                  />
-                  <MaxButton
-                    onClick={() => {
-                      setAmountOfProfitToUse(`${poolData.auction.profit}`)
-                    }}
-                  >
-                    MAX
-                  </MaxButton>
-                </BalanceContainer>
-              </InputContainer>
-            </InfoSectionContainer>
-            <InfoSectionContainer>
-              <InputContainer
-                style={{
-                  border: BORDER,
-                  borderRadius: 15,
-                }}
-              >
-                <BalanceContainer>
-                  <NumericalInput
                     placeholder="Specify Credits to Purchase"
                     value={amountCredits}
                     onChange={(e) => {
@@ -125,13 +99,7 @@ const Auction = ({ refresh }: StateComponent) => {
                   />
                   <MaxButton
                     onClick={() => {
-                      setAmountCredits(
-                        `${
-                          amountOfProfitToUse !== ""
-                            ? amountOfProfitToUse
-                            : poolData.auction.profit
-                        }`
-                      )
+                      setAmountCredits(`${poolData.creditsAvailable}`)
                     }}
                   >
                     MAX
@@ -145,7 +113,7 @@ const Auction = ({ refresh }: StateComponent) => {
           disabled={isPendingProfit || isPendingClose}
           onClick={() => {
             if (poolData.auction.principalCalculated) {
-              onCloseAccount(amountCredits, amountOfProfitToUse, async () => {
+              onCloseAccount(amountCredits, async () => {
                 await refresh()
               })
             } else {

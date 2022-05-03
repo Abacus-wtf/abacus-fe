@@ -1,8 +1,9 @@
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, useEffect } from "react"
 import styled from "styled-components"
 import { NFTBasePool } from "@state/poolData/reducer"
 
 import { Media, Modal } from "abacus-ui"
+import { globalHistory } from "@reach/router"
 import SelectNFT from "./SelectNFT"
 import { ModalState } from "./models"
 import Details from "./Details"
@@ -31,6 +32,15 @@ const CreatePoolModal: React.FC<CreatePoolModalProps> = ({
   const [tokenName, setTokenName] = useState("")
   const [tokenSymbol, setTokenSymbol] = useState("")
   const [currentNonce, setCurrentNonce] = useState(0)
+
+  useEffect(() => {
+    globalHistory.listen(({ action }) => {
+      console.log("action", action)
+      if (action === "PUSH") {
+        closeModal()
+      }
+    })
+  }, [closeModal])
 
   const content = useMemo(() => {
     switch (modalState) {

@@ -291,10 +291,10 @@ export const useSetPoolData = () => {
           ),
           erc721(address).methods.ownerOf(tokenId).call(),
         ])
-        const [closePoolContract, tokensLocked, symbol, emissionsStarted] =
+        const [closePoolContract, symbol, emissionsStarted, ownerRewards] =
           await vault(
             vaultAddress,
-            ["closePoolContract", "tokensLocked", "symbol", "emissionsStarted"],
+            ["closePoolContract", "symbol", "emissionsStarted", "ownerRewards"],
             [[], [], [], []]
           )
 
@@ -303,6 +303,7 @@ export const useSetPoolData = () => {
         let approvedBribeFactory = false
         let tickets = []
         let ownerOfNFT = ""
+        let tokensLocked = ""
         const variables: GetPoolQueryVariables = {
           id: vaultAddress?.toLowerCase() ?? "",
         }
@@ -318,8 +319,8 @@ export const useSetPoolData = () => {
             await Promise.all([
               vault(
                 vaultAddress,
-                ["getCreditsAvailableForPurchase"],
-                [[account]]
+                ["getCreditsAvailableForPurchase", "getUserPositionInfo"],
+                [[account], [account]]
               ),
               erc721(address)
                 .methods.isApprovedForAll(account, vaultAddress)
@@ -336,6 +337,7 @@ export const useSetPoolData = () => {
             )
           )
           creditsAvailable = multi[0][0]
+          tokensLocked = formatEther(multi[1][0])
           approved = approval
           approvedBribeFactory = approvalBribe
         }
@@ -369,7 +371,6 @@ export const useSetPoolData = () => {
             isAccountClaimed: false,
             claimPreviousBid: false,
           }
-
           if (account) {
             const [
               [
@@ -378,7 +379,7 @@ export const useSetPoolData = () => {
                 isAccountClaimed,
                 claimPreviousBid,
               ],
-              [getTokensLocked, tokensLocked, creditsAvailableForPurchase],
+              [creditsAvailableForPurchase],
             ] = await Promise.all([
               closePool(
                 closePoolContract[0],
@@ -392,21 +393,15 @@ export const useSetPoolData = () => {
               ),
               vault(
                 vaultAddress,
-                [
-                  "getTokensLocked",
-                  "tokensLocked",
-                  "getCreditsAvailableForPurchase",
-                ],
-                [[account], [], [account]]
+                ["getCreditsAvailableForPurchase"],
+                [[account]]
               ),
             ])
 
             auction.isAccountClaimed = isAccountClaimed[0]
             auction.principalCalculated = principalCalculated[0]
             auction.profit =
-              (Number(formatEther(auctionPremium[0])) *
-                Number(formatEther(getTokensLocked[0]))) /
-              Number(formatEther(tokensLocked[0]))
+              Number(formatEther(auctionPremium[0])) * Number(tokensLocked)
             auction.creditsAvailableForPurchase = formatEther(
               creditsAvailableForPurchase[0]
             )
@@ -417,6 +412,7 @@ export const useSetPoolData = () => {
 
         const asset = (os as { assets: OpenSeaAsset[] }).assets[0]
         const pool: Pool = {
+          ownerRewards: formatEther(ownerRewards[0]),
           emissionsStarted: emissionsStarted[0],
           vaultAddress,
           address,
@@ -425,7 +421,7 @@ export const useSetPoolData = () => {
           collectionTitle: asset.collection.name,
           nftName: asset.name || "",
           symbol: symbol[0],
-          tokensLocked: formatEther(tokensLocked[0]),
+          tokensLocked,
           tokenPrice: IS_PRODUCTION ? ".001" : "0.001",
           isManager: ownerOf.toLowerCase() === account.toLowerCase(),
           creditsAvailable: BigNumber.from(creditsAvailable).toString(),

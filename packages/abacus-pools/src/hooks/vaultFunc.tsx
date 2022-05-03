@@ -55,6 +55,46 @@ export const useOnExitPool = () => {
   }
 }
 
+export const useOnCollectEmissions = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+
+  const onCollectEmissions = useCallback(
+    async (vaultAddress: string, cb: () => void) => {
+      const vaultContract = getContract(
+        vaultAddress,
+        VAULT_ABI,
+        library,
+        account
+      )
+      const method = vaultContract.claimOwnersReward
+      const estimate = vaultContract.estimateGas.claimOwnersReward
+      const args = []
+      const value = null
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Collect Emissions",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [library, account, generalizedContractCall, addTransaction]
+  )
+  return {
+    onCollectEmissions,
+    isPending,
+  }
+}
+
 export const useOnApproveTransfer = () => {
   const { account, library } = useActiveWeb3React()
   const { generalizedContractCall, isPending } = useGeneralizedContractCall()
@@ -213,7 +253,7 @@ export const useOnPurchaseTokens = () => {
       while (runningTokenAmount !== 0) {
         const range = _.range(cycle * 20, cycle * 20 + 20)
         const methods = _.map(range, () => "ticketsPurchased")
-        const args = _.map(range, (i) => [i])
+        const args = _.map(range, (i) => [parseEther(`${i}`)])
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // eslint-disable-next-line no-await-in-loop
@@ -237,7 +277,7 @@ export const useOnPurchaseTokens = () => {
             } else {
               runningTokenAmount -= spaceLeft
             }
-            ticketArray.push(parseEther(`${i}`))
+            ticketArray.push(parseEther(`${i}`).toString())
             purchaseAmount.push(parseEther(`${spaceLeft}`).toString())
           }
         }
@@ -246,14 +286,21 @@ export const useOnPurchaseTokens = () => {
 
       const method = vaultContract.purchaseMulti
       const estimate = vaultContract.estimateGas.purchaseMulti
-      const args = [account, account, ticketArray, purchaseAmount, lockupPeriod]
+      const args = [
+        account,
+        account,
+        parseEther(`${Number(tokenAmount) * Number(poolData.tokenPrice)}`)
+          .mul(BigNumber.from(10125))
+          .div(BigNumber.from(10000))
+          .div(BigNumber.from(10000))
+          .mul(BigNumber.from(10000))
+          .toString(),
+        ticketArray,
+        purchaseAmount,
+        lockupPeriod,
+      ]
       console.log(args)
-      const value = parseEther(
-        `${Number(tokenAmount) * Number(poolData.tokenPrice)}`
-      )
-        .mul(BigNumber.from(10025))
-        .div(BigNumber.from(10000))
-      console.log(value)
+      const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Purchase Locked Up Tokens",
@@ -314,7 +361,7 @@ export const useOnPurchaseIndividualTicket = () => {
         lockupPeriod,
       ]
       console.log(args)
-      const value = parseEther(`${(Number(tokenAmount) * 1.0025) / 1000}`)
+      const value = parseEther(`${(Number(tokenAmount) * 1.0125) / 1000}`)
       console.log(value.toString())
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -370,7 +417,7 @@ export const useOnFutureOrder = () => {
         parseEther(`${reward}`),
       ]
       console.log(args)
-      const value = parseEther(`${(TICKET_SIZE * 1.0025) / 1000}`).add(
+      const value = parseEther(`${(TICKET_SIZE * 1.0125) / 1000}`).add(
         parseEther(`${reward}`)
       )
       console.log(value.toString())

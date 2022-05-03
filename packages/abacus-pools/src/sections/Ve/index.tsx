@@ -29,8 +29,6 @@ import {
   useOnChangeAllocation,
   useOnClaimReward,
   useOnLockTokens,
-  useOnRemoveAllocation,
-  useOnRemoveAutoAllocation,
   useOnUnlockTokens,
 } from "@hooks/veFunc"
 import styled from "styled-components"
@@ -68,17 +66,6 @@ interface Holder {
   multiplier: number
   amountAllocated: number
   amountAutoAllocated: number
-  veBalanceUpdates: number
-  autoUpdates: number
-}
-
-interface EpochData {
-  epochClaimedVe: boolean
-  epochClaimedAuto: boolean
-  veStartEpoch: number
-  veStartEpochAmount: number
-  autoStartEpoch: number
-  autoStartEpochAmount: number
 }
 
 const FullWidthButton = styled(Button)`
@@ -87,28 +74,26 @@ const FullWidthButton = styled(Button)`
 
 interface AllocInterface extends SubgraphAllocs {
   onChange: () => void
-  reset: () => void
 }
 
-const Allocation = (props: AllocInterface) => {
-  const { onRemoveAllocation, isPending: isPendingRemoveAllocation } =
-    useOnRemoveAllocation()
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "100%",
-      }}
-    >
-      <div>
-        {props.collection} - {formatEther(props.amount)}
-      </div>
-      <div style={{ display: "flex", flexDirection: "row", gridGap: 8 }}>
-        <Button onClick={() => props.onChange()}>Change</Button>
-        <Button
+const Allocation = (props: AllocInterface) => (
+  /* const { onRemoveAllocation, isPending: isPendingRemoveAllocation } =
+    useOnRemoveAllocation() */
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: "100%",
+    }}
+  >
+    <div>
+      {props.collection} - {formatEther(props.amount)}
+    </div>
+    <div style={{ display: "flex", flexDirection: "row", gridGap: 8 }}>
+      <Button onClick={() => props.onChange()}>Change</Button>
+      {/* <Button
           disabled={isPendingRemoveAllocation}
           onClick={() =>
             onRemoveAllocation(
@@ -119,11 +104,10 @@ const Allocation = (props: AllocInterface) => {
           }
         >
           {isPendingRemoveAllocation ? "Loading..." : "Remove"}
-        </Button>
-      </div>
+        </Button> */}
     </div>
-  )
-}
+  </div>
+)
 
 const Ve: React.FC = () => {
   const { account } = useActiveWeb3React()
@@ -139,7 +123,6 @@ const Ve: React.FC = () => {
   const [veAbcBalance, setVeAbcBalance] = useState("")
   const [abcInput, setABCInput] = useState("")
   const [holderData, setHolderData] = useState<Holder | null>(null)
-  const [epochData, setEpochData] = useState<EpochData | null>(null)
   const [allocateAddress, setAllocateAddress] = useState("")
   const [amount, setAmount] = useState("")
   const [allocs, setAllocs] = useState<SubgraphAllocs[]>([])
@@ -156,10 +139,6 @@ const Ve: React.FC = () => {
   const { onLockTokens, isPending: isPendingLockTokens } = useOnLockTokens()
   const { onAllocateTokens, isPending: isPendingAddAllocation } =
     useOnAllocateTokens()
-  const { onRemoveAutoAllocation, isPending: isPendingRemoveAutoAllocation } =
-    useOnRemoveAutoAllocation()
-  const { onRemoveAllocation, isPending: isPendingRemoveAllocation } =
-    useOnRemoveAllocation()
   const { onUnlockTokens, isPending: isPendingUnlockTokens } =
     useOnUnlockTokens()
   const { onChangeAllocation, isPending: isPendingChangeAllocation } =
@@ -167,15 +146,11 @@ const Ve: React.FC = () => {
   const { onClaimReward, isPending: isPendingClaimReward } = useOnClaimReward()
 
   const getClaimData = async () => {
+    const currentEpoch = await epochCall(ABC_EPOCH)
+      .methods.currentEpoch()
+      .call()
     const [
-      [
-        veHolderHistory,
-        getHolderEpochInfo,
-        veBalance,
-        recentVeUpdateCleared,
-        recentAutoUpdateCleared,
-      ],
-      currentEpoch,
+      [veHolderHistory, veBalance, getAmountAllocated, getAmountAutoAllocated],
       balance,
       allocs,
     ] = await Promise.all([
@@ -183,18 +158,17 @@ const Ve: React.FC = () => {
         VE_ABC_TOKEN,
         [
           "veHolderHistory",
-          "getHolderEpochInfo",
           "balanceOf",
-          "recentVeUpdateCleared",
-          "recentAutoUpdateCleared",
+          "getAmountAllocated",
+          "getAmountAutoAllocated",
         ],
-        [[account], [account, epoch], [account], [account], [account]]
+        [[account], [account], [account], [account, currentEpoch]]
       ),
-      epochCall(ABC_EPOCH).methods.currentEpoch().call(),
       abcCall(ABC_TOKEN).methods.balanceOf(account).call(),
       getAllocs(account),
     ])
     console.log("allocs", allocs)
+    console.log("veholder", veHolderHistory)
     if (allocs !== undefined && allocs.length > 0) {
       setCurrentAllocation(allocs[0])
       setAllocs(allocs)
@@ -205,29 +179,20 @@ const Ve: React.FC = () => {
     )
     setVeAbcBalance(formatEther(veBalance[0]))
     setABCMaxBalance(BigNumber.from(balance).sub(parseEther("10")).toString())
+    console.log("here1")
     setHolderData({
       timeUnlock: BigNumber.from(veHolderHistory[0]).mul(1000).toNumber(),
       amountLocked: Number(formatEther(veHolderHistory[1])),
       multiplier: BigNumber.from(veHolderHistory[2]).toNumber(),
-      amountAllocated: Number(formatEther(veHolderHistory[3])),
-      amountAutoAllocated: Number(formatEther(veHolderHistory[4])),
-      veBalanceUpdates: Number(BigNumber.from(veHolderHistory[5]).toNumber()),
-      autoUpdates: Number(BigNumber.from(veHolderHistory[6]).toNumber()),
+      amountAllocated: Number(formatEther(getAmountAllocated[0])),
+      amountAutoAllocated: Number(formatEther(getAmountAutoAllocated[0])),
     })
-
+    console.log("here")
     setShowClaimButton(
-      BigNumber.from(recentVeUpdateCleared[0]).toNumber() < currentEpoch ||
-        BigNumber.from(recentAutoUpdateCleared[0]).toNumber() < currentEpoch
+      BigNumber.from(veHolderHistory[0]).toNumber() < currentEpoch
     )
+    console.log("here2")
 
-    setEpochData({
-      epochClaimedVe: getHolderEpochInfo[0],
-      epochClaimedAuto: getHolderEpochInfo[1],
-      veStartEpoch: BigNumber.from(getHolderEpochInfo[2]).toNumber(),
-      veStartEpochAmount: Number(formatEther(getHolderEpochInfo[3])),
-      autoStartEpoch: BigNumber.from(getHolderEpochInfo[4]).toNumber(),
-      autoStartEpochAmount: Number(formatEther(getHolderEpochInfo[5])),
-    })
     setEpoch(currentEpoch)
   }
 
@@ -242,7 +207,7 @@ const Ve: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account])
 
-  if (holderData === null || epochData === null) {
+  if (holderData === null) {
     return (
       <UniversalContainer style={{ textAlign: "center" }}>
         Loading...
@@ -387,7 +352,6 @@ const Ve: React.FC = () => {
                 setCurrentAllocation(alloc)
                 setOpenModal(true)
               }}
-              reset={() => getClaimData()}
             />
           ))}
         </Card>
@@ -483,7 +447,7 @@ const Ve: React.FC = () => {
               />
             </InputContainer>
           </InfoSectionContainer>
-          <ButtonContainer style={{ gridTemplateColumns: "1fr 1fr 1fr 1fr" }}>
+          <ButtonContainer style={{ gridTemplateColumns: "1fr 1fr" }}>
             <FullWidthButton
               disabled={!amount || !allocateAddress || isPendingAddAllocation}
               onClick={() =>
@@ -502,7 +466,7 @@ const Ve: React.FC = () => {
             >
               {isPendingAddAuto ? "Loading..." : "Add to Auto Allocation"}
             </FullWidthButton>
-            <FullWidthButton
+            {/* <FullWidthButton
               disabled={
                 !amount || !allocateAddress || isPendingRemoveAllocation
               }
@@ -525,7 +489,7 @@ const Ve: React.FC = () => {
               {isPendingRemoveAutoAllocation
                 ? "Loading..."
                 : "Remove Auto Allocation"}
-            </FullWidthButton>
+              </FullWidthButton> */}
           </ButtonContainer>
         </Card>
       </StyledSplitContainer> */}

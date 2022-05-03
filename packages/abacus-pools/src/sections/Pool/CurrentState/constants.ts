@@ -5,7 +5,7 @@ export const customDurationConfig = IS_PRODUCTION
       min: 15,
       max: 90,
     }
-  : { min: Number(5 / 24 / 60), max: Number(36 / 24 / 60) }
+  : { min: Number(12 / 60), max: 6 }
 
 export const durations = IS_PRODUCTION
   ? [
@@ -19,18 +19,18 @@ export const durations = IS_PRODUCTION
     ]
   : [
       {
-        label: "5 Minutes",
-        id: "5_minute_duration",
-        value: Number(5 / 24 / 60).toString(),
+        label: "12 Hours",
+        id: "12_hour_duration",
+        value: Number(12 / 60).toString(),
       },
       {
-        label: "15 Minutes",
-        id: "15_minutes_duration",
-        value: Number(15 / 24 / 60).toString(),
+        label: "3 Days",
+        id: "3_day_duration",
+        value: "3",
       },
       {
-        label: "30 Minutes",
-        id: "30_minutes_duration",
-        value: Number(30 / 24 / 60).toString(),
+        label: "6 Days",
+        id: "6_day_duration",
+        value: "6",
       },
     ]

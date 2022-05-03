@@ -7,6 +7,29 @@ import { calculateVariance } from "utils/stats"
 import { TokenLockHistoryChart } from "../TokenLockHistoryChart"
 import { NFTImage } from "../NFTImage"
 
+const CardInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  max-width: 50%;
+`
+
+const CardInfoContent = styled(Mega)`
+  font-size: 22px;
+  display: flex;
+`
+
+const CardInfoRow = styled.div<{ flexGrow?: boolean }>`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex: ${({ flexGrow }) => (flexGrow ? "1 0 auto" : "unset")};
+
+  & ${CardInfo}:last-of-type {
+    align-items: flex-end;
+  }
+`
+
 const StyledSection = styled(Section)`
   position: relative;
   display: flex;
@@ -20,35 +43,9 @@ const StyledSection = styled(Section)`
   }
 `
 
-const CardInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  max-width: 66%;
-`
-
-const CardInfoContent = styled(Mega)`
-  font-size: 22px;
-  display: flex;
-`
-
-const CardInfoRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-
-  & ${CardInfo}:last-of-type {
-    align-items: flex-end;
-  }
-`
-
 const CardTitle = styled(CardInfoContent)`
   color: ${({ theme }) => theme.colors.core.primary};
   text-decoration: none;
-  white-space: nowrap;
-  overflow: hidden;
-  display: inline-block;
-  text-overflow: ellipsis;
 
   &:hover,
   &:focus {
@@ -118,7 +115,7 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
   return (
     <StyledSection>
       <NFTImage src={imgSrc} />
-      <CardInfoRow>
+      <CardInfoRow flexGrow>
         <CardInfo>
           <CardTitle as={Link} to={link}>
             {title}

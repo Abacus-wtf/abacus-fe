@@ -89,7 +89,7 @@ const Home: React.FC = () => {
       <ExploreFilters page={0} />
 
       <PoolGrid>
-        {pools.map((pool, index) => (
+        {pools.map((pool) => (
           <PoolCard
             key={`${pool.address}-${pool.tokenId}-${pool.nonce}`}
             link={`/pool?address=${pool.address}&tokenId=${pool.tokenId}&nonce=${pool.nonce}`}
@@ -97,7 +97,6 @@ const Home: React.FC = () => {
             title={pool.nftName}
             participants={pool.totalParticipants}
             poolSize={formatEther(pool.size.div(BigNumber.from("1000")))}
-            variation={3.2 * (index % 2 === 0 ? -1 : 1)}
             vaultId={pool.vaultAddress}
           />
         ))}

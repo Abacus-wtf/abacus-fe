@@ -119,6 +119,7 @@ var defaultTheme = {
     borderRadius: {
         main: "10px",
         section: "24px",
+        button: "80px",
     },
     boxShadow: {
         button: "0px 5px 60px rgba(0, 0, 0, 0.1)",
@@ -358,7 +359,7 @@ var Button = styled__default["default"].button.attrs(function (_a) {
     ";\n    opacity: 0.6;\n    box-shadow: none;\n  }\n\n  ",
     "\n"])), Font(), function (_a) {
     var theme = _a.theme;
-    return theme.borderRadius.section;
+    return theme.borderRadius.button;
 }, function (_a) {
     var theme = _a.theme;
     return theme.padding.main;

@@ -23,7 +23,7 @@ const Button = styled.button.attrs(({ disabled, ...rest }) => ({
 }))<ButtonProps>`
   ${Font()}
   text-decoration: none;
-  border-radius: ${({ theme }) => theme.borderRadius.section};
+  border-radius: ${({ theme }) => theme.borderRadius.button};
   padding: ${({ theme }) => theme.padding.main};
   box-shadow: ${({ theme, buttonType }) =>
     buttonType === ButtonType.Clear ? "none" : theme.boxShadow.button};

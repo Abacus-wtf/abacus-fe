@@ -39,6 +39,7 @@ declare const defaultTheme: {
     readonly borderRadius: {
         readonly main: "10px";
         readonly section: "24px";
+        readonly button: "80px";
     };
     readonly boxShadow: {
         readonly button: "0px 5px 60px rgba(0, 0, 0, 0.1)";

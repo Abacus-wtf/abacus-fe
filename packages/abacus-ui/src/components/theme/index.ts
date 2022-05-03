@@ -40,6 +40,7 @@ const defaultTheme = {
   borderRadius: {
     main: "10px",
     section: "24px",
+    button: "80px",
   },
   boxShadow: {
     button: "0px 5px 60px rgba(0, 0, 0, 0.1)",

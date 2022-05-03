@@ -6,7 +6,7 @@ export const poolSelector = createSelector(
   (state: AppState) => state.poolData.pools,
   (state: AppState, vaultId: string) => vaultId,
   (pools: AppState["poolData"]["pools"], vaultId: string) =>
-    pools.find((pool) => pool.vaultAddress === vaultId)
+    pools?.find((pool) => pool.vaultAddress === vaultId) ?? []
 )
 
 export const tokenLockHistorySelector = createSelector(poolSelector, (pool) =>

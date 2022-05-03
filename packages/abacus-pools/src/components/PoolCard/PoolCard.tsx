@@ -89,8 +89,10 @@ type PoolCardProps = {
   imgSrc: string
   poolSize: string
   participants: number
-  link: string
+  link?: string
   vaultId: string
+  fullDetails?: boolean
+  className?: string
 }
 
 const PoolCard: FunctionComponent<PoolCardProps> = ({
@@ -100,6 +102,8 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
   participants,
   link,
   vaultId,
+  fullDetails = true,
+  className,
 }) => {
   const tokenLockHistory = useTokenLockHistory(vaultId)
   const lockHistoryValues: number[] =
@@ -113,11 +117,11 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
     })
   )
   return (
-    <StyledSection>
+    <StyledSection className={className}>
       <NFTImage src={imgSrc} />
       <CardInfoRow flexGrow>
         <CardInfo>
-          <CardTitle as={Link} to={link}>
+          <CardTitle as={link ? Link : "a"} to={link}>
             {title}
           </CardTitle>
           <Kilo>Pool Name</Kilo>
@@ -127,23 +131,27 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
           <Kilo>Pool Size</Kilo>
         </CardInfo>
       </CardInfoRow>
-      <CardInfoRow>
-        <CardInfo>
-          <CardInfoContent>
-            <Variation variation={variation}>
-              {variation > 0 ? "+" : ""}
-              {variation}
-            </Variation>
-            ETH
-          </CardInfoContent>
-          <Kilo>Pool Variation (7d)</Kilo>
-        </CardInfo>
-        <CardInfo>
-          <CardInfoContent>{participants}</CardInfoContent>
-          <Kilo>Participants</Kilo>
-        </CardInfo>
-      </CardInfoRow>
-      <TokenLockHistoryChart data={tokenLockHistory} showYAxis />
+      {fullDetails ? (
+        <>
+          <CardInfoRow>
+            <CardInfo>
+              <CardInfoContent>
+                <Variation variation={variation}>
+                  {variation > 0 ? "+" : ""}
+                  {variation}
+                </Variation>
+                ETH
+              </CardInfoContent>
+              <Kilo>Pool Variation (7d)</Kilo>
+            </CardInfo>
+            <CardInfo>
+              <CardInfoContent>{participants}</CardInfoContent>
+              <Kilo>Participants</Kilo>
+            </CardInfo>
+          </CardInfoRow>
+          <TokenLockHistoryChart data={tokenLockHistory} showYAxis />
+        </>
+      ) : null}
     </StyledSection>
   )
 }

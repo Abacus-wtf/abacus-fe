@@ -1,40 +1,69 @@
 query GetPools(
-    $first: Int!
-    $skip: Int!
-    $orderBy: Vault_orderBy = timestamp
-    $orderDirection: OrderDirection = desc
-    $where: Vault_filter
+  $first: Int!
+  $skip: Int!
+  $orderBy: Vault_orderBy = timestamp
+  $orderDirection: OrderDirection = desc
+  $where: Vault_filter
+) {
+  vaults(
+    first: $first
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    skip: $skip
+    where: $where
   ) {
-    vaults(
-      first: $first
-      orderBy: $orderBy
-      orderDirection: $orderDirection
-      skip: $skip
-      where: $where
-    ) {
+    id
+    nftAddress
+    tokenId
+    owner
+    status
+    nonce
+    timestamp
+    emissionsSigned
+    size
+    totalParticipants
+    tickets {
       id
-      nftAddress
-      tokenId
-      owner
-      status
-      nonce
-      timestamp
-    	emissionsSigned
-      size
-      totalParticipants
-      tickets {
+      ticketNumber
+      vaultAddress
+      tokenPurchasesLength
+      tokenPurchases {
+        amount
         id
-        ticketNumber
-        vaultAddress
-        tokenPurchasesLength
-        tokenPurchases {
-          amount
-          id
-          length
-          owner
-          soldAt
-          timestamp
-        }
+        length
+        owner
+        soldAt
+        timestamp
       }
     }
   }
+}
+
+query GetPool($id: ID!) {
+  vault(id: $id) {
+    id
+    nftAddress
+    tokenId
+    owner
+    status
+    nonce
+    timestamp
+    emissionsSigned
+    size
+    totalParticipants
+    tickets {
+      id
+      ticketNumber
+      vaultAddress
+      tokenPurchasesLength
+      tokenPurchases {
+        amount
+        id
+        length
+        owner
+        soldAt
+        timestamp
+      }
+    }
+  }
+}

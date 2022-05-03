@@ -35,7 +35,6 @@ const CreatePoolModal: React.FC<CreatePoolModalProps> = ({
 
   useEffect(() => {
     globalHistory.listen(({ action }) => {
-      console.log("action", action)
       if (action === "PUSH") {
         closeModal()
       }

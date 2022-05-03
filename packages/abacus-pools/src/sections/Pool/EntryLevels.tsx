@@ -1,4 +1,4 @@
-import { useEntryLevels } from "@state/singlePoolData/hooks"
+import { useEntryLevels, useTickets } from "@state/singlePoolData/hooks"
 import { ProgressBar, Section } from "abacus-ui"
 import React, { FunctionComponent, useState } from "react"
 import styled from "styled-components"
@@ -57,7 +57,8 @@ const EntryLevels: FunctionComponent = () => {
       </SectionHeader>
       <EntryLevelsWrapper>
         {visibleEntryLevels.map((entryLevel) => {
-          const progress = entryLevel.amount / 1000
+          const amount = entryLevel.amount
+          const progress = amount > 1000 ? 1 : amount / 1000
           const displayProgress = (progress * 100).toLocaleString("en-us", {
             maximumSignificantDigits: 8,
             minimumSignificantDigits: 2,

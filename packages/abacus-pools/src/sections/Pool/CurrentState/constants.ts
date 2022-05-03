@@ -21,7 +21,7 @@ export const durations = IS_PRODUCTION
       {
         label: "12 Hours",
         id: "12_hour_duration",
-        value: Number(12 / 60).toString(),
+        value: "0.5",
       },
       {
         label: "3 Days",

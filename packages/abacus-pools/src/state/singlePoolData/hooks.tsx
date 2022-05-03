@@ -25,9 +25,6 @@ import {
   GetPoolDocument,
   GetPoolQuery,
   GetPoolQueryVariables,
-  GetTicketsDocument,
-  GetTicketsQuery,
-  GetTicketsQueryVariables,
 } from "abacus-graph"
 import { aggregateVaultTokenLockHistory } from "utils/vaultTickets"
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"

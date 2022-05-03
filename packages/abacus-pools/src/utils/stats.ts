@@ -8,7 +8,6 @@ const calculateMean = (values: number[]) => {
 // Calculate variance
 export const calculateVariance = (values: number[]) => {
   const average = calculateMean(values)
-  console.log("average", average)
   const squareDiffs = values.map((value) => {
     const diff = value - average
     return diff * diff

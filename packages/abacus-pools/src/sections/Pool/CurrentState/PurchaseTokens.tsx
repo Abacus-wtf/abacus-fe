@@ -110,20 +110,21 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
   const { tokenPrice, nftName, tokensLocked } = useGetPoolData()
   const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
 
-  const numTickets = Number(tokensLocked ?? 0)
-  const percentTicketsSold = numTickets / 1000
+  const numTokensLocked = Number(tokensLocked ?? 0)
+  const currentTicket = Math.floor(numTokensLocked / 1000) + 1
+  const percentTicketsSold = numTokensLocked / 1000
   const numTokens = String(Number(eth) / Number(tokenPrice))
 
   const progressLabel = useMemo(() => {
     const percentForDislplay = Math.round(percentTicketsSold * 100)
-    const numLeft = 1000 - numTickets
+    const numLeft = 1000 - numTokensLocked
     return (
       <ProgressLabel>
         <ProgressValue>{percentForDislplay}</ProgressValue>% filled /&nbsp;
         <ProgressValue>{numLeft}</ProgressValue>&nbsp;tokens left
       </ProgressLabel>
     )
-  }, [numTickets, percentTicketsSold])
+  }, [numTokensLocked, percentTicketsSold])
 
   const purchaseTokens = async () => {
     const duration = Math.round(lockDuration * 24 * 60 * 60)
@@ -135,7 +136,6 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
     })
   }
 
-  console.log(lockDuration)
   const confirmDisabled = !eth || !lockDuration || isPending
 
   return (
@@ -145,7 +145,7 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
         <TitleContainer>
           <CurrentTicket>
             Current Ticket:
-            <CurrentTicketValue>#{numTickets + 1}</CurrentTicketValue>
+            <CurrentTicketValue>#{currentTicket}</CurrentTicketValue>
           </CurrentTicket>
           <Title>Purchase Tokens</Title>
         </TitleContainer>

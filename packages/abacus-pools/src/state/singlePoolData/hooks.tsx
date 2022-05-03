@@ -22,6 +22,9 @@ import { PAGINATE_BY } from "@state/poolData/constants"
 import request from "graphql-request"
 import { createSelector } from "@reduxjs/toolkit"
 import {
+  GetPoolDocument,
+  GetPoolQuery,
+  GetPoolQueryVariables,
   GetTicketsDocument,
   GetTicketsQuery,
   GetTicketsQueryVariables,
@@ -93,6 +96,7 @@ type Activity = {
   action: "purchase" | "sale"
   timestamp: number
   amount: BigNumber
+  length?: number
 }
 
 export const useActivity = () => {
@@ -112,6 +116,7 @@ export const useActivity = () => {
               action: "purchase",
               timestamp,
               amount: BigNumber.from(tokenPurchase.amount),
+              length: Number(tokenPurchase.length) * 1000,
             }
             const sale: Activity = tokenPurchase.soldAt
               ? {
@@ -204,7 +209,6 @@ export const useGetTraderProfileData = () => {
       vault(poolData.vaultAddress).methods.traderProfile(account).call(),
       request<GetTicketQueryResponse>(GRAPHQL_ENDPOINT, GET_TICKETS, variables),
     ])
-    console.log("data.tickets", tickets)
     traderProfile.tokensLocked = formatEther(traderProfile.tokensLocked)
     traderProfile.ticketsOwned = []
     _.forEach(tickets, (ticket) => {
@@ -235,20 +239,21 @@ export const useGetTickets = () => {
 
   return useCallback(async () => {
     if (poolData.vaultAddress === undefined) return
-    const variables: GetTicketsQueryVariables = {
-      first: PAGINATE_BY,
-      skip: 0 * PAGINATE_BY,
-      where: { vaultAddress: poolData.vaultAddress.toLowerCase() },
+    const variables: GetPoolQueryVariables = {
+      id: poolData.vaultAddress.toLowerCase(),
     }
 
-    const { tickets } = await request<GetTicketsQuery>(
+    const { vault } = await request<GetPoolQuery>(
       GRAPHQL_ENDPOINT,
-      GetTicketsDocument,
+      GetPoolDocument,
       variables
     )
+    console.log("vault", vault)
 
     const ticketsReturned = _.map(_.range(0, 50), (i) => {
-      const ticket = tickets.find((ticket) => Number(ticket.ticketNumber) === i)
+      const ticket = vault.tickets.find(
+        (ticket) => Number(ticket.ticketNumber) === i
+      )
 
       if (!ticket) {
         return {
@@ -278,11 +283,6 @@ export const useSetPoolData = () => {
 
   return useCallback(
     async (address: string, tokenId: string, nonce: number) => {
-      const variables: GetTicketsQueryVariables = {
-        first: PAGINATE_BY,
-        skip: 0 * PAGINATE_BY,
-        where: null,
-      }
       try {
         const [vaultAddress, os, ownerOf] = await Promise.all([
           factory(ABC_FACTORY).methods.nftVault(nonce, address, tokenId).call(),
@@ -303,35 +303,34 @@ export const useSetPoolData = () => {
         let approvedBribeFactory = false
         let tickets = []
         let ownerOfNFT = ""
+        const variables: GetPoolQueryVariables = {
+          id: vaultAddress?.toLowerCase() ?? "",
+        }
+
+        const { vault: _pool } = await request<GetPoolQuery>(
+          GRAPHQL_ENDPOINT,
+          GetPoolDocument,
+          variables
+        )
 
         if (account) {
-          const [
-            multi,
-            approval,
-            approvalBribe,
-            _ownerOfNFT,
-            { tickets: _tickets },
-          ] = await Promise.all([
-            vault(
-              vaultAddress,
-              ["getCreditsAvailableForPurchase"],
-              [[account]]
-            ),
-            erc721(address)
-              .methods.isApprovedForAll(account, vaultAddress)
-              .call(),
-            erc721(address)
-              .methods.isApprovedForAll(account, ABC_BRIBE_FACTORY)
-              .call(),
-            erc721(address).methods.ownerOf(tokenId).call(),
-            request<GetTicketsQuery>(
-              GRAPHQL_ENDPOINT,
-              GetTicketsDocument,
-              variables
-            ),
-          ])
+          const [multi, approval, approvalBribe, _ownerOfNFT] =
+            await Promise.all([
+              vault(
+                vaultAddress,
+                ["getCreditsAvailableForPurchase"],
+                [[account]]
+              ),
+              erc721(address)
+                .methods.isApprovedForAll(account, vaultAddress)
+                .call(),
+              erc721(address)
+                .methods.isApprovedForAll(account, ABC_BRIBE_FACTORY)
+                .call(),
+              erc721(address).methods.ownerOf(tokenId).call(),
+            ])
           ownerOfNFT = _ownerOfNFT
-          tickets = _tickets.filter((ticket) =>
+          tickets = _pool.tickets.filter((ticket) =>
             ticket.tokenPurchases.some(
               (token) => token.owner === account.toLowerCase()
             )
@@ -361,7 +360,7 @@ export const useSetPoolData = () => {
             closePoolAddress: closePoolContract[0],
             profit: 0,
             principalCalculated: false,
-            hasTickets: tickets.length > 0,
+            hasTickets: _pool.tickets.length > 0,
             creditsAvailableForPurchase: "0",
             ownedTickets: _.map(tickets, (ticket) => ticket.ticketNumber),
             isNFTClaimed:
@@ -449,8 +448,8 @@ export const useSetPoolData = () => {
                 asset.owner.address
               }`
             : "",
-          size: BigNumber.from("0"), // TODO: This data needs to come from subgraph
-          totalParticipants: 0,
+          size: BigNumber.from(_pool.size),
+          totalParticipants: _pool.totalParticipants,
         }
         dispatch(getPoolData(pool))
       } catch (e) {

@@ -49,7 +49,6 @@ const CardTitle = styled(CardInfoContent)`
   overflow: hidden;
   display: inline-block;
   text-overflow: ellipsis;
-  width: 100%;
 
   &:hover,
   &:focus {
@@ -86,10 +85,6 @@ const Variation = styled.div<{ variation: number }>`
           color: ${({ theme }) => theme.colors.utility.green};
         `
       : ""}
-`
-
-const StyledTokenLockHistoryChart = styled(TokenLockHistoryChart)`
-  justify-self: flex-end;
 `
 
 type PoolCardProps = {
@@ -151,7 +146,7 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
           <Kilo>Participants</Kilo>
         </CardInfo>
       </CardInfoRow>
-      <StyledTokenLockHistoryChart data={tokenLockHistory} showYAxis />
+      <TokenLockHistoryChart data={tokenLockHistory} showYAxis />
     </StyledSection>
   )
 }

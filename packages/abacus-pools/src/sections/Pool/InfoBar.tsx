@@ -44,6 +44,7 @@ const InfoBar: FunctionComponent = () => {
     emissionsStarted,
     nftName,
     tokenPrice,
+    totalParticipants,
   } = useGetPoolData()
   const tokensLockedEth = (
     Number(tokensLocked) * Number(tokenPrice)
@@ -66,7 +67,7 @@ const InfoBar: FunctionComponent = () => {
       </InfoBarItem>
       <InfoBarItem>
         <InfoBarTitle>Participants</InfoBarTitle>
-        <InfoBarContent>TODO</InfoBarContent>
+        <InfoBarContent>{totalParticipants}</InfoBarContent>
       </InfoBarItem>
       <InfoBarItem>
         <InfoBarTitle>Owner</InfoBarTitle>

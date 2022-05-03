@@ -68,6 +68,11 @@ const Activity: FunctionComponent = () => {
                 <ActivityAmount>
                   {Math.round(Number(formatEther(item.amount)))} Token{" "}
                   {item.action}
+                  {item.action === "purchase"
+                    ? ` with a lockup period of ${moment(
+                        new Date().getTime() + item.length
+                      ).fromNow(true)}`
+                    : ""}
                 </ActivityAmount>
               </ActivityDetails>
             </Flex>

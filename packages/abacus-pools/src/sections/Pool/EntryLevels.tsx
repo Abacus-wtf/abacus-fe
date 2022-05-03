@@ -69,8 +69,8 @@ const EntryLevels: FunctionComponent = () => {
                 progress={progress}
                 label={
                   <ProgressLabel>
-                    <span>{displayProgress}</span> % filled / <span>2</span> ETH
-                    left
+                    <span>{displayProgress}</span> % filled /{" "}
+                    <span>{1 - progress}</span> ETH left
                   </ProgressLabel>
                 }
               />

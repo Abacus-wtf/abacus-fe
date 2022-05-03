@@ -30,7 +30,7 @@ const TokenLockHistoryChart = ({
   }
   return (
     <Container className={className}>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%">
         <BarChart data={data}>
           {showYAxis && (
             <YAxis

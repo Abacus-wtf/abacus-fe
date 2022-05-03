@@ -39,24 +39,18 @@ const SocialsContainer = styled.div`
 const socials: SocialCardProps[] = [
   {
     icon: <Twitter size="52" brandedColor />,
-    statistic: "1k+",
-    title: "Twitter Followers",
+    title: "Twitter",
     link: "https://twitter.com/abacus_wtf",
-    linkDescription: "Abaucs Twitter Profile",
   },
   {
     icon: <Discord size="52" brandedColor />,
-    statistic: "2k+",
-    title: "Discord Members",
+    title: "Discord",
     link: "https://discord.com/channels/861936155494842368/871084437306220564",
-    linkDescription: "Abacus Discord Channel",
   },
   {
     icon: <Medium size="52" brandedColor />,
-    statistic: "10+",
-    title: "Articles Written",
+    title: "Medium",
     link: "https://medium.com/abacus-wtf",
-    linkDescription: "Abacus Medium Articles",
   },
 ]
 

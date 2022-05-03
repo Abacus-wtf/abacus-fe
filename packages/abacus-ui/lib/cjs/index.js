@@ -979,7 +979,7 @@ var StyledOutput = styled__default["default"].output(templateObject_3$b || (temp
     return theme.colors.utility.blue;
 });
 var CustomLockDuration = function (_a) {
-    var id = _a.id, value = _a.value, setValue = _a.setValue, _b = _a.min, min = _b === void 0 ? 0 : _b, _c = _a.max, max = _c === void 0 ? 100 : _c, _d = _a.outputFormatter, outputFormatter = _d === void 0 ? null : _d;
+    var id = _a.id, value = _a.value, setValue = _a.setValue, _b = _a.min, min = _b === void 0 ? 0 : _b, _c = _a.max, max = _c === void 0 ? 100 : _c, _d = _a.outputFormatter, outputFormatter = _d === void 0 ? null : _d, _e = _a.step, step = _e === void 0 ? 0.1 : _e;
     var outputRef = React.useRef(null);
     var validValue = value !== null && typeof value !== "undefined";
     React.useEffect(function () {
@@ -989,7 +989,7 @@ var CustomLockDuration = function (_a) {
         }
     }, [max, min, validValue, value]);
     return (React__default["default"].createElement(Container$h, null,
-        React__default["default"].createElement(StyledInput, { type: "range", id: id, name: id, min: min, max: max, value: value, onChange: function (e) { return setValue(Number(e.target.value)); } }),
+        React__default["default"].createElement(StyledInput, { type: "range", id: id, name: id, min: min, max: max, value: value, step: step, onChange: function (e) { return setValue(Number(e.target.value)); } }),
         React__default["default"].createElement(StyledOutput, { visible: validValue, ref: outputRef }, typeof outputFormatter === "function" ? outputFormatter(value) : value)));
 };
 var templateObject_1$k, templateObject_2$h, templateObject_3$b;

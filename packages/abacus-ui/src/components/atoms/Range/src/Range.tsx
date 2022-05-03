@@ -130,6 +130,7 @@ type CustomLockDurationProps = {
   min?: number;
   max?: number;
   outputFormatter?: (value: number) => string;
+  step?: number;
 };
 
 const CustomLockDuration: FunctionComponent<CustomLockDurationProps> = ({
@@ -139,6 +140,7 @@ const CustomLockDuration: FunctionComponent<CustomLockDurationProps> = ({
   min = 0,
   max = 100,
   outputFormatter = null,
+  step = 0.1,
 }) => {
   const outputRef = useRef<HTMLOutputElement>(null);
   const validValue = value !== null && typeof value !== "undefined";
@@ -162,6 +164,7 @@ const CustomLockDuration: FunctionComponent<CustomLockDurationProps> = ({
         min={min}
         max={max}
         value={value}
+        step={step}
         onChange={(e) => setValue(Number(e.target.value))}
       />
 

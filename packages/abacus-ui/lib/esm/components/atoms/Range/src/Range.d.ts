@@ -6,6 +6,7 @@ declare type CustomLockDurationProps = {
     min?: number;
     max?: number;
     outputFormatter?: (value: number) => string;
+    step?: number;
 };
 declare const CustomLockDuration: FunctionComponent<CustomLockDurationProps>;
 export default CustomLockDuration;

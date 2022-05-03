@@ -286,21 +286,15 @@ export const useOnPurchaseTokens = () => {
 
       const method = vaultContract.purchaseMulti
       const estimate = vaultContract.estimateGas.purchaseMulti
-      const args = [
-        account,
-        account,
-        parseEther(`${Number(tokenAmount) * Number(poolData.tokenPrice)}`)
-          .mul(BigNumber.from(10125))
-          .div(BigNumber.from(10000))
-          .div(BigNumber.from(10000))
-          .mul(BigNumber.from(10000))
-          .toString(),
-        ticketArray,
-        purchaseAmount,
-        lockupPeriod,
-      ]
+      const args = [account, account, ticketArray, purchaseAmount, lockupPeriod]
       console.log(args)
-      const value = null
+      const value = parseEther(
+        `${Number(tokenAmount) * Number(poolData.tokenPrice)}`
+      )
+        .mul(BigNumber.from(10125))
+        .div(BigNumber.from(10000))
+        .div(BigNumber.from(10000))
+        .mul(BigNumber.from(10000))
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Purchase Locked Up Tokens",

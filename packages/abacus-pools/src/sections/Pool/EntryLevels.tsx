@@ -1,4 +1,4 @@
-import { useEntryLevels, useTickets } from "@state/singlePoolData/hooks"
+import { useEntryLevels } from "@state/singlePoolData/hooks"
 import { ProgressBar, Section } from "abacus-ui"
 import React, { FunctionComponent, useState } from "react"
 import styled from "styled-components"

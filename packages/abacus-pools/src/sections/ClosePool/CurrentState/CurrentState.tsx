@@ -1,3 +1,5 @@
+import { useOnExitPool } from "@hooks/vaultFunc"
+import { useGetPoolData } from "@state/singlePoolData/hooks"
 import {
   Section,
   Exa,
@@ -6,6 +8,7 @@ import {
   P,
   Button,
   ButtonType,
+  PersistentBanner,
 } from "abacus-ui"
 import { Link } from "gatsby"
 import React, { FunctionComponent, useMemo, useState } from "react"
@@ -89,6 +92,8 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
   const isFirstPage = page === Page.ApproveContract
   const progress = isFirstPage ? 0.5 : 1
   const status = isFirstPage ? "Approve Contract" : "Pool Closed"
+  const { vaultAddress, isManager } = useGetPoolData()
+  const { onExitPool, isPending } = useOnExitPool()
 
   const copy = useMemo(
     () =>
@@ -114,9 +119,17 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
     buttonType: isFirstPage ? ButtonType.Standard : ButtonType.Gray,
     buttonText: isFirstPage ? "Yes, close this pool!" : "Go to Auction Page >",
     onClick: isFirstPage
-      ? () => {
-          console.log("CONTRACT")
-          setPage(Page.PoolClosed)
+      ? async () => {
+          if (isManager) {
+            onExitPool(vaultAddress, () => {
+              setPage(Page.PoolClosed)
+              refreshPoolData()
+            })
+          } else {
+            console.warn(
+              "You are not the owner of this Pool, and cannot close it"
+            )
+          }
         }
       : undefined,
     as: isFirstPage ? undefined : Link,
@@ -132,12 +145,19 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
         <PageStatus>
           <span>{page + 1}/2</span> {status}
         </PageStatus>
-        <Title>Close your Pool</Title>
+        <Title>{isFirstPage ? "Close your Pool" : "Congratulations!"}</Title>
         <Main>{copy}</Main>
-        <StyledButton {...buttonProps} fullWidth={isFirstPage}>
-          {buttonProps.buttonText}
+        <StyledButton
+          {...buttonProps}
+          fullWidth={isFirstPage}
+          disabled={!isManager}
+        >
+          {isPending ? "Closing pool..." : buttonProps.buttonText}
         </StyledButton>
       </Wrapper>
+      <PersistentBanner type="error" bottom="0">
+        Only the owner of the pool can close it
+      </PersistentBanner>
     </Container>
   )
 }

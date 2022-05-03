@@ -30,42 +30,53 @@ const CardInfoRow = styled.div<{ flexGrow?: boolean }>`
   }
 `
 
-const StyledSection = styled(Section)`
+const StyledSection = styled(Section)<{ hasLink: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
   transition: all 0.2s ease-in-out;
   row-gap: 24px;
 
-  &:focus-within,
-  &:hover {
-    transform: scale(1.01);
-  }
+  ${({ hasLink }) =>
+    hasLink
+      ? css`
+          &:focus-within,
+          &:hover {
+            transform: scale(1.01);
+          }
+        `
+      : null}
 `
 
 const CardTitle = styled(CardInfoContent)`
   color: ${({ theme }) => theme.colors.core.primary};
   text-decoration: none;
 
-  &:hover,
-  &:focus {
-    color: ${({ theme }) => theme.colors.core.primary};
-    &::after {
-      opacity: 0.2;
-      background-color: white;
-    }
-  }
+  ${({ hasLink }) =>
+    hasLink
+      ? css`
+          &:hover,
+          &:focus {
+            color: ${({ theme }) => theme.colors.core.primary};
+            &::after {
+              opacity: 0.2;
+              background-color: white;
+            }
+          }
 
-  &::after {
-    transition: all ${({ theme }) => theme.transitionTime.main}, opacity 0;
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    border-radius: ${({ theme }) => theme.borderRadius.section};
-  }
+          &::after {
+            transition: all ${({ theme }) => theme.transitionTime.main},
+              opacity 0;
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            border-radius: ${({ theme }) => theme.borderRadius.section};
+          }
+        `
+      : null}
 `
 
 const Variation = styled.div<{ variation: number }>`
@@ -117,11 +128,11 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
     })
   )
   return (
-    <StyledSection className={className}>
+    <StyledSection className={className} hasLink={!!link}>
       <NFTImage src={imgSrc} />
       <CardInfoRow flexGrow>
         <CardInfo>
-          <CardTitle as={link ? Link : "a"} to={link}>
+          <CardTitle as={link ? Link : "a"} to={link} hasLink={!!link}>
             {title}
           </CardTitle>
           <Kilo>Pool Name</Kilo>

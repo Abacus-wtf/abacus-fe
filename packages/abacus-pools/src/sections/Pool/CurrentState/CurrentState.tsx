@@ -60,7 +60,7 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
       case Page.PurchaseTokens:
         return <PurchaseTokens refreshPoolData={refreshPoolData} />
       default:
-        return <>HI</>
+        return null
     }
   }, [page, refreshPoolData])
 

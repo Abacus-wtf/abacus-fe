@@ -5,11 +5,14 @@ const ImageContainer = styled.div`
   width: 100%;
   aspect-ratio: 1 / 1;
   display: grid;
+  overflow: hidden;
+  border-radius: 12px;
 `
 
 const StyledImg = styled.img`
   width: 100%;
   align-self: center;
+  /* border-radius: 12px; */
 `
 
 type NFTImageProps = {

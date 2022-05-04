@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react"
+import React, { FunctionComponent, useEffect } from "react"
 import { PageProps, Link } from "gatsby"
 import * as queryString from "query-string"
 import { Media } from "abacus-ui"
@@ -56,8 +56,6 @@ type PoolProps = {
 }
 
 const Pool: FunctionComponent<PoolProps> = ({ location }) => {
-  const [refresh, setRefresh] = useState({})
-  const refreshPoolData = () => setRefresh({})
   const { address, tokenId, nonce } = queryString.parse(location.search)
   const { img, nftName, size, totalParticipants, vaultAddress } =
     useGetPoolData()
@@ -66,7 +64,7 @@ const Pool: FunctionComponent<PoolProps> = ({ location }) => {
 
   useEffect(() => {
     setPool(String(address), String(tokenId), Number(nonce))
-  }, [address, tokenId, nonce, setPool, refresh])
+  }, [address, tokenId, nonce, setPool])
 
   useEffect(() => {
     getTickets()
@@ -88,7 +86,6 @@ const Pool: FunctionComponent<PoolProps> = ({ location }) => {
           vaultId={vaultAddress}
         />
         <CurrentState
-          refreshPoolData={refreshPoolData}
           address={String(address)}
           tokenId={String(tokenId)}
           nonce={String(nonce)}

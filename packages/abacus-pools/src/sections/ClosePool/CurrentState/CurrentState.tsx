@@ -1,4 +1,4 @@
-import { useOnExitPool } from "@hooks/vaultFunc"
+import { useOnApproveTransfer, useOnExitPool } from "@hooks/vaultFunc"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import {
   Section,
@@ -11,11 +11,12 @@ import {
   PersistentBanner,
 } from "abacus-ui"
 import { Link } from "gatsby"
-import React, { FunctionComponent, useMemo, useState } from "react"
+import React, { FunctionComponent, useEffect, useMemo, useState } from "react"
 import styled from "styled-components"
 
 enum Page {
   ApproveContract,
+  ClosePool,
   PoolClosed,
 }
 
@@ -76,88 +77,174 @@ const StyledButton = styled(Button)<{ fullWidth: boolean }>`
 `
 
 type CurrentStateProps = {
-  refreshPoolData: () => void
   address: string
   tokenId: string
   nonce: string
 }
 
+type Content = {
+  title: string
+  status: string
+  progress: number
+  copy: React.ReactNode
+  buttonProps: {
+    buttonType: ButtonType
+    buttonText: string
+    onClick?: () => void
+  }
+  as?: React.ReactNode
+  to?: string
+}
+
 const CurrentState: FunctionComponent<CurrentStateProps> = ({
-  refreshPoolData,
   address,
   tokenId,
   nonce,
 }) => {
   const [page, setPage] = useState<Page>(Page.ApproveContract)
-  const isFirstPage = page === Page.ApproveContract
-  const progress = isFirstPage ? 0.5 : 1
-  const status = isFirstPage ? "Approve Contract" : "Pool Closed"
-  const { vaultAddress, isManager } = useGetPoolData()
-  const { onExitPool, isPending } = useOnExitPool()
+  const { vaultAddress, isManager, approved, auction } = useGetPoolData()
+  const { onApproveTransfer, isPending: isPendingApproval } =
+    useOnApproveTransfer()
+  const { onExitPool, isPending: isPendingExit } = useOnExitPool()
 
-  const copy = useMemo(
-    () =>
-      isFirstPage ? (
-        <>
-          <p>Are you sure you want to close your pool?</p>
-          <p>Here is what you need to know;</p>
-          <ul>
-            <li>
-              <strong>This action is irriversible.</strong>
-            </li>
-            <li>A 24h auction will start at pool closure.</li>
-            <li>The auction proceeds will be sent to your wallet.</li>
-          </ul>
-        </>
-      ) : (
-        <P>Your pool has sucessfully been closed and the auction started.</P>
-      ),
-    [isFirstPage]
-  )
+  const isPending = isPendingApproval || isPendingExit
 
-  const buttonProps = {
-    buttonType: isFirstPage ? ButtonType.Standard : ButtonType.Gray,
-    buttonText: isFirstPage ? "Yes, close this pool!" : "Go to Auction Page >",
-    onClick: isFirstPage
-      ? async () => {
-          if (isManager) {
-            onExitPool(vaultAddress, () => {
-              setPage(Page.PoolClosed)
-              refreshPoolData()
-            })
-          } else {
-            console.warn(
-              "You are not the owner of this Pool, and cannot close it"
-            )
+  useEffect(() => {
+    if (approved && page === Page.ApproveContract) {
+      setPage(Page.ClosePool)
+    }
+    if (Boolean(auction) && page !== Page.PoolClosed) {
+      setPage(Page.PoolClosed)
+    }
+  }, [approved, page, auction])
+
+  console.log("auction", auction)
+
+  const { progress, status, copy, buttonProps, title } =
+    useMemo<Content>(() => {
+      switch (page) {
+        case Page.ApproveContract:
+          return {
+            title: "Approve the Contract",
+            status: "Approve Contract",
+            progress: 0.33,
+            copy: (
+              <p>
+                To close your pool, you will first need to approve the contract
+              </p>
+            ),
+            buttonProps: {
+              buttonType: ButtonType.Standard,
+              buttonText: "Approve contract",
+              onClick: async () => {
+                if (isManager) {
+                  onApproveTransfer(vaultAddress, () => {
+                    setPage(Page.ClosePool)
+                  })
+                } else {
+                  console.warn(
+                    "You are not the owner of this Pool, and cannot close it"
+                  )
+                }
+              },
+            },
           }
-        }
-      : undefined,
-    as: isFirstPage ? undefined : Link,
-    to: isFirstPage
-      ? undefined
-      : `/auction?address=${address}&tokenId=${tokenId}&nonce=${nonce}`,
-  }
+        case Page.ClosePool:
+          return {
+            title: "Close your Pool",
+            status: "Close Pool",
+            progress: 0.66,
+            copy: (
+              <>
+                <p>Are you sure you want to close your pool?</p>
+                <p>Here is what you need to know;</p>
+                <ul>
+                  <li>
+                    <strong>This action is irriversible.</strong>
+                  </li>
+                  <li>A 24h auction will start at pool closure.</li>
+                  <li>The auction proceeds will be sent to your wallet.</li>
+                </ul>
+              </>
+            ),
+            buttonProps: {
+              buttonType: ButtonType.Standard,
+              buttonText: "Yes, close this pool!",
+              onClick: async () => {
+                if (isManager) {
+                  onExitPool(vaultAddress, () => {
+                    setPage(Page.PoolClosed)
+                  })
+                } else {
+                  console.warn(
+                    "You are not the owner of this Pool, and cannot close it"
+                  )
+                }
+              },
+            },
+          }
+        case Page.PoolClosed:
+          return {
+            title: "Congratulations!",
+            status: "Pool Closed",
+            progress: 1,
+            copy: (
+              <p>
+                Your pool has sucessfully been closed and the auction started.
+              </p>
+            ),
+            buttonProps: {
+              buttonType: ButtonType.Gray,
+              buttonText: "Go to Auction Page >",
+              as: Link,
+              to: `/auction?address=${address}&tokenId=${tokenId}&nonce=${nonce}`,
+            },
+          }
+        default:
+          return {
+            title: "Something went wrong...",
+            status: "",
+            progress: 0,
+            copy: null,
+            buttonProps: {
+              buttonType: ButtonType.Standard,
+              buttonText: "...",
+            },
+          }
+      }
+    }, [
+      address,
+      isManager,
+      nonce,
+      onApproveTransfer,
+      onExitPool,
+      page,
+      tokenId,
+      vaultAddress,
+    ])
 
   return (
     <Container>
       <StyledProgressBar progress={progress} label={null} />
       <Wrapper>
         <PageStatus>
-          <span>{page + 1}/2</span> {status}
+          <span>{page + 1}/3</span> {status}
         </PageStatus>
-        <Title>{isFirstPage ? "Close your Pool" : "Congratulations!"}</Title>
+        <Title>{title}</Title>
         <Main>{copy}</Main>
         <StyledButton
           {...buttonProps}
-          fullWidth={isFirstPage}
-          disabled={!isManager}
+          fullWidth={buttonProps.buttonType === ButtonType.Standard}
+          disabled={!isManager || isPending}
         >
-          {isPending ? "Closing pool..." : buttonProps.buttonText}
+          {isPending ? "Pending tx..." : buttonProps.buttonText}
         </StyledButton>
       </Wrapper>
-      <PersistentBanner type="error" bottom="0">
-        Only the owner of the pool can close it
-      </PersistentBanner>
+      {!isManager && !auction && (
+        <PersistentBanner type="error" bottom="0">
+          Only the owner of the pool can close it
+        </PersistentBanner>
+      )}
     </Container>
   )
 }

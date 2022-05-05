@@ -5,7 +5,6 @@ import {
   Exa,
   ProgressBar,
   Kilo,
-  P,
   Button,
   ButtonType,
   PersistentBanner,
@@ -235,7 +234,7 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
         <StyledButton
           {...buttonProps}
           fullWidth={buttonProps.buttonType === ButtonType.Standard}
-          disabled={!isManager || isPending}
+          disabled={page !== Page.PoolClosed && (!isManager || isPending)}
         >
           {isPending ? "Pending tx..." : buttonProps.buttonText}
         </StyledButton>

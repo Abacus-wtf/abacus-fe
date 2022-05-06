@@ -300,7 +300,7 @@ export const useSetPoolData = () => {
         let approvedBribeFactory = false
         let tickets = []
         let ownerOfNFT = ""
-        let tokensLocked = ""
+        let userTokensLocked = ""
         const variables: GetPoolQueryVariables = {
           id: vaultAddress?.toLowerCase() ?? "",
         }
@@ -334,10 +334,11 @@ export const useSetPoolData = () => {
             )
           )
           creditsAvailable = multi[0][0]
-          tokensLocked = formatEther(multi[1][0])
+          userTokensLocked = formatEther(multi[1][0])
           approved = approval
           approvedBribeFactory = approvalBribe
         }
+
         let auction: Auction
         if (closePoolContract[0] !== ZERO_ADDRESS) {
           const [auctionComplete, auctionEndTime, highestBid, highestBidder] =
@@ -398,7 +399,7 @@ export const useSetPoolData = () => {
             auction.isAccountClaimed = isAccountClaimed[0]
             auction.principalCalculated = principalCalculated[0]
             auction.profit =
-              Number(formatEther(auctionPremium[0])) * Number(tokensLocked)
+              Number(formatEther(auctionPremium[0])) * Number(userTokensLocked)
             auction.creditsAvailableForPurchase = formatEther(
               creditsAvailableForPurchase[0]
             )
@@ -418,7 +419,7 @@ export const useSetPoolData = () => {
           collectionTitle: asset.collection.name,
           nftName: asset.name || "",
           symbol: symbol[0],
-          tokensLocked,
+          userTokensLocked,
           tokenPrice: IS_PRODUCTION ? ".001" : "0.001",
           isManager: ownerOf.toLowerCase() === account.toLowerCase(),
           creditsAvailable: BigNumber.from(creditsAvailable).toString(),

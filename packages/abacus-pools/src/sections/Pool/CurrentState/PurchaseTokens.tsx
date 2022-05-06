@@ -13,6 +13,7 @@ import {
   ButtonType,
   Range,
 } from "abacus-ui"
+import { formatEther } from "ethers/lib/utils"
 import { Link } from "gatsby"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
@@ -107,10 +108,10 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
   const [lockDuration, setLockDuration] = useState<number>(null)
   const [isCustomDuration, setIsCustomDuration] = useState(false)
   const ethUSD = useEthToUSD(Number(eth))
-  const { tokenPrice, nftName, tokensLocked } = useGetPoolData()
+  const { tokenPrice, nftName, size } = useGetPoolData()
   const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
 
-  const numTokensLocked = Number(tokensLocked ?? 0)
+  const numTokensLocked = Number(formatEther(size))
   const currentTicketTokensLocked = numTokensLocked % 1000
   const currentTicket = Math.floor(numTokensLocked / 1000) + 1
   const percentTicketsSold = currentTicketTokensLocked / 1000

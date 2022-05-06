@@ -49,6 +49,7 @@ export interface Pool extends NFT {
   nonce: number
   ownerRewards?: string
   symbol?: string
+  userTokensLocked?: string
   tokensLocked?: string
   tokenPrice?: string
   isManager?: boolean

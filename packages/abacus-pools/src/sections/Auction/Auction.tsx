@@ -17,6 +17,7 @@ import { InfoBar } from "./InfoBar"
 import { AuctionInfo } from "./AuctionInfo"
 import { EmptyState } from "./EmptyState"
 import MakeBid from "./MakeBid"
+import { BiddingHistory } from "./BiddingHistory"
 // import { CurrentState } from "./CurrentState"
 
 const GlobalStyle = createGlobalStyle<{ url: string }>`
@@ -88,6 +89,7 @@ const Auction: FunctionComponent<AuctionProps> = ({ location }) => {
               <InfoBar />
               <AuctionInfo />
               <MakeBid refreshPoolData={refreshPoolData} />
+              <BiddingHistory />
             </>
           ) : (
             <EmptyState />

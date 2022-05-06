@@ -8,6 +8,7 @@ export interface NFT {
   tokenId: string
   img?: string
   collectionTitle?: string
+  collectionLink?: string
   owner?: string
   ownerLink?: string
 }

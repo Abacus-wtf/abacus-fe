@@ -409,6 +409,7 @@ export const useSetPoolData = () => {
         }
 
         const asset = (os as { assets: OpenSeaAsset[] }).assets[0]
+        console.log("asset", asset)
         const pool: Pool = {
           ownerRewards: formatEther(ownerRewards[0]),
           emissionsStarted: emissionsStarted[0],
@@ -417,6 +418,11 @@ export const useSetPoolData = () => {
           tokenId,
           nonce,
           collectionTitle: asset.collection.name,
+          collectionLink: asset?.collection?.name
+            ? `https://${
+                IS_PRODUCTION ? "" : "testnets."
+              }opensea.io/collection/${asset.collection.name.toLowerCase()}`
+            : "",
           nftName: asset.name || "",
           symbol: symbol[0],
           userTokensLocked,

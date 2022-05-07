@@ -6,6 +6,7 @@ import { AbacusIcon } from "@icons";
 type LogoProps = {
   isDark?: boolean;
   onClick?: () => void;
+  className?: string;
 };
 
 const PetaModified = styled.div<{ isDark: boolean }>`
@@ -27,8 +28,12 @@ const Container = styled.div`
   }
 `;
 
-const Logo: FunctionComponent<LogoProps> = ({ onClick, isDark = false }) => (
-  <Container onClick={onClick}>
+const Logo: FunctionComponent<LogoProps> = ({
+  onClick,
+  isDark = false,
+  className,
+}) => (
+  <Container onClick={onClick} className={className}>
     <AbacusIcon fill={isDark ? "white" : "black"} />
     <PetaModified isDark={isDark}>Abacus</PetaModified>
   </Container>

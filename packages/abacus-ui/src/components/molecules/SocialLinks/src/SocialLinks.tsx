@@ -1,8 +1,8 @@
 /* eslint-disable import/no-webpack-loader-syntax */
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
+import { Twitter, Discord, Medium } from "@icons";
 import { VisuallyHidden } from "../../../atoms";
-import { Twitter, Discord, Medium } from "./icons";
 
 type SocialLinksProps = {
   twitter: string;

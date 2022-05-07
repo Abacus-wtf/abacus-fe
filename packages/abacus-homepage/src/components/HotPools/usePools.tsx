@@ -1,0 +1,55 @@
+import { useQuery } from "urql"
+import { GetPoolsDocument } from "abacus-graph"
+import { PoolCardProps } from "@components/PoolCard"
+import { matchOpenSeaAssetToNFT, openseaGetMany } from "abacus-utils"
+import { useEffect, useState } from "react"
+
+const OpenSeaURL = process.env.GATSBY_OPENSEA_API
+
+const usePools = () => {
+  const [pools, setPools] = useState<PoolCardProps[]>([])
+  const [result] = useQuery({
+    query: GetPoolsDocument,
+    variables: { first: 3, skip: 0, where: { status_lt: 3 } },
+  })
+
+  const { data, fetching } = result
+
+  useEffect(() => {
+    const getMetadata = async () => {
+      const vaults =
+        data?.vaults.map((vault) => ({
+          ...vault,
+          tokenId: vault.tokenId.toString(),
+        })) ?? null
+      if (vaults) {
+        const { assets } = await openseaGetMany(vaults, {
+          url: OpenSeaURL,
+        })
+
+        const mappedPools: PoolCardProps[] =
+          vaults.map((vault) => {
+            const asset = matchOpenSeaAssetToNFT(assets, vault)
+
+            return {
+              id: vault.id,
+              imgSrc: asset.image_preview_url || asset.image_url,
+              alt: `${asset.name} in NFT Collection: ${asset.collection}`,
+              poolName: asset.name,
+              poolSize: vault.size.toString(),
+              link: `${process.env.GATSBY_APP_URL}/pool/?address=${vault.nftAddress}&tokenId=${vault.tokenId}&nonce=${vault.nonce}`,
+              fetching,
+            }
+          }) ?? null
+        if (mappedPools) {
+          setPools(mappedPools)
+        }
+      }
+    }
+    getMetadata()
+  }, [data, fetching])
+
+  return { pools, fetching }
+}
+
+export { usePools }

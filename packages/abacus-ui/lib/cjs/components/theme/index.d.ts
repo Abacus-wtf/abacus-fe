@@ -29,6 +29,8 @@ declare const defaultTheme: {
             readonly gray: "#CCCCCC";
             readonly black: "#000000";
             readonly brown: "#964B00";
+            readonly lightBlue: "#F3FCFF";
+            readonly lightGreen: "#DDFFF1";
         };
     };
     readonly layout: {
@@ -36,7 +38,7 @@ declare const defaultTheme: {
     };
     readonly borderRadius: {
         readonly main: "10px";
-        readonly section: "26px";
+        readonly section: "24px";
     };
     readonly boxShadow: {
         readonly button: "0px 5px 60px rgba(0, 0, 0, 0.1)";

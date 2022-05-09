@@ -6,7 +6,6 @@ import { ABC_BRIBE_FACTORY, NetworkSymbolEnum } from "@config/constants"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import {
   useOnApproveTransfer,
-  useOnCollectEmissions,
   useOnExitPool,
   useOnStartEmissions,
 } from "@hooks/vaultFunc"
@@ -25,8 +24,6 @@ const ManagePool = ({ refresh }: StateComponent) => {
   const { onAcceptBribe, isPending: isPendingAcceptBribe } = useAcceptBribe()
   const { onApproveTransfer, isPending: isPendingApproval } =
     useOnApproveTransfer()
-  const { onCollectEmissions, isPending: isCollectEmissionsPending } =
-    useOnCollectEmissions()
 
   return (
     <>
@@ -97,25 +94,6 @@ const ManagePool = ({ refresh }: StateComponent) => {
               : !poolData.approvedBribeFactory
               ? "Approve Bribe Factory"
               : "Accept Bribes"}
-          </Button>
-          <Button
-            className="notConnected"
-            disabled={
-              !isNetworkSymbolETH ||
-              isCollectEmissionsPending ||
-              Number(poolData.ownerRewards) === 0 ||
-              !poolData.emissionsStarted
-            }
-            style={{ width: "100%", borderRadius: 5 }}
-            onClick={() => {
-              onCollectEmissions(poolData.vaultAddress, async () => {
-                await refresh()
-              })
-            }}
-          >
-            {isCollectEmissionsPending
-              ? "Loading..."
-              : `Collect Emissions (${poolData.ownerRewards || 0} ABC)`}
           </Button>
         </ButtonContainer>
         <Tooltip

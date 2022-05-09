@@ -143,43 +143,33 @@ export const useUnlockPosition = () => {
   const poolData = useGetPoolData()
 
   const onUnlockPosition = useCallback(
-    async (tokens: string[], cb: () => void) => {
+    async (cb: () => void) => {
       const vaultContract = getContract(
         poolData.vaultAddress,
         VAULT_ABI,
         library,
         account
       )
-      let max = 0
-      for (let i = 0; i < tokens.length; i += 1) {
-        if (max < Number(tokens[i])) {
-          max = Number(tokens[i])
-        }
-      }
-      let min = 0
-      while (min <= max) {
-        const method = vaultContract.sellToken
-        const estimate = vaultContract.estimateGas.sellToken
-        const args = [account, min]
-        const value = null
-        console.log(args)
-        const txnCb = async (response: any) => {
-          addTransaction(response, {
-            summary: "Unlock Position",
-          })
-          await response.wait()
-          cb()
-        }
-        // eslint-disable-next-line no-await-in-loop
-        await generalizedContractCall({
-          method,
-          estimate,
-          args,
-          value,
-          cb: txnCb,
+      const method = vaultContract.sell
+      const estimate = vaultContract.estimateGas.sell
+      const args = [account]
+      const value = null
+      console.log(args)
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Unlock Position",
         })
-        min += 100
+        await response.wait()
+        cb()
       }
+      // eslint-disable-next-line no-await-in-loop
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
     },
     [library, account, generalizedContractCall, addTransaction, poolData]
   )
@@ -284,8 +274,8 @@ export const useOnPurchaseTokens = () => {
         cycle += 1
       }
 
-      const method = vaultContract.purchaseMulti
-      const estimate = vaultContract.estimateGas.purchaseMulti
+      const method = vaultContract.purchase
+      const estimate = vaultContract.estimateGas.purchase
       const args = [account, account, ticketArray, purchaseAmount, lockupPeriod]
       console.log(args)
       const value = parseEther(
@@ -345,13 +335,13 @@ export const useOnPurchaseIndividualTicket = () => {
         account
       )
 
-      const method = vaultContract.purchaseToken
-      const estimate = vaultContract.estimateGas.purchaseToken
+      const method = vaultContract.purchase
+      const estimate = vaultContract.estimateGas.purchase
       const args = [
         account,
         account,
-        parseEther(`${ticket}`),
-        parseEther(tokenAmount),
+        [parseEther(`${ticket}`)],
+        [parseEther(tokenAmount)],
         lockupPeriod,
       ]
       console.log(args)

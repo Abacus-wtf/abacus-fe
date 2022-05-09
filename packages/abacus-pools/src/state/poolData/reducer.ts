@@ -43,7 +43,6 @@ export interface Pool extends NFT {
   vaultAddress?: string
   nftName: string
   nonce: number
-  ownerRewards?: string
   symbol?: string
   tokensLocked?: string
   tokenPrice?: string

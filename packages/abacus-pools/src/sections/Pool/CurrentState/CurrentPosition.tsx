@@ -8,11 +8,7 @@ import styled from "styled-components"
 import moment from "moment"
 import _ from "lodash"
 import Buttons from "@components/Button"
-import {
-  useChangePayoutRatio,
-  usePurchaseCredits,
-  useUnlockPosition,
-} from "@hooks/vaultFunc"
+import { usePurchaseCredits, useUnlockPosition } from "@hooks/vaultFunc"
 import { NumericalInput } from "@components/Input"
 import { formatEther } from "ethers/lib/utils"
 import { Stat, StatTitle, TicketContainer } from "./CurrentState.styles"
@@ -35,16 +31,12 @@ const CurrentPosition = () => {
   const getTraderProfileData = useGetTraderProfileData()
   const poolData = useGetPoolData()
   const [inputAvailableCredits, setInputsAvailableCredits] = useState("")
-  const [payoutRatioInput, setPayoutRatio] = useState("")
   const { onPurchaseCredits, isPending: isPendingPurchaseCredits } =
     usePurchaseCredits()
-  const { onChangePayoutRatio, isPending: isPendingPayoutRatio } =
-    useChangePayoutRatio()
 
   if (!traderData) {
     return <div>Loading...</div>
   }
-  console.log("ticketsopened", traderData.ticketsOwned)
   return (
     <Container>
       <Stat title="Number of Tokens Locked:" value={traderData.tokensLocked} />
@@ -54,10 +46,12 @@ const CurrentPosition = () => {
         title="Current Payout Ratio:"
         value={`${traderData.creditPurchasePercentage}%`}
       />
-      <Stat
-        title="Unlock Time:"
-        value={moment(traderData.timeUnlock * 1000).fromNow()}
-      />
+      {Number(traderData.timeUnlock) !== 0 && (
+        <Stat
+          title="Unlock Time:"
+          value={moment(Number(traderData.timeUnlock) * 1000).fromNow()}
+        />
+      )}
       <TicketContainer>
         {traderData.ticketsOwned &&
           _.map(Object.entries(traderData.ticketsOwned), ([ticket, amount]) => (
@@ -112,45 +106,13 @@ const CurrentPosition = () => {
             </Buttons>
           </>
         )}
-      <InputContainer
-        style={{
-          border: BORDER,
-          borderRadius: 15,
-          marginTop: 20,
-        }}
-      >
-        <LabelRow>
-          <BalanceContainer>
-            <NumericalInput
-              placeholder="10"
-              value={payoutRatioInput}
-              onChange={(e) => setPayoutRatio(e.target.value)}
-            />
-          </BalanceContainer>
-        </LabelRow>
-      </InputContainer>
-      <Buttons
-        style={{ marginTop: 20, marginBottom: 20 }}
-        onClick={() =>
-          onChangePayoutRatio(payoutRatioInput, () => getTraderProfileData())
-        }
-        disabled={
-          isPendingPayoutRatio ||
-          payoutRatioInput === "" ||
-          Number(payoutRatioInput) > 100
-        }
-      >
-        {isPendingPayoutRatio ? "Loading..." : "Adjust Payout Ratio"}
-      </Buttons>
-      {Number(traderData.timeUnlock) <= moment().unix() &&
+      {Number(traderData.timeUnlock) <= moment().unix() * 1000 &&
         Number(traderData.tokensLocked) !== 0 && (
           <Buttons
             style={{ marginTop: 20 }}
             onClick={() => {
               console.log(Object.keys(traderData.ticketsOwned))
-              onUnlockPosition(Object.keys(traderData.ticketsOwned), () =>
-                getTraderProfileData()
-              )
+              onUnlockPosition(() => getTraderProfileData())
             }}
             disabled={isUnlockPending}
           >

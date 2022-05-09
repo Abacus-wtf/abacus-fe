@@ -17,7 +17,6 @@ import AMM from "./AMM"
 import { StateComponent } from "."
 import { ButtonContainer, Tab } from "../Pool.styles"
 import FutureOrder from "./FutureOrder"
-import Sell from "./Sell"
 
 const Container = styled.div`
   display: flex;
@@ -85,16 +84,6 @@ const Tickets = ({ refresh }: StateComponent) => {
             <Tab disabled={tab === Tabs.Buy} onClick={() => setTab(Tabs.Buy)}>
               Buy
             </Tab>
-            {currentTicket && Number(traderData.ticketsOpen) !== 0 ? (
-              <></>
-            ) : (
-              <Tab
-                disabled={tab === Tabs.Sell}
-                onClick={() => setTab(Tabs.Sell)}
-              >
-                Sell
-              </Tab>
-            )}
             {currentTicket && currentTicket.tokenPurchasesLength === 0 ? (
               <></>
             ) : (
@@ -115,17 +104,6 @@ const Tickets = ({ refresh }: StateComponent) => {
               }}
               currentTicket={currentTicket}
             />
-          ) : tab === Tabs.Sell ? (
-            <>
-              <Sell
-                currentTicket={currentTicket}
-                refresh={async () => {
-                  await refresh()
-                  await getTickets()
-                  setIsModalOpen(false)
-                }}
-              />
-            </>
           ) : (
             <FutureOrder
               currentTicket={currentTicket}

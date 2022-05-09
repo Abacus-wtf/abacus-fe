@@ -215,12 +215,11 @@ export const useSetPoolData = () => {
           ),
           erc721(address).methods.ownerOf(tokenId).call(),
         ])
-        const [closePoolContract, symbol, emissionsStarted, ownerRewards] =
-          await vault(
-            vaultAddress,
-            ["closePoolContract", "symbol", "emissionsStarted", "ownerRewards"],
-            [[], [], [], []]
-          )
+        const [closePoolContract, symbol, emissionsStarted] = await vault(
+          vaultAddress,
+          ["closePoolContract", "symbol", "emissionsStarted"],
+          [[], [], []]
+        )
 
         let creditsAvailable = BigNumber.from(0)
         let approved = false
@@ -239,7 +238,7 @@ export const useSetPoolData = () => {
           ] = await Promise.all([
             vault(
               vaultAddress,
-              ["getCreditsAvailableForPurchase", "getUserPositionInfo"],
+              ["getAvailableCredits", "getUserPositionInfo"],
               [[account], [account]]
             ),
             erc721(address)
@@ -316,11 +315,7 @@ export const useSetPoolData = () => {
                 ],
                 [[account], [], [account], [account]]
               ),
-              vault(
-                vaultAddress,
-                ["getCreditsAvailableForPurchase"],
-                [[account]]
-              ),
+              vault(vaultAddress, ["getAvailableCredits"], [[account]]),
             ])
 
             auction.isAccountClaimed = isAccountClaimed[0]
@@ -337,7 +332,6 @@ export const useSetPoolData = () => {
 
         const asset = (os as { assets: OpenSeaAsset[] }).assets[0]
         const pool: Pool = {
-          ownerRewards: formatEther(ownerRewards[0]),
           emissionsStarted: emissionsStarted[0],
           vaultAddress,
           address,

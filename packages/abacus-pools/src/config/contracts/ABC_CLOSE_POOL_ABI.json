@@ -43,6 +43,51 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "availableCredits",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "availableCreditsCalculated",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "calculateAvailableCredits",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "calculatePositionPremiums",
     "outputs": [],
@@ -50,13 +95,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "tickets",
-        "type": "uint256[]"
-      }
-    ],
+    "inputs": [],
     "name": "calculatePrincipal",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -106,11 +145,6 @@
         "internalType": "uint256",
         "name": "_amountCredits",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amountOfProfitToUse",
-        "type": "uint256"
       }
     ],
     "name": "closeAccount",
@@ -136,6 +170,58 @@
     "name": "endAuction",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAuctionEndTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "endTime",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAuctionPremium",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "premium",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "heldToken",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "heldTokenId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -172,8 +258,28 @@
         "type": "address"
       },
       {
+        "internalType": "address",
+        "name": "_controller",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_heldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_heldTokenId",
+        "type": "uint256"
+      },
+      {
         "internalType": "uint256",
         "name": "_nftVal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_version",
         "type": "uint256"
       }
     ],
@@ -286,24 +392,11 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "ticketNumbers",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "slashOverBidders",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "vault",
     "outputs": [
       {
-        "internalType": "contract Vault",
+        "internalType": "contract IVault",
         "name": "",
         "type": "address"
       }
@@ -316,7 +409,7 @@
     "name": "vaultFactory",
     "outputs": [
       {
-        "internalType": "contract VaultFactory",
+        "internalType": "contract IVaultFactory",
         "name": "",
         "type": "address"
       }

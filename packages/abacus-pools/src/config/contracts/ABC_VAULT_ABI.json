@@ -189,6 +189,30 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "calculateCreditsAvailable",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_caller",
         "type": "address"
       },
@@ -211,28 +235,7 @@
   },
   {
     "inputs": [],
-    "name": "claimFindersFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "claimKeeperFees",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "claimOwnersReward",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "claimPendingResidual",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -284,30 +287,6 @@
         "internalType": "contract AbacusController",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_user",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "costToPurchaseCredits",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -385,13 +364,6 @@
   },
   {
     "inputs": [],
-    "name": "distributeFees",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "emissionsStarted",
     "outputs": [
       {
@@ -407,11 +379,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "_user",
         "type": "address"
       }
     ],
-    "name": "findersFee",
+    "name": "getAvailableCredits",
     "outputs": [
       {
         "internalType": "uint256",
@@ -443,7 +415,31 @@
         "type": "address"
       }
     ],
-    "name": "getCreditsAvailableForPurchase",
+    "name": "getListOfTickets",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_epoch",
+        "type": "uint256"
+      }
+    ],
+    "name": "getNominalTokensPerEpoch",
     "outputs": [
       {
         "internalType": "uint256",
@@ -462,11 +458,11 @@
         "type": "address"
       }
     ],
-    "name": "getFinalCreditCount",
+    "name": "getPayoutRatio",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "payoutRatio",
         "type": "uint256"
       }
     ],
@@ -507,38 +503,6 @@
         "internalType": "address",
         "name": "buyer",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getTime",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_user",
-        "type": "address"
-      }
-    ],
-    "name": "getTokensLocked",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -675,13 +639,19 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "name",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "maxTicketPerEpoch",
     "outputs": [
       {
-        "internalType": "string",
+        "internalType": "uint256",
         "name": "",
-        "type": "string"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -689,12 +659,12 @@
   },
   {
     "inputs": [],
-    "name": "ownerRewards",
+    "name": "name",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "string",
         "name": "",
-        "type": "uint256"
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -759,25 +729,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "pendingResidual",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "poolClosed",
     "outputs": [
@@ -788,19 +739,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "purchaseCredits",
-    "outputs": [],
-    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -831,7 +769,7 @@
         "type": "uint256"
       }
     ],
-    "name": "purchaseMulti",
+    "name": "purchase",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -839,34 +777,20 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_caller",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_buyer",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
-        "name": "ticket",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_lockTime",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "purchaseToken",
-    "outputs": [],
-    "stateMutability": "payable",
+    "name": "rewardCapPerEpoch",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -875,14 +799,9 @@
         "internalType": "address",
         "name": "_user",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startingTicket",
-        "type": "uint256"
       }
     ],
-    "name": "sellToken",
+    "name": "sell",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -892,6 +811,19 @@
     "name": "startEmissions",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "startTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -942,6 +874,25 @@
   {
     "inputs": [],
     "name": "tokensLocked",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "totalNominalTokensPerEpoch",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1007,7 +958,12 @@
       },
       {
         "internalType": "uint256",
-        "name": "creditsPurchased",
+        "name": "startEpoch",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "finalEpoch",
         "type": "uint256"
       }
     ],

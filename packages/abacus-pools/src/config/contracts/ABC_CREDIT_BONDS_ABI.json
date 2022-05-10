@@ -139,33 +139,8 @@
     "type": "fallback"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "abcCreditStored",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "addAbcCredit",
+    "inputs": [],
+    "name": "begin",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -175,6 +150,19 @@
     "name": "bond",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_epoch",
+        "type": "uint256"
+      }
+    ],
+    "name": "clearUnusedBond",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -192,7 +180,7 @@
   },
   {
     "inputs": [],
-    "name": "currentEpoch",
+    "name": "eVaultStartTime",
     "outputs": [
       {
         "internalType": "uint256",
@@ -233,9 +221,27 @@
         "internalType": "address",
         "name": "_user",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "epoch",
+        "type": "uint256"
       }
     ],
     "name": "getPersonalBoost",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "modVal",
     "outputs": [
       {
         "internalType": "uint256",
@@ -254,51 +260,24 @@
         "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "tickets",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "amounts",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lockTime",
-        "type": "uint256"
-      }
-    ],
-    "name": "purchaseMulti",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
-        "name": "_vault",
+        "name": "_user",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "ticket",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lockTime",
+        "name": "_amount",
         "type": "uint256"
       }
     ],
-    "name": "purchaseToken",
-    "outputs": [],
+    "name": "sendToVault",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -319,13 +298,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "updateEpochNumber",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

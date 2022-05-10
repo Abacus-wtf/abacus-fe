@@ -315,7 +315,7 @@ export const useSetPoolData = () => {
             await Promise.all([
               vault(
                 vaultAddress,
-                ["getCreditsAvailableForPurchase", "getUserPositionInfo"],
+                ["getAvailableCredits", "getUserPositionInfo"],
                 [[account], [account]]
               ),
               erc721(address)

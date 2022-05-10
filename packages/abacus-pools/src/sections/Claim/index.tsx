@@ -6,17 +6,22 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "shards-react"
-import { ABC_EPOCH } from "@config/constants"
+import { ABC_EPOCH, ABC_FACTORY } from "@config/constants"
 import _ from "lodash"
-import { useClaimABCReward, useEndEpoch } from "@hooks/epochFunc"
+import {
+  useClaimABCReward,
+  useClaimEmissions,
+  useEndEpoch,
+} from "@hooks/epochFunc"
 import Buttons from "@components/Button"
-import { useActiveWeb3React, useMultiCall } from "@hooks/index"
+import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import { formatEther } from "ethers/lib/utils"
 import { Stat } from "@sections/Pool/CurrentState/CurrentState.styles"
 import { BigNumber } from "ethers"
 import moment from "moment"
 import styled from "styled-components"
 import EPOCH_VAULT_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
+import FACTORY_ABI from "../../config/contracts/ABC_FACTORY_ABI.json"
 
 export const DropdownMenuStyled = styled(DropdownMenu)`
   max-height: 400px;
@@ -35,18 +40,25 @@ const Claim: React.FC = () => {
   const [showEndEpoch, setShowEndEpoch] = useState(false)
   const [userData, setUserData] = useState<EpochData | null>(null)
   const [currentEpochSet, setCurrentEpochSet] = useState(false)
+  const [pendingRewards, setPendingRewards] = useState(0)
   const { onClaimABCReward, isPending } = useClaimABCReward()
+  const { onClaimEmissions, isPending: isPendingEmissions } =
+    useClaimEmissions()
   const { onEndEpoch, isPending: isPendingEndEpoch } = useEndEpoch()
   const epochVault = useMultiCall(EPOCH_VAULT_ABI)
+  const factoryVault = useWeb3Contract(FACTORY_ABI)
 
   useEffect(() => {
     const startData = async () => {
-      const [currentEpoch] = await epochVault(ABC_EPOCH, ["currentEpoch"], [[]])
+      const [_pendingRewards, [currentEpoch]] = await Promise.all([
+        factoryVault(ABC_FACTORY).methods.pendingReturns(account).call(),
+        epochVault(ABC_EPOCH, ["getCurrentEpoch"], [[]]),
+      ])
 
       const [abcEmissions, userCredits, getEpochEndTime] = await epochVault(
         ABC_EPOCH,
-        ["getCurrentAbcEmission", "getUserCredits", "getEpochEndTime"],
-        [[], [currentEpoch[0], account], [currentEpoch[0]]]
+        ["getBaseEmission", "getUserCredits", "getEpochEndTime"],
+        [[currentEpoch[0]], [currentEpoch[0], account], [currentEpoch[0]]]
       )
 
       console.log(Number(formatEther(userCredits[0])))
@@ -54,6 +66,7 @@ const Claim: React.FC = () => {
       console.log(BigNumber.from(currentEpoch[0]).toNumber())
       console.log(BigNumber.from(getEpochEndTime[0]).toNumber())
       console.log(moment().unix())
+      setPendingRewards(Number(formatEther(_pendingRewards)))
       setShowEndEpoch(
         moment().unix() > BigNumber.from(getEpochEndTime[0]).toNumber()
       )
@@ -67,8 +80,8 @@ const Claim: React.FC = () => {
     const getClaimData = async () => {
       const [abcEmissions, userCredits, getEpochEndTime] = await epochVault(
         ABC_EPOCH,
-        ["getCurrentAbcEmission", "getUserCredits", "getEpochEndTime"],
-        [[], [epoch, account], [epoch]]
+        ["getBaseEmission", "getUserCredits", "getEpochEndTime"],
+        [[epoch], [epoch, account], [epoch]]
       )
       setShowEndEpoch(
         moment().unix() > BigNumber.from(getEpochEndTime[0]).toNumber()
@@ -89,7 +102,7 @@ const Claim: React.FC = () => {
         console.error(e)
       }
     }
-  }, [account, epochVault, epoch, currentEpochSet])
+  }, [account, epochVault, epoch, currentEpochSet, factoryVault])
 
   if (userData === null) {
     return (
@@ -125,6 +138,14 @@ const Claim: React.FC = () => {
             ? "Credits Claimed or No Credits Earned This Epoch"
             : "Claim ABC Reward"}
         </Buttons>
+        {pendingRewards !== 0 && (
+          <Buttons
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            onClick={() => onClaimEmissions(() => {})}
+          >
+            {isPendingEmissions ? "Loading..." : "Claim Emissions"}
+          </Buttons>
+        )}
         {showEndEpoch && (
           <Buttons
             disabled={isPendingEndEpoch}

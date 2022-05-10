@@ -41,7 +41,7 @@ const Utility: FunctionComponent = () => (
     <Breakdown />
     <StyledButton
       as="a"
-      href="/Abacus_Whitepaper.pdf"
+      href="https://docs.google.com/document/d/1VriJSb1yBap3IoMckADAx60V582dYdSqa0Ihtpgx8Fs/edit#"
       buttonType={ButtonType.Gray}
     >
       Read Whitepaper

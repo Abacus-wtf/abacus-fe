@@ -147,7 +147,7 @@ const Ve: React.FC = () => {
 
   const getClaimData = async () => {
     const currentEpoch = await epochCall(ABC_EPOCH)
-      .methods.currentEpoch()
+      .methods.getCurrentEpoch()
       .call()
     const [
       [veHolderHistory, veBalance, getAmountAllocated, getAmountAutoAllocated],

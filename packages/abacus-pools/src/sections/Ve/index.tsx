@@ -490,7 +490,7 @@ const Ve: React.FC = () => {
                 ? "Loading..."
                 : "Remove Auto Allocation"}
               </FullWidthButton> */}
-          </ButtonContainer>
+      {/* </ButtonContainer>
         </Card>
       </StyledSplitContainer> */}
     </UniversalContainer>

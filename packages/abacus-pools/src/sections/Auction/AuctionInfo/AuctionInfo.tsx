@@ -16,7 +16,7 @@ const AuctionInfo: FunctionComponent = () => {
   const price = Number(formatEther(size))
   const priceUSD = useEthToUSD(price)
 
-  const end = auction.auctionEndTime
+  const end = auction.auctionEndTime * 1000
 
   return (
     <Container>

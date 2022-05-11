@@ -36,6 +36,12 @@ export interface Auction {
   isAccountClaimed: boolean
   claimPreviousBid: boolean
   ownedTickets: number[]
+  bids: {
+    id: string
+    amount: number
+    bidder: string
+    timestamp: number
+  }[]
 }
 
 export enum PoolStatus {

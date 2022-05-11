@@ -20,8 +20,8 @@ const Container = styled.li`
 `
 
 type HistoryItemProps = {
-  bidAmount: number
-  address: string
+  amount: number
+  bidder: string
   timestamp: number
   etherscanLink: string
 }
@@ -37,28 +37,28 @@ const InfoRow = styled(Kilo)`
 `
 
 const HistoryItem = ({
-  bidAmount,
-  address,
+  amount,
+  bidder,
   timestamp,
   etherscanLink,
 }: HistoryItemProps) => {
-  const addressLink = address
+  const addressLink = bidder
     ? `https://${
         IS_PRODUCTION ? "" : "testnets."
-      }opensea.io/${address.toLowerCase()}`
+      }opensea.io/${bidder.toLowerCase()}`
     : ""
-  const bidAmountUSD = useEthToUSD(bidAmount)
+  const amountUSD = useEthToUSD(amount)
   return (
     <Container>
       <InfoContainer>
         <InfoRow>
-          Bid&nbsp;<strong>{bidAmount} ETH</strong>&nbsp;-&nbsp;
-          <strong>${bidAmountUSD}</strong>
+          Bid&nbsp;<strong>{amount} ETH</strong>&nbsp;-&nbsp;
+          <strong>${amountUSD}</strong>
         </InfoRow>
         <InfoRow>
           by&nbsp;
           <a href={addressLink} target="_blank" rel="noopener noreferrer">
-            {shortenAddress(address)}
+            {shortenAddress(bidder)}
           </a>
           &nbsp;
           {moment(timestamp).format("DD/MM/YYYY, HH:MM A")}

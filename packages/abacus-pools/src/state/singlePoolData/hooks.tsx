@@ -22,6 +22,9 @@ import { PAGINATE_BY } from "@state/poolData/constants"
 import request from "graphql-request"
 import { createSelector } from "@reduxjs/toolkit"
 import {
+  GetAuctionDocument,
+  GetAuctionQuery,
+  GetAuctionQueryVariables,
   GetPoolDocument,
   GetPoolQuery,
   GetPoolQueryVariables,
@@ -300,13 +303,19 @@ export const useSetPoolData = () => {
         let tickets = []
         let ownerOfNFT = ""
         let userTokensLocked = ""
-        const variables: GetPoolQueryVariables = {
+        const variables: GetPoolQueryVariables | GetAuctionQueryVariables = {
           id: vaultAddress?.toLowerCase() ?? "",
         }
 
         const { vault: _pool } = await request<GetPoolQuery>(
           GRAPHQL_ENDPOINT,
           GetPoolDocument,
+          variables
+        )
+
+        const { auction: _auction } = await request<GetAuctionQuery>(
+          GRAPHQL_ENDPOINT,
+          GetAuctionDocument,
           variables
         )
 
@@ -340,22 +349,16 @@ export const useSetPoolData = () => {
 
         let auction: Auction
         if (closePoolContract[0] !== ZERO_ADDRESS) {
-          const [auctionComplete, auctionEndTime, highestBid, highestBidder] =
-            await closePool(
-              closePoolContract[0],
-              [
-                "auctionComplete",
-                "auctionEndTime",
-                "highestBid",
-                "highestBidder",
-              ],
-              [[], [], [], []]
-            )
+          const [auctionComplete, auctionEndTime] = await closePool(
+            closePoolContract[0],
+            ["auctionComplete", "auctionEndTime"],
+            [[], [], []]
+          )
           auction = {
             auctionComplete: auctionComplete[0],
             auctionEndTime: BigNumber.from(auctionEndTime[0]).toNumber(),
-            highestBid: Number(formatEther(highestBid[0])),
-            highestBidder: highestBidder[0],
+            highestBid: Number(formatEther(_auction.highestBid)),
+            highestBidder: _auction.highestBidder ?? "",
             closePoolAddress: closePoolContract[0],
             profit: 0,
             principalCalculated: false,
@@ -367,6 +370,11 @@ export const useSetPoolData = () => {
               ownerOfNFT.toLowerCase() !== vaultAddress.toLowerCase(),
             isAccountClaimed: false,
             claimPreviousBid: false,
+            bids: _auction.bids.map((bid) => ({
+              ...bid,
+              timestamp: bid.timestamp * 1000,
+              amount: Number(formatEther(bid.amount)),
+            })),
           }
           if (account) {
             const [

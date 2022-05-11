@@ -1,6 +1,7 @@
 import { LoadingOverlay } from "@components/LoadingOverlay"
 import { useOnBid } from "@hooks/auctionFunc"
 import { useEthToUSD } from "@state/application/hooks"
+import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { Button, Exa, Input, Section } from "abacus-ui"
 import React, { FunctionComponent, useState } from "react"
 import styled from "styled-components"
@@ -56,8 +57,16 @@ type PurchaseTokensProps = {
 const MakeBid: FunctionComponent<PurchaseTokensProps> = ({
   refreshPoolData,
 }) => {
+  const { auction } = useGetPoolData()
   const [eth, setEth] = useState("")
   const { onBid, isPending } = useOnBid()
+
+  const ended =
+    auction.auctionComplete || auction.auctionEndTime <= new Date().getTime()
+
+  if (ended) {
+    return null
+  }
 
   const makeBid = async () => {
     await onBid(eth, async () => {

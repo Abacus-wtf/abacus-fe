@@ -1,6 +1,5 @@
 import { useEthToUSD } from "@state/application/hooks"
 import React, { FunctionComponent } from "react"
-import { formatEther } from "ethers/lib/utils"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import Countdown from "./Countdown"
 import {
@@ -12,17 +11,16 @@ import {
 } from "./AuctionInfo.styled"
 
 const AuctionInfo: FunctionComponent = () => {
-  const { size, auction } = useGetPoolData()
-  const price = Number(formatEther(size))
-  const priceUSD = useEthToUSD(price)
+  const { auction } = useGetPoolData()
+  const priceUSD = useEthToUSD(auction.highestBid)
 
   const end = auction.auctionEndTime * 1000
 
   return (
     <Container>
       <InfoWrapper>
-        <InfoLabel>Reserve Price</InfoLabel>
-        <InfoData>{price} ETH</InfoData>
+        <InfoLabel>Highest Bid</InfoLabel>
+        <InfoData>{auction.highestBid} ETH</InfoData>
         <InfoSecondaryData>${priceUSD}</InfoSecondaryData>
       </InfoWrapper>
       <InfoWrapper>

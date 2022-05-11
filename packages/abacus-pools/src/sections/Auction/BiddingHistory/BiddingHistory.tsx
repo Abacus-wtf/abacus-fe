@@ -1,3 +1,5 @@
+import { IS_PRODUCTION } from "@config/constants"
+import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { Exa, Section } from "abacus-ui"
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
@@ -19,41 +21,18 @@ const HistoryContainer = styled.ul`
   width: 100%;
 `
 
+const getEtherscanLink = (id: string) =>
+  `https://${IS_PRODUCTION ? "" : "rinkeby."}etherscan.io/tx/${id}`
+
 const BiddingHistory: FunctionComponent = () => {
-  const history = [
-    {
-      id: 1,
-      bidAmount: 0.01,
-      address: "0xd365Ae104DA3E86EA36f268050D6e5212a42e360",
-      timestamp: 1651862054000,
-      etherscanLink:
-        "https://rinkeby.etherscan.io/tx/0x0a1e5c3c6670c098c13406bc2707727a85fc36d395682aac0c00726a0b9fb572",
-    },
-    {
-      id: 2,
-      bidAmount: 0.01,
-      address: "0xd365Ae104DA3E86EA36f268050D6e5212a42e360",
-      timestamp: 1651862054000,
-      etherscanLink:
-        "https://rinkeby.etherscan.io/tx/0x0a1e5c3c6670c098c13406bc2707727a85fc36d395682aac0c00726a0b9fb572",
-    },
-    {
-      id: 3,
-      bidAmount: 0.01,
-      address: "0xd365Ae104DA3E86EA36f268050D6e5212a42e360",
-      timestamp: 1651862054000,
-      etherscanLink:
-        "https://rinkeby.etherscan.io/tx/0x0a1e5c3c6670c098c13406bc2707727a85fc36d395682aac0c00726a0b9fb572",
-    },
-    {
-      id: 4,
-      bidAmount: 0.01,
-      address: "0xd365Ae104DA3E86EA36f268050D6e5212a42e360",
-      timestamp: 1651862054000,
-      etherscanLink:
-        "https://rinkeby.etherscan.io/tx/0x0a1e5c3c6670c098c13406bc2707727a85fc36d395682aac0c00726a0b9fb572",
-    },
-  ]
+  const { auction } = useGetPoolData()
+
+  const history =
+    auction?.bids.map((bid) => ({
+      ...bid,
+      etherscanLink: getEtherscanLink(bid.id),
+    })) ?? []
+
   return (
     <Container>
       <Title>Bidding History</Title>

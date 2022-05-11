@@ -2,6 +2,7 @@ query GetAuction($id: ID!) {
   auction(id: $id) {
     id
     highestBid
+    highestBidder
     bids {
       id
       bidder
@@ -15,6 +16,7 @@ query GetAuctions {
   auctions {
     id
     highestBid
+    highestBidder
     bids {
       id
       bidder

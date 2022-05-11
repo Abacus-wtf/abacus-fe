@@ -159,6 +159,7 @@ export declare type Auction = {
     endTimestamp: Scalars['Int'];
     ended: Scalars['Boolean'];
     highestBid: Scalars['BigInt'];
+    highestBidder?: Maybe<Scalars['ID']>;
     id: Scalars['ID'];
 };
 export declare type AuctionBidsArgs = {
@@ -197,6 +198,14 @@ export declare type Auction_Filter = {
     highestBid_lte?: InputMaybe<Scalars['BigInt']>;
     highestBid_not?: InputMaybe<Scalars['BigInt']>;
     highestBid_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    highestBidder?: InputMaybe<Scalars['ID']>;
+    highestBidder_gt?: InputMaybe<Scalars['ID']>;
+    highestBidder_gte?: InputMaybe<Scalars['ID']>;
+    highestBidder_in?: InputMaybe<Array<Scalars['ID']>>;
+    highestBidder_lt?: InputMaybe<Scalars['ID']>;
+    highestBidder_lte?: InputMaybe<Scalars['ID']>;
+    highestBidder_not?: InputMaybe<Scalars['ID']>;
+    highestBidder_not_in?: InputMaybe<Array<Scalars['ID']>>;
     id?: InputMaybe<Scalars['ID']>;
     id_gt?: InputMaybe<Scalars['ID']>;
     id_gte?: InputMaybe<Scalars['ID']>;
@@ -211,6 +220,7 @@ export declare enum Auction_OrderBy {
     EndTimestamp = "endTimestamp",
     Ended = "ended",
     HighestBid = "highestBid",
+    HighestBidder = "highestBidder",
     Id = "id"
 }
 export declare type Bid = {
@@ -954,6 +964,7 @@ export declare type GetAuctionQuery = {
         __typename?: 'Auction';
         id: string;
         highestBid: string;
+        highestBidder?: string | null;
         bids: Array<{
             __typename?: 'Bid';
             id: string;
@@ -972,6 +983,7 @@ export declare type GetAuctionsQuery = {
         __typename?: 'Auction';
         id: string;
         highestBid: string;
+        highestBidder?: string | null;
         bids: Array<{
             __typename?: 'Bid';
             id: string;

@@ -153,6 +153,115 @@ export declare enum Allocation_OrderBy {
     Timestamp = "timestamp",
     User = "user"
 }
+export declare type Auction = {
+    __typename?: 'Auction';
+    bids: Array<Bid>;
+    endTimestamp: Scalars['Int'];
+    ended: Scalars['Boolean'];
+    highestBid: Scalars['BigInt'];
+    id: Scalars['ID'];
+};
+export declare type AuctionBidsArgs = {
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<Bid_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    where?: InputMaybe<Bid_Filter>;
+};
+export declare type Auction_Filter = {
+    /** Filter for the block changed event. */
+    _change_block?: InputMaybe<BlockChangedFilter>;
+    bids?: InputMaybe<Array<Scalars['String']>>;
+    bids_contains?: InputMaybe<Array<Scalars['String']>>;
+    bids_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+    bids_not?: InputMaybe<Array<Scalars['String']>>;
+    bids_not_contains?: InputMaybe<Array<Scalars['String']>>;
+    bids_not_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+    endTimestamp?: InputMaybe<Scalars['Int']>;
+    endTimestamp_gt?: InputMaybe<Scalars['Int']>;
+    endTimestamp_gte?: InputMaybe<Scalars['Int']>;
+    endTimestamp_in?: InputMaybe<Array<Scalars['Int']>>;
+    endTimestamp_lt?: InputMaybe<Scalars['Int']>;
+    endTimestamp_lte?: InputMaybe<Scalars['Int']>;
+    endTimestamp_not?: InputMaybe<Scalars['Int']>;
+    endTimestamp_not_in?: InputMaybe<Array<Scalars['Int']>>;
+    ended?: InputMaybe<Scalars['Boolean']>;
+    ended_in?: InputMaybe<Array<Scalars['Boolean']>>;
+    ended_not?: InputMaybe<Scalars['Boolean']>;
+    ended_not_in?: InputMaybe<Array<Scalars['Boolean']>>;
+    highestBid?: InputMaybe<Scalars['BigInt']>;
+    highestBid_gt?: InputMaybe<Scalars['BigInt']>;
+    highestBid_gte?: InputMaybe<Scalars['BigInt']>;
+    highestBid_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    highestBid_lt?: InputMaybe<Scalars['BigInt']>;
+    highestBid_lte?: InputMaybe<Scalars['BigInt']>;
+    highestBid_not?: InputMaybe<Scalars['BigInt']>;
+    highestBid_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    id?: InputMaybe<Scalars['ID']>;
+    id_gt?: InputMaybe<Scalars['ID']>;
+    id_gte?: InputMaybe<Scalars['ID']>;
+    id_in?: InputMaybe<Array<Scalars['ID']>>;
+    id_lt?: InputMaybe<Scalars['ID']>;
+    id_lte?: InputMaybe<Scalars['ID']>;
+    id_not?: InputMaybe<Scalars['ID']>;
+    id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+};
+export declare enum Auction_OrderBy {
+    Bids = "bids",
+    EndTimestamp = "endTimestamp",
+    Ended = "ended",
+    HighestBid = "highestBid",
+    Id = "id"
+}
+export declare type Bid = {
+    __typename?: 'Bid';
+    amount: Scalars['BigInt'];
+    bidder: Scalars['ID'];
+    id: Scalars['ID'];
+    timestamp: Scalars['Int'];
+};
+export declare type Bid_Filter = {
+    /** Filter for the block changed event. */
+    _change_block?: InputMaybe<BlockChangedFilter>;
+    amount?: InputMaybe<Scalars['BigInt']>;
+    amount_gt?: InputMaybe<Scalars['BigInt']>;
+    amount_gte?: InputMaybe<Scalars['BigInt']>;
+    amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    amount_lt?: InputMaybe<Scalars['BigInt']>;
+    amount_lte?: InputMaybe<Scalars['BigInt']>;
+    amount_not?: InputMaybe<Scalars['BigInt']>;
+    amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    bidder?: InputMaybe<Scalars['ID']>;
+    bidder_gt?: InputMaybe<Scalars['ID']>;
+    bidder_gte?: InputMaybe<Scalars['ID']>;
+    bidder_in?: InputMaybe<Array<Scalars['ID']>>;
+    bidder_lt?: InputMaybe<Scalars['ID']>;
+    bidder_lte?: InputMaybe<Scalars['ID']>;
+    bidder_not?: InputMaybe<Scalars['ID']>;
+    bidder_not_in?: InputMaybe<Array<Scalars['ID']>>;
+    id?: InputMaybe<Scalars['ID']>;
+    id_gt?: InputMaybe<Scalars['ID']>;
+    id_gte?: InputMaybe<Scalars['ID']>;
+    id_in?: InputMaybe<Array<Scalars['ID']>>;
+    id_lt?: InputMaybe<Scalars['ID']>;
+    id_lte?: InputMaybe<Scalars['ID']>;
+    id_not?: InputMaybe<Scalars['ID']>;
+    id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+    timestamp?: InputMaybe<Scalars['Int']>;
+    timestamp_gt?: InputMaybe<Scalars['Int']>;
+    timestamp_gte?: InputMaybe<Scalars['Int']>;
+    timestamp_in?: InputMaybe<Array<Scalars['Int']>>;
+    timestamp_lt?: InputMaybe<Scalars['Int']>;
+    timestamp_lte?: InputMaybe<Scalars['Int']>;
+    timestamp_not?: InputMaybe<Scalars['Int']>;
+    timestamp_not_in?: InputMaybe<Array<Scalars['Int']>>;
+};
+export declare enum Bid_OrderBy {
+    Amount = "amount",
+    Bidder = "bidder",
+    Id = "id",
+    Timestamp = "timestamp"
+}
 export declare type BlockChangedFilter = {
     number_gte: Scalars['Int'];
 };
@@ -201,6 +310,10 @@ export declare type Query = {
     aggregates: Array<Aggregate>;
     allocation?: Maybe<Allocation>;
     allocations: Array<Allocation>;
+    auction?: Maybe<Auction>;
+    auctions: Array<Auction>;
+    bid?: Maybe<Bid>;
+    bids: Array<Bid>;
     participant?: Maybe<Participant>;
     participants: Array<Participant>;
     ticket?: Maybe<Ticket>;
@@ -242,6 +355,34 @@ export declare type QueryAllocationsArgs = {
     skip?: InputMaybe<Scalars['Int']>;
     subgraphError?: _SubgraphErrorPolicy_;
     where?: InputMaybe<Allocation_Filter>;
+};
+export declare type QueryAuctionArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type QueryAuctionsArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<Auction_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<Auction_Filter>;
+};
+export declare type QueryBidArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type QueryBidsArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<Bid_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<Bid_Filter>;
 };
 export declare type QueryParticipantArgs = {
     block?: InputMaybe<Block_Height>;
@@ -321,6 +462,10 @@ export declare type Subscription = {
     aggregates: Array<Aggregate>;
     allocation?: Maybe<Allocation>;
     allocations: Array<Allocation>;
+    auction?: Maybe<Auction>;
+    auctions: Array<Auction>;
+    bid?: Maybe<Bid>;
+    bids: Array<Bid>;
     participant?: Maybe<Participant>;
     participants: Array<Participant>;
     ticket?: Maybe<Ticket>;
@@ -362,6 +507,34 @@ export declare type SubscriptionAllocationsArgs = {
     skip?: InputMaybe<Scalars['Int']>;
     subgraphError?: _SubgraphErrorPolicy_;
     where?: InputMaybe<Allocation_Filter>;
+};
+export declare type SubscriptionAuctionArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type SubscriptionAuctionsArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<Auction_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<Auction_Filter>;
+};
+export declare type SubscriptionBidArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type SubscriptionBidsArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<Bid_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<Bid_Filter>;
 };
 export declare type SubscriptionParticipantArgs = {
     block?: InputMaybe<Block_Height>;
@@ -772,6 +945,42 @@ export declare type GetAggregatesQuery = {
         totalParticipants: number;
     } | null;
 };
+export declare type GetAuctionQueryVariables = Exact<{
+    id: Scalars['ID'];
+}>;
+export declare type GetAuctionQuery = {
+    __typename?: 'Query';
+    auction?: {
+        __typename?: 'Auction';
+        id: string;
+        highestBid: string;
+        bids: Array<{
+            __typename?: 'Bid';
+            id: string;
+            bidder: string;
+            timestamp: number;
+            amount: string;
+        }>;
+    } | null;
+};
+export declare type GetAuctionsQueryVariables = Exact<{
+    [key: string]: never;
+}>;
+export declare type GetAuctionsQuery = {
+    __typename?: 'Query';
+    auctions: Array<{
+        __typename?: 'Auction';
+        id: string;
+        highestBid: string;
+        bids: Array<{
+            __typename?: 'Bid';
+            id: string;
+            bidder: string;
+            timestamp: number;
+            amount: string;
+        }>;
+    }>;
+};
 export declare type GetPoolsQueryVariables = Exact<{
     first: Scalars['Int'];
     skip: Scalars['Int'];
@@ -871,6 +1080,12 @@ export declare type GetTicketsQuery = {
     }>;
 };
 export declare const GetAggregatesDocument: DocumentNode<GetAggregatesQuery, Exact<{
+    [key: string]: never;
+}>>;
+export declare const GetAuctionDocument: DocumentNode<GetAuctionQuery, Exact<{
+    id: Scalars['ID'];
+}>>;
+export declare const GetAuctionsDocument: DocumentNode<GetAuctionsQuery, Exact<{
     [key: string]: never;
 }>>;
 export declare const GetPoolsDocument: DocumentNode<GetPoolsQuery, Exact<{

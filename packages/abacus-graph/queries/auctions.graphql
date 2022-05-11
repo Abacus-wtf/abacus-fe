@@ -1,0 +1,25 @@
+query GetAuction($id: ID!) {
+  auction(id: $id) {
+    id
+    highestBid
+    bids {
+      id
+      bidder
+      timestamp
+      amount
+    }
+  }
+}
+
+query GetAuctions {
+  auctions {
+    id
+    highestBid
+    bids {
+      id
+      bidder
+      timestamp
+      amount
+    }
+  }
+}

@@ -17,7 +17,7 @@ import { formatEther } from "ethers/lib/utils"
 import { Link } from "gatsby"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
-import Loading from "../Loading"
+import { LoadingOverlay } from "@components/index"
 import { customDurationConfig, durations } from "./constants"
 
 const UpperContainer = styled.div`
@@ -118,7 +118,12 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
   const numTokens = String(Number(eth) / Number(tokenPrice))
 
   const progressLabel = useMemo(() => {
-    const percentForDislplay = Math.round(percentTicketsSold * 100)
+    const percentForDislplay = Number(
+      (percentTicketsSold * 100).toLocaleString("en-US", {
+        minimumSignificantDigits: 2,
+        maximumSignificantDigits: 2,
+      })
+    )
     const numLeft = 1000 - currentTicketTokensLocked
     return (
       <ProgressLabel>
@@ -142,7 +147,7 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
 
   return (
     <>
-      <Loading loading={isPending} />
+      <LoadingOverlay loading={isPending} />
       <UpperContainer>
         <TitleContainer>
           <CurrentTicket>

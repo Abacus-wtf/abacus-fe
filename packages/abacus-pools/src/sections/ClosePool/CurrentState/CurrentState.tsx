@@ -1,3 +1,4 @@
+import { LoadingOverlay } from "@components/LoadingOverlay"
 import { useOnApproveTransfer, useOnExitPool } from "@hooks/vaultFunc"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import {
@@ -224,6 +225,7 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
 
   return (
     <Container>
+      <LoadingOverlay loading={isPending} />
       <StyledProgressBar progress={progress} label={null} />
       <Wrapper>
         <PageStatus>

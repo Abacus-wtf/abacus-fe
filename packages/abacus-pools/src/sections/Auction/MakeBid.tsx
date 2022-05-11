@@ -1,3 +1,4 @@
+import { LoadingOverlay } from "@components/LoadingOverlay"
 import { useOnBid } from "@hooks/auctionFunc"
 import { useEthToUSD } from "@state/application/hooks"
 import { Button, Exa, Input, Section } from "abacus-ui"
@@ -7,6 +8,7 @@ import styled from "styled-components"
 
 const Container = styled(Section)`
   row-gap: 40px;
+  position: relative;
 `
 
 const UpperContainer = styled.div`
@@ -68,7 +70,7 @@ const MakeBid: FunctionComponent<PurchaseTokensProps> = ({
 
   return (
     <Container>
-      {/* <Loading loading={isPending} /> */}
+      <LoadingOverlay loading={isPending} />
       <UpperContainer>
         <TitleContainer>
           <Title>Make a Bid</Title>

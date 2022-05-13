@@ -10,7 +10,7 @@ type InputProps = {
   type: "text" | "number";
   name: string;
   label?: string;
-  pill?: string;
+  pill?: string | React.ReactNode;
   id?: string;
   placeholder?: string;
   className?: string;
@@ -74,11 +74,12 @@ const ExteriorLabel = styled.label`
   margin-bottom: 10px;
 `;
 
-const Pill = styled.span`
+const Pill = styled.span<{ isString: boolean }>`
   ${Font("milli")}
   text-align: center;
-  background-color: ${({ theme }) => theme.colors.core.label};
-  padding: 10px;
+  background-color: ${({ theme, isString }) =>
+    isString ? theme.colors.core.label : "transparent"};
+  padding: ${({ isString }) => (isString ? "10px" : "0")};
   height: calc(100% - 17px);
   margin: 8.5px 0;
   border-radius: ${({ theme }) => theme.borderRadius.main};
@@ -133,7 +134,7 @@ const Input: FunctionComponent<InputProps> = ({
         required={required}
         value={value}
       >
-        {pill && <Pill>{pill}</Pill>}
+        {pill ? <Pill isString={typeof pill === "string"}>{pill}</Pill> : null}
         <StyledInput
           id={ID}
           name={name}

@@ -5,7 +5,7 @@ declare type InputProps = {
     type: "text" | "number";
     name: string;
     label?: string;
-    pill?: string;
+    pill?: string | React.ReactNode;
     id?: string;
     placeholder?: string;
     className?: string;

@@ -284,9 +284,13 @@ var InputContainer = styled.div(templateObject_4$a || (templateObject_4$a = __ma
         ? css(templateObject_3$j || (templateObject_3$j = __makeTemplateObject(["\n          box-shadow: 0px 2px 0px ", ";\n        "], ["\n          box-shadow: 0px 2px 0px ", ";\n        "])), theme.colors.utility.red) : "";
 });
 var ExteriorLabel = styled.label(templateObject_5$8 || (templateObject_5$8 = __makeTemplateObject(["\n  ", "\n  font-weight: bold;\n  text-align: left;\n  margin-bottom: 10px;\n"], ["\n  ", "\n  font-weight: bold;\n  text-align: left;\n  margin-bottom: 10px;\n"])), Font("mega"));
-var Pill = styled.span(templateObject_6$6 || (templateObject_6$6 = __makeTemplateObject(["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: 10px;\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"], ["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: 10px;\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"])), Font("milli"), function (_a) {
-    var theme = _a.theme;
-    return theme.colors.core.label;
+var Pill = styled.span(templateObject_6$6 || (templateObject_6$6 = __makeTemplateObject(["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: ", ";\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"], ["\n  ", "\n  text-align: center;\n  background-color: ",
+    ";\n  padding: ", ";\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"])), Font("milli"), function (_a) {
+    var theme = _a.theme, isString = _a.isString;
+    return isString ? theme.colors.core.label : "transparent";
+}, function (_a) {
+    var isString = _a.isString;
+    return (isString ? "10px" : "0");
 }, function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.main;
@@ -308,7 +312,7 @@ var Input = function (_a) {
     return (React.createElement(Container$q, { className: className },
         label && React.createElement(ExteriorLabel, { htmlFor: ID }, label),
         React.createElement(InputContainer, { disabled: disabled, pristine: pristine, required: required, value: value },
-            pill && React.createElement(Pill, null, pill),
+            pill ? React.createElement(Pill, { isString: typeof pill === "string" }, pill) : null,
             React.createElement(StyledInput$2, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); }, disabled: disabled, "aria-disabled": disabled, required: required, onFocus: function () { return setPristine(false); }, step: step })),
         hint && React.createElement(StyledKilo$3, null, hint)));
 };
@@ -730,6 +734,12 @@ var OutboundLink = function (_a) {
     var _b = _a.fill, fill = _b === void 0 ? "#323232" : _b, _c = _a.size, size = _c === void 0 ? 12 : _c;
     return (React.createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 12 13", height: size },
         React.createElement("path", { d: "M10.667 11.167H1.333V1.833H6V.5H1.333C.593.5 0 1.1 0 1.833v9.334C0 11.9.593 12.5 1.333 12.5h9.334c.733 0 1.333-.6 1.333-1.333V6.5h-1.333v4.667ZM7.333.5v1.333h2.394L3.173 8.387l.94.94 6.554-6.554v2.394H12V.5H7.333Z", fill: fill })));
+};
+
+var DownChevron = function (_a) {
+    var _b = _a.fill, fill = _b === void 0 ? "#323232" : _b;
+    return (React.createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 8 6" },
+        React.createElement("path", { d: "M7.06.227 4 3.28.94.227l-.94.94 4 4 4-4-.94-.94Z", fill: fill })));
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -1409,5 +1419,5 @@ var PreviousSessionsAutoScroll = function (_a) {
 };
 var templateObject_1, templateObject_2;
 
-export { AbacusBalance, AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, Accordion, ActivitySection, Button, ButtonType, CardBackground, CardBar, CardWithTitle, Checkbox, Checkmark, ChevronLeft, Close, Discord, Dropdown, Eth as ETH, Container$E as Exa, ExploreImage, ExploreInfo, Extras, Flex, Font, FontImport, Container$D as Giga, Container$C as H1, Container$B as H2, Container$A as H3, Container$z as H4, Container$y as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, LinkImage, Loader$1 as Loader, LoadingShimmer, Lock, Logo, Media, Medium, Container$x as Mega, Container$w as Milli, MiniList, OpenAppModal as Modal, Navbar, OutboundLink, StyledP as P, PartOfCollection, PersistentBanner, Container$v as Peta, PreviousSessionsAutoScroll, PriceHistory, ProfileGroup, ProfileIcon, ProfileInfo, ProgressBar, CustomLockDuration as Range, Section, SessionCard, SessionCountdown, Container$u as Small, SocialLinks, SplitSection, StatInfo, Container$t as Tera, Twitter, VisuallyHidden, Container$s as Yotta, Container$r as Zetta, breakpoints, defaultTheme };
+export { AbacusBalance, AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, Accordion, ActivitySection, Button, ButtonType, CardBackground, CardBar, CardWithTitle, Checkbox, Checkmark, ChevronLeft, Close, Discord, DownChevron, Dropdown, Eth as ETH, Container$E as Exa, ExploreImage, ExploreInfo, Extras, Flex, Font, FontImport, Container$D as Giga, Container$C as H1, Container$B as H2, Container$A as H3, Container$z as H4, Container$y as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, LinkImage, Loader$1 as Loader, LoadingShimmer, Lock, Logo, Media, Medium, Container$x as Mega, Container$w as Milli, MiniList, OpenAppModal as Modal, Navbar, OutboundLink, StyledP as P, PartOfCollection, PersistentBanner, Container$v as Peta, PreviousSessionsAutoScroll, PriceHistory, ProfileGroup, ProfileIcon, ProfileInfo, ProgressBar, CustomLockDuration as Range, Section, SessionCard, SessionCountdown, Container$u as Small, SocialLinks, SplitSection, StatInfo, Container$t as Tera, Twitter, VisuallyHidden, Container$s as Yotta, Container$r as Zetta, breakpoints, defaultTheme };
 //# sourceMappingURL=index.js.map

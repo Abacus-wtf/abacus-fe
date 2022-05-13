@@ -11,3 +11,4 @@ export { default as ChevronLeft } from "./ChevronLeft";
 export { default as Checkmark } from "./Checkmark";
 export * from "./Social";
 export * from "./OutboundLink";
+export * from "./DownChevron";

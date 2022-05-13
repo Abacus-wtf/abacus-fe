@@ -11,12 +11,12 @@ export const InfoBarContainer = styled(Section)`
   ${Media.sm`
     flex-direction: row;  
     flex-wrap: wrap;
-    grid-column-gap: 40px;
-    grid-row-gap: 16px;
+    column-gap: 40px;
+    row-gap: 16px;
   `}
 
   ${Media.lg`
-    grid-column-gap: 80px;
+    column-gap: 80px;
   `}
 `
 export const InfoBarItem = styled.div`
@@ -24,8 +24,11 @@ export const InfoBarItem = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  max-width: 25%;
-  grid-row-gap: 8px;
+  row-gap: 8px;
+
+  ${Media.md`
+    max-width: 25%;
+  `}
 `
 
 export const InfoBarTitle = styled(Kilo)`

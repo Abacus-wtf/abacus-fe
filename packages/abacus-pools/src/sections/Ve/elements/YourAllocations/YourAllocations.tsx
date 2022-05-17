@@ -1,9 +1,10 @@
-import { H4 } from "abacus-ui"
+import { H4, Media } from "abacus-ui"
 import { BigNumber } from "ethers"
 import React from "react"
 import styled from "styled-components"
 import { SectionTitle, StyledSection } from "../Ve.styles"
 import { Allocation } from "./Allocation"
+import { ColumnContainer } from "./YourAllocations.styled"
 
 const allocations = [
   {
@@ -26,28 +27,27 @@ const allocations = [
   },
 ]
 
-const HeadingContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-`
-
-const Heading = styled(H4)`
+type Spanable = { span: number }
+const Heading = styled(H4)<Spanable>`
   flex: 0 1 auto;
   font-size: 16px;
   color: ${({ theme }) => theme.colors.core[900]};
+
+  ${Media.sm`
+    grid-column: span ${({ span }: Spanable) => span};
+  `}
 `
 
 const YourAllocations = () => (
   <StyledSection order={2}>
     <SectionTitle>Your Allocations</SectionTitle>
-    <HeadingContainer>
+    <ColumnContainer>
       <Heading>Collection</Heading>
-      <Heading>Amount</Heading>
-    </HeadingContainer>
-    {allocations.map((allocation) => (
-      <Allocation key={allocation.address} {...allocation} />
-    ))}
+      <Heading span={2}>Amount</Heading>
+      {allocations.map((allocation) => (
+        <Allocation key={allocation.address} {...allocation} />
+      ))}
+    </ColumnContainer>
   </StyledSection>
 )
 

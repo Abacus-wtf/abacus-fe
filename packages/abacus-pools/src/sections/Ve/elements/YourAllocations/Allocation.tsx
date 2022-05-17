@@ -11,25 +11,6 @@ type AllocationProps = {
   amount: BigNumber
 }
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  row-gap: 16px;
-  align-items: center;
-
-  ${Media.sm`
-    flex-direction: row;
-  `}
-`
-
-const InfoContainer = styled.div`
-  width: 100%;
-  display: flex;
-
-  column-gap: 16px;
-`
-
 const CollectionName = styled(P)`
   font-size: 22px;
 
@@ -53,23 +34,23 @@ const CollectionImage = styled.img`
 
 const StyledButton = styled(Button)`
   width: 100%;
+  grid-column: span 2;
+  margin-bottom: 8px;
 
   ${Media.sm`
     width: max-content;
+    grid-column: 3;
+    margin-bottom: 0;
   `}
 `
 
 const Amount = styled(P)`
   font-size: 22px;
-  text-align: right;
+  flex: 0 1 auto;
 
   & span {
     color: ${({ theme }) => theme.colors.core[900]};
   }
-
-  ${Media.sm`
-    text-align: left;
-  `}
 `
 
 const Allocation = ({
@@ -78,23 +59,22 @@ const Allocation = ({
   address,
   amount,
 }: AllocationProps) => (
-  <Container>
-    <InfoContainer>
-      <CollectionContainer>
-        <CollectionImage src={imgSrc} alt="" />
-        <CollectionName>{collection}</CollectionName>
-      </CollectionContainer>
-      <Amount>
-        {formatEther(amount)} <span>ABC</span>
-      </Amount>
-    </InfoContainer>
+  <>
+    <CollectionContainer>
+      <CollectionImage src={imgSrc} alt="" />
+      <CollectionName>{collection}</CollectionName>
+    </CollectionContainer>
+    <Amount>
+      {formatEther(amount)} <span>ABC</span>
+    </Amount>
+
     <StyledButton
       buttonType={ButtonType.Gray}
       onClick={console.log("change", address)}
     >
       Change
     </StyledButton>
-  </Container>
+  </>
 )
 
 export { Allocation }

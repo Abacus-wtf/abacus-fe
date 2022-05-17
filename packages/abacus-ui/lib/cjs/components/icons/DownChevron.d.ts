@@ -1,5 +1,6 @@
 declare type DownChevronProps = {
     fill?: string;
+    size?: number;
 };
-declare const DownChevron: ({ fill }: DownChevronProps) => JSX.Element;
+declare const DownChevron: ({ fill, size }: DownChevronProps) => JSX.Element;
 export { DownChevron };

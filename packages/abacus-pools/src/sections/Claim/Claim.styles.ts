@@ -33,8 +33,6 @@ export const StyledInfoBarItem = styled(InfoBarItem)`
 
 export const StyledInfoBarContent = styled(InfoBarContent)`
   font-weight: 400;
-  display: flex;
-  flex-wrap: wrap;
 
   & span {
     color: ${({ theme }) => theme.colors.core[900]};

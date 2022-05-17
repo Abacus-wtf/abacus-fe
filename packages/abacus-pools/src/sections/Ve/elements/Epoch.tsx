@@ -1,7 +1,8 @@
 import React, { useState } from "react"
-import { InfoBarTitle, InfoBarItem, InfoBarContent } from "@components/index"
+import { InfoBarTitle } from "@components/index"
 import { Media, Section, Select } from "abacus-ui"
 import styled from "styled-components"
+import { StyledInfoBarContent, StyledInfoBarItem } from "./Ve.styles"
 
 const StyledSection = styled(Section)`
   display: flex;
@@ -13,18 +14,6 @@ const StyledSection = styled(Section)`
     padding: 24px;
     flex-direction: row;
   `}
-`
-
-export const StyledInfoBarItem = styled(InfoBarItem)`
-  flex: 1 0 auto;
-`
-
-export const StyledInfoBarContent = styled(InfoBarContent)`
-  font-weight: 400;
-
-  & span {
-    color: ${({ theme }) => theme.colors.core[900]};
-  }
 `
 
 const options = ["#1", "#2", "#3", "#4", "#5", "#6", "#7", "#8", "#9"]

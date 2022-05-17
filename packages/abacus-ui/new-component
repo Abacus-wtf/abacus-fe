@@ -29,7 +29,7 @@ echo "export * from \"./src\";" > "${DIRECTORY}/${INDEX}"
 
 echo "export { default as ${COMPONENT} } from \"./${COMPONENT}\";" > "$DIRECTORY/src/${INDEX}"
 
-echo "import React, { FunctionComponent } from \"react\";
+echo "import React from \"react\";
 import styled from \"styled-components\";
 
 type ${COMPONENT}Props = {
@@ -39,7 +39,7 @@ type ${COMPONENT}Props = {
 // You probably want to change this to something semantic or abandon it all together
 const Container = styled.div``;
 
-const ${COMPONENT}: FunctionComponent<${COMPONENT}Props> = ({ className }) => {
+const ${COMPONENT} = ({ className }: ${COMPONENT}Props) => {
   return (
     <Container className={className}>
     </Container>

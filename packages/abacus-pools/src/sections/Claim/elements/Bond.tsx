@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { InfoBarTitle } from "@components/index"
-import { Button, ButtonType, DownChevron, Input, Media } from "abacus-ui"
+import { Button, ButtonType, Input, Media, Select } from "abacus-ui"
 import styled from "styled-components"
 import {
   StyledSection,
@@ -22,15 +22,19 @@ const MaxButton = styled(Button)`
   padding: 9px 20px;
 `
 
+const options = ["#1", "#2", "#3", "#4", "#5", "#6", "#7", "#8", "#9"]
 const Bond = () => {
   const [eth, setEth] = useState("")
+  const [selectedEpoch, setSelectedEpoch] = useState(options[0])
   return (
     <StyledSection>
       <StyledInfoBarItem>
         <InfoBarTitle>Epoch</InfoBarTitle>
-        <Button buttonType={ButtonType.Gray}>
-          #1 <DownChevron />
-        </Button>
+        <Select
+          value={selectedEpoch}
+          setValue={setSelectedEpoch}
+          options={options}
+        />
       </StyledInfoBarItem>
       <StyledInfoBarItem>
         <InfoBarTitle>ABC Bonded</InfoBarTitle>

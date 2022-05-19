@@ -1,22 +1,11 @@
-import { H4, Media, Button, ButtonType } from "abacus-ui"
+import { Media, Button, ButtonType } from "abacus-ui"
 import React, { useState } from "react"
 import styled from "styled-components"
 import { allocations } from "../placeholder-data"
 import { SectionTitle, StyledSection } from "../Ve.styles"
 import { Allocation } from "./Allocation"
 import { AllocationModal } from "./AllocationModal"
-import { ColumnContainer } from "./YourAllocations.styled"
-
-type Spanable = { span: number }
-const Heading = styled(H4)<Spanable>`
-  flex: 0 1 auto;
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.core[900]};
-
-  ${Media.sm`
-    grid-column: span ${({ span }: Spanable) => span};
-  `}
-`
+import { ColumnContainer, Heading } from "./YourAllocations.styled"
 
 const SeeAllButton = styled(Button)`
   align-self: center;
@@ -28,6 +17,7 @@ const SeeAllButton = styled(Button)`
 `
 
 const YourAllocations = () => {
+  const [modalOpen, setModalOpen] = useState(false)
   const [allocationToChange, setAllocationToChange] = useState<string>(null)
   return (
     <StyledSection order={2}>
@@ -39,14 +29,19 @@ const YourAllocations = () => {
           <Allocation
             key={allocation.address}
             {...allocation}
-            setAllocationToChange={setAllocationToChange}
+            changeAction={() => {
+              setAllocationToChange(allocation.address)
+              setModalOpen(true)
+            }}
           />
         ))}
       </ColumnContainer>
       <SeeAllButton buttonType={ButtonType.Gray}>{"See All >"}</SeeAllButton>
       <AllocationModal
-        isOpen={Boolean(allocationToChange)}
-        closeModal={() => setAllocationToChange(null)}
+        isOpen={modalOpen}
+        closeModal={() => setModalOpen(false)}
+        allocationToChange={allocationToChange}
+        setAllocationToChange={setAllocationToChange}
       />
     </StyledSection>
   )

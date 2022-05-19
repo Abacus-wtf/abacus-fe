@@ -18,8 +18,6 @@ const Container = styled.div`
   margin: 0;
   position: relative;
   width: max-content;
-  margin-right: 6px;
-  margin-bottom: 12px;
 `;
 
 const StyledLabel = styled.label`

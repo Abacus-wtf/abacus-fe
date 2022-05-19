@@ -1,7 +1,8 @@
-import { Button, Modal, Media } from "abacus-ui"
-import React, { useState } from "react"
+import { Modal, Media } from "abacus-ui"
+import React from "react"
 import styled from "styled-components"
 import { OverallAllocations } from "./OverallAllocations/OverallAllocations"
+import { YourAllocations } from "./YourAllocations"
 
 const Container = styled.div`
   display: grid;
@@ -10,7 +11,7 @@ const Container = styled.div`
   column-gap: 40px;
   row-gap: 24px;
 
-  ${Media.md`
+  ${Media.sm`
     grid-template-columns: auto 1px auto;
   `}
 
@@ -23,7 +24,7 @@ const Divider = styled.div`
   border: 0.5px solid ${({ theme }) => theme.colors.core[800]};
   margin: 0 80px;
 
-  ${Media.md`
+  ${Media.sm`
     margin: 80px 0;
     max-height: 600px;
   `}
@@ -32,6 +33,8 @@ const Divider = styled.div`
 type AllocationModalProps = {
   isOpen: boolean
   closeModal: () => void
+  allocationToChange: string
+  setAllocationToChange: React.Dispatch<string>
 }
 
 export enum UserState {
@@ -39,14 +42,23 @@ export enum UserState {
   WRITE,
 }
 
-const AllocationModal = ({ isOpen, closeModal }: AllocationModalProps) => {
-  const [userState, setUserState] = useState(UserState.READ)
+const AllocationModal = ({
+  isOpen,
+  closeModal,
+  allocationToChange,
+  setAllocationToChange,
+}: AllocationModalProps) => {
+  const userState = allocationToChange ? UserState.WRITE : UserState.READ
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <Container>
         <OverallAllocations userState={userState} />
         <Divider />
-        <OverallAllocations userState={userState} />
+        <YourAllocations
+          userState={userState}
+          setAllocationToChange={setAllocationToChange}
+          allocationToChange={allocationToChange}
+        />
       </Container>
     </Modal>
   )

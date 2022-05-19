@@ -1,6 +1,6 @@
 import { RoundImage } from "@components/RoundImage"
 import { VeAllocation } from "@sections/Ve/models"
-import { Checkbox, Font, Media } from "abacus-ui"
+import { Checkbox, Checkmark, Font, Media, VisuallyHidden } from "abacus-ui"
 import { formatEther } from "ethers/lib/utils"
 import React from "react"
 import styled from "styled-components"
@@ -19,7 +19,17 @@ const StyledCheckbox = styled(Checkbox)`
   height: 27px;
   padding: 0;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.utility.gray};
+  background-color: ${({ theme, checked }) =>
+    checked ? theme.colors.utility.green : theme.colors.utility.gray};
+
+  & label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 4px;
+  }
 `
 
 const CollectionInfo = styled.td`
@@ -35,7 +45,7 @@ const TD = styled.td`
     color: ${({ theme }) => theme.colors.core[900]};
   }
 
-  ${Media.md`
+  ${Media.lg`
     ${Font("giga")}
   `}
 `
@@ -56,33 +66,42 @@ const OverallAllocationRow = ({
   editMode,
   selectedAllocation,
   setSelectedAllocation,
-}: OverallAllocationRowProps) => (
-  <TR>
-    {editMode ? (
-      <StyledCheckbox
-        type="radio"
-        name={RADIO_NAME}
-        label=""
-        id={address}
-        value={address}
-        checked={selectedAllocation === address}
-        onChange={() => setSelectedAllocation(address)}
-      />
-    ) : (
-      <RowNumber>{index + 1}.</RowNumber>
-    )}
+}: OverallAllocationRowProps) => {
+  const checked = selectedAllocation === address
+  return (
+    <TR>
+      {editMode ? (
+        <StyledCheckbox
+          type="radio"
+          name={RADIO_NAME}
+          label={
+            checked ? (
+              <Checkmark stroke="#FFF" />
+            ) : (
+              <VisuallyHidden>{collection}</VisuallyHidden>
+            )
+          }
+          id={address}
+          value={address}
+          checked={checked}
+          onChange={() => setSelectedAllocation(address)}
+        />
+      ) : (
+        <RowNumber>{index + 1}.</RowNumber>
+      )}
 
-    <CollectionInfo>
-      <RoundImage src={imgSrc} size={27} />
-      <TD as="span">{collection}</TD>
-    </CollectionInfo>
-    <TD>
-      {formatEther(amount)} <span>veABC</span>
-    </TD>
-    <TD style={{ width: "max-content" }}>
-      {percent} <span>%</span>
-    </TD>
-  </TR>
-)
+      <CollectionInfo>
+        <RoundImage src={imgSrc} size={27} />
+        <TD as="span">{collection}</TD>
+      </CollectionInfo>
+      <TD>
+        {formatEther(amount)} <span>veABC</span>
+      </TD>
+      <TD style={{ width: "max-content" }}>
+        {percent} <span>%</span>
+      </TD>
+    </TR>
+  )
+}
 
 export { OverallAllocationRow }

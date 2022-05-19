@@ -603,7 +603,7 @@ var CardBackground = function (_a) {
 var templateObject_1$r;
 
 // You probably want to change this to something semantic or abandon it all together
-var Container$m = styled.div(templateObject_1$q || (templateObject_1$q = __makeTemplateObject(["\n  margin: 0;\n  position: relative;\n  width: max-content;\n  margin-right: 6px;\n  margin-bottom: 12px;\n"], ["\n  margin: 0;\n  position: relative;\n  width: max-content;\n  margin-right: 6px;\n  margin-bottom: 12px;\n"])));
+var Container$m = styled.div(templateObject_1$q || (templateObject_1$q = __makeTemplateObject(["\n  margin: 0;\n  position: relative;\n  width: max-content;\n"], ["\n  margin: 0;\n  position: relative;\n  width: max-content;\n"])));
 var StyledLabel = styled.label(templateObject_2$n || (templateObject_2$n = __makeTemplateObject(["\n  ", ";\n  cursor: pointer;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"], ["\n  ", ";\n  cursor: pointer;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"])), Font(), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.border;

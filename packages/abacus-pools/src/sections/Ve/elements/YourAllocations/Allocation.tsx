@@ -4,8 +4,12 @@ import { formatEther } from "ethers/lib/utils"
 import React from "react"
 import styled from "styled-components"
 
-const CollectionName = styled(P)`
-  font-size: 22px;
+const StyledP = styled(P)`
+  font-size: 16px;
+
+  ${Media.lg`
+    font-size: 22px;
+  `}
 
   & span {
     color: ${({ theme }) => theme.colors.core[900]};
@@ -25,10 +29,16 @@ const CollectionImage = styled.img`
   overflow: hidden;
 `
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(Button)<{
+  cancel: boolean
+  conserveSpace: boolean
+}>`
   width: 100%;
   grid-column: span 2;
   margin-bottom: 8px;
+  padding: ${({ conserveSpace }) => (conserveSpace ? "5px 8px" : "13px 20px")};
+  ${({ cancel, theme }) =>
+    cancel ? `background-color: ${theme.colors.utility.red}` : ""};
 
   ${Media.sm`
     width: max-content;
@@ -37,40 +47,43 @@ const StyledButton = styled(Button)`
   `}
 `
 
-const Amount = styled(P)`
-  font-size: 22px;
+const Amount = styled(StyledP)`
   flex: 0 1 auto;
-
-  & span {
-    color: ${({ theme }) => theme.colors.core[900]};
-  }
 `
 
 interface AllocationProps extends VeAllocation {
-  setAllocationToChange: React.Dispatch<string>
+  changeAction: () => void
+  changeDisabled?: boolean
+  isSelected?: boolean
+  conserveSpace?: boolean
 }
 
 const Allocation = ({
   collection,
   imgSrc,
-  address,
   amount,
-  setAllocationToChange,
+  changeAction,
+  changeDisabled = false,
+  isSelected = false,
+  conserveSpace = false,
 }: AllocationProps) => (
   <>
     <CollectionContainer>
       <CollectionImage src={imgSrc} alt="" />
-      <CollectionName>{collection}</CollectionName>
+      <StyledP>{collection}</StyledP>
     </CollectionContainer>
     <Amount>
       {formatEther(amount)} <span>ABC</span>
     </Amount>
 
     <StyledButton
+      disabled={changeDisabled}
       buttonType={ButtonType.Gray}
-      onClick={() => setAllocationToChange(address)}
+      onClick={changeAction}
+      cancel={isSelected}
+      conserveSpace={conserveSpace}
     >
-      Change
+      {isSelected ? "Cancel" : "Change"}
     </StyledButton>
   </>
 )

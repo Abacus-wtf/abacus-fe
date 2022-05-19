@@ -1,5 +1,16 @@
-import { H3 } from "abacus-ui"
+import { Font, H2, H3 } from "abacus-ui"
 import styled from "styled-components"
+
+export const SectionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+`
+
+export const SectionHeader = styled(H2)`
+  ${Font("peta", "Bluu next")}
+  font-weight: bold;
+`
 
 export const ColumnTitle = styled(H3)`
   font-weight: 400;

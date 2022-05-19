@@ -1,31 +1,11 @@
 import { H4, Media, Button, ButtonType } from "abacus-ui"
-import { BigNumber } from "ethers"
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
+import { allocations } from "../placeholder-data"
 import { SectionTitle, StyledSection } from "../Ve.styles"
 import { Allocation } from "./Allocation"
+import { AllocationModal } from "./AllocationModal"
 import { ColumnContainer } from "./YourAllocations.styled"
-
-const allocations = [
-  {
-    collection: "Doodles",
-    imgSrc: "/vomit.png",
-    address: "0xdeds",
-    amount: BigNumber.from("1231250000000000000000"),
-  },
-  {
-    collection: "Doodles",
-    imgSrc: "/vomit.png",
-    address: "0xdeddds",
-    amount: BigNumber.from("1231250000000000000000"),
-  },
-  {
-    collection: "Doodles",
-    imgSrc: "/vomit.png",
-    address: "0xded23s",
-    amount: BigNumber.from("1231250000000000000000"),
-  },
-]
 
 type Spanable = { span: number }
 const Heading = styled(H4)<Spanable>`
@@ -47,18 +27,29 @@ const SeeAllButton = styled(Button)`
   `}
 `
 
-const YourAllocations = () => (
-  <StyledSection order={2}>
-    <SectionTitle>Your Allocations</SectionTitle>
-    <ColumnContainer>
-      <Heading>Collection</Heading>
-      <Heading span={2}>Amount</Heading>
-      {allocations.map((allocation) => (
-        <Allocation key={allocation.address} {...allocation} />
-      ))}
-    </ColumnContainer>
-    <SeeAllButton buttonType={ButtonType.Gray}>{"See All >"}</SeeAllButton>
-  </StyledSection>
-)
+const YourAllocations = () => {
+  const [allocationToChange, setAllocationToChange] = useState<string>(null)
+  return (
+    <StyledSection order={2}>
+      <SectionTitle>Your Allocations</SectionTitle>
+      <ColumnContainer>
+        <Heading>Collection</Heading>
+        <Heading span={2}>Amount</Heading>
+        {allocations.map((allocation) => (
+          <Allocation
+            key={allocation.address}
+            {...allocation}
+            setAllocationToChange={setAllocationToChange}
+          />
+        ))}
+      </ColumnContainer>
+      <SeeAllButton buttonType={ButtonType.Gray}>{"See All >"}</SeeAllButton>
+      <AllocationModal
+        isOpen={Boolean(allocationToChange)}
+        closeModal={() => setAllocationToChange(null)}
+      />
+    </StyledSection>
+  )
+}
 
 export { YourAllocations }

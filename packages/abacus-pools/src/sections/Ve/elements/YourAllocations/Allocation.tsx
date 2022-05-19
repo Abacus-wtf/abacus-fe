@@ -1,15 +1,8 @@
+import { VeAllocation } from "@sections/Ve/models"
 import { Button, P, ButtonType, Media } from "abacus-ui"
-import { BigNumber } from "ethers"
 import { formatEther } from "ethers/lib/utils"
 import React from "react"
 import styled from "styled-components"
-
-type AllocationProps = {
-  collection: string
-  imgSrc: string
-  address: string
-  amount: BigNumber
-}
 
 const CollectionName = styled(P)`
   font-size: 22px;
@@ -53,11 +46,16 @@ const Amount = styled(P)`
   }
 `
 
+interface AllocationProps extends VeAllocation {
+  setAllocationToChange: React.Dispatch<string>
+}
+
 const Allocation = ({
   collection,
   imgSrc,
   address,
   amount,
+  setAllocationToChange,
 }: AllocationProps) => (
   <>
     <CollectionContainer>
@@ -70,7 +68,7 @@ const Allocation = ({
 
     <StyledButton
       buttonType={ButtonType.Gray}
-      onClick={console.log("change", address)}
+      onClick={() => setAllocationToChange(address)}
     >
       Change
     </StyledButton>

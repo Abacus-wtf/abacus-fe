@@ -36,6 +36,7 @@ const ModalBody = styled.div`
   max-height: 90vh;
   opacity: 1;
   overflow: auto;
+  position: relative;
 `;
 
 type OpenAppModalProps = {

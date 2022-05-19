@@ -1406,7 +1406,7 @@ var Container$3 = styled__default["default"].div(templateObject_2$2 || (template
     var isOpen = _a.isOpen;
     return (isOpen ? 1 : 0);
 }, Media.sm(templateObject_1$3 || (templateObject_1$3 = __makeTemplateObject(["\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    overflow-y: hidden;\n  "], ["\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    overflow-y: hidden;\n  "]))));
-var ModalBody = styled__default["default"].div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  margin: 0;\n  max-width: 1040px;\n  height: max-content;\n  max-height: 90vh;\n  opacity: 1;\n  overflow: auto;\n"], ["\n  margin: 0;\n  max-width: 1040px;\n  height: max-content;\n  max-height: 90vh;\n  opacity: 1;\n  overflow: auto;\n"])));
+var ModalBody = styled__default["default"].div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  margin: 0;\n  max-width: 1040px;\n  height: max-content;\n  max-height: 90vh;\n  opacity: 1;\n  overflow: auto;\n  position: relative;\n"], ["\n  margin: 0;\n  max-width: 1040px;\n  height: max-content;\n  max-height: 90vh;\n  opacity: 1;\n  overflow: auto;\n  position: relative;\n"])));
 var preventBubbling = function (e) {
     e.stopPropagation();
 };

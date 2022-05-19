@@ -36,11 +36,13 @@ const StyledButton = styled(Button)<{
   width: 100%;
   grid-column: span 2;
   margin-bottom: 8px;
-  padding: ${({ conserveSpace }) => (conserveSpace ? "5px 8px" : "13px 20px")};
+  padding: 13px 20px;
   ${({ cancel, theme }) =>
     cancel ? `background-color: ${theme.colors.utility.red}` : ""};
 
   ${Media.sm`
+    ${({ conserveSpace }: { conserveSpace: boolean }) =>
+      conserveSpace ? "padding: 5px 8px" : ""};
     width: max-content;
     grid-column: 3;
     margin-bottom: 0;

@@ -119,7 +119,8 @@ declare enum Sizes {
     SMALL = "sm",
     MEDIUM = "md",
     LARGE = "lg",
-    XLARGE = "xl"
+    XLARGE = "xl",
+    XSMALL = "xs"
 }
 export declare const breakpoints: {
     size: Sizes;

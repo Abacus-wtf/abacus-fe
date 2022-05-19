@@ -194,12 +194,14 @@ var Sizes;
     Sizes["MEDIUM"] = "md";
     Sizes["LARGE"] = "lg";
     Sizes["XLARGE"] = "xl";
+    Sizes["XSMALL"] = "xs";
 })(Sizes || (Sizes = {}));
 var breakpoints = [
     { size: "xl", value: "1700px" },
     { size: "lg", value: "1200px" },
     { size: "md", value: "885px" },
     { size: "sm", value: "600px" },
+    { size: "xs", value: "425px" },
 ];
 var Media = breakpoints.reduce(function (accumulator, _a) {
     var _b;
@@ -213,6 +215,7 @@ var Media = breakpoints.reduce(function (accumulator, _a) {
     };
     return __assign(__assign({}, accumulator), (_b = {}, _b[size] = nextMedia, _b));
 }, {
+    xs: css,
     sm: css,
     md: css,
     lg: css,
@@ -604,25 +607,28 @@ var StyledLabel = styled.label(templateObject_2$n || (templateObject_2$n = __mak
     var theme = _a.theme;
     return theme.colors.core.border;
 });
-var StyledInput$1 = styled.input(templateObject_3$g || (templateObject_3$g = __makeTemplateObject(["\n  position: absolute;\n  top: 0;\n  opacity: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  z-index: -1;\n\n  &:checked ~ ", " {\n    border: 2px solid ", ";\n  }\n\n  &:focus ~ ", " {\n    outline: 1px solid ", ";\n  }\n\n  &:checked&:focus ~ ", " {\n    border: 2px solid ", ";\n    outline: 1px solid ", ";\n    box-shadow: 0 0 0 2px ", ";\n  }\n"], ["\n  position: absolute;\n  top: 0;\n  opacity: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  z-index: -1;\n\n  &:checked ~ ", " {\n    border: 2px solid ", ";\n  }\n\n  &:focus ~ ", " {\n    outline: 1px solid ", ";\n  }\n\n  &:checked&:focus ~ ", " {\n    border: 2px solid ", ";\n    outline: 1px solid ", ";\n    box-shadow: 0 0 0 2px ", ";\n  }\n"])), StyledLabel, function (_a) {
+var StyledInput$1 = styled.input(templateObject_3$g || (templateObject_3$g = __makeTemplateObject(["\n  position: absolute;\n  top: 0;\n  opacity: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  z-index: -1;\n\n  &:checked ~ ", " {\n    border: 2px solid ", ";\n    color: ", ";\n  }\n\n  &:focus ~ ", " {\n    outline: 1px solid ", ";\n  }\n\n  &:checked&:focus ~ ", " {\n    border: 2px solid ", ";\n    outline: 1px solid ", ";\n    box-shadow: 0 0 0 2px ", ";\n  }\n"], ["\n  position: absolute;\n  top: 0;\n  opacity: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  z-index: -1;\n\n  &:checked ~ ", " {\n    border: 2px solid ", ";\n    color: ", ";\n  }\n\n  &:focus ~ ", " {\n    outline: 1px solid ", ";\n  }\n\n  &:checked&:focus ~ ", " {\n    border: 2px solid ", ";\n    outline: 1px solid ", ";\n    box-shadow: 0 0 0 2px ", ";\n  }\n"])), StyledLabel, function (_a) {
     var theme = _a.theme;
-    return theme.colors.core.semiTitle;
-}, StyledLabel, function (_a) {
+    return theme.colors.utility.blue;
+}, function (_a) {
     var theme = _a.theme;
     return theme.colors.utility.blue;
 }, StyledLabel, function (_a) {
     var theme = _a.theme;
     return theme.colors.core.semiTitle;
+}, StyledLabel, function (_a) {
+    var theme = _a.theme;
+    return theme.colors.utility.blue;
 }, function (_a) {
     var theme = _a.theme;
     return theme.colors.utility.white;
 }, function (_a) {
     var theme = _a.theme;
-    return theme.colors.utility.blue;
+    return theme.colors.core.semiTitle;
 });
 var Checkbox = function (_a) {
-    var checked = _a.checked, label = _a.label, name = _a.name, value = _a.value, id = _a.id, onChange = _a.onChange, _b = _a.type, type = _b === void 0 ? "checkbox" : _b;
-    return (React.createElement(Container$m, null,
+    var checked = _a.checked, label = _a.label, name = _a.name, value = _a.value, id = _a.id, onChange = _a.onChange, _b = _a.type, type = _b === void 0 ? "checkbox" : _b, className = _a.className;
+    return (React.createElement(Container$m, { className: className },
         React.createElement(StyledInput$1, { type: type, id: id, name: name, value: value, checked: checked, onChange: onChange }),
         React.createElement(StyledLabel, { htmlFor: id }, label)));
 };

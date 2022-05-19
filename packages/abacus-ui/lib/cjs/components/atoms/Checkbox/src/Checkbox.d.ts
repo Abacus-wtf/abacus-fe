@@ -1,12 +1,13 @@
-import { FunctionComponent } from "react";
+import React from "react";
 declare type CheckboxProps = {
     checked: boolean;
-    label: string;
+    label: string | React.ReactNode;
     name: string;
     value: string;
     id: string;
     onChange: () => void;
     type?: "checkbox" | "radio";
+    className?: string;
 };
-declare const Checkbox: FunctionComponent<CheckboxProps>;
+declare const Checkbox: ({ checked, label, name, value, id, onChange, type, className, }: CheckboxProps) => JSX.Element;
 export default Checkbox;

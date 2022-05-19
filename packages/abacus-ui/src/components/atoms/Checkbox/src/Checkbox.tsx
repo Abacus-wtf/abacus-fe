@@ -1,15 +1,16 @@
-import React, { FunctionComponent } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Font } from "@theme";
 
 type CheckboxProps = {
   checked: boolean;
-  label: string;
+  label: string | React.ReactNode;
   name: string;
   value: string;
   id: string;
   onChange: () => void;
   type?: "checkbox" | "radio";
+  className?: string;
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -42,21 +43,22 @@ const StyledInput = styled.input`
   z-index: -1;
 
   &:checked ~ ${StyledLabel} {
-    border: 2px solid ${({ theme }) => theme.colors.core.semiTitle};
+    border: 2px solid ${({ theme }) => theme.colors.utility.blue};
+    color: ${({ theme }) => theme.colors.utility.blue};
   }
 
   &:focus ~ ${StyledLabel} {
-    outline: 1px solid ${({ theme }) => theme.colors.utility.blue};
+    outline: 1px solid ${({ theme }) => theme.colors.core.semiTitle};
   }
 
   &:checked&:focus ~ ${StyledLabel} {
-    border: 2px solid ${({ theme }) => theme.colors.core.semiTitle};
+    border: 2px solid ${({ theme }) => theme.colors.utility.blue};
     outline: 1px solid ${({ theme }) => theme.colors.utility.white};
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.utility.blue};
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.core.semiTitle};
   }
 `;
 
-const Checkbox: FunctionComponent<CheckboxProps> = ({
+const Checkbox = ({
   checked,
   label,
   name,
@@ -64,8 +66,9 @@ const Checkbox: FunctionComponent<CheckboxProps> = ({
   id,
   onChange,
   type = "checkbox",
-}) => (
-  <Container>
+  className,
+}: CheckboxProps) => (
+  <Container className={className}>
     <StyledInput
       type={type}
       id={id}

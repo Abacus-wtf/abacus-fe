@@ -26,7 +26,7 @@ declare const defaultTheme: {
             readonly red: "#F33636";
             readonly yellow: "#FFC93E";
             readonly white: "#FFFFFF";
-            readonly gray: "#CCCCCC";
+            readonly gray: "#C4C4C4";
             readonly black: "#000000";
             readonly brown: "#964B00";
             readonly lightBlue: "#F3FCFF";
@@ -72,8 +72,8 @@ declare const defaultTheme: {
             readonly "line-height": "132%";
         };
         readonly mega: {
-            readonly "font-size": "20px";
-            readonly "line-height": "132%";
+            readonly "font-size": "22px";
+            readonly "line-height": "27px";
         };
         readonly giga: {
             readonly "font-size": "24px";

@@ -94,7 +94,7 @@ var defaultTheme = {
             red: "#F33636",
             yellow: "#FFC93E",
             white: "#FFFFFF",
-            gray: "#CCCCCC",
+            gray: "#C4C4C4",
             black: "#000000",
             brown: "#964B00",
             lightBlue: "#F3FCFF",
@@ -141,8 +141,8 @@ var defaultTheme = {
             "line-height": "132%",
         },
         mega: {
-            "font-size": "20px",
-            "line-height": "132%",
+            "font-size": "22px",
+            "line-height": "27px",
         },
         giga: {
             "font-size": "24px",
@@ -182,7 +182,7 @@ var FontImport = function () { return css(templateObject_1$U || (templateObject_
 var Font = function (size, fontFamily) {
     if (size === void 0) { size = "kilo"; }
     if (fontFamily === void 0) { fontFamily = "Inter"; }
-    return css(templateObject_2$u || (templateObject_2$u = __makeTemplateObject(["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ", ";\n"], ["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ",
+    return css(templateObject_2$v || (templateObject_2$v = __makeTemplateObject(["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ", ";\n"], ["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ",
         ";\n"])), fontFamily, function (_a) {
         var theme = _a.theme;
         return (theme === null || theme === void 0 ? void 0 : theme.copy) ? theme.copy[size] : defaultTheme.copy[size];
@@ -221,7 +221,7 @@ var Media = breakpoints.reduce(function (accumulator, _a) {
     lg: css,
     xl: css,
 });
-var templateObject_1$U, templateObject_2$u, templateObject_3$l;
+var templateObject_1$U, templateObject_2$v, templateObject_3$l;
 
 var Container$F = styled.div(templateObject_1$T || (templateObject_1$T = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("exa"));
 var templateObject_1$T;
@@ -280,7 +280,7 @@ var InputContainer = styled.div(templateObject_4$a || (templateObject_4$a = __ma
     "\n"])), function (_a) {
     var disabled = _a.disabled;
     return disabled
-        ? css(templateObject_2$t || (templateObject_2$t = __makeTemplateObject(["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "], ["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "]))) : "";
+        ? css(templateObject_2$u || (templateObject_2$u = __makeTemplateObject(["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "], ["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "]))) : "";
 }, function (_a) {
     var required = _a.required, pristine = _a.pristine, theme = _a.theme, value = _a.value;
     return required && !pristine && !value
@@ -319,9 +319,10 @@ var Input = function (_a) {
             React.createElement(StyledInput$2, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); }, disabled: disabled, "aria-disabled": disabled, required: required, onFocus: function () { return setPristine(false); }, step: step })),
         hint && React.createElement(StyledKilo$3, null, hint)));
 };
-var templateObject_1$C, templateObject_2$t, templateObject_3$k, templateObject_4$a, templateObject_5$8, templateObject_6$6, templateObject_7$4, templateObject_8$3, templateObject_9$3;
+var templateObject_1$C, templateObject_2$u, templateObject_3$k, templateObject_4$a, templateObject_5$8, templateObject_6$6, templateObject_7$4, templateObject_8$3, templateObject_9$3;
 
-var Section = styled.section(templateObject_1$B || (templateObject_1$B = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 20px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n"])), function (_a) {
+var Section = styled.section(templateObject_2$t || (templateObject_2$t = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 12px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 12px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ",
+    "\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.utility.white;
 }, function (_a) {
@@ -330,8 +331,8 @@ var Section = styled.section(templateObject_1$B || (templateObject_1$B = __makeT
 }, function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.section;
-});
-var templateObject_1$B;
+}, Media.md(templateObject_1$B || (templateObject_1$B = __makeTemplateObject(["\n    padding: 20px;\n  "], ["\n    padding: 20px;\n  "]))));
+var templateObject_1$B, templateObject_2$t;
 
 var ButtonType;
 (function (ButtonType) {
@@ -697,9 +698,9 @@ var Eth = function (_a) {
 };
 
 var Close = function (_a) {
-    var _b = _a.stroke, stroke = _b === void 0 ? "#1C2333" : _b;
-    return (React.createElement("svg", { width: "14", height: "14", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
-        React.createElement("path", { d: "m1 1 12 12m0-12L1 13", stroke: stroke, strokeOpacity: ".72", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })));
+    var _b = _a.fill, fill = _b === void 0 ? "#1C2333" : _b;
+    return (React.createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 28 28" },
+        React.createElement("path", { d: "M17.453 8.668 14 12.121l-3.454-3.453-1.88 1.88 3.454 3.453-3.454 3.454 1.88 1.88L14 15.88l3.453 3.454 1.88-1.88L15.88 14l3.453-3.453-1.88-1.88ZM14 .668A13.321 13.321 0 0 0 .667 14.001c0 7.374 5.96 13.334 13.333 13.334S27.333 21.375 27.333 14C27.333 6.628 21.373.668 14 .668Zm0 24c-5.88 0-10.667-4.787-10.667-10.667S8.12 3.335 14 3.335 24.666 8.12 24.666 14c0 5.88-4.786 10.667-10.666 10.667Z", fill: fill, fillOpacity: ".72" })));
 };
 
 var Lock = function (_a) {

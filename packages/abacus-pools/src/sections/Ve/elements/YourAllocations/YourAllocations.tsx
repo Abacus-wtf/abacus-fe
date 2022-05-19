@@ -1,4 +1,4 @@
-import { H4, Media } from "abacus-ui"
+import { H4, Media, Button, ButtonType } from "abacus-ui"
 import { BigNumber } from "ethers"
 import React from "react"
 import styled from "styled-components"
@@ -38,6 +38,15 @@ const Heading = styled(H4)<Spanable>`
   `}
 `
 
+const SeeAllButton = styled(Button)`
+  align-self: center;
+  margin-top: 16px;
+
+  ${Media.sm`
+    margin: 0;
+  `}
+`
+
 const YourAllocations = () => (
   <StyledSection order={2}>
     <SectionTitle>Your Allocations</SectionTitle>
@@ -48,6 +57,7 @@ const YourAllocations = () => (
         <Allocation key={allocation.address} {...allocation} />
       ))}
     </ColumnContainer>
+    <SeeAllButton buttonType={ButtonType.Gray}>{"See All >"}</SeeAllButton>
   </StyledSection>
 )
 

@@ -1,23 +1,12 @@
 import { useOnPurchaseTokens } from "@hooks/vaultFunc"
 import { useEthToUSD } from "@state/application/hooks"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import {
-  Button,
-  Checkbox,
-  Exa,
-  Flex,
-  Font,
-  Input,
-  Kilo,
-  ProgressBar,
-  ButtonType,
-  Range,
-} from "abacus-ui"
+import { Button, Exa, Input, Kilo, ProgressBar } from "abacus-ui"
 import { formatEther } from "ethers/lib/utils"
-import { Link } from "gatsby"
+
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
-import { LoadingOverlay } from "@components/index"
+import { LoadingOverlay, LockTimeSelector } from "@components/index"
 import { customDurationConfig, durations } from "./constants"
 
 const UpperContainer = styled.div`
@@ -65,32 +54,6 @@ const ProgressValue = styled.span`
   color: ${({ theme }) => theme.colors.core.primary};
 `
 
-const LockRadioContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  row-gap: 16px;
-`
-
-const LockRadioLabel = styled.label`
-  ${Font("kilo")}
-  font-size: 20px;
-`
-
-const LockRadioGroup = styled(Flex)`
-  flex-wrap: wrap;
-`
-
-const CustomDurationButton = styled(Button)`
-  display: block;
-  border: 2px solid rgba(28, 35, 51, 0.04);
-  border-radius: 70px;
-  padding: 8px 14px;
-  text-align: center;
-  margin-right: 6px;
-  margin-bottom: 12px;
-`
-
 const ConfirmButton = styled(Button)`
   width: 100%;
   padding: 22px;
@@ -106,7 +69,6 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
 }) => {
   const [eth, setEth] = useState("")
   const [lockDuration, setLockDuration] = useState<number>(null)
-  const [isCustomDuration, setIsCustomDuration] = useState(false)
   const ethUSD = useEthToUSD(Number(eth))
   const { tokenPrice, nftName, size } = useGetPoolData()
   const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
@@ -179,53 +141,14 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
         pill={nftName}
         hint={`$${ethUSD}`}
       />
-      <LockRadioContainer>
-        <Flex
-          style={{
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            columnGap: "8px",
-            rowGap: "16px",
-          }}
-        >
-          <LockRadioLabel htmlFor="lock_duration">
-            How long do you want to lock your deposit?
-          </LockRadioLabel>
-          <Link to="/learn-more">{"Learn More >"}</Link>
-        </Flex>
-        {isCustomDuration ? (
-          <Range
-            id="lock_duration"
-            value={lockDuration}
-            setValue={setLockDuration}
-            min={customDurationConfig.min}
-            max={customDurationConfig.max}
-            outputFormatter={(value: number) => `${value}d`}
-          />
-        ) : (
-          <LockRadioGroup>
-            {durations.map((duration) => (
-              <Checkbox
-                key={duration.id}
-                type="radio"
-                name="lock_duration"
-                label={duration.label}
-                id={duration.id}
-                value={duration.value}
-                checked={lockDuration === Number(duration.value)}
-                onChange={() => setLockDuration(Number(duration.value))}
-              />
-            ))}
-
-            <CustomDurationButton
-              buttonType={ButtonType.Clear}
-              onClick={() => setIsCustomDuration(true)}
-            >
-              Custom
-            </CustomDurationButton>
-          </LockRadioGroup>
-        )}
-      </LockRadioContainer>
+      <LockTimeSelector
+        label="How long do you want to lock your deposit?"
+        learnMoreLink="/learn-more"
+        lockDuration={lockDuration}
+        setLockDuration={setLockDuration}
+        durations={durations}
+        customDurationConfig={customDurationConfig}
+      />
       <ConfirmButton disabled={confirmDisabled} onClick={purchaseTokens}>
         {isPending ? "Pending..." : "Confirm Purchase"}
       </ConfirmButton>

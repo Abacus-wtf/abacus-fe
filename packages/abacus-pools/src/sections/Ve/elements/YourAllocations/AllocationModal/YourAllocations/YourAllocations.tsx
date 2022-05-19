@@ -11,6 +11,7 @@ type YourAllocationsProps = {
   userState: UserState
   allocationToChange: string
   setAllocationToChange: React.Dispatch<string>
+  newAllocation: string
 }
 
 const SaveChanges = styled.div`
@@ -27,6 +28,7 @@ const YourAllocations = ({
   userState,
   setAllocationToChange,
   allocationToChange,
+  newAllocation,
 }: YourAllocationsProps) => {
   const editMode = userState === UserState.WRITE
   return (
@@ -56,11 +58,13 @@ const YourAllocations = ({
       </ColumnContainer>
       {editMode && (
         <SaveChanges>
-          <Button>Save Changes</Button>
-          <P>
-            Select collection on the left or input custom address to change
-            allocation
-          </P>
+          <Button disabled={!newAllocation}>Save Changes</Button>
+          {!newAllocation && (
+            <P>
+              Select collection on the left or input custom address to change
+              allocation
+            </P>
+          )}
         </SaveChanges>
       )}
     </SectionContainer>

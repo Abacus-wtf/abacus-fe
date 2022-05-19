@@ -1,5 +1,5 @@
 import { Modal, Media } from "abacus-ui"
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import { OverallAllocations } from "./OverallAllocations/OverallAllocations"
 import { YourAllocations } from "./YourAllocations"
@@ -48,13 +48,18 @@ const AllocationModal = ({
   allocationToChange,
   setAllocationToChange,
 }: AllocationModalProps) => {
+  const [newAllocation, setNewAllocation] = useState("")
   const userState = allocationToChange ? UserState.WRITE : UserState.READ
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <Container>
-        <OverallAllocations userState={userState} />
+        <OverallAllocations
+          userState={userState}
+          setNewAllocation={setNewAllocation}
+        />
         <Divider />
         <YourAllocations
+          newAllocation={newAllocation}
           userState={userState}
           setAllocationToChange={setAllocationToChange}
           allocationToChange={allocationToChange}

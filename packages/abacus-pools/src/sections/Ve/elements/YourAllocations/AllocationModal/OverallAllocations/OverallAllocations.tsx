@@ -1,5 +1,5 @@
 import { Button, ButtonType, Input } from "abacus-ui"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { allocations as placeholder } from "../../../placeholder-data"
 import { UserState } from "../AllocationModal"
@@ -13,6 +13,7 @@ import { Table, TR } from "./OverallAllocations.styled"
 
 type OverallAllocationsProps = {
   userState: UserState
+  setNewAllocation: React.Dispatch<string>
 }
 
 const ViewMoreButton = styled(Button)`
@@ -21,7 +22,10 @@ const ViewMoreButton = styled(Button)`
   text-decoration: underline;
 `
 
-const OverallAllocations = ({ userState }: OverallAllocationsProps) => {
+const OverallAllocations = ({
+  userState,
+  setNewAllocation,
+}: OverallAllocationsProps) => {
   const [selectedAllocation, setSelectedAllocation] = useState("")
   const [customAddress, setCustomAddress] = useState("")
   const editMode = userState === UserState.WRITE
@@ -32,6 +36,10 @@ const OverallAllocations = ({ userState }: OverallAllocationsProps) => {
       address: `${allocation.address}${i}`,
       percent: 12.7,
     }))
+
+  useEffect(() => {
+    setNewAllocation(selectedAllocation || customAddress)
+  }, [customAddress, selectedAllocation, setNewAllocation])
   return (
     <SectionContainer>
       <SectionHeader>Overall Allocations</SectionHeader>

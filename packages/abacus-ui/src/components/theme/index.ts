@@ -27,7 +27,7 @@ const defaultTheme = {
       red: "#F33636",
       yellow: "#FFC93E",
       white: "#FFFFFF",
-      gray: "#CCCCCC",
+      gray: "#C4C4C4",
       black: "#000000",
       brown: "#964B00",
       lightBlue: "#F3FCFF",
@@ -74,8 +74,8 @@ const defaultTheme = {
       "line-height": "132%",
     },
     mega: {
-      "font-size": "20px",
-      "line-height": "132%",
+      "font-size": "22px",
+      "line-height": "27px",
     },
     giga: {
       "font-size": "24px",

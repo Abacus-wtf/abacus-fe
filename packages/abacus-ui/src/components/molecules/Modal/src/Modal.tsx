@@ -15,7 +15,7 @@ const Container = styled.div<{ isOpen: boolean }>`
   background-size: cover;
   backdrop-filter: blur(40px);
   z-index: ${({ isOpen }) => (isOpen ? "10" : "-1")};
-  padding: 1rem;
+  padding: 12px;
   transition: opacity 0.33s ease, z-index 0.33s ease;
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   overflow-y: scroll;
@@ -26,6 +26,7 @@ const Container = styled.div<{ isOpen: boolean }>`
     justify-content: center;
     align-items: center;
     overflow-y: hidden;
+    padding: 16px;
   `}
 `;
 

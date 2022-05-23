@@ -1,7 +1,8 @@
 import { useEthToUSD } from "@state/application/hooks"
 import React, { FunctionComponent } from "react"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import Countdown from "./Countdown"
+import { Countdown } from "@components/index"
+import styled from "styled-components"
 import {
   Container,
   InfoWrapper,
@@ -9,6 +10,10 @@ import {
   InfoData,
   InfoSecondaryData,
 } from "./AuctionInfo.styled"
+
+const StyledInfoData = styled(InfoData)`
+  font-family: monospace;
+`
 
 const AuctionInfo: FunctionComponent = () => {
   const { auction } = useGetPoolData()
@@ -25,7 +30,9 @@ const AuctionInfo: FunctionComponent = () => {
       </InfoWrapper>
       <InfoWrapper>
         <InfoLabel>Auction Ending in</InfoLabel>
-        <Countdown endTime={end} />
+        <StyledInfoData>
+          <Countdown endTime={end} />
+        </StyledInfoData>
       </InfoWrapper>
     </Container>
   )

@@ -178,3 +178,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     mobile: true,
   },
 }
+
+const DAY = 24 * 60 * 60 * 1000
+
+export const EPOCH_LENGTH = IS_PRODUCTION ? 2 * DAY : 2 * DAY

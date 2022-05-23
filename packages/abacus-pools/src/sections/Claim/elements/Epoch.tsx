@@ -1,36 +1,49 @@
-import React, { useState } from "react"
-import { InfoBarTitle } from "@components/index"
+import React from "react"
+import { Countdown, InfoBarTitle } from "@components/index"
 import { Select } from "abacus-ui"
+import moment from "moment"
+import { EPOCH_LENGTH } from "@config/constants"
 import {
   StyledSection,
   StyledInfoBarContent,
   StyledInfoBarItem,
 } from "../Claim.styles"
 
-const options = ["#1", "#2", "#3", "#4", "#5", "#6", "#7", "#8", "#9"]
+type EpochProps = {
+  epoch: number
+  setEpoch: React.Dispatch<number>
+  epochs: string[]
+  endTime: number
+}
 
-const Epoch = () => {
-  const [selectedEpoch, setSelectedEpoch] = useState(options[0])
+const Epoch = ({ epochs, epoch, setEpoch, endTime }: EpochProps) => {
+  const startTime = endTime - EPOCH_LENGTH
+  const format = "DD/MM/YYYY"
   return (
     <StyledSection>
       <StyledInfoBarItem>
         <InfoBarTitle>Epoch</InfoBarTitle>
         <StyledInfoBarContent>
           <Select
-            value={selectedEpoch}
-            setValue={setSelectedEpoch}
-            options={options}
+            value={`#${epoch}`}
+            setValue={(nextEpoch) =>
+              setEpoch(Number(nextEpoch.replaceAll("#", "")))
+            }
+            options={epochs}
           />
         </StyledInfoBarContent>
       </StyledInfoBarItem>
       <StyledInfoBarItem>
         <InfoBarTitle>Epoch Ending In</InfoBarTitle>
-        <StyledInfoBarContent>21 d 32 m</StyledInfoBarContent>
+        <StyledInfoBarContent>
+          <Countdown endTime={endTime} key={`${epoch}`} />
+        </StyledInfoBarContent>
       </StyledInfoBarItem>
       <StyledInfoBarItem>
         <InfoBarTitle>Epoch Range</InfoBarTitle>
         <StyledInfoBarContent>
-          01/05/2022&nbsp;<span>to</span>&nbsp;14/05/2022
+          {moment(startTime).format(format)}&nbsp;<span>to</span>&nbsp;
+          {moment(endTime).format(format)}
         </StyledInfoBarContent>
       </StyledInfoBarItem>
     </StyledSection>

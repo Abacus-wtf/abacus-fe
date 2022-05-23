@@ -6,7 +6,8 @@ import {
   StyledSection,
   StyledInfoBarContent,
   StyledInfoBarItem,
-} from "../Claim.styles"
+} from "../../Claim.styles"
+import { useBondData } from "./useBondData"
 
 const ButtonContainer = styled(StyledInfoBarItem)`
   flex-direction: row;
@@ -22,23 +23,39 @@ const MaxButton = styled(Button)`
   padding: 9px 20px;
 `
 
-const options = ["#1", "#2", "#3", "#4", "#5", "#6", "#7", "#8", "#9"]
 const Bond = () => {
-  const [eth, setEth] = useState("")
-  const [selectedEpoch, setSelectedEpoch] = useState(options[0])
+  const [bondAmount, setBondAmount] = useState("")
+  const {
+    epoch,
+    setEpoch,
+    epochs,
+    ethBalance,
+    getCreditData,
+    onBond,
+    isPendingBond,
+    userData,
+  } = useBondData()
+  const handleBond = () => onBond(bondAmount, () => getCreditData())
+
+  const setMax = () => setBondAmount(ethBalance)
+
   return (
     <StyledSection>
       <StyledInfoBarItem>
         <InfoBarTitle>Epoch</InfoBarTitle>
         <Select
-          value={selectedEpoch}
-          setValue={setSelectedEpoch}
-          options={options}
+          value={`#${epoch}`}
+          setValue={(nextEpoch) =>
+            setEpoch(Number(nextEpoch.replaceAll("#", "")))
+          }
+          options={epochs}
         />
       </StyledInfoBarItem>
       <StyledInfoBarItem>
         <InfoBarTitle>ABC Bonded</InfoBarTitle>
-        <StyledInfoBarContent>26,000.00</StyledInfoBarContent>
+        <StyledInfoBarContent>
+          {userData?.bondedAmount ?? "-"}
+        </StyledInfoBarContent>
       </StyledInfoBarItem>
       <StyledInfoBarItem>
         <InfoBarTitle>ETH amount you want bond </InfoBarTitle>
@@ -46,15 +63,21 @@ const Bond = () => {
           <Input
             type="number"
             name="bond_eth"
-            value={eth}
-            onChange={setEth}
+            value={bondAmount}
+            onChange={setBondAmount}
             placeholder="0.00"
-            pill={<MaxButton>Max</MaxButton>}
+            pill={<MaxButton onClick={setMax}>Max</MaxButton>}
           />
         </StyledInfoBarContent>
       </StyledInfoBarItem>
       <ButtonContainer>
-        <Button buttonType={ButtonType.Standard}>Bond Eth</Button>
+        <Button
+          buttonType={ButtonType.Standard}
+          onClick={handleBond}
+          disabled={isPendingBond}
+        >
+          {isPendingBond ? "...Pending" : "Bond Eth"}
+        </Button>
       </ButtonContainer>
     </StyledSection>
   )

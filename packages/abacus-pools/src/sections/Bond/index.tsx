@@ -49,7 +49,7 @@ const Bond: React.FC = () => {
     const [[creditStored, currentEpoch], [balance]] = await Promise.all([
       bondContracts(
         ABC_CREDIT_BONDS,
-        ["abcCreditStored", "currentEpoch"],
+        ["userCredit", "currentEpoch"],
         [[account], []]
       ),
       erc721(ABC_TOKEN, ["balanceOf"], [[account]]),

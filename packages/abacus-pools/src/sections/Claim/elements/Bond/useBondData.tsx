@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import { useActiveWeb3React, useMultiCall } from "@hooks/index"
 import { formatEther } from "ethers/lib/utils"
 
-import { ABC_CREDIT_BONDS, ABC_TOKEN } from "@config/constants"
+import { ABC_CREDIT_BONDS, ABC_EPOCH, ABC_TOKEN } from "@config/constants"
 import { useOnAddABCCredit, useOnBond } from "@hooks/bondFunc"
 
 import { useGetCurrentNetwork } from "@state/application/hooks"
@@ -11,6 +11,7 @@ import { BigNumber } from "ethers"
 import { map, range } from "lodash"
 import ABC_BOND_ABI from "../../../../config/contracts/ABC_CREDIT_BONDS_ABI.json"
 import ERC_721_ABI from "../../../../config/contracts/ERC_721_ABI.json"
+import EPOCH_VAULT_ABI from "../../../../config/contracts/ABC_EPOCH_ABI.json"
 
 interface CreditData {
   creditStored: string
@@ -26,6 +27,7 @@ const useBondData = () => {
   const { onBond, isPending: isPendingBond } = useOnBond()
   const { onAddABCCredit, isPending: isPendingABCCredit } = useOnAddABCCredit()
   const bondContracts = useMultiCall(ABC_BOND_ABI)
+  const epochVault = useMultiCall(EPOCH_VAULT_ABI)
   const erc721 = useMultiCall(ERC_721_ABI)
   const [ethBalance, setEthBalance] = useState(null)
   const [epoch, setEpoch] = useState(0)
@@ -38,11 +40,15 @@ const useBondData = () => {
   }, [account, library])
 
   const getCreditData = useCallback(async () => {
-    const [[creditStored, currentEpoch], [balance]] = await Promise.all([
+    const [[currentEpoch]] = await Promise.all([
+      epochVault(ABC_EPOCH, ["getCurrentEpoch"], [[]]),
+    ])
+
+    const [[creditStored], [balance]] = await Promise.all([
       bondContracts(
         ABC_CREDIT_BONDS,
-        ["abcCreditStored", "currentEpoch"],
-        [[account], []]
+        ["userCredit"],
+        [[currentEpoch[0], account]]
       ),
       erc721(ABC_TOKEN, ["balanceOf"], [[account]]),
     ])
@@ -54,7 +60,7 @@ const useBondData = () => {
     })
     setEpoch(BigNumber.from(currentEpoch[0]).toNumber())
     setCurrentEpoch(BigNumber.from(currentEpoch[0]).toNumber())
-  }, [account, bondContracts, erc721])
+  }, [account, bondContracts, epochVault, erc721])
 
   const getBondedAmount = useCallback(async () => {
     const [[bondedAmount]] = await Promise.all([

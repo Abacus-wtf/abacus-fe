@@ -76,7 +76,7 @@ const Bond = () => {
           onClick={handleBond}
           disabled={isPendingBond}
         >
-          {isPendingBond ? "...Pending" : "Bond Eth"}
+          {isPendingBond ? "tx Pending" : "Bond Eth"}
         </Button>
       </ButtonContainer>
     </StyledSection>

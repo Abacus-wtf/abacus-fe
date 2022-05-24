@@ -61,7 +61,7 @@ interface AllocationProps extends VeAllocation {
 }
 
 const Allocation = ({
-  collection,
+  name,
   imgSrc,
   amount,
   changeAction,
@@ -72,7 +72,7 @@ const Allocation = ({
   <>
     <CollectionContainer>
       <CollectionImage src={imgSrc} alt="" />
-      <StyledP>{collection}</StyledP>
+      <StyledP>{name}</StyledP>
     </CollectionContainer>
     <Amount>
       {formatEther(amount)} <span>ABC</span>

@@ -1,8 +1,8 @@
 import { BigNumber } from "ethers"
 
 export type VeAllocation = {
-  collection: string
-  imgSrc: string
   address: string
+  imgSrc: string
+  name: string
   amount: BigNumber
 }

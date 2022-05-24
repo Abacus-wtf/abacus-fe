@@ -59,7 +59,7 @@ const RADIO_NAME = "overall_allocation_row_radio_group"
 const OverallAllocationRow = ({
   address,
   amount,
-  collection,
+  name,
   imgSrc,
   percent,
   index,
@@ -78,7 +78,7 @@ const OverallAllocationRow = ({
             checked ? (
               <Checkmark stroke="#FFF" />
             ) : (
-              <VisuallyHidden>{collection}</VisuallyHidden>
+              <VisuallyHidden>{name}</VisuallyHidden>
             )
           }
           id={address}
@@ -92,7 +92,7 @@ const OverallAllocationRow = ({
 
       <CollectionInfo>
         <RoundImage src={imgSrc} size={27} />
-        <TD as="span">{collection}</TD>
+        <TD as="span">{name}</TD>
       </CollectionInfo>
       <TD>
         {formatEther(amount)} <span>veABC</span>

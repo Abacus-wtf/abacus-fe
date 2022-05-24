@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useActiveWeb3React, useMultiCall } from "@hooks/index"
 import { formatEther } from "ethers/lib.esm/utils"
 
@@ -8,6 +8,7 @@ import { useOnBond } from "@hooks/bondFunc"
 import { useGetCurrentNetwork } from "@state/application/hooks"
 
 import { BigNumber } from "ethers"
+import { map, range } from "lodash"
 import ABC_BOND_ABI from "../../../../config/contracts/ABC_CREDIT_BONDS_ABI.json"
 import EPOCH_VAULT_ABI from "../../../../config/contracts/ABC_EPOCH_ABI.json"
 
@@ -19,6 +20,7 @@ const useBondData = () => {
   const bondContracts = useMultiCall(ABC_BOND_ABI)
   const epochVault = useMultiCall(EPOCH_VAULT_ABI)
   const [ethBalance, setEthBalance] = useState(null)
+  const [epoch, setEpoch] = useState(0)
   const [currentEpoch, setCurrentEpoch] = useState(0)
   const networkSymbol = useGetCurrentNetwork()
 
@@ -32,22 +34,21 @@ const useBondData = () => {
       epochVault(ABC_EPOCH, ["getCurrentEpoch"], [[]]),
     ])
 
-    setCurrentEpoch(BigNumber.from(currentEpoch[0]).toNumber())
+    // eslint-disable-next-line no-underscore-dangle
+    const _currentEpoch = BigNumber.from(currentEpoch[0]).toNumber()
+    setCurrentEpoch(_currentEpoch)
+    setEpoch(_currentEpoch)
   }, [epochVault])
 
   const getBondedAmount = useCallback(async () => {
     if (account) {
       const [[userCredit]] = await Promise.all([
-        bondContracts(
-          ABC_CREDIT_BONDS,
-          ["userCredit"],
-          [[currentEpoch + 1, account]]
-        ),
+        bondContracts(ABC_CREDIT_BONDS, ["userCredit"], [[epoch, account]]),
       ])
 
       setAbcBonded(Number(formatEther(userCredit[0])))
     }
-  }, [account, bondContracts, currentEpoch])
+  }, [account, bondContracts, epoch])
 
   useEffect(() => {
     if (ethBalance === null && account) {
@@ -69,6 +70,11 @@ const useBondData = () => {
     }
   }, [account, getCurrentEpoch])
 
+  const epochs = useMemo(
+    () => map(range(0, currentEpoch + 2), (i) => `#${i}`),
+    [currentEpoch]
+  )
+
   return {
     ethBalance,
     getBondedAmount,
@@ -77,6 +83,9 @@ const useBondData = () => {
     abcBonded,
     account,
     currentEpoch,
+    epoch,
+    setEpoch,
+    epochs,
   }
 }
 

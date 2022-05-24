@@ -1,17 +1,12 @@
 import { useEffect, useMemo, useState } from "react"
 
 import { ABC_EPOCH, ABC_FACTORY } from "@config/constants"
-import {
-  useClaimABCReward,
-  useClaimEmissions,
-  useEndEpoch,
-} from "@hooks/epochFunc"
+import { useClaimABCReward } from "@hooks/epochFunc"
 import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import { formatEther } from "ethers/lib/utils"
 import { map, range } from "lodash"
 
 import { BigNumber } from "ethers"
-import moment from "moment"
 
 import EPOCH_VAULT_ABI from "../../../../config/contracts/ABC_EPOCH_ABI.json"
 import FACTORY_ABI from "../../../../config/contracts/ABC_FACTORY_ABI.json"
@@ -21,7 +16,6 @@ const useCreditsData = () => {
   const { account } = useActiveWeb3React()
   const [currentEpoch, setCurrentEpoch] = useState(0)
   const [epoch, setEpoch] = useState(0)
-  const [showEndEpoch, setShowEndEpoch] = useState(false)
   const [epochEndTime, setEpochEndTime] = useState<number>(null)
   const [totalEmissions, setTotalEmissions] = useState<BigNumber>(
     BigNumber.from(0)
@@ -29,11 +23,12 @@ const useCreditsData = () => {
   const [totalCredits, setTotalCredits] = useState<number>(null)
   const [userData, setUserData] = useState<EpochData | null>(null)
   const [currentEpochSet, setCurrentEpochSet] = useState(false)
-  const [pendingRewards, setPendingRewards] = useState(0)
+  const [, setPendingRewards] = useState(0)
   const { onClaimABCReward, isPending } = useClaimABCReward()
-  const { onClaimEmissions, isPending: isPendingEmissions } =
-    useClaimEmissions()
-  const { onEndEpoch, isPending: isPendingEndEpoch } = useEndEpoch()
+  // TODO: Determine if this will be used
+  // const { onClaimEmissions, isPending: isPendingEmissions } =
+  //   useClaimEmissions()
+
   const epochVault = useMultiCall(EPOCH_VAULT_ABI)
   const factoryVault = useWeb3Contract(FACTORY_ABI)
 
@@ -67,9 +62,7 @@ const useCreditsData = () => {
       setTotalCredits(Number(formatEther(BigNumber.from(epochTracker[0]))))
 
       setPendingRewards(Number(formatEther(_pendingRewards)))
-      setShowEndEpoch(
-        moment().unix() > BigNumber.from(getEpochEndTime[0]).toNumber()
-      )
+
       setEpochEndTime(BigNumber.from(getEpochEndTime[0]).toNumber() * 1000)
       setEpoch(BigNumber.from(currentEpoch[0]).toNumber())
       setCurrentEpoch(BigNumber.from(currentEpoch[0]).toNumber())
@@ -85,9 +78,7 @@ const useCreditsData = () => {
         ["getBaseEmission", "getUserCredits", "getEpochEndTime"],
         [[epoch], [epoch, account], [epoch]]
       )
-      setShowEndEpoch(
-        moment().unix() > BigNumber.from(getEpochEndTime[0]).toNumber()
-      )
+
       setEpochEndTime(BigNumber.from(getEpochEndTime[0]).toNumber() * 1000)
       setUserData({
         userCredits: Number(formatEther(userCredits[0])),
@@ -108,7 +99,7 @@ const useCreditsData = () => {
   }, [account, epochVault, epoch, currentEpochSet, factoryVault])
 
   const epochs = useMemo(
-    () => map(range(0, currentEpoch + 10), (i) => `#${i}`),
+    () => map(range(0, currentEpoch + 11), (i) => `#${i}`),
     [currentEpoch]
   )
 
@@ -133,6 +124,7 @@ const useCreditsData = () => {
     userData,
     claimableAbc,
     onClaimABCReward,
+    isPending,
   }
 }
 

@@ -9,11 +9,7 @@ import { ColumnContainer, Heading } from "./YourAllocations.styled"
 
 const SeeAllButton = styled(Button)`
   align-self: center;
-  margin-top: 16px;
-
-  ${Media.sm`
-    margin: 0;
-  `}
+  margin-top: auto;
 `
 
 const YourAllocations = () => {
@@ -23,21 +19,32 @@ const YourAllocations = () => {
   return (
     <StyledSection order={2}>
       <SectionTitle>Your Allocations</SectionTitle>
-      <ColumnContainer>
-        <Heading>Collection</Heading>
-        <Heading span={2}>Amount</Heading>
-        {allocations.map((allocation) => (
-          <Allocation
-            key={allocation.address}
-            {...allocation}
-            changeAction={() => {
-              setAllocationToChange(allocation.address)
-              setModalOpen(true)
-            }}
-          />
-        ))}
-      </ColumnContainer>
-      <SeeAllButton buttonType={ButtonType.Gray}>{"See All >"}</SeeAllButton>
+      {allocations.length > 0 ? (
+        <ColumnContainer>
+          <Heading>Collection</Heading>
+          <Heading span={2}>Amount</Heading>
+          {allocations.map((allocation, i) =>
+            i < 3 ? ( // Only show the first 3
+              <Allocation
+                key={allocation.address}
+                {...allocation}
+                changeAction={() => {
+                  setAllocationToChange(allocation.address)
+                  setModalOpen(true)
+                }}
+              />
+            ) : null
+          )}
+        </ColumnContainer>
+      ) : (
+        "You have no allocations yet"
+      )}
+      <SeeAllButton
+        buttonType={ButtonType.Gray}
+        onClick={() => setModalOpen(true)}
+      >
+        {"See All >"}
+      </SeeAllButton>
       <AllocationModal
         isOpen={modalOpen}
         closeModal={() => setModalOpen(false)}

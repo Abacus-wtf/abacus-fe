@@ -1,0 +1,7 @@
+fragment Allocation on Allocation {
+  id
+  epoch
+  collection
+  amount
+  timestamp
+}

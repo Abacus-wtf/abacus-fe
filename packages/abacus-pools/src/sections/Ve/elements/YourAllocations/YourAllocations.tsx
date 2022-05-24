@@ -1,7 +1,7 @@
+import { useUserAllocations } from "@state/allocations/hooks"
 import { Media, Button, ButtonType } from "abacus-ui"
 import React, { useState } from "react"
 import styled from "styled-components"
-import { allocations } from "../placeholder-data"
 import { SectionTitle, StyledSection } from "../Ve.styles"
 import { Allocation } from "./Allocation"
 import { AllocationModal } from "./AllocationModal"
@@ -19,6 +19,7 @@ const SeeAllButton = styled(Button)`
 const YourAllocations = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const [allocationToChange, setAllocationToChange] = useState<string>(null)
+  const allocations = useUserAllocations()
   return (
     <StyledSection order={2}>
       <SectionTitle>Your Allocations</SectionTitle>

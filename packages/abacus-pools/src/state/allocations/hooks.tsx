@@ -64,7 +64,7 @@ export const useFetchUserAllocations = () => {
     })
 
     dispatch(setUserAllocations(allocations))
-  }, [])
+  }, [account, dispatch])
 
   return { fetchUserAllocations }
 }

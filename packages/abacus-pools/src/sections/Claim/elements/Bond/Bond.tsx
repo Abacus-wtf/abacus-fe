@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { InfoBarTitle } from "@components/index"
-import { Button, ButtonType, Input, Media, Select } from "abacus-ui"
+import { Button, ButtonType, Input, Media } from "abacus-ui"
 import styled from "styled-components"
 import {
   StyledSection,
@@ -26,16 +26,14 @@ const MaxButton = styled(Button)`
 const Bond = () => {
   const [bondAmount, setBondAmount] = useState("")
   const {
-    epoch,
-    setEpoch,
-    epochs,
     ethBalance,
-    getCreditData,
+    getBondedAmount,
     onBond,
     isPendingBond,
-    userData,
+    abcBonded,
+    currentEpoch,
   } = useBondData()
-  const handleBond = () => onBond(bondAmount, () => getCreditData())
+  const handleBond = () => onBond(bondAmount, () => getBondedAmount())
 
   const setMax = () => setBondAmount(ethBalance)
 
@@ -43,19 +41,12 @@ const Bond = () => {
     <StyledSection>
       <StyledInfoBarItem>
         <InfoBarTitle>Epoch</InfoBarTitle>
-        <Select
-          value={`#${epoch}`}
-          setValue={(nextEpoch) =>
-            setEpoch(Number(nextEpoch.replaceAll("#", "")))
-          }
-          options={epochs}
-        />
+        <StyledInfoBarContent>#{currentEpoch}</StyledInfoBarContent>
       </StyledInfoBarItem>
       <StyledInfoBarItem>
-        <InfoBarTitle>ABC Bonded</InfoBarTitle>
-        <StyledInfoBarContent>
-          {userData?.bondedAmount ?? "-"}
-        </StyledInfoBarContent>
+        <InfoBarTitle>ETH Bonded</InfoBarTitle>
+        <StyledInfoBarContent>{abcBonded ?? "-"} ETH</StyledInfoBarContent>
+        <InfoBarTitle>For Epoch #{currentEpoch + 1}</InfoBarTitle>
       </StyledInfoBarItem>
       <StyledInfoBarItem>
         <InfoBarTitle>ETH amount you want bond </InfoBarTitle>

@@ -1,5 +1,5 @@
 import { useUserAllocations } from "@state/allocations/hooks"
-import { Media, Button, ButtonType } from "abacus-ui"
+import { Button, ButtonType } from "abacus-ui"
 import React, { useState } from "react"
 import styled from "styled-components"
 import { SectionTitle, StyledSection } from "../Ve.styles"

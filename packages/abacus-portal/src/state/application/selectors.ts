@@ -1,6 +1,6 @@
 import { AppState } from "@state/index"
 import { createSelector } from "reselect"
-import { round2Decimals } from "utils"
+import { round2Decimals } from "@utils"
 
 export const networkSymbolSelector = (
   state: AppState

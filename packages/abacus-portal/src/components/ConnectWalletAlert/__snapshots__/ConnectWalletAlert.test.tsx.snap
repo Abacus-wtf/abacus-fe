@@ -8,16 +8,16 @@ exports[`ConnectWalletAlert Matches snapshot 1`] = `
     style="background-color: white;"
   >
     <div
-      class="sc-bSqaIl lgcFUj"
+      class="sc-iIUQWv fQHQXC"
       style="align-items: center;"
     >
       <div
-        class="sc-jvvksu eeHdLn"
+        class="sc-gslxeA elBDeI"
       >
         You cannot participate until you connect your wallet
       </div>
       <button
-        class="sc-iIUQWv kIRbrO btn btn-primary"
+        class="sc-dUbtfd lnQQnO btn btn-primary"
         data-testid="CONNECT_WALLET_BUTTON_ID"
         type="button"
       >

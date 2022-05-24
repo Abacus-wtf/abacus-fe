@@ -1,6 +1,6 @@
-export declare const schema: string | undefined;
-export declare const documents: string[];
-export declare const generates: {
+export const schema: string | undefined;
+export const documents: string[];
+export const generates: {
     "./index.ts": {
         plugins: string[];
         config: {

@@ -3,7 +3,7 @@
 exports[`ExploreFilters Matches snapshot 1`] = `
 <div>
   <div
-    class="sc-iIUQWv kPfkXg"
+    class="sc-htJRVC dxtHNY"
   >
     <h2
       class="sc-hKwDye jQQxBx"
@@ -12,13 +12,14 @@ exports[`ExploreFilters Matches snapshot 1`] = `
       Explore
     </h2>
     <div
-      class="sc-ilfuhL fgBLeb"
+      class="sc-dkYRCH kyBTFa"
     >
       <button
-        class="sc-dJjYzT sc-dtDOqo hIGvt cPimGj"
+        class="sc-dlVxhl sc-evcjhq gnHBnE flTZAs"
+        type="button"
       >
         <svg
-          class="sc-fHeRUh"
+          class="sc-gIDmLj"
           fill="none"
           height="8"
           width="14"
@@ -34,111 +35,111 @@ exports[`ExploreFilters Matches snapshot 1`] = `
           />
         </svg>
         <div
-          class="sc-furwcr sc-dkYRCH jcgyHA dGNVEd"
+          class="sc-furwcr sc-fHeRUh jcgyHA fTcRRu"
         >
           Status
         </div>
       </button>
       <div
-        class="sc-XxNYO dtMEjB"
+        class="sc-dtDOqo bBHSVg"
       >
         <div
-          class="sc-cCcXHH kPWSAG"
+          class="sc-jcFjpl erDLeq"
         >
           <input
-            class="sc-jcFjpl bSWhLi"
+            class="sc-iUKqMP fOkHLo"
             id="Vote"
             name="Vote"
             type="checkbox"
             value="Vote"
           />
           <label
-            class="sc-cidDSM cSXgxo"
+            class="sc-caiLqq kPnhcR"
             for="Vote"
           >
             Vote
           </label>
         </div>
         <div
-          class="sc-cCcXHH kPWSAG"
+          class="sc-jcFjpl erDLeq"
         >
           <input
-            class="sc-jcFjpl bSWhLi"
+            class="sc-iUKqMP fOkHLo"
             id="Weigh"
             name="Weigh"
             type="checkbox"
             value="Weigh"
           />
           <label
-            class="sc-cidDSM cSXgxo"
+            class="sc-caiLqq kPnhcR"
             for="Weigh"
           >
             Weigh
           </label>
         </div>
         <div
-          class="sc-cCcXHH kPWSAG"
+          class="sc-jcFjpl erDLeq"
         >
           <input
-            class="sc-jcFjpl bSWhLi"
+            class="sc-iUKqMP fOkHLo"
             id="Set Final"
             name="Set Final"
             type="checkbox"
             value="Set Final"
           />
           <label
-            class="sc-cidDSM cSXgxo"
+            class="sc-caiLqq kPnhcR"
             for="Set Final"
           >
             Set Final
           </label>
         </div>
         <div
-          class="sc-cCcXHH kPWSAG"
+          class="sc-jcFjpl erDLeq"
         >
           <input
-            class="sc-jcFjpl bSWhLi"
+            class="sc-iUKqMP fOkHLo"
             id="Harvest"
             name="Harvest"
             type="checkbox"
             value="Harvest"
           />
           <label
-            class="sc-cidDSM cSXgxo"
+            class="sc-caiLqq kPnhcR"
             for="Harvest"
           >
             Harvest
           </label>
         </div>
         <div
-          class="sc-cCcXHH kPWSAG"
+          class="sc-jcFjpl erDLeq"
         >
           <input
-            class="sc-jcFjpl bSWhLi"
+            class="sc-iUKqMP fOkHLo"
             id="Claim"
             name="Claim"
             type="checkbox"
             value="Claim"
           />
           <label
-            class="sc-cidDSM cSXgxo"
+            class="sc-caiLqq kPnhcR"
             for="Claim"
           >
             Claim
           </label>
         </div>
         <div
-          class="sc-cCcXHH kPWSAG"
+          class="sc-jcFjpl erDLeq"
         >
           <input
-            class="sc-jcFjpl bSWhLi"
+            class="sc-iUKqMP fOkHLo"
             id="Complete"
             name="Complete"
             type="checkbox"
             value="Complete"
           />
           <label
-            class="sc-cidDSM cSXgxo"
+            class="sc-caiLqq kPnhcR"
             for="Complete"
           >
             Complete
@@ -147,16 +148,17 @@ exports[`ExploreFilters Matches snapshot 1`] = `
       </div>
     </div>
     <hr
-      class="sc-gslxeA cxcOsU"
+      class="sc-cbTzjv bCmYyH"
     />
     <div
-      class="sc-ilfuhL fgBLeb"
+      class="sc-dkYRCH kyBTFa"
     >
       <button
-        class="sc-dJjYzT sc-dtDOqo hIGvt cPimGj"
+        class="sc-dlVxhl sc-evcjhq gnHBnE flTZAs"
+        type="button"
       >
         <svg
-          class="sc-fHeRUh"
+          class="sc-gIDmLj"
           fill="none"
           height="8"
           width="14"
@@ -172,43 +174,43 @@ exports[`ExploreFilters Matches snapshot 1`] = `
           />
         </svg>
         <div
-          class="sc-furwcr sc-dkYRCH jcgyHA dGNVEd"
+          class="sc-furwcr sc-fHeRUh jcgyHA fTcRRu"
         >
           Bounty price
         </div>
       </button>
       <div
-        class="sc-XxNYO dtMEjB"
+        class="sc-dtDOqo bBHSVg"
       >
         <div
-          class="sc-cCcXHH kPWSAG"
+          class="sc-jcFjpl erDLeq"
         >
           <input
-            class="sc-jcFjpl bSWhLi"
+            class="sc-iUKqMP fOkHLo"
             id="Low to High"
             name="sort_order"
             type="radio"
             value="Low to High"
           />
           <label
-            class="sc-cidDSM cSXgxo"
+            class="sc-caiLqq kPnhcR"
             for="Low to High"
           >
             Low to High
           </label>
         </div>
         <div
-          class="sc-cCcXHH kPWSAG"
+          class="sc-jcFjpl erDLeq"
         >
           <input
-            class="sc-jcFjpl bSWhLi"
+            class="sc-iUKqMP fOkHLo"
             id="High to Low"
             name="sort_order"
             type="radio"
             value="High to Low"
           />
           <label
-            class="sc-cidDSM cSXgxo"
+            class="sc-caiLqq kPnhcR"
             for="High to Low"
           >
             High to Low
@@ -217,16 +219,17 @@ exports[`ExploreFilters Matches snapshot 1`] = `
       </div>
     </div>
     <hr
-      class="sc-gslxeA cxcOsU"
+      class="sc-cbTzjv bCmYyH"
     />
     <div
-      class="sc-ilfuhL fgBLeb"
+      class="sc-dkYRCH kyBTFa"
     >
       <button
-        class="sc-dJjYzT sc-dtDOqo hIGvt cPimGj"
+        class="sc-dlVxhl sc-evcjhq gnHBnE flTZAs"
+        type="button"
       >
         <svg
-          class="sc-fHeRUh"
+          class="sc-gIDmLj"
           fill="none"
           height="8"
           width="14"
@@ -242,60 +245,60 @@ exports[`ExploreFilters Matches snapshot 1`] = `
           />
         </svg>
         <div
-          class="sc-furwcr sc-dkYRCH jcgyHA dGNVEd"
+          class="sc-furwcr sc-fHeRUh jcgyHA fTcRRu"
         >
           Amount staked
         </div>
       </button>
       <div
-        class="sc-XxNYO dtMEjB"
+        class="sc-dtDOqo bBHSVg"
       >
         <div
-          class="sc-cCcXHH kPWSAG"
+          class="sc-jcFjpl erDLeq"
         >
           <input
-            class="sc-jcFjpl bSWhLi"
+            class="sc-iUKqMP fOkHLo"
             id="low_range"
             name="low_range"
             type="checkbox"
             value="low_range"
           />
           <label
-            class="sc-cidDSM cSXgxo"
+            class="sc-caiLqq kPnhcR"
             for="low_range"
           >
             Under 0.1Ξ
           </label>
         </div>
         <div
-          class="sc-cCcXHH kPWSAG"
+          class="sc-jcFjpl erDLeq"
         >
           <input
-            class="sc-jcFjpl bSWhLi"
+            class="sc-iUKqMP fOkHLo"
             id="mid_range"
             name="mid_range"
             type="checkbox"
             value="mid_range"
           />
           <label
-            class="sc-cidDSM cSXgxo"
+            class="sc-caiLqq kPnhcR"
             for="mid_range"
           >
             0.1Ξ to 1Ξ
           </label>
         </div>
         <div
-          class="sc-cCcXHH kPWSAG"
+          class="sc-jcFjpl erDLeq"
         >
           <input
-            class="sc-jcFjpl bSWhLi"
+            class="sc-iUKqMP fOkHLo"
             id="high_range"
             name="high_range"
             type="checkbox"
             value="high_range"
           />
           <label
-            class="sc-cidDSM cSXgxo"
+            class="sc-caiLqq kPnhcR"
             for="high_range"
           >
             Over 1Ξ

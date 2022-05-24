@@ -1,3 +1,22 @@
+fragment TokenPurchase on TokenPurchase {
+  amount
+  id
+  length
+  owner
+  soldAt
+  timestamp
+}
+
+fragment Ticket on Ticket {
+  id
+  ticketNumber
+  vaultAddress
+  tokenPurchasesLength
+  tokenPurchases {
+    ...TokenPurchase
+  }
+}
+
 query GetTickets($first: Int!, $skip: Int!, $where: Ticket_filter) {
   tickets(
     first: $first
@@ -6,17 +25,6 @@ query GetTickets($first: Int!, $skip: Int!, $where: Ticket_filter) {
     skip: $skip
     where: $where
   ) {
-    id
-    ticketNumber
-    vaultAddress
-    tokenPurchasesLength
-    tokenPurchases {
-      amount
-      id
-      length
-      owner
-      soldAt
-      timestamp
-    }
+    ...Ticket
   }
 }

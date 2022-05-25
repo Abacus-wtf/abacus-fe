@@ -9,7 +9,7 @@ import {
   SectionHeader,
 } from "../AllocationModal.styled"
 import { OverallAllocationRow } from "./OverallAllocationRow"
-import { Table, TR } from "./OverallAllocations.styled"
+import { Table, TR, TBody } from "./OverallAllocations.styled"
 
 type OverallAllocationsProps = {
   userState: UserState
@@ -60,25 +60,27 @@ const OverallAllocations = ({
         </>
       )}
       <Table>
-        <TR>
-          <ColumnTitle as="th">#</ColumnTitle>
-          <ColumnTitle as="th">Collection</ColumnTitle>
-          <ColumnTitle as="th">Amount</ColumnTitle>
-          <ColumnTitle as="th">%</ColumnTitle>
-        </TR>
-        {allocations.map((allocation, index) => (
-          <OverallAllocationRow
-            key={allocation.address}
-            {...allocation}
-            index={index}
-            editMode={editMode}
-            selectedAllocation={selectedAllocation}
-            setSelectedAllocation={(s) => {
-              setCustomAddress("")
-              setSelectedAllocation(s)
-            }}
-          />
-        ))}
+        <TBody>
+          <TR>
+            <ColumnTitle as="th">#</ColumnTitle>
+            <ColumnTitle as="th">Collection</ColumnTitle>
+            <ColumnTitle as="th">Amount</ColumnTitle>
+            <ColumnTitle as="th">%</ColumnTitle>
+          </TR>
+          {allocations.map((allocation, index) => (
+            <OverallAllocationRow
+              key={allocation.address}
+              {...allocation}
+              index={index}
+              editMode={editMode}
+              selectedAllocation={selectedAllocation}
+              setSelectedAllocation={(s) => {
+                setCustomAddress("")
+                setSelectedAllocation(s)
+              }}
+            />
+          ))}
+        </TBody>
       </Table>
       <ViewMoreButton buttonType={ButtonType.Clear}>View More</ViewMoreButton>
     </SectionContainer>

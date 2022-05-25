@@ -36,6 +36,7 @@ const CollectionInfo = styled.td`
   display: flex;
   align-items: center;
   column-gap: 6px;
+  flex-wrap: wrap;
 `
 
 const TD = styled.td`
@@ -98,7 +99,8 @@ const OverallAllocationRow = ({
         {formatEther(amount)} <span>veABC</span>
       </TD>
       <TD style={{ width: "max-content" }}>
-        {percent} <span>%</span>
+        {percent}
+        <span>%</span>
       </TD>
     </TR>
   )

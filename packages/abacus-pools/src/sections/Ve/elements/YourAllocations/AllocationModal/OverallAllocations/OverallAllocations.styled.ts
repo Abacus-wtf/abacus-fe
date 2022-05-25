@@ -1,7 +1,9 @@
 import { Media } from "abacus-ui"
 import styled from "styled-components"
 
-export const Table = styled.table`
+export const Table = styled.table``
+
+export const TBody = styled.tbody`
   display: flex;
   flex-direction: column;
   row-gap: 20px;

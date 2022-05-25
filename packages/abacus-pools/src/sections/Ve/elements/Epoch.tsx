@@ -39,7 +39,7 @@ const Epoch = () => {
       <StyledInfoBarItem>
         <InfoBarTitle>Epoch Range</InfoBarTitle>
         <StyledInfoBarContent>
-          01/05/2022&nbsp;<span>to</span>&nbsp;14/05/2022
+          01/05/2022 <span>to</span> 14/05/2022
         </StyledInfoBarContent>
       </StyledInfoBarItem>
     </StyledSection>

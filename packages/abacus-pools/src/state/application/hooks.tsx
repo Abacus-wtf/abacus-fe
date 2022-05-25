@@ -6,12 +6,12 @@ import {
   NetworkSymbolEnum,
 } from "@config/constants"
 import axios from "axios"
-import { getContract } from "@config/utils"
 import ABC_TOKEN_ABI from "@config/contracts/ABC_TOKEN_ABI.json"
-import { useActiveWeb3React } from "@hooks/index"
-import { formatEther } from "ethers/lib/utils"
+import { useActiveWeb3React, useWeb3Contract } from "@hooks/index"
+import { formatEther, parseEther } from "ethers/lib/utils"
 import request from "graphql-request"
 import { GetAggregatesDocument, GetAggregatesQuery } from "abacus-graph"
+import { BigNumber } from "ethers"
 import { AppDispatch, AppState } from "../index"
 import {
   toggleWalletModal,
@@ -106,18 +106,17 @@ export const useGetEthToUSD = () => {
 export const useGetAbcBalance = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { account, library, chainId } = useActiveWeb3React()
+  const abcCall = useWeb3Contract(ABC_TOKEN_ABI)
 
   return useCallback(async () => {
     try {
-      const tokenContract = getContract(
-        ABC_TOKEN,
-        ABC_TOKEN_ABI,
-        library,
-        account
+      const balance = await abcCall(ABC_TOKEN).methods.balanceOf(account).call()
+
+      dispatch(
+        setAbcBalance(
+          Number(formatEther(BigNumber.from(balance).sub(parseEther("10"))))
+        )
       )
-      const balance = await tokenContract.balanceOf(account)
-      const parsedBalance = formatEther(balance)
-      dispatch(setAbcBalance(Number(parsedBalance)))
     } catch {
       console.log(`Unable to get current ABC Balance for ${account}`)
     }

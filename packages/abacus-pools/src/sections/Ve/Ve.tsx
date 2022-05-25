@@ -3,6 +3,7 @@ import React from "react"
 import styled from "styled-components"
 import { Container } from "../../layouts/styles"
 import { Allocate, Epoch, Lock, YourAllocations, YourLocks } from "./elements"
+import { useVeData } from "./useVeData"
 
 const GridContainer = styled.div`
   display: grid;
@@ -14,16 +15,19 @@ const GridContainer = styled.div`
   `}
 `
 
-const Ve = () => (
-  <Container>
-    <Epoch />
-    <GridContainer>
-      <YourLocks />
-      <Lock />
-      <YourAllocations />
-      <Allocate />
-    </GridContainer>
-  </Container>
-)
+const Ve = () => {
+  const { veAbcBalance, getVeData } = useVeData()
+  return (
+    <Container>
+      <Epoch />
+      <GridContainer>
+        <YourLocks />
+        <Lock />
+        <YourAllocations />
+        <Allocate veAbcBalance={veAbcBalance} getVeData={getVeData} />
+      </GridContainer>
+    </Container>
+  )
+}
 
 export { Ve }

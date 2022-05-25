@@ -8,29 +8,6 @@ import {
 } from "../Ve.styles"
 import { CollectionRadioButtons } from "./CollectionRadioButtons"
 
-const collections = [
-  {
-    name: "Doodles",
-    address: "doodles",
-    imgSrc: "/vomit.png",
-  },
-  {
-    name: "Cryptopunks",
-    address: "Cryptopunks",
-    imgSrc: "/vomit.png",
-  },
-  {
-    name: "Bored Apes",
-    address: "Bored Apes",
-    imgSrc: "/vomit.png",
-  },
-  {
-    name: "Azuki",
-    address: "Azuki",
-    imgSrc: "/vomit.png",
-  },
-]
-
 const Allocate = () => {
   const [abc, setAbc] = useState("")
   const [selectedCollection, setSelectedCollection] = useState("")
@@ -49,7 +26,6 @@ const Allocate = () => {
       <CollectionRadioButtons
         selectedCollection={selectedCollection}
         setSelectedCollection={setSelectedCollection}
-        collections={collections}
       />
       <FullWidthButton>Allocate to Collection</FullWidthButton>
     </StyledSection>

@@ -1,6 +1,7 @@
 import React from "react"
 import { Button, ButtonType, Checkbox, Font, Media } from "abacus-ui"
 import styled from "styled-components"
+import { defaultCollections } from "./constants"
 
 const Container = styled.div`
   display: flex;
@@ -17,10 +18,10 @@ const RadioLabel = styled.label`
 const RadioContainer = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
-  column-gap: 12px;
+  gap: 12px;
 
   ${Media.xs`
+    row-gap: 20px;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, max-content));
   `}
@@ -65,19 +66,16 @@ const CollectionCheckboxText = styled.span`
 const CustomCheckboxContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 12px;
 
   ${Media.xs`
+    row-gap: 20px;
     flex-direction: row;
     grid-column: span 2;
   `}
 `
 
 type CollectionRadioButtonsProps = {
-  collections: {
-    name: string
-    address: string
-    imgSrc: string
-  }[]
   selectedCollection: string
   setSelectedCollection: React.Dispatch<string>
 }
@@ -86,14 +84,13 @@ const RADIO_NAME = "selected_collection"
 export const AUTO_ALLOCATION = "AUTO_ALLOCATION"
 
 const CollectionRadioButtons = ({
-  collections,
   selectedCollection,
   setSelectedCollection,
 }: CollectionRadioButtonsProps) => (
   <Container>
     <RadioLabel>Choose or specify a custom collection</RadioLabel>
     <RadioContainer>
-      {collections.map(({ name, address, imgSrc }) => (
+      {defaultCollections.map(({ name, address, imgSrc }) => (
         <CollectionCheckbox
           key={address}
           type="radio"

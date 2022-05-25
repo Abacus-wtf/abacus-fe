@@ -34,10 +34,13 @@ const ModalBody = styled.div`
   margin: 0;
   max-width: 1040px;
   height: max-content;
-  max-height: 90vh;
   opacity: 1;
   overflow: auto;
   position: relative;
+
+  ${Media.sm`
+    max-height: 90vh;
+  `}
 `;
 
 type OpenAppModalProps = {

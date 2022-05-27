@@ -1,7 +1,7 @@
 import { Input } from "abacus-ui"
-import { formatEther } from "ethers/lib.esm/utils"
 import React, { useState } from "react"
 import { useOnAddAutoAllocation, useOnAllocateTokens } from "@hooks/veFunc"
+import { LoadingOverlay } from "@components/LoadingOverlay"
 import {
   SectionTitle,
   StyledSection,
@@ -14,11 +14,11 @@ import {
 } from "./CollectionRadioButtons"
 
 type AllocateProps = {
-  veAbcBalance: string
   getVeData: () => void
+  veABCMaxToAllocate: string
 }
 
-const Allocate = ({ veAbcBalance, getVeData }: AllocateProps) => {
+const Allocate = ({ getVeData, veABCMaxToAllocate }: AllocateProps) => {
   const [abc, setAbc] = useState("")
   const [selectedCollection, setSelectedCollection] = useState("")
   const { onAddAutoAllocation, isPending: isPendingAddAuto } =
@@ -33,15 +33,18 @@ const Allocate = ({ veAbcBalance, getVeData }: AllocateProps) => {
 
   return (
     <StyledSection order={4} style={{ rowGap: "32px" }}>
+      <LoadingOverlay loading={isPending} />
       <SectionTitle>Allocate</SectionTitle>
       <Input
-        label="ABC amount you want to allocate "
+        label="veABC amount you want to allocate "
         type="number"
         name="allocate_abc"
         value={abc}
         onChange={setAbc}
         placeholder="0.00"
-        pill={<MaxButton onClick={() => setAbc(veAbcBalance)}>Max</MaxButton>}
+        pill={
+          <MaxButton onClick={() => setAbc(veABCMaxToAllocate)}>Max</MaxButton>
+        }
       />
       <CollectionRadioButtons
         selectedCollection={selectedCollection}

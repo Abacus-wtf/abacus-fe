@@ -26,6 +26,7 @@ interface Holder {
 
 const useVeData = () => {
   const { account } = useActiveWeb3React()
+  const [refresh, setRefresh] = useState({})
 
   const [epoch, setEpoch] = useState(0)
   const [abcMaxBalance, setABCMaxBalance] = useState("")
@@ -98,7 +99,7 @@ const useVeData = () => {
         console.error(e)
       }
     }
-  }, [account, getVeData])
+  }, [account, getVeData, refresh])
 
   return {
     epoch,
@@ -108,6 +109,7 @@ const useVeData = () => {
     showClaimButton,
     showUnlockTokensButton,
     getVeData,
+    refreshVeState: () => setRefresh({}),
   }
 }
 

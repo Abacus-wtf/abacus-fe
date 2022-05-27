@@ -18,6 +18,7 @@ export const FullWidthButton = styled(Button)`
 
 export const StyledSection = styled(Section)<{ order: number }>`
   row-gap: 24px;
+  position: relative;
   ${Media.md`
     order: ${({ order }: { order: number }) => order};
   `}

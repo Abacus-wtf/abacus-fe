@@ -1,4 +1,5 @@
-import { LockTimeSelector } from "@components/index"
+import { LockTimeSelector, LoadingOverlay } from "@components/index"
+import { useOnLockTokens } from "@hooks/veFunc"
 import { Input } from "abacus-ui"
 import React, { useState } from "react"
 import {
@@ -9,11 +10,31 @@ import {
 } from "../Ve.styles"
 import { durations, customDurationConfig } from "./config"
 
-const Lock = () => {
+type LockProps = {
+  refreshVeState: () => void
+}
+
+const Lock = ({ refreshVeState }: LockProps) => {
   const [eth, setEth] = useState("")
   const [lockDuration, setLockDuration] = useState<number>(null)
+  const { onLockTokens, isPending } = useOnLockTokens()
+
+  const onClick = async () => {
+    if (!isPending) {
+      const duration = Math.round(lockDuration * 24 * 60 * 60)
+      onLockTokens(eth, duration, () => {
+        setEth("")
+        setLockDuration(null)
+        refreshVeState()
+      })
+    }
+  }
+
+  const buttonDisabled = isPending || !(eth && lockDuration)
+
   return (
     <StyledSection order={3} style={{ rowGap: "32px", height: "max-content" }}>
+      <LoadingOverlay loading={isPending} />
       <SectionTitle>Lock</SectionTitle>
       <Input
         label="ETH amount you want bond"
@@ -32,7 +53,9 @@ const Lock = () => {
         durations={durations}
         customDurationConfig={customDurationConfig}
       />
-      <FullWidthButton>Lock Tokens</FullWidthButton>
+      <FullWidthButton onClick={onClick} disabled={buttonDisabled}>
+        {isPending ? "Locking..." : "Lock Tokens"}
+      </FullWidthButton>
     </StyledSection>
   )
 }

@@ -16,13 +16,13 @@ const GridContainer = styled.div`
 `
 
 const Ve = () => {
-  const { veAbcBalance, getVeData } = useVeData()
+  const { veAbcBalance, getVeData, refreshVeState } = useVeData()
   return (
     <Container>
       <Epoch />
       <GridContainer>
         <YourLocks />
-        <Lock />
+        <Lock refreshVeState={refreshVeState} />
         <YourAllocations />
         <Allocate veAbcBalance={veAbcBalance} getVeData={getVeData} />
       </GridContainer>

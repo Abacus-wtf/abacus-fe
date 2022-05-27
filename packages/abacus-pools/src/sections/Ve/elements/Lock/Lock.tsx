@@ -37,7 +37,7 @@ const Lock = ({ refreshVeState }: LockProps) => {
       <LoadingOverlay loading={isPending} />
       <SectionTitle>Lock</SectionTitle>
       <Input
-        label="ETH amount you want bond"
+        label="ABC amount you want to lock"
         type="number"
         name="lock_eth"
         value={eth}

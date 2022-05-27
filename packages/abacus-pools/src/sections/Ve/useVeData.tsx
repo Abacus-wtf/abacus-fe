@@ -12,11 +12,12 @@ import moment from "moment"
 //   useOnLockTokens,
 //   useOnUnlockTokens,
 // } from "@hooks/veFunc"
+import { useFetchUserAllocations } from "@state/allocations/hooks"
 import ABC_EPOCH_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
 import VE_ABC_ABI from "../../config/contracts/VE_ABC_TOKEN_ABI.json"
 import ABC_ABI from "../../config/contracts/ABC_TOKEN_ABI.json"
 
-interface Holder {
+export interface Holder {
   timeUnlock: number
   amountLocked: number
   multiplier: number
@@ -27,9 +28,11 @@ interface Holder {
 const useVeData = () => {
   const { account } = useActiveWeb3React()
   const [refresh, setRefresh] = useState({})
+  const { fetchUserAllocations } = useFetchUserAllocations()
 
   const [epoch, setEpoch] = useState(0)
   const [abcMaxBalance, setABCMaxBalance] = useState("")
+  const [veABCMaxToAllocate, setVeABCMaxToAllocate] = useState("")
   const [veAbcBalance, setVeAbcBalance] = useState("")
 
   const [holderData, setHolderData] = useState<Holder | null>(null)
@@ -74,15 +77,22 @@ const useVeData = () => {
         BigNumber.from(veHolderHistory[0]).toNumber() < moment().unix()
     )
     setVeAbcBalance(formatEther(veBalance[0] ?? "0"))
+
     setABCMaxBalance(BigNumber.from(balance).sub(parseEther("10")).toString())
 
     setHolderData({
-      timeUnlock: BigNumber.from(veHolderHistory[0]).mul(1000).toNumber(),
-      amountLocked: Number(formatEther(veHolderHistory[1])),
-      multiplier: BigNumber.from(veHolderHistory[2]).toNumber(),
+      timeUnlock: BigNumber.from(veHolderHistory[2]).mul(1000).toNumber(),
+      amountLocked: Number(formatEther(veHolderHistory[3])),
+      multiplier: 1,
       amountAllocated: Number(formatEther(getAmountAllocated[0])),
       amountAutoAllocated: Number(formatEther(getAmountAutoAllocated[0])),
     })
+
+    setVeABCMaxToAllocate(
+      formatEther(
+        BigNumber.from(veBalance[0]).sub(BigNumber.from(getAmountAllocated[0]))
+      )
+    )
 
     setShowClaimButton(
       BigNumber.from(veHolderHistory[0]).toNumber() < currentEpoch
@@ -101,6 +111,12 @@ const useVeData = () => {
     }
   }, [account, getVeData, refresh])
 
+  useEffect(() => {
+    if (account) {
+      fetchUserAllocations()
+    }
+  }, [account, fetchUserAllocations, refresh])
+
   return {
     epoch,
     abcMaxBalance,
@@ -108,6 +124,7 @@ const useVeData = () => {
     holderData,
     showClaimButton,
     showUnlockTokensButton,
+    veABCMaxToAllocate,
     getVeData,
     refreshVeState: () => setRefresh({}),
   }

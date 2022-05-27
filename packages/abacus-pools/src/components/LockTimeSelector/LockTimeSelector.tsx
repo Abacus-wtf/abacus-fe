@@ -26,8 +26,7 @@ const CustomDurationButton = styled(Button)`
   border-radius: 70px;
   padding: 8px 14px;
   text-align: center;
-  margin-right: 6px;
-  margin-bottom: 12px;
+  margin: 0;
 `
 
 type LockTimeSelectorProps = {

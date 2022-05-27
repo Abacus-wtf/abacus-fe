@@ -5,3 +5,9 @@ fragment Allocation on Allocation {
   amount
   timestamp
 }
+
+query Allocations($first: Int!, $skip: Int!) {
+  allocations(first: $first, skip: $skip) {
+    ...Allocation
+  }
+}

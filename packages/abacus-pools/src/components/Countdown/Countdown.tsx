@@ -4,12 +4,14 @@ import ReactCountdown from "react-countdown"
 type CountdownProps = {
   endTime: number
   key?: React.Key
+  onComplete?: () => void
 }
 
-const Countdown = ({ endTime, key }: CountdownProps) => (
+const Countdown = ({ endTime, key, onComplete }: CountdownProps) => (
   <ReactCountdown
     key={key}
     date={endTime}
+    onComplete={onComplete}
     renderer={({ days, hours, minutes, seconds, completed }) => {
       if (completed) {
         // Render a completed state

@@ -27,6 +27,12 @@ const CollectionImage = styled.img`
   height: 27px;
   border-radius: 50%;
   overflow: hidden;
+  flex: 0 0 auto;
+
+  ${Media.md`
+    width: 40px;
+    height: 40px;
+  `}
 `
 
 const StyledButton = styled(Button)<{
@@ -50,7 +56,7 @@ const StyledButton = styled(Button)<{
 `
 
 const Amount = styled(StyledP)`
-  flex: 0 1 auto;
+  flex: 0 0 auto;
 `
 
 interface AllocationProps extends VeAllocation {
@@ -75,7 +81,7 @@ const Allocation = ({
       <StyledP>{name}</StyledP>
     </CollectionContainer>
     <Amount>
-      {formatEther(amount)} <span>ABC</span>
+      {formatEther(amount)} <span>veABC</span>
     </Amount>
 
     <StyledButton

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Button, ButtonType, Checkbox, Font, Input, Media } from "abacus-ui"
+import { Checkbox, Font, Input, Media } from "abacus-ui"
 import styled from "styled-components"
 import { ZERO_ADDRESS } from "@config/constants"
 import { defaultCollections } from "./constants"
@@ -26,16 +26,6 @@ const RadioContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(2, minmax(0, max-content));
   `}
-`
-
-const CustomAddressButton = styled(Button)`
-  display: block;
-  border: 2px solid rgba(28, 35, 51, 0.04);
-  border-radius: 70px;
-  padding: 8px 14px;
-  text-align: center;
-  margin-right: 6px;
-  margin-bottom: 12px;
 `
 
 const CollectionCheckbox = styled(Checkbox)`

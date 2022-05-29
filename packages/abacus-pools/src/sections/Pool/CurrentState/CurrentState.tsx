@@ -4,6 +4,7 @@ import { Section, Media } from "abacus-ui"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
 import PurchaseTokens from "./PurchaseTokens"
+import OwnerSection from "../OwnerSection"
 
 enum Page {
   PurchaseTokens,
@@ -31,6 +32,8 @@ const Container = styled(Section)`
 
 const LeftSection = styled.div`
   display: flex;
+  flex-direction: column;
+  grid-gap: 24px;
   align-self: flex-start;
   border-radius: ${({ theme }) => theme.borderRadius.main};
   overflow: hidden;
@@ -53,7 +56,7 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
   refreshPoolData,
 }) => {
   const [page] = useState<Page>(Page.PurchaseTokens)
-  const { img } = useGetPoolData()
+  const { img, isManager } = useGetPoolData()
 
   const rightSection = useMemo(() => {
     switch (page) {
@@ -63,11 +66,11 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
         return null
     }
   }, [page, refreshPoolData])
-
   return (
     <Container>
       <LeftSection>
         <NFTImage src={img} />
+        {isManager && <OwnerSection refreshPoolData={refreshPoolData} />}
       </LeftSection>
       <RightSection>{rightSection}</RightSection>
     </Container>

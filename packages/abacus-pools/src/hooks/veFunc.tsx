@@ -52,7 +52,7 @@ export const useOnAddTokens = () => {
   const addTransaction = useTransactionAdder()
 
   const onAddTokens = useCallback(
-    async (amount: number, cb: () => void) => {
+    async (amount: string, cb: () => void) => {
       const veContract = getContract(
         VE_ABC_TOKEN,
         VE_ABC_TOKEN_ABI,

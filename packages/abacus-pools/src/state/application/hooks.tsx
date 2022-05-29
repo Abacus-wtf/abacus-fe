@@ -109,16 +109,18 @@ export const useGetAbcBalance = () => {
   const abcCall = useWeb3Contract(ABC_TOKEN_ABI)
 
   return useCallback(async () => {
+    if (account === undefined || account === null) return
+
     try {
       const balance = await abcCall(ABC_TOKEN).methods.balanceOf(account).call()
-
       dispatch(
         setAbcBalance(
           Number(formatEther(BigNumber.from(balance).sub(parseEther("10"))))
         )
       )
-    } catch {
+    } catch (e) {
       console.log(`Unable to get current ABC Balance for ${account}`)
+      console.error(`Error: ${e}`)
     }
     // We want to update on chainId change as well
     // eslint-disable-next-line react-hooks/exhaustive-deps

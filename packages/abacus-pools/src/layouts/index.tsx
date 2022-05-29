@@ -101,7 +101,7 @@ const GlobalLayout: React.FC<GlobalLayoutProps> = ({ children, location }) => {
     <>
       <SEO {...seoProps} />
       <GlobalStyles />
-      <Navbar />
+      <Navbar pathname={location.pathname} />
       <GlobalContainer>
         <InnerContainer>{children}</InnerContainer>
         {!account && (

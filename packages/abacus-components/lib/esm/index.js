@@ -74,14 +74,14 @@ var theme = {
         height: "60px",
     },
     media: {
-        splitCenter: "(max-width: " + sizes.splitCenter + ")",
-        tablet: "(max-width: " + sizes.tablet + ")",
-        phone: "(max-width: " + sizes.phone + ")",
+        splitCenter: "(max-width: ".concat(sizes.splitCenter, ")"),
+        tablet: "(max-width: ".concat(sizes.tablet, ")"),
+        phone: "(max-width: ".concat(sizes.phone, ")"),
     },
     mediaMin: {
-        splitCenter: "(min-width: " + sizes.splitCenter + ")",
-        tablet: "(min-width: " + sizes.tablet + ")",
-        phone: "(min-width: " + sizes.phone + ")",
+        splitCenter: "(min-width: ".concat(sizes.splitCenter, ")"),
+        tablet: "(min-width: ".concat(sizes.tablet, ")"),
+        phone: "(min-width: ".concat(sizes.phone, ")"),
     },
 };
 
@@ -121,11 +121,10 @@ var UniversalContainer = styled.div(templateObject_4 || (templateObject_4 = __ma
 var SmallUniversalContainer = styled(UniversalContainer)(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  max-width: 1100px;\n"], ["\n  max-width: 1100px;\n"])));
 var Title = styled.h2(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  color: ", " !important;\n  font-weight: 900;\n  font-size: 1.5rem;\n  text-align: left;\n  margin: 0px !important;\n  max-width: 100%;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"], ["\n  color: ", " !important;\n  font-weight: 900;\n  font-size: 1.5rem;\n  text-align: left;\n  margin: 0px !important;\n  max-width: 100%;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n"])), theme.colors.text1);
 var MainContainer = styled(Col)(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  padding: 32px;\n  grid-gap: 24px;\n  padding-top: 32px;\n"], ["\n  display: flex;\n  flex-direction: column;\n  padding: 32px;\n  grid-gap: 24px;\n  padding-top: 32px;\n"])));
-var CategoryButton = styled.div(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n  font-weight: 400;\n  padding: 8px 16px;\n  border-radius: 20px;\n  opacity: 1;\n  cursor: pointer;\n  transition: 0.3s;\n  font-size: 0.85rem;\n  width: fit-content;\n  color: ", ";\n\n  &:hover {\n    opacity: 0.8;\n  }\n\n  ", "\n"], ["\n  font-weight: 400;\n  padding: 8px 16px;\n  border-radius: 20px;\n  opacity: 1;\n  cursor: pointer;\n  transition: 0.3s;\n  font-size: 0.85rem;\n  width: fit-content;\n  color: ", ";\n\n  &:hover {\n    opacity: 0.8;\n  }\n\n  ",
-    "\n"])), theme.colors.text1, function (_a) {
+var CategoryButton = styled.div(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n  font-weight: 400;\n  padding: 8px 16px;\n  border-radius: 20px;\n  opacity: 1;\n  cursor: pointer;\n  transition: 0.3s;\n  font-size: 0.85rem;\n  width: fit-content;\n  color: ", ";\n\n  &:hover {\n    opacity: 0.8;\n  }\n\n  ", "\n"], ["\n  font-weight: 400;\n  padding: 8px 16px;\n  border-radius: 20px;\n  opacity: 1;\n  cursor: pointer;\n  transition: 0.3s;\n  font-size: 0.85rem;\n  width: fit-content;\n  color: ", ";\n\n  &:hover {\n    opacity: 0.8;\n  }\n\n  ", "\n"])), theme.colors.text1, function (_a) {
     var active = _a.active, theme = _a.theme;
     return active &&
-        "\n        cursor: default;\n        color: " + theme.colors.accent + ";\n        background-color: rgba(89,89,89, 0.06);\n        &:hover {\n            opacity: 1.0;\n        }\n    ";
+        "\n        cursor: default;\n        color: ".concat(theme.colors.accent, ";\n        background-color: rgba(89,89,89, 0.06);\n        &:hover {\n            opacity: 1.0;\n        }\n    ");
 });
 var ImageContainer = styled.div(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n  width: 100%;\n  height: 100%;\n  border: 1px solid #c3c8d7;\n  background-image: url(\"", "\");\n  background-size: contain;\n  background-repeat: no-repeat;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  padding: 7px;\n  background-position: center;\n  background-color: black;\n  border-radius: 6px;\n"], ["\n  width: 100%;\n  height: 100%;\n  border: 1px solid #c3c8d7;\n  background-image: url(\"", "\");\n  background-size: contain;\n  background-repeat: no-repeat;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  padding: 7px;\n  background-position: center;\n  background-color: black;\n  border-radius: 6px;\n"])), function (_a) {
     var src = _a.src;
@@ -134,17 +133,12 @@ var ImageContainer = styled.div(templateObject_9 || (templateObject_9 = __makeTe
 var Label = styled.label(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n  font-weight: 500;\n  font-size: 0.9rem;\n  cursor: default;\n"], ["\n  font-weight: 500;\n  font-size: 0.9rem;\n  cursor: default;\n"])));
 var templateObject_1$1, templateObject_2$1, templateObject_3$1, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10;
 
-var MainInput = styled(FormInput).attrs(function (props) { return ({
-    size: props.size || "sm",
-    ...props,
-}); })(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  border: transparent;\n  border-radius: 0px;\n  padding: 0px;\n  ", "\n\n  input::-webkit-outer-spin-button,\n  input::-webkit-inner-spin-button {\n    -webkit-appearance: none;\n    margin: 0;\n  }\n\n  &:active {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  .form-control:focus {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  &:focus {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  &:disabled {\n    background-color: transparent !important;\n  }\n"], ["\n  border: transparent;\n  border-radius: 0px;\n  padding: 0px;\n  ",
-    "\n\n  input::-webkit-outer-spin-button,\n  input::-webkit-inner-spin-button {\n    -webkit-appearance: none;\n    margin: 0;\n  }\n\n  &:active {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  .form-control:focus {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  &:focus {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  &:disabled {\n    background-color: transparent !important;\n  }\n"])), function (_a) {
+var MainInput = styled(FormInput).attrs(function (props) { return (__assign({ size: props.size || "sm" }, props)); })(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  border: transparent;\n  border-radius: 0px;\n  padding: 0px;\n  ", "\n\n  input::-webkit-outer-spin-button,\n  input::-webkit-inner-spin-button {\n    -webkit-appearance: none;\n    margin: 0;\n  }\n\n  &:active {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  .form-control:focus {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  &:focus {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  &:disabled {\n    background-color: transparent !important;\n  }\n"], ["\n  border: transparent;\n  border-radius: 0px;\n  padding: 0px;\n  ", "\n\n  input::-webkit-outer-spin-button,\n  input::-webkit-inner-spin-button {\n    -webkit-appearance: none;\n    margin: 0;\n  }\n\n  &:active {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  .form-control:focus {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  &:focus {\n    border-color: transparent !important;\n    box-shadow: none !important;\n  }\n\n  &:disabled {\n    background-color: transparent !important;\n  }\n"])), function (_a) {
     var type = _a.type;
     return type === "checkbox" &&
         "\n    appearance: auto;\n    width: 20px;\n  ";
 });
-var Container = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: ", ";\n  align-items: ", ";\n  justify-content: ", ";\n  width: 100%;\n"], ["\n  display: flex;\n  flex-direction: ", ";\n  align-items: ", ";\n  justify-content: ",
-    ";\n  width: 100%;\n"])), function (_a) {
+var Container = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: ", ";\n  align-items: ", ";\n  justify-content: ", ";\n  width: 100%;\n"], ["\n  display: flex;\n  flex-direction: ", ";\n  align-items: ", ";\n  justify-content: ", ";\n  width: 100%;\n"])), function (_a) {
     var type = _a.type;
     return (type === "checkbox" ? "" : "column");
 }, function (_a) {
@@ -162,7 +156,7 @@ var InputWithTitle = function (_a) {
             title,
             infoText && (React__default.createElement(React__default.Fragment, null,
                 React__default.createElement(Info, { id: id, style: { height: 15, marginTop: -2, marginLeft: 1 } }),
-                React__default.createElement(Tooltip, { open: isToolTipOpen, target: "#" + id, toggle: function () { return setIsToolTipOpen(!isToolTipOpen); }, placement: "right", trigger: "hover" }, infoText)))),
+                React__default.createElement(Tooltip, { open: isToolTipOpen, target: "#".concat(id), toggle: function () { return setIsToolTipOpen(!isToolTipOpen); }, placement: "right", trigger: "hover" }, infoText)))),
         React__default.createElement(MainInput, __assign({ id: id, size: "lg", type: type }, props))));
 };
 var InputContainer = styled.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  width: 100%;\n  display: flex;\n  justify-content: space-between;\n"], ["\n  width: 100%;\n  display: flex;\n  justify-content: space-between;\n"])));

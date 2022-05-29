@@ -1,3 +1,4 @@
+import { useVeData } from "@sections/Ve/useVeData"
 import { useUserAllocations } from "@state/allocations/hooks"
 import { Button, ButtonType } from "abacus-ui"
 import React, { useState } from "react"
@@ -16,9 +17,11 @@ const YourAllocations = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const [allocationToChange, setAllocationToChange] = useState<string>(null)
   const allocations = useUserAllocations()
+  const { holderData } = useVeData()
   return (
     <StyledSection order={2}>
       <SectionTitle>Your Allocations</SectionTitle>
+      <Heading>Auto-Allocated: {holderData?.amountAutoAllocated} veABC</Heading>
       {allocations.length > 0 ? (
         <ColumnContainer>
           <Heading>Collection</Heading>
@@ -37,7 +40,7 @@ const YourAllocations = () => {
           )}
         </ColumnContainer>
       ) : (
-        "You have no allocations yet"
+        "You have no collection allocations yet"
       )}
       <SeeAllButton
         buttonType={ButtonType.Gray}

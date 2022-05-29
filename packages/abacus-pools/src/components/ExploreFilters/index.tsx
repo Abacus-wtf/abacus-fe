@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, useEffect, useState } from "react"
 import { Checkbox, Kilo, Media } from "abacus-ui"
 import styled from "styled-components"
 // import { usePrevious } from "@hooks/index"
 // import { useSetPools } from "@state/poolData/hooks"
-import { Order } from "./constants"
+import { useSetPools } from "@state/poolData/hooks"
+import { OrderDirection, Vault_OrderBy } from "abacus-graph"
 
 const Container = styled.div`
   display: flex;
@@ -37,20 +38,33 @@ type ExploreFiltersProps = {
 }
 
 const ExploreFilters: FunctionComponent<ExploreFiltersProps> = () => {
-  const [poolSizeOrder, setPoolSizeOrder] = useState<Order>(null)
-  const [participantsOrder, setParticipantsOrder] = useState<Order>(null)
-  const [ticketsOrder, setTicketsOrder] = useState<Order>(null)
+  const [poolSizeOrder, setPoolSizeOrder] = useState<OrderDirection | null>(
+    null
+  )
+  const [participantsOrder, setParticipantsOrder] =
+    useState<OrderDirection | null>(null)
+  // const [ticketsOrder, setTicketsOrder] = useState<OrderDirection | null>(null)
   // const previousPoolSizeOrder = usePrevious(poolSizeOrder)
   // const previousPage = usePrevious(page)
-  // const setPools = useSetPools()
+  const setPools = useSetPools()
+
+  useEffect(() => {
+    if (poolSizeOrder !== null) {
+      setPools(Vault_OrderBy.Size, poolSizeOrder)
+    }
+  }, [poolSizeOrder, setPools])
+
+  useEffect(() => {
+    if (participantsOrder !== null) {
+      setPools(Vault_OrderBy.TotalParticipants, participantsOrder)
+    }
+  }, [participantsOrder, setPools])
 
   // useEffect(() => {
-  //   if (previousPoolSizeOrder !== poolSizeOrder || page > previousPage) {
-  //     const orderBy = poolSizeOrder ? "timestamp" : "timestamp"
-  //     const orderDirection = poolSizeOrder || null
-  //     setPools("", orderBy, orderDirection)
-  //   }
-  // }, [page, poolSizeOrder, previousPage, previousPoolSizeOrder, setPools])
+  //  if (ticketsOrder !== null) {
+  //    setPools(Vault_OrderBy.Tickets, ticketsOrder)
+  //  }
+  // }, [ticketsOrder, setPools])
 
   return (
     <Container>
@@ -64,7 +78,7 @@ const ExploreFilters: FunctionComponent<ExploreFiltersProps> = () => {
             id="pool_size_lth"
             value="Low to High"
             checked={poolSizeOrder === "asc"}
-            onChange={() => setPoolSizeOrder("asc")}
+            onChange={() => setPoolSizeOrder(OrderDirection.Asc)}
           />
           <Checkbox
             type="radio"
@@ -73,7 +87,7 @@ const ExploreFilters: FunctionComponent<ExploreFiltersProps> = () => {
             id="pool_size_htl"
             value="High to Low"
             checked={poolSizeOrder === "desc"}
-            onChange={() => setPoolSizeOrder("desc")}
+            onChange={() => setPoolSizeOrder(OrderDirection.Desc)}
           />
         </CheckboxContainer>
       </Category>
@@ -87,7 +101,7 @@ const ExploreFilters: FunctionComponent<ExploreFiltersProps> = () => {
             id="participants_lth"
             value="Low to High"
             checked={participantsOrder === "asc"}
-            onChange={() => setParticipantsOrder("asc")}
+            onChange={() => setParticipantsOrder(OrderDirection.Asc)}
           />
           <Checkbox
             type="radio"
@@ -96,11 +110,11 @@ const ExploreFilters: FunctionComponent<ExploreFiltersProps> = () => {
             id="participants_htl"
             value="High to Low"
             checked={participantsOrder === "desc"}
-            onChange={() => setParticipantsOrder("desc")}
+            onChange={() => setParticipantsOrder(OrderDirection.Desc)}
           />
         </CheckboxContainer>
       </Category>
-      <Category>
+      {/* <Category>
         <CategoryTitle>Tickets</CategoryTitle>
         <CheckboxContainer>
           <Checkbox
@@ -110,7 +124,7 @@ const ExploreFilters: FunctionComponent<ExploreFiltersProps> = () => {
             id="tickets_lth"
             value="Low to High"
             checked={ticketsOrder === "asc"}
-            onChange={() => setTicketsOrder("asc")}
+            onChange={() => setTicketsOrder(OrderDirection.Asc)}
           />
           <Checkbox
             type="radio"
@@ -119,10 +133,10 @@ const ExploreFilters: FunctionComponent<ExploreFiltersProps> = () => {
             id="tickets_htl"
             value="High to Low"
             checked={ticketsOrder === "desc"}
-            onChange={() => setTicketsOrder("desc")}
+            onChange={() => setTicketsOrder(OrderDirection.Desc)}
           />
         </CheckboxContainer>
-      </Category>
+  </Category> */}
     </Container>
   )
 }

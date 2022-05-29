@@ -1,13 +1,14 @@
-import React from "react"
-import { Button, ButtonType, Checkbox, Font, Media } from "abacus-ui"
+import React, { useState } from "react"
+import { Checkbox, Font, Input, Media } from "abacus-ui"
 import styled from "styled-components"
+import { ZERO_ADDRESS } from "@config/constants"
 import { defaultCollections } from "./constants"
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  row-gap: 30px;
+  row-gap: 20px;
 `
 
 const RadioLabel = styled.label`
@@ -25,16 +26,6 @@ const RadioContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(2, minmax(0, max-content));
   `}
-`
-
-const CustomAddressButton = styled(Button)`
-  display: block;
-  border: 2px solid rgba(28, 35, 51, 0.04);
-  border-radius: 70px;
-  padding: 8px 14px;
-  text-align: center;
-  margin-right: 6px;
-  margin-bottom: 12px;
 `
 
 const CollectionCheckbox = styled(Checkbox)`
@@ -86,46 +77,72 @@ export const AUTO_ALLOCATION = "AUTO_ALLOCATION"
 const CollectionRadioButtons = ({
   selectedCollection,
   setSelectedCollection,
-}: CollectionRadioButtonsProps) => (
-  <Container>
-    <RadioLabel>Choose or specify a custom collection</RadioLabel>
-    <RadioContainer>
-      {defaultCollections.map(({ name, address, imgSrc }) => (
-        <CollectionCheckbox
-          key={address}
-          type="radio"
-          name={RADIO_NAME}
-          label={
-            <>
-              <CollectionCheckboxImage src={imgSrc} />
-              <CollectionCheckboxText>{name}</CollectionCheckboxText>
-            </>
-          }
-          id={address}
-          value={address}
-          checked={selectedCollection === address}
-          onChange={() => setSelectedCollection(address)}
+}: CollectionRadioButtonsProps) => {
+  const [showCustomCollection, setIsShowCustomCollection] = useState(false)
+  return (
+    <Container>
+      <RadioLabel>Choose or specify a custom collection</RadioLabel>
+      <RadioContainer>
+        {defaultCollections.map(({ name, address, imgSrc }) => (
+          <CollectionCheckbox
+            key={address}
+            type="radio"
+            name={RADIO_NAME}
+            label={
+              <>
+                <CollectionCheckboxImage src={imgSrc} />
+                <CollectionCheckboxText>{name}</CollectionCheckboxText>
+              </>
+            }
+            id={address}
+            value={address}
+            checked={selectedCollection === address}
+            onChange={() => {
+              setSelectedCollection(address)
+              setIsShowCustomCollection(false)
+            }}
+          />
+        ))}
+        <CustomCheckboxContainer>
+          <Checkbox
+            type="radio"
+            name={RADIO_NAME}
+            label="Auto Allocation"
+            id={AUTO_ALLOCATION}
+            value={AUTO_ALLOCATION}
+            checked={selectedCollection === AUTO_ALLOCATION}
+            onChange={() => {
+              setSelectedCollection(AUTO_ALLOCATION)
+              setIsShowCustomCollection(false)
+            }}
+          />
+          <Checkbox
+            key="CUSTOM"
+            type="radio"
+            name={RADIO_NAME}
+            label="Input Custom Address"
+            value=""
+            id="CUSTOM"
+            checked={showCustomCollection}
+            onChange={() => {
+              setIsShowCustomCollection(true)
+              setSelectedCollection("")
+            }}
+          />
+        </CustomCheckboxContainer>
+      </RadioContainer>
+      {showCustomCollection && (
+        <Input
+          label="Custom address"
+          type="text"
+          name="custom_address"
+          value={selectedCollection}
+          onChange={setSelectedCollection}
+          placeholder={ZERO_ADDRESS}
         />
-      ))}
-      <CustomCheckboxContainer>
-        <Checkbox
-          type="radio"
-          name={RADIO_NAME}
-          label="Auto Allocation"
-          id={AUTO_ALLOCATION}
-          value={AUTO_ALLOCATION}
-          checked={selectedCollection === AUTO_ALLOCATION}
-          onChange={() => setSelectedCollection(AUTO_ALLOCATION)}
-        />
-        <CustomAddressButton
-          buttonType={ButtonType.Clear}
-          // onClick={() => setIsCustomDuration(true)}
-        >
-          Input Custom Address
-        </CustomAddressButton>
-      </CustomCheckboxContainer>
-    </RadioContainer>
-  </Container>
-)
+      )}
+    </Container>
+  )
+}
 
 export { CollectionRadioButtons }

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { useState } from "react"
 import styled, { css } from "styled-components"
 import {
   Button,
@@ -100,9 +100,13 @@ const DropdownButton = styled(Button)<{ menuOpen: boolean }>`
   `}
 `
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(Link)<{ highlight?: boolean }>`
   display: flex;
-  text-decoration: none;
+  text-decoration: ${({ highlight }) => (highlight ? "underline" : "none")};
+  text-decoration-color: #8673ff;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 8px;
+  line-height: 1.3;
   align-items: center;
   color: ${({ theme }) => theme.colors.core.primary};
   gap: 6px;
@@ -122,7 +126,11 @@ const ProfileButton = styled(Button)`
   padding: 0px;
 `
 
-const Navbar: FunctionComponent = () => {
+interface NavbarProps {
+  pathname: string
+}
+
+const Navbar = ({ pathname }: NavbarProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { account } = useActiveWeb3React()
   const openWeb3Modal = useToggleWalletModal()
@@ -133,7 +141,7 @@ const Navbar: FunctionComponent = () => {
 
   return (
     <Container menuOpen={menuOpen}>
-      <SideContainer style={{ gridGap: 8 }} menuOpen={menuOpen}>
+      <SideContainer style={{ gridGap: 24 }} menuOpen={menuOpen}>
         <StyledLink to="/">
           <Logo />
           <Divider />
@@ -147,9 +155,12 @@ const Navbar: FunctionComponent = () => {
           <Dropdown />
           <VisuallyHidden>Dropdown</VisuallyHidden>
         </DropdownButton>
+        <StyledLink highlight={pathname === "/ve"} to="/ve">
+          <Tera style={{ fontWeight: 300 }}>Ve</Tera>
+        </StyledLink>
       </SideContainer>
       <SideContainer style={{ gridGap: 32 }} isOptions menuOpen={menuOpen}>
-        <StyledLink to="/claim-pool">
+        <StyledLink to="/claim">
           <Kilo>
             {abcBalance
               ? abcBalance.toLocaleString("en-us", {

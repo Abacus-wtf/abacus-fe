@@ -63,11 +63,11 @@ const useVeData = () => {
         VE_ABC_TOKEN,
         [
           "veHolderHistory",
-          "balanceOf",
+          "getVeAmount",
           "getAmountAllocated",
           "getAmountAutoAllocated",
         ],
-        [[account], [account], [account], [account, currentEpoch]]
+        [[account], [account, currentEpoch], [account], [account, currentEpoch]]
       ),
       abcCall(ABC_TOKEN).methods.balanceOf(account).call(),
     ])

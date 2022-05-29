@@ -121,14 +121,24 @@ const CollectionRadioButtons = ({
             id={AUTO_ALLOCATION}
             value={AUTO_ALLOCATION}
             checked={selectedCollection === AUTO_ALLOCATION}
-            onChange={() => setSelectedCollection(AUTO_ALLOCATION)}
+            onChange={() => {
+              setSelectedCollection(AUTO_ALLOCATION)
+              setIsShowCustomCollection(false)
+            }}
           />
-          <CustomAddressButton
-            buttonType={ButtonType.Clear}
-            onClick={() => setIsShowCustomCollection(true)}
-          >
-            Input Custom Address
-          </CustomAddressButton>
+          <Checkbox
+            key="CUSTOM"
+            type="radio"
+            name={RADIO_NAME}
+            label="Input Custom Address"
+            value=""
+            id="CUSTOM"
+            checked={showCustomCollection}
+            onChange={() => {
+              setIsShowCustomCollection(true)
+              setSelectedCollection("")
+            }}
+          />
         </CustomCheckboxContainer>
       </RadioContainer>
       {showCustomCollection && (

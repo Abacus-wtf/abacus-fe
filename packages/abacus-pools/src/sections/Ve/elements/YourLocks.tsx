@@ -1,7 +1,8 @@
 import { Button, ButtonType, H4, Media, P } from "abacus-ui"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { Countdown } from "@components/index"
+import { Countdown, LoadingOverlay } from "@components/index"
+import { useOnUnlockTokens } from "@hooks/veFunc"
 import { Holder } from "../useVeData"
 import { SectionTitle, StyledSection } from "./Ve.styles"
 
@@ -51,11 +52,13 @@ const StyledButton = styled(Button)`
 type YourLocksProps = {
   veBalance: string
   holder: Holder | null
+  refreshVeState: () => void
 }
 
-const YourLocks = ({ veBalance, holder }: YourLocksProps) => {
+const YourLocks = ({ veBalance, holder, refreshVeState }: YourLocksProps) => {
   const timeUnlock = holder?.timeUnlock ?? NaN
   const [unlocked, setUnlocked] = useState(timeUnlock < new Date().getTime())
+  const { onUnlockTokens, isPending } = useOnUnlockTokens()
 
   useEffect(() => {
     if (timeUnlock < new Date().getTime()) {
@@ -69,6 +72,7 @@ const YourLocks = ({ veBalance, holder }: YourLocksProps) => {
 
   return (
     <StyledSection order={1}>
+      <LoadingOverlay loading={isPending} />
       <SectionTitle>Your Locks</SectionTitle>
       <GridContainer>
         <InfoItem order={1}>
@@ -96,7 +100,11 @@ const YourLocks = ({ veBalance, holder }: YourLocksProps) => {
           </InfoContent>
         </InfoItem>
         <InfoItem order={3}>
-          <StyledButton buttonType={ButtonType.Gray}>
+          <StyledButton
+            onClick={() => onUnlockTokens(() => refreshVeState())}
+            disabled={!unlocked || isPending}
+            buttonType={ButtonType.Gray}
+          >
             Unlock Tokens
           </StyledButton>
         </InfoItem>

@@ -22,7 +22,11 @@ const Ve = () => {
     <Container>
       <Epoch />
       <GridContainer>
-        <YourLocks veBalance={veAbcBalance} holder={holderData} />
+        <YourLocks
+          refreshVeState={refreshVeState}
+          veBalance={veAbcBalance}
+          holder={holderData}
+        />
         <Lock refreshVeState={refreshVeState} />
         <YourAllocations />
         <Allocate

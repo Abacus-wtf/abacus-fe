@@ -56,7 +56,7 @@ const Lock = ({ refreshVeState }: LockProps) => {
     isPendingAdd ||
     (!eth && !lockDuration && unlocked) ||
     (!eth && !unlocked)
-
+  const disabledPage = unlocked && holderData?.amountLocked !== 0
   return (
     <StyledSection order={3} style={{ rowGap: "32px", height: "max-content" }}>
       <LoadingOverlay loading={isPendingAdd || isPendingLock} />
@@ -69,7 +69,10 @@ const Lock = ({ refreshVeState }: LockProps) => {
         onChange={setEth}
         placeholder="0.00"
         pill={
-          <MaxButton onClick={() => setEth(formatEther(abcMaxBalance))}>
+          <MaxButton
+            disable={disabledPage}
+            onClick={() => setEth(formatEther(abcMaxBalance))}
+          >
             Max
           </MaxButton>
         }
@@ -86,7 +89,10 @@ const Lock = ({ refreshVeState }: LockProps) => {
       ) : (
         <></>
       )}
-      <FullWidthButton onClick={onClick} disabled={buttonDisabled}>
+      <FullWidthButton
+        onClick={onClick}
+        disabled={buttonDisabled || disabledPage}
+      >
         {isPendingLock
           ? "Locking..."
           : isPendingAdd

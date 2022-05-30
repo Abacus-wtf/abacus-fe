@@ -12,7 +12,10 @@ import moment from "moment"
 //   useOnLockTokens,
 //   useOnUnlockTokens,
 // } from "@hooks/veFunc"
-import { useFetchUserAllocations } from "@state/allocations/hooks"
+import {
+  useFetchEpochAllocations,
+  useFetchUserAllocations,
+} from "@state/allocations/hooks"
 import ABC_EPOCH_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
 import VE_ABC_ABI from "../../config/contracts/VE_ABC_TOKEN_ABI.json"
 import ABC_ABI from "../../config/contracts/ABC_TOKEN_ABI.json"
@@ -29,6 +32,7 @@ const useVeData = () => {
   const { account } = useActiveWeb3React()
   const [refresh, setRefresh] = useState({})
   const { fetchUserAllocations } = useFetchUserAllocations()
+  const { fetchEpochAllocations } = useFetchEpochAllocations()
 
   const [epoch, setEpoch] = useState(0)
   const [abcMaxBalance, setABCMaxBalance] = useState("")
@@ -116,6 +120,10 @@ const useVeData = () => {
       fetchUserAllocations()
     }
   }, [account, fetchUserAllocations, refresh])
+
+  useEffect(() => {
+    fetchEpochAllocations()
+  }, [fetchEpochAllocations])
 
   return {
     epoch,

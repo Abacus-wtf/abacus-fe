@@ -219,7 +219,7 @@ export const useGetTraderProfileData = () => {
             : acc,
         BigNumber.from("0")
       )
-      console.log(totalTicketAmount)
+
       if (totalTicketAmount.eq(BigNumber.from(0))) {
         return
       }
@@ -227,7 +227,7 @@ export const useGetTraderProfileData = () => {
         BigNumber.from(ticket.ticketNumber).toNumber()
       ] = formatEther(totalTicketAmount)
     })
-    console.log("traderProfile", traderProfile)
+
     dispatch(getTraderProfile(traderProfile))
   }, [poolData, account, vault, dispatch])
 }
@@ -247,7 +247,6 @@ export const useGetTickets = () => {
       GetPoolDocument,
       variables
     )
-    console.log("vault", vault)
 
     const ticketsReturned = _.map(_.range(0, 50), (i) => {
       const ticket = vault.tickets.find(
@@ -411,7 +410,7 @@ export const useSetPoolData = () => {
         }
 
         const asset = (os as { assets: OpenSeaAsset[] }).assets[0]
-        console.log("asset", asset)
+
         const pool: Pool = {
           emissionsStarted: emissionsStarted[0],
           vaultAddress,
@@ -454,7 +453,7 @@ export const useSetPoolData = () => {
         }
         dispatch(getPoolData(pool))
       } catch (e) {
-        console.log("Look into this")
+        console.log("Unable to fetch pool data")
         console.error(e)
       }
     },

@@ -118,8 +118,6 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
     }
   }, [approved, page, auction])
 
-  console.log("auction", auction)
-
   const { progress, status, copy, buttonProps, title } =
     useMemo<Content>(() => {
       switch (page) {

@@ -38,7 +38,7 @@ const Sell = (props: FutureOrderProps) => {
         (tokenPurchases) => tokenPurchases.owner
       )
     )
-    console.log("owners", owners)
+
     setTicketOwners(owners)
     setTicketOwner(owners[0])
   }, [poolData.vaultAddress, props.currentTicket])

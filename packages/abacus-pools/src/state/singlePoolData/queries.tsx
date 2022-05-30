@@ -48,12 +48,12 @@ export const getTicketOwners = async (
     skip: 0,
     where: { vaultAddress, ticketNumber },
   }
-  console.log(variables)
+
   const { tickets } = await request<GetTicketQueryResponse>(
     GRAPHQL_ENDPOINT,
     GET_TICKETS,
     variables
   )
-  console.log(tickets)
+
   return tickets
 }

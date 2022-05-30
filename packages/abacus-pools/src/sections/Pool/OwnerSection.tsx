@@ -54,7 +54,7 @@ const OwnerSection = ({ refreshPoolData }: OwnerSectionProps) => {
         <Link
           to={`/close-pool?address=${address}&tokenId=${tokenId}&nonce=${nonce}`}
         >
-          <StyledButton buttonType={ButtonType.Gray}>Close pool</StyledButton>
+          <StyledButton buttonType={ButtonType.Gray}>Close Pool</StyledButton>
         </Link>
         <StyledButton
           onClick={() =>

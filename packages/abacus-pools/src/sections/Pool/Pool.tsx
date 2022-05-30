@@ -4,6 +4,7 @@ import * as queryString from "query-string"
 import { Media } from "abacus-ui"
 import styled, { createGlobalStyle } from "styled-components"
 import {
+  useGetBribeData,
   useGetPoolData,
   useGetTickets,
   useSetPoolData,
@@ -55,6 +56,7 @@ const Pool: FunctionComponent<PoolProps> = ({ location }) => {
   const poolData = useGetPoolData()
   const setPool = useSetPoolData()
   const getTickets = useGetTickets()
+  const getBribeData = useGetBribeData()
 
   useEffect(() => {
     setPool(String(address), String(tokenId), Number(nonce))
@@ -63,6 +65,10 @@ const Pool: FunctionComponent<PoolProps> = ({ location }) => {
   useEffect(() => {
     getTickets()
   }, [getTickets])
+
+  useEffect(() => {
+    getBribeData()
+  }, [getBribeData])
 
   return (
     <Container>

@@ -168,7 +168,6 @@ export const useGetBribeData = () => {
         [poolData.address, poolData.tokenId],
       ]
     )
-
     let bribe: Bribe = {
       offeredBribeSize: Number(formatEther(offeredBribeSize[0])),
       bribeOfferedByUser: 0,

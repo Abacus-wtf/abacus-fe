@@ -1,9 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 import { Button, P } from "abacus-ui"
+import { useUserAllocations } from "@state/allocations/hooks"
 import { ColumnContainer, Heading } from "../../YourAllocations.styled"
 import { SectionContainer, SectionHeader } from "../AllocationModal.styled"
-import { allocations } from "../../../placeholder-data"
 import { Allocation } from "../../Allocation"
 import { UserState } from "../AllocationModal"
 
@@ -31,6 +31,7 @@ const YourAllocations = ({
   newAllocation,
 }: YourAllocationsProps) => {
   const editMode = userState === UserState.WRITE
+  const allocations = useUserAllocations()
   return (
     <SectionContainer>
       <SectionHeader>Your Allocations</SectionHeader>

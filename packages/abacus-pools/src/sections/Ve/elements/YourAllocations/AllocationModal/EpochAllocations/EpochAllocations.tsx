@@ -1,8 +1,11 @@
-import { useEpochAllocations } from "@state/allocations/hooks"
+import {
+  useEpochAllocationAggregate,
+  useEpochAllocations,
+} from "@state/allocations/hooks"
 import { Button, ButtonType, Input } from "abacus-ui"
+import { BigNumber } from "ethers"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { allocations as placeholder } from "../../../placeholder-data"
 import { UserState } from "../AllocationModal"
 import {
   ColumnTitle,
@@ -31,14 +34,22 @@ const EpochAllocations = ({
   const [customAddress, setCustomAddress] = useState("")
   const editMode = userState === UserState.WRITE
   const epochAllocatons = useEpochAllocations()
-  console.log("epochAllocatons", epochAllocatons)
-  const allocations = Array(8)
-    .fill(placeholder[0])
-    .map((allocation, i) => ({
-      ...allocation,
-      address: `${allocation.address}${i}`,
-      percent: 12.7,
-    }))
+  const epochAllocationAggregate = useEpochAllocationAggregate()
+
+  const allocations = epochAllocatons.map((allocation, i) => ({
+    ...allocation,
+    address: `${allocation.address}${i}`,
+    percent: (
+      parseFloat(
+        BigNumber.from(allocation.amount)
+          .div(BigNumber.from(epochAllocationAggregate?.amount ?? "1"))
+          .toString()
+      ) * 100
+    ).toLocaleString("en-US", {
+      maximumSignificantDigits: 2,
+      minimumSignificantDigits: 2,
+    }),
+  }))
 
   useEffect(() => {
     setNewAllocation(selectedAllocation || customAddress)

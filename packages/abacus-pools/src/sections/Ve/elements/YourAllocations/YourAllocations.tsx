@@ -45,6 +45,7 @@ const YourAllocations = () => {
       <SeeAllButton
         buttonType={ButtonType.Gray}
         onClick={() => setModalOpen(true)}
+        disabled={!allocations?.length}
       >
         {"See All >"}
       </SeeAllButton>

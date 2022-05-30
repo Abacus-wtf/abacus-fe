@@ -7,7 +7,7 @@ import styled from "styled-components"
 import { TR } from "./EpochAllocations.styled"
 
 interface EpochAllocationRowProps extends VeAllocation {
-  percent: number
+  percent: string
   index: number
   editMode: boolean
   selectedAllocation: string

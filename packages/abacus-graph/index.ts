@@ -289,6 +289,100 @@ export type Block_Height = {
   number_gte?: InputMaybe<Scalars['Int']>;
 };
 
+export type EpochAllocation = {
+  __typename?: 'EpochAllocation';
+  amount: Scalars['BigInt'];
+  collection: Scalars['ID'];
+  epoch: Scalars['BigInt'];
+  id: Scalars['ID'];
+};
+
+export type EpochAllocationAggregate = {
+  __typename?: 'EpochAllocationAggregate';
+  amount: Scalars['BigInt'];
+  epoch: Scalars['BigInt'];
+  id: Scalars['ID'];
+};
+
+export type EpochAllocationAggregate_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  amount?: InputMaybe<Scalars['BigInt']>;
+  amount_gt?: InputMaybe<Scalars['BigInt']>;
+  amount_gte?: InputMaybe<Scalars['BigInt']>;
+  amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  amount_lt?: InputMaybe<Scalars['BigInt']>;
+  amount_lte?: InputMaybe<Scalars['BigInt']>;
+  amount_not?: InputMaybe<Scalars['BigInt']>;
+  amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  epoch?: InputMaybe<Scalars['BigInt']>;
+  epoch_gt?: InputMaybe<Scalars['BigInt']>;
+  epoch_gte?: InputMaybe<Scalars['BigInt']>;
+  epoch_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  epoch_lt?: InputMaybe<Scalars['BigInt']>;
+  epoch_lte?: InputMaybe<Scalars['BigInt']>;
+  epoch_not?: InputMaybe<Scalars['BigInt']>;
+  epoch_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export enum EpochAllocationAggregate_OrderBy {
+  Amount = 'amount',
+  Epoch = 'epoch',
+  Id = 'id'
+}
+
+export type EpochAllocation_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  amount?: InputMaybe<Scalars['BigInt']>;
+  amount_gt?: InputMaybe<Scalars['BigInt']>;
+  amount_gte?: InputMaybe<Scalars['BigInt']>;
+  amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  amount_lt?: InputMaybe<Scalars['BigInt']>;
+  amount_lte?: InputMaybe<Scalars['BigInt']>;
+  amount_not?: InputMaybe<Scalars['BigInt']>;
+  amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  collection?: InputMaybe<Scalars['ID']>;
+  collection_gt?: InputMaybe<Scalars['ID']>;
+  collection_gte?: InputMaybe<Scalars['ID']>;
+  collection_in?: InputMaybe<Array<Scalars['ID']>>;
+  collection_lt?: InputMaybe<Scalars['ID']>;
+  collection_lte?: InputMaybe<Scalars['ID']>;
+  collection_not?: InputMaybe<Scalars['ID']>;
+  collection_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  epoch?: InputMaybe<Scalars['BigInt']>;
+  epoch_gt?: InputMaybe<Scalars['BigInt']>;
+  epoch_gte?: InputMaybe<Scalars['BigInt']>;
+  epoch_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  epoch_lt?: InputMaybe<Scalars['BigInt']>;
+  epoch_lte?: InputMaybe<Scalars['BigInt']>;
+  epoch_not?: InputMaybe<Scalars['BigInt']>;
+  epoch_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export enum EpochAllocation_OrderBy {
+  Amount = 'amount',
+  Collection = 'collection',
+  Epoch = 'epoch',
+  Id = 'id'
+}
+
 /** Defines the order direction, either ascending or descending */
 export enum OrderDirection {
   Asc = 'asc',
@@ -337,6 +431,10 @@ export type Query = {
   auctions: Array<Auction>;
   bid?: Maybe<Bid>;
   bids: Array<Bid>;
+  epochAllocation?: Maybe<EpochAllocation>;
+  epochAllocationAggregate?: Maybe<EpochAllocationAggregate>;
+  epochAllocationAggregates: Array<EpochAllocationAggregate>;
+  epochAllocations: Array<EpochAllocation>;
   participant?: Maybe<Participant>;
   participants: Array<Participant>;
   ticket?: Maybe<Ticket>;
@@ -424,6 +522,42 @@ export type QueryBidsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<Bid_Filter>;
+};
+
+
+export type QueryEpochAllocationArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryEpochAllocationAggregateArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryEpochAllocationAggregatesArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<EpochAllocationAggregate_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<EpochAllocationAggregate_Filter>;
+};
+
+
+export type QueryEpochAllocationsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<EpochAllocation_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<EpochAllocation_Filter>;
 };
 
 
@@ -528,6 +662,10 @@ export type Subscription = {
   auctions: Array<Auction>;
   bid?: Maybe<Bid>;
   bids: Array<Bid>;
+  epochAllocation?: Maybe<EpochAllocation>;
+  epochAllocationAggregate?: Maybe<EpochAllocationAggregate>;
+  epochAllocationAggregates: Array<EpochAllocationAggregate>;
+  epochAllocations: Array<EpochAllocation>;
   participant?: Maybe<Participant>;
   participants: Array<Participant>;
   ticket?: Maybe<Ticket>;
@@ -615,6 +753,42 @@ export type SubscriptionBidsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<Bid_Filter>;
+};
+
+
+export type SubscriptionEpochAllocationArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionEpochAllocationAggregateArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionEpochAllocationAggregatesArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<EpochAllocationAggregate_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<EpochAllocationAggregate_Filter>;
+};
+
+
+export type SubscriptionEpochAllocationsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<EpochAllocation_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<EpochAllocation_Filter>;
 };
 
 
@@ -1083,6 +1257,20 @@ export type GetAuctionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAuctionsQuery = { __typename?: 'Query', auctions: Array<{ __typename?: 'Auction', id: string, highestBid: string, highestBidder?: string | null, bids: Array<{ __typename?: 'Bid', id: string, bidder: string, timestamp: number, amount: string }> }> };
 
+export type GetEpochAllocationAggregateQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetEpochAllocationAggregateQuery = { __typename?: 'Query', epochAllocationAggregate?: { __typename?: 'EpochAllocationAggregate', id: string, amount: string, epoch: string } | null };
+
+export type GetEpochAllocationsQueryVariables = Exact<{
+  where?: InputMaybe<EpochAllocation_Filter>;
+}>;
+
+
+export type GetEpochAllocationsQuery = { __typename?: 'Query', epochAllocations: Array<{ __typename?: 'EpochAllocation', id: string, amount: string, collection: string, epoch: string }> };
+
 export type VaultFragment = { __typename?: 'Vault', id: string, nftAddress: string, tokenId: string, owner: string, status: number, nonce: number, timestamp: string, emissionsSigned: boolean, size: string, totalParticipants: number, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, length: string, owner: string, soldAt?: string | null, timestamp: string }> }> };
 
 export type GetPoolsQueryVariables = Exact<{
@@ -1134,6 +1322,8 @@ export const GetAggregatesDocument = {"kind":"Document","definitions":[{"kind":"
 export const AllocationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Allocations"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allocations"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Allocation"}}]}}]}},...AllocationFragmentDoc.definitions]} as unknown as DocumentNode<AllocationsQuery, AllocationsQueryVariables>;
 export const GetAuctionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAuction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"auction"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"highestBid"}},{"kind":"Field","name":{"kind":"Name","value":"highestBidder"}},{"kind":"Field","name":{"kind":"Name","value":"bids"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Bid"}}]}}]}}]}},...BidFragmentDoc.definitions]} as unknown as DocumentNode<GetAuctionQuery, GetAuctionQueryVariables>;
 export const GetAuctionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAuctions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"auctions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"highestBid"}},{"kind":"Field","name":{"kind":"Name","value":"highestBidder"}},{"kind":"Field","name":{"kind":"Name","value":"bids"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Bid"}}]}}]}}]}},...BidFragmentDoc.definitions]} as unknown as DocumentNode<GetAuctionsQuery, GetAuctionsQueryVariables>;
+export const GetEpochAllocationAggregateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetEpochAllocationAggregate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"epochAllocationAggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"epoch"}}]}}]}}]} as unknown as DocumentNode<GetEpochAllocationAggregateQuery, GetEpochAllocationAggregateQueryVariables>;
+export const GetEpochAllocationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetEpochAllocations"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"EpochAllocation_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"epochAllocations"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"collection"}},{"kind":"Field","name":{"kind":"Name","value":"epoch"}}]}}]}}]} as unknown as DocumentNode<GetEpochAllocationsQuery, GetEpochAllocationsQueryVariables>;
 export const GetPoolsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPools"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Vault_orderBy"}},"defaultValue":{"kind":"EnumValue","value":"timestamp"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}},"defaultValue":{"kind":"EnumValue","value":"desc"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Vault_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vaults"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Vault"}}]}}]}},...VaultFragmentDoc.definitions]} as unknown as DocumentNode<GetPoolsQuery, GetPoolsQueryVariables>;
 export const GetPoolDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPool"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vault"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Vault"}}]}}]}},...VaultFragmentDoc.definitions]} as unknown as DocumentNode<GetPoolQuery, GetPoolQueryVariables>;
 export const GetTicketsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTickets"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Ticket_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tickets"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"EnumValue","value":"ticketNumber"}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"EnumValue","value":"desc"}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Ticket"}}]}}]}},...TicketFragmentDoc.definitions]} as unknown as DocumentNode<GetTicketsQuery, GetTicketsQueryVariables>;

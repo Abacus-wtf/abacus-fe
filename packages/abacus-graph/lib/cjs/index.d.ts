@@ -280,6 +280,94 @@ export declare type Block_Height = {
     number?: InputMaybe<Scalars['Int']>;
     number_gte?: InputMaybe<Scalars['Int']>;
 };
+export declare type EpochAllocation = {
+    __typename?: 'EpochAllocation';
+    amount: Scalars['BigInt'];
+    collection: Scalars['ID'];
+    epoch: Scalars['BigInt'];
+    id: Scalars['ID'];
+};
+export declare type EpochAllocationAggregate = {
+    __typename?: 'EpochAllocationAggregate';
+    amount: Scalars['BigInt'];
+    epoch: Scalars['BigInt'];
+    id: Scalars['ID'];
+};
+export declare type EpochAllocationAggregate_Filter = {
+    /** Filter for the block changed event. */
+    _change_block?: InputMaybe<BlockChangedFilter>;
+    amount?: InputMaybe<Scalars['BigInt']>;
+    amount_gt?: InputMaybe<Scalars['BigInt']>;
+    amount_gte?: InputMaybe<Scalars['BigInt']>;
+    amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    amount_lt?: InputMaybe<Scalars['BigInt']>;
+    amount_lte?: InputMaybe<Scalars['BigInt']>;
+    amount_not?: InputMaybe<Scalars['BigInt']>;
+    amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    epoch?: InputMaybe<Scalars['BigInt']>;
+    epoch_gt?: InputMaybe<Scalars['BigInt']>;
+    epoch_gte?: InputMaybe<Scalars['BigInt']>;
+    epoch_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    epoch_lt?: InputMaybe<Scalars['BigInt']>;
+    epoch_lte?: InputMaybe<Scalars['BigInt']>;
+    epoch_not?: InputMaybe<Scalars['BigInt']>;
+    epoch_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    id?: InputMaybe<Scalars['ID']>;
+    id_gt?: InputMaybe<Scalars['ID']>;
+    id_gte?: InputMaybe<Scalars['ID']>;
+    id_in?: InputMaybe<Array<Scalars['ID']>>;
+    id_lt?: InputMaybe<Scalars['ID']>;
+    id_lte?: InputMaybe<Scalars['ID']>;
+    id_not?: InputMaybe<Scalars['ID']>;
+    id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+};
+export declare enum EpochAllocationAggregate_OrderBy {
+    Amount = "amount",
+    Epoch = "epoch",
+    Id = "id"
+}
+export declare type EpochAllocation_Filter = {
+    /** Filter for the block changed event. */
+    _change_block?: InputMaybe<BlockChangedFilter>;
+    amount?: InputMaybe<Scalars['BigInt']>;
+    amount_gt?: InputMaybe<Scalars['BigInt']>;
+    amount_gte?: InputMaybe<Scalars['BigInt']>;
+    amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    amount_lt?: InputMaybe<Scalars['BigInt']>;
+    amount_lte?: InputMaybe<Scalars['BigInt']>;
+    amount_not?: InputMaybe<Scalars['BigInt']>;
+    amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    collection?: InputMaybe<Scalars['ID']>;
+    collection_gt?: InputMaybe<Scalars['ID']>;
+    collection_gte?: InputMaybe<Scalars['ID']>;
+    collection_in?: InputMaybe<Array<Scalars['ID']>>;
+    collection_lt?: InputMaybe<Scalars['ID']>;
+    collection_lte?: InputMaybe<Scalars['ID']>;
+    collection_not?: InputMaybe<Scalars['ID']>;
+    collection_not_in?: InputMaybe<Array<Scalars['ID']>>;
+    epoch?: InputMaybe<Scalars['BigInt']>;
+    epoch_gt?: InputMaybe<Scalars['BigInt']>;
+    epoch_gte?: InputMaybe<Scalars['BigInt']>;
+    epoch_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    epoch_lt?: InputMaybe<Scalars['BigInt']>;
+    epoch_lte?: InputMaybe<Scalars['BigInt']>;
+    epoch_not?: InputMaybe<Scalars['BigInt']>;
+    epoch_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    id?: InputMaybe<Scalars['ID']>;
+    id_gt?: InputMaybe<Scalars['ID']>;
+    id_gte?: InputMaybe<Scalars['ID']>;
+    id_in?: InputMaybe<Array<Scalars['ID']>>;
+    id_lt?: InputMaybe<Scalars['ID']>;
+    id_lte?: InputMaybe<Scalars['ID']>;
+    id_not?: InputMaybe<Scalars['ID']>;
+    id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+};
+export declare enum EpochAllocation_OrderBy {
+    Amount = "amount",
+    Collection = "collection",
+    Epoch = "epoch",
+    Id = "id"
+}
 /** Defines the order direction, either ascending or descending */
 export declare enum OrderDirection {
     Asc = "asc",
@@ -324,6 +412,10 @@ export declare type Query = {
     auctions: Array<Auction>;
     bid?: Maybe<Bid>;
     bids: Array<Bid>;
+    epochAllocation?: Maybe<EpochAllocation>;
+    epochAllocationAggregate?: Maybe<EpochAllocationAggregate>;
+    epochAllocationAggregates: Array<EpochAllocationAggregate>;
+    epochAllocations: Array<EpochAllocation>;
     participant?: Maybe<Participant>;
     participants: Array<Participant>;
     ticket?: Maybe<Ticket>;
@@ -393,6 +485,34 @@ export declare type QueryBidsArgs = {
     skip?: InputMaybe<Scalars['Int']>;
     subgraphError?: _SubgraphErrorPolicy_;
     where?: InputMaybe<Bid_Filter>;
+};
+export declare type QueryEpochAllocationArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type QueryEpochAllocationAggregateArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type QueryEpochAllocationAggregatesArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<EpochAllocationAggregate_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<EpochAllocationAggregate_Filter>;
+};
+export declare type QueryEpochAllocationsArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<EpochAllocation_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<EpochAllocation_Filter>;
 };
 export declare type QueryParticipantArgs = {
     block?: InputMaybe<Block_Height>;
@@ -476,6 +596,10 @@ export declare type Subscription = {
     auctions: Array<Auction>;
     bid?: Maybe<Bid>;
     bids: Array<Bid>;
+    epochAllocation?: Maybe<EpochAllocation>;
+    epochAllocationAggregate?: Maybe<EpochAllocationAggregate>;
+    epochAllocationAggregates: Array<EpochAllocationAggregate>;
+    epochAllocations: Array<EpochAllocation>;
     participant?: Maybe<Participant>;
     participants: Array<Participant>;
     ticket?: Maybe<Ticket>;
@@ -545,6 +669,34 @@ export declare type SubscriptionBidsArgs = {
     skip?: InputMaybe<Scalars['Int']>;
     subgraphError?: _SubgraphErrorPolicy_;
     where?: InputMaybe<Bid_Filter>;
+};
+export declare type SubscriptionEpochAllocationArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type SubscriptionEpochAllocationAggregateArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type SubscriptionEpochAllocationAggregatesArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<EpochAllocationAggregate_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<EpochAllocationAggregate_Filter>;
+};
+export declare type SubscriptionEpochAllocationsArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<EpochAllocation_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<EpochAllocation_Filter>;
 };
 export declare type SubscriptionParticipantArgs = {
     block?: InputMaybe<Block_Height>;
@@ -1023,6 +1175,31 @@ export declare type GetAuctionsQuery = {
         }>;
     }>;
 };
+export declare type GetEpochAllocationAggregateQueryVariables = Exact<{
+    id: Scalars['ID'];
+}>;
+export declare type GetEpochAllocationAggregateQuery = {
+    __typename?: 'Query';
+    epochAllocationAggregate?: {
+        __typename?: 'EpochAllocationAggregate';
+        id: string;
+        amount: string;
+        epoch: string;
+    } | null;
+};
+export declare type GetEpochAllocationsQueryVariables = Exact<{
+    where?: InputMaybe<EpochAllocation_Filter>;
+}>;
+export declare type GetEpochAllocationsQuery = {
+    __typename?: 'Query';
+    epochAllocations: Array<{
+        __typename?: 'EpochAllocation';
+        id: string;
+        amount: string;
+        collection: string;
+        epoch: string;
+    }>;
+};
 export declare type VaultFragment = {
     __typename?: 'Vault';
     id: string;
@@ -1211,6 +1388,12 @@ export declare const GetAuctionDocument: DocumentNode<GetAuctionQuery, Exact<{
 }>>;
 export declare const GetAuctionsDocument: DocumentNode<GetAuctionsQuery, Exact<{
     [key: string]: never;
+}>>;
+export declare const GetEpochAllocationAggregateDocument: DocumentNode<GetEpochAllocationAggregateQuery, Exact<{
+    id: Scalars['ID'];
+}>>;
+export declare const GetEpochAllocationsDocument: DocumentNode<GetEpochAllocationsQuery, Exact<{
+    where?: InputMaybe<EpochAllocation_Filter> | undefined;
 }>>;
 export declare const GetPoolsDocument: DocumentNode<GetPoolsQuery, Exact<{
     first: Scalars['Int'];

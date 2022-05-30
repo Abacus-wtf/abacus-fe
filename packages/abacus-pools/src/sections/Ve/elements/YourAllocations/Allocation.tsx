@@ -48,7 +48,7 @@ const StyledButton = styled(Button)<{
 
   ${Media.sm`
     ${({ conserveSpace }: { conserveSpace: boolean }) =>
-      conserveSpace ? "padding: 5px 8px" : ""};
+      conserveSpace ? "padding: 5px 8px;" : ""}
     width: max-content;
     grid-column: 3;
     margin-bottom: 0;

@@ -1,0 +1,8 @@
+query GetEpochAllocations($where: EpochAllocation_filter) {
+  epochAllocations(where: $where) {
+    id
+    amount
+    collection
+    epoch
+  }
+}

@@ -1,7 +1,7 @@
 import { Modal, Media } from "abacus-ui"
 import React, { useState } from "react"
 import styled from "styled-components"
-import { OverallAllocations } from "./OverallAllocations/OverallAllocations"
+import { EpochAllocations } from "./EpochAllocations/EpochAllocations"
 import { YourAllocations } from "./YourAllocations"
 
 const Container = styled.div`
@@ -53,7 +53,7 @@ const AllocationModal = ({
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <Container>
-        <OverallAllocations
+        <EpochAllocations
           userState={userState}
           setNewAllocation={setNewAllocation}
         />

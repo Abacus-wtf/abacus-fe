@@ -4,9 +4,9 @@ import { Checkbox, Checkmark, Font, Media, VisuallyHidden } from "abacus-ui"
 import { formatEther } from "ethers/lib/utils"
 import React from "react"
 import styled from "styled-components"
-import { TR } from "./OverallAllocations.styled"
+import { TR } from "./EpochAllocations.styled"
 
-interface OverallAllocationRowProps extends VeAllocation {
+interface EpochAllocationRowProps extends VeAllocation {
   percent: number
   index: number
   editMode: boolean
@@ -55,9 +55,9 @@ const RowNumber = styled(TD)`
   color: ${({ theme }) => theme.colors.core[800]};
 `
 
-const RADIO_NAME = "overall_allocation_row_radio_group"
+const RADIO_NAME = "Epoch_allocation_row_radio_group"
 
-const OverallAllocationRow = ({
+const EpochAllocationRow = ({
   address,
   amount,
   name,
@@ -67,7 +67,7 @@ const OverallAllocationRow = ({
   editMode,
   selectedAllocation,
   setSelectedAllocation,
-}: OverallAllocationRowProps) => {
+}: EpochAllocationRowProps) => {
   const checked = selectedAllocation === address
   return (
     <TR>
@@ -106,4 +106,4 @@ const OverallAllocationRow = ({
   )
 }
 
-export { OverallAllocationRow }
+export { EpochAllocationRow }

@@ -1,3 +1,4 @@
+import { useEpochAllocations } from "@state/allocations/hooks"
 import { Button, ButtonType, Input } from "abacus-ui"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
@@ -8,10 +9,10 @@ import {
   SectionContainer,
   SectionHeader,
 } from "../AllocationModal.styled"
-import { OverallAllocationRow } from "./OverallAllocationRow"
-import { Table, TR, TBody } from "./OverallAllocations.styled"
+import { EpochAllocationRow } from "./EpochAllocationRow"
+import { Table, TR, TBody } from "./EpochAllocations.styled"
 
-type OverallAllocationsProps = {
+type EpochAllocationsProps = {
   userState: UserState
   setNewAllocation: React.Dispatch<string>
 }
@@ -22,13 +23,15 @@ const ViewMoreButton = styled(Button)`
   text-decoration: underline;
 `
 
-const OverallAllocations = ({
+const EpochAllocations = ({
   userState,
   setNewAllocation,
-}: OverallAllocationsProps) => {
+}: EpochAllocationsProps) => {
   const [selectedAllocation, setSelectedAllocation] = useState("")
   const [customAddress, setCustomAddress] = useState("")
   const editMode = userState === UserState.WRITE
+  const epochAllocatons = useEpochAllocations()
+  console.log("epochAllocatons", epochAllocatons)
   const allocations = Array(8)
     .fill(placeholder[0])
     .map((allocation, i) => ({
@@ -42,7 +45,7 @@ const OverallAllocations = ({
   }, [customAddress, selectedAllocation, setNewAllocation])
   return (
     <SectionContainer>
-      <SectionHeader>Overall Allocations</SectionHeader>
+      <SectionHeader>Epoch Allocations</SectionHeader>
       {editMode && (
         <>
           <Input
@@ -68,7 +71,7 @@ const OverallAllocations = ({
             <ColumnTitle as="th">%</ColumnTitle>
           </TR>
           {allocations.map((allocation, index) => (
-            <OverallAllocationRow
+            <EpochAllocationRow
               key={allocation.address}
               {...allocation}
               index={index}
@@ -87,4 +90,4 @@ const OverallAllocations = ({
   )
 }
 
-export { OverallAllocations }
+export { EpochAllocations }

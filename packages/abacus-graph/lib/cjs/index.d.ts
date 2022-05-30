@@ -1353,9 +1353,8 @@ export declare type GetTicketsQuery = {
     }>;
 };
 export declare type UserAllocationsQueryVariables = Exact<{
-    first: Scalars['Int'];
-    skip: Scalars['Int'];
     id: Scalars['ID'];
+    where?: InputMaybe<Allocation_Filter>;
 }>;
 export declare type UserAllocationsQuery = {
     __typename?: 'Query';
@@ -1411,7 +1410,6 @@ export declare const GetTicketsDocument: DocumentNode<GetTicketsQuery, Exact<{
     where?: InputMaybe<Ticket_Filter> | undefined;
 }>>;
 export declare const UserAllocationsDocument: DocumentNode<UserAllocationsQuery, Exact<{
-    first: Scalars['Int'];
-    skip: Scalars['Int'];
     id: Scalars['ID'];
+    where?: InputMaybe<Allocation_Filter> | undefined;
 }>>;

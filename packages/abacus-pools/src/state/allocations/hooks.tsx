@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
 import request from "graphql-request"
 import {
+  GetEpochAllocationAggregateDocument,
+  GetEpochAllocationAggregateQuery,
+  GetEpochAllocationAggregateQueryVariables,
   GetEpochAllocationsDocument,
   GetEpochAllocationsQuery,
   GetEpochAllocationsQueryVariables,
@@ -19,8 +22,16 @@ import { VeAllocation } from "@sections/Ve/models"
 import { useCallback } from "react"
 import { BigNumber } from "ethers"
 import { useCurrentEpoch } from "@state/application/hooks"
-import { epochAllocationsSelector, userAllocationsSelector } from "./selectors"
-import { setEpochAllocations, setUserAllocations } from "./actions"
+import {
+  epochAllocationAggregateSelector,
+  epochAllocationsSelector,
+  userAllocationsSelector,
+} from "./selectors"
+import {
+  setEpochAllocationAggregate,
+  setEpochAllocations,
+  setUserAllocations,
+} from "./actions"
 
 const OPENSEA_LINK = process.env.GATSBY_OPENSEA_API || ""
 const OPENSEA_API_KEY = process.env.GATSBY_OPENSEA_API_KEY
@@ -86,8 +97,6 @@ export const useFetchEpochAllocations = () => {
   const dispatch = useDispatch()
   const currentEpoch = useCurrentEpoch()
 
-  console.log("CONTOR currentEpoch", currentEpoch)
-
   const fetchEpochAllocations = useCallback(async () => {
     if (!currentEpoch) {
       return
@@ -131,5 +140,34 @@ export const useFetchEpochAllocations = () => {
   return { fetchEpochAllocations }
 }
 
+export const useFetchEpochAllocationAggregate = () => {
+  const dispatch = useDispatch()
+  const currentEpoch = useCurrentEpoch()
+
+  const fetchEpochAllocationAggregate = useCallback(async () => {
+    if (!currentEpoch) {
+      return
+    }
+    const variables: GetEpochAllocationAggregateQueryVariables = {
+      id: currentEpoch,
+    }
+    const { epochAllocationAggregate } =
+      await request<GetEpochAllocationAggregateQuery>(
+        GRAPHQL_ENDPOINT,
+        GetEpochAllocationAggregateDocument,
+        variables
+      )
+    if (!epochAllocationAggregate) {
+      return
+    }
+
+    dispatch(setEpochAllocationAggregate(epochAllocationAggregate))
+  }, [dispatch, currentEpoch])
+
+  return { fetchEpochAllocationAggregate }
+}
+
 export const useUserAllocations = () => useSelector(userAllocationsSelector)
 export const useEpochAllocations = () => useSelector(epochAllocationsSelector)
+export const useEpochAllocationAggregate = () =>
+  useSelector(epochAllocationAggregateSelector)

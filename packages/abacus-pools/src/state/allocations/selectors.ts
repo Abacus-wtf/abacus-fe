@@ -5,3 +5,6 @@ export const userAllocationsSelector = (state: AppState) =>
 
 export const epochAllocationsSelector = (state: AppState) =>
   state.allocations.epochAllocations
+
+export const epochAllocationAggregateSelector = (state: AppState) =>
+  state.allocations.epochAllocationAggregate

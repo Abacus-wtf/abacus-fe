@@ -15,6 +15,7 @@ import moment from "moment"
 import {
   useFetchEpochAllocations,
   useFetchUserAllocations,
+  useFetchEpochAllocationAggregate,
 } from "@state/allocations/hooks"
 import ABC_EPOCH_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
 import VE_ABC_ABI from "../../config/contracts/VE_ABC_TOKEN_ABI.json"
@@ -33,6 +34,7 @@ const useVeData = () => {
   const [refresh, setRefresh] = useState({})
   const { fetchUserAllocations } = useFetchUserAllocations()
   const { fetchEpochAllocations } = useFetchEpochAllocations()
+  const { fetchEpochAllocationAggregate } = useFetchEpochAllocationAggregate()
 
   const [epoch, setEpoch] = useState(0)
   const [abcMaxBalance, setABCMaxBalance] = useState("")
@@ -124,6 +126,10 @@ const useVeData = () => {
   useEffect(() => {
     fetchEpochAllocations()
   }, [fetchEpochAllocations])
+
+  useEffect(() => {
+    fetchEpochAllocationAggregate()
+  }, [fetchEpochAllocationAggregate])
 
   return {
     epoch,

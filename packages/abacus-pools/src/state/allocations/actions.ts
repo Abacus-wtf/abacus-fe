@@ -4,6 +4,6 @@ import { VeAllocation } from "@sections/Ve/models"
 export const setUserAllocations = createAction<VeAllocation[]>(
   "allocations/userAllocations"
 )
-export const setAllocations = createAction<VeAllocation[]>(
-  "allocations/allocations"
+export const setEpochAllocations = createAction<VeAllocation[]>(
+  "allocations/epochAllocations"
 )

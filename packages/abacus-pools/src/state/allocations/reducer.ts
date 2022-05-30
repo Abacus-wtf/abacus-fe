@@ -1,14 +1,14 @@
 import { createReducer } from "@reduxjs/toolkit"
 import { VeAllocation } from "@sections/Ve/models"
-import { setAllocations, setUserAllocations } from "./actions"
+import { setEpochAllocations, setUserAllocations } from "./actions"
 
 interface AllocationState {
-  allocations: VeAllocation[]
+  epochAllocations: VeAllocation[]
   userAllocations: VeAllocation[]
 }
 
 const initialState: AllocationState = {
-  allocations: [],
+  epochAllocations: [],
   userAllocations: [],
 }
 
@@ -17,7 +17,7 @@ export default createReducer(initialState, (builder) =>
     .addCase(setUserAllocations, (state, action) => {
       state.userAllocations = action.payload
     })
-    .addCase(setAllocations, (state, action) => {
-      state.allocations = action.payload
+    .addCase(setEpochAllocations, (state, action) => {
+      state.epochAllocations = action.payload
     })
 )

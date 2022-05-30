@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
 import request from "graphql-request"
 import {
-  AllocationsDocument,
-  AllocationsQuery,
-  AllocationsQueryVariables,
+  GetEpochAllocationsDocument,
+  GetEpochAllocationsQuery,
+  GetEpochAllocationsQueryVariables,
   UserAllocationsDocument,
   UserAllocationsQuery,
   UserAllocationsQueryVariables,
@@ -18,8 +18,9 @@ import {
 import { VeAllocation } from "@sections/Ve/models"
 import { useCallback } from "react"
 import { BigNumber } from "ethers"
-import { allocationsSelector, userAllocationsSelector } from "./selectors"
-import { setAllocations, setUserAllocations } from "./actions"
+import { useCurrentEpoch } from "@state/application/hooks"
+import { epochAllocationsSelector, userAllocationsSelector } from "./selectors"
+import { setEpochAllocations, setUserAllocations } from "./actions"
 
 const OPENSEA_LINK = process.env.GATSBY_OPENSEA_API || ""
 const OPENSEA_API_KEY = process.env.GATSBY_OPENSEA_API_KEY
@@ -27,13 +28,17 @@ const OPENSEA_API_KEY = process.env.GATSBY_OPENSEA_API_KEY
 export const useFetchUserAllocations = () => {
   const { account } = useActiveWeb3React()
   const dispatch = useDispatch()
+  const currentEpoch = useCurrentEpoch()
 
   const fetchUserAllocations = useCallback(async () => {
-    const variables: UserAllocationsQueryVariables = {
-      first: 20,
-      skip: 0,
-      id: account.toLowerCase(),
+    if (!currentEpoch || !account) {
+      return
     }
+    const variables: UserAllocationsQueryVariables = {
+      id: account.toLowerCase(),
+      where: { epoch: currentEpoch },
+    }
+
     const { user } = await request<UserAllocationsQuery>(
       GRAPHQL_ENDPOINT,
       UserAllocationsDocument,
@@ -72,58 +77,59 @@ export const useFetchUserAllocations = () => {
     })
 
     dispatch(setUserAllocations(allocations))
-  }, [account, dispatch])
+  }, [account, dispatch, currentEpoch])
 
   return { fetchUserAllocations }
 }
 
-export const useFetchAllocations = () => {
-  const { account } = useActiveWeb3React()
+export const useFetchEpochAllocations = () => {
   const dispatch = useDispatch()
-  const currentAllocations = useSelector(allocationsSelector)
+  const currentEpoch = useCurrentEpoch()
 
-  // TODO: Query for Allocation Aggregates: https://github.com/Abacus-wtf/abacus-fe/issues/73
-  const fetchUserAllocations = useCallback(async () => {
-    // const variables: AllocationsQueryVariables = {
-    //   first: 20,
-    //   skip: 0,
-    // }
-    // const { allocations } = await request<AllocationsQuery>(
-    //   GRAPHQL_ENDPOINT,
-    //   AllocationsDocument,
-    //   variables
-    // )
-    // if (!allocations) {
-    //   return
-    // }
-    // if (!(allocations.length > 0)) {
-    //   dispatch(setAllocations([]))
-    // }
-    // const openSeaGetManyParams: OpenSeaGetManyParams = allocations.map(
-    //   (allocation) => ({ nftAddress: allocation.collection, tokenId: "1" })
-    // )
-    // const { assets } = await openseaGetMany(openSeaGetManyParams, {
-    //   url: OPENSEA_LINK,
-    //   api_key: OPENSEA_API_KEY,
-    // })
-    // const nextAllocations: VeAllocation[] = allocations
-    //   .map((allocation) => {
-    //     const asset = matchOpenSeaAssetToNFT(assets, {
-    //       nftAddress: allocation.collection,
-    //       tokenId: "1",
-    //     })
-    //     return {
-    //       name: asset.collection.name,
-    //       imgSrc: asset.image_url,
-    //       address: allocation.collection,
-    //       amount: BigNumber.from(allocation.amount),
-    //     }
-    //   })
-    //   dispatch(setUserAllocations(allocations))
-  }, [account, dispatch])
+  console.log("CONTOR currentEpoch", currentEpoch)
 
-  return { fetchUserAllocations }
+  const fetchEpochAllocations = useCallback(async () => {
+    if (!currentEpoch) {
+      return
+    }
+    const variables: GetEpochAllocationsQueryVariables = {
+      where: { epoch: currentEpoch },
+    }
+    const { epochAllocations } = await request<GetEpochAllocationsQuery>(
+      GRAPHQL_ENDPOINT,
+      GetEpochAllocationsDocument,
+      variables
+    )
+    if (!epochAllocations) {
+      return
+    }
+
+    const openSeaGetManyParams: OpenSeaGetManyParams = epochAllocations.map(
+      (allocation) => ({ nftAddress: allocation.collection, tokenId: "1" })
+    )
+    const { assets } = await openseaGetMany(openSeaGetManyParams, {
+      url: OPENSEA_LINK,
+      api_key: OPENSEA_API_KEY,
+    })
+    const nextAllocations: VeAllocation[] = epochAllocations.map(
+      (allocation) => {
+        const asset = matchOpenSeaAssetToNFT(assets, {
+          nftAddress: allocation.collection,
+          tokenId: "1",
+        })
+        return {
+          name: asset.collection.name,
+          imgSrc: asset.image_url,
+          address: allocation.collection,
+          amount: BigNumber.from(allocation.amount),
+        }
+      }
+    )
+    dispatch(setEpochAllocations(nextAllocations))
+  }, [dispatch, currentEpoch])
+
+  return { fetchEpochAllocations }
 }
 
 export const useUserAllocations = () => useSelector(userAllocationsSelector)
-export const useAllocations = () => useSelector(allocationsSelector)
+export const useEpochAllocations = () => useSelector(epochAllocationsSelector)

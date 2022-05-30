@@ -22,3 +22,6 @@ export const abcBalanceSelector = (state: AppState) =>
 
 export const aggregateSelector = (state: AppState) =>
   state.application.aggregate
+
+export const currentEpochSelector = (state: AppState) =>
+  state.application.currentEpoch

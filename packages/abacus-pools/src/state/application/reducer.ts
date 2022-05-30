@@ -9,6 +9,7 @@ import {
   setEthToUSD,
   setAbcBalance,
   setAggregate,
+  setCurrentEpoch,
 } from "./actions"
 
 export type GeneralizedContractState = {
@@ -21,6 +22,7 @@ interface ApplicationState {
   ethToUSD: number
   abcBalance: number
   aggregate: Aggregate | null
+  currentEpoch: string
 }
 
 export const initialState: ApplicationState = {
@@ -32,6 +34,7 @@ export const initialState: ApplicationState = {
   ethToUSD: null,
   abcBalance: null,
   aggregate: null,
+  currentEpoch: null,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -53,5 +56,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(setAggregate, (state, action) => {
       state.aggregate = action.payload
+    })
+    .addCase(setCurrentEpoch, (state, action) => {
+      state.currentEpoch = action.payload
     })
 )

@@ -15,3 +15,4 @@ export const setGeneralizedContractErrorMessage = createAction<
 export const setEthToUSD = createAction<number>("application/ethToUSD")
 export const setAbcBalance = createAction<number>("application/abcBalance")
 export const setAggregate = createAction<Aggregate>("application/aggregate")
+export const setCurrentEpoch = createAction<string>("application/currentEpoch")

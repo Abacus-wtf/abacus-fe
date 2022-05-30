@@ -1,6 +1,7 @@
 import { useCallback } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import {
+  ABC_EPOCH,
   ABC_TOKEN,
   GRAPHQL_ENDPOINT,
   NetworkSymbolEnum,
@@ -20,6 +21,7 @@ import {
   setAbcBalance,
   setGeneralizedContractErrorMessage,
   setAggregate,
+  setCurrentEpoch,
 } from "./actions"
 import {
   abcBalanceSelector,
@@ -27,8 +29,10 @@ import {
   ethToUSDCalculationSelector,
   generalizedContractErrorMessageSelector,
   networkSymbolSelector,
+  currentEpochSelector,
 } from "./selectors"
 import { GeneralizedContractState } from "./reducer"
+import ABC_EPOCH_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
 
 export const useToggleWalletModal = () => {
   const isWalletModalOpen = useSelector<
@@ -146,3 +150,26 @@ export const useGetAggregate = () => {
 }
 
 export const useAggregate = () => useSelector(aggregateSelector)
+
+export const useFetchCurrentEpoch = () => {
+  const dispatch = useDispatch()
+  const epochCall = useWeb3Contract(ABC_EPOCH_ABI)
+
+  const fetchCurrentEpoch = useCallback(async () => {
+    try {
+      const currentEpoch = await epochCall(ABC_EPOCH)
+        .methods.getCurrentEpoch()
+        .call()
+
+      dispatch(setCurrentEpoch(currentEpoch))
+    } catch {
+      // TODO: Determine why this errors
+    }
+  }, [dispatch, epochCall])
+
+  return {
+    fetchCurrentEpoch,
+  }
+}
+
+export const useCurrentEpoch = () => useSelector(currentEpochSelector)

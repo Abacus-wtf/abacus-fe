@@ -14,10 +14,6 @@ const Container = styled.div`
   ${Media.sm`
     grid-template-columns: auto 1px auto;
   `}
-
-  ${Media.lg`
-    grid-template-columns: max-content 1px auto;
-  `}
 `
 
 const Divider = styled.div`

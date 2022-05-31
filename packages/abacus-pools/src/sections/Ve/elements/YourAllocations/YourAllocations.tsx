@@ -1,3 +1,4 @@
+import { VeAllocation } from "@sections/Ve/models"
 import { useVeData } from "@sections/Ve/useVeData"
 import { useUserAllocations } from "@state/allocations/hooks"
 import { Button, ButtonType } from "abacus-ui"
@@ -13,9 +14,14 @@ const SeeAllButton = styled(Button)`
   margin-top: auto;
 `
 
-const YourAllocations = () => {
+type YourAllocationsProps = {
+  refreshVeState: () => void
+}
+
+const YourAllocations = ({ refreshVeState }: YourAllocationsProps) => {
   const [modalOpen, setModalOpen] = useState(false)
-  const [allocationToChange, setAllocationToChange] = useState<string>(null)
+  const [allocationToChange, setAllocationToChange] =
+    useState<VeAllocation>(null)
   const allocations = useUserAllocations()
   const { holderData } = useVeData()
   return (
@@ -32,7 +38,7 @@ const YourAllocations = () => {
                 key={allocation.address}
                 {...allocation}
                 changeAction={() => {
-                  setAllocationToChange(allocation.address)
+                  setAllocationToChange(allocation)
                   setModalOpen(true)
                 }}
               />
@@ -54,6 +60,7 @@ const YourAllocations = () => {
         closeModal={() => setModalOpen(false)}
         allocationToChange={allocationToChange}
         setAllocationToChange={setAllocationToChange}
+        refreshVeState={refreshVeState}
       />
     </StyledSection>
   )

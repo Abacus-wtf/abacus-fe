@@ -35,7 +35,7 @@ const Ve = () => {
           holder={holderData}
         />
         <Lock refreshVeState={refreshVeState} />
-        <YourAllocations />
+        <YourAllocations refreshVeState={refreshVeState} />
         <Allocate
           getVeData={refreshVeState}
           veABCMaxToAllocate={veABCMaxToAllocate}

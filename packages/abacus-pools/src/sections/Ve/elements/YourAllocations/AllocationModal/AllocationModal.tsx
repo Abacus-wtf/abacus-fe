@@ -1,4 +1,8 @@
+import { LoadingOverlay } from "@components/LoadingOverlay"
+import { useOnChangeAllocation } from "@hooks/veFunc"
+import { VeAllocation } from "@sections/Ve/models"
 import { Modal, Media } from "abacus-ui"
+import { formatEther } from "ethers/lib/utils"
 import React, { useState } from "react"
 import styled from "styled-components"
 import { EpochAllocations } from "./EpochAllocations/EpochAllocations"
@@ -29,8 +33,9 @@ const Divider = styled.div`
 type AllocationModalProps = {
   isOpen: boolean
   closeModal: () => void
-  allocationToChange: string
-  setAllocationToChange: React.Dispatch<string>
+  allocationToChange: VeAllocation
+  setAllocationToChange: React.Dispatch<VeAllocation>
+  refreshVeState: () => void
 }
 
 export enum UserState {
@@ -43,22 +48,42 @@ const AllocationModal = ({
   closeModal,
   allocationToChange,
   setAllocationToChange,
+  refreshVeState,
 }: AllocationModalProps) => {
   const [newAllocation, setNewAllocation] = useState("")
   const userState = allocationToChange ? UserState.WRITE : UserState.READ
+  const { onChangeAllocation, isPending } = useOnChangeAllocation()
+
+  const changeAllocationDisabled = !allocationToChange || !newAllocation
+
+  const changeAllocation = () => {
+    const amount = parseFloat(formatEther(allocationToChange.amount))
+    onChangeAllocation(
+      allocationToChange.address,
+      newAllocation,
+      amount,
+      () => {
+        refreshVeState()
+        closeModal()
+      }
+    )
+  }
+
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <Container>
+        <LoadingOverlay loading={isPending} />
         <EpochAllocations
           userState={userState}
           setNewAllocation={setNewAllocation}
         />
         <Divider />
         <YourAllocations
-          newAllocation={newAllocation}
           userState={userState}
           setAllocationToChange={setAllocationToChange}
           allocationToChange={allocationToChange}
+          changeAllocation={changeAllocation}
+          changeAllocationDisabled={changeAllocationDisabled}
         />
       </Container>
     </Modal>

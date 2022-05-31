@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Button, P } from "abacus-ui"
 import { useUserAllocations } from "@state/allocations/hooks"
+import { VeAllocation } from "@sections/Ve/models"
 import { ColumnContainer, Heading } from "../../YourAllocations.styled"
 import { SectionContainer, SectionHeader } from "../AllocationModal.styled"
 import { Allocation } from "../../Allocation"
@@ -9,9 +10,10 @@ import { UserState } from "../AllocationModal"
 
 type YourAllocationsProps = {
   userState: UserState
-  allocationToChange: string
-  setAllocationToChange: React.Dispatch<string>
-  newAllocation: string
+  allocationToChange: VeAllocation
+  setAllocationToChange: React.Dispatch<VeAllocation>
+  changeAllocation: () => void
+  changeAllocationDisabled: boolean
 }
 
 const SaveChanges = styled.div`
@@ -28,7 +30,8 @@ const YourAllocations = ({
   userState,
   setAllocationToChange,
   allocationToChange,
-  newAllocation,
+  changeAllocation,
+  changeAllocationDisabled,
 }: YourAllocationsProps) => {
   const editMode = userState === UserState.WRITE
   const allocations = useUserAllocations()
@@ -40,11 +43,10 @@ const YourAllocations = ({
         <Heading span={2}>Amount</Heading>
         {allocations.map((allocation) => {
           const hasSelectedAllocation = Boolean(allocationToChange)
-          const isSelectedAllocation = allocation.address === allocationToChange
+          const isSelectedAllocation =
+            allocation.address === allocationToChange?.address
           const action = () =>
-            setAllocationToChange(
-              hasSelectedAllocation ? null : allocation.address
-            )
+            setAllocationToChange(hasSelectedAllocation ? null : allocation)
           return (
             <Allocation
               key={allocation.address}
@@ -59,8 +61,13 @@ const YourAllocations = ({
       </ColumnContainer>
       {editMode && (
         <SaveChanges>
-          <Button disabled={!newAllocation}>Save Changes</Button>
-          {!newAllocation && (
+          <Button
+            disabled={changeAllocationDisabled}
+            onClick={changeAllocation}
+          >
+            Save Changes
+          </Button>
+          {changeAllocationDisabled && (
             <P>
               Select collection on the left or input custom address to change
               allocation

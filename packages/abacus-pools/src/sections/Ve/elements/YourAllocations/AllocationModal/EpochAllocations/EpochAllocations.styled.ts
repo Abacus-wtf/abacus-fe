@@ -14,6 +14,7 @@ export const TR = styled.tr`
   grid-template-columns: 27px 1fr 1fr 0.2fr;
   align-items: center;
   column-gap: 12px;
+  position: relative;
 
   ${Media.md`
     column-gap: 24px;

@@ -234,6 +234,7 @@ export const useGeneralizedContractCall = () => {
             </>
           )
 
+          console.log("txError", error)
           setTxError((error?.data?.message || error?.error?.message) ?? null)
           dispatch(setGeneralizedContractErrorMessage(ErrorMessage))
         })

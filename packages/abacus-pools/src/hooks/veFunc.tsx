@@ -185,9 +185,11 @@ export const useOnChangeAllocation = () => {
         library,
         account
       )
-      const method = veContract.changeAllocationTarget
-      const estimate = veContract.estimateGas.changeAllocationTarget
-      const args = [currentCollection, newCollection, parseEther(`${amount}`)]
+      const method = veContract.changeAllocation
+      const estimate = veContract.estimateGas.changeAllocation
+      const parsedAmount = parseEther(`${amount}`).toString()
+      const args = [currentCollection, newCollection, parsedAmount]
+
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {

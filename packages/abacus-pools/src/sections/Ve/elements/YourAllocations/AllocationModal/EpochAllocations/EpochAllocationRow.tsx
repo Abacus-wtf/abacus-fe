@@ -19,6 +19,7 @@ const StyledCheckbox = styled(Checkbox)`
   height: 27px;
   padding: 0;
   border-radius: 50%;
+  position: initial;
   background-color: ${({ theme, checked }) =>
     checked ? theme.colors.utility.green : theme.colors.utility.gray};
 
@@ -29,6 +30,16 @@ const StyledCheckbox = styled(Checkbox)`
     height: 100%;
     width: 100%;
     padding: 4px;
+    position: initial;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
   }
 `
 

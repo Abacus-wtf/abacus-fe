@@ -74,18 +74,22 @@ export const useFetchUserAllocations = () => {
       api_key: OPENSEA_API_KEY,
     })
 
-    const allocations: VeAllocation[] = user.allocations.map((allocation) => {
-      const asset = matchOpenSeaAssetToNFT(assets, {
-        nftAddress: allocation.collection,
-        tokenId: "1",
+    const allocations: VeAllocation[] = user.allocations
+      .filter((allocation) =>
+        BigNumber.from(allocation.amount).gt(BigNumber.from("0"))
+      )
+      .map((allocation) => {
+        const asset = matchOpenSeaAssetToNFT(assets, {
+          nftAddress: allocation.collection,
+          tokenId: "1",
+        })
+        return {
+          name: asset.collection.name,
+          imgSrc: asset.image_url,
+          address: allocation.collection,
+          amount: BigNumber.from(allocation.amount),
+        }
       })
-      return {
-        name: asset.collection.name,
-        imgSrc: asset.image_url,
-        address: allocation.collection,
-        amount: BigNumber.from(allocation.amount),
-      }
-    })
 
     dispatch(setUserAllocations(allocations))
   }, [account, dispatch, currentEpoch])
@@ -120,8 +124,11 @@ export const useFetchEpochAllocations = () => {
       url: OPENSEA_LINK,
       api_key: OPENSEA_API_KEY,
     })
-    const nextAllocations: VeAllocation[] = epochAllocations.map(
-      (allocation) => {
+    const nextAllocations: VeAllocation[] = epochAllocations
+      .filter((allocation) =>
+        BigNumber.from(allocation.amount).gt(BigNumber.from("0"))
+      )
+      .map((allocation) => {
         const asset = matchOpenSeaAssetToNFT(assets, {
           nftAddress: allocation.collection,
           tokenId: "1",
@@ -132,8 +139,7 @@ export const useFetchEpochAllocations = () => {
           address: allocation.collection,
           amount: BigNumber.from(allocation.amount),
         }
-      }
-    )
+      })
     dispatch(setEpochAllocations(nextAllocations))
   }, [dispatch, currentEpoch])
 

@@ -36,9 +36,9 @@ const EpochAllocations = ({
   const epochAllocatons = useEpochAllocations()
   const epochAllocationAggregate = useEpochAllocationAggregate()
 
-  const allocations = epochAllocatons.map((allocation, i) => ({
+  const allocations = epochAllocatons.map((allocation) => ({
     ...allocation,
-    address: `${allocation.address}${i}`,
+    address: allocation.address,
     percent: (
       parseFloat(
         BigNumber.from(allocation.amount)
@@ -54,6 +54,7 @@ const EpochAllocations = ({
   useEffect(() => {
     setNewAllocation(selectedAllocation || customAddress)
   }, [customAddress, selectedAllocation, setNewAllocation])
+
   return (
     <SectionContainer>
       <SectionHeader>Epoch Allocations</SectionHeader>

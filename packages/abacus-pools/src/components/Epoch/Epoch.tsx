@@ -36,7 +36,7 @@ const Epoch = ({ epochs, epoch, setEpoch, endTime }: EpochProps) => {
       <StyledInfoBarItem>
         <InfoBarTitle>Epoch Ending In</InfoBarTitle>
         <StyledInfoBarContent>
-          <Countdown endTime={endTime} key={`${epoch}`} />
+          {endTime && <Countdown endTime={endTime} key={`${epoch}`} />}
         </StyledInfoBarContent>
       </StyledInfoBarItem>
       <StyledInfoBarItem>

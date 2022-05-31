@@ -7,7 +7,7 @@ import {
   StyledSection,
   StyledInfoBarContent,
   StyledInfoBarItem,
-} from "../../Claim.styles"
+} from "../../sections/Claim/Claim.styles"
 
 type EpochProps = {
   epoch: number

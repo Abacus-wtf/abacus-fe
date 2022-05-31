@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Epoch } from "./Epoch"
+import { Epoch } from "../../../../components/Epoch/Epoch"
 import { Emissions } from "./Emissions"
 import { useCreditsData } from "./useCreditsData"
 

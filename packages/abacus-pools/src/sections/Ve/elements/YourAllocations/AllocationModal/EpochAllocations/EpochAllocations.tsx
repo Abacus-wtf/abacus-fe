@@ -3,7 +3,7 @@ import {
   useEpochAllocations,
 } from "@state/allocations/hooks"
 import { Button, ButtonType, Input } from "abacus-ui"
-import { BigNumber } from "ethers"
+import { formatEther } from "ethers/lib/utils"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { UserState } from "../AllocationModal"
@@ -36,20 +36,20 @@ const EpochAllocations = ({
   const epochAllocatons = useEpochAllocations()
   const epochAllocationAggregate = useEpochAllocationAggregate()
 
-  const allocations = epochAllocatons.map((allocation) => ({
-    ...allocation,
-    address: allocation.address,
-    percent: (
-      parseFloat(
-        BigNumber.from(allocation.amount)
-          .div(BigNumber.from(epochAllocationAggregate?.amount ?? "1"))
-          .toString()
-      ) * 100
-    ).toLocaleString("en-US", {
-      maximumSignificantDigits: 2,
-      minimumSignificantDigits: 2,
-    }),
-  }))
+  const allocations = epochAllocatons.map((allocation) => {
+    const aggregate = Number(
+      formatEther(epochAllocationAggregate?.amount ?? "1")
+    )
+    const amount = Number(formatEther(allocation.amount))
+    return {
+      ...allocation,
+      address: allocation.address,
+      percent: ((amount / aggregate) * 100).toLocaleString("en-US", {
+        maximumSignificantDigits: 2,
+        minimumSignificantDigits: 2,
+      }),
+    }
+  })
 
   useEffect(() => {
     setNewAllocation(selectedAllocation || customAddress)

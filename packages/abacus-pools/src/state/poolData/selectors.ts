@@ -8,7 +8,7 @@ export const poolSelector = createSelector(
   (pools: AppState["poolData"]["pools"], vaultId: string) => {
     // eslint-disable-next-line no-underscore-dangle
     const _pools = pools ?? []
-    console.log(_pools)
+
     return _pools.find((pool) => pool.vaultAddress === vaultId)
   }
 )

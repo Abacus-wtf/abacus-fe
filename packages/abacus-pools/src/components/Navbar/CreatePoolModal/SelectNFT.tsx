@@ -21,10 +21,11 @@ const SelectNFT: FunctionComponent<SelectNFTProps> = ({
   const [error, setError] = useState(null)
   const selectNft = async () => {
     setError(null)
-    const addressIndex = nftAddress.indexOf("assets/") + "assets/".length
-    const tokenIndex = addressIndex + 43
-    const address = nftAddress.slice(addressIndex, tokenIndex - 1)
-    const tokenId = nftAddress.slice(tokenIndex, nftAddress.length)
+    const url = new URL(nftAddress)
+    const splitPath = url.pathname.split("/")
+
+    const address = splitPath[splitPath.length - 2]
+    const tokenId = splitPath[splitPath.length - 1]
 
     try {
       const os = (await openseaGet(

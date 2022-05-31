@@ -5,6 +5,7 @@ import { useOnCreatePool } from "@hooks/createPool"
 import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
 import { ABC_FACTORY } from "@config/constants"
 import { useWeb3Contract } from "@hooks/index"
+import { LoadingOverlay } from "@components/LoadingOverlay"
 import {
   StyledButton,
   StyledInput,
@@ -63,6 +64,7 @@ const Details: FunctionComponent<DetailsProps> = ({
 
   return (
     <>
+      <LoadingOverlay loading={isPending} />
       <Title>Start a new Pool</Title>
       <ImageContainer>
         <NFTImage src={imgSrc} alt="NFT for Spot Pool" />

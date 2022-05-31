@@ -19,7 +19,7 @@ import {
 } from "@state/allocations/hooks"
 import { map, range } from "lodash"
 import { useCurrentEpoch } from "@state/application/hooks"
-import ABC_EPOCH_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
+import EPOCH_VAULT_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
 import VE_ABC_ABI from "../../config/contracts/VE_ABC_TOKEN_ABI.json"
 import ABC_ABI from "../../config/contracts/ABC_TOKEN_ABI.json"
 
@@ -52,7 +52,7 @@ const useVeData = () => {
 
   const veAbcCall = useMultiCall(VE_ABC_ABI)
   const abcCall = useWeb3Contract(ABC_ABI)
-  const epochMulti = useMultiCall(ABC_EPOCH_ABI)
+  const epochVault = useMultiCall(EPOCH_VAULT_ABI)
   // const { onAddTokens, isPending: isPendingAddTokens } = useOnAddTokens()
   // const { onLockTokens, isPending: isPendingLockTokens } = useOnLockTokens()
   // const { onUnlockTokens, isPending: isPendingUnlockTokens } =
@@ -138,15 +138,17 @@ const useVeData = () => {
 
   useEffect(() => {
     const getEndTime = async () => {
-      const [getEpochEndTime] = await epochMulti(
-        ABC_EPOCH,
-        ["getEpochEndTime"],
-        [[epoch]]
-      )
-      setEpochEndTime(BigNumber.from(getEpochEndTime[0]).toNumber() * 1000)
+      if (epoch && account) {
+        const [getEpochEndTime] = await epochVault(
+          ABC_EPOCH,
+          ["getEpochEndTime"],
+          [[epoch]]
+        )
+        setEpochEndTime(BigNumber.from(getEpochEndTime[0]).toNumber() * 1000)
+      }
     }
     getEndTime()
-  }, [epoch, epochMulti])
+  }, [epoch, epochVault, account])
 
   const epochs = useMemo(
     () => map(range(0, Number(currentEpoch) + 11), (i) => `#${i}`),

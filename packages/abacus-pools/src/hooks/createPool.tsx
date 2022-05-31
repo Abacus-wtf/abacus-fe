@@ -65,7 +65,7 @@ export const useOnCreatePool = () => {
       )
       const method = factoryContract.createVault
       const estimate = factoryContract.estimateGas.createVault
-      const args = [poolName, poolSymbol, nftAddress, tokenId]
+      const args = [nftAddress, tokenId]
       console.log(args)
       const value = null
       const txnCb = async (response: any) => {

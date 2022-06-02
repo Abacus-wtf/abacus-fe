@@ -37,6 +37,8 @@ const CloseButton = styled(Button)`
   padding: 8px;
   right: 0;
   top: 0;
+  width: 50px;
+  height: 50px;
 `
 
 const StyledPersistentBanner = styled(PersistentBanner)`
@@ -73,7 +75,7 @@ const GeneralizedContractError: FunctionComponent = () => {
     <StyledPersistentBanner type="error">
       <Container>
         <CloseButton buttonType={ButtonType.Clear} onClick={dismiss}>
-          <Close stroke="#FFF" />
+          <Close fill="#FFF" />
           <VisuallyHidden>Close Error Banner</VisuallyHidden>
         </CloseButton>
         <Message>{txError}</Message>

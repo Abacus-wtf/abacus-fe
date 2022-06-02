@@ -214,29 +214,38 @@ export const useGeneralizedContractCall = () => {
           })
         )
         .catch((error) => {
-          const ErrorMessage = (
-            <>
-              <ErrorMessageLabel>
-                The transaction was reverted.
-              </ErrorMessageLabel>
-              <div>
-                <p>
-                  You may not have enough ABC or ETH to complete this
-                  transaction.
-                </p>{" "}
-                {error?.data?.message ? (
-                  <p>
-                    The error message from MetaMask was: "
-                    <i>{error.data.message}</i>"
-                  </p>
-                ) : null}
-              </div>
-            </>
-          )
-
-          console.log("txError", error)
           setTxError((error?.data?.message || error?.error?.message) ?? null)
-          dispatch(setGeneralizedContractErrorMessage(ErrorMessage))
+          if (error.code === 4001) {
+            const CancelledMessage = (
+              <>
+                <ErrorMessageLabel>
+                  You rejected the transaction.
+                </ErrorMessageLabel>
+              </>
+            )
+            dispatch(setGeneralizedContractErrorMessage(CancelledMessage))
+          } else {
+            const ErrorMessage = (
+              <>
+                <ErrorMessageLabel>
+                  The transaction was reverted.
+                </ErrorMessageLabel>
+                <div>
+                  <p>
+                    You may not have enough ABC or ETH to complete this
+                    transaction.
+                  </p>{" "}
+                  {error?.data?.message ? (
+                    <p>
+                      The error message from MetaMask was: "
+                      <i>{error.data.message}</i>"
+                    </p>
+                  ) : null}
+                </div>
+              </>
+            )
+            dispatch(setGeneralizedContractErrorMessage(ErrorMessage))
+          }
         })
     },
     [account, chainId, dispatch, library, toggleWalletModal]

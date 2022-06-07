@@ -13,8 +13,8 @@ export const Container = styled.div`
   max-width: 1120px;
   grid-gap: 32px;
   width: 100%;
-  padding-top: 50px;
   padding: 0px 16px;
+  padding-top: 24px;
   padding-bottom: 100px;
   box-sizing: border-box;
 

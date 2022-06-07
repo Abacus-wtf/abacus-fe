@@ -220,7 +220,10 @@ const Navbar = ({ pathname }: NavbarProps) => {
 
             <ProfileButton
               buttonType={ButtonType.Clear}
-              onClick={openWeb3Modal}
+              onClick={() => {
+                setMenuOpen(false)
+                openWeb3Modal()
+              }}
             >
               <ProfileIcon src={iconSource} />
               <Kilo>{account ? shortenAddress(account) : "Connect"}</Kilo>

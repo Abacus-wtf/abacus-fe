@@ -7,9 +7,10 @@ import {
   Logo,
   Kilo,
   Tera,
-  Dropdown,
+  Hamburger,
   Media,
   ProfileIcon,
+  Close,
 } from "abacus-ui"
 import { Link } from "gatsby"
 import { useActiveWeb3React } from "@hooks/index"
@@ -18,18 +19,31 @@ import { getUserIcon } from "@utils"
 import { useAbcBalance, useToggleWalletModal } from "@state/application/hooks"
 import { CreatePoolModal } from "./CreatePoolModal"
 
+const PurpleBox = styled.div`
+  display: flex;
+  width: 100%;
+  height: 64px;
+  background-color: #8181ff;
+
+  ${Media.md`
+    display: none;
+  `}
+`
+
 const Container = styled.nav<{ menuOpen: boolean }>`
   display: flex;
-  padding: 16px;
-  width: 100%;
-  margin: 0 auto;
+  padding: 8px 16px;
   max-width: 1120px;
+  background-color: ${({ theme }) => theme.colors.utility.white};
 
   ${Media.md`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 28px 100px;
+    background-color: transparent;
+    margin: 0 auto;
+    gap: 40px;
   `}
 
   ${Media.lg`
@@ -40,9 +54,9 @@ const Container = styled.nav<{ menuOpen: boolean }>`
     menuOpen &&
     css`
       flex-direction: column;
-      background: ${theme.colors.core.background};
+      background: ${theme.colors.utility.white};
       position: fixed;
-      top: 0;
+      top: 64px;
       left: 0;
       right: 0;
       bottom: 0;
@@ -56,14 +70,29 @@ const Container = styled.nav<{ menuOpen: boolean }>`
     `}
 `
 
-const SideContainer = styled.div<{ isOptions?: boolean; menuOpen?: boolean }>`
+const TitleContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 100%;
+  justify-content: space-between;
 
-  ${({ isOptions, menuOpen }) =>
-    isOptions &&
+  ${Media.md`
+    width: max-content;
+  `}
+`
+
+const MenuContainer = styled.div<{ menuOpen?: boolean }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1 0 auto;
+  justify-content: space-between;
+  gap: 24px;
+
+  ${({ menuOpen }) =>
     css`
+      height: 100%;
       display: ${menuOpen ? "flex" : "none"};
       flex-direction: column;
       justify-content: center;
@@ -74,14 +103,26 @@ const SideContainer = styled.div<{ isOptions?: boolean; menuOpen?: boolean }>`
     display: flex;
     position: inherit;
     flex-direction: row;
-    flex: 0 0 auto;
+    flex: 1 0 auto;
+    justify-content: space-between;
   `}
 `
 
-const Divider = styled.div`
-  background: rgba(0, 0, 0, 0.2);
-  width: 1px;
-  height: 38px;
+const MenuSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 24px;
+
+  ${Media.md`
+    width: max-content;
+    flex-direction: row;
+  `}
+
+  &:last-of-type {
+    gap: 32px;
+  }
 `
 
 const DropdownButton = styled(Button)<{ menuOpen: boolean }>`
@@ -90,10 +131,6 @@ const DropdownButton = styled(Button)<{ menuOpen: boolean }>`
   display: flex;
   align-items: center;
   padding: 0 10px;
-  transition: transform 0.25s linear;
-
-  transform: ${({ menuOpen }) =>
-    menuOpen ? "rotateZ(-180deg)" : "rotateZ(0)"};
 
   ${Media.md`
     display: none;
@@ -106,7 +143,7 @@ const StyledLink = styled(Link)<{ highlight?: boolean }>`
   text-decoration-color: #8673ff;
   text-decoration-thickness: 1px;
   text-underline-offset: 8px;
-  line-height: 1.3;
+
   align-items: center;
   color: ${({ theme }) => theme.colors.core.primary};
   gap: 6px;
@@ -140,54 +177,68 @@ const Navbar = ({ pathname }: NavbarProps) => {
   const iconSource = getUserIcon(account)
 
   return (
-    <Container menuOpen={menuOpen}>
-      <SideContainer style={{ gridGap: 24 }} menuOpen={menuOpen}>
-        <StyledLink to="/">
-          <Logo />
-          <Divider />
-          <Tera>Spot</Tera>
-        </StyledLink>
-        <DropdownButton
-          menuOpen={menuOpen}
-          buttonType={ButtonType.Clear}
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          <Dropdown />
-          <VisuallyHidden>Dropdown</VisuallyHidden>
-        </DropdownButton>
-        <StyledLink highlight={pathname === "/ve"} to="/ve">
-          <Tera style={{ fontWeight: 300 }}>Ve</Tera>
-        </StyledLink>
-      </SideContainer>
-      <SideContainer style={{ gridGap: 32 }} isOptions menuOpen={menuOpen}>
-        <StyledLink to="/claim">
-          <Kilo>
-            {abcBalance
-              ? abcBalance.toLocaleString("en-us", {
-                  maximumSignificantDigits: 8,
-                  minimumSignificantDigits: 2,
-                })
-              : "..."}{" "}
-            ABC
-          </Kilo>
-        </StyledLink>
+    <>
+      <PurpleBox />
+      <Container menuOpen={menuOpen}>
+        <TitleContainer>
+          <StyledLink to="/">
+            <Logo />
+          </StyledLink>
+          <DropdownButton
+            menuOpen={menuOpen}
+            buttonType={ButtonType.Clear}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? <Close /> : <Hamburger />}
+            <VisuallyHidden>
+              {menuOpen ? "Close Menu" : "Open Menu"}
+            </VisuallyHidden>
+          </DropdownButton>
+        </TitleContainer>
+        <MenuContainer menuOpen={menuOpen}>
+          <MenuSection>
+            <StyledLink highlight={pathname === "/"} to="/">
+              <Tera style={{ fontWeight: 300 }}>Pools</Tera>
+            </StyledLink>
+            <StyledLink highlight={pathname === "/ve"} to="/ve">
+              <Tera style={{ fontWeight: 300 }}>Ve</Tera>
+            </StyledLink>
+          </MenuSection>
 
-        <ProfileButton buttonType={ButtonType.Clear} onClick={openWeb3Modal}>
-          <ProfileIcon src={iconSource} />
-          <Kilo>{account ? shortenAddress(account) : "Connect"}</Kilo>
-        </ProfileButton>
-        <Button
-          buttonType={ButtonType.Gray}
-          onClick={() => setCreateModalOpen(true)}
-        >
-          New Pool
-        </Button>
-      </SideContainer>
-      <CreatePoolModal
-        isOpen={createModalOpen}
-        closeModal={() => setCreateModalOpen(false)}
-      />
-    </Container>
+          <MenuSection>
+            <StyledLink highlight={pathname === "/claim"} to="/claim">
+              <Kilo>
+                {abcBalance
+                  ? abcBalance.toLocaleString("en-us", {
+                      maximumSignificantDigits: 8,
+                      minimumSignificantDigits: 2,
+                    })
+                  : "..."}{" "}
+                ABC
+              </Kilo>
+            </StyledLink>
+
+            <ProfileButton
+              buttonType={ButtonType.Clear}
+              onClick={openWeb3Modal}
+            >
+              <ProfileIcon src={iconSource} />
+              <Kilo>{account ? shortenAddress(account) : "Connect"}</Kilo>
+            </ProfileButton>
+            <Button
+              buttonType={ButtonType.Gray}
+              onClick={() => setCreateModalOpen(true)}
+            >
+              New Pool
+            </Button>
+          </MenuSection>
+        </MenuContainer>
+        <CreatePoolModal
+          isOpen={createModalOpen}
+          closeModal={() => setCreateModalOpen(false)}
+        />
+      </Container>
+    </>
   )
 }
 

@@ -12,3 +12,4 @@ export { default as Checkmark } from "./Checkmark";
 export * from "./Social";
 export * from "./OutboundLink";
 export * from "./DownChevron";
+export * from "./Hamburger";

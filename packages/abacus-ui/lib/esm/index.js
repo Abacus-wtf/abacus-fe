@@ -669,8 +669,8 @@ var Eth = function (_a) {
 };
 
 var Close = function (_a) {
-    var _b = _a.fill, fill = _b === void 0 ? "#1C2333" : _b;
-    return (React.createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 28 28" },
+    var _b = _a.fill, fill = _b === void 0 ? "#1C2333" : _b, _c = _a.size, size = _c === void 0 ? 18 : _c;
+    return (React.createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 28 28", height: size, width: size },
         React.createElement("path", { d: "M17.453 8.668 14 12.121l-3.454-3.453-1.88 1.88 3.454 3.453-3.454 3.454 1.88 1.88L14 15.88l3.453 3.454 1.88-1.88L15.88 14l3.453-3.453-1.88-1.88ZM14 .668A13.321 13.321 0 0 0 .667 14.001c0 7.374 5.96 13.334 13.333 13.334S27.333 21.375 27.333 14C27.333 6.628 21.373.668 14 .668Zm0 24c-5.88 0-10.667-4.787-10.667-10.667S8.12 3.335 14 3.335 24.666 8.12 24.666 14c0 5.88-4.786 10.667-10.666 10.667Z", fill: fill, fillOpacity: ".72" })));
 };
 
@@ -718,6 +718,12 @@ var DownChevron = function (_a) {
     var _b = _a.fill, fill = _b === void 0 ? "#323232" : _b, _c = _a.size, size = _c === void 0 ? 8 : _c;
     return (React.createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 8 6", width: size, height: size * 0.75 },
         React.createElement("path", { d: "M7.06.227 4 3.28.94.227l-.94.94 4 4 4-4-.94-.94Z", fill: fill })));
+};
+
+var Hamburger = function (_a) {
+    var _b = _a.fill, fill = _b === void 0 ? "#323232" : _b, _c = _a.size, size = _c === void 0 ? 18 : _c;
+    return (React.createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 18 12", width: size, height: size * (12 / 18) },
+        React.createElement("path", { d: "M0 11a1 1 0 0 0 1 1h16a1 1 0 1 0 0-2H1a1 1 0 0 0-1 1Zm0-5a1 1 0 0 0 1 1h16a1 1 0 1 0 0-2H1a1 1 0 0 0-1 1Zm1-6a1 1 0 0 0 0 2h16a1 1 0 1 0 0-2H1Z", fill: fill })));
 };
 
 // You probably want to change this to something semantic or abandon it all together
@@ -1394,5 +1400,5 @@ var PreviousSessionsAutoScroll = function (_a) {
 };
 var templateObject_1, templateObject_2;
 
-export { AbacusBalance, AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, Accordion, ActivitySection, Button, ButtonType, CardBackground, CardBar, CardWithTitle, Checkbox, Checkmark, ChevronLeft, Close, Discord, DownChevron, Dropdown, Eth as ETH, Container$F as Exa, ExploreImage, ExploreInfo, Extras, Flex, Font, FontImport, Container$E as Giga, Container$D as H1, Container$C as H2, Container$B as H3, Container$A as H4, Container$z as H5, StyledH6 as H6, Infographic, Input, StyledDiv as Kilo, LinkImage, Loader$1 as Loader, LoadingShimmer, Lock, Logo, Media, Medium, Container$y as Mega, Container$x as Milli, MiniList, OpenAppModal as Modal, Navbar, OutboundLink, StyledP as P, PartOfCollection, PersistentBanner, Container$w as Peta, PreviousSessionsAutoScroll, PriceHistory, ProfileGroup, ProfileIcon, ProfileInfo, ProgressBar, CustomLockDuration as Range, Section, Select, SessionCard, SessionCountdown, Container$v as Small, SocialLinks, SplitSection, StatInfo, Container$u as Tera, Twitter, VisuallyHidden, Container$t as Yotta, Container$s as Zetta, breakpoints, defaultTheme };
+export { AbacusBalance, AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, Accordion, ActivitySection, Button, ButtonType, CardBackground, CardBar, CardWithTitle, Checkbox, Checkmark, ChevronLeft, Close, Discord, DownChevron, Dropdown, Eth as ETH, Container$F as Exa, ExploreImage, ExploreInfo, Extras, Flex, Font, FontImport, Container$E as Giga, Container$D as H1, Container$C as H2, Container$B as H3, Container$A as H4, Container$z as H5, StyledH6 as H6, Hamburger, Infographic, Input, StyledDiv as Kilo, LinkImage, Loader$1 as Loader, LoadingShimmer, Lock, Logo, Media, Medium, Container$y as Mega, Container$x as Milli, MiniList, OpenAppModal as Modal, Navbar, OutboundLink, StyledP as P, PartOfCollection, PersistentBanner, Container$w as Peta, PreviousSessionsAutoScroll, PriceHistory, ProfileGroup, ProfileIcon, ProfileInfo, ProgressBar, CustomLockDuration as Range, Section, Select, SessionCard, SessionCountdown, Container$v as Small, SocialLinks, SplitSection, StatInfo, Container$u as Tera, Twitter, VisuallyHidden, Container$t as Yotta, Container$s as Zetta, breakpoints, defaultTheme };
 //# sourceMappingURL=index.js.map

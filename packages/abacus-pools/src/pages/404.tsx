@@ -1,12 +1,13 @@
 import NotFound from "@sections/NotFound"
 import React from "react"
-import SEO from "@components/SEO"
 
-const NotFoundPage = () => (
-  <>
-    <SEO title="Abacus Protocol | 404: Not Found" />
+import { PageProps } from "gatsby"
+import GlobalLayout from "@layouts/index"
+
+const NotFoundPage = ({ location }: PageProps) => (
+  <GlobalLayout location={location}>
     <NotFound />
-  </>
+  </GlobalLayout>
 )
 
 export default NotFoundPage

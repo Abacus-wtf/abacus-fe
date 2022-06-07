@@ -1,11 +1,18 @@
-import { Title } from "@components/global.styles"
+import { Font, H2, Mega } from "abacus-ui"
 import * as React from "react"
+import styled from "styled-components"
 import { Container } from "./styles"
+
+const Title = styled(H2)`
+  ${Font("tena")}
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.utility.blue};
+`
 
 const NotFound = () => (
   <Container>
-    <Title className="four-title">404</Title>
-    <Title className="four-not">Not Found</Title>
+    <Title>404</Title>
+    <Mega>Not Found</Mega>
   </Container>
 )
 

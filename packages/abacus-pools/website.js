@@ -1,11 +1,12 @@
 module.exports = {
   siteTitle: "Abacus Pools",
-  siteTitleAlt: "Abacus Pools - NFT Primitive", // Alternative Site title for SEO
+  siteTitleAlt: "Abacus Pools - NFT Valuation", // Alternative Site title for SEO
   siteTitleShort: "Abacus Pools", // short_name for manifest
   siteUrl: "https://app.abacus.wtf", // Domain of your site. No trailing slash!
   lang: "en", // Language Tag on <html> element
   pathPrefix: "/",
-  siteDescription: "NFT Primitive",
+  siteDescription:
+    "Abacus is a revolutionary NFT valutaion system combining optimistic rollups and proof of stake logic.",
   minibio: ``,
   author: "Abacus Team", // Author for schemaORGJSONLD
   organization: "AbacusWTF",

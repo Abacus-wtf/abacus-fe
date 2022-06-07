@@ -8,9 +8,6 @@ import {
   useGetTickets,
   useSetPoolData,
 } from "@state/singlePoolData/hooks"
-// import { PoolCard } from "@components/PoolCard"
-// import { formatEther } from "ethers/lib/utils"
-// import { BigNumber } from "ethers"
 import { NFTImage } from "@components/NFTImage"
 import { Container } from "../../layouts/styles"
 import { InfoBar } from "./InfoBar"
@@ -18,7 +15,6 @@ import { AuctionInfo } from "./AuctionInfo"
 import { EmptyState } from "./EmptyState"
 import MakeBid from "./MakeBid"
 import { BiddingHistory } from "./BiddingHistory"
-// import { CurrentState } from "./CurrentState"
 
 const GlobalStyle = createGlobalStyle<{ url: string }>`
 body {

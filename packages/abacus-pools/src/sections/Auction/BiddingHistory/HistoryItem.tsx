@@ -34,6 +34,7 @@ const InfoContainer = styled.div`
 
 const InfoRow = styled(Kilo)`
   display: flex;
+  flex-wrap: wrap;
 `
 
 const HistoryItem = ({

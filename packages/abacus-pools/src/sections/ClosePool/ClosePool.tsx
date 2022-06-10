@@ -51,11 +51,11 @@ const StyledPoolCard = styled(PoolCard)`
   height: min-content;
 `
 
-type PoolProps = {
+type ClosePoolProps = {
   location: PageProps["location"]
 }
 
-const Pool: FunctionComponent<PoolProps> = ({ location }) => {
+const ClosePool: FunctionComponent<ClosePoolProps> = ({ location }) => {
   const { address, tokenId, nonce } = queryString.parse(location.search)
   const { img, nftName, size, totalParticipants, vaultAddress } =
     useGetPoolData()
@@ -95,4 +95,4 @@ const Pool: FunctionComponent<PoolProps> = ({ location }) => {
   )
 }
 
-export default Pool
+export default ClosePool

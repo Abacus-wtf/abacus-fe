@@ -1,5 +1,5 @@
 import React from "react"
 
-const CreatePool = () => <></>
+const CreatePool = () => <>YOYOY</>
 
 export { CreatePool }

@@ -91,6 +91,7 @@ var defaultTheme = {
         utility: {
             green: "#23CE7C",
             purple: "#8673FF",
+            lightPurple: "#8181ff",
             blue: "#3E74FF",
             red: "#F33636",
             yellow: "#FFC93E",
@@ -117,7 +118,7 @@ var defaultTheme = {
         section: "0px 2px 32px rgba(0, 0, 0, 0.06)",
     },
     padding: {
-        main: "16px 24px",
+        main: "13px 20px",
     },
     transitionTime: {
         main: "0.3s",

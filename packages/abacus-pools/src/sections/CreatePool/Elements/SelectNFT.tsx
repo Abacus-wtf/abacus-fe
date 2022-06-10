@@ -2,21 +2,21 @@ import { NFTBasePool } from "@state/poolData/reducer"
 import React, { FunctionComponent, useState } from "react"
 import { OpenSeaAsset, openseaGet } from "@config/utils"
 import { InputError } from "@components/InputError"
-import { Title, StyledInput, StyledButton } from "./CreatePoolModal.styled"
-import { ModalState } from "./models"
+import { Title, StyledInput, StyledButton } from "../CreatePool.styled"
+import { CreatePoolState } from "../models"
 
 type SelectNFTProps = {
   nftAddress: string
   setNftAddress: React.Dispatch<React.SetStateAction<string>>
   setNewSesh: React.Dispatch<React.SetStateAction<NFTBasePool>>
-  setModalState: React.Dispatch<React.SetStateAction<ModalState>>
+  setCreatePoolState: React.Dispatch<React.SetStateAction<CreatePoolState>>
 }
 
 const SelectNFT: FunctionComponent<SelectNFTProps> = ({
   nftAddress,
   setNftAddress,
   setNewSesh,
-  setModalState,
+  setCreatePoolState,
 }) => {
   const [error, setError] = useState(null)
   const selectNft = async () => {
@@ -42,7 +42,7 @@ const SelectNFT: FunctionComponent<SelectNFTProps> = ({
         img: os.image_url,
         collectionTitle: os.collection.name,
       })
-      setModalState(ModalState.Details)
+      setCreatePoolState(CreatePoolState.Details)
     } catch (e) {
       setError("Invalid link")
     }

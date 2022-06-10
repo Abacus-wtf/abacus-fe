@@ -50,13 +50,7 @@ export const useOnCreatePool = () => {
   const addTransaction = useTransactionAdder()
 
   const onCreatePool = useCallback(
-    async (
-      nftAddress: string,
-      tokenId: string,
-      poolName: string,
-      poolSymbol: string,
-      cb: () => void
-    ) => {
+    async (nftAddress: string, tokenId: string, cb: () => void) => {
       const factoryContract = getContract(
         ABC_FACTORY,
         FACTORY_ABI,

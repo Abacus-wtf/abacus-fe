@@ -1,4 +1,4 @@
-export enum ModalState {
+export enum CreatePoolState {
   SelectNFT,
   Details,
   Complete,

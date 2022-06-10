@@ -6,13 +6,8 @@ import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
 import { ABC_FACTORY } from "@config/constants"
 import { useWeb3Contract } from "@hooks/index"
 import { LoadingOverlay } from "@components/LoadingOverlay"
-import {
-  StyledButton,
-  StyledInput,
-  ImageContainer,
-  Title,
-} from "./CreatePoolModal.styled"
-import { ModalState } from "./models"
+import { StyledButton, ImageContainer, Title } from "../CreatePool.styled"
+import { CreatePoolState } from "../models"
 
 const ModalError = styled.div`
   display: flex;
@@ -30,12 +25,8 @@ type DetailsProps = {
   imgSrc: string
   address: string
   tokenId: string
-  setModalState: React.Dispatch<React.SetStateAction<ModalState>>
+  setCreatePoolState: React.Dispatch<React.SetStateAction<CreatePoolState>>
   setCurrentNonce: React.Dispatch<React.SetStateAction<number>>
-  tokenName: string
-  setTokenName: React.Dispatch<React.SetStateAction<string>>
-  tokenSymbol: string
-  setTokenSymbol: React.Dispatch<React.SetStateAction<string>>
 }
 
 const Details: FunctionComponent<DetailsProps> = ({
@@ -43,11 +34,7 @@ const Details: FunctionComponent<DetailsProps> = ({
   address,
   tokenId,
   setCurrentNonce,
-  tokenName,
-  setTokenName,
-  tokenSymbol,
-  setTokenSymbol,
-  setModalState,
+  setCreatePoolState,
 }) => {
   const { onCreatePool, txError, isPending } = useOnCreatePool()
   const factory = useWeb3Contract(FACTORY_ABI)
@@ -57,8 +44,8 @@ const Details: FunctionComponent<DetailsProps> = ({
       .methods.nextVaultIndex(address, tokenId)
       .call()
     setCurrentNonce(nonce)
-    await onCreatePool(address, tokenId, tokenName, tokenSymbol, () => {
-      setModalState(ModalState.Complete)
+    await onCreatePool(address, tokenId, () => {
+      setCreatePoolState(CreatePoolState.Complete)
     })
   }
 
@@ -69,22 +56,6 @@ const Details: FunctionComponent<DetailsProps> = ({
       <ImageContainer>
         <NFTImage src={imgSrc} alt="NFT for Spot Pool" />
       </ImageContainer>
-      <StyledInput
-        label="Pool Token Name"
-        name="poolTokenName"
-        placeholder="BAYC Vault"
-        type="text"
-        value={tokenName}
-        onChange={setTokenName}
-      />
-      <StyledInput
-        label="Pool Token Symbol"
-        name="poolTokenSymbol"
-        placeholder="BAYC"
-        type="text"
-        value={tokenSymbol}
-        onChange={setTokenSymbol}
-      />
       <StyledButton onClick={createPool} disabled={isPending}>
         {isPending ? "Creating Pool..." : "Create Pool"}
       </StyledButton>

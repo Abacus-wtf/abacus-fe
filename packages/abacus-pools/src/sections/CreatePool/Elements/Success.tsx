@@ -4,7 +4,7 @@ import { NFTImage } from "@components/NFTImage"
 import { Mega, Kilo } from "abacus-ui"
 import { Link } from "gatsby"
 import { shortenAddress } from "@config/utils"
-import { StyledButton, Title } from "./CreatePoolModal.styled"
+import { StyledButton, Title } from "../CreatePool.styled"
 
 const Container = styled.div`
   position: relative;
@@ -36,7 +36,7 @@ const CardInfoRow = styled.div`
 
 type SuccessProps = {
   imgSrc: string
-  poolName: string
+
   link: string
   openSeaLink: string
   collection: string
@@ -46,7 +46,7 @@ type SuccessProps = {
 
 const Success: FunctionComponent<SuccessProps> = ({
   imgSrc,
-  poolName,
+
   openSeaLink,
   link,
   collection,
@@ -57,10 +57,6 @@ const Success: FunctionComponent<SuccessProps> = ({
     <Title>Vault Created!</Title>
     <NFTImage src={imgSrc} />
     <CardInfoRow>
-      <CardInfo>
-        <CardInfoContent>{poolName}</CardInfoContent>
-        <Kilo>Pool Name</Kilo>
-      </CardInfo>
       <CardInfo>
         <CardInfoContent>{collection}</CardInfoContent>
         <Kilo>Collection</Kilo>

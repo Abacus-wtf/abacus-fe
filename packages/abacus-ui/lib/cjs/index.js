@@ -739,6 +739,9 @@ var Hamburger = function (_a) {
         React__default["default"].createElement("path", { d: "M0 11a1 1 0 0 0 1 1h16a1 1 0 1 0 0-2H1a1 1 0 0 0-1 1Zm0-5a1 1 0 0 0 1 1h16a1 1 0 1 0 0-2H1a1 1 0 0 0-1 1Zm1-6a1 1 0 0 0 0 2h16a1 1 0 1 0 0-2H1Z", fill: fill })));
 };
 
+var Activity = function () { return (React__default["default"].createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
+    React__default["default"].createElement("path", { d: "M22 12h-4l-3 9L9 3l-3 9H2" }))); };
+
 // You probably want to change this to something semantic or abandon it all together
 var Container$l = styled__default["default"].div(templateObject_1$p || (templateObject_1$p = __makeTemplateObject(["\n  padding: 10px 20px;\n  border-radius: 56px;\n  border: 2px solid ", ";\n  display: flex;\n  grid-gap: 10px;\n  align-items: center;\n  width: fit-content;\n"], ["\n  padding: 10px 20px;\n  border-radius: 56px;\n  border: 2px solid ", ";\n  display: flex;\n  grid-gap: 10px;\n  align-items: center;\n  width: fit-content;\n"])), function (_a) {
     var theme = _a.theme;
@@ -1419,6 +1422,7 @@ exports.AbacusCrowdsIcon = AbacusCrowds;
 exports.AbacusIcon = Abacus;
 exports.AbacusSpotIcon = AbacusSpot;
 exports.Accordion = Accordion;
+exports.Activity = Activity;
 exports.ActivitySection = ActivitySection;
 exports.Button = Button;
 exports.CardBackground = CardBackground;

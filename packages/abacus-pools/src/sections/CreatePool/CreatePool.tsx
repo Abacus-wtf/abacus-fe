@@ -4,7 +4,10 @@ import { NFTBasePool } from "@state/poolData/reducer"
 
 import { Button, Media, Section, ButtonType } from "abacus-ui"
 import { useActiveWeb3React } from "@hooks/index"
-import { useToggleWalletModal } from "@state/application/hooks"
+import {
+  useSetIsSelectNetworkModalOpen,
+  useToggleWalletModal,
+} from "@state/application/hooks"
 import SelectNFT from "./Elements/SelectNFT"
 import { CreatePoolState } from "./models"
 import Details from "./Elements/Details"
@@ -53,6 +56,7 @@ export const CreatePool = () => {
   const [currentNonce, setCurrentNonce] = useState(0)
   const { account } = useActiveWeb3React()
   const openWeb3Modal = useToggleWalletModal()
+  const setIsSelectNetworkModalOpen = useSetIsSelectNetworkModalOpen()
 
   const content = useMemo(() => {
     switch (createPoolState) {
@@ -108,7 +112,12 @@ export const CreatePool = () => {
               Connect Wallet
             </Button>
           )}
-          <Button buttonType={ButtonType.Gray}>Switch Network</Button>
+          <Button
+            buttonType={ButtonType.Gray}
+            onClick={() => setIsSelectNetworkModalOpen(true)}
+          >
+            Switch Network
+          </Button>
         </ButtonContainer>
       </UpperContainer>
       <StyledSection complete={createPoolState === CreatePoolState.Complete}>

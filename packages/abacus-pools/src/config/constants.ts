@@ -100,11 +100,11 @@ export const NetworkInfoMap: NetworkInfo[] = [
     rpc: ETH_RPC,
     chainId: NETWORK_CHAIN_ID,
     symbol: "ETH",
-    network: IS_PRODUCTION ? "Ethereum Mainnet" : "Rinkeby Test Network",
-    logo: "ETH.svg",
+    network: IS_PRODUCTION ? "Ethereum Mainnet" : "Ropsten Test Network",
+    logo: "eth_logo.svg",
     blockExplorer: IS_PRODUCTION
       ? "https://etherscan.io/#/"
-      : "https://rinkeby.etherscan.io/#/",
+      : "https://ropsten.etherscan.io/#/",
   },
 ]
 

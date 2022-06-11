@@ -6,6 +6,9 @@ import { GeneralizedContractState } from "./reducer"
 export const toggleWalletModal = createAction<boolean>(
   "application/toggleWalletModal"
 )
+export const setSelectNetworkModalOpen = createAction<boolean>(
+  "application/setSelectNetworkModalOpen"
+)
 export const selectNetwork = createAction<NetworkSymbolEnum>(
   "application/selectNetwork"
 )

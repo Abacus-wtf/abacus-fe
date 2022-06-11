@@ -22,6 +22,7 @@ import {
   setGeneralizedContractErrorMessage,
   setAggregate,
   setCurrentEpoch,
+  setSelectNetworkModalOpen,
 } from "./actions"
 import {
   abcBalanceSelector,
@@ -30,6 +31,7 @@ import {
   generalizedContractErrorMessageSelector,
   networkSymbolSelector,
   currentEpochSelector,
+  selectNetworkModalOpen,
 } from "./selectors"
 import { GeneralizedContractState } from "./reducer"
 import ABC_EPOCH_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
@@ -173,3 +175,17 @@ export const useFetchCurrentEpoch = () => {
 }
 
 export const useCurrentEpoch = () => useSelector(currentEpochSelector)
+
+export const useIsSelectNetworkModalOpen = () =>
+  useSelector(selectNetworkModalOpen)
+
+export const useSetIsSelectNetworkModalOpen = () => {
+  const dispatch = useDispatch()
+
+  return useCallback(
+    (isOpen: boolean) => {
+      dispatch(setSelectNetworkModalOpen(isOpen))
+    },
+    [dispatch]
+  )
+}

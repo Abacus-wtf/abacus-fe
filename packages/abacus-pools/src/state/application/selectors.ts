@@ -25,3 +25,6 @@ export const aggregateSelector = (state: AppState) =>
 
 export const currentEpochSelector = (state: AppState) =>
   state.application.currentEpoch
+
+export const selectNetworkModalOpen = (state: AppState) =>
+  state.application.isSelectNetworkModalOpen

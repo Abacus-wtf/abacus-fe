@@ -2,17 +2,46 @@ import React, { useState, useMemo } from "react"
 import styled from "styled-components"
 import { NFTBasePool } from "@state/poolData/reducer"
 
-import { Media, Section } from "abacus-ui"
+import { Button, Media, Section, ButtonType } from "abacus-ui"
+import { useActiveWeb3React } from "@hooks/index"
+import { useToggleWalletModal } from "@state/application/hooks"
 import SelectNFT from "./Elements/SelectNFT"
 import { CreatePoolState } from "./models"
 import Details from "./Elements/Details"
 import Success from "./Elements/Success"
 
-const Container = styled(Section)<{ complete: boolean }>`
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+`
+
+const StyledSection = styled(Section)<{ complete: boolean }>`
   display: flex;
   flex-direction: column;
 
   ${({ complete }) => (complete ? "" : Media.sm`padding: 20px 76px;`)}
+`
+
+const UpperContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+`
+
+const NotConnectedWarning = styled.div`
+  padding: 16px;
+  background-color: ${({ theme }) => theme.colors.utility.yellow};
+  box-shadow: ${({ theme }) => theme.boxShadow.section};
+  border-radius: ${({ theme }) => theme.borderRadius.section};
+  max-width: 350px;
+`
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 16px;
 `
 
 export const CreatePool = () => {
@@ -22,6 +51,8 @@ export const CreatePool = () => {
   const [newSesh, setNewSesh] = useState<NFTBasePool | null>(null)
   const [nftAddress, setNftAddress] = useState("")
   const [currentNonce, setCurrentNonce] = useState(0)
+  const { account } = useActiveWeb3React()
+  const openWeb3Modal = useToggleWalletModal()
 
   const content = useMemo(() => {
     switch (createPoolState) {
@@ -61,8 +92,28 @@ export const CreatePool = () => {
   }, [createPoolState, nftAddress, newSesh, currentNonce])
 
   return (
-    <Container complete={createPoolState === CreatePoolState.Complete}>
-      {content}
+    <Container>
+      <UpperContainer>
+        {!account && (
+          <NotConnectedWarning>
+            Your wallet is currently not connected or on the incorrect network.
+          </NotConnectedWarning>
+        )}
+        <ButtonContainer>
+          {!account && (
+            <Button
+              buttonType={ButtonType.Gray}
+              onClick={() => openWeb3Modal()}
+            >
+              Connect Wallet
+            </Button>
+          )}
+          <Button buttonType={ButtonType.Gray}>Switch Network</Button>
+        </ButtonContainer>
+      </UpperContainer>
+      <StyledSection complete={createPoolState === CreatePoolState.Complete}>
+        {content}
+      </StyledSection>
     </Container>
   )
 }

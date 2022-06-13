@@ -9,14 +9,13 @@ import {
   useSetIsSelectNetworkModalOpen,
   useToggleWalletModal,
 } from "@state/application/hooks"
+import { Container as LayoutContainer } from "@layouts/styles"
 import { SelectNFT } from "./Elements/SelectNFT"
 import { CreatePoolState } from "./models"
 import Details from "./Elements/Details"
 import Success from "./Elements/Success"
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+const Container = styled(LayoutContainer)`
   align-items: center;
   gap: 40px;
 `
@@ -61,6 +60,7 @@ export const CreatePool = () => {
   const [createPoolState, setCreatePoolState] = useState(
     CreatePoolState.SelectNFT
   )
+  const [vaultAddress, setVaultAddress] = useState("")
   const [newSesh, setNewSesh] = useState<NFTBasePool[] | null>(null)
   const [nftAddresses, setNftAddresses] = useState<NewAddress[]>([
     { id: 0, value: "" },
@@ -85,9 +85,7 @@ export const CreatePool = () => {
       case CreatePoolState.Details:
         return (
           <Details
-            imgSrc={newSesh[0].img}
-            address={newSesh[0].address}
-            tokenId={newSesh[0].tokenId}
+            nfts={nftAddresses}
             setCurrentNonce={setCurrentNonce}
             setCreatePoolState={setCreatePoolState}
           />
@@ -95,18 +93,14 @@ export const CreatePool = () => {
       case CreatePoolState.Complete:
         return (
           <Success
-            imgSrc={newSesh[0].img}
-            openSeaLink={nftAddresses[0].value}
-            link={`/pool?address=${newSesh[0].address}&tokenId=${newSesh[0].tokenId}&nonce=${currentNonce}`}
-            collection={newSesh[0].collectionTitle}
-            tokenId={newSesh[0].tokenId}
-            address={newSesh[0].address}
+            link={`/pool/${vaultAddress}`} // TODO: Use vault ID for pool URL
+            nfts={nftAddresses}
           />
         )
       default:
         return null
     }
-  }, [createPoolState, nftAddresses, newSesh, currentNonce])
+  }, [createPoolState, nftAddresses, vaultAddress])
 
   return (
     <Container>

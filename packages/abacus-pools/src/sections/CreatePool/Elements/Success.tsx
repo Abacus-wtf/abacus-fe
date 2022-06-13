@@ -1,16 +1,17 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
-import { NFTImage } from "@components/NFTImage"
+import { NFTImage, NFTGrid } from "@components/index"
 import { Mega, Kilo } from "abacus-ui"
 import { Link } from "gatsby"
 import { shortenAddress } from "@config/utils"
+import { IS_PRODUCTION } from "@config/constants"
 import { StyledButton, Title } from "../CreatePool.styled"
+import { NewAddress } from "../CreatePool"
 
 const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  max-width: 350px;
 `
 
 const CardInfo = styled.div`
@@ -34,51 +35,54 @@ const CardInfoRow = styled.div`
   }
 `
 
-type SuccessProps = {
-  imgSrc: string
+const NFTWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
+type SuccessProps = {
   link: string
-  openSeaLink: string
-  collection: string
-  tokenId: string
-  address: string
+  nfts: NewAddress[]
 }
 
-const Success: FunctionComponent<SuccessProps> = ({
-  imgSrc,
-
-  openSeaLink,
-  link,
-  collection,
-  tokenId,
-  address,
-}) => (
+const Success: FunctionComponent<SuccessProps> = ({ link, nfts }) => (
   <Container>
     <Title>Vault Created!</Title>
-    <NFTImage src={imgSrc} />
-    <CardInfoRow>
-      <CardInfo>
-        <CardInfoContent>{collection}</CardInfoContent>
-        <Kilo>Collection</Kilo>
-      </CardInfo>
-    </CardInfoRow>
-    <CardInfoRow>
-      <CardInfo>
-        <CardInfoContent
-          as="a"
-          href={openSeaLink}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {shortenAddress(address)}
-        </CardInfoContent>
-        <Kilo>NFT Address</Kilo>
-      </CardInfo>
-      <CardInfo>
-        <CardInfoContent>{tokenId}</CardInfoContent>
-        <Kilo>Token ID</Kilo>
-      </CardInfo>
-    </CardInfoRow>
+    <NFTGrid size={nfts.length}>
+      {nfts.map((nft) => (
+        <NFTWrapper key={nft.address}>
+          <NFTImage src={nft.img} />
+          <CardInfoRow>
+            <CardInfo>
+              <CardInfoContent>{nft.collectionTitle}</CardInfoContent>
+              <Kilo>Collection</Kilo>
+            </CardInfo>
+          </CardInfoRow>
+          <CardInfoRow>
+            <CardInfo>
+              <CardInfoContent
+                as="a"
+                href={`https://${
+                  IS_PRODUCTION ? "" : "testnets."
+                }opensea.io/assets/${IS_PRODUCTION ? "" : "rinkeby/"}${
+                  nft.address
+                }/${nft.tokenId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {shortenAddress(nft.address)}
+              </CardInfoContent>
+              <Kilo>NFT Address</Kilo>
+            </CardInfo>
+            <CardInfo>
+              <CardInfoContent>{nft.tokenId}</CardInfoContent>
+              <Kilo>Token ID</Kilo>
+            </CardInfo>
+          </CardInfoRow>
+        </NFTWrapper>
+      ))}
+    </NFTGrid>
+
     <StyledButton as={Link} to={link}>
       Go To Pool
     </StyledButton>

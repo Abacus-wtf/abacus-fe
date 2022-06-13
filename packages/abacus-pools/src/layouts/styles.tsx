@@ -11,7 +11,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 1120px;
-  grid-gap: 32px;
+  gap: 32px;
   width: 100%;
   padding: 0px 16px;
   padding-top: 24px;

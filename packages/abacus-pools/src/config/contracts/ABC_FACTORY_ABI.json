@@ -1410,6 +1410,11 @@
   {
     "inputs": [
       {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
         "internalType": "address[]",
         "name": "_nft",
         "type": "address[]"
@@ -1440,6 +1445,11 @@
     ],
     "name": "multiAssetMapping",
     "outputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
       {
         "internalType": "address",
         "name": "pool",
@@ -1622,6 +1632,25 @@
     "name": "updatePendingReturns",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "name": "vaultNames",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

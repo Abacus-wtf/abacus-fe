@@ -1,11 +1,10 @@
-import { NFTBasePool } from "@state/poolData/reducer"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { Button, Checkbox, P, Add, ButtonType } from "abacus-ui"
 import { Link } from "gatsby"
 import styled from "styled-components"
 import { NewAddress } from "@sections/CreatePool/CreatePool"
-import { Title, StyledButton } from "../../CreatePool.styled"
+import { Title, StyledButton, StyledInput } from "../../CreatePool.styled"
 import { CreatePoolState } from "../../models"
 import { NFTInput } from "./NFTInput"
 
@@ -35,29 +34,39 @@ const AddNFTButton = styled(Button)`
 
 type SelectNFTProps = {
   nftAddresses: NewAddress[]
+  vaultName: string
+  setVaultName: React.Dispatch<string>
+  maxCollateralAmount: number
+  setMaxCollateralAmount: React.Dispatch<number>
   setNftAddresses: React.Dispatch<React.SetStateAction<NewAddress[]>>
-  setNewSesh: React.Dispatch<React.SetStateAction<NFTBasePool[]>>
   setCreatePoolState: React.Dispatch<React.SetStateAction<CreatePoolState>>
 }
 
 export const SelectNFT = ({
   nftAddresses,
   setNftAddresses,
-  setNewSesh,
+  vaultName,
+  setVaultName,
+  maxCollateralAmount,
+  setMaxCollateralAmount,
   setCreatePoolState,
 }: SelectNFTProps) => {
   const [multi, setMulti] = useState(false)
   const selectNft = () => {
-    setNewSesh(
-      nftAddresses.map((nftAddress) => ({
-        address: nftAddress.address,
-        tokenId: nftAddress.tokenId,
-        img: nftAddress.img,
-        collectionTitle: nftAddress.collectionTitle,
-      }))
-    )
     setCreatePoolState(CreatePoolState.Details)
   }
+
+  useEffect(() => {
+    if (!multi) {
+      setVaultName("")
+    }
+  }, [multi, setVaultName])
+
+  useEffect(() => {
+    if (maxCollateralAmount > nftAddresses.length) {
+      setMaxCollateralAmount(nftAddresses.length)
+    }
+  }, [maxCollateralAmount, nftAddresses.length, setMaxCollateralAmount])
 
   const selectDisabled = nftAddresses.some((nft) => !nft.address)
 
@@ -93,6 +102,29 @@ export const SelectNFT = ({
           />
         </RadioContainer>
       </PoolTypeContainer>
+      {multi && (
+        <StyledInput
+          type="text"
+          name="vault_name"
+          value={vaultName}
+          onChange={setVaultName}
+          label="Vault Name"
+          placeholder="Name of Vault (Must be unique)"
+        />
+      )}
+      {multi && (
+        <StyledInput
+          type="number"
+          step="1"
+          name="max_collateral_amount"
+          value={String(maxCollateralAmount)}
+          onChange={(value) => setMaxCollateralAmount(Number(value))}
+          label="Max Collateral Amount"
+          placeholder="1"
+          min={1}
+          max={nftAddresses.length}
+        />
+      )}
       {nftAddresses.map((address, index) => (
         <NFTInput
           key={address.id}

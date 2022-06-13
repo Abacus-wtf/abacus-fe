@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, useState } from "react"
 import styled from "styled-components"
 import { useOnCreatePool } from "@hooks/createPool"
-// import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
-// import { ABC_FACTORY } from "@config/constants"
-// import { useWeb3Contract } from "@hooks/index"
+import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
 import { NFTGrid, LoadingOverlay, NFTImage } from "@components/index"
+import { ABC_FACTORY } from "@config/constants"
+import { useWeb3Contract } from "@hooks/index"
 import { StyledButton, Title } from "../CreatePool.styled"
 import { CreatePoolState } from "../models"
 import { NewAddress } from "../CreatePool"
@@ -23,32 +23,66 @@ const ModalError = styled.div`
 
 type DetailsProps = {
   nfts: NewAddress[]
+  vaultName: string
+  maxCollateralAmount: number
   setCreatePoolState: React.Dispatch<React.SetStateAction<CreatePoolState>>
-  setCurrentNonce: React.Dispatch<React.SetStateAction<number>>
+  setVaultAddress: React.Dispatch<string>
 }
 
 const Details: FunctionComponent<DetailsProps> = ({
   nfts,
-  setCurrentNonce,
+  vaultName,
+  maxCollateralAmount,
   setCreatePoolState,
+  setVaultAddress,
 }) => {
-  const { txError, isPending } = useOnCreatePool()
-  // const factory = useWeb3Contract(FACTORY_ABI)
+  const [isFetchingVaultAddress, setIsFetchingVaultAddress] = useState(false)
+  const { onCreatePool, txError, isPending } = useOnCreatePool()
+  const factory = useWeb3Contract(FACTORY_ABI)
 
   const createPool = async () => {
-    // const nonce = await factory(ABC_FACTORY)
-    //   .methods.nextVaultIndex(address, tokenId)
-    //   .call()
-    // setCurrentNonce(nonce)
-    setCurrentNonce(0)
-    // await onCreatePool(address, tokenId, () => {
-    setCreatePoolState(CreatePoolState.Complete)
-    // })
+    const getVaultAddress = async () => {
+      setIsFetchingVaultAddress(true)
+      try {
+        const vaultAddress = await factory(ABC_FACTORY)
+          .methods.vaultNames(vaultName)
+          .call()
+        setVaultAddress(vaultAddress)
+      } finally {
+        setIsFetchingVaultAddress(false)
+      }
+      setCreatePoolState(CreatePoolState.Complete)
+    }
+
+    const INITIAL: { nftAddresses: string[]; tokenIds: string[] } = {
+      nftAddresses: [],
+      tokenIds: [],
+    }
+    const { nftAddresses, tokenIds } = nfts.reduce(
+      (acc, nft) => ({
+        nftAddresses: [...acc.nftAddresses, nft.address],
+        tokenIds: [...acc.tokenIds, nft.tokenId],
+      }),
+      INITIAL
+    )
+    const validatedVaultName =
+      vaultName || `${nfts[0].collectionTitle}#${nfts[0].tokenId}`
+    await onCreatePool(
+      validatedVaultName,
+      nftAddresses,
+      tokenIds,
+      maxCollateralAmount,
+      () => {
+        getVaultAddress()
+      }
+    )
   }
+
+  const loading = isPending || isFetchingVaultAddress
 
   return (
     <>
-      <LoadingOverlay loading={isPending} />
+      <LoadingOverlay loading={loading} />
       <Title>Start a new Pool</Title>
       <NFTGrid size={nfts.length}>
         {nfts.map((nft) => (
@@ -56,8 +90,8 @@ const Details: FunctionComponent<DetailsProps> = ({
         ))}
       </NFTGrid>
 
-      <StyledButton onClick={createPool} disabled={isPending}>
-        {isPending ? "Creating Pool..." : "Create Pool"}
+      <StyledButton onClick={createPool} disabled={loading}>
+        {loading ? "Creating Pool..." : "Create Pool"}
       </StyledButton>
       {txError && <ModalError>{txError}</ModalError>}
     </>

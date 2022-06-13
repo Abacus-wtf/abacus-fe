@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from "react"
 import styled from "styled-components"
-import { NFTBasePool } from "@state/poolData/reducer"
 
 import { Button, Media, Section, ButtonType } from "abacus-ui"
 import { useActiveWeb3React } from "@hooks/index"
@@ -61,13 +60,13 @@ export const CreatePool = () => {
     CreatePoolState.SelectNFT
   )
   const [vaultAddress, setVaultAddress] = useState("")
-  const [newSesh, setNewSesh] = useState<NFTBasePool[] | null>(null)
+  const [vaultName, setVaultName] = useState("")
+  const [maxCollateralAmount, setMaxCollateralAmount] = useState(1)
   const [nftAddresses, setNftAddresses] = useState<NewAddress[]>([
     { id: 0, value: "" },
   ])
-  const [currentNonce, setCurrentNonce] = useState(0)
   const { account, chainId } = useActiveWeb3React()
-  const isCorrectChain = IS_PRODUCTION ? chainId === 1 : chainId === 3
+  const isCorrectChain = IS_PRODUCTION ? chainId === 1 : chainId === 4
   const openWeb3Modal = useToggleWalletModal()
   const setIsSelectNetworkModalOpen = useSetIsSelectNetworkModalOpen()
 
@@ -76,7 +75,10 @@ export const CreatePool = () => {
       case CreatePoolState.SelectNFT:
         return (
           <SelectNFT
-            setNewSesh={setNewSesh}
+            vaultName={vaultName}
+            setVaultName={setVaultName}
+            maxCollateralAmount={maxCollateralAmount}
+            setMaxCollateralAmount={setMaxCollateralAmount}
             setCreatePoolState={setCreatePoolState}
             nftAddresses={nftAddresses}
             setNftAddresses={setNftAddresses}
@@ -86,8 +88,10 @@ export const CreatePool = () => {
         return (
           <Details
             nfts={nftAddresses}
-            setCurrentNonce={setCurrentNonce}
+            vaultName={vaultName}
+            maxCollateralAmount={maxCollateralAmount}
             setCreatePoolState={setCreatePoolState}
+            setVaultAddress={setVaultAddress}
           />
         )
       case CreatePoolState.Complete:
@@ -100,7 +104,13 @@ export const CreatePool = () => {
       default:
         return null
     }
-  }, [createPoolState, nftAddresses, vaultAddress])
+  }, [
+    createPoolState,
+    maxCollateralAmount,
+    nftAddresses,
+    vaultAddress,
+    vaultName,
+  ])
 
   return (
     <Container>

@@ -50,16 +50,22 @@ export const useOnCreatePool = () => {
   const addTransaction = useTransactionAdder()
 
   const onCreatePool = useCallback(
-    async (nftAddress: string, tokenId: string, cb: () => void) => {
+    async (
+      vaultName: string,
+      nftAddresses: string[],
+      tokenIds: string[],
+      maxCollateralAmount: number,
+      cb: () => void
+    ) => {
       const factoryContract = getContract(
         ABC_FACTORY,
         FACTORY_ABI,
         library,
         account
       )
-      const method = factoryContract.createVault
-      const estimate = factoryContract.estimateGas.createVault
-      const args = [nftAddress, tokenId]
+      const method = factoryContract.initiateMultiAssetVault
+      const estimate = factoryContract.estimateGas.initiateMultiAssetVault
+      const args = [vaultName, nftAddresses, tokenIds, maxCollateralAmount]
       console.log(args)
       const value = null
       const txnCb = async (response: any) => {

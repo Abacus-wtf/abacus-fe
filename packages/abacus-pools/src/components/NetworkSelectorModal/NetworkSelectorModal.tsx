@@ -115,11 +115,11 @@ export const NetworkSelectorModal = () => {
           }
         }
       }
-    } else if (network.chainId === 3) {
+    } else if (network.chainId === 4) {
       try {
         await ethereum.request({
           method: "wallet_switchEthereumChain",
-          params: [{ chainId: "0x3" }],
+          params: [{ chainId: "0x4" }],
         })
         setShowModal(false)
       } catch (error) {
@@ -129,7 +129,7 @@ export const NetworkSelectorModal = () => {
               method: "wallet_addEthereumChain",
               params: [
                 {
-                  chainId: "0x3",
+                  chainId: "0x4",
                   rpcUrl: [ETH_RPC],
                   chainName: "Rinkeby Test Network",
                   nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },

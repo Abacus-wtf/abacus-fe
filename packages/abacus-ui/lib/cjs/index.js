@@ -318,14 +318,14 @@ var StyledKilo$3 = styled__default["default"](StyledDiv)(templateObject_9$3 || (
     return theme.colors.core["900"];
 });
 var Input = function (_a) {
-    var value = _a.value, onChange = _a.onChange, type = _a.type, label = _a.label, pill = _a.pill, name = _a.name, id = _a.id, placeholder = _a.placeholder, className = _a.className, hint = _a.hint, _b = _a.disabled, disabled = _b === void 0 ? false : _b, _c = _a.required, required = _c === void 0 ? false : _c, _d = _a.step, step = _d === void 0 ? "0.1" : _d;
+    var value = _a.value, onChange = _a.onChange, type = _a.type, label = _a.label, pill = _a.pill, name = _a.name, id = _a.id, placeholder = _a.placeholder, className = _a.className, hint = _a.hint, _b = _a.disabled, disabled = _b === void 0 ? false : _b, _c = _a.required, required = _c === void 0 ? false : _c, _d = _a.step, step = _d === void 0 ? "0.1" : _d, min = _a.min, max = _a.max;
     var _e = React.useState(true), pristine = _e[0], setPristine = _e[1];
     var ID = typeof id === "string" ? id : getUniqueId("input");
     return (React__default["default"].createElement(Container$r, { className: className },
         label && React__default["default"].createElement(ExteriorLabel, { htmlFor: ID }, label),
         React__default["default"].createElement(InputContainer, { disabled: disabled, pristine: pristine, required: required, value: value },
             pill ? React__default["default"].createElement(Pill, { isString: typeof pill === "string" }, pill) : null,
-            React__default["default"].createElement(StyledInput$2, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); }, disabled: disabled, "aria-disabled": disabled, required: required, onFocus: function () { return setPristine(false); }, step: step })),
+            React__default["default"].createElement(StyledInput$2, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); }, disabled: disabled, "aria-disabled": disabled, required: required, onFocus: function () { return setPristine(false); }, step: step, min: min, max: max })),
         hint && React__default["default"].createElement(StyledKilo$3, null, hint)));
 };
 var templateObject_1$D, templateObject_2$v, templateObject_3$k, templateObject_4$b, templateObject_5$8, templateObject_6$6, templateObject_7$4, templateObject_8$3, templateObject_9$3;

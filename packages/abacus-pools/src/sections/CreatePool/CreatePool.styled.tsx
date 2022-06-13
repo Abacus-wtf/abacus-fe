@@ -7,7 +7,6 @@ export const Title = styled(Exa)`
 `
 
 export const StyledInput = styled(Input)`
-  margin-top: 24px;
   ${Media.md`
     min-width: 500px;
   `}
@@ -15,7 +14,7 @@ export const StyledInput = styled(Input)`
 
 export const StyledButton = styled(Button)`
   width: 100%;
-  margin-top: 32px;
+  margin-top: 8px;
   text-align: center;
 `
 

@@ -9,7 +9,7 @@ import {
   useSetIsSelectNetworkModalOpen,
   useToggleWalletModal,
 } from "@state/application/hooks"
-import SelectNFT from "./Elements/SelectNFT"
+import { SelectNFT } from "./Elements/SelectNFT"
 import { CreatePoolState } from "./models"
 import Details from "./Elements/Details"
 import Success from "./Elements/Success"
@@ -48,12 +48,23 @@ const ButtonContainer = styled.div`
   gap: 16px;
 `
 
+export type NewAddress = {
+  id: number
+  value: string
+  address?: string
+  tokenId?: string
+  img?: string
+  collectionTitle?: string
+}
+
 export const CreatePool = () => {
   const [createPoolState, setCreatePoolState] = useState(
     CreatePoolState.SelectNFT
   )
-  const [newSesh, setNewSesh] = useState<NFTBasePool | null>(null)
-  const [nftAddress, setNftAddress] = useState("")
+  const [newSesh, setNewSesh] = useState<NFTBasePool[] | null>(null)
+  const [nftAddresses, setNftAddresses] = useState<NewAddress[]>([
+    { id: 0, value: "" },
+  ])
   const [currentNonce, setCurrentNonce] = useState(0)
   const { account, chainId } = useActiveWeb3React()
   const isCorrectChain = IS_PRODUCTION ? chainId === 1 : chainId === 3
@@ -67,16 +78,16 @@ export const CreatePool = () => {
           <SelectNFT
             setNewSesh={setNewSesh}
             setCreatePoolState={setCreatePoolState}
-            nftAddress={nftAddress}
-            setNftAddress={setNftAddress}
+            nftAddresses={nftAddresses}
+            setNftAddresses={setNftAddresses}
           />
         )
       case CreatePoolState.Details:
         return (
           <Details
-            imgSrc={newSesh.img}
-            address={newSesh.address}
-            tokenId={newSesh.tokenId}
+            imgSrc={newSesh[0].img}
+            address={newSesh[0].address}
+            tokenId={newSesh[0].tokenId}
             setCurrentNonce={setCurrentNonce}
             setCreatePoolState={setCreatePoolState}
           />
@@ -84,18 +95,18 @@ export const CreatePool = () => {
       case CreatePoolState.Complete:
         return (
           <Success
-            imgSrc={newSesh.img}
-            openSeaLink={nftAddress}
-            link={`/pool?address=${newSesh.address}&tokenId=${newSesh.tokenId}&nonce=${currentNonce}`}
-            collection={newSesh.collectionTitle}
-            tokenId={newSesh.tokenId}
-            address={newSesh.address}
+            imgSrc={newSesh[0].img}
+            openSeaLink={nftAddresses[0].value}
+            link={`/pool?address=${newSesh[0].address}&tokenId=${newSesh[0].tokenId}&nonce=${currentNonce}`}
+            collection={newSesh[0].collectionTitle}
+            tokenId={newSesh[0].tokenId}
+            address={newSesh[0].address}
           />
         )
       default:
         return null
     }
-  }, [createPoolState, nftAddress, newSesh, currentNonce])
+  }, [createPoolState, nftAddresses, newSesh, currentNonce])
 
   return (
     <Container>

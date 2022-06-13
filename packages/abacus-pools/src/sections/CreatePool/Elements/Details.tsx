@@ -40,12 +40,15 @@ const Details: FunctionComponent<DetailsProps> = ({
   const { onCreatePool, txError, isPending } = useOnCreatePool()
   const factory = useWeb3Contract(FACTORY_ABI)
 
+  const validatedVaultName =
+    vaultName || `${nfts[0].collectionTitle}#${nfts[0].tokenId}`
+
   const createPool = async () => {
     const getVaultAddress = async () => {
       setIsFetchingVaultAddress(true)
       try {
         const vaultAddress = await factory(ABC_FACTORY)
-          .methods.vaultNames(vaultName)
+          .methods.vaultNames(validatedVaultName)
           .call()
         setVaultAddress(vaultAddress)
       } finally {
@@ -53,7 +56,6 @@ const Details: FunctionComponent<DetailsProps> = ({
       }
       setCreatePoolState(CreatePoolState.Complete)
     }
-
     const INITIAL: { nftAddresses: string[]; tokenIds: string[] } = {
       nftAddresses: [],
       tokenIds: [],
@@ -65,8 +67,7 @@ const Details: FunctionComponent<DetailsProps> = ({
       }),
       INITIAL
     )
-    const validatedVaultName =
-      vaultName || `${nfts[0].collectionTitle}#${nfts[0].tokenId}`
+
     await onCreatePool(
       validatedVaultName,
       nftAddresses,

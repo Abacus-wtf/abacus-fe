@@ -38,7 +38,6 @@ type InputContainerProps = Disableable & {
 };
 
 const InputContainer = styled.div<InputContainerProps>`
-  background-color: white;
   display: flex;
   width: 100%;
   flex-direction: row-reverse;
@@ -93,6 +92,7 @@ const StyledInput = styled.input<Disableable>`
   padding: 0;
   width: 100%;
   padding-right: 6px;
+  background-color: transparent;
 
   ${({ disabled }) =>
     disabled

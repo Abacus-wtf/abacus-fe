@@ -14,3 +14,7 @@ export * from "./OutboundLink";
 export * from "./DownChevron";
 export * from "./Hamburger";
 export * from "./Activity";
+export * from "./Remove";
+export * from "./Add";
+export * from "./Spinner";
+export * from "./Error";

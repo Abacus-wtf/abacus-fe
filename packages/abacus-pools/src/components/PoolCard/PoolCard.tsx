@@ -141,8 +141,8 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
       minimumSignificantDigits: 2,
     })
   )
-  const src = nfts?.[0].img ?? ""
-  const alt = nfts?.[0].alt ?? ""
+  const src = nfts?.[0]?.img ?? ""
+  const alt = nfts?.[0]?.alt ?? ""
   return (
     <StyledSection className={className} hasLink={!!link}>
       <NumNFTsPill>

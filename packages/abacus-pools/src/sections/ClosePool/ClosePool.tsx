@@ -71,7 +71,7 @@ const ClosePool: FunctionComponent<ClosePoolProps> = ({ location }) => {
 
   const poolLink = `/pool?address=${address}&tokenId=${tokenId}&nonce=${nonce}`
 
-  const globalImg = nfts?.[0].img ?? ""
+  const globalImg = nfts?.[0]?.img ?? ""
 
   return (
     <Container>

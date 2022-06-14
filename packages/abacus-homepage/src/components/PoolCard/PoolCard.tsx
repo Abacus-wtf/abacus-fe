@@ -10,6 +10,7 @@ import {
   Info,
   InfoData,
   InfoTitle,
+  NumNFTsPill,
 } from "./PoolCard.styled"
 
 const InfoDataLink = styled(InfoData)`
@@ -34,8 +35,7 @@ const InfoDataLink = styled(InfoData)`
 `
 
 const PoolCard: FunctionComponent<PoolCardProps> = ({
-  imgSrc,
-  alt = "",
+  nfts,
   poolName,
   poolSize,
   link,
@@ -44,9 +44,11 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
   if (fetching) {
     return <PoolCardFallback />
   }
+  const src = nfts?.[0].imgSrc ?? ""
+  const alt = nfts?.[0].alt ?? ""
   return (
     <Container>
-      <Image src={imgSrc} alt={alt} />
+      <Image src={src} alt={alt} />
       <InfoContainer>
         <Info>
           <InfoDataLink as="a" href={link}>
@@ -59,6 +61,9 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
           <InfoTitle>Pool Size</InfoTitle>
         </Info>
       </InfoContainer>
+      <NumNFTsPill>
+        {nfts.length} NFT{nfts.length > 1 ? "s" : ""}
+      </NumNFTsPill>
     </Container>
   )
 }

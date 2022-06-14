@@ -1,7 +1,10 @@
 export type PoolCardProps = {
   id: string
-  imgSrc: string
-  alt?: string
+  nfts: {
+    name: string
+    imgSrc: string
+    alt?: string
+  }[]
   poolName: string
   poolSize: string
   link: string

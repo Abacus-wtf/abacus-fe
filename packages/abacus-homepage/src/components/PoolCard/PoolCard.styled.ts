@@ -38,3 +38,14 @@ export const InfoData = styled(Mega)`
 export const InfoTitle = styled(Kilo)`
   color: ${({ theme }) => theme.colors.core[900]};
 `
+
+export const NumNFTsPill = styled.span`
+  padding: 8px 14px;
+  border-radius: 70px;
+  background-color: transparent;
+  border: 2px solid ${({ theme }) => theme.colors.core.border};
+  width: max-content;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+`

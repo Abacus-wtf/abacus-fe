@@ -29,7 +29,7 @@ type DetailsProps = {
   setVaultAddress: React.Dispatch<string>
 }
 
-const Details: FunctionComponent<DetailsProps> = ({
+export const Details: FunctionComponent<DetailsProps> = ({
   nfts,
   vaultName,
   maxCollateralAmount,
@@ -98,5 +98,3 @@ const Details: FunctionComponent<DetailsProps> = ({
     </>
   )
 }
-
-export default Details

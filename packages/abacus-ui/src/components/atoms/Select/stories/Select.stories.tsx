@@ -13,7 +13,3 @@ const Template: ComponentStory<typeof Select> = (args) => <Select {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {};
-
-export const Secondary = Template.bind({});
-Number.args = {};
-

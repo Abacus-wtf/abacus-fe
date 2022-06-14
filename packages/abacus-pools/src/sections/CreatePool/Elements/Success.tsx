@@ -45,7 +45,7 @@ type SuccessProps = {
   nfts: NewAddress[]
 }
 
-const Success: FunctionComponent<SuccessProps> = ({ link, nfts }) => (
+export const Success: FunctionComponent<SuccessProps> = ({ link, nfts }) => (
   <Container>
     <Title>Vault Created!</Title>
     <NFTGrid size={nfts.length}>
@@ -88,5 +88,3 @@ const Success: FunctionComponent<SuccessProps> = ({ link, nfts }) => (
     </StyledButton>
   </Container>
 )
-
-export default Success

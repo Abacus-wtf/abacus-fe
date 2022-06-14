@@ -9,10 +9,8 @@ import {
   useToggleWalletModal,
 } from "@state/application/hooks"
 import { Container as LayoutContainer } from "@layouts/styles"
-import { SelectNFT } from "./Elements/SelectNFT"
+import { SelectNFT, Details, Success } from "./Elements"
 import { CreatePoolState } from "./models"
-import Details from "./Elements/Details"
-import Success from "./Elements/Success"
 
 const Container = styled(LayoutContainer)`
   align-items: center;

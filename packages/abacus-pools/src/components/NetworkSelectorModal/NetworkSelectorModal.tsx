@@ -14,8 +14,7 @@ import {
   useSetIsSelectNetworkModalOpen,
 } from "@state/application/hooks"
 import { theme } from "@config/theme"
-import { Modal, Activity } from "abacus-ui"
-import Button from "../Button"
+import { Modal, Activity, Button } from "abacus-ui"
 
 const StyledMenuButton = styled.button`
   position: relative;

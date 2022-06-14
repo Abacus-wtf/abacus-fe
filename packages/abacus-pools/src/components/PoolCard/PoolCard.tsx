@@ -95,9 +95,23 @@ const Variation = styled.div<{ variation: number }>`
       : ""}
 `
 
+export const NumNFTsPill = styled.span`
+  padding: 8px 14px;
+  border-radius: 70px;
+  background-color: transparent;
+  border: 2px solid ${({ theme }) => theme.colors.core.border};
+  width: max-content;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+`
+
 type PoolCardProps = {
   title: string
-  imgSrc: string
+  nfts: {
+    img: string
+    alt: string
+  }[]
   poolSize: string
   participants: number
   link?: string
@@ -107,7 +121,7 @@ type PoolCardProps = {
 }
 
 const PoolCard: FunctionComponent<PoolCardProps> = ({
-  imgSrc,
+  nfts,
   title,
   poolSize,
   participants,
@@ -127,9 +141,14 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
       minimumSignificantDigits: 2,
     })
   )
+  const src = nfts?.[0].img ?? ""
+  const alt = nfts?.[0].alt ?? ""
   return (
     <StyledSection className={className} hasLink={!!link}>
-      <NFTImage src={imgSrc} />
+      <NumNFTsPill>
+        {nfts.length} NFT{nfts.length > 1 ? "s" : ""}
+      </NumNFTsPill>
+      <NFTImage src={src} alt={alt} />
       <CardInfoRow flexGrow>
         <CardInfo>
           <CardTitle as={link ? Link : "a"} to={link} hasLink={!!link}>

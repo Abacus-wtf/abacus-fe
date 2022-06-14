@@ -91,10 +91,10 @@ const Home: React.FC = () => {
       <PoolGrid>
         {pools.map((pool) => (
           <PoolCard
-            key={`${pool.address}-${pool.tokenId}-${pool.nonce}`}
-            link={`/pool?address=${pool.address}&tokenId=${pool.tokenId}&nonce=${pool.nonce}`}
-            imgSrc={pool.img}
-            title={pool.nftName}
+            key={`${pool.vaultAddress}`}
+            link={`/pool/${pool.vaultAddress}`}
+            title={pool.name}
+            nfts={pool.nfts}
             participants={pool.totalParticipants}
             poolSize={formatEther(pool.size.div(BigNumber.from("1000")))}
             vaultId={pool.vaultAddress}

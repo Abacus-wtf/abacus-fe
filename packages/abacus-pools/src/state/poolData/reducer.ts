@@ -6,7 +6,8 @@ import { getPools, getMyPools } from "./actions"
 export interface NFT {
   address: string
   tokenId: string
-  img?: string
+  img: string
+  alt: string
   collectionTitle?: string
   collectionLink?: string
   owner?: string
@@ -50,11 +51,8 @@ export enum PoolStatus {
   Auction,
 }
 
-export interface Pool extends NFT {
+export interface Pool {
   vaultAddress?: string
-  nftName: string
-  nonce: number
-  symbol?: string
   userTokensLocked?: string
   tokensLocked?: string
   tokenPrice?: string
@@ -69,18 +67,16 @@ export interface Pool extends NFT {
   size: BigNumber
   totalParticipants: number
   tickets?: GetPoolsQuery["vaults"][number]["tickets"]
+  nfts: NFT[]
+  name: string
 }
 
 export const INITIAL_POOL: Pool = {
-  nftName: "",
-  owner: "",
-  ownerLink: "",
-  address: "",
-  nonce: -1,
-  tokenId: "",
+  name: "",
   state: PoolStatus.Normal,
   size: BigNumber.from("0"),
   totalParticipants: 0,
+  nfts: [],
 }
 
 interface PoolState {

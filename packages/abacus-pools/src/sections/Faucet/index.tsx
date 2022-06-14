@@ -1,7 +1,7 @@
 import React from "react"
-import Buttons from "@components/Button"
 import { useOnFaucet } from "@hooks/faucetFunc"
 import { useGetAbcBalance } from "@state/application/hooks"
+import { Button } from "abacus-ui"
 import { Container } from "../../layouts/styles"
 
 const FaucetPage: React.FC = () => {
@@ -10,8 +10,7 @@ const FaucetPage: React.FC = () => {
 
   return (
     <Container>
-      <Buttons
-        style={{ fontSize: 24, padding: "16px 28px", margin: "0 auto" }}
+      <Button
         disabled={isPending}
         onClick={() =>
           onFaucet(() => {
@@ -20,7 +19,7 @@ const FaucetPage: React.FC = () => {
         }
       >
         {isPending ? "Loading..." : "Mint ABC"}
-      </Buttons>
+      </Button>
     </Container>
   )
 }

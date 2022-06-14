@@ -57,8 +57,7 @@ type ClosePoolProps = {
 
 const ClosePool: FunctionComponent<ClosePoolProps> = ({ location }) => {
   const { address, tokenId, nonce } = queryString.parse(location.search)
-  const { img, nftName, size, totalParticipants, vaultAddress } =
-    useGetPoolData()
+  const { nfts, size, totalParticipants, vaultAddress, name } = useGetPoolData()
   const setPool = useSetPoolData()
   const getTickets = useGetTickets()
 
@@ -72,15 +71,17 @@ const ClosePool: FunctionComponent<ClosePoolProps> = ({ location }) => {
 
   const poolLink = `/pool?address=${address}&tokenId=${tokenId}&nonce=${nonce}`
 
+  const globalImg = nfts?.[0].img ?? ""
+
   return (
     <Container>
-      <GlobalStyle url={img} />
+      <GlobalStyle url={globalImg} />
       <BackLink to={poolLink}>{"< Back to Pool"}</BackLink>
       <SplitSection>
         <StyledPoolCard
           fullDetails={false}
-          imgSrc={img}
-          title={nftName}
+          nfts={nfts}
+          title={name}
           participants={totalParticipants}
           poolSize={formatEther(size.div(BigNumber.from("1000")))}
           vaultId={vaultAddress}

@@ -146,7 +146,7 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
   return (
     <StyledSection className={className} hasLink={!!link}>
       <NumNFTsPill>
-        {nfts.length} NFT{nfts.length > 1 ? "s" : ""}
+        {nfts?.length ?? "-"} NFT{nfts?.length ?? 0 > 1 ? "s" : ""}
       </NumNFTsPill>
       <NFTImage src={src} alt={alt} />
       <CardInfoRow flexGrow>

@@ -54,7 +54,7 @@ const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
         alt: `${asset.name} in NFT Collection: ${asset.collection}`,
       }
     }),
-    name: "TODO", // TODO: Need to add vault name to graph
+    name: vault.name,
     vaultAddress: vault.id,
     emissionsStarted: vault.emissionsSigned,
     size: BigNumber.from(vault.size),

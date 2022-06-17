@@ -117,6 +117,35 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "allowanceTracker",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "amountNft",
     "outputs": [
@@ -231,6 +260,30 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "comTickets",
+        "type": "uint256"
+      }
+    ],
+    "name": "decodeCompressedValue",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "stopIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[10]",
+        "name": "tickets",
+        "type": "uint256[10]"
+      }
+    ],
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -1094,6 +1147,11 @@
         "internalType": "uint32",
         "name": "unlockEpoch",
         "type": "uint32"
+      },
+      {
+        "internalType": "uint64",
+        "name": "maxTicket",
+        "type": "uint64"
       },
       {
         "internalType": "uint256",

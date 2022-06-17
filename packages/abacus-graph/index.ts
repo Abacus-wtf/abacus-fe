@@ -1181,6 +1181,7 @@ export type Vault = {
   __typename?: 'Vault';
   emissionsSigned: Scalars['Boolean'];
   id: Scalars['ID'];
+  name: Scalars['String'];
   nfts: Array<Nft>;
   owner: Scalars['ID'];
   size: Scalars['BigInt'];
@@ -1223,6 +1224,26 @@ export type Vault_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  name?: InputMaybe<Scalars['String']>;
+  name_contains?: InputMaybe<Scalars['String']>;
+  name_contains_nocase?: InputMaybe<Scalars['String']>;
+  name_ends_with?: InputMaybe<Scalars['String']>;
+  name_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  name_gt?: InputMaybe<Scalars['String']>;
+  name_gte?: InputMaybe<Scalars['String']>;
+  name_in?: InputMaybe<Array<Scalars['String']>>;
+  name_lt?: InputMaybe<Scalars['String']>;
+  name_lte?: InputMaybe<Scalars['String']>;
+  name_not?: InputMaybe<Scalars['String']>;
+  name_not_contains?: InputMaybe<Scalars['String']>;
+  name_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  name_not_ends_with?: InputMaybe<Scalars['String']>;
+  name_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  name_not_in?: InputMaybe<Array<Scalars['String']>>;
+  name_not_starts_with?: InputMaybe<Scalars['String']>;
+  name_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  name_starts_with?: InputMaybe<Scalars['String']>;
+  name_starts_with_nocase?: InputMaybe<Scalars['String']>;
   nfts?: InputMaybe<Array<Scalars['String']>>;
   nfts_contains?: InputMaybe<Array<Scalars['String']>>;
   nfts_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
@@ -1280,6 +1301,7 @@ export type Vault_Filter = {
 export enum Vault_OrderBy {
   EmissionsSigned = 'emissionsSigned',
   Id = 'id',
+  Name = 'name',
   Nfts = 'nfts',
   Owner = 'owner',
   Size = 'size',

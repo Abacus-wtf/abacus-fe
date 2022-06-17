@@ -116,6 +116,7 @@ exports.Vault_OrderBy = void 0;
 (function (Vault_OrderBy) {
     Vault_OrderBy["EmissionsSigned"] = "emissionsSigned";
     Vault_OrderBy["Id"] = "id";
+    Vault_OrderBy["Name"] = "name";
     Vault_OrderBy["Nfts"] = "nfts";
     Vault_OrderBy["Owner"] = "owner";
     Vault_OrderBy["Size"] = "size";

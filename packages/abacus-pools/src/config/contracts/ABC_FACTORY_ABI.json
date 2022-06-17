@@ -731,6 +731,12 @@
       {
         "indexed": false,
         "internalType": "uint256",
+        "name": "ticketsSold",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
         "name": "creditsPurchased",
         "type": "uint256"
       }
@@ -817,12 +823,18 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
         "internalType": "address",
         "name": "_creator",
         "type": "address"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "address",
         "name": "_pool",
         "type": "address"
@@ -1362,6 +1374,11 @@
         "internalType": "address",
         "name": "_seller",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_ticketsSold",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",

@@ -1305,6 +1305,7 @@ export declare type GetEpochAllocationsQuery = {
 export declare type VaultFragment = {
     __typename?: 'Vault';
     id: string;
+    name: string;
     owner: string;
     status: number;
     timestamp: string;
@@ -1346,6 +1347,7 @@ export declare type GetPoolsQuery = {
     vaults: Array<{
         __typename?: 'Vault';
         id: string;
+        name: string;
         owner: string;
         status: number;
         timestamp: string;
@@ -1384,6 +1386,7 @@ export declare type GetPoolQuery = {
     vault?: {
         __typename?: 'Vault';
         id: string;
+        name: string;
         owner: string;
         status: number;
         timestamp: string;

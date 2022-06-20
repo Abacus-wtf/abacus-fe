@@ -4,10 +4,11 @@ import { PageProps } from "gatsby"
 import React from "react"
 
 function PoolPage(props: PageProps) {
-  const { location } = props
+  const { params } = props
+  const vaultId = params.id
   return (
     <GlobalLayout {...props}>
-      <Pool location={location} />
+      <Pool vaultId={vaultId} />
     </GlobalLayout>
   )
 }

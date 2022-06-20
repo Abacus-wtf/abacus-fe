@@ -1,6 +1,6 @@
 import { NFTImage } from "@components/index"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import { Section, Media } from "abacus-ui"
+import { Section, Media, Pill } from "abacus-ui"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
 import PurchaseTokens from "./PurchaseTokens"
@@ -37,6 +37,7 @@ const LeftSection = styled.div`
   align-self: flex-start;
   border-radius: ${({ theme }) => theme.borderRadius.main};
   overflow: hidden;
+  position: relative;
 `
 
 const RightSection = styled.div`
@@ -48,6 +49,12 @@ const RightSection = styled.div`
   grid-row-gap: 24px;
 `
 
+const StyledPill = styled(Pill)`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+`
+
 type CurrentStateProps = {
   refreshPoolData: () => void
 }
@@ -56,7 +63,7 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
   refreshPoolData,
 }) => {
   const [page] = useState<Page>(Page.PurchaseTokens)
-  const { img, isManager } = useGetPoolData()
+  const { nfts } = useGetPoolData()
 
   const rightSection = useMemo(() => {
     switch (page) {
@@ -66,11 +73,17 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
         return null
     }
   }, [page, refreshPoolData])
+
+  const src = nfts?.[0]?.img ?? ""
+
   return (
     <Container>
       <LeftSection>
-        <NFTImage src={img} />
-        {isManager && <OwnerSection refreshPoolData={refreshPoolData} />}
+        <StyledPill>
+          {nfts?.length ?? "-"} NFT{nfts?.length ?? 0 > 1 ? "s" : ""}
+        </StyledPill>
+        <NFTImage src={src} />
+        {true && <OwnerSection refreshPoolData={refreshPoolData} />}
       </LeftSection>
       <RightSection>{rightSection}</RightSection>
     </Container>

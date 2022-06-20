@@ -30,7 +30,7 @@ interface OwnerSectionProps {
 }
 
 const OwnerSection = ({ refreshPoolData }: OwnerSectionProps) => {
-  const { address, tokenId, nonce, approvedBribeFactory, emissionsStarted } =
+  const { vaultAddress, approvedBribeFactory, emissionsStarted } =
     useGetPoolData()
   const { onStartEmissions, isPending: isPendingStartEmissions } =
     useOnStartEmissions()
@@ -51,9 +51,7 @@ const OwnerSection = ({ refreshPoolData }: OwnerSectionProps) => {
         Proceed with caution, the following actions are irreversible:
       </Kilo>
       <ButtonContainer>
-        <Link
-          to={`/close-pool?address=${address}&tokenId=${tokenId}&nonce=${nonce}`}
-        >
+        <Link to={`/close-pool/${vaultAddress}`}>
           <StyledButton buttonType={ButtonType.Gray}>Close Pool</StyledButton>
         </Link>
         <StyledButton

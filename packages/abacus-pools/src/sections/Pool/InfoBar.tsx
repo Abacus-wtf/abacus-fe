@@ -38,15 +38,8 @@ const PoolTitle = styled(InfoBarContent)`
 `
 
 const InfoBar: FunctionComponent = () => {
-  const {
-    owner,
-    ownerLink,
-    emissionsStarted,
-    nftName,
-    tokenPrice,
-    totalParticipants,
-    size,
-  } = useGetPoolData()
+  const { emissionsStarted, tokenPrice, totalParticipants, size, name } =
+    useGetPoolData()
   const tokensLockedEth = (
     Number(formatEther(size)) * Number(tokenPrice)
   ).toLocaleString("en-US", {
@@ -59,7 +52,7 @@ const InfoBar: FunctionComponent = () => {
     <InfoBarContainer>
       <InfoBarItem>
         <InfoBarTitle>Pool Name</InfoBarTitle>
-        <PoolTitle as="h1">{nftName}</PoolTitle>
+        <PoolTitle as="h1">{name}</PoolTitle>
       </InfoBarItem>
       <InfoBarItem>
         <InfoBarTitle># Tokens Locked</InfoBarTitle>
@@ -73,15 +66,15 @@ const InfoBar: FunctionComponent = () => {
       <InfoBarItem>
         <InfoBarTitle>Owner</InfoBarTitle>
         <InfoBarContent>
-          <StyledOutboundLink target="_blank" href={ownerLink}>
-            {owner}
+          <StyledOutboundLink target="_blank" href="">
+            TODO {/* {owner} */}
           </StyledOutboundLink>
         </InfoBarContent>
         <EnabledEmissions emissionsStarted={emissionsStarted}>
           {emissionsStarted ? (
             <Checkmark stroke={theme.colors.utility.green} />
           ) : (
-            <Close stroke={theme.colors.utility.red} />
+            <Close fill={theme.colors.utility.red} />
           )}
           {emissionsStarted ? "Emissions Enabled" : "Emissions Not Enabled"}
         </EnabledEmissions>

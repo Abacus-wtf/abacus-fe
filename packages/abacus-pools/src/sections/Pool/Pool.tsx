@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
-import { PageProps, Link } from "gatsby"
-import * as queryString from "query-string"
+import { Link } from "gatsby"
 import { Media } from "abacus-ui"
 import styled, { createGlobalStyle } from "styled-components"
 import {
@@ -46,33 +45,34 @@ const SplitSection = styled.div`
 `
 
 type PoolProps = {
-  location: PageProps["location"]
+  vaultId: string
 }
 
-const Pool: FunctionComponent<PoolProps> = ({ location }) => {
+const Pool: FunctionComponent<PoolProps> = ({ vaultId }) => {
   const [refresh, setRefresh] = useState({})
   const refreshPoolData = () => setRefresh({})
-  const { address, tokenId, nonce } = queryString.parse(location.search)
   const poolData = useGetPoolData()
   const setPool = useSetPoolData()
   const getTickets = useGetTickets()
   const getBribeData = useGetBribeData()
 
   useEffect(() => {
-    setPool(String(address), String(tokenId), Number(nonce))
-  }, [address, tokenId, nonce, setPool, refresh])
+    setPool(vaultId)
+  }, [vaultId, refresh, setPool])
 
   useEffect(() => {
-    getTickets()
+    // getTickets()
   }, [getTickets])
 
   useEffect(() => {
-    getBribeData()
+    // getBribeData()
   }, [getBribeData])
+
+  const globalStyleImg = poolData?.nfts?.[0]?.img ?? ""
 
   return (
     <Container>
-      <GlobalStyle url={poolData.img} />
+      <GlobalStyle url={globalStyleImg} />
       <BackLink to="/">{"< Back to Spot"}</BackLink>
       <InfoBar />
       <CurrentState refreshPoolData={refreshPoolData} />

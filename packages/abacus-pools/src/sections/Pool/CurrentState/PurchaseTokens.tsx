@@ -119,7 +119,7 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
   const [page, setPage] = useState(Page.Market)
   const [lockDuration, setLockDuration] = useState<number>(null)
   const ethUSD = useEthToUSD(Number(eth))
-  const { tokenPrice, nftName, size } = useGetPoolData()
+  const { tokenPrice, name, size } = useGetPoolData()
   const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
   const { onAddToBribe, isPending: isPendingBribe } = useOnAddToBribe()
   const { onWithdrawBribe, isPending: isPendingWithdrawBribe } =
@@ -216,7 +216,7 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
             onChange={() => {}}
             label="To:"
             placeholder="0.00"
-            pill={nftName}
+            pill={name}
             hint={`$${ethUSD}`}
           />
           <LockTimeSelector

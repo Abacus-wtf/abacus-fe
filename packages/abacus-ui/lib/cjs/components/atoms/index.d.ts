@@ -17,3 +17,4 @@ export * from "./Loader";
 export * from "./ProgressBar";
 export * from "./Range";
 export * from "./Select";
+export * from "./Pill";

@@ -942,6 +942,30 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "comTickets",
+        "type": "uint256"
+      }
+    ],
+    "name": "decodeCompressedValue",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "stopIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[10]",
+        "name": "tickets",
+        "type": "uint256[10]"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_pool",
         "type": "address"

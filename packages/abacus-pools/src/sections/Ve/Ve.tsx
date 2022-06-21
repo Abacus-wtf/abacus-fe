@@ -1,7 +1,6 @@
 import { Media } from "abacus-ui"
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import { useFetchCurrentEpoch } from "@state/application/hooks"
 import { Epoch } from "@components/Epoch"
 import { Container } from "../../layouts/styles"
 import { Allocate, Lock, YourAllocations, YourLocks } from "./elements"
@@ -18,12 +17,6 @@ const GridContainer = styled.div`
 `
 
 const Ve = () => {
-  const { fetchCurrentEpoch } = useFetchCurrentEpoch()
-
-  useEffect(() => {
-    fetchCurrentEpoch()
-  }, [fetchCurrentEpoch])
-
   const {
     veAbcBalance,
     refreshVeState,

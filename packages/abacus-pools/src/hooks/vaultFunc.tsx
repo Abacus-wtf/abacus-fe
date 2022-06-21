@@ -104,7 +104,7 @@ export const useOnApproveTransfer = () => {
   const onApproveTransfer = useCallback(
     async (address: string, cb: () => void) => {
       const erc721 = getContract(
-        poolData.address,
+        poolData.vaultAddress,
         ERC_721_ABI,
         library,
         account
@@ -228,7 +228,12 @@ export const useOnPurchaseTokens = () => {
   const multicall = useMultiCall(VAULT_ABI)
 
   const onPurchaseTokens = useCallback(
-    async (tokenAmount: string, lockupPeriod: number, cb: () => void) => {
+    async (
+      tokenAmount: string,
+      startEpoch: number,
+      endEpoch: number,
+      cb: () => void
+    ) => {
       const vaultContract = getContract(
         poolData.vaultAddress,
         VAULT_ABI,
@@ -243,7 +248,7 @@ export const useOnPurchaseTokens = () => {
       while (runningTokenAmount !== 0) {
         const range = _.range(cycle * 20, cycle * 20 + 20)
         const methods = _.map(range, () => "ticketsPurchased")
-        const args = _.map(range, (i) => [parseEther(`${i}`)])
+        const args = _.map(range, (i) => [startEpoch, parseEther(`${i}`)])
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // eslint-disable-next-line no-await-in-loop
@@ -267,8 +272,8 @@ export const useOnPurchaseTokens = () => {
             } else {
               runningTokenAmount -= spaceLeft
             }
-            ticketArray.push(parseEther(`${i}`).toString())
-            purchaseAmount.push(parseEther(`${spaceLeft}`).toString())
+            ticketArray.push(i)
+            purchaseAmount.push(spaceLeft)
           }
         }
         cycle += 1
@@ -276,15 +281,20 @@ export const useOnPurchaseTokens = () => {
 
       const method = vaultContract.purchase
       const estimate = vaultContract.estimateGas.purchase
-      const args = [account, account, ticketArray, purchaseAmount, lockupPeriod]
+      const args = [
+        account,
+        account,
+        ticketArray,
+        purchaseAmount,
+        startEpoch,
+        endEpoch,
+        0,
+      ]
       console.log(args)
       const value = parseEther(
         `${Number(tokenAmount) * Number(poolData.tokenPrice)}`
       )
-        .mul(BigNumber.from(10125))
-        .div(BigNumber.from(10000))
-        .div(BigNumber.from(10000))
-        .mul(BigNumber.from(10000))
+
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Purchase Locked Up Tokens",

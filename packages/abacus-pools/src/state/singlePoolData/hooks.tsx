@@ -5,7 +5,7 @@ import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import VAULT_ABI from "@config/contracts/ABC_VAULT_ABI.json"
 import BRIBE_ABI from "@config/contracts/ABC_BRIBE_FACTORY_ABI.json"
 import CLOSE_POOL_ABI from "@config/contracts/ABC_CLOSE_POOL_ABI.json"
-// import ERC_721_ABI from "@config/contracts/ERC_721_ABI.json"
+import ERC_721_ABI from "@config/contracts/ERC_721_ABI.json"
 import {
   ABC_BRIBE_FACTORY,
   GRAPHQL_ENDPOINT,
@@ -160,13 +160,10 @@ export const useGetBribeData = () => {
   return useCallback(async () => {
     if (poolData.vaultAddress === undefined) return
 
-    const [offeredBribeSize, bribePerUserIndex] = await bribeMulti(
+    const [offeredBribeSize] = await bribeMulti(
       ABC_BRIBE_FACTORY,
-      ["offeredBribeSize", "bribePerUserIndex"],
-      [
-        [poolData.address, poolData.tokenId],
-        [poolData.address, poolData.tokenId],
-      ]
+      ["offeredBribeSize"],
+      [[poolData.vaultAddress]]
     )
     let bribe: Bribe = {
       offeredBribeSize: Number(formatEther(offeredBribeSize[0])),
@@ -174,12 +171,7 @@ export const useGetBribeData = () => {
     }
     if (account) {
       const accountBribe = await bribeContract(ABC_BRIBE_FACTORY)
-        .methods.bribePerAccount(
-          bribePerUserIndex[0],
-          poolData.address,
-          poolData.tokenId,
-          account
-        )
+        .methods.bribePerAccount(poolData.vaultAddress, account)
         .call()
       bribe.bribeOfferedByUser = Number(formatEther(accountBribe))
     }
@@ -273,7 +265,7 @@ export const useGetTickets = () => {
 
 export const useSetPoolData = () => {
   const dispatch = useDispatch<AppDispatch>()
-  // const erc721 = useWeb3Contract(ERC_721_ABI)
+  const erc721 = useWeb3Contract(ERC_721_ABI)
   const vault = useMultiCall(VAULT_ABI)
   const closePool = useMultiCall(CLOSE_POOL_ABI)
   const { account } = useActiveWeb3React()
@@ -313,21 +305,30 @@ export const useSetPoolData = () => {
           { url: OPENSEA_LINK }
         )
 
-        const nfts = _pool.nfts.map((nft) => {
+        // TODO: Do this in multi-call
+        const owners = await Promise.all(
+          _pool.nfts.map(async (nft) => {
+            const ownerOf: string = await erc721(nft.address)
+              .methods.ownerOf(nft.tokenId)
+              .call()
+            return ownerOf ?? ""
+          })
+        )
+
+        const nfts = _pool.nfts.map((nft, index) => {
           const asset = matchOpenSeaAssetToNFT(assets, {
             nftAddress: nft.address,
             tokenId: nft.tokenId,
           })
-          // const ownerOf = await erc721(nft.address)
-          //   .methods.ownerOf(nft.tokenId)
-          //   .call()
+          const owner = owners[index]
+
           return {
             ...nft,
             img: asset.image_preview_url || asset.image_url,
             alt: asset.name,
-            isNftClaimed: false, // TODO: Determine how best to use this
-            // ownerOf !== "" &&
-            // ownerOf.toLowerCase() !== vaultAddress.toLowerCase(),
+            isNftClaimed:
+              owner !== "" &&
+              owner.toLowerCase() !== vaultAddress.toLowerCase(),
             owner:
               asset?.owner?.user && asset?.owner?.user?.username
                 ? asset.owner.user.username
@@ -344,35 +345,30 @@ export const useSetPoolData = () => {
                 }opensea.io/collection/${asset.collection.name.toLowerCase()}`
               : "",
             nftName: asset.name || "",
-            isManager: false, // TODO: ownerOf.toLowerCase() === account?.toLowerCase(),
+            isManager: owner.toLowerCase() === account?.toLowerCase(),
           }
         })
 
+        // TODO: Owners will need to check isApprovedForAll for every address they own - do in multicall
         if (account) {
-          // TODO: Determine how to get these
-          // const [multi, approval, approvalBribe] = await Promise.all([
-          //   vault(
-          //     vaultAddress,
-          //     ["getAvailableCredits", "getUserPositionInfo"],
-          //     [[account], [account]]
-          //   ),
-
-          // erc721(address)
-          //   .methods.isApprovedForAll(account, vaultAddress)
-          //   .call(),
-          // erc721(address)
-          //   .methods.isApprovedForAll(account, ABC_BRIBE_FACTORY)
-          //   .call(),
-          // ])
+          const [multi, approval, approvalBribe] = await Promise.all([
+            vault(vaultAddress, ["totAvailFunds"], [[account]]),
+            erc721(nfts[0].address)
+              .methods.isApprovedForAll(account, vaultAddress)
+              .call(),
+            erc721(nfts[0].address)
+              .methods.isApprovedForAll(account, ABC_BRIBE_FACTORY)
+              .call(),
+          ])
           tickets = _pool.tickets.filter((ticket) =>
             ticket.tokenPurchases.some(
               (token) => token.owner === account.toLowerCase()
             )
           )
-          // creditsAvailable = multi[0][0]
-          // userTokensLocked = formatEther(multi[1][0])
-          approved = false // TODO: approval
-          approvedBribeFactory = false // TODO:approvalBribe
+          creditsAvailable = multi[0][0]
+          // userTokensLocked = formatEther(multi[1][0]) TODO - What is this for?
+          approved = approval
+          approvedBribeFactory = approvalBribe
         }
 
         let auction: Auction
@@ -449,16 +445,16 @@ export const useSetPoolData = () => {
           approved,
           approvedBribeFactory,
           nfts,
+          isManager: nfts.some((nft) => nft.isManager),
           size: BigNumber.from(_pool.size),
           totalParticipants: _pool.totalParticipants,
         }
-
         dispatch(getPoolData(pool))
       } catch (e) {
         console.log("Unable to fetch pool data")
         console.error(e)
       }
     },
-    [account, closePool, dispatch, vault]
+    [account, closePool, dispatch, erc721, vault]
   )
 }

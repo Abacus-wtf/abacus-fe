@@ -21,8 +21,8 @@ import {
   setAbcBalance,
   setGeneralizedContractErrorMessage,
   setAggregate,
-  setCurrentEpoch,
   setSelectNetworkModalOpen,
+  setEpoch,
 } from "./actions"
 import {
   abcBalanceSelector,
@@ -32,6 +32,7 @@ import {
   networkSymbolSelector,
   currentEpochSelector,
   selectNetworkModalOpen,
+  epochLengthSelector,
 } from "./selectors"
 import { GeneralizedContractState } from "./reducer"
 import ABC_EPOCH_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
@@ -159,11 +160,16 @@ export const useFetchCurrentEpoch = () => {
 
   const fetchCurrentEpoch = useCallback(async () => {
     try {
-      const currentEpoch = await epochCall(ABC_EPOCH)
-        .methods.getCurrentEpoch()
-        .call()
-
-      dispatch(setCurrentEpoch(currentEpoch))
+      // TODO: Use multi-call
+      const [currentEpoch, epochLength] = await Promise.all([
+        epochCall(ABC_EPOCH).methods.getCurrentEpoch().call(),
+        epochCall(ABC_EPOCH).methods.epochLength().call(),
+      ])
+      const epoch = {
+        current: parseInt(currentEpoch, 10),
+        length: parseInt(epochLength, 10) * 1000,
+      }
+      dispatch(setEpoch(epoch))
     } catch {
       // TODO: Determine why this errors
     }
@@ -175,6 +181,7 @@ export const useFetchCurrentEpoch = () => {
 }
 
 export const useCurrentEpoch = () => useSelector(currentEpochSelector)
+export const useEpochLength = () => useSelector(epochLengthSelector)
 
 export const useIsSelectNetworkModalOpen = () =>
   useSelector(selectNetworkModalOpen)

@@ -10,6 +10,7 @@ import {
   useToggleWalletModal,
   useGetEthToUSD,
   useGetAbcBalance,
+  useFetchCurrentEpoch,
 } from "@state/application/hooks"
 import { NetworkSymbolEnum, NetworkSymbolAndId } from "@config/constants"
 import SEO, { SEOWithQueryProps } from "@components/SEO"
@@ -35,6 +36,11 @@ const GlobalLayout: React.FC<GlobalLayoutProps> = ({ children, location }) => {
   const toggleWalletModal = useToggleWalletModal()
   const getEthToUSD = useGetEthToUSD()
   const getAbcBalance = useGetAbcBalance()
+  const { fetchCurrentEpoch } = useFetchCurrentEpoch()
+
+  useEffect(() => {
+    fetchCurrentEpoch()
+  }, [fetchCurrentEpoch])
 
   useEffect(() => {
     getEthToUSD()

@@ -7,7 +7,7 @@ const LockRadioContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  row-gap: 16px;
+  gap: 16px;
 `
 
 const LockRadioLabel = styled.label`
@@ -18,6 +18,7 @@ const LockRadioLabel = styled.label`
 const LockRadioGroup = styled(Flex)`
   flex-wrap: wrap;
   justify-content: space-evenly;
+  gap: 6px;
 `
 
 const CustomDurationButton = styled(Button)`
@@ -38,6 +39,7 @@ type LockTimeSelectorProps = {
     min: number
     max: number
   }
+  formatter?: (value: number) => string
   durations: {
     label: string
     id: string
@@ -52,6 +54,7 @@ const LockTimeSelector = ({
   durations,
   label,
   learnMoreLink,
+  formatter = (value: number) => `${value}d`,
 }: LockTimeSelectorProps) => {
   const [isCustomDuration, setIsCustomDuration] = useState(false)
   return (
@@ -74,7 +77,8 @@ const LockTimeSelector = ({
           setValue={setLockDuration}
           min={customDurationConfig.min}
           max={customDurationConfig.max}
-          outputFormatter={(value: number) => `${value}d`}
+          outputFormatter={formatter}
+          step={1}
         />
       ) : (
         <LockRadioGroup>

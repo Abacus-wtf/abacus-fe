@@ -102,6 +102,7 @@ const StyledOutput = styled.output<{ visible: boolean }>`
   color: white;
   padding: 2px 10px;
   position: absolute;
+  width: max-content;
   border-radius: 4px;
   font-size: 14px;
   line-height: 140%;

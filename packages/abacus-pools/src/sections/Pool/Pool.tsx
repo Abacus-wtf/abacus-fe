@@ -65,7 +65,7 @@ const Pool: FunctionComponent<PoolProps> = ({ vaultId }) => {
   }, [getTickets])
 
   useEffect(() => {
-    // getBribeData()
+    getBribeData()
   }, [getBribeData])
 
   const globalStyleImg = poolData?.nfts?.[0]?.img ?? ""

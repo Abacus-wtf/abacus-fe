@@ -1,17 +1,26 @@
 import { NFTImage } from "@components/index"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import { Section, Media, Pill } from "abacus-ui"
+import { Section, Media, Pill, ProgressBar, Checkbox } from "abacus-ui"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
+import { formatEther } from "ethers/lib/utils"
 import PurchaseTokens from "./PurchaseTokens"
 import OwnerSection from "../OwnerSection"
+import {
+  CurrentTicket,
+  CurrentTicketValue,
+  PageContainer,
+  ProgressLabel,
+  ProgressValue,
+  Title,
+  TitleContainer,
+  UpperContainer,
+} from "./CurrentState.styled"
+import { Bribes } from "./Bribes"
 
 enum Page {
-  PurchaseTokens,
-  CurrentPositions,
-  ManagePool,
-  Tickets,
-  Bribes,
+  PurchaseTokens = "PurchaseTokens",
+  Bribes = "Bribes",
 }
 
 const Container = styled(Section)`
@@ -62,19 +71,39 @@ type CurrentStateProps = {
 const CurrentState: FunctionComponent<CurrentStateProps> = ({
   refreshPoolData,
 }) => {
-  const [page] = useState<Page>(Page.PurchaseTokens)
-  const { nfts } = useGetPoolData()
+  const [page, setPage] = useState<Page>(Page.PurchaseTokens)
+  const { nfts, size, isManager } = useGetPoolData()
 
-  const rightSection = useMemo(() => {
+  const pageUi = useMemo(() => {
     switch (page) {
       case Page.PurchaseTokens:
         return <PurchaseTokens refreshPoolData={refreshPoolData} />
       default:
-        return null
+        return <Bribes refreshPoolData={refreshPoolData} />
     }
   }, [page, refreshPoolData])
 
   const src = nfts?.[0]?.img ?? ""
+
+  const numTokensLocked = Number(formatEther(size))
+  const currentTicketTokensLocked = numTokensLocked % 1000
+  const currentTicket = Math.floor(numTokensLocked / 1000) + 1
+  const percentTicketsSold = currentTicketTokensLocked / 1000
+  const progressLabel = useMemo(() => {
+    const percentForDislplay = Number(
+      (percentTicketsSold * 100).toLocaleString("en-US", {
+        minimumSignificantDigits: 2,
+        maximumSignificantDigits: 2,
+      })
+    )
+    const numLeft = 1000 - currentTicketTokensLocked
+    return (
+      <ProgressLabel>
+        <ProgressValue>{percentForDislplay}</ProgressValue>% filled /&nbsp;
+        <ProgressValue>{numLeft}</ProgressValue>&nbsp;tokens left
+      </ProgressLabel>
+    )
+  }, [currentTicketTokensLocked, percentTicketsSold])
 
   return (
     <Container>
@@ -83,9 +112,43 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
           {nfts?.length ?? "-"} NFT{nfts?.length ?? 0 > 1 ? "s" : ""}
         </StyledPill>
         <NFTImage src={src} />
-        {true && <OwnerSection refreshPoolData={refreshPoolData} />}
+        {isManager && <OwnerSection refreshPoolData={refreshPoolData} />}
       </LeftSection>
-      <RightSection>{rightSection}</RightSection>
+      <RightSection>
+        <UpperContainer>
+          <TitleContainer>
+            <CurrentTicket>
+              Current Ticket:
+              <CurrentTicketValue>#{currentTicket}</CurrentTicketValue>
+            </CurrentTicket>
+            <Title>Purchase Tokens</Title>
+          </TitleContainer>
+          <ProgressBar progress={percentTicketsSold} label={progressLabel} />
+          <PageContainer>
+            <Checkbox
+              key={Page.PurchaseTokens}
+              type="radio"
+              name="page_selector"
+              label={Page.PurchaseTokens}
+              id={Page.PurchaseTokens}
+              value={Page.PurchaseTokens}
+              checked={page === Page.PurchaseTokens}
+              onChange={() => setPage(Page.PurchaseTokens)}
+            />
+            <Checkbox
+              key={Page.Bribes}
+              type="radio"
+              name="page_selector"
+              label={Page.Bribes}
+              id={Page.Bribes}
+              value={Page.Bribes}
+              checked={page === Page.Bribes}
+              onChange={() => setPage(Page.Bribes)}
+            />
+          </PageContainer>
+        </UpperContainer>
+        {pageUi}
+      </RightSection>
     </Container>
   )
 }

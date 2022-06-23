@@ -23,7 +23,7 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
   const [eth, setEth] = useState("")
   const [finalEpoch, setFinalEpoch] = useState<number>(null)
   const ethUSD = useEthToUSD(Number(eth))
-  const { tokenPrice, name } = useGetPoolData()
+  const { tokenPrice } = useGetPoolData()
   const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
   const currentEpoch = useCurrentEpoch()
   const epochLength = useEpochLength()
@@ -82,7 +82,7 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
         onChange={() => {}}
         label="To:"
         placeholder="0.00"
-        pill={name}
+        pill="Tokens"
         hint={`$${ethUSD}`}
       />
       <LockTimeSelector

@@ -80,9 +80,7 @@ export const useEntryLevels = () => {
         ticketNumber: ticket.ticketNumber,
         amount: ticket.tokenPurchases.reduce(
           (acc, tokenPurchase) =>
-            tokenPurchase.soldAt
-              ? 0
-              : acc + Number.parseFloat(formatEther(tokenPurchase.amount)),
+            tokenPurchase.soldAt ? 0 : acc + Number(tokenPurchase.amount),
           0
         ),
       })) ?? []
@@ -95,7 +93,7 @@ type Activity = {
   user: string
   action: "purchase" | "sale"
   timestamp: number
-  amount: BigNumber
+  amount: number
   length?: number
 }
 
@@ -115,8 +113,8 @@ export const useActivity = () => {
               user: tokenPurchase.owner,
               action: "purchase",
               timestamp,
-              amount: BigNumber.from(tokenPurchase.amount),
-              length: Number(tokenPurchase.length) * 1000,
+              amount: Number(tokenPurchase.amount),
+              length: Number(tokenPurchase.length),
             }
             const sale: Activity = tokenPurchase.soldAt
               ? {
@@ -124,7 +122,7 @@ export const useActivity = () => {
                   user: tokenPurchase.owner,
                   action: "purchase",
                   timestamp,
-                  amount: BigNumber.from(tokenPurchase.amount),
+                  amount: Number(tokenPurchase.amount),
                 }
               : null
             if (sale) {

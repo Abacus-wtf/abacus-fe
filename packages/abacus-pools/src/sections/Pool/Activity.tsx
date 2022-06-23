@@ -4,7 +4,6 @@ import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { getUserIcon } from "@utils"
 import moment from "moment"
-import { formatEther } from "ethers/lib/utils"
 import { shortenAddress } from "@config/utils"
 import { SectionHeader, SectionTitle } from "./Pool.styled"
 
@@ -66,12 +65,11 @@ const Activity: FunctionComponent = () => {
               <ActivityDetails>
                 <ActivityUser>{shortenAddress(item.user)}</ActivityUser>
                 <ActivityAmount>
-                  {Math.round(Number(formatEther(item.amount)))} Token{" "}
-                  {item.action}
+                  {item.amount} Token {item.action}
                   {item.action === "purchase"
-                    ? ` with a lockup period of ${moment(
-                        new Date().getTime() + item.length
-                      ).fromNow(true)}`
+                    ? ` with a lockup period of ${item.length} epoch${
+                        item?.length ?? 0 > 1 ? "s" : ""
+                      }`
                     : ""}
                 </ActivityAmount>
               </ActivityDetails>

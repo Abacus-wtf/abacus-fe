@@ -1,5 +1,4 @@
 import { BigNumber } from "ethers"
-import { formatEther } from "ethers/lib.esm/utils"
 import { range } from "lodash"
 
 type AggregateVaultTokenLockHistoryParams = {
@@ -40,7 +39,7 @@ export const aggregateVaultTokenLockHistory = (
           }
           return value
         }, BigNumber.from("0"))
-        return acc + Number(formatEther(thisDayValue)) / 1000
+        return acc + Number(thisDayValue) / 1000
       }, 0),
     }
     return valuation

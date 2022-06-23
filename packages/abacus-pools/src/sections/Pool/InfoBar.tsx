@@ -11,7 +11,6 @@ import {
 import { Checkmark, Close } from "abacus-ui"
 
 import { OutboundLink } from "gatsby-plugin-google-gtag"
-import { formatEther } from "ethers/lib/utils"
 
 const StyledOutboundLink = styled(OutboundLink)`
   color: ${({ theme }) => theme.colors.core.primary};
@@ -40,12 +39,13 @@ const PoolTitle = styled(InfoBarContent)`
 const InfoBar: FunctionComponent = () => {
   const { emissionsStarted, tokenPrice, totalParticipants, size, name } =
     useGetPoolData()
-  const tokensLockedEth = (
-    Number(formatEther(size)) * Number(tokenPrice)
-  ).toLocaleString("en-US", {
-    maximumSignificantDigits: 5,
-    minimumSignificantDigits: 2,
-  })
+  const tokensLockedEth = (Number(size) * Number(tokenPrice)).toLocaleString(
+    "en-US",
+    {
+      maximumSignificantDigits: 5,
+      minimumSignificantDigits: 2,
+    }
+  )
   const tokensLockedUSD = useEthToUSD(Number(tokensLockedEth))
   const theme = useTheme()
   return (

@@ -61,7 +61,7 @@ const Pool: FunctionComponent<PoolProps> = ({ vaultId }) => {
   }, [vaultId, refresh, setPool])
 
   useEffect(() => {
-    // getTickets()
+    getTickets()
   }, [getTickets])
 
   useEffect(() => {

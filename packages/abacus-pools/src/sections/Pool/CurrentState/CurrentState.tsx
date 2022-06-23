@@ -3,7 +3,6 @@ import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { Section, Media, Pill, ProgressBar, Checkbox } from "abacus-ui"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
-import { formatEther } from "ethers/lib/utils"
 import PurchaseTokens from "./PurchaseTokens"
 import OwnerSection from "../OwnerSection"
 import {
@@ -85,7 +84,7 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
 
   const src = nfts?.[0]?.img ?? ""
 
-  const numTokensLocked = Number(formatEther(size))
+  const numTokensLocked = Number(size)
   const currentTicketTokensLocked = numTokensLocked % 1000
   const currentTicket = Math.floor(numTokensLocked / 1000) + 1
   const percentTicketsSold = currentTicketTokensLocked / 1000

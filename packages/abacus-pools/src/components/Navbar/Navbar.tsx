@@ -203,8 +203,11 @@ const Navbar = ({ pathname }: NavbarProps) => {
             <StyledLink highlight={pathname === "/"} to="/">
               <Tera style={{ fontWeight: 300 }}>Pools</Tera>
             </StyledLink>
-            <StyledLink highlight={pathname === "/ve"} to="/ve">
-              <Tera style={{ fontWeight: 300 }}>Ve</Tera>
+            <StyledLink
+              highlight={pathname === "/allocations/"}
+              to="/allocations"
+            >
+              <Tera style={{ fontWeight: 300 }}>Allocations</Tera>
             </StyledLink>
           </MenuSection>
 

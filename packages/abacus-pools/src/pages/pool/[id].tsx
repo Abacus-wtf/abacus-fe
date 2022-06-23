@@ -3,12 +3,10 @@ import { Pool } from "@sections/index"
 import { PageProps } from "gatsby"
 import React from "react"
 
-function PoolPage(props: PageProps) {
-  const { params } = props
-  const vaultId = params.id
+function PoolPage({ params, location }: PageProps) {
   return (
-    <GlobalLayout {...props}>
-      <Pool vaultId={vaultId} />
+    <GlobalLayout location={location}>
+      <Pool vaultId={params.id} />
     </GlobalLayout>
   )
 }

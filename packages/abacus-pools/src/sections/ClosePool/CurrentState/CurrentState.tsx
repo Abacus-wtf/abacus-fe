@@ -77,9 +77,7 @@ const StyledButton = styled(Button)<{ fullWidth: boolean }>`
 `
 
 type CurrentStateProps = {
-  address: string
-  tokenId: string
-  nonce: string
+  vaultAddress: string
 }
 
 type Content = {
@@ -97,12 +95,10 @@ type Content = {
 }
 
 const CurrentState: FunctionComponent<CurrentStateProps> = ({
-  address,
-  tokenId,
-  nonce,
+  vaultAddress,
 }) => {
   const [page, setPage] = useState<Page>(Page.ApproveContract)
-  const { vaultAddress, isManager, approved, auction } = useGetPoolData()
+  const { isManager, approved, auction } = useGetPoolData()
   const { onApproveTransfer, isPending: isPendingApproval } =
     useOnApproveTransfer()
   const { onExitPool, isPending: isPendingExit } = useOnExitPool()
@@ -195,7 +191,7 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
               buttonType: ButtonType.Gray,
               buttonText: "Go to Auction Page >",
               as: Link,
-              to: `/auction?address=${address}&tokenId=${tokenId}&nonce=${nonce}`,
+              to: `/auction/${vaultAddress}`,
             },
           }
         default:
@@ -210,16 +206,7 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
             },
           }
       }
-    }, [
-      address,
-      isManager,
-      nonce,
-      onApproveTransfer,
-      onExitPool,
-      page,
-      tokenId,
-      vaultAddress,
-    ])
+    }, [isManager, onApproveTransfer, onExitPool, page, vaultAddress])
 
   return (
     <Container>

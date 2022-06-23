@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import styled, { css } from "styled-components"
-import { Section, Kilo, Mega, Pill } from "abacus-ui"
+import { Section, Kilo, Mega } from "abacus-ui"
 import { Link } from "gatsby"
 import { useTokenLockHistory } from "@state/poolData/hooks"
 import { calculateVariance } from "utils/stats"
@@ -95,12 +95,6 @@ const Variation = styled.div<{ variation: number }>`
       : ""}
 `
 
-const StyledPill = styled(Pill)`
-  position: absolute;
-  top: 24px;
-  right: 24px;
-`
-
 type PoolCardProps = {
   title: string
   nfts: {
@@ -140,10 +134,7 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
   const alt = nfts?.[0]?.alt ?? ""
   return (
     <StyledSection className={className} hasLink={!!link}>
-      <StyledPill>
-        {nfts?.length ?? "-"} NFT{nfts?.length ?? 0 > 1 ? "s" : ""}
-      </StyledPill>
-      <NFTImage src={src} alt={alt} />
+      <NFTImage src={src} alt={alt} numNfts={nfts?.length} />
       <CardInfoRow flexGrow>
         <CardInfo>
           <CardTitle as={link ? Link : "a"} to={link} hasLink={!!link}>

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react"
-import { PageProps, Link } from "gatsby"
-import * as queryString from "query-string"
+import { Link } from "gatsby"
+
 import { Media } from "abacus-ui"
 import styled, { createGlobalStyle } from "styled-components"
 import {
@@ -52,24 +52,23 @@ const StyledPoolCard = styled(PoolCard)`
 `
 
 type ClosePoolProps = {
-  location: PageProps["location"]
+  vaultAddress: string
 }
 
-const ClosePool: FunctionComponent<ClosePoolProps> = ({ location }) => {
-  const { address, tokenId, nonce } = queryString.parse(location.search)
-  const { nfts, size, totalParticipants, vaultAddress, name } = useGetPoolData()
+const ClosePool: FunctionComponent<ClosePoolProps> = ({ vaultAddress }) => {
+  const { nfts, size, totalParticipants, name } = useGetPoolData()
   const setPool = useSetPoolData()
   const getTickets = useGetTickets()
 
   useEffect(() => {
-    setPool(String(address), String(tokenId), Number(nonce))
-  }, [address, tokenId, nonce, setPool])
+    setPool(vaultAddress)
+  }, [setPool, vaultAddress])
 
   useEffect(() => {
     getTickets()
   }, [getTickets])
 
-  const poolLink = `/pool?address=${address}&tokenId=${tokenId}&nonce=${nonce}`
+  const poolLink = `/pool/${vaultAddress}`
 
   const globalImg = nfts?.[0]?.img ?? ""
 
@@ -86,11 +85,7 @@ const ClosePool: FunctionComponent<ClosePoolProps> = ({ location }) => {
           poolSize={formatEther(size.div(BigNumber.from("1000")))}
           vaultId={vaultAddress}
         />
-        <CurrentState
-          address={String(address)}
-          tokenId={String(tokenId)}
-          nonce={String(nonce)}
-        />
+        <CurrentState vaultAddress={vaultAddress} />
       </SplitSection>
     </Container>
   )

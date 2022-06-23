@@ -3,9 +3,9 @@ import { PageProps } from "gatsby"
 import { ClosePool } from "@sections/index"
 import React from "react"
 
-const ClosePoolPage = ({ location }: PageProps) => (
+const ClosePoolPage = ({ params, location }: PageProps) => (
   <GlobalLayout location={location}>
-    <ClosePool location={location} />
+    <ClosePool vaultAddress={params.id} />
   </GlobalLayout>
 )
 

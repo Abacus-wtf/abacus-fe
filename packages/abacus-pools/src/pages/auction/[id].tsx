@@ -3,9 +3,9 @@ import { Auction } from "@sections/index"
 import { PageProps } from "gatsby"
 import React from "react"
 
-const AuctionsPage = ({ location }: PageProps) => (
+const AuctionsPage = ({ params, location }: PageProps) => (
   <GlobalLayout location={location}>
-    <Auction location={location} />
+    <Auction vaultAddress={params.id} />
   </GlobalLayout>
 )
 

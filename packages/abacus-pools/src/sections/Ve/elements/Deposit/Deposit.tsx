@@ -2,6 +2,7 @@ import { LoadingOverlay } from "@components/index"
 import { useOnDepoistAbc } from "@hooks/veFunc"
 import { useVeData } from "@sections/Ve/useVeData"
 import { Input } from "abacus-ui"
+import { parseEther } from "ethers/lib/utils"
 import React, { useState } from "react"
 import {
   SectionTitle,
@@ -21,7 +22,7 @@ const Deposit = ({ refreshVeState }: DepositProps) => {
 
   const onClick = async () => {
     if (!isPendingDeposit) {
-      onDepoistAbc(abc, () => {
+      onDepoistAbc(parseEther(abc).toString(), () => {
         setAbc("")
         refreshVeState()
       })

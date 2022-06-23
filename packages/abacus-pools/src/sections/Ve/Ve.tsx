@@ -3,7 +3,7 @@ import React from "react"
 import styled from "styled-components"
 import { Epoch } from "@components/Epoch"
 import { Container } from "../../layouts/styles"
-import { Allocate, Deposit, YourAllocations, YourLocks } from "./elements"
+import { Allocate, Deposit, YourAllocations, YourDeposits } from "./elements"
 import { useVeData } from "./useVeData"
 
 const GridContainer = styled.div`
@@ -19,6 +19,7 @@ const GridContainer = styled.div`
 const Ve = () => {
   const { refreshVeState, holderData, epoch, setEpoch, epochEndTime, epochs } =
     useVeData()
+
   return (
     <Container>
       <Epoch
@@ -28,16 +29,12 @@ const Ve = () => {
         endTime={epochEndTime}
       />
       <GridContainer>
-        <YourLocks
-          refreshVeState={refreshVeState}
-          veBalance="veAbcBalance" // TODO: Remove
-          holder={holderData}
-        />
+        <YourDeposits refreshVeState={refreshVeState} holder={holderData} />
         <Deposit refreshVeState={refreshVeState} />
         <YourAllocations refreshVeState={refreshVeState} />
         <Allocate
           getVeData={refreshVeState}
-          veABCMaxToAllocate="veABCMaxToAllocate" // TODO: Remove
+          abcMaxToAllocate={String(holderData?.availableAbc ?? "")}
         />
       </GridContainer>
     </Container>

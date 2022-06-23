@@ -1,8 +1,8 @@
 import { Button, ButtonType, H4, Media, P } from "abacus-ui"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import styled from "styled-components"
-import { Countdown, LoadingOverlay } from "@components/index"
-import { useOnUnlockTokens } from "@hooks/veFunc"
+import { LoadingOverlay } from "@components/index"
+import { useOnWithdrawTokens } from "@hooks/veFunc"
 import { Holder } from "../useVeData"
 import { SectionTitle, StyledSection } from "./Ve.styles"
 
@@ -49,63 +49,47 @@ const StyledButton = styled(Button)`
   `}
 `
 
-type YourLocksProps = {
-  veBalance: string
+type YourDepositsProps = {
   holder: Holder | null
   refreshVeState: () => void
 }
 
-const YourLocks = ({ veBalance, holder, refreshVeState }: YourLocksProps) => {
-  const timeUnlock = holder?.timeUnlock ?? NaN
-  const [unlocked, setUnlocked] = useState(timeUnlock < new Date().getTime())
-  const { onUnlockTokens, isPending } = useOnUnlockTokens()
-
-  useEffect(() => {
-    if (timeUnlock < new Date().getTime()) {
-      setUnlocked(true)
-    }
-  }, [timeUnlock])
-
-  const unlockedABC = unlocked ? holder?.amountLocked ?? "-" : "0"
-  const lockedABC = holder?.amountLocked ?? "-"
-  const lockedVeABC = veBalance
-
+const YourDeposits = ({ holder, refreshVeState }: YourDepositsProps) => {
+  const { onWithdrawTokens, isPending } = useOnWithdrawTokens()
   return (
     <StyledSection order={1}>
       <LoadingOverlay loading={isPending} />
-      <SectionTitle>Your Locks</SectionTitle>
+      <SectionTitle>Your Deposits</SectionTitle>
       <GridContainer>
         <InfoItem order={1}>
-          <InfoTitle>Unlocked $ABC</InfoTitle>
+          <InfoTitle>Deposited $ABC</InfoTitle>
           <InfoContent>
-            {unlockedABC} <span>ABC</span>
+            {holder?.depositedAbc ?? "-"} <span>ABC</span>
           </InfoContent>
         </InfoItem>
         <InfoItem order={2}>
-          <InfoTitle>Locked $ABC</InfoTitle>
+          <InfoTitle>Allocated $ABC</InfoTitle>
           <InfoContent>
-            {lockedVeABC} <span>veABC</span> ({lockedABC} <span>ABC</span>)
+            {holder?.amountAllocated ?? "-"} <span>ABC</span>
           </InfoContent>
         </InfoItem>
         <InfoItem order={4}>
-          <InfoTitle>Unlock TIme</InfoTitle>
+          <InfoTitle>Available ABC</InfoTitle>
           <InfoContent>
-            {/* 21d 32m */}
-            {holder?.timeUnlock && (
-              <Countdown
-                endTime={holder.timeUnlock}
-                onComplete={() => setUnlocked(true)}
-              />
-            )}
+            {holder?.availableAbc ?? "-"} <span>ABC</span>
           </InfoContent>
         </InfoItem>
         <InfoItem order={3}>
           <StyledButton
-            onClick={() => onUnlockTokens(() => refreshVeState())}
-            disabled={!unlocked || isPending}
+            onClick={() =>
+              onWithdrawTokens(() => {
+                refreshVeState()
+              })
+            }
+            disabled={holder?.amountAllocated !== 0}
             buttonType={ButtonType.Gray}
           >
-            Unlock Tokens
+            Withdraw Tokens
           </StyledButton>
         </InfoItem>
       </GridContainer>
@@ -113,4 +97,4 @@ const YourLocks = ({ veBalance, holder, refreshVeState }: YourLocksProps) => {
   )
 }
 
-export { YourLocks }
+export { YourDeposits }

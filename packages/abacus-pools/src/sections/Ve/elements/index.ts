@@ -1,4 +1,4 @@
 export * from "./YourAllocations"
-export * from "./YourLocks"
+export * from "./YourDeposits"
 export * from "./Deposit"
 export * from "./Allocate"

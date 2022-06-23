@@ -9,10 +9,9 @@ import {
 import axios from "axios"
 import ABC_TOKEN_ABI from "@config/contracts/ABC_TOKEN_ABI.json"
 import { useActiveWeb3React, useWeb3Contract } from "@hooks/index"
-import { formatEther, parseEther } from "ethers/lib/utils"
+import { formatEther } from "ethers/lib/utils"
 import request from "graphql-request"
 import { GetAggregatesDocument, GetAggregatesQuery } from "abacus-graph"
-import { BigNumber } from "ethers"
 import { AppDispatch, AppState } from "../index"
 import {
   toggleWalletModal,
@@ -120,11 +119,8 @@ export const useGetAbcBalance = () => {
 
     try {
       const balance = await abcCall(ABC_TOKEN).methods.balanceOf(account).call()
-      dispatch(
-        setAbcBalance(
-          Number(formatEther(BigNumber.from(balance).sub(parseEther("10"))))
-        )
-      )
+      const formatted = Number(formatEther(balance))
+      dispatch(setAbcBalance(formatted))
     } catch (e) {
       console.log(`Unable to get current ABC Balance for ${account}`)
       console.error(`Error: ${e}`)

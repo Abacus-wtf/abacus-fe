@@ -86,12 +86,12 @@ export const useOnDepoistAbc = () => {
   }
 }
 
-export const useOnUnlockTokens = () => {
+export const useOnWithdrawTokens = () => {
   const { account, library } = useActiveWeb3React()
   const { generalizedContractCall, isPending } = useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
 
-  const onUnlockTokens = useCallback(
+  const onWithdrawTokens = useCallback(
     async (cb: () => void) => {
       const veContract = getContract(
         VE_ABC_TOKEN,
@@ -99,13 +99,13 @@ export const useOnUnlockTokens = () => {
         library,
         account
       )
-      const method = veContract.unlockTokens
-      const estimate = veContract.estimateGas.unlockTokens
+      const method = veContract.withdrawAbc
+      const estimate = veContract.estimateGas.withdrawAbc
       const args = []
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
-          summary: "Unlock Tokens",
+          summary: "Withdraw Tokens",
         })
         await response.wait()
         cb()
@@ -121,7 +121,7 @@ export const useOnUnlockTokens = () => {
     [library, account, generalizedContractCall, addTransaction]
   )
   return {
-    onUnlockTokens,
+    onWithdrawTokens,
     isPending,
   }
 }

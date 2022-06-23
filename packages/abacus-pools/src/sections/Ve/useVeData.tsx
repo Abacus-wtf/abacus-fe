@@ -5,13 +5,7 @@ import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import { formatEther, parseEther } from "ethers/lib/utils"
 import { BigNumber } from "@ethersproject/bignumber"
 import moment from "moment"
-// import {
-//   useOnAddTokens,
-//   useOnChangeAllocation,
-//   useOnClaimReward,
-//   useOnLockTokens,
-//   useOnUnlockTokens,
-// } from "@hooks/veFunc"
+
 import {
   useFetchEpochAllocations,
   useFetchUserAllocations,
@@ -24,8 +18,6 @@ import VE_ABC_ABI from "../../config/contracts/VE_ABC_TOKEN_ABI.json"
 import ABC_ABI from "../../config/contracts/ABC_TOKEN_ABI.json"
 
 export interface Holder {
-  timeUnlock: number
-  amountLocked: number
   multiplier: number
   amountAllocated: number
   amountAutoAllocated: number
@@ -41,8 +33,6 @@ const useVeData = () => {
   const currentEpoch = useCurrentEpoch()
   const [epoch, setEpoch] = useState(0)
   const [abcMaxBalance, setABCMaxBalance] = useState("")
-  const [veABCMaxToAllocate, setVeABCMaxToAllocate] = useState("")
-  const [veAbcBalance, setVeAbcBalance] = useState("")
   const [epochEndTime, setEpochEndTime] = useState<number>(null)
 
   const [holderData, setHolderData] = useState<Holder | null>(null)
@@ -62,51 +52,38 @@ const useVeData = () => {
   // const { onClaimReward, isPending: isPendingClaimReward } = useOnClaimReward()
 
   const getVeData = useCallback(async () => {
-    if (!currentEpoch) {
+    if (!currentEpoch || !account) {
       return
     }
     const [
-      [veHolderHistory, veBalance, getAmountAllocated, getAmountAutoAllocated],
+      [holderHistory, getAmountAllocated, getAmountAutoAllocated],
       balance,
     ] = await Promise.all([
       veAbcCall(
         VE_ABC_TOKEN,
-        [
-          "veHolderHistory",
-          "getVeAmount",
-          "getAmountAllocated",
-          "getAmountAutoAllocated",
-        ],
-        [[account], [account, currentEpoch], [account], [account, currentEpoch]]
+        ["holderHistory", "getAmountAllocated", "getAmountAutoAllocated"],
+        [[account], [account, currentEpoch], [account, currentEpoch]]
       ),
       abcCall(ABC_TOKEN).methods.balanceOf(account).call(),
     ])
+    console.log("holderHistory", holderHistory)
+    console.log("getAmountAllocated", getAmountAllocated)
+    console.log("getAmountAutoAllocated", getAmountAutoAllocated)
 
     setShowUnlockTokensButton(
-      Number(formatEther(veHolderHistory[3])) === 0 &&
-        BigNumber.from(veHolderHistory[0]).toNumber() < moment().unix()
+      BigNumber.from(holderHistory[0]).toNumber() < moment().unix()
     )
-
-    setVeAbcBalance(formatEther(veBalance[0] ?? "0"))
 
     setABCMaxBalance(BigNumber.from(balance).sub(parseEther("10")).toString())
 
     setHolderData({
-      timeUnlock: BigNumber.from(veHolderHistory[2]).mul(1000).toNumber(),
-      amountLocked: Number(formatEther(veHolderHistory[3])),
       multiplier: 1,
       amountAllocated: Number(formatEther(getAmountAllocated[0])),
       amountAutoAllocated: Number(formatEther(getAmountAutoAllocated[0])),
     })
 
-    setVeABCMaxToAllocate(
-      formatEther(
-        BigNumber.from(veBalance[0]).sub(BigNumber.from(getAmountAllocated[0]))
-      )
-    )
-
     setShowClaimButton(
-      BigNumber.from(veHolderHistory[0]).toNumber() < Number(currentEpoch)
+      BigNumber.from(holderHistory[0]).toNumber() < Number(currentEpoch)
     )
 
     setEpoch(Number(currentEpoch))
@@ -160,11 +137,9 @@ const useVeData = () => {
     setEpoch,
     epochs,
     abcMaxBalance,
-    veAbcBalance,
     holderData,
     showClaimButton,
     showUnlockTokensButton,
-    veABCMaxToAllocate,
     epochEndTime,
     getVeData,
     refreshVeState: () => setRefresh({}),

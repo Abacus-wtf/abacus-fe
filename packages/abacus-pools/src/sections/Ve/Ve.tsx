@@ -1,9 +1,9 @@
 import { Media } from "abacus-ui"
-import React, { useEffect } from "react"
+import React from "react"
 import styled from "styled-components"
 import { Epoch } from "@components/Epoch"
 import { Container } from "../../layouts/styles"
-import { Allocate, Lock, YourAllocations, YourLocks } from "./elements"
+import { Allocate, Deposit, YourAllocations, YourLocks } from "./elements"
 import { useVeData } from "./useVeData"
 
 const GridContainer = styled.div`
@@ -17,16 +17,8 @@ const GridContainer = styled.div`
 `
 
 const Ve = () => {
-  const {
-    veAbcBalance,
-    refreshVeState,
-    holderData,
-    veABCMaxToAllocate,
-    epoch,
-    setEpoch,
-    epochEndTime,
-    epochs,
-  } = useVeData()
+  const { refreshVeState, holderData, epoch, setEpoch, epochEndTime, epochs } =
+    useVeData()
   return (
     <Container>
       <Epoch
@@ -38,14 +30,14 @@ const Ve = () => {
       <GridContainer>
         <YourLocks
           refreshVeState={refreshVeState}
-          veBalance={veAbcBalance}
+          veBalance="veAbcBalance" // TODO: Remove
           holder={holderData}
         />
-        <Lock refreshVeState={refreshVeState} />
+        <Deposit refreshVeState={refreshVeState} />
         <YourAllocations refreshVeState={refreshVeState} />
         <Allocate
           getVeData={refreshVeState}
-          veABCMaxToAllocate={veABCMaxToAllocate}
+          veABCMaxToAllocate="veABCMaxToAllocate" // TODO: Remove
         />
       </GridContainer>
     </Container>

@@ -2,7 +2,7 @@ import GlobalLayout from "@layouts/index"
 import { Ve } from "@sections/index"
 import React from "react"
 
-function VePage(props: any) {
+function DepositPage(props: any) {
   return (
     <GlobalLayout {...props}>
       <Ve />
@@ -10,4 +10,4 @@ function VePage(props: any) {
   )
 }
 
-export default VePage
+export default DepositPage

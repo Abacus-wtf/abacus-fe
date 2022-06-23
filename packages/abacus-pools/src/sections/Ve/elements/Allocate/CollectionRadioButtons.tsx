@@ -66,6 +66,34 @@ const CustomCheckboxContainer = styled.div`
   `}
 `
 
+const CustomAddressInput = styled(Input)`
+  border: 2px solid ${({ theme }) => theme.colors.utility.blue};
+  border-radius: ${({ theme }) => theme.borderRadius.button};
+  position: relative;
+  justify-content: center;
+
+  & > div {
+    box-shadow: none !important;
+  }
+
+  & label {
+    position: absolute;
+    margin: 0;
+    top: 0;
+    left: 20px;
+    margin: 0;
+    transform: translateY(-50%);
+    padding: 2px 4px;
+    ${Font("nano")}
+    font-weight: bold;
+    background-color: ${({ theme }) => theme.colors.core.white};
+  }
+
+  & input {
+    padding: 0 6px;
+  }
+`
+
 type CollectionRadioButtonsProps = {
   selectedCollection: string
   setSelectedCollection: React.Dispatch<string>
@@ -116,31 +144,32 @@ const CollectionRadioButtons = ({
               setIsShowCustomCollection(false)
             }}
           />
-          <Checkbox
-            key="CUSTOM"
-            type="radio"
-            name={RADIO_NAME}
-            label="Input Custom Address"
-            value=""
-            id="CUSTOM"
-            checked={showCustomCollection}
-            onChange={() => {
-              setIsShowCustomCollection(true)
-              setSelectedCollection("")
-            }}
-          />
+          {showCustomCollection ? (
+            <CustomAddressInput
+              label="Custom address"
+              type="text"
+              name="custom_address"
+              value={selectedCollection}
+              onChange={setSelectedCollection}
+              placeholder={ZERO_ADDRESS}
+            />
+          ) : (
+            <Checkbox
+              key="CUSTOM"
+              type="radio"
+              name={RADIO_NAME}
+              label="Input Custom Address"
+              value=""
+              id="CUSTOM"
+              checked={showCustomCollection}
+              onChange={() => {
+                setIsShowCustomCollection(true)
+                setSelectedCollection("")
+              }}
+            />
+          )}
         </CustomCheckboxContainer>
       </RadioContainer>
-      {showCustomCollection && (
-        <Input
-          label="Custom address"
-          type="text"
-          name="custom_address"
-          value={selectedCollection}
-          onChange={setSelectedCollection}
-          placeholder={ZERO_ADDRESS}
-        />
-      )}
     </Container>
   )
 }

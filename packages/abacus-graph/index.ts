@@ -1053,10 +1053,11 @@ export enum Ticket_OrderBy {
 export type TokenPurchase = {
   __typename?: 'TokenPurchase';
   amount: Scalars['BigInt'];
+  finalEpoch: Scalars['Int'];
   id: Scalars['ID'];
-  length: Scalars['BigInt'];
   owner: Scalars['ID'];
   soldAt?: Maybe<Scalars['BigInt']>;
+  startEpoch: Scalars['Int'];
   ticket: Ticket;
   timestamp: Scalars['BigInt'];
 };
@@ -1072,6 +1073,14 @@ export type TokenPurchase_Filter = {
   amount_lte?: InputMaybe<Scalars['BigInt']>;
   amount_not?: InputMaybe<Scalars['BigInt']>;
   amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  finalEpoch?: InputMaybe<Scalars['Int']>;
+  finalEpoch_gt?: InputMaybe<Scalars['Int']>;
+  finalEpoch_gte?: InputMaybe<Scalars['Int']>;
+  finalEpoch_in?: InputMaybe<Array<Scalars['Int']>>;
+  finalEpoch_lt?: InputMaybe<Scalars['Int']>;
+  finalEpoch_lte?: InputMaybe<Scalars['Int']>;
+  finalEpoch_not?: InputMaybe<Scalars['Int']>;
+  finalEpoch_not_in?: InputMaybe<Array<Scalars['Int']>>;
   id?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
@@ -1080,14 +1089,6 @@ export type TokenPurchase_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-  length?: InputMaybe<Scalars['BigInt']>;
-  length_gt?: InputMaybe<Scalars['BigInt']>;
-  length_gte?: InputMaybe<Scalars['BigInt']>;
-  length_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  length_lt?: InputMaybe<Scalars['BigInt']>;
-  length_lte?: InputMaybe<Scalars['BigInt']>;
-  length_not?: InputMaybe<Scalars['BigInt']>;
-  length_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   owner?: InputMaybe<Scalars['ID']>;
   owner_gt?: InputMaybe<Scalars['ID']>;
   owner_gte?: InputMaybe<Scalars['ID']>;
@@ -1104,6 +1105,14 @@ export type TokenPurchase_Filter = {
   soldAt_lte?: InputMaybe<Scalars['BigInt']>;
   soldAt_not?: InputMaybe<Scalars['BigInt']>;
   soldAt_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startEpoch?: InputMaybe<Scalars['Int']>;
+  startEpoch_gt?: InputMaybe<Scalars['Int']>;
+  startEpoch_gte?: InputMaybe<Scalars['Int']>;
+  startEpoch_in?: InputMaybe<Array<Scalars['Int']>>;
+  startEpoch_lt?: InputMaybe<Scalars['Int']>;
+  startEpoch_lte?: InputMaybe<Scalars['Int']>;
+  startEpoch_not?: InputMaybe<Scalars['Int']>;
+  startEpoch_not_in?: InputMaybe<Array<Scalars['Int']>>;
   ticket?: InputMaybe<Scalars['String']>;
   ticket_contains?: InputMaybe<Scalars['String']>;
   ticket_contains_nocase?: InputMaybe<Scalars['String']>;
@@ -1136,10 +1145,11 @@ export type TokenPurchase_Filter = {
 
 export enum TokenPurchase_OrderBy {
   Amount = 'amount',
+  FinalEpoch = 'finalEpoch',
   Id = 'id',
-  Length = 'length',
   Owner = 'owner',
   SoldAt = 'soldAt',
+  StartEpoch = 'startEpoch',
   Ticket = 'ticket',
   Timestamp = 'timestamp'
 }
@@ -1386,7 +1396,7 @@ export type GetEpochAllocationsQueryVariables = Exact<{
 
 export type GetEpochAllocationsQuery = { __typename?: 'Query', epochAllocations: Array<{ __typename?: 'EpochAllocation', id: string, amount: string, collection: string, epoch: string }> };
 
-export type VaultFragment = { __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: string, emissionsSigned: boolean, size: string, totalParticipants: number, nfts: Array<{ __typename?: 'NFT', id: string, address: string, tokenId: string }>, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, length: string, owner: string, soldAt?: string | null, timestamp: string }> }> };
+export type VaultFragment = { __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: string, emissionsSigned: boolean, size: string, totalParticipants: number, nfts: Array<{ __typename?: 'NFT', id: string, address: string, tokenId: string }>, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, soldAt?: string | null, timestamp: string }> }> };
 
 export type GetPoolsQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -1397,18 +1407,18 @@ export type GetPoolsQueryVariables = Exact<{
 }>;
 
 
-export type GetPoolsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: string, emissionsSigned: boolean, size: string, totalParticipants: number, nfts: Array<{ __typename?: 'NFT', id: string, address: string, tokenId: string }>, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, length: string, owner: string, soldAt?: string | null, timestamp: string }> }> }> };
+export type GetPoolsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: string, emissionsSigned: boolean, size: string, totalParticipants: number, nfts: Array<{ __typename?: 'NFT', id: string, address: string, tokenId: string }>, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, soldAt?: string | null, timestamp: string }> }> }> };
 
 export type GetPoolQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetPoolQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: string, emissionsSigned: boolean, size: string, totalParticipants: number, nfts: Array<{ __typename?: 'NFT', id: string, address: string, tokenId: string }>, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, length: string, owner: string, soldAt?: string | null, timestamp: string }> }> } | null };
+export type GetPoolQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: string, emissionsSigned: boolean, size: string, totalParticipants: number, nfts: Array<{ __typename?: 'NFT', id: string, address: string, tokenId: string }>, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, soldAt?: string | null, timestamp: string }> }> } | null };
 
-export type TokenPurchaseFragment = { __typename?: 'TokenPurchase', amount: string, id: string, length: string, owner: string, soldAt?: string | null, timestamp: string };
+export type TokenPurchaseFragment = { __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, soldAt?: string | null, timestamp: string };
 
-export type TicketFragment = { __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, length: string, owner: string, soldAt?: string | null, timestamp: string }> };
+export type TicketFragment = { __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, soldAt?: string | null, timestamp: string }> };
 
 export type GetTicketsQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -1417,7 +1427,7 @@ export type GetTicketsQueryVariables = Exact<{
 }>;
 
 
-export type GetTicketsQuery = { __typename?: 'Query', tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, length: string, owner: string, soldAt?: string | null, timestamp: string }> }> };
+export type GetTicketsQuery = { __typename?: 'Query', tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, soldAt?: string | null, timestamp: string }> }> };
 
 export type UserAllocationsQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -1429,7 +1439,7 @@ export type UserAllocationsQuery = { __typename?: 'Query', user?: { __typename?:
 
 export const AllocationFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Allocation"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Allocation"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"epoch"}},{"kind":"Field","name":{"kind":"Name","value":"collection"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}}]} as unknown as DocumentNode<AllocationFragment, unknown>;
 export const BidFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Bid"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Bid"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"bidder"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]} as unknown as DocumentNode<BidFragment, unknown>;
-export const TokenPurchaseFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TokenPurchase"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TokenPurchase"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"length"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"soldAt"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}}]} as unknown as DocumentNode<TokenPurchaseFragment, unknown>;
+export const TokenPurchaseFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TokenPurchase"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TokenPurchase"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"startEpoch"}},{"kind":"Field","name":{"kind":"Name","value":"finalEpoch"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"soldAt"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}}]} as unknown as DocumentNode<TokenPurchaseFragment, unknown>;
 export const TicketFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Ticket"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Ticket"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ticketNumber"}},{"kind":"Field","name":{"kind":"Name","value":"vaultAddress"}},{"kind":"Field","name":{"kind":"Name","value":"tokenPurchasesLength"}},{"kind":"Field","name":{"kind":"Name","value":"tokenPurchases"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenPurchase"}}]}}]}},...TokenPurchaseFragmentDoc.definitions]} as unknown as DocumentNode<TicketFragment, unknown>;
 export const VaultFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Vault"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Vault"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nfts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"tokenId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"emissionsSigned"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"totalParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"tickets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Ticket"}}]}}]}},...TicketFragmentDoc.definitions]} as unknown as DocumentNode<VaultFragment, unknown>;
 export const GetAggregatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAggregates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"StringValue","value":"MEDICI_RULES","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"totalPools"}},{"kind":"Field","name":{"kind":"Name","value":"TVL"}},{"kind":"Field","name":{"kind":"Name","value":"totalParticipants"}}]}}]}}]} as unknown as DocumentNode<GetAggregatesQuery, GetAggregatesQueryVariables>;

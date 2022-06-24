@@ -1,7 +1,8 @@
 fragment TokenPurchase on TokenPurchase {
   amount
   id
-  length
+  startEpoch
+  finalEpoch
   owner
   soldAt
   timestamp

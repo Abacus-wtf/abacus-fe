@@ -924,10 +924,11 @@ export declare enum Ticket_OrderBy {
 export declare type TokenPurchase = {
     __typename?: 'TokenPurchase';
     amount: Scalars['BigInt'];
+    finalEpoch: Scalars['Int'];
     id: Scalars['ID'];
-    length: Scalars['BigInt'];
     owner: Scalars['ID'];
     soldAt?: Maybe<Scalars['BigInt']>;
+    startEpoch: Scalars['Int'];
     ticket: Ticket;
     timestamp: Scalars['BigInt'];
 };
@@ -942,6 +943,14 @@ export declare type TokenPurchase_Filter = {
     amount_lte?: InputMaybe<Scalars['BigInt']>;
     amount_not?: InputMaybe<Scalars['BigInt']>;
     amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    finalEpoch?: InputMaybe<Scalars['Int']>;
+    finalEpoch_gt?: InputMaybe<Scalars['Int']>;
+    finalEpoch_gte?: InputMaybe<Scalars['Int']>;
+    finalEpoch_in?: InputMaybe<Array<Scalars['Int']>>;
+    finalEpoch_lt?: InputMaybe<Scalars['Int']>;
+    finalEpoch_lte?: InputMaybe<Scalars['Int']>;
+    finalEpoch_not?: InputMaybe<Scalars['Int']>;
+    finalEpoch_not_in?: InputMaybe<Array<Scalars['Int']>>;
     id?: InputMaybe<Scalars['ID']>;
     id_gt?: InputMaybe<Scalars['ID']>;
     id_gte?: InputMaybe<Scalars['ID']>;
@@ -950,14 +959,6 @@ export declare type TokenPurchase_Filter = {
     id_lte?: InputMaybe<Scalars['ID']>;
     id_not?: InputMaybe<Scalars['ID']>;
     id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-    length?: InputMaybe<Scalars['BigInt']>;
-    length_gt?: InputMaybe<Scalars['BigInt']>;
-    length_gte?: InputMaybe<Scalars['BigInt']>;
-    length_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    length_lt?: InputMaybe<Scalars['BigInt']>;
-    length_lte?: InputMaybe<Scalars['BigInt']>;
-    length_not?: InputMaybe<Scalars['BigInt']>;
-    length_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     owner?: InputMaybe<Scalars['ID']>;
     owner_gt?: InputMaybe<Scalars['ID']>;
     owner_gte?: InputMaybe<Scalars['ID']>;
@@ -974,6 +975,14 @@ export declare type TokenPurchase_Filter = {
     soldAt_lte?: InputMaybe<Scalars['BigInt']>;
     soldAt_not?: InputMaybe<Scalars['BigInt']>;
     soldAt_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startEpoch?: InputMaybe<Scalars['Int']>;
+    startEpoch_gt?: InputMaybe<Scalars['Int']>;
+    startEpoch_gte?: InputMaybe<Scalars['Int']>;
+    startEpoch_in?: InputMaybe<Array<Scalars['Int']>>;
+    startEpoch_lt?: InputMaybe<Scalars['Int']>;
+    startEpoch_lte?: InputMaybe<Scalars['Int']>;
+    startEpoch_not?: InputMaybe<Scalars['Int']>;
+    startEpoch_not_in?: InputMaybe<Array<Scalars['Int']>>;
     ticket?: InputMaybe<Scalars['String']>;
     ticket_contains?: InputMaybe<Scalars['String']>;
     ticket_contains_nocase?: InputMaybe<Scalars['String']>;
@@ -1005,10 +1014,11 @@ export declare type TokenPurchase_Filter = {
 };
 export declare enum TokenPurchase_OrderBy {
     Amount = "amount",
+    FinalEpoch = "finalEpoch",
     Id = "id",
-    Length = "length",
     Owner = "owner",
     SoldAt = "soldAt",
+    StartEpoch = "startEpoch",
     Ticket = "ticket",
     Timestamp = "timestamp"
 }
@@ -1328,7 +1338,8 @@ export declare type VaultFragment = {
             __typename?: 'TokenPurchase';
             amount: string;
             id: string;
-            length: string;
+            startEpoch: number;
+            finalEpoch: number;
             owner: string;
             soldAt?: string | null;
             timestamp: string;
@@ -1370,7 +1381,8 @@ export declare type GetPoolsQuery = {
                 __typename?: 'TokenPurchase';
                 amount: string;
                 id: string;
-                length: string;
+                startEpoch: number;
+                finalEpoch: number;
                 owner: string;
                 soldAt?: string | null;
                 timestamp: string;
@@ -1409,7 +1421,8 @@ export declare type GetPoolQuery = {
                 __typename?: 'TokenPurchase';
                 amount: string;
                 id: string;
-                length: string;
+                startEpoch: number;
+                finalEpoch: number;
                 owner: string;
                 soldAt?: string | null;
                 timestamp: string;
@@ -1421,7 +1434,8 @@ export declare type TokenPurchaseFragment = {
     __typename?: 'TokenPurchase';
     amount: string;
     id: string;
-    length: string;
+    startEpoch: number;
+    finalEpoch: number;
     owner: string;
     soldAt?: string | null;
     timestamp: string;
@@ -1436,7 +1450,8 @@ export declare type TicketFragment = {
         __typename?: 'TokenPurchase';
         amount: string;
         id: string;
-        length: string;
+        startEpoch: number;
+        finalEpoch: number;
         owner: string;
         soldAt?: string | null;
         timestamp: string;
@@ -1459,7 +1474,8 @@ export declare type GetTicketsQuery = {
             __typename?: 'TokenPurchase';
             amount: string;
             id: string;
-            length: string;
+            startEpoch: number;
+            finalEpoch: number;
             owner: string;
             soldAt?: string | null;
             timestamp: string;

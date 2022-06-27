@@ -13,6 +13,8 @@ declare type InputProps = {
     disabled?: boolean;
     required?: boolean;
     step?: string;
+    min?: number;
+    max?: number;
 };
 declare const Input: FunctionComponent<InputProps>;
 export default Input;

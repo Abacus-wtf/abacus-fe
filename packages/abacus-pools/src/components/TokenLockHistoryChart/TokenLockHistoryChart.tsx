@@ -3,16 +3,16 @@ import { BarChart, Bar, ResponsiveContainer, YAxis, Tooltip } from "recharts"
 import styled from "styled-components"
 import { CustomTooltip } from "./Tooltip"
 
-const Container = styled.div`
+const Container = styled.div<{ empty?: boolean }>`
   display: flex;
   flex-direction: column;
-  height: 150px;
+  height: ${({ empty }) => (empty ? "auto" : "150px")};
   width: 100%;
 `
 
 type TokenLockHistoryChartProps = {
   data: {
-    date: number
+    epoch: number
     uv: number
   }[]
   showYAxis?: boolean
@@ -26,7 +26,7 @@ const TokenLockHistoryChart = ({
 }: TokenLockHistoryChartProps) => {
   const hasData = data.some((value) => value.uv > 0)
   if (!hasData) {
-    return <Container>No purchases in the last 4 weeks</Container>
+    return <Container empty>No purchases in the last 4 weeks</Container>
   }
   return (
     <Container className={className}>

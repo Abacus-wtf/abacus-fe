@@ -2,11 +2,14 @@
 
 fragment Vault on Vault {
   id
-  nftAddress
-  tokenId
+  nfts {
+    id
+    address
+    tokenId
+  }
+  name
   owner
   status
-  nonce
   timestamp
   emissionsSigned
   size

@@ -2,19 +2,18 @@ import { useCallback } from "react"
 import { AppDispatch, AppState } from "@state/index"
 import { useDispatch, useSelector } from "react-redux"
 import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
-import FACTORY_ABI from "@config/contracts/ABC_FACTORY_ABI.json"
 import VAULT_ABI from "@config/contracts/ABC_VAULT_ABI.json"
 import BRIBE_ABI from "@config/contracts/ABC_BRIBE_FACTORY_ABI.json"
 import CLOSE_POOL_ABI from "@config/contracts/ABC_CLOSE_POOL_ABI.json"
 import ERC_721_ABI from "@config/contracts/ERC_721_ABI.json"
 import {
   ABC_BRIBE_FACTORY,
-  ABC_FACTORY,
   GRAPHQL_ENDPOINT,
   IS_PRODUCTION,
+  OPENSEA_LINK,
   ZERO_ADDRESS,
 } from "@config/constants"
-import { OpenSeaAsset, openseaGet, shortenAddress } from "@config/utils"
+import { shortenAddress } from "@config/utils"
 import { formatEther } from "ethers/lib/utils"
 import { BigNumber } from "ethers"
 import _ from "lodash"
@@ -30,6 +29,8 @@ import {
   GetPoolQueryVariables,
 } from "abacus-graph"
 import { aggregateVaultTokenLockHistory } from "utils/vaultTickets"
+import { matchOpenSeaAssetToNFT, openseaGetMany } from "abacus-utils"
+import { useCurrentEpoch } from "@state/application/hooks"
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"
 import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
 import { Bribe } from "./reducer"
@@ -72,6 +73,56 @@ export const useTickets = () =>
     getTicketsSelector
   )
 
+type SellablePosition = {
+  id: string
+  amount: number
+  nonce: number
+  startEpoch: number
+  finalEpoch: number
+}
+
+export const useSellablePositions = (currentEpoch: number, account: string) => {
+  const initial: SellablePosition[] = []
+  const sellablePositionsSelector = createSelector(
+    getTicketsSelector,
+    (tickets) =>
+      tickets
+        ?.reduce((acc, ticket) => {
+          if (!ticket.tokenPurchasesLength || !account) {
+            return acc
+          }
+          const nextSellablePositions: SellablePosition[] =
+            ticket.tokenPurchases.reduce((tokenAcc, tokenPurchase) => {
+              const isAccountsPurchase =
+                tokenPurchase.owner.toLowerCase() === account.toLowerCase()
+              if (!isAccountsPurchase) {
+                return tokenAcc
+              }
+              const isSold = !!tokenPurchase.soldAt
+              if (isSold) {
+                return tokenAcc
+              }
+              const locked = tokenPurchase.finalEpoch > currentEpoch
+              if (locked) {
+                return tokenAcc
+              }
+              const sellablePosition: SellablePosition = {
+                id: tokenPurchase.id,
+                amount: Number(tokenPurchase.amount),
+                nonce: 0, // TODO: Get this from event emission
+                startEpoch: tokenPurchase.startEpoch,
+                finalEpoch: tokenPurchase.finalEpoch,
+              }
+
+              return [...tokenAcc, sellablePosition]
+            }, initial)
+          return [...acc, ...nextSellablePositions]
+        }, initial)
+        .sort((a, b) => b.startEpoch - a.startEpoch)
+  )
+  return useSelector(sellablePositionsSelector)
+}
+
 export const useEntryLevels = () => {
   const entryLevelsSelector = createSelector(
     getTicketsSelector,
@@ -80,9 +131,7 @@ export const useEntryLevels = () => {
         ticketNumber: ticket.ticketNumber,
         amount: ticket.tokenPurchases.reduce(
           (acc, tokenPurchase) =>
-            tokenPurchase.soldAt
-              ? 0
-              : acc + Number.parseFloat(formatEther(tokenPurchase.amount)),
+            tokenPurchase.soldAt ? 0 : acc + Number(tokenPurchase.amount),
           0
         ),
       })) ?? []
@@ -95,7 +144,7 @@ type Activity = {
   user: string
   action: "purchase" | "sale"
   timestamp: number
-  amount: BigNumber
+  amount: number
   length?: number
 }
 
@@ -115,8 +164,8 @@ export const useActivity = () => {
               user: tokenPurchase.owner,
               action: "purchase",
               timestamp,
-              amount: BigNumber.from(tokenPurchase.amount),
-              length: Number(tokenPurchase.length) * 1000,
+              amount: Number(tokenPurchase.amount),
+              length: tokenPurchase.finalEpoch - tokenPurchase.startEpoch,
             }
             const sale: Activity = tokenPurchase.soldAt
               ? {
@@ -124,7 +173,7 @@ export const useActivity = () => {
                   user: tokenPurchase.owner,
                   action: "purchase",
                   timestamp,
-                  amount: BigNumber.from(tokenPurchase.amount),
+                  amount: Number(tokenPurchase.amount),
                 }
               : null
             if (sale) {
@@ -142,9 +191,10 @@ export const useActivity = () => {
 }
 
 export const useSinglePoolTokenLockHistory = () => {
+  const currentEpoch = useCurrentEpoch()
   const tokenLockHistorySelector = createSelector(
     getTicketsSelector,
-    aggregateVaultTokenLockHistory
+    aggregateVaultTokenLockHistory(currentEpoch)
   )
 
   return useSelector(tokenLockHistorySelector)
@@ -160,13 +210,10 @@ export const useGetBribeData = () => {
   return useCallback(async () => {
     if (poolData.vaultAddress === undefined) return
 
-    const [offeredBribeSize, bribePerUserIndex] = await bribeMulti(
+    const [offeredBribeSize] = await bribeMulti(
       ABC_BRIBE_FACTORY,
-      ["offeredBribeSize", "bribePerUserIndex"],
-      [
-        [poolData.address, poolData.tokenId],
-        [poolData.address, poolData.tokenId],
-      ]
+      ["offeredBribeSize"],
+      [[poolData.vaultAddress]]
     )
     let bribe: Bribe = {
       offeredBribeSize: Number(formatEther(offeredBribeSize[0])),
@@ -174,12 +221,7 @@ export const useGetBribeData = () => {
     }
     if (account) {
       const accountBribe = await bribeContract(ABC_BRIBE_FACTORY)
-        .methods.bribePerAccount(
-          bribePerUserIndex[0],
-          poolData.address,
-          poolData.tokenId,
-          account
-        )
+        .methods.bribePerAccount(poolData.vaultAddress, account)
         .call()
       bribe.bribeOfferedByUser = Number(formatEther(accountBribe))
     }
@@ -273,25 +315,17 @@ export const useGetTickets = () => {
 
 export const useSetPoolData = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const factory = useWeb3Contract(FACTORY_ABI)
   const erc721 = useWeb3Contract(ERC_721_ABI)
   const vault = useMultiCall(VAULT_ABI)
   const closePool = useMultiCall(CLOSE_POOL_ABI)
   const { account } = useActiveWeb3React()
 
   return useCallback(
-    async (address: string, tokenId: string, nonce: number) => {
+    async (vaultAddress: string) => {
       try {
-        const [vaultAddress, os, ownerOf] = await Promise.all([
-          factory(ABC_FACTORY).methods.nftVault(nonce, address, tokenId).call(),
-          openseaGet(
-            `assets?token_ids=${tokenId}&asset_contract_address=${address}`
-          ),
-          erc721(address).methods.ownerOf(tokenId).call(),
-        ])
-        const [closePoolContract, symbol, emissionsStarted] = await vault(
+        const [closePoolContract, emissionsStarted] = await vault(
           vaultAddress,
-          ["closePoolContract", "symbol", "emissionsStarted"],
+          ["closePoolContract", "emissionsStarted"],
           [[], [], []]
         )
 
@@ -299,7 +333,6 @@ export const useSetPoolData = () => {
         let approved = false
         let approvedBribeFactory = false
         let tickets = []
-        let ownerOfNFT = ""
         let userTokensLocked = ""
         const variables: GetPoolQueryVariables | GetAuctionQueryVariables = {
           id: vaultAddress?.toLowerCase() ?? "",
@@ -317,30 +350,73 @@ export const useSetPoolData = () => {
           variables
         )
 
+        const { assets } = await openseaGetMany(
+          _pool.nfts.map((nft) => ({ ...nft, nftAddress: nft.address })),
+          { url: OPENSEA_LINK }
+        )
+
+        // TODO: Do this in multi-call
+        const owners = await Promise.all(
+          _pool.nfts.map(async (nft) => {
+            const ownerOf: string = await erc721(nft.address)
+              .methods.ownerOf(nft.tokenId)
+              .call()
+            return ownerOf ?? ""
+          })
+        )
+
+        const nfts = _pool.nfts.map((nft, index) => {
+          const asset = matchOpenSeaAssetToNFT(assets, {
+            nftAddress: nft.address,
+            tokenId: nft.tokenId,
+          })
+          const owner = owners[index]
+
+          return {
+            ...nft,
+            img: asset.image_preview_url || asset.image_url,
+            alt: asset.name,
+            isNftClaimed:
+              owner !== "" &&
+              owner.toLowerCase() !== vaultAddress.toLowerCase(),
+            owner:
+              asset?.owner?.user && asset?.owner?.user?.username
+                ? asset.owner.user.username
+                : shortenAddress(asset?.owner?.address),
+            ownerLink: asset?.owner?.address
+              ? `https://${IS_PRODUCTION ? "" : "testnets."}opensea.io/${
+                  asset.owner.address
+                }`
+              : "",
+            collectionTitle: asset.collection.name,
+            collectionLink: asset?.collection?.name
+              ? `https://${
+                  IS_PRODUCTION ? "" : "testnets."
+                }opensea.io/collection/${asset.collection.name.toLowerCase()}`
+              : "",
+            nftName: asset.name || "",
+            isManager: owner.toLowerCase() === account?.toLowerCase(),
+          }
+        })
+
+        // TODO: Owners will need to check isApprovedForAll for every address they own - do in multicall
         if (account) {
-          const [multi, approval, approvalBribe, _ownerOfNFT] =
-            await Promise.all([
-              vault(
-                vaultAddress,
-                ["getAvailableCredits", "getUserPositionInfo"],
-                [[account], [account]]
-              ),
-              erc721(address)
-                .methods.isApprovedForAll(account, vaultAddress)
-                .call(),
-              erc721(address)
-                .methods.isApprovedForAll(account, ABC_BRIBE_FACTORY)
-                .call(),
-              erc721(address).methods.ownerOf(tokenId).call(),
-            ])
-          ownerOfNFT = _ownerOfNFT
+          const [multi, approval, approvalBribe] = await Promise.all([
+            vault(vaultAddress, ["totAvailFunds"], [[account]]),
+            erc721(nfts[0].address)
+              .methods.isApprovedForAll(account, vaultAddress)
+              .call(),
+            erc721(nfts[0].address)
+              .methods.isApprovedForAll(account, ABC_BRIBE_FACTORY)
+              .call(),
+          ])
           tickets = _pool.tickets.filter((ticket) =>
             ticket.tokenPurchases.some(
               (token) => token.owner === account.toLowerCase()
             )
           )
           creditsAvailable = multi[0][0]
-          userTokensLocked = formatEther(multi[1][0])
+          // userTokensLocked = formatEther(multi[1][0]) TODO - What is this for?
           approved = approval
           approvedBribeFactory = approvalBribe
         }
@@ -350,7 +426,7 @@ export const useSetPoolData = () => {
           const [auctionComplete, auctionEndTime] = await closePool(
             closePoolContract[0],
             ["auctionComplete", "auctionEndTime"],
-            [[], [], []]
+            [[], []]
           )
           auction = {
             auctionComplete: auctionComplete[0],
@@ -363,9 +439,6 @@ export const useSetPoolData = () => {
             hasTickets: _pool.tickets.length > 0,
             creditsAvailableForPurchase: "0",
             ownedTickets: _.map(tickets, (ticket) => ticket.ticketNumber),
-            isNFTClaimed:
-              ownerOfNFT !== "" &&
-              ownerOfNFT.toLowerCase() !== vaultAddress.toLowerCase(),
             isAccountClaimed: false,
             claimPreviousBid: false,
             bids: _auction.bids.map((bid) => ({
@@ -373,6 +446,7 @@ export const useSetPoolData = () => {
               timestamp: bid.timestamp * 1000,
               amount: Number(formatEther(bid.amount)),
             })),
+            isNFTClaimed: nfts.some((nft) => nft.isNftClaimed), // TODO: Validate this assumption
           }
           if (account) {
             const [
@@ -382,7 +456,6 @@ export const useSetPoolData = () => {
                 isAccountClaimed,
                 claimPreviousBid,
               ],
-              [creditsAvailableForPurchase],
             ] = await Promise.all([
               closePool(
                 closePoolContract[0],
@@ -394,40 +467,23 @@ export const useSetPoolData = () => {
                 ],
                 [[account], [], [account], [account]]
               ),
-              vault(vaultAddress, ["getAvailableCredits"], [[account]]),
             ])
 
             auction.isAccountClaimed = isAccountClaimed[0]
             auction.principalCalculated = principalCalculated[0]
             auction.profit =
               Number(formatEther(auctionPremium[0])) * Number(userTokensLocked)
-            auction.creditsAvailableForPurchase = formatEther(
-              creditsAvailableForPurchase[0]
-            )
 
             auction.claimPreviousBid = claimPreviousBid[0]
           }
         }
 
-        const asset = (os as { assets: OpenSeaAsset[] }).assets[0]
-
         const pool: Pool = {
+          name: _pool.name,
           emissionsStarted: emissionsStarted[0],
           vaultAddress,
-          address,
-          tokenId,
-          nonce,
-          collectionTitle: asset.collection.name,
-          collectionLink: asset?.collection?.name
-            ? `https://${
-                IS_PRODUCTION ? "" : "testnets."
-              }opensea.io/collection/${asset.collection.name.toLowerCase()}`
-            : "",
-          nftName: asset.name || "",
-          symbol: symbol[0],
           userTokensLocked,
           tokenPrice: IS_PRODUCTION ? ".001" : "0.001",
-          isManager: ownerOf.toLowerCase() === account.toLowerCase(),
           creditsAvailable: BigNumber.from(creditsAvailable).toString(),
           state:
             closePoolContract[0] === ZERO_ADDRESS
@@ -436,18 +492,10 @@ export const useSetPoolData = () => {
               ? PoolStatus.Auction
               : PoolStatus.Closed,
           auction,
-          img: asset.image_url,
           approved,
           approvedBribeFactory,
-          owner:
-            asset?.owner?.user && asset?.owner?.user?.username
-              ? asset.owner.user.username
-              : shortenAddress(asset?.owner?.address),
-          ownerLink: asset?.owner?.address
-            ? `https://${IS_PRODUCTION ? "" : "testnets."}opensea.io/${
-                asset.owner.address
-              }`
-            : "",
+          nfts,
+          isManager: nfts.some((nft) => nft.isManager),
           size: BigNumber.from(_pool.size),
           totalParticipants: _pool.totalParticipants,
         }
@@ -457,6 +505,6 @@ export const useSetPoolData = () => {
         console.error(e)
       }
     },
-    [factory, vault, closePool, account, dispatch, erc721]
+    [account, closePool, dispatch, erc721, vault]
   )
 }

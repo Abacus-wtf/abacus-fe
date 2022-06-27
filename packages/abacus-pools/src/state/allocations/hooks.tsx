@@ -47,7 +47,7 @@ export const useFetchUserAllocations = () => {
     }
     const variables: UserAllocationsQueryVariables = {
       id: account.toLowerCase(),
-      where: { epoch: currentEpoch },
+      where: { epoch: String(currentEpoch) },
     }
 
     const { user } = await request<UserAllocationsQuery>(
@@ -106,7 +106,7 @@ export const useFetchEpochAllocations = () => {
       return
     }
     const variables: GetEpochAllocationsQueryVariables = {
-      where: { epoch: currentEpoch },
+      where: { epoch: String(currentEpoch) },
     }
     const { epochAllocations } = await request<GetEpochAllocationsQuery>(
       GRAPHQL_ENDPOINT,
@@ -155,7 +155,7 @@ export const useFetchEpochAllocationAggregate = () => {
       return
     }
     const variables: GetEpochAllocationAggregateQueryVariables = {
-      id: currentEpoch,
+      id: String(currentEpoch),
     }
     const { epochAllocationAggregate } =
       await request<GetEpochAllocationAggregateQuery>(

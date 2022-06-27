@@ -17,13 +17,12 @@ import { useActiveWeb3React } from "@hooks/index"
 import { shortenAddress } from "@config/utils"
 import { getUserIcon } from "@utils"
 import { useAbcBalance, useToggleWalletModal } from "@state/application/hooks"
-import { CreatePoolModal } from "./CreatePoolModal"
 
 const PurpleBox = styled.div`
   display: flex;
   width: 100%;
   height: 64px;
-  background-color: #8181ff;
+  background-color: ${({ theme }) => theme.colors.utility.lightPurple};
 
   ${Media.md`
     display: none;
@@ -140,7 +139,7 @@ const DropdownButton = styled(Button)<{ menuOpen: boolean }>`
 const StyledLink = styled(Link)<{ highlight?: boolean }>`
   display: flex;
   text-decoration: ${({ highlight }) => (highlight ? "underline" : "none")};
-  text-decoration-color: #8673ff;
+  text-decoration-color: ${({ theme }) => theme.colors.utility.lightPurple};
   text-decoration-thickness: 1px;
   text-underline-offset: 8px;
 
@@ -167,12 +166,16 @@ interface NavbarProps {
   pathname: string
 }
 
+const CreatePoolButton = styled(Button)<{ highlight: boolean }>`
+  color: ${({ highlight, theme }) =>
+    highlight ? theme.colors.utility.lightPurple : theme.colors.core.primary};
+`
+
 const Navbar = ({ pathname }: NavbarProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { account } = useActiveWeb3React()
   const openWeb3Modal = useToggleWalletModal()
   const abcBalance = useAbcBalance()
-  const [createModalOpen, setCreateModalOpen] = useState(false)
 
   const iconSource = getUserIcon(account)
 
@@ -200,8 +203,11 @@ const Navbar = ({ pathname }: NavbarProps) => {
             <StyledLink highlight={pathname === "/"} to="/">
               <Tera style={{ fontWeight: 300 }}>Pools</Tera>
             </StyledLink>
-            <StyledLink highlight={pathname === "/ve"} to="/ve">
-              <Tera style={{ fontWeight: 300 }}>Ve</Tera>
+            <StyledLink
+              highlight={pathname === "/allocations/"}
+              to="/allocations"
+            >
+              <Tera style={{ fontWeight: 300 }}>Allocations</Tera>
             </StyledLink>
           </MenuSection>
 
@@ -228,18 +234,16 @@ const Navbar = ({ pathname }: NavbarProps) => {
               <ProfileIcon src={iconSource} />
               <Kilo>{account ? shortenAddress(account) : "Connect"}</Kilo>
             </ProfileButton>
-            <Button
+            <CreatePoolButton
+              highlight={pathname === "/create-pool"}
+              to="/create-pool"
               buttonType={ButtonType.Gray}
-              onClick={() => setCreateModalOpen(true)}
+              as={Link}
             >
               New Pool
-            </Button>
+            </CreatePoolButton>
           </MenuSection>
         </MenuContainer>
-        <CreatePoolModal
-          isOpen={createModalOpen}
-          closeModal={() => setCreateModalOpen(false)}
-        />
       </Container>
     </>
   )

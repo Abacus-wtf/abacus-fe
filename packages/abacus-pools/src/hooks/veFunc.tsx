@@ -46,12 +46,12 @@ export const useOnLockTokens = () => {
   }
 }
 
-export const useOnAddTokens = () => {
+export const useOnDepoistAbc = () => {
   const { account, library } = useActiveWeb3React()
   const { generalizedContractCall, isPending } = useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
 
-  const onAddTokens = useCallback(
+  const onDepoistAbc = useCallback(
     async (amount: string, cb: () => void) => {
       const veContract = getContract(
         VE_ABC_TOKEN,
@@ -59,9 +59,9 @@ export const useOnAddTokens = () => {
         library,
         account
       )
-      const method = veContract.addTokens
-      const estimate = veContract.estimateGas.addTokens
-      const args = [parseEther(`${amount}`)]
+      const method = veContract.depositAbc
+      const estimate = veContract.estimateGas.depositAbc
+      const args = [amount]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -81,17 +81,17 @@ export const useOnAddTokens = () => {
     [library, account, generalizedContractCall, addTransaction]
   )
   return {
-    onAddTokens,
+    onDepoistAbc,
     isPending,
   }
 }
 
-export const useOnUnlockTokens = () => {
+export const useOnWithdrawTokens = () => {
   const { account, library } = useActiveWeb3React()
   const { generalizedContractCall, isPending } = useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
 
-  const onUnlockTokens = useCallback(
+  const onWithdrawTokens = useCallback(
     async (cb: () => void) => {
       const veContract = getContract(
         VE_ABC_TOKEN,
@@ -99,13 +99,13 @@ export const useOnUnlockTokens = () => {
         library,
         account
       )
-      const method = veContract.unlockTokens
-      const estimate = veContract.estimateGas.unlockTokens
+      const method = veContract.withdrawAbc
+      const estimate = veContract.estimateGas.withdrawAbc
       const args = []
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
-          summary: "Unlock Tokens",
+          summary: "Withdraw Tokens",
         })
         await response.wait()
         cb()
@@ -121,7 +121,7 @@ export const useOnUnlockTokens = () => {
     [library, account, generalizedContractCall, addTransaction]
   )
   return {
-    onUnlockTokens,
+    onWithdrawTokens,
     isPending,
   }
 }

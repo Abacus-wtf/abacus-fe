@@ -9,7 +9,8 @@ import {
   setEthToUSD,
   setAbcBalance,
   setAggregate,
-  setCurrentEpoch,
+  setSelectNetworkModalOpen,
+  setEpoch,
 } from "./actions"
 
 export type GeneralizedContractState = {
@@ -17,16 +18,21 @@ export type GeneralizedContractState = {
 }
 interface ApplicationState {
   isWalletModalOpen: boolean
+  isSelectNetworkModalOpen: boolean
   networkSymbol: NetworkSymbolEnum | null
   generalizedContract: GeneralizedContractState
   ethToUSD: number
   abcBalance: number
   aggregate: Aggregate | null
-  currentEpoch: string
+  epoch: {
+    current: number
+    length: number
+  }
 }
 
 export const initialState: ApplicationState = {
   isWalletModalOpen: false,
+  isSelectNetworkModalOpen: false,
   networkSymbol: null,
   generalizedContract: {
     errorMessage: null,
@@ -34,7 +40,10 @@ export const initialState: ApplicationState = {
   ethToUSD: null,
   abcBalance: null,
   aggregate: null,
-  currentEpoch: null,
+  epoch: {
+    current: null,
+    length: null,
+  },
 }
 
 export default createReducer(initialState, (builder) =>
@@ -57,7 +66,10 @@ export default createReducer(initialState, (builder) =>
     .addCase(setAggregate, (state, action) => {
       state.aggregate = action.payload
     })
-    .addCase(setCurrentEpoch, (state, action) => {
-      state.currentEpoch = action.payload
+    .addCase(setEpoch, (state, action) => {
+      state.epoch = action.payload
+    })
+    .addCase(setSelectNetworkModalOpen, (state, action) => {
+      state.isSelectNetworkModalOpen = action.payload
     })
 )

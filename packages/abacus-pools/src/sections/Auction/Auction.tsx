@@ -1,6 +1,4 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
-import { PageProps } from "gatsby"
-import * as queryString from "query-string"
 import { Media, Section } from "abacus-ui"
 import styled, { createGlobalStyle } from "styled-components"
 import {
@@ -53,31 +51,32 @@ const CurrentState = styled.div`
 `
 
 type AuctionProps = {
-  location: PageProps["location"]
+  vaultAddress: string
 }
 
-const Auction: FunctionComponent<AuctionProps> = ({ location }) => {
+const Auction: FunctionComponent<AuctionProps> = ({ vaultAddress }) => {
   const [refresh, setRefresh] = useState({})
   const refreshPoolData = () => setRefresh({})
-  const { address, tokenId, nonce } = queryString.parse(location.search)
-  const { img, auction } = useGetPoolData()
+  const { nfts, auction } = useGetPoolData()
   const setPool = useSetPoolData()
   const getTickets = useGetTickets()
 
   useEffect(() => {
-    setPool(String(address), String(tokenId), Number(nonce))
-  }, [address, tokenId, nonce, setPool, refresh])
+    setPool(vaultAddress)
+  }, [setPool, vaultAddress, refresh])
 
   useEffect(() => {
     getTickets()
   }, [getTickets])
 
+  const src = nfts?.[0]?.img ?? ""
+  const alt = nfts?.[0]?.alt ?? ""
   return (
     <Container>
-      <GlobalStyle url={img} />
+      <GlobalStyle url={src} />
       <PageGrid>
         <NFTImageSection>
-          <NFTImage src={img} />
+          <NFTImage src={src} alt={alt} numNfts={nfts?.length} />
         </NFTImageSection>
         <CurrentState>
           {auction ? (

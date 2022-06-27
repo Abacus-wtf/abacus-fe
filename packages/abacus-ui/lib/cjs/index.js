@@ -103,6 +103,7 @@ var defaultTheme = {
         utility: {
             green: "#23CE7C",
             purple: "#8673FF",
+            lightPurple: "#8181ff",
             blue: "#3E74FF",
             red: "#F33636",
             yellow: "#FFC93E",
@@ -129,7 +130,7 @@ var defaultTheme = {
         section: "0px 2px 32px rgba(0, 0, 0, 0.06)",
     },
     padding: {
-        main: "16px 24px",
+        main: "13px 20px",
     },
     transitionTime: {
         main: "0.3s",
@@ -191,11 +192,11 @@ var defaultTheme = {
         },
     },
 };
-var FontImport = function () { return styled.css(templateObject_1$U || (templateObject_1$U = __makeTemplateObject(["\n  @import url(\"https://rsms.me/inter/inter.css\");\n"], ["\n  @import url(\"https://rsms.me/inter/inter.css\");\n"]))); };
+var FontImport = function () { return styled.css(templateObject_1$W || (templateObject_1$W = __makeTemplateObject(["\n  @import url(\"https://rsms.me/inter/inter.css\");\n"], ["\n  @import url(\"https://rsms.me/inter/inter.css\");\n"]))); };
 var Font = function (size, fontFamily) {
     if (size === void 0) { size = "kilo"; }
     if (fontFamily === void 0) { fontFamily = "Inter"; }
-    return styled.css(templateObject_2$v || (templateObject_2$v = __makeTemplateObject(["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ", ";\n"], ["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ", ";\n"])), fontFamily, function (_a) {
+    return styled.css(templateObject_2$w || (templateObject_2$w = __makeTemplateObject(["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ", ";\n"], ["\n  font-family: \"", "\", sans-serif;\n  font-style: normal;\n  font-weight: normal;\n  ", ";\n"])), fontFamily, function (_a) {
         var theme = _a.theme;
         return (theme === null || theme === void 0 ? void 0 : theme.copy) ? theme.copy[size] : defaultTheme.copy[size];
     });
@@ -233,71 +234,71 @@ var Media = breakpoints.reduce(function (accumulator, _a) {
     lg: styled.css,
     xl: styled.css,
 });
-var templateObject_1$U, templateObject_2$v, templateObject_3$l;
+var templateObject_1$W, templateObject_2$w, templateObject_3$l;
 
-var Container$F = styled__default["default"].div(templateObject_1$T || (templateObject_1$T = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("exa"));
+var Container$F = styled__default["default"].div(templateObject_1$V || (templateObject_1$V = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("exa"));
+var templateObject_1$V;
+
+var Container$E = styled__default["default"].div(templateObject_1$U || (templateObject_1$U = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("giga"));
+var templateObject_1$U;
+
+var Container$D = styled__default["default"].h1(templateObject_1$T || (templateObject_1$T = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("exa"));
 var templateObject_1$T;
 
-var Container$E = styled__default["default"].div(templateObject_1$S || (templateObject_1$S = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("giga"));
+var Container$C = styled__default["default"].h2(templateObject_1$S || (templateObject_1$S = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("peta"));
 var templateObject_1$S;
 
-var Container$D = styled__default["default"].h1(templateObject_1$R || (templateObject_1$R = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("exa"));
+var Container$B = styled__default["default"].h3(templateObject_1$R || (templateObject_1$R = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("tera"));
 var templateObject_1$R;
 
-var Container$C = styled__default["default"].h2(templateObject_1$Q || (templateObject_1$Q = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("peta"));
+var Container$A = styled__default["default"].h4(templateObject_1$Q || (templateObject_1$Q = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("giga"));
 var templateObject_1$Q;
 
-var Container$B = styled__default["default"].h3(templateObject_1$P || (templateObject_1$P = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("tera"));
+var Container$z = styled__default["default"].h5(templateObject_1$P || (templateObject_1$P = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("mega"));
 var templateObject_1$P;
 
-var Container$A = styled__default["default"].h4(templateObject_1$O || (templateObject_1$O = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("giga"));
+var StyledH6 = styled__default["default"].h6(templateObject_1$O || (templateObject_1$O = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font());
 var templateObject_1$O;
 
-var Container$z = styled__default["default"].h5(templateObject_1$N || (templateObject_1$N = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("mega"));
+var StyledDiv = styled__default["default"].div(templateObject_1$N || (templateObject_1$N = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font());
 var templateObject_1$N;
 
-var StyledH6 = styled__default["default"].h6(templateObject_1$M || (templateObject_1$M = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font());
+var Container$y = styled__default["default"].div(templateObject_1$M || (templateObject_1$M = __makeTemplateObject(["\n  ", ";\n"], ["\n  ", ";\n"])), Font("mega"));
 var templateObject_1$M;
 
-var StyledDiv = styled__default["default"].div(templateObject_1$L || (templateObject_1$L = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font());
+var Container$x = styled__default["default"].div(templateObject_1$L || (templateObject_1$L = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("milli"));
 var templateObject_1$L;
 
-var Container$y = styled__default["default"].div(templateObject_1$K || (templateObject_1$K = __makeTemplateObject(["\n  ", ";\n"], ["\n  ", ";\n"])), Font("mega"));
+var StyledP = styled__default["default"].p(templateObject_1$K || (templateObject_1$K = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font());
 var templateObject_1$K;
 
-var Container$x = styled__default["default"].div(templateObject_1$J || (templateObject_1$J = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("milli"));
+var Container$w = styled__default["default"].div(templateObject_1$J || (templateObject_1$J = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("peta"));
 var templateObject_1$J;
 
-var StyledP = styled__default["default"].p(templateObject_1$I || (templateObject_1$I = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font());
+var Container$v = styled__default["default"].small(templateObject_1$I || (templateObject_1$I = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("milli"));
 var templateObject_1$I;
 
-var Container$w = styled__default["default"].div(templateObject_1$H || (templateObject_1$H = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("peta"));
+var Container$u = styled__default["default"].div(templateObject_1$H || (templateObject_1$H = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("tera"));
 var templateObject_1$H;
 
-var Container$v = styled__default["default"].small(templateObject_1$G || (templateObject_1$G = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("milli"));
+var Container$t = styled__default["default"].div(templateObject_1$G || (templateObject_1$G = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("yotta"));
 var templateObject_1$G;
 
-var Container$u = styled__default["default"].div(templateObject_1$F || (templateObject_1$F = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("tera"));
+var Container$s = styled__default["default"].div(templateObject_1$F || (templateObject_1$F = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("zetta"));
 var templateObject_1$F;
 
-var Container$t = styled__default["default"].div(templateObject_1$E || (templateObject_1$E = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("yotta"));
-var templateObject_1$E;
-
-var Container$s = styled__default["default"].div(templateObject_1$D || (templateObject_1$D = __makeTemplateObject(["\n  ", "\n"], ["\n  ", "\n"])), Font("zetta"));
-var templateObject_1$D;
-
-var Container$r = styled__default["default"].div(templateObject_1$C || (templateObject_1$C = __makeTemplateObject(["\n  width: 100%;\n  margin-bottom: 2px;\n  display: flex;\n  flex-direction: column;\n"], ["\n  width: 100%;\n  margin-bottom: 2px;\n  display: flex;\n  flex-direction: column;\n"])));
-var InputContainer = styled__default["default"].div(templateObject_4$b || (templateObject_4$b = __makeTemplateObject(["\n  background-color: white;\n  display: flex;\n  width: 100%;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: stretch;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  ", "\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n\n  ", "\n"], ["\n  background-color: white;\n  display: flex;\n  width: 100%;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: stretch;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  ", "\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n\n  ", "\n"])), function (_a) {
+var Container$r = styled__default["default"].div(templateObject_1$E || (templateObject_1$E = __makeTemplateObject(["\n  width: 100%;\n  margin-bottom: 2px;\n  display: flex;\n  flex-direction: column;\n"], ["\n  width: 100%;\n  margin-bottom: 2px;\n  display: flex;\n  flex-direction: column;\n"])));
+var InputContainer = styled__default["default"].div(templateObject_4$b || (templateObject_4$b = __makeTemplateObject(["\n  display: flex;\n  width: 100%;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: stretch;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  ", "\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n\n  ", "\n"], ["\n  display: flex;\n  width: 100%;\n  flex-direction: row-reverse;\n  justify-content: space-between;\n  align-items: stretch;\n  box-shadow: 0px 2px 0px #f6f6f6;\n\n  ", "\n\n  &:focus-within {\n    box-shadow: 0px 2px 0px #6b6b6b;\n  }\n\n  ", "\n"])), function (_a) {
     var disabled = _a.disabled;
     return disabled
-        ? styled.css(templateObject_2$u || (templateObject_2$u = __makeTemplateObject(["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "], ["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "]))) : "";
+        ? styled.css(templateObject_2$v || (templateObject_2$v = __makeTemplateObject(["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "], ["\n          background-color: rgba(239, 239, 239, 0.3);\n          color: rgb(84, 84, 84);\n          cursor: not-allowed;\n        "]))) : "";
 }, function (_a) {
     var required = _a.required, pristine = _a.pristine, theme = _a.theme, value = _a.value;
     return required && !pristine && !value
         ? styled.css(templateObject_3$k || (templateObject_3$k = __makeTemplateObject(["\n          box-shadow: 0px 2px 0px ", ";\n        "], ["\n          box-shadow: 0px 2px 0px ", ";\n        "])), theme.colors.utility.red) : "";
 });
 var ExteriorLabel = styled__default["default"].label(templateObject_5$8 || (templateObject_5$8 = __makeTemplateObject(["\n  ", "\n  font-weight: bold;\n  text-align: left;\n  margin-bottom: 10px;\n"], ["\n  ", "\n  font-weight: bold;\n  text-align: left;\n  margin-bottom: 10px;\n"])), Font("mega"));
-var Pill = styled__default["default"].span(templateObject_6$6 || (templateObject_6$6 = __makeTemplateObject(["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: ", ";\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"], ["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: ", ";\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"])), Font("milli"), function (_a) {
+var Pill$1 = styled__default["default"].span(templateObject_6$6 || (templateObject_6$6 = __makeTemplateObject(["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: ", ";\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"], ["\n  ", "\n  text-align: center;\n  background-color: ", ";\n  padding: ", ";\n  height: calc(100% - 17px);\n  margin: 8.5px 0;\n  border-radius: ", ";\n"])), Font("milli"), function (_a) {
     var theme = _a.theme, isString = _a.isString;
     return isString ? theme.colors.core.label : "transparent";
 }, function (_a) {
@@ -307,7 +308,7 @@ var Pill = styled__default["default"].span(templateObject_6$6 || (templateObject
     var theme = _a.theme;
     return theme.borderRadius.main;
 });
-var StyledInput$2 = styled__default["default"].input(templateObject_8$3 || (templateObject_8$3 = __makeTemplateObject(["\n  ", "\n  font-size: 22px;\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ", "\n"], ["\n  ", "\n  font-size: 22px;\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n\n  ", "\n"])), Font("mega"), function (_a) {
+var StyledInput$2 = styled__default["default"].input(templateObject_8$3 || (templateObject_8$3 = __makeTemplateObject(["\n  ", "\n  font-size: 22px;\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n  background-color: transparent;\n\n  ", "\n"], ["\n  ", "\n  font-size: 22px;\n  border: none;\n  outline: none;\n  padding: 0;\n  width: 100%;\n  padding-right: 6px;\n  background-color: transparent;\n\n  ", "\n"])), Font("mega"), function (_a) {
     var disabled = _a.disabled;
     return disabled
         ? styled.css(templateObject_7$4 || (templateObject_7$4 = __makeTemplateObject(["\n          background: unset;\n          cursor: not-allowed;\n        "], ["\n          background: unset;\n          cursor: not-allowed;\n        "]))) : "";
@@ -317,19 +318,19 @@ var StyledKilo$3 = styled__default["default"](StyledDiv)(templateObject_9$3 || (
     return theme.colors.core["900"];
 });
 var Input = function (_a) {
-    var value = _a.value, onChange = _a.onChange, type = _a.type, label = _a.label, pill = _a.pill, name = _a.name, id = _a.id, placeholder = _a.placeholder, className = _a.className, hint = _a.hint, _b = _a.disabled, disabled = _b === void 0 ? false : _b, _c = _a.required, required = _c === void 0 ? false : _c, _d = _a.step, step = _d === void 0 ? "0.1" : _d;
+    var value = _a.value, onChange = _a.onChange, type = _a.type, label = _a.label, pill = _a.pill, name = _a.name, id = _a.id, placeholder = _a.placeholder, className = _a.className, hint = _a.hint, _b = _a.disabled, disabled = _b === void 0 ? false : _b, _c = _a.required, required = _c === void 0 ? false : _c, _d = _a.step, step = _d === void 0 ? "0.1" : _d, min = _a.min, max = _a.max;
     var _e = React.useState(true), pristine = _e[0], setPristine = _e[1];
     var ID = typeof id === "string" ? id : getUniqueId("input");
     return (React__default["default"].createElement(Container$r, { className: className },
         label && React__default["default"].createElement(ExteriorLabel, { htmlFor: ID }, label),
         React__default["default"].createElement(InputContainer, { disabled: disabled, pristine: pristine, required: required, value: value },
-            pill ? React__default["default"].createElement(Pill, { isString: typeof pill === "string" }, pill) : null,
-            React__default["default"].createElement(StyledInput$2, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); }, disabled: disabled, "aria-disabled": disabled, required: required, onFocus: function () { return setPristine(false); }, step: step })),
+            pill ? React__default["default"].createElement(Pill$1, { isString: typeof pill === "string" }, pill) : null,
+            React__default["default"].createElement(StyledInput$2, { id: ID, name: name, value: value, type: type, placeholder: placeholder, onChange: function (e) { return onChange(e.target.value); }, disabled: disabled, "aria-disabled": disabled, required: required, onFocus: function () { return setPristine(false); }, step: step, min: min, max: max })),
         hint && React__default["default"].createElement(StyledKilo$3, null, hint)));
 };
-var templateObject_1$C, templateObject_2$u, templateObject_3$k, templateObject_4$b, templateObject_5$8, templateObject_6$6, templateObject_7$4, templateObject_8$3, templateObject_9$3;
+var templateObject_1$E, templateObject_2$v, templateObject_3$k, templateObject_4$b, templateObject_5$8, templateObject_6$6, templateObject_7$4, templateObject_8$3, templateObject_9$3;
 
-var Section = styled__default["default"].section(templateObject_2$t || (templateObject_2$t = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 12px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 12px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ", "\n"])), function (_a) {
+var Section = styled__default["default"].section(templateObject_2$u || (templateObject_2$u = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 12px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  padding: 12px;\n  background: ", ";\n  box-shadow: ", ";\n  border-radius: ", ";\n\n  ", "\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.utility.white;
 }, function (_a) {
@@ -338,8 +339,8 @@ var Section = styled__default["default"].section(templateObject_2$t || (template
 }, function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.section;
-}, Media.md(templateObject_1$B || (templateObject_1$B = __makeTemplateObject(["\n    padding: 20px;\n  "], ["\n    padding: 20px;\n  "]))));
-var templateObject_1$B, templateObject_2$t;
+}, Media.md(templateObject_1$D || (templateObject_1$D = __makeTemplateObject(["\n    padding: 20px;\n  "], ["\n    padding: 20px;\n  "]))));
+var templateObject_1$D, templateObject_2$u;
 
 exports.ButtonType = void 0;
 (function (ButtonType) {
@@ -351,7 +352,7 @@ exports.ButtonType = void 0;
 var Button = styled__default["default"].button.attrs(function (_a) {
     var disabled = _a.disabled, rest = __rest(_a, ["disabled"]);
     return (__assign({ "aria-disabled": disabled, type: "button" }, rest));
-})(templateObject_2$s || (templateObject_2$s = __makeTemplateObject(["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    color: ", ";\n    opacity: 0.6;\n    box-shadow: none;\n  }\n\n  ", "\n"], ["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    color: ", ";\n    opacity: 0.6;\n    box-shadow: none;\n  }\n\n  ", "\n"])), Font(), function (_a) {
+})(templateObject_2$t || (templateObject_2$t = __makeTemplateObject(["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    color: ", ";\n    opacity: 0.6;\n    box-shadow: none;\n  }\n\n  ", "\n"], ["\n  ", "\n  text-decoration: none;\n  border-radius: ", ";\n  padding: ", ";\n  box-shadow: ", ";\n  border: none;\n  cursor: pointer;\n  transition: ", ";\n  color: ", ";\n  background-color: ", ";\n  width: max-content;\n  height: min-content;\n\n  &:hover {\n    color: ", ";\n    opacity: 0.6;\n    box-shadow: none;\n  }\n\n  ", "\n"])), Font(), function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.button;
 }, function (_a) {
@@ -389,12 +390,12 @@ var Button = styled__default["default"].button.attrs(function (_a) {
 }, function (_a) {
     var disabled = _a.disabled;
     return disabled
-        ? styled.css(templateObject_1$A || (templateObject_1$A = __makeTemplateObject(["\n          opacity: 0.2;\n\n          &:hover {\n            cursor: not-allowed;\n            opacity: 0.2;\n          }\n        "], ["\n          opacity: 0.2;\n\n          &:hover {\n            cursor: not-allowed;\n            opacity: 0.2;\n          }\n        "]))) : "";
+        ? styled.css(templateObject_1$C || (templateObject_1$C = __makeTemplateObject(["\n          opacity: 0.2;\n\n          &:hover {\n            cursor: not-allowed;\n            opacity: 0.2;\n          }\n        "], ["\n          opacity: 0.2;\n\n          &:hover {\n            cursor: not-allowed;\n            opacity: 0.2;\n          }\n        "]))) : "";
 });
-var templateObject_1$A, templateObject_2$s;
+var templateObject_1$C, templateObject_2$t;
 
-var Container$q = styled__default["default"].div(templateObject_1$z || (templateObject_1$z = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  grid-gap: 10px;\n"], ["\n  display: flex;\n  flex-direction: column;\n  grid-gap: 10px;\n"])));
-var MiniContainer = styled__default["default"].div(templateObject_2$r || (templateObject_2$r = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n"], ["\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n"])));
+var Container$q = styled__default["default"].div(templateObject_1$B || (templateObject_1$B = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  grid-gap: 10px;\n"], ["\n  display: flex;\n  flex-direction: column;\n  grid-gap: 10px;\n"])));
+var MiniContainer = styled__default["default"].div(templateObject_2$s || (templateObject_2$s = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n"], ["\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n"])));
 var StyledKilo$2 = styled__default["default"](StyledDiv)(templateObject_5$7 || (templateObject_5$7 = __makeTemplateObject(["\n  ", ";\n\n  color: ", ";\n"], ["\n  ", ";\n\n  color: ", ";\n"])), function (_a) {
     var isValue = _a.isValue;
     return isValue
@@ -423,20 +424,20 @@ var MiniList = function (_a) {
             index !== Object.entries(info).length - 1 ? (React__default["default"].createElement(Divider$1, { isDark: isDark || false })) : null));
     })));
 };
-var templateObject_1$z, templateObject_2$r, templateObject_3$j, templateObject_4$a, templateObject_5$7, templateObject_6$5;
+var templateObject_1$B, templateObject_2$s, templateObject_3$j, templateObject_4$a, templateObject_5$7, templateObject_6$5;
 
-var Container$p = styled__default["default"].span(templateObject_1$y || (templateObject_1$y = __makeTemplateObject(["\n  border: 0px;\n  clip: rect(0px, 0px, 0px, 0px);\n  height: 1px;\n  width: 1px;\n  margin: -1px;\n  padding: 0px;\n  overflow: hidden;\n  white-space: nowrap;\n  position: absolute;\n"], ["\n  border: 0px;\n  clip: rect(0px, 0px, 0px, 0px);\n  height: 1px;\n  width: 1px;\n  margin: -1px;\n  padding: 0px;\n  overflow: hidden;\n  white-space: nowrap;\n  position: absolute;\n"])));
+var Container$p = styled__default["default"].span(templateObject_1$A || (templateObject_1$A = __makeTemplateObject(["\n  border: 0px;\n  clip: rect(0px, 0px, 0px, 0px);\n  height: 1px;\n  width: 1px;\n  margin: -1px;\n  padding: 0px;\n  overflow: hidden;\n  white-space: nowrap;\n  position: absolute;\n"], ["\n  border: 0px;\n  clip: rect(0px, 0px, 0px, 0px);\n  height: 1px;\n  width: 1px;\n  margin: -1px;\n  padding: 0px;\n  overflow: hidden;\n  white-space: nowrap;\n  position: absolute;\n"])));
 var VisuallyHidden = function (_a) {
     var children = _a.children;
     return (React__default["default"].createElement(Container$p, null, children));
 };
-var templateObject_1$y;
+var templateObject_1$A;
 
-var Flex = styled__default["default"].div(templateObject_1$x || (templateObject_1$x = __makeTemplateObject(["\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n"], ["\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n"])));
-var templateObject_1$x;
+var Flex = styled__default["default"].div(templateObject_1$z || (templateObject_1$z = __makeTemplateObject(["\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n"], ["\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n"])));
+var templateObject_1$z;
 
-var Shimmer = styled.keyframes(templateObject_1$w || (templateObject_1$w = __makeTemplateObject(["\n    0% {\n        background-position: 100% 0;\n    }\n    100% {\n        background-position: -100% 0;\n    }\n"], ["\n    0% {\n        background-position: 100% 0;\n    }\n    100% {\n        background-position: -100% 0;\n    }\n"])));
-var LoadingShimmer = styled__default["default"].div(templateObject_2$q || (templateObject_2$q = __makeTemplateObject(["\n  animation-duration: 2.2s;\n  animation-fill-mode: forwards;\n  animation-iteration-count: infinite;\n  animation-name: ", ";\n  animation-timing-function: linear;\n  background: ", ";\n  background: linear-gradient(\n    to right,\n    ", " 9%,\n    ", " 18%,\n    ", " 27%\n  );\n  background-size: 300% 100%;\n  border-radius: ", ";\n  min-height: 16px;\n  height: 100%;\n  font-size: inherit;\n  line-height: inherit;\n  font-weight: inherit;\n  color: transparent !important;\n\n  & * {\n    color: transparent !important;\n  }\n"], ["\n  animation-duration: 2.2s;\n  animation-fill-mode: forwards;\n  animation-iteration-count: infinite;\n  animation-name: ", ";\n  animation-timing-function: linear;\n  background: ", ";\n  background: linear-gradient(\n    to right,\n    ", " 9%,\n    ", " 18%,\n    ", " 27%\n  );\n  background-size: 300% 100%;\n  border-radius: ", ";\n  min-height: 16px;\n  height: 100%;\n  font-size: inherit;\n  line-height: inherit;\n  font-weight: inherit;\n  color: transparent !important;\n\n  & * {\n    color: transparent !important;\n  }\n"])), Shimmer, function (_a) {
+var Shimmer = styled.keyframes(templateObject_1$y || (templateObject_1$y = __makeTemplateObject(["\n    0% {\n        background-position: 100% 0;\n    }\n    100% {\n        background-position: -100% 0;\n    }\n"], ["\n    0% {\n        background-position: 100% 0;\n    }\n    100% {\n        background-position: -100% 0;\n    }\n"])));
+var LoadingShimmer = styled__default["default"].div(templateObject_2$r || (templateObject_2$r = __makeTemplateObject(["\n  animation-duration: 2.2s;\n  animation-fill-mode: forwards;\n  animation-iteration-count: infinite;\n  animation-name: ", ";\n  animation-timing-function: linear;\n  background: ", ";\n  background: linear-gradient(\n    to right,\n    ", " 9%,\n    ", " 18%,\n    ", " 27%\n  );\n  background-size: 300% 100%;\n  border-radius: ", ";\n  min-height: 16px;\n  height: 100%;\n  font-size: inherit;\n  line-height: inherit;\n  font-weight: inherit;\n  color: transparent !important;\n\n  & * {\n    color: transparent !important;\n  }\n"], ["\n  animation-duration: 2.2s;\n  animation-fill-mode: forwards;\n  animation-iteration-count: infinite;\n  animation-name: ", ";\n  animation-timing-function: linear;\n  background: ", ";\n  background: linear-gradient(\n    to right,\n    ", " 9%,\n    ", " 18%,\n    ", " 27%\n  );\n  background-size: 300% 100%;\n  border-radius: ", ";\n  min-height: 16px;\n  height: 100%;\n  font-size: inherit;\n  line-height: inherit;\n  font-weight: inherit;\n  color: transparent !important;\n\n  & * {\n    color: transparent !important;\n  }\n"])), Shimmer, function (_a) {
     var theme = _a.theme;
     return theme.colors.core.background;
 }, function (_a) {
@@ -452,9 +453,9 @@ var LoadingShimmer = styled__default["default"].div(templateObject_2$q || (templ
     var theme = _a.theme;
     return theme.borderRadius.section;
 });
-var templateObject_1$w, templateObject_2$q;
+var templateObject_1$y, templateObject_2$r;
 
-var ImageContainer$1 = styled__default["default"].div(templateObject_1$v || (templateObject_1$v = __makeTemplateObject(["\n  width: 100%;\n  height: 0;\n  padding-bottom: 100%;\n  background-color: ", ";\n  border-radius: ", ";\n  transition: transform ", ";\n\n  &:hover {\n    transform: ", ";\n  }\n"], ["\n  width: 100%;\n  height: 0;\n  padding-bottom: 100%;\n  background-color: ", ";\n  border-radius: ", ";\n  transition: transform ", ";\n\n  &:hover {\n    transform: ", ";\n  }\n"])), function (_a) {
+var ImageContainer$1 = styled__default["default"].div(templateObject_1$x || (templateObject_1$x = __makeTemplateObject(["\n  width: 100%;\n  height: 0;\n  padding-bottom: 100%;\n  background-color: ", ";\n  border-radius: ", ";\n  transition: transform ", ";\n\n  &:hover {\n    transform: ", ";\n  }\n"], ["\n  width: 100%;\n  height: 0;\n  padding-bottom: 100%;\n  background-color: ", ";\n  border-radius: ", ";\n  transition: transform ", ";\n\n  &:hover {\n    transform: ", ";\n  }\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.white;
 }, function (_a) {
@@ -486,15 +487,15 @@ var ExploreImage = function (_a) {
                 borderTopRightRadius: theme.borderRadius.section,
             } })));
 };
-var templateObject_1$v;
+var templateObject_1$x;
 
-var IndivContainer = styled__default["default"].div(templateObject_1$u || (templateObject_1$u = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  margin-right: 30px;\n\n  &:last-of-type {\n    margin-right: 0;\n  }\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  margin-right: 30px;\n\n  &:last-of-type {\n    margin-right: 0;\n  }\n"])));
-var Text = styled__default["default"](StyledDiv)(templateObject_3$i || (templateObject_3$i = __makeTemplateObject(["\n  ", "\n  margin-bottom: 6px;\n"], ["\n  ", "\n  margin-bottom: 6px;\n"])), Media.md(templateObject_2$p || (templateObject_2$p = __makeTemplateObject(["\n    font-size: 18px;\n  "], ["\n    font-size: 18px;\n  "]))));
+var IndivContainer = styled__default["default"].div(templateObject_1$w || (templateObject_1$w = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  margin-right: 30px;\n\n  &:last-of-type {\n    margin-right: 0;\n  }\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  margin-right: 30px;\n\n  &:last-of-type {\n    margin-right: 0;\n  }\n"])));
+var Text = styled__default["default"](StyledDiv)(templateObject_3$i || (templateObject_3$i = __makeTemplateObject(["\n  ", "\n  margin-bottom: 6px;\n"], ["\n  ", "\n  margin-bottom: 6px;\n"])), Media.md(templateObject_2$q || (templateObject_2$q = __makeTemplateObject(["\n    font-size: 18px;\n  "], ["\n    font-size: 18px;\n  "]))));
 var Subtext = styled__default["default"](Container$x)(templateObject_5$6 || (templateObject_5$6 = __makeTemplateObject(["\n  ", "\n  color: ", ";\n\n  ", "\n"], ["\n  ", "\n  color: ", ";\n\n  ", "\n"])), Font("nano"), function (_a) {
     var theme = _a.theme;
     return theme.colors.core[900];
 }, Media.md(templateObject_4$9 || (templateObject_4$9 = __makeTemplateObject(["\n  ", "\n  "], ["\n  ", "\n  "])), Font("milli")));
-var templateObject_1$u, templateObject_2$p, templateObject_3$i, templateObject_4$9, templateObject_5$6;
+var templateObject_1$w, templateObject_2$q, templateObject_3$i, templateObject_4$9, templateObject_5$6;
 
 var Fallback$1 = function () { return (React__default["default"].createElement("div", { style: { display: "flex" } },
     React__default["default"].createElement(IndivContainer, null,
@@ -534,7 +535,7 @@ var SessionCountdown = function (_a) {
 };
 
 // You probably want to change this to something semantic or abandon it all together
-var Container$o = styled__default["default"].div(templateObject_1$t || (templateObject_1$t = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  grid-gap: ", ";\n  align-items: ", ";\n"], ["\n  display: flex;\n  flex-direction: column;\n  grid-gap: ", ";\n  align-items: ", ";\n"])), function (_a) {
+var Container$o = styled__default["default"].div(templateObject_1$v || (templateObject_1$v = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  grid-gap: ", ";\n  align-items: ", ";\n"], ["\n  display: flex;\n  flex-direction: column;\n  grid-gap: ", ";\n  align-items: ", ";\n"])), function (_a) {
     var isCardBar = _a.isCardBar;
     return (isCardBar ? "5px" : "10px");
 }, function (_a) {
@@ -544,7 +545,7 @@ var Container$o = styled__default["default"].div(templateObject_1$t || (template
 var BoldenKilo = styled__default["default"](StyledDiv)(templateObject_3$h || (templateObject_3$h = __makeTemplateObject(["\n  color: ", ";\n  font-weight: 600;\n  ", "\n\n  ", "\n"], ["\n  color: ", ";\n  font-weight: 600;\n  ", "\n\n  ", "\n"])), function (_a) {
     var theme = _a.theme, isCardBar = _a.isCardBar;
     return isCardBar ? theme.colors.core[900] : "black";
-}, Font("micro"), Media.md(templateObject_2$o || (templateObject_2$o = __makeTemplateObject(["\n    ", "\n  "], ["\n    ", "\n  "])), Font("kilo")));
+}, Font("micro"), Media.md(templateObject_2$p || (templateObject_2$p = __makeTemplateObject(["\n    ", "\n  "], ["\n    ", "\n  "])), Font("kilo")));
 var StyledGiga = styled__default["default"](Container$E)(templateObject_5$5 || (templateObject_5$5 = __makeTemplateObject(["\n  color: ", ";\n  ", ";\n  width: 100%;\n  text-align: inherit;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n\n  ", "\n\n  ", "\n"], ["\n  color: ", ";\n  ", ";\n  width: 100%;\n  text-align: inherit;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n\n  ", "\n\n  ", "\n"])), function (_a) {
     var theme = _a.theme, isCardBar = _a.isCardBar;
     return isCardBar ? theme.colors.core[900] : "black";
@@ -563,13 +564,13 @@ var ExploreInfo = function (_a) {
         React__default["default"].createElement(StyledGiga, { isCardBar: isCardBar || false }, text),
         unit ? React__default["default"].createElement(ColoredKilo, null, unit) : null));
 };
-var templateObject_1$t, templateObject_2$o, templateObject_3$h, templateObject_4$8, templateObject_5$5, templateObject_6$4, templateObject_7$3;
+var templateObject_1$v, templateObject_2$p, templateObject_3$h, templateObject_4$8, templateObject_5$5, templateObject_6$4, templateObject_7$3;
 
-var ProfileIcon = styled__default["default"].img.attrs(function (props) { return (__assign({ alt: "Profile Icon" }, props)); })(templateObject_1$s || (templateObject_1$s = __makeTemplateObject(["\n  border-radius: 50%;\n  width: 24px;\n  height: 24px;\n"], ["\n  border-radius: 50%;\n  width: 24px;\n  height: 24px;\n"])));
-var templateObject_1$s;
+var ProfileIcon = styled__default["default"].img.attrs(function (props) { return (__assign({ alt: "Profile Icon" }, props)); })(templateObject_1$u || (templateObject_1$u = __makeTemplateObject(["\n  border-radius: 50%;\n  width: 24px;\n  height: 24px;\n"], ["\n  border-radius: 50%;\n  width: 24px;\n  height: 24px;\n"])));
+var templateObject_1$u;
 
 // You probably want to change this to something semantic or abandon it all together
-var Container$n = styled__default["default"].div(templateObject_1$r || (templateObject_1$r = __makeTemplateObject(["\n  border-radius: ", ";\n  background-color: ", ";\n  box-shadow: ", ";\n  width: auto;\n  height: 100%;\n  padding: 20px;\n  display: flex;\n  flex-direction: row;\n"], ["\n  border-radius: ", ";\n  background-color: ", ";\n  box-shadow: ", ";\n  width: auto;\n  height: 100%;\n  padding: 20px;\n  display: flex;\n  flex-direction: row;\n"])), function (_a) {
+var Container$n = styled__default["default"].div(templateObject_1$t || (templateObject_1$t = __makeTemplateObject(["\n  border-radius: ", ";\n  background-color: ", ";\n  box-shadow: ", ";\n  width: auto;\n  height: 100%;\n  padding: 20px;\n  display: flex;\n  flex-direction: row;\n"], ["\n  border-radius: ", ";\n  background-color: ", ";\n  box-shadow: ", ";\n  width: auto;\n  height: 100%;\n  padding: 20px;\n  display: flex;\n  flex-direction: row;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.borderRadius.section;
 }, function (_a) {
@@ -583,11 +584,11 @@ var CardBackground = function (_a) {
     var children = _a.children, isHalfScreen = _a.isHalfScreen, style = _a.style;
     return (React__default["default"].createElement(Container$n, { style: __assign({}, style), isHalfScreen: isHalfScreen || false }, children));
 };
-var templateObject_1$r;
+var templateObject_1$t;
 
 // You probably want to change this to something semantic or abandon it all together
-var Container$m = styled__default["default"].div(templateObject_1$q || (templateObject_1$q = __makeTemplateObject(["\n  margin: 0;\n  position: relative;\n  width: max-content;\n"], ["\n  margin: 0;\n  position: relative;\n  width: max-content;\n"])));
-var StyledLabel = styled__default["default"].label(templateObject_2$n || (templateObject_2$n = __makeTemplateObject(["\n  ", ";\n  cursor: pointer;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"], ["\n  ", ";\n  cursor: pointer;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"])), Font(), function (_a) {
+var Container$m = styled__default["default"].div(templateObject_1$s || (templateObject_1$s = __makeTemplateObject(["\n  margin: 0;\n  position: relative;\n  width: max-content;\n"], ["\n  margin: 0;\n  position: relative;\n  width: max-content;\n"])));
+var StyledLabel = styled__default["default"].label(templateObject_2$o || (templateObject_2$o = __makeTemplateObject(["\n  ", ";\n  cursor: pointer;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"], ["\n  ", ";\n  cursor: pointer;\n  display: block;\n  border: 2px solid ", ";\n  border-radius: 70px;\n  padding: 8px 14px;\n  text-align: center;\n  position: relative;\n  background-color: transparent;\n"])), Font(), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.border;
 });
@@ -616,7 +617,7 @@ var Checkbox = function (_a) {
         React__default["default"].createElement(StyledInput$1, { type: type, id: id, name: name, value: value, checked: checked, onChange: onChange }),
         React__default["default"].createElement(StyledLabel, { htmlFor: id }, label)));
 };
-var templateObject_1$q, templateObject_2$n, templateObject_3$g;
+var templateObject_1$s, templateObject_2$o, templateObject_3$g;
 
 var Abacus = function (_a) {
     var _b = _a.fill, fill = _b === void 0 ? "white" : _b;
@@ -699,8 +700,8 @@ var ChevronLeft = function (_a) {
 };
 
 var Checkmark = function (_a) {
-    var _b = _a.stroke, stroke = _b === void 0 ? "#23CE7C" : _b;
-    return (React__default["default"].createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 13 11" },
+    var _b = _a.stroke, stroke = _b === void 0 ? "#23CE7C" : _b, _c = _a.size, size = _c === void 0 ? 13 : _c;
+    return (React__default["default"].createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 13 11", height: size, width: size },
         React__default["default"].createElement("path", { d: "m.958 6.292 3.167 3.167 7.917-7.917", stroke: stroke, strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" })));
 };
 
@@ -738,8 +739,39 @@ var Hamburger = function (_a) {
         React__default["default"].createElement("path", { d: "M0 11a1 1 0 0 0 1 1h16a1 1 0 1 0 0-2H1a1 1 0 0 0-1 1Zm0-5a1 1 0 0 0 1 1h16a1 1 0 1 0 0-2H1a1 1 0 0 0-1 1Zm1-6a1 1 0 0 0 0 2h16a1 1 0 1 0 0-2H1Z", fill: fill })));
 };
 
+var Activity = function () { return (React__default["default"].createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
+    React__default["default"].createElement("path", { d: "M22 12h-4l-3 9L9 3l-3 9H2" }))); };
+
+var Remove = function (_a) {
+    var _b = _a.size, size = _b === void 0 ? 24 : _b, _c = _a.fill, fill = _c === void 0 ? "#F33636" : _c;
+    return (React__default["default"].createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", height: size, width: size },
+        React__default["default"].createElement("path", { d: "M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0Zm6 13.2H6v-2.4h12v2.4Z", fill: fill })));
+};
+
+var Add = function (_a) {
+    var _b = _a.size, size = _b === void 0 ? 24 : _b, _c = _a.fill, fill = _c === void 0 ? "#1C2333" : _c;
+    return (React__default["default"].createElement("svg", { fill: "none", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 16 17", height: size, width: size },
+        React__default["default"].createElement("path", { d: "M8 .5c-4.416 0-8 3.584-8 8s3.584 8 8 8 8-3.584 8-8-3.584-8-8-8Zm4 8.8H8.8v3.2H7.2V9.3H4V7.7h3.2V4.5h1.6v3.2H12v1.6Z", fill: fill })));
+};
+
+var Spin = styled.keyframes(templateObject_1$r || (templateObject_1$r = __makeTemplateObject(["\n   from {\n        transform:rotate(0deg);\n    }\n    to {\n        transform:rotate(360deg);\n    }\n"], ["\n   from {\n        transform:rotate(0deg);\n    }\n    to {\n        transform:rotate(360deg);\n    }\n"])));
+var StyledSVG$1 = styled__default["default"].svg(templateObject_2$n || (templateObject_2$n = __makeTemplateObject(["\n  animation-name: ", ";\n  animation-duration: 5000ms;\n  animation-iteration-count: infinite;\n  animation-timing-function: linear;\n"], ["\n  animation-name: ", ";\n  animation-duration: 5000ms;\n  animation-iteration-count: infinite;\n  animation-timing-function: linear;\n"])), Spin);
+var Spinner = function (_a) {
+    var _b = _a.size, size = _b === void 0 ? 16 : _b;
+    return (React__default["default"].createElement(StyledSVG$1, { stroke: "currentColor", fill: "currentColor", strokeWidth: "0", viewBox: "0 0 1024 1024", height: size, width: size, xmlns: "http://www.w3.org/2000/svg" },
+        React__default["default"].createElement("path", { d: "M512 1024c-69.1 0-136.2-13.5-199.3-40.2C251.7 958 197 921 150 874c-47-47-84-101.7-109.8-162.7C13.5 648.2 0 581.1 0 512c0-19.9 16.1-36 36-36s36 16.1 36 36c0 59.4 11.6 117 34.6 171.3 22.2 52.4 53.9 99.5 94.3 139.9 40.4 40.4 87.5 72.2 139.9 94.3C395 940.4 452.6 952 512 952c59.4 0 117-11.6 171.3-34.6 52.4-22.2 99.5-53.9 139.9-94.3 40.4-40.4 72.2-87.5 94.3-139.9C940.4 629 952 571.4 952 512c0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 0 0-94.3-139.9 437.71 437.71 0 0 0-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.2C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3s-13.5 136.2-40.2 199.3C958 772.3 921 827 874 874c-47 47-101.8 83.9-162.7 109.7-63.1 26.8-130.2 40.3-199.3 40.3z", stroke: "none" })));
+};
+var templateObject_1$r, templateObject_2$n;
+
+var Error = function (_a) {
+    var _b = _a.size, size = _b === void 0 ? 16 : _b, _c = _a.fill, fill = _c === void 0 ? "#F33636" : _c;
+    return (React__default["default"].createElement("svg", { stroke: "currentColor", fill: fill, strokeWidth: "0", viewBox: "0 0 24 24", height: size, width: size, xmlns: "http://www.w3.org/2000/svg" },
+        React__default["default"].createElement("path", { d: "M11 7h2v7h-2zm0 8h2v2h-2z", stroke: "none" }),
+        React__default["default"].createElement("path", { d: "m21.707 7.293-5-5A.996.996 0 0 0 16 2H8a.996.996 0 0 0-.707.293l-5 5A.996.996 0 0 0 2 8v8c0 .266.105.52.293.707l5 5A.996.996 0 0 0 8 22h8c.266 0 .52-.105.707-.293l5-5A.996.996 0 0 0 22 16V8a.996.996 0 0 0-.293-.707zM20 15.586 15.586 20H8.414L4 15.586V8.414L8.414 4h7.172L20 8.414v7.172z", stroke: "none" })));
+};
+
 // You probably want to change this to something semantic or abandon it all together
-var Container$l = styled__default["default"].div(templateObject_1$p || (templateObject_1$p = __makeTemplateObject(["\n  padding: 10px 20px;\n  border-radius: 56px;\n  border: 2px solid ", ";\n  display: flex;\n  grid-gap: 10px;\n  align-items: center;\n  width: fit-content;\n"], ["\n  padding: 10px 20px;\n  border-radius: 56px;\n  border: 2px solid ", ";\n  display: flex;\n  grid-gap: 10px;\n  align-items: center;\n  width: fit-content;\n"])), function (_a) {
+var Container$l = styled__default["default"].div(templateObject_1$q || (templateObject_1$q = __makeTemplateObject(["\n  padding: 10px 20px;\n  border-radius: 56px;\n  border: 2px solid ", ";\n  display: flex;\n  grid-gap: 10px;\n  align-items: center;\n  width: fit-content;\n"], ["\n  padding: 10px 20px;\n  border-radius: 56px;\n  border: 2px solid ", ";\n  display: flex;\n  grid-gap: 10px;\n  align-items: center;\n  width: fit-content;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.border;
 });
@@ -757,7 +789,7 @@ var AbacusBalance = function (_a) {
             " ",
             isEth ? "ETH" : "ABC")));
 };
-var templateObject_1$p, templateObject_2$m;
+var templateObject_1$q, templateObject_2$m;
 
 // You probably want to change this to something semantic or abandon it all together
 var Container$k = styled__default["default"].div(templateObject_3$f || (templateObject_3$f = __makeTemplateObject(["\n  position: fixed;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 16px;\n  background-color: ", ";\n  color: ", ";\n  ", "\n  ", ";\n"], ["\n  position: fixed;\n  left: 0;\n  right: 0;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 16px;\n  background-color: ", ";\n  color: ", ";\n  ", "\n  ", ";\n"])), function (_a) {
@@ -778,7 +810,7 @@ var Container$k = styled__default["default"].div(templateObject_3$f || (template
 }, function (_a) {
     var bottom = _a.bottom;
     return bottom
-        ? styled.css(templateObject_1$o || (templateObject_1$o = __makeTemplateObject(["\n          bottom: ", ";\n        "], ["\n          bottom: ", ";\n        "])), bottom) : "";
+        ? styled.css(templateObject_1$p || (templateObject_1$p = __makeTemplateObject(["\n          bottom: ", ";\n        "], ["\n          bottom: ", ";\n        "])), bottom) : "";
 }, function (_a) {
     var top = _a.top;
     return top
@@ -788,7 +820,7 @@ var PersistentBanner = function (_a) {
     var children = _a.children, rest = __rest(_a, ["children"]);
     return React__default["default"].createElement(Container$k, __assign({}, rest), children);
 };
-var templateObject_1$o, templateObject_2$l, templateObject_3$f;
+var templateObject_1$p, templateObject_2$l, templateObject_3$f;
 
 var RECT_HEIGHT = 2.8;
 var CIRCLE_RADIUS = 5.65;
@@ -802,7 +834,7 @@ var BarY;
 var FIRST_BEAD_POSITION = 14 + CIRCLE_RADIUS;
 var LAST_BEAD_POSITION = 66 - CIRCLE_RADIUS;
 var BEAD_GAP = (66 - CIRCLE_RADIUS - (14 + CIRCLE_RADIUS)) / 3;
-var BarIBeadII = styled.keyframes(templateObject_1$n || (templateObject_1$n = __makeTemplateObject(["\n  0% {\n    transform: translateX(0);\n  }\n  50% {\n    transform: translateX(", "px)\n  }\n  100% {\n    transform: translateX(", "px)\n  }\n"], ["\n  0% {\n    transform: translateX(0);\n  }\n  50% {\n    transform: translateX(", "px)\n  }\n  100% {\n    transform: translateX(", "px)\n  }\n"])), BEAD_GAP, BEAD_GAP);
+var BarIBeadII = styled.keyframes(templateObject_1$o || (templateObject_1$o = __makeTemplateObject(["\n  0% {\n    transform: translateX(0);\n  }\n  50% {\n    transform: translateX(", "px)\n  }\n  100% {\n    transform: translateX(", "px)\n  }\n"], ["\n  0% {\n    transform: translateX(0);\n  }\n  50% {\n    transform: translateX(", "px)\n  }\n  100% {\n    transform: translateX(", "px)\n  }\n"])), BEAD_GAP, BEAD_GAP);
 var BarIBeadI = styled.keyframes(templateObject_2$k || (templateObject_2$k = __makeTemplateObject(["\n  0% {\n    transform: translateX(", "px);\n  }\n  50% {\n    transform: translateX(0)\n  }\n  100% {\n    transform: translateX(0)\n  }\n"], ["\n  0% {\n    transform: translateX(", "px);\n  }\n  50% {\n    transform: translateX(0)\n  }\n  100% {\n    transform: translateX(0)\n  }\n"])), BEAD_GAP);
 var BarIIBeadI = styled.keyframes(templateObject_3$e || (templateObject_3$e = __makeTemplateObject(["\n  0% {\n    transform: translateX(", "px);\n  }\n  16.666% {\n    transform: translateX(0)\n  }\n  100% {\n    transform: translateX(0)\n  }\n"], ["\n  0% {\n    transform: translateX(", "px);\n  }\n  16.666% {\n    transform: translateX(0)\n  }\n  100% {\n    transform: translateX(0)\n  }\n"])), BEAD_GAP);
 var BarIIBeadII = styled.keyframes(templateObject_4$7 || (templateObject_4$7 = __makeTemplateObject(["\n  0% {\n    transform: 0;\n  }\n  16.666% {\n    transform: translateX(-", "px)\n  }\n  83.333% {\n    transform: translateX(-", "px)\n  }\n  100% {\n    transform: translateX(0)\n  }\n"], ["\n  0% {\n    transform: 0;\n  }\n  16.666% {\n    transform: translateX(-", "px)\n  }\n  83.333% {\n    transform: translateX(-", "px)\n  }\n  100% {\n    transform: translateX(0)\n  }\n"])), BEAD_GAP, BEAD_GAP);
@@ -859,10 +891,10 @@ var Loader = function () { return (React__default["default"].createElement(Style
             React__default["default"].createElement("feBlend", { in2: "effect1_dropShadow_1_208", result: "effect2_dropShadow_1_208" }),
             React__default["default"].createElement("feBlend", { in: "SourceGraphic", in2: "effect2_dropShadow_1_208", result: "shape" }))))); };
 var Loader$1 = React__default["default"].memo(Loader);
-var templateObject_1$n, templateObject_2$k, templateObject_3$e, templateObject_4$7, templateObject_5$4, templateObject_6$3, templateObject_7$2, templateObject_8$2, templateObject_9$2, templateObject_10$1;
+var templateObject_1$o, templateObject_2$k, templateObject_3$e, templateObject_4$7, templateObject_5$4, templateObject_6$3, templateObject_7$2, templateObject_8$2, templateObject_9$2, templateObject_10$1;
 
 // You probably want to change this to something semantic or abandon it all together
-var Container$j = styled__default["default"].div(templateObject_1$m || (templateObject_1$m = __makeTemplateObject(["\n  background: ", ";\n  border-radius: ", ";\n  position: relative;\n  min-height: 24px;\n  overflow: hidden;\n"], ["\n  background: ", ";\n  border-radius: ", ";\n  position: relative;\n  min-height: 24px;\n  overflow: hidden;\n"])), function (_a) {
+var Container$j = styled__default["default"].div(templateObject_1$n || (templateObject_1$n = __makeTemplateObject(["\n  background: ", ";\n  border-radius: ", ";\n  position: relative;\n  min-height: 24px;\n  overflow: hidden;\n"], ["\n  background: ", ";\n  border-radius: ", ";\n  position: relative;\n  min-height: 24px;\n  overflow: hidden;\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.utility.gray;
 }, function (_a) {
@@ -901,9 +933,9 @@ var ProgressBar = function (_a) {
         React__default["default"].createElement(Progress, { progress: progress }),
         React__default["default"].createElement(Label, null, label)));
 };
-var templateObject_1$m, templateObject_2$j, templateObject_3$d;
+var templateObject_1$n, templateObject_2$j, templateObject_3$d;
 
-var Container$i = styled__default["default"].div(templateObject_1$l || (templateObject_1$l = __makeTemplateObject(["\n  position: relative;\n  height: 48px;\n  margin-top: 16px;\n  margin-bottom: -14px;\n"], ["\n  position: relative;\n  height: 48px;\n  margin-top: 16px;\n  margin-bottom: -14px;\n"])));
+var Container$i = styled__default["default"].div(templateObject_1$m || (templateObject_1$m = __makeTemplateObject(["\n  position: relative;\n  height: 48px;\n  margin-top: 16px;\n  margin-bottom: -14px;\n"], ["\n  position: relative;\n  height: 48px;\n  margin-top: 16px;\n  margin-bottom: -14px;\n"])));
 var StyledInput = styled__default["default"].input(templateObject_2$i || (templateObject_2$i = __makeTemplateObject(["\n  &[type=\"range\"] {\n    height: 100%;\n    -webkit-appearance: none;\n    margin: 0;\n    width: 100%;\n  }\n  &[type=\"range\"]:focus {\n    outline: none;\n  }\n  &[type=\"range\"]::-webkit-slider-runnable-track {\n    width: 100%;\n    height: 0px;\n    cursor: pointer;\n    box-shadow: none;\n    background: ", ";\n    border-radius: 0px;\n    border: 1px solid ", ";\n  }\n  &[type=\"range\"]::-webkit-slider-thumb {\n    box-shadow: none;\n    border: 2px solid ", ";\n    height: 24px;\n    width: 24px;\n    border-radius: 24px;\n    background: ", ";\n    cursor: pointer;\n    -webkit-appearance: none;\n    transform: translateY(-50%);\n  }\n  &[type=\"range\"]:focus::-webkit-slider-runnable-track {\n    background: ", ";\n  }\n  &[type=\"range\"]::-moz-range-track {\n    width: 100%;\n    height: 0px;\n    cursor: pointer;\n    box-shadow: none;\n    background: ", ";\n    border-radius: 0px;\n    border: 1px solid ", ";\n  }\n  &[type=\"range\"]::-moz-range-thumb {\n    box-shadow: none;\n    border: 2px solid ", ";\n    height: 24px;\n    width: 24px;\n    border-radius: 24px;\n    background: ", ";\n    cursor: pointer;\n  }\n  &[type=\"range\"]::-ms-track {\n    width: 100%;\n    height: 0px;\n    cursor: pointer;\n    background: transparent;\n    border-color: transparent;\n    color: transparent;\n  }\n  &[type=\"range\"]::-ms-fill-lower {\n    background: ", ";\n    border: 1px solid ", ";\n    border-radius: 0px;\n    box-shadow: none;\n  }\n  &[type=\"range\"]::-ms-fill-upper {\n    background: ", ";\n    border: 1px solid ", ";\n    border-radius: 0px;\n    box-shadow: none;\n  }\n  &[type=\"range\"]::-ms-thumb {\n    margin-top: 1px;\n    box-shadow: none;\n    border: 2px solid ", ";\n    height: 24px;\n    width: 24px;\n    border-radius: 24px;\n    background: ", ";\n    cursor: pointer;\n  }\n  &[type=\"range\"]:focus::-ms-fill-lower {\n    background: ", ";\n  }\n  &[type=\"range\"]:focus::-ms-fill-upper {\n    background: ", ";\n  }\n"], ["\n  &[type=\"range\"] {\n    height: 100%;\n    -webkit-appearance: none;\n    margin: 0;\n    width: 100%;\n  }\n  &[type=\"range\"]:focus {\n    outline: none;\n  }\n  &[type=\"range\"]::-webkit-slider-runnable-track {\n    width: 100%;\n    height: 0px;\n    cursor: pointer;\n    box-shadow: none;\n    background: ", ";\n    border-radius: 0px;\n    border: 1px solid ", ";\n  }\n  &[type=\"range\"]::-webkit-slider-thumb {\n    box-shadow: none;\n    border: 2px solid ", ";\n    height: 24px;\n    width: 24px;\n    border-radius: 24px;\n    background: ", ";\n    cursor: pointer;\n    -webkit-appearance: none;\n    transform: translateY(-50%);\n  }\n  &[type=\"range\"]:focus::-webkit-slider-runnable-track {\n    background: ", ";\n  }\n  &[type=\"range\"]::-moz-range-track {\n    width: 100%;\n    height: 0px;\n    cursor: pointer;\n    box-shadow: none;\n    background: ", ";\n    border-radius: 0px;\n    border: 1px solid ", ";\n  }\n  &[type=\"range\"]::-moz-range-thumb {\n    box-shadow: none;\n    border: 2px solid ", ";\n    height: 24px;\n    width: 24px;\n    border-radius: 24px;\n    background: ", ";\n    cursor: pointer;\n  }\n  &[type=\"range\"]::-ms-track {\n    width: 100%;\n    height: 0px;\n    cursor: pointer;\n    background: transparent;\n    border-color: transparent;\n    color: transparent;\n  }\n  &[type=\"range\"]::-ms-fill-lower {\n    background: ", ";\n    border: 1px solid ", ";\n    border-radius: 0px;\n    box-shadow: none;\n  }\n  &[type=\"range\"]::-ms-fill-upper {\n    background: ", ";\n    border: 1px solid ", ";\n    border-radius: 0px;\n    box-shadow: none;\n  }\n  &[type=\"range\"]::-ms-thumb {\n    margin-top: 1px;\n    box-shadow: none;\n    border: 2px solid ", ";\n    height: 24px;\n    width: 24px;\n    border-radius: 24px;\n    background: ", ";\n    cursor: pointer;\n  }\n  &[type=\"range\"]:focus::-ms-fill-lower {\n    background: ", ";\n  }\n  &[type=\"range\"]:focus::-ms-fill-upper {\n    background: ", ";\n  }\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.core.primary;
@@ -956,7 +988,7 @@ var StyledInput = styled__default["default"].input(templateObject_2$i || (templa
     var theme = _a.theme;
     return theme.colors.core.primary;
 });
-var StyledOutput = styled__default["default"].output(templateObject_3$c || (templateObject_3$c = __makeTemplateObject(["\n  background: ", ";\n  color: white;\n  padding: 2px 10px;\n  position: absolute;\n  border-radius: 4px;\n  font-size: 14px;\n  line-height: 140%;\n  left: 0;\n  bottom: 40px;\n  transform: translateX(-50%);\n  visibility: ", ";\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    width: 5px;\n    height: 5px;\n    background: ", ";\n    top: 100%;\n    left: 50%;\n    transform-origin: center;\n    transform: translate(-50%, -50%) rotateZ(45deg);\n  }\n"], ["\n  background: ", ";\n  color: white;\n  padding: 2px 10px;\n  position: absolute;\n  border-radius: 4px;\n  font-size: 14px;\n  line-height: 140%;\n  left: 0;\n  bottom: 40px;\n  transform: translateX(-50%);\n  visibility: ", ";\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    width: 5px;\n    height: 5px;\n    background: ", ";\n    top: 100%;\n    left: 50%;\n    transform-origin: center;\n    transform: translate(-50%, -50%) rotateZ(45deg);\n  }\n"])), function (_a) {
+var StyledOutput = styled__default["default"].output(templateObject_3$c || (templateObject_3$c = __makeTemplateObject(["\n  background: ", ";\n  color: white;\n  padding: 2px 10px;\n  position: absolute;\n  width: max-content;\n  border-radius: 4px;\n  font-size: 14px;\n  line-height: 140%;\n  left: 0;\n  bottom: 40px;\n  transform: translateX(-50%);\n  visibility: ", ";\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    width: 5px;\n    height: 5px;\n    background: ", ";\n    top: 100%;\n    left: 50%;\n    transform-origin: center;\n    transform: translate(-50%, -50%) rotateZ(45deg);\n  }\n"], ["\n  background: ", ";\n  color: white;\n  padding: 2px 10px;\n  position: absolute;\n  width: max-content;\n  border-radius: 4px;\n  font-size: 14px;\n  line-height: 140%;\n  left: 0;\n  bottom: 40px;\n  transform: translateX(-50%);\n  visibility: ", ";\n\n  &::after {\n    content: \"\";\n    position: absolute;\n    width: 5px;\n    height: 5px;\n    background: ", ";\n    top: 100%;\n    left: 50%;\n    transform-origin: center;\n    transform: translate(-50%, -50%) rotateZ(45deg);\n  }\n"])), function (_a) {
     var theme = _a.theme;
     return theme.colors.utility.blue;
 }, function (_a) {
@@ -980,9 +1012,9 @@ var CustomLockDuration = function (_a) {
         React__default["default"].createElement(StyledInput, { type: "range", id: id, name: id, min: min, max: max, value: value, step: step, onChange: function (e) { return setValue(Number(e.target.value)); } }),
         React__default["default"].createElement(StyledOutput, { visible: validValue, ref: outputRef }, typeof outputFormatter === "function" ? outputFormatter(value) : value)));
 };
-var templateObject_1$l, templateObject_2$i, templateObject_3$c;
+var templateObject_1$m, templateObject_2$i, templateObject_3$c;
 
-var Container$h = styled__default["default"].div(templateObject_1$k || (templateObject_1$k = __makeTemplateObject(["\n  display: flex;\n  gap: 10px;\n  position: relative;\n\n  & svg {\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    right: 20px;\n  }\n"], ["\n  display: flex;\n  gap: 10px;\n  position: relative;\n\n  & svg {\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    right: 20px;\n  }\n"])));
+var Container$h = styled__default["default"].div(templateObject_1$l || (templateObject_1$l = __makeTemplateObject(["\n  display: flex;\n  gap: 10px;\n  position: relative;\n\n  & svg {\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    right: 20px;\n  }\n"], ["\n  display: flex;\n  gap: 10px;\n  position: relative;\n\n  & svg {\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    right: 20px;\n  }\n"])));
 var StyledSelect = styled__default["default"].select(templateObject_2$h || (templateObject_2$h = __makeTemplateObject(["\n  ", ";\n  border: none;\n  padding: 13px 20px;\n  padding-right: 38px;\n  background-color: ", ";\n  border-radius: ", ";\n  appearance: none;\n"], ["\n  ", ";\n  border: none;\n  padding: 13px 20px;\n  padding-right: 38px;\n  background-color: ", ";\n  border-radius: ", ";\n  appearance: none;\n"])), Font("kilo"), function (_a) {
     var theme = _a.theme;
     return theme.colors.button.secondary;
@@ -997,7 +1029,13 @@ var Select = function (_a) {
         React__default["default"].createElement(StyledSelect, { className: className, value: value, onChange: function (e) { return setValue(e.target.value); } }, options.map(function (option) { return (React__default["default"].createElement(Option, { key: option }, option)); })),
         React__default["default"].createElement(DownChevron, null)));
 };
-var templateObject_1$k, templateObject_2$h, templateObject_3$b;
+var templateObject_1$l, templateObject_2$h, templateObject_3$b;
+
+var Pill = styled__default["default"].span(templateObject_1$k || (templateObject_1$k = __makeTemplateObject(["\n  padding: 8px 14px;\n  border-radius: 70px;\n  background-color: transparent;\n  border: 2px solid ", ";\n  width: max-content;\n"], ["\n  padding: 8px 14px;\n  border-radius: 70px;\n  background-color: transparent;\n  border: 2px solid ", ";\n  width: max-content;\n"])), function (_a) {
+    var theme = _a.theme;
+    return theme.colors.core.border;
+});
+var templateObject_1$k;
 
 var PetaModified = styled__default["default"].div(templateObject_1$j || (templateObject_1$j = __makeTemplateObject(["\n  ", ";\n  margin-left: 8px;\n  color: ", ";\n"], ["\n  ", ";\n  margin-left: 8px;\n  color: ", ";\n"])), Font("peta", "Bluu Next"), function (_a) {
     var isDark = _a.isDark, theme = _a.theme;
@@ -1418,7 +1456,9 @@ exports.AbacusCrowdsIcon = AbacusCrowds;
 exports.AbacusIcon = Abacus;
 exports.AbacusSpotIcon = AbacusSpot;
 exports.Accordion = Accordion;
+exports.Activity = Activity;
 exports.ActivitySection = ActivitySection;
+exports.Add = Add;
 exports.Button = Button;
 exports.CardBackground = CardBackground;
 exports.CardBar = CardBar;
@@ -1431,6 +1471,7 @@ exports.Discord = Discord;
 exports.DownChevron = DownChevron;
 exports.Dropdown = Dropdown;
 exports.ETH = Eth;
+exports.Error = Error;
 exports.Exa = Container$F;
 exports.ExploreImage = ExploreImage;
 exports.ExploreInfo = ExploreInfo;
@@ -1466,6 +1507,7 @@ exports.P = StyledP;
 exports.PartOfCollection = PartOfCollection;
 exports.PersistentBanner = PersistentBanner;
 exports.Peta = Container$w;
+exports.Pill = Pill;
 exports.PreviousSessionsAutoScroll = PreviousSessionsAutoScroll;
 exports.PriceHistory = PriceHistory;
 exports.ProfileGroup = ProfileGroup;
@@ -1473,12 +1515,14 @@ exports.ProfileIcon = ProfileIcon;
 exports.ProfileInfo = ProfileInfo;
 exports.ProgressBar = ProgressBar;
 exports.Range = CustomLockDuration;
+exports.Remove = Remove;
 exports.Section = Section;
 exports.Select = Select;
 exports.SessionCard = SessionCard;
 exports.SessionCountdown = SessionCountdown;
 exports.Small = Container$v;
 exports.SocialLinks = SocialLinks;
+exports.Spinner = Spinner;
 exports.SplitSection = SplitSection;
 exports.StatInfo = StatInfo;
 exports.Tera = Container$u;

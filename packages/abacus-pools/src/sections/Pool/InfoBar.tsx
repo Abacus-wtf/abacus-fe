@@ -11,7 +11,6 @@ import {
 import { Checkmark, Close } from "abacus-ui"
 
 import { OutboundLink } from "gatsby-plugin-google-gtag"
-import { formatEther } from "ethers/lib/utils"
 
 const StyledOutboundLink = styled(OutboundLink)`
   color: ${({ theme }) => theme.colors.core.primary};
@@ -38,28 +37,22 @@ const PoolTitle = styled(InfoBarContent)`
 `
 
 const InfoBar: FunctionComponent = () => {
-  const {
-    owner,
-    ownerLink,
-    emissionsStarted,
-    nftName,
-    tokenPrice,
-    totalParticipants,
-    size,
-  } = useGetPoolData()
-  const tokensLockedEth = (
-    Number(formatEther(size)) * Number(tokenPrice)
-  ).toLocaleString("en-US", {
-    maximumSignificantDigits: 5,
-    minimumSignificantDigits: 2,
-  })
+  const { emissionsStarted, tokenPrice, totalParticipants, size, name } =
+    useGetPoolData()
+  const tokensLockedEth = (Number(size) * Number(tokenPrice)).toLocaleString(
+    "en-US",
+    {
+      maximumSignificantDigits: 5,
+      minimumSignificantDigits: 2,
+    }
+  )
   const tokensLockedUSD = useEthToUSD(Number(tokensLockedEth))
   const theme = useTheme()
   return (
     <InfoBarContainer>
       <InfoBarItem>
         <InfoBarTitle>Pool Name</InfoBarTitle>
-        <PoolTitle as="h1">{nftName}</PoolTitle>
+        <PoolTitle as="h1">{name}</PoolTitle>
       </InfoBarItem>
       <InfoBarItem>
         <InfoBarTitle># Tokens Locked</InfoBarTitle>
@@ -73,15 +66,15 @@ const InfoBar: FunctionComponent = () => {
       <InfoBarItem>
         <InfoBarTitle>Owner</InfoBarTitle>
         <InfoBarContent>
-          <StyledOutboundLink target="_blank" href={ownerLink}>
-            {owner}
+          <StyledOutboundLink target="_blank" href="">
+            TODO {/* {owner} */}
           </StyledOutboundLink>
         </InfoBarContent>
         <EnabledEmissions emissionsStarted={emissionsStarted}>
           {emissionsStarted ? (
             <Checkmark stroke={theme.colors.utility.green} />
           ) : (
-            <Close stroke={theme.colors.utility.red} />
+            <Close fill={theme.colors.utility.red} />
           )}
           {emissionsStarted ? "Emissions Enabled" : "Emissions Not Enabled"}
         </EnabledEmissions>

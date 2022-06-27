@@ -2,8 +2,12 @@ import { useCallback } from "react"
 import { AppDispatch, AppState } from "@state/index"
 import { useDispatch, useSelector } from "react-redux"
 import request from "graphql-request"
-import { GRAPHQL_ENDPOINT } from "@config/constants"
-import { openseaGetMany, OpenSeaGetResponse } from "@config/utils"
+import { GRAPHQL_ENDPOINT, OPENSEA_LINK } from "@config/constants"
+import {
+  openseaGetMany,
+  OpenSeaGetManyParams,
+  matchOpenSeaAssetToNFT,
+} from "abacus-utils"
 import _ from "lodash"
 import { useActiveWeb3React } from "@hooks/index"
 import {
@@ -14,47 +18,50 @@ import {
   Vault_OrderBy,
 } from "abacus-graph"
 import { BigNumber } from "ethers"
+import { useCurrentEpoch } from "@state/application/hooks"
 import { getPools, getMyPools } from "./actions"
 import { Pool, PoolStatus } from "./reducer"
 import { PAGINATE_BY } from "./constants"
 import { tokenLockHistorySelector } from "./selectors"
 
-const findAsset = (
-  assets: OpenSeaGetResponse["assets"],
-  vault: GetPoolsQuery["vaults"][number]
-) => {
-  const ret = assets.find(
-    (asset) =>
-      String(asset.asset_contract.address) === String(vault.nftAddress) &&
-      String(asset.token_id) === String(vault.tokenId)
-  )
-  return ret
-}
-
 const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
-  const { assets } = await openseaGetMany(vaults)
-  const poolData: Pool[] = _.map(vaults, (vault) => {
-    const asset = findAsset(assets, vault)
-    return {
-      img: (asset?.image_preview_url || asset?.image_url) ?? "",
-      nonce: vault.nonce || 0,
-      state:
-        vault.status === 0
-          ? PoolStatus.Normal
-          : vault.status === 1
-          ? PoolStatus.Auction
-          : PoolStatus.Closed,
-      collectionTitle: asset?.asset_contract.name ?? "",
-      nftName: asset?.name ?? "",
-      address: vault.nftAddress,
-      tokenId: vault.tokenId,
-      vaultAddress: vault.id,
-      emissionsStarted: vault.emissionsSigned,
-      size: BigNumber.from(vault.size),
-      totalParticipants: vault.totalParticipants,
-      tickets: vault.tickets,
-    }
+  const INITIAL_NFTS: OpenSeaGetManyParams = []
+  const nfts = vaults.reduce((acc, vault) => {
+    const nextNfts = vault.nfts.map((nft) => ({
+      nftAddress: nft.address,
+      tokenId: nft.tokenId,
+    }))
+    return [...acc, ...nextNfts]
+  }, INITIAL_NFTS)
+  const { assets } = await openseaGetMany(nfts, {
+    url: OPENSEA_LINK,
   })
+  const poolData: Pool[] = _.map(vaults, (vault) => ({
+    state:
+      vault.status === 0
+        ? PoolStatus.Normal
+        : vault.status === 1
+        ? PoolStatus.Auction
+        : PoolStatus.Closed,
+    nfts: vault.nfts.map((nft) => {
+      const asset = matchOpenSeaAssetToNFT(assets, {
+        ...nft,
+        nftAddress: nft.address,
+      })
+      return {
+        ...nft,
+        name: asset.name,
+        img: asset.image_url,
+        alt: `${asset.name} in NFT Collection: ${asset.collection}`,
+      }
+    }),
+    name: vault.name,
+    vaultAddress: vault.id,
+    emissionsStarted: vault.emissionsSigned,
+    size: BigNumber.from(vault.size),
+    totalParticipants: vault.totalParticipants,
+    tickets: vault.tickets,
+  }))
   return poolData
 }
 
@@ -120,7 +127,9 @@ const getMyPoolsSelector = (state: AppState): AppState["poolData"]["myPools"] =>
 export const useGetMyPools = () =>
   useSelector<AppState, AppState["poolData"]["myPools"]>(getMyPoolsSelector)
 
-export const useTokenLockHistory = (vaultId: string) =>
-  useSelector<AppState, { uv: number; date: number }[]>((state) =>
-    tokenLockHistorySelector(state, vaultId)
+export const useTokenLockHistory = (vaultId: string) => {
+  const currentEpoch = useCurrentEpoch()
+  return useSelector<AppState, { uv: number; epoch: number }[]>((state) =>
+    tokenLockHistorySelector(currentEpoch)(state, vaultId)
   )
+}

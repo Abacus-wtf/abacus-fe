@@ -4,7 +4,6 @@ import {
   useSinglePoolTokenLockHistory,
 } from "@state/singlePoolData/hooks"
 import { Section } from "abacus-ui"
-import { formatEther } from "ethers/lib/utils"
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { SectionHeader, SectionTitle } from "./Pool.styled"
@@ -27,12 +26,13 @@ const StyledSection = styled(Section)`
 const TokenLockHistory: FunctionComponent = () => {
   const { tokenPrice, size } = useGetPoolData()
   const data = useSinglePoolTokenLockHistory()
-  const tokensLockedEth = (
-    Number(formatEther(size)) * Number(tokenPrice)
-  ).toLocaleString("en-US", {
-    maximumSignificantDigits: 5,
-    minimumSignificantDigits: 2,
-  })
+  const tokensLockedEth = (Number(size) * Number(tokenPrice)).toLocaleString(
+    "en-US",
+    {
+      maximumSignificantDigits: 5,
+      minimumSignificantDigits: 2,
+    }
+  )
 
   return (
     <StyledSection>

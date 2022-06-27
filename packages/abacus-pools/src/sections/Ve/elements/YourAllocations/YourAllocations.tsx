@@ -27,7 +27,7 @@ const YourAllocations = ({ refreshVeState }: YourAllocationsProps) => {
   return (
     <StyledSection order={2}>
       <SectionTitle>Your Allocations</SectionTitle>
-      <Heading>Auto-Allocated: {holderData?.amountAutoAllocated} veABC</Heading>
+      <Heading>Auto-Allocated: {holderData?.amountAutoAllocated} ABC</Heading>
       {allocations.length > 0 ? (
         <ColumnContainer>
           <Heading>Collection</Heading>

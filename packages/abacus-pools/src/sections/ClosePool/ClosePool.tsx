@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react"
-import { PageProps, Link } from "gatsby"
-import * as queryString from "query-string"
+import { Link } from "gatsby"
+
 import { Media } from "abacus-ui"
 import styled, { createGlobalStyle } from "styled-components"
 import {
@@ -51,48 +51,44 @@ const StyledPoolCard = styled(PoolCard)`
   height: min-content;
 `
 
-type PoolProps = {
-  location: PageProps["location"]
+type ClosePoolProps = {
+  vaultAddress: string
 }
 
-const Pool: FunctionComponent<PoolProps> = ({ location }) => {
-  const { address, tokenId, nonce } = queryString.parse(location.search)
-  const { img, nftName, size, totalParticipants, vaultAddress } =
-    useGetPoolData()
+const ClosePool: FunctionComponent<ClosePoolProps> = ({ vaultAddress }) => {
+  const { nfts, size, totalParticipants, name } = useGetPoolData()
   const setPool = useSetPoolData()
   const getTickets = useGetTickets()
 
   useEffect(() => {
-    setPool(String(address), String(tokenId), Number(nonce))
-  }, [address, tokenId, nonce, setPool])
+    setPool(vaultAddress)
+  }, [setPool, vaultAddress])
 
   useEffect(() => {
     getTickets()
   }, [getTickets])
 
-  const poolLink = `/pool?address=${address}&tokenId=${tokenId}&nonce=${nonce}`
+  const poolLink = `/pool/${vaultAddress}`
+
+  const globalImg = nfts?.[0]?.img ?? ""
 
   return (
     <Container>
-      <GlobalStyle url={img} />
+      <GlobalStyle url={globalImg} />
       <BackLink to={poolLink}>{"< Back to Pool"}</BackLink>
       <SplitSection>
         <StyledPoolCard
           fullDetails={false}
-          imgSrc={img}
-          title={nftName}
+          nfts={nfts}
+          title={name}
           participants={totalParticipants}
           poolSize={formatEther(size.div(BigNumber.from("1000")))}
           vaultId={vaultAddress}
         />
-        <CurrentState
-          address={String(address)}
-          tokenId={String(tokenId)}
-          nonce={String(nonce)}
-        />
+        <CurrentState vaultAddress={vaultAddress} />
       </SplitSection>
     </Container>
   )
 }
 
-export default Pool
+export default ClosePool

@@ -15,10 +15,10 @@ import {
 
 type AllocateProps = {
   getVeData: () => void
-  veABCMaxToAllocate: string
+  abcMaxToAllocate: string
 }
 
-const Allocate = ({ getVeData, veABCMaxToAllocate }: AllocateProps) => {
+const Allocate = ({ getVeData, abcMaxToAllocate }: AllocateProps) => {
   const [abc, setAbc] = useState("")
   const [selectedCollection, setSelectedCollection] = useState("")
   const { onAddAutoAllocation, isPending: isPendingAddAuto } =
@@ -36,14 +36,14 @@ const Allocate = ({ getVeData, veABCMaxToAllocate }: AllocateProps) => {
       <LoadingOverlay loading={isPending} />
       <SectionTitle>Allocate</SectionTitle>
       <Input
-        label="veABC amount you want to allocate "
+        label="ABC amount you want to allocate "
         type="number"
         name="allocate_abc"
         value={abc}
         onChange={setAbc}
         placeholder="0.00"
         pill={
-          <MaxButton onClick={() => setAbc(veABCMaxToAllocate)}>Max</MaxButton>
+          <MaxButton onClick={() => setAbc(abcMaxToAllocate)}>Max</MaxButton>
         }
       />
       <CollectionRadioButtons

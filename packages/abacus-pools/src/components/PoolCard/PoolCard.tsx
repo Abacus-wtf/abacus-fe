@@ -97,7 +97,10 @@ const Variation = styled.div<{ variation: number }>`
 
 type PoolCardProps = {
   title: string
-  imgSrc: string
+  nfts: {
+    img: string
+    alt: string
+  }[]
   poolSize: string
   participants: number
   link?: string
@@ -107,7 +110,7 @@ type PoolCardProps = {
 }
 
 const PoolCard: FunctionComponent<PoolCardProps> = ({
-  imgSrc,
+  nfts,
   title,
   poolSize,
   participants,
@@ -127,9 +130,11 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
       minimumSignificantDigits: 2,
     })
   )
+  const src = nfts?.[0]?.img ?? ""
+  const alt = nfts?.[0]?.alt ?? ""
   return (
     <StyledSection className={className} hasLink={!!link}>
-      <NFTImage src={imgSrc} />
+      <NFTImage src={src} alt={alt} numNfts={nfts?.length} />
       <CardInfoRow flexGrow>
         <CardInfo>
           <CardTitle as={link ? Link : "a"} to={link} hasLink={!!link}>

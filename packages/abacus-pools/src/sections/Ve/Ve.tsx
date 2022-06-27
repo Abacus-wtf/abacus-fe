@@ -1,10 +1,9 @@
 import { Media } from "abacus-ui"
-import React, { useEffect } from "react"
+import React from "react"
 import styled from "styled-components"
-import { useFetchCurrentEpoch } from "@state/application/hooks"
 import { Epoch } from "@components/Epoch"
 import { Container } from "../../layouts/styles"
-import { Allocate, Lock, YourAllocations, YourLocks } from "./elements"
+import { Allocate, Deposit, YourAllocations, YourDeposits } from "./elements"
 import { useVeData } from "./useVeData"
 
 const GridContainer = styled.div`
@@ -18,22 +17,9 @@ const GridContainer = styled.div`
 `
 
 const Ve = () => {
-  const { fetchCurrentEpoch } = useFetchCurrentEpoch()
+  const { refreshVeState, holderData, epoch, setEpoch, epochEndTime, epochs } =
+    useVeData()
 
-  useEffect(() => {
-    fetchCurrentEpoch()
-  }, [fetchCurrentEpoch])
-
-  const {
-    veAbcBalance,
-    refreshVeState,
-    holderData,
-    veABCMaxToAllocate,
-    epoch,
-    setEpoch,
-    epochEndTime,
-    epochs,
-  } = useVeData()
   return (
     <Container>
       <Epoch
@@ -43,16 +29,12 @@ const Ve = () => {
         endTime={epochEndTime}
       />
       <GridContainer>
-        <YourLocks
-          refreshVeState={refreshVeState}
-          veBalance={veAbcBalance}
-          holder={holderData}
-        />
-        <Lock refreshVeState={refreshVeState} />
+        <YourDeposits refreshVeState={refreshVeState} holder={holderData} />
+        <Deposit refreshVeState={refreshVeState} />
         <YourAllocations refreshVeState={refreshVeState} />
         <Allocate
           getVeData={refreshVeState}
-          veABCMaxToAllocate={veABCMaxToAllocate}
+          abcMaxToAllocate={String(holderData?.availableAbc ?? "")}
         />
       </GridContainer>
     </Container>

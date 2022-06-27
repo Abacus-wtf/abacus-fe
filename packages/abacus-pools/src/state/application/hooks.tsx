@@ -9,10 +9,9 @@ import {
 import axios from "axios"
 import ABC_TOKEN_ABI from "@config/contracts/ABC_TOKEN_ABI.json"
 import { useActiveWeb3React, useWeb3Contract } from "@hooks/index"
-import { formatEther, parseEther } from "ethers/lib/utils"
+import { formatEther } from "ethers/lib/utils"
 import request from "graphql-request"
 import { GetAggregatesDocument, GetAggregatesQuery } from "abacus-graph"
-import { BigNumber } from "ethers"
 import { AppDispatch, AppState } from "../index"
 import {
   toggleWalletModal,
@@ -21,7 +20,8 @@ import {
   setAbcBalance,
   setGeneralizedContractErrorMessage,
   setAggregate,
-  setCurrentEpoch,
+  setSelectNetworkModalOpen,
+  setEpoch,
 } from "./actions"
 import {
   abcBalanceSelector,
@@ -30,6 +30,8 @@ import {
   generalizedContractErrorMessageSelector,
   networkSymbolSelector,
   currentEpochSelector,
+  selectNetworkModalOpen,
+  epochLengthSelector,
 } from "./selectors"
 import { GeneralizedContractState } from "./reducer"
 import ABC_EPOCH_ABI from "../../config/contracts/ABC_EPOCH_ABI.json"
@@ -117,11 +119,8 @@ export const useGetAbcBalance = () => {
 
     try {
       const balance = await abcCall(ABC_TOKEN).methods.balanceOf(account).call()
-      dispatch(
-        setAbcBalance(
-          Number(formatEther(BigNumber.from(balance).sub(parseEther("10"))))
-        )
-      )
+      const formatted = Number(formatEther(balance))
+      dispatch(setAbcBalance(formatted))
     } catch (e) {
       console.log(`Unable to get current ABC Balance for ${account}`)
       console.error(`Error: ${e}`)
@@ -157,11 +156,16 @@ export const useFetchCurrentEpoch = () => {
 
   const fetchCurrentEpoch = useCallback(async () => {
     try {
-      const currentEpoch = await epochCall(ABC_EPOCH)
-        .methods.getCurrentEpoch()
-        .call()
-
-      dispatch(setCurrentEpoch(currentEpoch))
+      // TODO: Use multi-call
+      const [currentEpoch, epochLength] = await Promise.all([
+        epochCall(ABC_EPOCH).methods.getCurrentEpoch().call(),
+        epochCall(ABC_EPOCH).methods.epochLength().call(),
+      ])
+      const epoch = {
+        current: parseInt(currentEpoch, 10),
+        length: parseInt(epochLength, 10) * 1000,
+      }
+      dispatch(setEpoch(epoch))
     } catch {
       // TODO: Determine why this errors
     }
@@ -173,3 +177,18 @@ export const useFetchCurrentEpoch = () => {
 }
 
 export const useCurrentEpoch = () => useSelector(currentEpochSelector)
+export const useEpochLength = () => useSelector(epochLengthSelector)
+
+export const useIsSelectNetworkModalOpen = () =>
+  useSelector(selectNetworkModalOpen)
+
+export const useSetIsSelectNetworkModalOpen = () => {
+  const dispatch = useDispatch()
+
+  return useCallback(
+    (isOpen: boolean) => {
+      dispatch(setSelectNetworkModalOpen(isOpen))
+    },
+    [dispatch]
+  )
+}

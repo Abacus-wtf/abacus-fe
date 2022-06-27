@@ -13,6 +13,7 @@ export const poolSelector = createSelector(
   }
 )
 
-export const tokenLockHistorySelector = createSelector(poolSelector, (pool) =>
-  aggregateVaultTokenLockHistory(pool?.tickets)
-)
+export const tokenLockHistorySelector = (currentEpoch: number) =>
+  createSelector(poolSelector, (pool) =>
+    aggregateVaultTokenLockHistory(currentEpoch)(pool?.tickets)
+  )

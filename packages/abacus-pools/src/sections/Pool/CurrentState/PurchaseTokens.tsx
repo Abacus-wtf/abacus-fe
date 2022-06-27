@@ -5,9 +5,9 @@ import {
   useEthToUSD,
 } from "@state/application/hooks"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
-import { Input } from "abacus-ui"
+import { Checkbox, Flex, Input } from "abacus-ui"
 
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, useEffect, useState } from "react"
 
 import { LoadingOverlay, LockTimeSelector } from "@components/index"
 import moment from "moment"
@@ -25,24 +25,29 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
   const ethUSD = useEthToUSD(Number(eth))
   const { tokenPrice } = useGetPoolData()
   const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
+  const [startEpoch, setStartEpoch] = useState<number>(null)
   const currentEpoch = useCurrentEpoch()
   const epochLength = useEpochLength()
 
   const numTokens = String(Number(eth) / Number(tokenPrice))
 
+  useEffect(() => {
+    setStartEpoch(currentEpoch)
+  }, [currentEpoch])
+
   const purchaseTokens = async () => {
-    await onPurchaseTokens(numTokens, currentEpoch, finalEpoch, async () => {
+    await onPurchaseTokens(numTokens, startEpoch, finalEpoch, async () => {
       // await getBalance()
       await refreshPoolData()
       setEth("")
     })
   }
 
-  const confirmDisabled = !eth || !finalEpoch || isPending
+  const confirmDisabled = !eth || !finalEpoch || isPending || !startEpoch
 
   const durations = Array.from({ length: 3 }).map((_, i) => {
     const next = i + 1
-    const nextEpoch = currentEpoch + next
+    const nextEpoch = startEpoch + next
     const nextDate = moment(+new Date() + epochLength * i).format("MMM DD")
     return {
       label: `#${nextEpoch} ${nextDate}`,
@@ -52,12 +57,12 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
   })
 
   const customDurationConfig = {
-    min: currentEpoch + 1,
-    max: currentEpoch + 10,
+    min: startEpoch + 1,
+    max: startEpoch + 10,
   }
   const customDurationFormatter = (value: number) =>
     `#${value} - ${moment(
-      +new Date() + epochLength * (value - currentEpoch)
+      +new Date() + epochLength * (value - startEpoch)
     ).format("MMM DD")}`
 
   return (
@@ -85,6 +90,26 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
         pill="Tokens"
         hint={`$${ethUSD}`}
       />
+      <Flex style={{ gap: "8px" }}>
+        <Checkbox
+          type="radio"
+          name="start_epoch"
+          label={`Epoch #${currentEpoch} (current)`}
+          id={`start_epoch${currentEpoch}`}
+          value={`${currentEpoch}`}
+          checked={startEpoch === currentEpoch}
+          onChange={() => setStartEpoch(currentEpoch)}
+        />
+        <Checkbox
+          type="radio"
+          name="start_epoch"
+          label={`Epoch #${currentEpoch + 1} (next)`}
+          id={`start_epoch${currentEpoch + 1}`}
+          value={`${currentEpoch + 1}`}
+          checked={startEpoch === currentEpoch + 1}
+          onChange={() => setStartEpoch(currentEpoch + 1)}
+        />
+      </Flex>
       <LockTimeSelector
         label="How long do you want to lock your deposit?"
         learnMoreLink="/learn-more"

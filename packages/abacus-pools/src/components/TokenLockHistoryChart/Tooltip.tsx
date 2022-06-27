@@ -1,5 +1,5 @@
 import { H3, P } from "abacus-ui"
-import moment from "moment"
+// import moment from "moment"
 import React from "react"
 import styled from "styled-components"
 
@@ -37,10 +37,10 @@ const DataValue = styled(DataLabel)`
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
-    const { date, uv } = payload[0].payload
+    const { epoch, uv } = payload[0].payload
     return (
       <Container>
-        <Title>{moment(date).format("MMM DD, yyyy")}</Title>
+        <Title>Epoch #{epoch}</Title>
         <Wrapper>
           <DataLabel>Locked</DataLabel>
           <DataValue>{uv} ETH</DataValue>

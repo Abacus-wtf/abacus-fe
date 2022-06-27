@@ -12,7 +12,7 @@ const Container = styled.div<{ empty?: boolean }>`
 
 type TokenLockHistoryChartProps = {
   data: {
-    date: number
+    epoch: number
     uv: number
   }[]
   showYAxis?: boolean

@@ -11,6 +11,7 @@ import _ from "lodash"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { formatEther, parseEther } from "ethers/lib/utils"
 import { TICKET_SIZE } from "@config/constants"
+import { BigNumber } from "ethers"
 import VAULT_ABI from "../config/contracts/ABC_VAULT_ABI.json"
 import ERC_721_ABI from "../config/contracts/ERC_721_ABI.json"
 
@@ -287,7 +288,7 @@ export const useOnPurchaseTokens = () => {
         purchaseAmount,
         startEpoch,
         endEpoch,
-        0,
+        BigNumber.from("0"),
       ]
       console.log(args)
       const value = parseEther(

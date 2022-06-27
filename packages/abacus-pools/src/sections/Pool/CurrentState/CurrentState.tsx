@@ -16,10 +16,12 @@ import {
   UpperContainer,
 } from "./CurrentState.styled"
 import { Bribes } from "./Bribes"
+import { SellTokens } from "./SellTokens"
 
 enum Page {
   PurchaseTokens = "PurchaseTokens",
   Bribes = "Bribes",
+  SellTokens = "SellTokens",
 }
 
 const Container = styled(Section)`
@@ -77,8 +79,12 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
     switch (page) {
       case Page.PurchaseTokens:
         return <PurchaseTokens refreshPoolData={refreshPoolData} />
-      default:
+      case Page.Bribes:
         return <Bribes refreshPoolData={refreshPoolData} />
+      case Page.SellTokens:
+        return <SellTokens refreshPoolData={refreshPoolData} />
+      default:
+        return null
     }
   }, [page, refreshPoolData])
 
@@ -133,6 +139,16 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
               value={Page.PurchaseTokens}
               checked={page === Page.PurchaseTokens}
               onChange={() => setPage(Page.PurchaseTokens)}
+            />
+            <Checkbox
+              key={Page.SellTokens}
+              type="radio"
+              name="page_selector"
+              label={Page.SellTokens}
+              id={Page.SellTokens}
+              value={Page.SellTokens}
+              checked={page === Page.SellTokens}
+              onChange={() => setPage(Page.SellTokens)}
             />
             <Checkbox
               key={Page.Bribes}

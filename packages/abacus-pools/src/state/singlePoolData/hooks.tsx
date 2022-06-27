@@ -30,6 +30,7 @@ import {
 } from "abacus-graph"
 import { aggregateVaultTokenLockHistory } from "utils/vaultTickets"
 import { matchOpenSeaAssetToNFT, openseaGetMany } from "abacus-utils"
+import { useCurrentEpoch } from "@state/application/hooks"
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"
 import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
 import { Bribe } from "./reducer"
@@ -71,6 +72,56 @@ export const useTickets = () =>
   useSelector<AppState, AppState["singlePoolData"]["tickets"]>(
     getTicketsSelector
   )
+
+type SellablePosition = {
+  id: string
+  amount: number
+  nonce: number
+  startEpoch: number
+  finalEpoch: number
+}
+
+export const useSellablePositions = (currentEpoch: number, account: string) => {
+  const initial: SellablePosition[] = []
+  const sellablePositionsSelector = createSelector(
+    getTicketsSelector,
+    (tickets) =>
+      tickets
+        ?.reduce((acc, ticket) => {
+          if (!ticket.tokenPurchasesLength || !account) {
+            return acc
+          }
+          const nextSellablePositions: SellablePosition[] =
+            ticket.tokenPurchases.reduce((tokenAcc, tokenPurchase) => {
+              const isAccountsPurchase =
+                tokenPurchase.owner.toLowerCase() === account.toLowerCase()
+              if (!isAccountsPurchase) {
+                return tokenAcc
+              }
+              const isSold = !!tokenPurchase.soldAt
+              if (isSold) {
+                return tokenAcc
+              }
+              const locked = tokenPurchase.finalEpoch > currentEpoch
+              if (locked) {
+                return tokenAcc
+              }
+              const sellablePosition: SellablePosition = {
+                id: tokenPurchase.id,
+                amount: Number(tokenPurchase.amount),
+                nonce: 0, // TODO: Get this from event emission
+                startEpoch: tokenPurchase.startEpoch,
+                finalEpoch: tokenPurchase.finalEpoch,
+              }
+
+              return [...tokenAcc, sellablePosition]
+            }, initial)
+          return [...acc, ...nextSellablePositions]
+        }, initial)
+        .sort((a, b) => b.startEpoch - a.startEpoch)
+  )
+  return useSelector(sellablePositionsSelector)
+}
 
 export const useEntryLevels = () => {
   const entryLevelsSelector = createSelector(
@@ -114,7 +165,7 @@ export const useActivity = () => {
               action: "purchase",
               timestamp,
               amount: Number(tokenPurchase.amount),
-              length: Number(tokenPurchase.length),
+              length: tokenPurchase.finalEpoch - tokenPurchase.startEpoch,
             }
             const sale: Activity = tokenPurchase.soldAt
               ? {
@@ -140,9 +191,10 @@ export const useActivity = () => {
 }
 
 export const useSinglePoolTokenLockHistory = () => {
+  const currentEpoch = useCurrentEpoch()
   const tokenLockHistorySelector = createSelector(
     getTicketsSelector,
-    aggregateVaultTokenLockHistory
+    aggregateVaultTokenLockHistory(currentEpoch)
   )
 
   return useSelector(tokenLockHistorySelector)

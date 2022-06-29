@@ -86,7 +86,7 @@ const YourDeposits = ({ holder, refreshVeState }: YourDepositsProps) => {
                 refreshVeState()
               })
             }
-            disabled={holder?.amountAllocated !== 0}
+            disabled={holder?.depositedAbc === 0}
             buttonType={ButtonType.Gray}
           >
             Withdraw Tokens

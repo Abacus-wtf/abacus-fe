@@ -27,14 +27,16 @@ type NFTImageProps = {
   src: string
   alt?: string
   numNfts?: number
+  style?: any
 }
 
 const NFTImage: FunctionComponent<NFTImageProps> = ({
   src,
   alt = "",
   numNfts,
+  style,
 }) => (
-  <ImageContainer>
+  <ImageContainer style={{ ...style }}>
     <StyledImg src={src} alt={alt} />
     {numNfts && (
       <StyledPill>

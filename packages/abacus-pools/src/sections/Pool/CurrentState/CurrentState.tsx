@@ -19,9 +19,9 @@ import { Bribes } from "./Bribes"
 import { SellTokens } from "./SellTokens"
 
 enum Page {
-  PurchaseTokens = "PurchaseTokens",
+  PurchaseTokens = "Purchase Tokens",
   Bribes = "Bribes",
-  SellTokens = "SellTokens",
+  SellTokens = "Sell Tokens",
 }
 
 const Container = styled(Section)`

@@ -14,6 +14,7 @@ import { CurrentState } from "./CurrentState"
 import TokenLockHistory from "./TokenLockHistory"
 import EntryLevels from "./EntryLevels"
 import Activity from "./Activity"
+import NFTsInPool from "./NFTsInPool"
 
 const BackLink = styled(Link)`
   display: none;
@@ -76,6 +77,7 @@ const Pool: FunctionComponent<PoolProps> = ({ vaultId }) => {
       <BackLink to="/">{"< Back to Spot"}</BackLink>
       <InfoBar />
       <CurrentState refreshPoolData={refreshPoolData} />
+      <NFTsInPool />
       <SplitSection>
         <TokenLockHistory />
         <EntryLevels />

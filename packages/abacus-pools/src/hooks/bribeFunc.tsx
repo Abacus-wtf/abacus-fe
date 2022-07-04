@@ -55,7 +55,7 @@ export const useWithdrawBribe = () => {
   const poolData = useGetPoolData()
 
   const onWithdrawBribe = useCallback(
-    async (amount: string, cb: () => void) => {
+    async (amount: number, cb: () => void) => {
       const bribeContract = getContract(
         ABC_BRIBE_FACTORY,
         BRIBE_ABI,
@@ -64,7 +64,7 @@ export const useWithdrawBribe = () => {
       )
       const method = bribeContract.withdrawBribe
       const estimate = bribeContract.estimateGas.withdrawBribe
-      const args = [poolData.address, poolData.tokenId, parseEther(amount)]
+      const args = [poolData.address, poolData.tokenId, parseEther(`${amount}`)]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {

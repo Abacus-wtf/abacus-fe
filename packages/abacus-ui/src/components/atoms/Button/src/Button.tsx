@@ -23,7 +23,7 @@ const Button = styled.button.attrs(({ disabled, ...rest }) => ({
 }))<ButtonProps>`
   ${Font()}
   text-decoration: none;
-  border-radius: ${({ theme }) => theme.borderRadius.section};
+  border-radius: ${({ theme }) => theme.borderRadius.button};
   padding: ${({ theme }) => theme.padding.main};
   box-shadow: ${({ theme, buttonType }) =>
     buttonType === ButtonType.Clear ? "none" : theme.boxShadow.button};
@@ -31,7 +31,9 @@ const Button = styled.button.attrs(({ disabled, ...rest }) => ({
   cursor: pointer;
   transition: ${({ theme }) => theme.transitionTime.main};
   color: ${({ theme, buttonType }) =>
-    buttonType === ButtonType.White || buttonType === ButtonType.Gray
+    buttonType === ButtonType.White ||
+    buttonType === ButtonType.Gray ||
+    buttonType === ButtonType.Clear
       ? theme.colors.button.primary
       : theme.colors.core.white};
   background-color: ${({ theme, buttonType }) =>

@@ -1,0 +1,7 @@
+query GetEpochAllocationAggregate($id: ID!) {
+  epochAllocationAggregate(id: $id) {
+    id
+    amount
+    epoch
+  }
+}

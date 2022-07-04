@@ -1,0 +1,9 @@
+# import Comment from 'allocations.graphql'
+
+query UserAllocations($id: ID!, $where: Allocation_filter) {
+  user(id: $id) {
+    allocations(where: $where) {
+      ...Allocation
+    }
+  }
+}

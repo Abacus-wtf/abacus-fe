@@ -62,7 +62,6 @@ export async function openseaGet<T = OpenSeaAsset>(
     });
     return result.data;
   } catch (e) {
-    console.log("e", e);
     return DEFAULT_ASSET;
   }
 }

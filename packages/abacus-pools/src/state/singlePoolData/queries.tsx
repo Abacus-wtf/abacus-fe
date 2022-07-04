@@ -1,31 +1,6 @@
 import { GRAPHQL_ENDPOINT } from "@config/constants"
-import { BigNumber } from "ethers"
+import { SubgraphTicket } from "@models/Subgraph"
 import request, { gql } from "graphql-request"
-
-export type SubgraphTokenPurchase = {
-  id: string
-  ticket: string
-  owner: string
-  amount: BigNumber
-  timestamp: BigNumber
-  length: BigNumber
-  soldAt: BigNumber | null
-}
-
-export type SubgraphTicket = {
-  id: string
-  vaultAddress: string
-  ticketNumber: number
-  tokenPurchases: SubgraphTokenPurchase[]
-  tokenPurchasesLength: number
-}
-
-export type SubgraphTokenPurchases = {
-  owner: string
-  amount: string
-  soldAt: number
-  timestamp: number
-}
 
 export type GetTicketQueryResponse = {
   tickets: SubgraphTicket[]
@@ -53,6 +28,7 @@ export const GET_TICKETS = gql`
     ) {
       ticketNumber
       vaultAddress
+      tokenPurchasesLength
       tokenPurchases {
         owner
         amount
@@ -72,12 +48,12 @@ export const getTicketOwners = async (
     skip: 0,
     where: { vaultAddress, ticketNumber },
   }
-  console.log(variables)
+
   const { tickets } = await request<GetTicketQueryResponse>(
     GRAPHQL_ENDPOINT,
     GET_TICKETS,
     variables
   )
-  console.log(tickets)
+
   return tickets
 }

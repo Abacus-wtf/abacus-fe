@@ -1,0 +1,44 @@
+# import Ticket from 'tickets.graphql'
+
+fragment Vault on Vault {
+  id
+  nfts {
+    id
+    address
+    tokenId
+  }
+  name
+  owner
+  status
+  timestamp
+  emissionsSigned
+  size
+  totalParticipants
+  tickets {
+    ...Ticket
+  }
+}
+
+query GetPools(
+  $first: Int!
+  $skip: Int!
+  $orderBy: Vault_orderBy = timestamp
+  $orderDirection: OrderDirection = desc
+  $where: Vault_filter
+) {
+  vaults(
+    first: $first
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    skip: $skip
+    where: $where
+  ) {
+    ...Vault
+  }
+}
+
+query GetPool($id: ID!) {
+  vault(id: $id) {
+    ...Vault
+  }
+}

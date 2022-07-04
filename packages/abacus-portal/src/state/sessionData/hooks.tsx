@@ -29,7 +29,6 @@ import {
 import { formatEther } from "ethers/lib/utils"
 import { PromiseStatus } from "@models/PromiseStatus"
 import { useGetCurrentNetwork } from "@state/application/hooks"
-import { BigNumber } from "@ethersproject/bignumber"
 import {
   SessionData,
   UserState,

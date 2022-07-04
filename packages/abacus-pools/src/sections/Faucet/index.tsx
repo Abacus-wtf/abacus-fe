@@ -1,21 +1,26 @@
 import React from "react"
-import { UniversalContainer } from "@components/global.styles"
-import Buttons from "@components/Button"
 import { useOnFaucet } from "@hooks/faucetFunc"
+import { useGetAbcBalance } from "@state/application/hooks"
+import { Button } from "abacus-ui"
+import { Container } from "../../layouts/styles"
 
 const FaucetPage: React.FC = () => {
   const { onFaucet, isPending } = useOnFaucet()
+  const getAbcBalance = useGetAbcBalance()
 
   return (
-    <UniversalContainer style={{ gridGap: 30, alignItems: "center" }}>
-      <Buttons
-        style={{ fontSize: 24, padding: "16px 28px" }}
+    <Container>
+      <Button
         disabled={isPending}
-        onClick={() => onFaucet(() => {})}
+        onClick={() =>
+          onFaucet(() => {
+            getAbcBalance()
+          })
+        }
       >
         {isPending ? "Loading..." : "Mint ABC"}
-      </Buttons>
-    </UniversalContainer>
+      </Button>
+    </Container>
   )
 }
 

@@ -40,35 +40,40 @@ export const GRAPHQL_ENDPOINT = process.env.GATSBY_GRAPH_API as string
 
 export const ABC_CONTROLLER = IS_PRODUCTION
   ? ""
-  : "0x64b91d7f72F3fc219c6dE2844D089f096cbe7575"
+  : "0x40f9201c33F1974AAFd2Ad850FD071E2093b55a4"
 
 export const ABC_TREASURY = IS_PRODUCTION
   ? ""
-  : "0x561923F46414306Afe6847CEc1598fA53A885A60"
+  : "0xB2a7d345c42bE7606f43FAA51A025fC00EC697f4"
 
 export const ABC_FACTORY = IS_PRODUCTION
   ? ""
-  : "0x756EA93B95b6573Fa458E09729C4f1bB7Af10097"
+  : "0x0a8A03905AD54A3c8cF6Df1Fb84dbC69F43bbc51"
 
 export const ABC_TOKEN = IS_PRODUCTION
   ? ""
-  : "0x8532e46c6Ea8Fd091Ea5887617EBFD0D188fa4A1"
+  : "0x47459c3D28eb1b16B3384aC6DeCAd96b44F7C0e2"
 
+// TODO: Rename this ABC_ALLOCATOR
 export const VE_ABC_TOKEN = IS_PRODUCTION
   ? ""
-  : "0x4dB4370EEE0d779d468b1e81F7dde098355E1A1b"
+  : "0x5b4d72055a8f49C12fe65A62959769f7880D47E8"
 
 export const ABC_EPOCH = IS_PRODUCTION
   ? ""
-  : "0x9ce53060A6CEE9640Bf47867cBc44A312314400F"
+  : "0x2d3BCfD0800034B35074fc0E995EfD65CF10C834"
 
 export const ABC_BRIBE_FACTORY = IS_PRODUCTION
   ? ""
-  : "0xb13F5690D5082a76C832BbeFaE0563C84DF4DBD6"
+  : "0x8ca0cdAdeb386Ac498bE1f712e49F5f0A00C46D1"
 
 export const ABC_CREDIT_BONDS = IS_PRODUCTION
   ? ""
-  : "0x2519cC3b7866A88d116E4C1cE8eE02383d427392"
+  : "0x09Def36d294E8204eC2F364F2245bb3Fd7921DE4"
+
+export const ABC_NFT_ETH = IS_PRODUCTION
+  ? ""
+  : "0x9F16bA20D4D7FF21150921268707E81aD2A0107c"
 
 export const ETH_USD_ORACLE_ADDRESS =
   "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
@@ -99,9 +104,9 @@ export const NetworkInfoMap: NetworkInfo[] = [
   {
     rpc: ETH_RPC,
     chainId: NETWORK_CHAIN_ID,
-    symbol: "ETH",
+    symbol: IS_PRODUCTION ? "ETH" : "Rinkeby ETH",
     network: IS_PRODUCTION ? "Ethereum Mainnet" : "Rinkeby Test Network",
-    logo: "ETH.svg",
+    logo: "eth_logo.svg",
     blockExplorer: IS_PRODUCTION
       ? "https://etherscan.io/#/"
       : "https://rinkeby.etherscan.io/#/",
@@ -178,3 +183,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     mobile: true,
   },
 }
+
+const DAY = 24 * 60 * 60 * 1000
+
+export const EPOCH_LENGTH = IS_PRODUCTION ? 2 * DAY : 2 * DAY

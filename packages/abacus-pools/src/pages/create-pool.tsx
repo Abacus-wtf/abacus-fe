@@ -1,9 +1,10 @@
 import GlobalLayout from "@layouts/index"
-import CreatePool from "@sections/CreatePool"
+import { PageProps } from "gatsby"
+import { CreatePool } from "@sections/index"
 import React from "react"
 
-const CreatePoolPage = (props: any) => (
-  <GlobalLayout {...props}>
+const CreatePoolPage = ({ location }: PageProps) => (
+  <GlobalLayout location={location}>
     <CreatePool />
   </GlobalLayout>
 )

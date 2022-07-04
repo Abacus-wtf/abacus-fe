@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 declare type CloseProps = {
-    stroke?: string;
+    fill?: string;
+    size?: number;
 };
 declare const Close: FunctionComponent<CloseProps>;
 export default Close;

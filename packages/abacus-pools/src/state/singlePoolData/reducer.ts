@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit"
-import { SubgraphTicket } from "./queries"
+import { GetTicketsQuery } from "abacus-graph"
 import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
 import { INITIAL_POOL, Pool } from "../poolData/reducer"
 
@@ -25,7 +25,7 @@ export interface PoolState {
   data: Pool
   traderProfile?: TraderProfile
   bribe?: Bribe
-  tickets?: SubgraphTicket[]
+  tickets?: GetTicketsQuery["tickets"]
 }
 
 const initialState: PoolState = {

@@ -1,0 +1,31 @@
+fragment TokenPurchase on TokenPurchase {
+  amount
+  id
+  startEpoch
+  finalEpoch
+  owner
+  soldAt
+  timestamp
+}
+
+fragment Ticket on Ticket {
+  id
+  ticketNumber
+  vaultAddress
+  tokenPurchasesLength
+  tokenPurchases {
+    ...TokenPurchase
+  }
+}
+
+query GetTickets($first: Int!, $skip: Int!, $where: Ticket_filter) {
+  tickets(
+    first: $first
+    orderBy: ticketNumber
+    orderDirection: desc
+    skip: $skip
+    where: $where
+  ) {
+    ...Ticket
+  }
+}

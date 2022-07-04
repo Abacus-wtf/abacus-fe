@@ -1,0 +1,13 @@
+fragment Allocation on Allocation {
+  id
+  epoch
+  collection
+  amount
+  timestamp
+}
+
+query Allocations($first: Int!, $skip: Int!) {
+  allocations(first: $first, skip: $skip) {
+    ...Allocation
+  }
+}

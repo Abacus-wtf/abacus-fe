@@ -10,7 +10,7 @@ const Complete: FunctionComponent = () => {
   const sessionData = useCurrentSessionData()
 
   const userRanking = useUserRanking()
-  console.log("userRanking", userRanking)
+
   const isWinner = userRanking
     ? isWithinWinRange(
         Number(userRanking.appraisal),
@@ -19,7 +19,6 @@ const Complete: FunctionComponent = () => {
       )
     : false
 
-  console.log("isWinner", isWinner)
   if (!userRanking) {
     return <NonParticipant />
   }

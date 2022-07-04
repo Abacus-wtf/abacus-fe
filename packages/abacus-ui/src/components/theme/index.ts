@@ -23,13 +23,16 @@ const defaultTheme = {
     utility: {
       green: "#23CE7C",
       purple: "#8673FF",
+      lightPurple: "#8181ff",
       blue: "#3E74FF",
       red: "#F33636",
       yellow: "#FFC93E",
       white: "#FFFFFF",
-      gray: "#CCCCCC",
+      gray: "#C4C4C4",
       black: "#000000",
       brown: "#964B00",
+      lightBlue: "#F3FCFF",
+      lightGreen: "#DDFFF1",
     },
   },
   layout: {
@@ -37,7 +40,8 @@ const defaultTheme = {
   },
   borderRadius: {
     main: "10px",
-    section: "26px",
+    section: "24px",
+    button: "80px",
   },
   boxShadow: {
     button: "0px 5px 60px rgba(0, 0, 0, 0.1)",
@@ -46,7 +50,7 @@ const defaultTheme = {
     section: "0px 2px 32px rgba(0, 0, 0, 0.06)",
   },
   padding: {
-    main: "16px 24px",
+    main: "13px 20px",
   },
   transitionTime: {
     main: "0.3s",
@@ -71,8 +75,8 @@ const defaultTheme = {
       "line-height": "132%",
     },
     mega: {
-      "font-size": "20px",
-      "line-height": "132%",
+      "font-size": "22px",
+      "line-height": "27px",
     },
     giga: {
       "font-size": "24px",
@@ -132,6 +136,7 @@ enum Sizes {
   MEDIUM = "md",
   LARGE = "lg",
   XLARGE = "xl",
+  XSMALL = "xs",
 }
 
 export const breakpoints = [
@@ -139,6 +144,7 @@ export const breakpoints = [
   { size: "lg", value: "1200px" },
   { size: "md", value: "885px" },
   { size: "sm", value: "600px" },
+  { size: "xs", value: "425px" },
 ] as { size: Sizes; value: string }[];
 
 export const Media: { [breakpoint in Sizes]: typeof css } = breakpoints.reduce(
@@ -157,6 +163,7 @@ export const Media: { [breakpoint in Sizes]: typeof css } = breakpoints.reduce(
     };
   },
   {
+    xs: css,
     sm: css,
     md: css,
     lg: css,

@@ -1,0 +1,28 @@
+fragment Bid on Bid {
+  id
+  bidder
+  timestamp
+  amount
+}
+
+query GetAuction($id: ID!) {
+  auction(id: $id) {
+    id
+    highestBid
+    highestBidder
+    bids {
+      ...Bid
+    }
+  }
+}
+
+query GetAuctions {
+  auctions {
+    id
+    highestBid
+    highestBidder
+    bids {
+      ...Bid
+    }
+  }
+}

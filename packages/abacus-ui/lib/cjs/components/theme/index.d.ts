@@ -22,13 +22,16 @@ declare const defaultTheme: {
         readonly utility: {
             readonly green: "#23CE7C";
             readonly purple: "#8673FF";
+            readonly lightPurple: "#8181ff";
             readonly blue: "#3E74FF";
             readonly red: "#F33636";
             readonly yellow: "#FFC93E";
             readonly white: "#FFFFFF";
-            readonly gray: "#CCCCCC";
+            readonly gray: "#C4C4C4";
             readonly black: "#000000";
             readonly brown: "#964B00";
+            readonly lightBlue: "#F3FCFF";
+            readonly lightGreen: "#DDFFF1";
         };
     };
     readonly layout: {
@@ -36,7 +39,8 @@ declare const defaultTheme: {
     };
     readonly borderRadius: {
         readonly main: "10px";
-        readonly section: "26px";
+        readonly section: "24px";
+        readonly button: "80px";
     };
     readonly boxShadow: {
         readonly button: "0px 5px 60px rgba(0, 0, 0, 0.1)";
@@ -45,7 +49,7 @@ declare const defaultTheme: {
         readonly section: "0px 2px 32px rgba(0, 0, 0, 0.06)";
     };
     readonly padding: {
-        readonly main: "16px 24px";
+        readonly main: "13px 20px";
     };
     readonly transitionTime: {
         readonly main: "0.3s";
@@ -69,8 +73,8 @@ declare const defaultTheme: {
             readonly "line-height": "132%";
         };
         readonly mega: {
-            readonly "font-size": "20px";
-            readonly "line-height": "132%";
+            readonly "font-size": "22px";
+            readonly "line-height": "27px";
         };
         readonly giga: {
             readonly "font-size": "24px";
@@ -116,7 +120,8 @@ declare enum Sizes {
     SMALL = "sm",
     MEDIUM = "md",
     LARGE = "lg",
-    XLARGE = "xl"
+    XLARGE = "xl",
+    XSMALL = "xs"
 }
 export declare const breakpoints: {
     size: Sizes;

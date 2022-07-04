@@ -8,7 +8,8 @@ import FACTORY_ABI from "../config/contracts/ABC_FACTORY_ABI.json"
 
 export const useOnApproveNFT = () => {
   const { account, library } = useActiveWeb3React()
-  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const { generalizedContractCall, isPending, txError } =
+    useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
 
   const onApproveNFT = useCallback(
@@ -38,20 +39,22 @@ export const useOnApproveNFT = () => {
   return {
     onApproveNFT,
     isPending,
+    txError,
   }
 }
 
 export const useOnCreatePool = () => {
   const { account, library } = useActiveWeb3React()
-  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const { generalizedContractCall, isPending, txError } =
+    useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
 
   const onCreatePool = useCallback(
     async (
-      nftAddress: string,
-      tokenId: string,
-      poolName: string,
-      poolSymbol: string,
+      vaultName: string,
+      nftAddresses: string[],
+      tokenIds: string[],
+      maxCollateralAmount: number,
       cb: () => void
     ) => {
       const factoryContract = getContract(
@@ -60,9 +63,9 @@ export const useOnCreatePool = () => {
         library,
         account
       )
-      const method = factoryContract.createVault
-      const estimate = factoryContract.estimateGas.createVault
-      const args = [poolName, poolSymbol, nftAddress, tokenId]
+      const method = factoryContract.initiateMultiAssetVault
+      const estimate = factoryContract.estimateGas.initiateMultiAssetVault
+      const args = [vaultName, nftAddresses, tokenIds, maxCollateralAmount]
       console.log(args)
       const value = null
       const txnCb = async (response: any) => {
@@ -85,5 +88,6 @@ export const useOnCreatePool = () => {
   return {
     onCreatePool,
     isPending,
+    txError,
   }
 }

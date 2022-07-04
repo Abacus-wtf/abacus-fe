@@ -1,5 +1,5 @@
 import { NFTImage } from "@components/index"
-import { useGetPoolData } from "@state/singlePoolData/hooks"
+import { useGetPoolData, usePoolSize } from "@state/singlePoolData/hooks"
 import { Section, Media, Pill, ProgressBar, Checkbox } from "abacus-ui"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
@@ -17,6 +17,7 @@ import {
 } from "./CurrentState.styled"
 import { Bribes } from "./Bribes"
 import { SellTokens } from "./SellTokens"
+import { useSellTokensData } from "./SellTokens/useSellTokensData"
 
 enum Page {
   PurchaseTokens = "Purchase Tokens",
@@ -73,7 +74,10 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
   refreshPoolData,
 }) => {
   const [page, setPage] = useState<Page>(Page.PurchaseTokens)
-  const { nfts, size, isManager } = useGetPoolData()
+  const { nfts, isManager } = useGetPoolData()
+  const size = usePoolSize()
+  const { sellablePositions } = useSellTokensData()
+  const hasSellablePositions = sellablePositions?.length > 0
 
   const pageUi = useMemo(() => {
     switch (page) {
@@ -140,16 +144,18 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
               checked={page === Page.PurchaseTokens}
               onChange={() => setPage(Page.PurchaseTokens)}
             />
-            <Checkbox
-              key={Page.SellTokens}
-              type="radio"
-              name="page_selector"
-              label={Page.SellTokens}
-              id={Page.SellTokens}
-              value={Page.SellTokens}
-              checked={page === Page.SellTokens}
-              onChange={() => setPage(Page.SellTokens)}
-            />
+            {hasSellablePositions && (
+              <Checkbox
+                key={Page.SellTokens}
+                type="radio"
+                name="page_selector"
+                label={Page.SellTokens}
+                id={Page.SellTokens}
+                value={Page.SellTokens}
+                checked={page === Page.SellTokens}
+                onChange={() => setPage(Page.SellTokens)}
+              />
+            )}
             <Checkbox
               key={Page.Bribes}
               type="radio"

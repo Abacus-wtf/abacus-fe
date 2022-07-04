@@ -438,14 +438,19 @@ export const useOnFutureOrder = () => {
   }
 }
 
-export const useOnSellToken = () => {
+export const useOnSellTokens = () => {
   const { account, library } = useActiveWeb3React()
   const { generalizedContractCall, isPending } = useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
   const poolData = useGetPoolData()
 
-  const onSellToken = useCallback(
-    async (user: string, startingTicket: number, cb: () => void) => {
+  const onSellTokens = useCallback(
+    async (
+      user: string,
+      nonce: number,
+      payoutRatio: number,
+      cb: () => void
+    ) => {
       const vaultContract = getContract(
         poolData.vaultAddress,
         VAULT_ABI,
@@ -453,14 +458,14 @@ export const useOnSellToken = () => {
         account
       )
 
-      const method = vaultContract.sellToken
-      const estimate = vaultContract.estimateGas.sellToken
-      const args = [user, startingTicket]
+      const method = vaultContract.sell
+      const estimate = vaultContract.estimateGas.sell
+      const args = [user, nonce, payoutRatio]
       console.log(args)
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
-          summary: "Sell Token",
+          summary: "Sell Tokens",
         })
         await response.wait()
         cb()
@@ -476,7 +481,7 @@ export const useOnSellToken = () => {
     [poolData, library, account, generalizedContractCall, addTransaction]
   )
   return {
-    onSellToken,
+    onSellTokens,
     isPending,
   }
 }
@@ -506,7 +511,6 @@ export const usePurchaseCredits = () => {
       const args = [parseEther(amount)]
       const value = ethAmount
       console.log(args)
-      console.log(ethAmount)
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Purchase Credits",

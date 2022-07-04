@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-declare type CustomLockDurationProps = {
+declare type RangeProps = {
     id: string;
     value: number;
     setValue: (value: number) => void;
@@ -8,5 +8,5 @@ declare type CustomLockDurationProps = {
     outputFormatter?: (value: number) => string;
     step?: number;
 };
-declare const CustomLockDuration: FunctionComponent<CustomLockDurationProps>;
+declare const CustomLockDuration: FunctionComponent<RangeProps>;
 export default CustomLockDuration;

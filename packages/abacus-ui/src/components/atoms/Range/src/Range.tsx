@@ -124,7 +124,7 @@ const StyledOutput = styled.output<{ visible: boolean }>`
   }
 `;
 
-type CustomLockDurationProps = {
+type RangeProps = {
   id: string;
   value: number;
   setValue: (value: number) => void;
@@ -134,7 +134,7 @@ type CustomLockDurationProps = {
   step?: number;
 };
 
-const CustomLockDuration: FunctionComponent<CustomLockDurationProps> = ({
+const CustomLockDuration: FunctionComponent<RangeProps> = ({
   id,
   value,
   setValue,

@@ -124,6 +124,7 @@ export const useSellablePositions = (currentEpoch: number, account: string) => {
 }
 
 export const useEntryLevels = () => {
+  const currentEpoch = useCurrentEpoch()
   const entryLevelsSelector = createSelector(
     getTicketsSelector,
     (tickets) =>
@@ -131,12 +132,32 @@ export const useEntryLevels = () => {
         ticketNumber: ticket.ticketNumber,
         amount: ticket.tokenPurchases.reduce(
           (acc, tokenPurchase) =>
-            tokenPurchase.soldAt ? 0 : acc + Number(tokenPurchase.amount),
+            currentEpoch >= tokenPurchase.finalEpoch
+              ? acc
+              : acc + Number(tokenPurchase.amount),
           0
         ),
       })) ?? []
   )
   return useSelector(entryLevelsSelector)
+}
+
+export const usePoolSize = () => {
+  const currentEpoch = useCurrentEpoch()
+  const poolSizeSelector = createSelector(getTicketsSelector, (tickets) =>
+    tickets?.reduce((ticketAcc, ticket) => {
+      const amount = ticket.tokenPurchases.reduce(
+        (acc, tokenPurchase) =>
+          currentEpoch >= tokenPurchase.finalEpoch
+            ? acc
+            : acc + Number(tokenPurchase.amount),
+        0
+      )
+      return ticketAcc + amount
+    }, 0)
+  )
+
+  return useSelector(poolSizeSelector)
 }
 
 type Activity = {

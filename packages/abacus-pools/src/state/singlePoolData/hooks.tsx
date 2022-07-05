@@ -31,6 +31,7 @@ import {
 import { aggregateVaultTokenLockHistory } from "utils/vaultTickets"
 import { matchOpenSeaAssetToNFT, openseaGetMany } from "abacus-utils"
 import { useCurrentEpoch } from "@state/application/hooks"
+import { currentEpochSelector } from "@state/application/selectors"
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"
 import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
 import { Bribe } from "./reducer"
@@ -143,18 +144,20 @@ export const useEntryLevels = () => {
 }
 
 export const usePoolSize = () => {
-  const currentEpoch = useCurrentEpoch()
-  const poolSizeSelector = createSelector(getTicketsSelector, (tickets) =>
-    tickets?.reduce((ticketAcc, ticket) => {
-      const amount = ticket.tokenPurchases.reduce(
-        (acc, tokenPurchase) =>
-          currentEpoch >= tokenPurchase.finalEpoch
-            ? acc
-            : acc + Number(tokenPurchase.amount),
-        0
-      )
-      return ticketAcc + amount
-    }, 0)
+  const poolSizeSelector = createSelector(
+    currentEpochSelector,
+    getTicketsSelector,
+    (currentEpoch, tickets) =>
+      tickets?.reduce((ticketAcc, ticket) => {
+        const amount = ticket.tokenPurchases.reduce(
+          (acc, tokenPurchase) =>
+            currentEpoch >= tokenPurchase.finalEpoch
+              ? acc
+              : acc + Number(tokenPurchase.amount),
+          0
+        )
+        return ticketAcc + amount
+      }, 0)
   )
 
   return useSelector(poolSizeSelector)
@@ -517,7 +520,6 @@ export const useSetPoolData = () => {
           approvedBribeFactory,
           nfts,
           isManager: nfts.some((nft) => nft.isManager),
-          size: BigNumber.from(_pool.size),
           totalParticipants: _pool.totalParticipants,
         }
         dispatch(getPoolData(pool))

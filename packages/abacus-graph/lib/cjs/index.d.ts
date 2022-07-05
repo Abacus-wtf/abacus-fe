@@ -125,6 +125,7 @@ export declare type Allocation_Filter = {
     timestamp_not?: InputMaybe<Scalars['BigInt']>;
     timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     user?: InputMaybe<Scalars['String']>;
+    user_?: InputMaybe<User_Filter>;
     user_contains?: InputMaybe<Scalars['String']>;
     user_contains_nocase?: InputMaybe<Scalars['String']>;
     user_ends_with?: InputMaybe<Scalars['String']>;
@@ -173,6 +174,7 @@ export declare type Auction_Filter = {
     /** Filter for the block changed event. */
     _change_block?: InputMaybe<BlockChangedFilter>;
     bids?: InputMaybe<Array<Scalars['String']>>;
+    bids_?: InputMaybe<Bid_Filter>;
     bids_contains?: InputMaybe<Array<Scalars['String']>>;
     bids_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
     bids_not?: InputMaybe<Array<Scalars['String']>>;
@@ -905,6 +907,7 @@ export declare type Ticket_Filter = {
     tokenPurchasesLength_lte?: InputMaybe<Scalars['Int']>;
     tokenPurchasesLength_not?: InputMaybe<Scalars['Int']>;
     tokenPurchasesLength_not_in?: InputMaybe<Array<Scalars['Int']>>;
+    tokenPurchases_?: InputMaybe<TokenPurchase_Filter>;
     vaultAddress?: InputMaybe<Scalars['ID']>;
     vaultAddress_gt?: InputMaybe<Scalars['ID']>;
     vaultAddress_gte?: InputMaybe<Scalars['ID']>;
@@ -984,6 +987,7 @@ export declare type TokenPurchase_Filter = {
     startEpoch_not?: InputMaybe<Scalars['Int']>;
     startEpoch_not_in?: InputMaybe<Array<Scalars['Int']>>;
     ticket?: InputMaybe<Scalars['String']>;
+    ticket_?: InputMaybe<Ticket_Filter>;
     ticket_contains?: InputMaybe<Scalars['String']>;
     ticket_contains_nocase?: InputMaybe<Scalars['String']>;
     ticket_ends_with?: InputMaybe<Scalars['String']>;
@@ -1037,6 +1041,7 @@ export declare type UserAllocationsArgs = {
 export declare type User_Filter = {
     /** Filter for the block changed event. */
     _change_block?: InputMaybe<BlockChangedFilter>;
+    allocations_?: InputMaybe<Allocation_Filter>;
     id?: InputMaybe<Scalars['ID']>;
     id_gt?: InputMaybe<Scalars['ID']>;
     id_gte?: InputMaybe<Scalars['ID']>;
@@ -1057,7 +1062,6 @@ export declare type Vault = {
     name: Scalars['String'];
     nfts: Array<Nft>;
     owner: Scalars['ID'];
-    size: Scalars['BigInt'];
     status: Scalars['Int'];
     tickets: Array<Ticket>;
     timestamp: Scalars['BigInt'];
@@ -1113,6 +1117,7 @@ export declare type Vault_Filter = {
     name_starts_with?: InputMaybe<Scalars['String']>;
     name_starts_with_nocase?: InputMaybe<Scalars['String']>;
     nfts?: InputMaybe<Array<Scalars['String']>>;
+    nfts_?: InputMaybe<Nft_Filter>;
     nfts_contains?: InputMaybe<Array<Scalars['String']>>;
     nfts_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
     nfts_not?: InputMaybe<Array<Scalars['String']>>;
@@ -1126,14 +1131,6 @@ export declare type Vault_Filter = {
     owner_lte?: InputMaybe<Scalars['ID']>;
     owner_not?: InputMaybe<Scalars['ID']>;
     owner_not_in?: InputMaybe<Array<Scalars['ID']>>;
-    size?: InputMaybe<Scalars['BigInt']>;
-    size_gt?: InputMaybe<Scalars['BigInt']>;
-    size_gte?: InputMaybe<Scalars['BigInt']>;
-    size_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    size_lt?: InputMaybe<Scalars['BigInt']>;
-    size_lte?: InputMaybe<Scalars['BigInt']>;
-    size_not?: InputMaybe<Scalars['BigInt']>;
-    size_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     status?: InputMaybe<Scalars['Int']>;
     status_gt?: InputMaybe<Scalars['Int']>;
     status_gte?: InputMaybe<Scalars['Int']>;
@@ -1143,6 +1140,7 @@ export declare type Vault_Filter = {
     status_not?: InputMaybe<Scalars['Int']>;
     status_not_in?: InputMaybe<Array<Scalars['Int']>>;
     tickets?: InputMaybe<Array<Scalars['String']>>;
+    tickets_?: InputMaybe<Ticket_Filter>;
     tickets_contains?: InputMaybe<Array<Scalars['String']>>;
     tickets_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
     tickets_not?: InputMaybe<Array<Scalars['String']>>;
@@ -1171,7 +1169,6 @@ export declare enum Vault_OrderBy {
     Name = "name",
     Nfts = "nfts",
     Owner = "owner",
-    Size = "size",
     Status = "status",
     Tickets = "tickets",
     Timestamp = "timestamp",
@@ -1320,7 +1317,6 @@ export declare type VaultFragment = {
     status: number;
     timestamp: string;
     emissionsSigned: boolean;
-    size: string;
     totalParticipants: number;
     nfts: Array<{
         __typename?: 'NFT';
@@ -1363,7 +1359,6 @@ export declare type GetPoolsQuery = {
         status: number;
         timestamp: string;
         emissionsSigned: boolean;
-        size: string;
         totalParticipants: number;
         nfts: Array<{
             __typename?: 'NFT';
@@ -1403,7 +1398,6 @@ export declare type GetPoolQuery = {
         status: number;
         timestamp: string;
         emissionsSigned: boolean;
-        size: string;
         totalParticipants: number;
         nfts: Array<{
             __typename?: 'NFT';

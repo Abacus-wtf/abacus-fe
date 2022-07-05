@@ -12,7 +12,6 @@ fragment Vault on Vault {
   status
   timestamp
   emissionsSigned
-  size
   totalParticipants
   tickets {
     ...Ticket

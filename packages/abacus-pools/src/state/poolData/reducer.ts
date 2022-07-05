@@ -1,6 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit"
 import { GetPoolsQuery } from "abacus-graph"
-import { BigNumber } from "ethers"
 import { getPools, getMyPools } from "./actions"
 
 export interface NFT {
@@ -64,7 +63,6 @@ export interface Pool {
   auction?: Auction
   approved?: boolean
   approvedBribeFactory?: boolean
-  size: BigNumber
   totalParticipants: number
   tickets?: GetPoolsQuery["vaults"][number]["tickets"]
   nfts: NFT[]
@@ -74,7 +72,6 @@ export interface Pool {
 export const INITIAL_POOL: Pool = {
   name: "",
   state: PoolStatus.Normal,
-  size: BigNumber.from("0"),
   totalParticipants: 0,
   nfts: [],
 }

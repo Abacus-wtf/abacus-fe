@@ -64,18 +64,6 @@
       },
       {
         "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
-      },
-      {
-        "indexed": false,
         "internalType": "address",
         "name": "_briber",
         "type": "address"
@@ -116,18 +104,6 @@
         "internalType": "address",
         "name": "_pool",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
       }
     ],
     "name": "EmissionsStarted",
@@ -141,18 +117,6 @@
         "internalType": "address",
         "name": "_pool",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
       }
     ],
     "name": "EmissionsStopped",
@@ -166,18 +130,6 @@
         "internalType": "address",
         "name": "_pool",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
       },
       {
         "indexed": false,
@@ -218,49 +170,6 @@
       },
       {
         "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "initiater",
-        "type": "address"
-      }
-    ],
-    "name": "LPInitiated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "_pool",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
-      },
-      {
-        "indexed": false,
         "internalType": "address",
         "name": "from",
         "type": "address"
@@ -283,18 +192,6 @@
         "internalType": "address",
         "name": "_pool",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
       },
       {
         "indexed": false,
@@ -378,15 +275,9 @@
       },
       {
         "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
+        "internalType": "address",
+        "name": "_collection",
+        "type": "address"
       },
       {
         "indexed": false,
@@ -427,15 +318,9 @@
       },
       {
         "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
+        "internalType": "address",
+        "name": "removedAddress",
+        "type": "address"
       },
       {
         "indexed": false,
@@ -486,18 +371,6 @@
         "internalType": "address",
         "name": "_pool",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
       },
       {
         "indexed": false,
@@ -561,18 +434,6 @@
         "internalType": "address",
         "name": "_pool",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
       }
     ],
     "name": "PoolClosed",
@@ -586,18 +447,6 @@
         "internalType": "address",
         "name": "_pool",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
       },
       {
         "indexed": false,
@@ -641,6 +490,12 @@
         "internalType": "address",
         "name": "_user",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_nonce",
+        "type": "uint256"
       }
     ],
     "name": "PrincipalCalculated",
@@ -654,18 +509,6 @@
         "internalType": "address",
         "name": "_pool",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
       },
       {
         "indexed": false,
@@ -684,6 +527,12 @@
         "internalType": "uint256[]",
         "name": "amountPerTicket",
         "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "nonce",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -709,18 +558,6 @@
         "internalType": "address",
         "name": "_pool",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
       },
       {
         "indexed": false,
@@ -786,18 +623,6 @@
       },
       {
         "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
-      },
-      {
-        "indexed": false,
         "internalType": "uint256",
         "name": "reservationId",
         "type": "uint256"
@@ -838,24 +663,6 @@
         "internalType": "address",
         "name": "_pool",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amountOfSlots",
-        "type": "uint256"
       }
     ],
     "name": "VaultCreated",
@@ -879,17 +686,42 @@
       {
         "indexed": false,
         "internalType": "address[]",
-        "name": "_collections",
+        "name": "nftAddress",
         "type": "address[]"
       },
       {
         "indexed": false,
         "internalType": "uint256[]",
-        "name": "_ids",
+        "name": "ids",
         "type": "uint256[]"
       }
     ],
     "name": "VaultSigned",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_pool",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "slots",
+        "type": "uint256"
+      }
+    ],
+    "name": "VaultStarted",
     "type": "event"
   },
   {
@@ -947,7 +779,7 @@
         "type": "uint256"
       }
     ],
-    "name": "decodeCompressedValue",
+    "name": "decodeCompressedTickets",
     "outputs": [
       {
         "internalType": "uint256",
@@ -958,6 +790,30 @@
         "internalType": "uint256[10]",
         "name": "tickets",
         "type": "uint256[10]"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_compTokenInfo",
+        "type": "uint256"
+      }
+    ],
+    "name": "decodeCompressedValue",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "_nft",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
       }
     ],
     "stateMutability": "pure",
@@ -999,16 +855,6 @@
   {
     "inputs": [
       {
-        "internalType": "address[]",
-        "name": "_callerTokens",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_callerTokenIds",
-        "type": "uint256[]"
-      },
-      {
         "internalType": "address",
         "name": "_briber",
         "type": "address"
@@ -1042,16 +888,6 @@
   {
     "inputs": [
       {
-        "internalType": "address[]",
-        "name": "_callerTokens",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_callerTokenIds",
-        "type": "uint256[]"
-      },
-      {
         "internalType": "address",
         "name": "_briber",
         "type": "address"
@@ -1079,39 +915,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "address",
-        "name": "initiater",
-        "type": "address"
-      }
-    ],
-    "name": "emitLPInitiated",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
-      },
       {
         "internalType": "address",
         "name": "from",
@@ -1174,18 +977,13 @@
   {
     "inputs": [
       {
-        "internalType": "address[]",
-        "name": "_callerTokens",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_callerTokenIds",
-        "type": "uint256[]"
+        "internalType": "address",
+        "name": "_caller",
+        "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_caller",
+        "name": "_nft",
         "type": "address"
       },
       {
@@ -1235,44 +1033,6 @@
   {
     "inputs": [
       {
-        "internalType": "address[]",
-        "name": "_callerTokens",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_callerTokenIds",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "address",
-        "name": "_user",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_ratio",
-        "type": "uint256"
-      }
-    ],
-    "name": "emitPayoutRatioAdjusted",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address[]",
-        "name": "_callerTokens",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_callerTokenIds",
-        "type": "uint256[]"
-      },
-      {
         "internalType": "uint256",
         "name": "_payoutPerReservation",
         "type": "uint256"
@@ -1285,16 +1045,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address[]",
-        "name": "_collections",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "heldIds",
-        "type": "uint256[]"
-      },
       {
         "internalType": "address",
         "name": "from",
@@ -1332,6 +1082,11 @@
         "internalType": "address",
         "name": "_user",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_nonce",
+        "type": "uint256"
       }
     ],
     "name": "emitPrincipalCalculated",
@@ -1341,16 +1096,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address[]",
-        "name": "_callerTokens",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_callerTokenIds",
-        "type": "uint256[]"
-      },
       {
         "internalType": "address",
         "name": "_buyer",
@@ -1365,6 +1110,11 @@
         "internalType": "uint256[]",
         "name": "amountPerTicket",
         "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nonce",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -1384,16 +1134,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address[]",
-        "name": "_callerTokens",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_callerTokenIds",
-        "type": "uint256[]"
-      },
       {
         "internalType": "address",
         "name": "_seller",
@@ -1418,16 +1158,6 @@
   {
     "inputs": [
       {
-        "internalType": "address[]",
-        "name": "_callerTokens",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_callerTokenIds",
-        "type": "uint256[]"
-      },
-      {
         "internalType": "uint256",
         "name": "_reservationId",
         "type": "uint256"
@@ -1451,24 +1181,33 @@
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
         "internalType": "address[]",
-        "name": "_nft",
+        "name": "nft",
         "type": "address[]"
       },
       {
         "internalType": "uint256[]",
-        "name": "_id",
+        "name": "id",
         "type": "uint256[]"
-      },
+      }
+    ],
+    "name": "encodeCompressedValue",
+    "outputs": [
       {
-        "internalType": "uint256",
-        "name": "amountSlots",
-        "type": "uint256"
+        "internalType": "uint256[]",
+        "name": "_compTokenInfo",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
       }
     ],
     "name": "initiateMultiAssetVault",
@@ -1558,35 +1297,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "presentInPool",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "name": "recentlyCreatedPool",
@@ -1647,18 +1357,7 @@
       }
     ],
     "name": "updateNftInUse",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "newCollections",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "newIds",
-        "type": "uint256[]"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1678,9 +1377,32 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "mavNonce",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "slots",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateSlotCount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "string",
         "name": "",
         "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "name": "vaultNames",

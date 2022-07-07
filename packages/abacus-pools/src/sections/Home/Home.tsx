@@ -10,7 +10,11 @@ import {
   InfoBarItem,
   InfoBarTitle,
 } from "@components/index"
-import { useAggregate, useGetAggregate } from "@state/application/hooks"
+import {
+  useAggregate,
+  useCurrentEpoch,
+  useGetAggregate,
+} from "@state/application/hooks"
 import { formatEther } from "ethers/lib/utils"
 import { BigNumber } from "ethers"
 import { Container } from "../../layouts/styles"
@@ -50,6 +54,7 @@ const Home: React.FC = () => {
   const pools = useGetPools()
   const aggregate = useAggregate()
   const getAggregate = useGetAggregate()
+  const currentEpoch = useCurrentEpoch()
 
   useEffect(() => {
     getAggregate()
@@ -85,6 +90,10 @@ const Home: React.FC = () => {
           <InfoBarTitle>Total Participants</InfoBarTitle>
           <InfoBarContent>{aggregate?.totalParticipants ?? "-"}</InfoBarContent>
         </InfoBarItem>
+        <InfoBarItem>
+          <InfoBarTitle>Current Epoch</InfoBarTitle>
+          <InfoBarContent>{currentEpoch ?? "-"}</InfoBarContent>
+        </InfoBarItem>
       </InfoBarContainer>
       <ExploreFilters page={0} />
 
@@ -96,7 +105,6 @@ const Home: React.FC = () => {
             title={pool.name}
             nfts={pool.nfts}
             participants={pool.totalParticipants}
-            poolSize={formatEther(pool.size.div(BigNumber.from("1000")))}
             vaultId={pool.vaultAddress}
           />
         ))}

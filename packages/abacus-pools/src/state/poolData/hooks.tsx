@@ -17,12 +17,10 @@ import {
   OrderDirection,
   Vault_OrderBy,
 } from "abacus-graph"
-import { BigNumber } from "ethers"
-import { useCurrentEpoch } from "@state/application/hooks"
 import { getPools, getMyPools } from "./actions"
 import { Pool, PoolStatus } from "./reducer"
 import { PAGINATE_BY } from "./constants"
-import { tokenLockHistorySelector } from "./selectors"
+import { poolSizeSelector, tokenLockHistorySelector } from "./selectors"
 
 const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
   const INITIAL_NFTS: OpenSeaGetManyParams = []
@@ -58,7 +56,6 @@ const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
     name: vault.name,
     vaultAddress: vault.id,
     emissionsStarted: vault.emissionsSigned,
-    size: BigNumber.from(vault.size),
     totalParticipants: vault.totalParticipants,
     tickets: vault.tickets,
   }))
@@ -127,9 +124,10 @@ const getMyPoolsSelector = (state: AppState): AppState["poolData"]["myPools"] =>
 export const useGetMyPools = () =>
   useSelector<AppState, AppState["poolData"]["myPools"]>(getMyPoolsSelector)
 
-export const useTokenLockHistory = (vaultId: string) => {
-  const currentEpoch = useCurrentEpoch()
-  return useSelector<AppState, { uv: number; epoch: number }[]>((state) =>
-    tokenLockHistorySelector(currentEpoch)(state, vaultId)
+export const useTokenLockHistory = (vaultId: string) =>
+  useSelector<AppState, { uv: number; epoch: number }[]>((state) =>
+    tokenLockHistorySelector(state, vaultId)
   )
-}
+
+export const usePoolSize = (vaultId: string) =>
+  useSelector<AppState, number>((state) => poolSizeSelector(state, vaultId))

@@ -28,7 +28,7 @@ import {
   GetPoolQuery,
   GetPoolQueryVariables,
 } from "abacus-graph"
-import { aggregateVaultTokenLockHistory } from "utils/vaultTickets"
+import { aggregateVaultTokenLockHistory, getPoolSize } from "utils/vaultTickets"
 import { matchOpenSeaAssetToNFT, openseaGetMany } from "abacus-utils"
 import { useCurrentEpoch } from "@state/application/hooks"
 import { currentEpochSelector } from "@state/application/selectors"
@@ -143,21 +143,11 @@ export const useEntryLevels = () => {
   return useSelector(entryLevelsSelector)
 }
 
-export const usePoolSize = () => {
+export const useCurrentPoolSize = () => {
   const poolSizeSelector = createSelector(
     currentEpochSelector,
     getTicketsSelector,
-    (currentEpoch, tickets) =>
-      tickets?.reduce((ticketAcc, ticket) => {
-        const amount = ticket.tokenPurchases.reduce(
-          (acc, tokenPurchase) =>
-            currentEpoch >= tokenPurchase.finalEpoch
-              ? acc
-              : acc + Number(tokenPurchase.amount),
-          0
-        )
-        return ticketAcc + amount
-      }, 0)
+    (currentEpoch, tickets) => getPoolSize(currentEpoch, tickets)
   )
 
   return useSelector(poolSizeSelector)
@@ -215,10 +205,11 @@ export const useActivity = () => {
 }
 
 export const useSinglePoolTokenLockHistory = () => {
-  const currentEpoch = useCurrentEpoch()
   const tokenLockHistorySelector = createSelector(
     getTicketsSelector,
-    aggregateVaultTokenLockHistory(currentEpoch)
+    currentEpochSelector,
+    (tickets, currentEpoch) =>
+      aggregateVaultTokenLockHistory(currentEpoch, tickets)
   )
 
   return useSelector(tokenLockHistorySelector)

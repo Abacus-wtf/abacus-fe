@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react"
 import styled, { css } from "styled-components"
 import { Section, Kilo, Mega } from "abacus-ui"
 import { Link } from "gatsby"
-import { useTokenLockHistory } from "@state/poolData/hooks"
+import { usePoolSize, useTokenLockHistory } from "@state/poolData/hooks"
 import { calculateVariance } from "utils/stats"
 import { TokenLockHistoryChart } from "../TokenLockHistoryChart"
 import { NFTImage } from "../NFTImage"
@@ -101,7 +101,6 @@ type PoolCardProps = {
     img: string
     alt: string
   }[]
-  poolSize: string
   participants: number
   link?: string
   vaultId: string
@@ -112,7 +111,6 @@ type PoolCardProps = {
 const PoolCard: FunctionComponent<PoolCardProps> = ({
   nfts,
   title,
-  poolSize,
   participants,
   link,
   vaultId,
@@ -120,6 +118,7 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
   className,
 }) => {
   const tokenLockHistory = useTokenLockHistory(vaultId)
+  const poolSize = usePoolSize(vaultId)
   const lockHistoryValues: number[] =
     tokenLockHistory
       ?.map((lockedValues) => lockedValues.uv)

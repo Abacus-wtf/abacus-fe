@@ -1,7 +1,7 @@
 import { TokenLockHistoryChart } from "@components/TokenLockHistoryChart"
 import {
   useGetPoolData,
-  usePoolSize,
+  useCurrentPoolSize,
   useSinglePoolTokenLockHistory,
 } from "@state/singlePoolData/hooks"
 import { Section } from "abacus-ui"
@@ -26,7 +26,7 @@ const StyledSection = styled(Section)`
 
 const TokenLockHistory: FunctionComponent = () => {
   const { tokenPrice } = useGetPoolData()
-  const size = usePoolSize()
+  const size = useCurrentPoolSize()
   const data = useSinglePoolTokenLockHistory()
   const tokensLockedEth = (Number(size) * Number(tokenPrice)).toLocaleString(
     "en-US",

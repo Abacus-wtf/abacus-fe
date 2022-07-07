@@ -1,5 +1,5 @@
 import { NFTImage } from "@components/index"
-import { useGetPoolData, usePoolSize } from "@state/singlePoolData/hooks"
+import { useGetPoolData, useCurrentPoolSize } from "@state/singlePoolData/hooks"
 import { Section, Media, Pill, ProgressBar, Checkbox } from "abacus-ui"
 import React, { FunctionComponent, useMemo, useState } from "react"
 import styled from "styled-components"
@@ -75,7 +75,7 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
 }) => {
   const [page, setPage] = useState<Page>(Page.PurchaseTokens)
   const { nfts, isManager } = useGetPoolData()
-  const size = usePoolSize()
+  const size = useCurrentPoolSize()
   const { sellablePositions } = useSellTokensData()
   const hasSellablePositions = sellablePositions?.length > 0
 

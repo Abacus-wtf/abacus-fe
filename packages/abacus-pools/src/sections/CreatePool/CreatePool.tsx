@@ -9,11 +9,12 @@ import {
   useToggleWalletModal,
 } from "@state/application/hooks"
 import { Container as LayoutContainer } from "@layouts/styles"
-import { SelectNFT, Details, Success } from "./Elements"
+import { SelectNFT, Details, Success, NameVault } from "./Elements"
 import { CreatePoolState } from "./models"
 
 const Container = styled(LayoutContainer)`
   align-items: center;
+  position: relative;
   gap: 40px;
 `
 
@@ -56,7 +57,7 @@ export type NewAddress = {
 
 export const CreatePool = () => {
   const [createPoolState, setCreatePoolState] = useState(
-    CreatePoolState.SelectNFT
+    CreatePoolState.NameVault
   )
   const [vaultAddress, setVaultAddress] = useState("")
   const [vaultName, setVaultName] = useState("")
@@ -71,11 +72,20 @@ export const CreatePool = () => {
 
   const content = useMemo(() => {
     switch (createPoolState) {
+      case CreatePoolState.NameVault:
+        return (
+          <NameVault
+            vaultName={vaultName}
+            setVaultName={setVaultName}
+            setCreatePoolState={setCreatePoolState}
+            setVaultAddress={setVaultAddress}
+          />
+        )
       case CreatePoolState.SelectNFT:
         return (
           <SelectNFT
+            vaultAddress={vaultAddress}
             vaultName={vaultName}
-            setVaultName={setVaultName}
             maxCollateralAmount={maxCollateralAmount}
             setMaxCollateralAmount={setMaxCollateralAmount}
             setCreatePoolState={setCreatePoolState}
@@ -87,10 +97,9 @@ export const CreatePool = () => {
         return (
           <Details
             nfts={nftAddresses}
-            vaultName={vaultName}
+            vaultAddress={vaultAddress}
             maxCollateralAmount={maxCollateralAmount}
             setCreatePoolState={setCreatePoolState}
-            setVaultAddress={setVaultAddress}
           />
         )
       case CreatePoolState.Complete:

@@ -44,17 +44,41 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "adjustCompleted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_user",
         "type": "address"
       },
       {
         "internalType": "uint256",
         "name": "_nonce",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_finalNftVal",
         "type": "uint256"
       },
       {
@@ -72,7 +96,7 @@
     "outputs": [
       {
         "internalType": "bool",
-        "name": "complete",
+        "name": "",
         "type": "bool"
       }
     ],
@@ -156,6 +180,43 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "auctionSaleValue",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "slots",
+        "type": "uint256"
+      }
+    ],
+    "name": "begin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -263,27 +324,16 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "comTickets",
-        "type": "uint256"
-      }
-    ],
-    "name": "decodeCompressedValue",
+    "inputs": [],
+    "name": "creator",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "stopIndex",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256[10]",
-        "name": "tickets",
-        "type": "uint256[10]"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -468,18 +518,24 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getHeldTokens",
-    "outputs": [
+    "inputs": [
       {
-        "internalType": "address[]",
-        "name": "tokens",
-        "type": "address[]"
+        "internalType": "address",
+        "name": "_nft",
+        "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "ids",
-        "type": "uint256[]"
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getHeldTokenExistence",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -518,6 +574,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getPoolClosedStatus",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -541,6 +610,25 @@
         "internalType": "bool",
         "name": "",
         "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "epoch",
+        "type": "uint256"
+      }
+    ],
+    "name": "getTotalFunds",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -573,61 +661,21 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "heldCollections",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "heldTokenIds",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address[]",
-        "name": "_heldTokenCollection",
-        "type": "address[]"
-      },
-      {
         "internalType": "uint256[]",
-        "name": "_heldTokenIds",
+        "name": "_compTokenInfo",
         "type": "uint256[]"
-      },
+      }
+    ],
+    "name": "includeNft",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
         "internalType": "uint256",
         "name": "_vaultVersion",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "slots",
         "type": "uint256"
       },
       {
@@ -644,6 +692,11 @@
         "internalType": "address",
         "name": "closePoolImplementation_",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_creator",
+        "type": "address"
       }
     ],
     "name": "initialize",
@@ -655,18 +708,48 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_user",
+        "name": "",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "_nonce",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "initiateFutureLp",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "loss",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "lossesCleared",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -862,11 +945,6 @@
       {
         "internalType": "uint256",
         "name": "finalEpoch",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "nonce",
         "type": "uint256"
       }
     ],
@@ -1107,6 +1185,25 @@
         "type": "uint256"
       }
     ],
+    "name": "tokenMapping",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "totAvailFunds",
     "outputs": [
       {
@@ -1147,11 +1244,6 @@
         "internalType": "uint32",
         "name": "unlockEpoch",
         "type": "uint32"
-      },
-      {
-        "internalType": "uint64",
-        "name": "maxTicket",
-        "type": "uint64"
       },
       {
         "internalType": "uint256",
@@ -1229,7 +1321,7 @@
         "type": "uint256"
       }
     ],
-    "name": "updateAvailFunds",
+    "name": "updateSaleValue",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"

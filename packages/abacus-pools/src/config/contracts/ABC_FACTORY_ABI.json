@@ -318,6 +318,25 @@
       },
       {
         "indexed": false,
+        "internalType": "uint256[]",
+        "name": "nfts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "NftInclusion",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_pool",
+        "type": "address"
+      },
+      {
+        "indexed": false,
         "internalType": "address",
         "name": "removedAddress",
         "type": "address"
@@ -568,6 +587,12 @@
       {
         "indexed": false,
         "internalType": "uint256",
+        "name": "nonce",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
         "name": "ticketsSold",
         "type": "uint256"
       },
@@ -641,6 +666,19 @@
       }
     ],
     "name": "SpotReserved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_pool",
+        "type": "address"
+      }
+    ],
+    "name": "VaultBegun",
     "type": "event"
   },
   {
@@ -731,29 +769,6 @@
   {
     "inputs": [],
     "name": "claimPendingReturns",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_pool",
-        "type": "address"
-      },
-      {
-        "internalType": "address[]",
-        "name": "_nft",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_ids",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "closePool",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1010,6 +1025,19 @@
   {
     "inputs": [
       {
+        "internalType": "uint256[]",
+        "name": "encodedNfts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "emitNftInclusion",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_pool",
         "type": "address"
@@ -1026,6 +1054,13 @@
       }
     ],
     "name": "emitPayout",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "emitPoolBegun",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1138,6 +1173,11 @@
         "internalType": "address",
         "name": "_seller",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_nonce",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",

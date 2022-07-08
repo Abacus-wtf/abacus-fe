@@ -4,6 +4,8 @@ import { Button, Checkbox, P, Add, ButtonType } from "abacus-ui"
 import { Link } from "gatsby"
 import styled from "styled-components"
 import { NewAddress } from "@sections/CreatePool/CreatePool"
+import { useOnIncludeNFT } from "@hooks/createPool"
+import { LoadingOverlay } from "@components/LoadingOverlay"
 import { Title, StyledButton, StyledInput } from "../../CreatePool.styled"
 import { CreatePoolState } from "../../models"
 import { NFTInput } from "./NFTInput"
@@ -33,9 +35,9 @@ const AddNFTButton = styled(Button)`
 `
 
 type SelectNFTProps = {
+  vaultAddress: string
   nftAddresses: NewAddress[]
   vaultName: string
-  setVaultName: React.Dispatch<string>
   maxCollateralAmount: number
   setMaxCollateralAmount: React.Dispatch<number>
   setNftAddresses: React.Dispatch<React.SetStateAction<NewAddress[]>>
@@ -43,24 +45,39 @@ type SelectNFTProps = {
 }
 
 export const SelectNFT = ({
+  vaultAddress,
   nftAddresses,
   setNftAddresses,
   vaultName,
-  setVaultName,
   maxCollateralAmount,
   setMaxCollateralAmount,
   setCreatePoolState,
 }: SelectNFTProps) => {
   const [multi, setMulti] = useState(false)
-  const selectNft = () => {
-    setCreatePoolState(CreatePoolState.Details)
-  }
+  const { onIncludeNFT, isPending } = useOnIncludeNFT()
 
-  useEffect(() => {
-    if (!multi) {
-      setVaultName("")
+  const onClick = async () => {
+    const INTIIAL: { nfts: string[]; tokenIds: number[] } = {
+      nfts: [],
+      tokenIds: [],
     }
-  }, [multi, setVaultName])
+    const { nfts, tokenIds } = nftAddresses.reduce(
+      (acc, nft) => ({
+        nfts: [...acc.nfts, nft.address],
+        tokenIds: [...acc.tokenIds, Number(nft.tokenId)],
+      }),
+      INTIIAL
+    )
+
+    onIncludeNFT(
+      {
+        nfts,
+        tokenIds,
+        vaultAddress,
+      },
+      () => setCreatePoolState(CreatePoolState.Details)
+    )
+  }
 
   useEffect(() => {
     if (maxCollateralAmount > nftAddresses.length) {
@@ -68,11 +85,12 @@ export const SelectNFT = ({
     }
   }, [maxCollateralAmount, nftAddresses.length, setMaxCollateralAmount])
 
-  const selectDisabled = nftAddresses.some((nft) => !nft.address)
+  const selectDisabled = isPending || nftAddresses.some((nft) => !nft.address)
 
   return (
     <Container>
-      <Title>Start a new Pool</Title>
+      <LoadingOverlay loading={isPending} />
+      <Title>Select NFTs for {vaultName}</Title>
       <PoolTypeContainer>
         <P>
           What type of Pool do you want to start?{" "}
@@ -102,16 +120,6 @@ export const SelectNFT = ({
           />
         </RadioContainer>
       </PoolTypeContainer>
-      {multi && (
-        <StyledInput
-          type="text"
-          name="vault_name"
-          value={vaultName}
-          onChange={setVaultName}
-          label="Vault Name"
-          placeholder="Name of Vault (Must be unique)"
-        />
-      )}
       {multi && (
         <StyledInput
           type="number"
@@ -171,8 +179,8 @@ export const SelectNFT = ({
           Add NFT <Add size={16} />
         </AddNFTButton>
       )}
-      <StyledButton onClick={selectNft} disabled={selectDisabled}>
-        Preview
+      <StyledButton onClick={onClick} disabled={selectDisabled}>
+        {isPending ? "Including NFTs..." : "Include NFTs"}
       </StyledButton>
     </Container>
   )

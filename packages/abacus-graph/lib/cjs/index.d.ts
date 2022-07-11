@@ -375,6 +375,14 @@ export declare type Nft = {
     address: Scalars['String'];
     id: Scalars['ID'];
     tokenId: Scalars['String'];
+    vaults?: Maybe<Array<VaultNft>>;
+};
+export declare type NftVaultsArgs = {
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<VaultNft_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    where?: InputMaybe<VaultNft_Filter>;
 };
 export declare type Nft_Filter = {
     /** Filter for the block changed event. */
@@ -427,11 +435,13 @@ export declare type Nft_Filter = {
     tokenId_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
     tokenId_starts_with?: InputMaybe<Scalars['String']>;
     tokenId_starts_with_nocase?: InputMaybe<Scalars['String']>;
+    vaults_?: InputMaybe<VaultNft_Filter>;
 };
 export declare enum Nft_OrderBy {
     Address = "address",
     Id = "id",
-    TokenId = "tokenId"
+    TokenId = "tokenId",
+    Vaults = "vaults"
 }
 /** Defines the order direction, either ascending or descending */
 export declare enum OrderDirection {
@@ -492,6 +502,8 @@ export declare type Query = {
     user?: Maybe<User>;
     users: Array<User>;
     vault?: Maybe<Vault>;
+    vaultNFT?: Maybe<VaultNft>;
+    vaultNFTs: Array<VaultNft>;
     vaults: Array<Vault>;
 };
 export declare type Query_MetaArgs = {
@@ -656,6 +668,20 @@ export declare type QueryVaultArgs = {
     id: Scalars['ID'];
     subgraphError?: _SubgraphErrorPolicy_;
 };
+export declare type QueryVaultNftArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type QueryVaultNfTsArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<VaultNft_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<VaultNft_Filter>;
+};
 export declare type QueryVaultsArgs = {
     block?: InputMaybe<Block_Height>;
     first?: InputMaybe<Scalars['Int']>;
@@ -692,6 +718,8 @@ export declare type Subscription = {
     user?: Maybe<User>;
     users: Array<User>;
     vault?: Maybe<Vault>;
+    vaultNFT?: Maybe<VaultNft>;
+    vaultNFTs: Array<VaultNft>;
     vaults: Array<Vault>;
 };
 export declare type Subscription_MetaArgs = {
@@ -855,6 +883,20 @@ export declare type SubscriptionVaultArgs = {
     block?: InputMaybe<Block_Height>;
     id: Scalars['ID'];
     subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type SubscriptionVaultNftArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type SubscriptionVaultNfTsArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<VaultNft_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<VaultNft_Filter>;
 };
 export declare type SubscriptionVaultsArgs = {
     block?: InputMaybe<Block_Height>;
@@ -1060,7 +1102,7 @@ export declare type Vault = {
     emissionsSigned: Scalars['Boolean'];
     id: Scalars['ID'];
     name: Scalars['String'];
-    nfts: Array<Nft>;
+    nfts?: Maybe<Array<VaultNft>>;
     owner: Scalars['ID'];
     status: Scalars['Int'];
     tickets: Array<Ticket>;
@@ -1069,10 +1111,10 @@ export declare type Vault = {
 };
 export declare type VaultNftsArgs = {
     first?: InputMaybe<Scalars['Int']>;
-    orderBy?: InputMaybe<Nft_OrderBy>;
+    orderBy?: InputMaybe<VaultNft_OrderBy>;
     orderDirection?: InputMaybe<OrderDirection>;
     skip?: InputMaybe<Scalars['Int']>;
-    where?: InputMaybe<Nft_Filter>;
+    where?: InputMaybe<VaultNft_Filter>;
 };
 export declare type VaultTicketsArgs = {
     first?: InputMaybe<Scalars['Int']>;
@@ -1081,6 +1123,71 @@ export declare type VaultTicketsArgs = {
     skip?: InputMaybe<Scalars['Int']>;
     where?: InputMaybe<Ticket_Filter>;
 };
+export declare type VaultNft = {
+    __typename?: 'VaultNFT';
+    id: Scalars['ID'];
+    nft: Nft;
+    vault: Vault;
+};
+export declare type VaultNft_Filter = {
+    /** Filter for the block changed event. */
+    _change_block?: InputMaybe<BlockChangedFilter>;
+    id?: InputMaybe<Scalars['ID']>;
+    id_gt?: InputMaybe<Scalars['ID']>;
+    id_gte?: InputMaybe<Scalars['ID']>;
+    id_in?: InputMaybe<Array<Scalars['ID']>>;
+    id_lt?: InputMaybe<Scalars['ID']>;
+    id_lte?: InputMaybe<Scalars['ID']>;
+    id_not?: InputMaybe<Scalars['ID']>;
+    id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+    nft?: InputMaybe<Scalars['String']>;
+    nft_?: InputMaybe<Nft_Filter>;
+    nft_contains?: InputMaybe<Scalars['String']>;
+    nft_contains_nocase?: InputMaybe<Scalars['String']>;
+    nft_ends_with?: InputMaybe<Scalars['String']>;
+    nft_ends_with_nocase?: InputMaybe<Scalars['String']>;
+    nft_gt?: InputMaybe<Scalars['String']>;
+    nft_gte?: InputMaybe<Scalars['String']>;
+    nft_in?: InputMaybe<Array<Scalars['String']>>;
+    nft_lt?: InputMaybe<Scalars['String']>;
+    nft_lte?: InputMaybe<Scalars['String']>;
+    nft_not?: InputMaybe<Scalars['String']>;
+    nft_not_contains?: InputMaybe<Scalars['String']>;
+    nft_not_contains_nocase?: InputMaybe<Scalars['String']>;
+    nft_not_ends_with?: InputMaybe<Scalars['String']>;
+    nft_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+    nft_not_in?: InputMaybe<Array<Scalars['String']>>;
+    nft_not_starts_with?: InputMaybe<Scalars['String']>;
+    nft_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+    nft_starts_with?: InputMaybe<Scalars['String']>;
+    nft_starts_with_nocase?: InputMaybe<Scalars['String']>;
+    vault?: InputMaybe<Scalars['String']>;
+    vault_?: InputMaybe<Vault_Filter>;
+    vault_contains?: InputMaybe<Scalars['String']>;
+    vault_contains_nocase?: InputMaybe<Scalars['String']>;
+    vault_ends_with?: InputMaybe<Scalars['String']>;
+    vault_ends_with_nocase?: InputMaybe<Scalars['String']>;
+    vault_gt?: InputMaybe<Scalars['String']>;
+    vault_gte?: InputMaybe<Scalars['String']>;
+    vault_in?: InputMaybe<Array<Scalars['String']>>;
+    vault_lt?: InputMaybe<Scalars['String']>;
+    vault_lte?: InputMaybe<Scalars['String']>;
+    vault_not?: InputMaybe<Scalars['String']>;
+    vault_not_contains?: InputMaybe<Scalars['String']>;
+    vault_not_contains_nocase?: InputMaybe<Scalars['String']>;
+    vault_not_ends_with?: InputMaybe<Scalars['String']>;
+    vault_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+    vault_not_in?: InputMaybe<Array<Scalars['String']>>;
+    vault_not_starts_with?: InputMaybe<Scalars['String']>;
+    vault_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+    vault_starts_with?: InputMaybe<Scalars['String']>;
+    vault_starts_with_nocase?: InputMaybe<Scalars['String']>;
+};
+export declare enum VaultNft_OrderBy {
+    Id = "id",
+    Nft = "nft",
+    Vault = "vault"
+}
 export declare type Vault_Filter = {
     /** Filter for the block changed event. */
     _change_block?: InputMaybe<BlockChangedFilter>;
@@ -1116,13 +1223,7 @@ export declare type Vault_Filter = {
     name_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
     name_starts_with?: InputMaybe<Scalars['String']>;
     name_starts_with_nocase?: InputMaybe<Scalars['String']>;
-    nfts?: InputMaybe<Array<Scalars['String']>>;
-    nfts_?: InputMaybe<Nft_Filter>;
-    nfts_contains?: InputMaybe<Array<Scalars['String']>>;
-    nfts_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
-    nfts_not?: InputMaybe<Array<Scalars['String']>>;
-    nfts_not_contains?: InputMaybe<Array<Scalars['String']>>;
-    nfts_not_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+    nfts_?: InputMaybe<VaultNft_Filter>;
     owner?: InputMaybe<Scalars['ID']>;
     owner_gt?: InputMaybe<Scalars['ID']>;
     owner_gte?: InputMaybe<Scalars['ID']>;
@@ -1309,6 +1410,12 @@ export declare type GetEpochAllocationsQuery = {
         epoch: string;
     }>;
 };
+export declare type NftFragment = {
+    __typename?: 'NFT';
+    id: string;
+    address: string;
+    tokenId: string;
+};
 export declare type VaultFragment = {
     __typename?: 'Vault';
     id: string;
@@ -1318,12 +1425,15 @@ export declare type VaultFragment = {
     timestamp: string;
     emissionsSigned: boolean;
     totalParticipants: number;
-    nfts: Array<{
-        __typename?: 'NFT';
-        id: string;
-        address: string;
-        tokenId: string;
-    }>;
+    nfts?: Array<{
+        __typename?: 'VaultNFT';
+        nft: {
+            __typename?: 'NFT';
+            id: string;
+            address: string;
+            tokenId: string;
+        };
+    }> | null;
     tickets: Array<{
         __typename?: 'Ticket';
         id: string;
@@ -1360,12 +1470,15 @@ export declare type GetPoolsQuery = {
         timestamp: string;
         emissionsSigned: boolean;
         totalParticipants: number;
-        nfts: Array<{
-            __typename?: 'NFT';
-            id: string;
-            address: string;
-            tokenId: string;
-        }>;
+        nfts?: Array<{
+            __typename?: 'VaultNFT';
+            nft: {
+                __typename?: 'NFT';
+                id: string;
+                address: string;
+                tokenId: string;
+            };
+        }> | null;
         tickets: Array<{
             __typename?: 'Ticket';
             id: string;
@@ -1399,12 +1512,15 @@ export declare type GetPoolQuery = {
         timestamp: string;
         emissionsSigned: boolean;
         totalParticipants: number;
-        nfts: Array<{
-            __typename?: 'NFT';
-            id: string;
-            address: string;
-            tokenId: string;
-        }>;
+        nfts?: Array<{
+            __typename?: 'VaultNFT';
+            nft: {
+                __typename?: 'NFT';
+                id: string;
+                address: string;
+                tokenId: string;
+            };
+        }> | null;
         tickets: Array<{
             __typename?: 'Ticket';
             id: string;
@@ -1494,8 +1610,19 @@ export declare type UserAllocationsQuery = {
         }>;
     } | null;
 };
+export declare type VaultNftFragment = {
+    __typename?: 'VaultNFT';
+    nft: {
+        __typename?: 'NFT';
+        id: string;
+        address: string;
+        tokenId: string;
+    };
+};
 export declare const AllocationFragmentDoc: DocumentNode<AllocationFragment, unknown>;
 export declare const BidFragmentDoc: DocumentNode<BidFragment, unknown>;
+export declare const NftFragmentDoc: DocumentNode<NftFragment, unknown>;
+export declare const VaultNftFragmentDoc: DocumentNode<VaultNftFragment, unknown>;
 export declare const TokenPurchaseFragmentDoc: DocumentNode<TokenPurchaseFragment, unknown>;
 export declare const TicketFragmentDoc: DocumentNode<TicketFragment, unknown>;
 export declare const VaultFragmentDoc: DocumentNode<VaultFragment, unknown>;

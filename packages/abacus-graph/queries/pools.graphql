@@ -1,11 +1,10 @@
 # import Ticket from 'tickets.graphql'
+# import VaultNFT from 'vaultNft.graphql'
 
 fragment Vault on Vault {
   id
   nfts {
-    id
-    address
-    tokenId
+    ...VaultNFT
   }
   name
   owner

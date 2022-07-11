@@ -1,0 +1,5 @@
+fragment NFT on NFT {
+  id
+  address
+  tokenId
+}

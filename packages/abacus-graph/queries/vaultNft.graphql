@@ -1,0 +1,7 @@
+# import NFT from 'nft.graphql'
+
+fragment VaultNFT on VaultNFT {
+  nft {
+    ...NFT
+  }
+}

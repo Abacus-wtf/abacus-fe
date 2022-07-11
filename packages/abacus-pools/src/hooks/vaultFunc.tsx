@@ -11,7 +11,6 @@ import _ from "lodash"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { formatEther, parseEther } from "ethers/lib/utils"
 import { TICKET_SIZE } from "@config/constants"
-import { BigNumber } from "ethers"
 import VAULT_ABI from "../config/contracts/ABC_VAULT_ABI.json"
 import ERC_721_ABI from "../config/contracts/ERC_721_ABI.json"
 
@@ -288,13 +287,11 @@ export const useOnPurchaseTokens = () => {
         purchaseAmount,
         startEpoch,
         endEpoch,
-        BigNumber.from("0"),
       ]
       console.log(args)
       const value = parseEther(
         `${Number(tokenAmount) * Number(poolData.tokenPrice)}`
       )
-
       const txnCb = async (response: any) => {
         addTransaction(response, {
           summary: "Purchase Locked Up Tokens",

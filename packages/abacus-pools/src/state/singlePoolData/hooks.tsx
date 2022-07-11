@@ -30,8 +30,7 @@ import {
 } from "abacus-graph"
 import { aggregateVaultTokenLockHistory, getPoolSize } from "utils/vaultTickets"
 import { matchOpenSeaAssetToNFT, openseaGetMany } from "abacus-utils"
-import { useCurrentEpoch } from "@state/application/hooks"
-import { currentEpochSelector } from "@state/application/selectors"
+
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"
 import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
 import { Bribe } from "./reducer"
@@ -74,6 +73,9 @@ export const useTickets = () =>
     getTicketsSelector
   )
 
+const getPoolEpochSelector = (state: AppState) =>
+  state.singlePoolData.data.epoch
+
 type SellablePosition = {
   id: string
   amount: number
@@ -82,11 +84,13 @@ type SellablePosition = {
   finalEpoch: number
 }
 
-export const useSellablePositions = (currentEpoch: number, account: string) => {
+export const useSellablePositions = () => {
+  const { account } = useActiveWeb3React()
   const initial: SellablePosition[] = []
   const sellablePositionsSelector = createSelector(
     getTicketsSelector,
-    (tickets) =>
+    getPoolEpochSelector,
+    (tickets, currentEpoch) =>
       tickets
         ?.reduce((acc, ticket) => {
           if (!ticket.tokenPurchasesLength || !account) {
@@ -125,10 +129,10 @@ export const useSellablePositions = (currentEpoch: number, account: string) => {
 }
 
 export const useEntryLevels = () => {
-  const currentEpoch = useCurrentEpoch()
   const entryLevelsSelector = createSelector(
     getTicketsSelector,
-    (tickets) =>
+    getPoolEpochSelector,
+    (tickets, currentEpoch) =>
       tickets?.map((ticket) => ({
         ticketNumber: ticket.ticketNumber,
         amount: ticket.tokenPurchases.reduce(
@@ -145,7 +149,7 @@ export const useEntryLevels = () => {
 
 export const useCurrentPoolSize = () => {
   const poolSizeSelector = createSelector(
-    currentEpochSelector,
+    getPoolEpochSelector,
     getTicketsSelector,
     (currentEpoch, tickets) => getPoolSize(currentEpoch, tickets)
   )
@@ -207,7 +211,7 @@ export const useActivity = () => {
 export const useSinglePoolTokenLockHistory = () => {
   const tokenLockHistorySelector = createSelector(
     getTicketsSelector,
-    currentEpochSelector,
+    getPoolEpochSelector,
     (tickets, currentEpoch) =>
       aggregateVaultTokenLockHistory(currentEpoch, tickets)
   )
@@ -526,9 +530,6 @@ export const useSetPoolData = () => {
     [account, closePool, dispatch, erc721, vault]
   )
 }
-
-const getPoolEpochSelector = (state: AppState) =>
-  state.singlePoolData.data.epoch
 
 export const usePoolCurrentEpoch = () =>
   useSelector<AppState, AppState["singlePoolData"]["data"]["epoch"]>(

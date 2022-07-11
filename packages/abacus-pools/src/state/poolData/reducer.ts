@@ -67,6 +67,7 @@ export interface Pool {
   tickets?: GetPoolsQuery["vaults"][number]["tickets"]
   nfts: NFT[]
   name: string
+  epoch?: number
 }
 
 export const INITIAL_POOL: Pool = {

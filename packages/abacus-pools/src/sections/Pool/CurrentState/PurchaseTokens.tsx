@@ -1,10 +1,9 @@
 import { useOnPurchaseTokens } from "@hooks/vaultFunc"
+import { useEpochLength, useEthToUSD } from "@state/application/hooks"
 import {
-  useCurrentEpoch,
-  useEpochLength,
-  useEthToUSD,
-} from "@state/application/hooks"
-import { useGetPoolData } from "@state/singlePoolData/hooks"
+  useGetPoolData,
+  usePoolCurrentEpoch,
+} from "@state/singlePoolData/hooks"
 import { Checkbox, Flex, Input } from "abacus-ui"
 
 import React, { FunctionComponent, useEffect, useState } from "react"
@@ -26,7 +25,7 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
   const { tokenPrice } = useGetPoolData()
   const { onPurchaseTokens, isPending } = useOnPurchaseTokens()
   const [startEpoch, setStartEpoch] = useState<number>(null)
-  const currentEpoch = useCurrentEpoch()
+  const currentEpoch = usePoolCurrentEpoch()
   const epochLength = useEpochLength()
 
   const numTokens = String(Number(eth) / Number(tokenPrice))
@@ -43,7 +42,8 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
     })
   }
 
-  const confirmDisabled = !eth || !finalEpoch || isPending || !startEpoch
+  const confirmDisabled =
+    !eth || !finalEpoch || isPending || (!startEpoch && startEpoch < 0)
 
   const durations = Array.from({ length: 3 }).map((_, i) => {
     const next = i + 1

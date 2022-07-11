@@ -338,11 +338,13 @@ export const useSetPoolData = () => {
   return useCallback(
     async (vaultAddress: string) => {
       try {
-        const [closePoolContract, emissionsStarted] = await vault(
-          vaultAddress,
-          ["closePoolContract", "emissionsStarted"],
-          [[], [], []]
-        )
+        const now = Math.floor(new Date().getTime() / 1000)
+        const [closePoolContract, emissionsStarted, [currentEpoch]] =
+          await vault(
+            vaultAddress,
+            ["closePoolContract", "emissionsStarted", "getEpoch"],
+            [[], [], [now]]
+          )
 
         let creditsAvailable = BigNumber.from(0)
         let approved = false
@@ -513,6 +515,7 @@ export const useSetPoolData = () => {
           nfts,
           isManager: nfts.some((nft) => nft.isManager),
           totalParticipants: _pool.totalParticipants,
+          epoch: BigNumber.from(currentEpoch).toNumber(),
         }
         dispatch(getPoolData(pool))
       } catch (e) {
@@ -523,3 +526,11 @@ export const useSetPoolData = () => {
     [account, closePool, dispatch, erc721, vault]
   )
 }
+
+const getPoolEpochSelector = (state: AppState) =>
+  state.singlePoolData.data.epoch
+
+export const usePoolCurrentEpoch = () =>
+  useSelector<AppState, AppState["singlePoolData"]["data"]["epoch"]>(
+    getPoolEpochSelector
+  )

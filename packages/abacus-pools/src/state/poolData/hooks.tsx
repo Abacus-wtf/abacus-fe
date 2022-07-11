@@ -25,7 +25,7 @@ import { poolSizeSelector, tokenLockHistorySelector } from "./selectors"
 const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
   const INITIAL_NFTS: OpenSeaGetManyParams = []
   const nfts = vaults.reduce((acc, vault) => {
-    const nextNfts = vault.nfts.map((nft) => ({
+    const nextNfts = vault.nfts.map(({ nft }) => ({
       nftAddress: nft.address,
       tokenId: nft.tokenId,
     }))
@@ -41,7 +41,7 @@ const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
         : vault.status === 1
         ? PoolStatus.Auction
         : PoolStatus.Closed,
-    nfts: vault.nfts.map((nft) => {
+    nfts: vault.nfts.map(({ nft }) => {
       const asset = matchOpenSeaAssetToNFT(assets, {
         ...nft,
         nftAddress: nft.address,
@@ -73,6 +73,9 @@ export const useSetPools = () => {
         skip: 0 * PAGINATE_BY,
         orderBy: orderBy || Vault_OrderBy.Timestamp,
         orderDirection: orderDirection || OrderDirection.Desc,
+        where: {
+          status_gte: 0,
+        },
       }
 
       const { vaults } = await request<GetPoolsQuery>(

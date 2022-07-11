@@ -366,13 +366,13 @@ export const useSetPoolData = () => {
         )
 
         const { assets } = await openseaGetMany(
-          _pool.nfts.map((nft) => ({ ...nft, nftAddress: nft.address })),
+          _pool.nfts.map(({ nft }) => ({ ...nft, nftAddress: nft.address })),
           { url: OPENSEA_LINK }
         )
 
         // TODO: Do this in multi-call
         const owners = await Promise.all(
-          _pool.nfts.map(async (nft) => {
+          _pool.nfts.map(async ({ nft }) => {
             const ownerOf: string = await erc721(nft.address)
               .methods.ownerOf(nft.tokenId)
               .call()
@@ -380,7 +380,7 @@ export const useSetPoolData = () => {
           })
         )
 
-        const nfts = _pool.nfts.map((nft, index) => {
+        const nfts = _pool.nfts.map(({ nft }, index) => {
           const asset = matchOpenSeaAssetToNFT(assets, {
             nftAddress: nft.address,
             tokenId: nft.tokenId,
@@ -416,14 +416,15 @@ export const useSetPoolData = () => {
 
         // TODO: Owners will need to check isApprovedForAll for every address they own - do in multicall
         if (account) {
-          const [multi, approval, approvalBribe] = await Promise.all([
+          const [multi] = await Promise.all([
             vault(vaultAddress, ["totAvailFunds"], [[account]]),
-            erc721(nfts[0].address)
-              .methods.isApprovedForAll(account, vaultAddress)
-              .call(),
-            erc721(nfts[0].address)
-              .methods.isApprovedForAll(account, ABC_BRIBE_FACTORY)
-              .call(),
+            // TODO: Determine why these are failing
+            // erc721(nfts[0].address)
+            //   .methods.isApprovedForAll(account, vaultAddress)
+            //   .call(),
+            // erc721(nfts[0].address)
+            //   .methods.isApprovedForAll(account, ABC_BRIBE_FACTORY)
+            //   .call(),
           ])
           tickets = _pool.tickets.filter((ticket) =>
             ticket.tokenPurchases.some(
@@ -432,8 +433,8 @@ export const useSetPoolData = () => {
           )
           creditsAvailable = multi[0][0]
           // userTokensLocked = formatEther(multi[1][0]) TODO - What is this for?
-          approved = approval
-          approvedBribeFactory = approvalBribe
+          approved = false // approval
+          approvedBribeFactory = false // approvalBribe
         }
 
         let auction: Auction

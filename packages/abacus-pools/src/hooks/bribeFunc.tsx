@@ -23,7 +23,7 @@ export const useOnAddToBribe = () => {
       )
       const method = bribeContract.addToBribe
       const estimate = bribeContract.estimateGas.addToBribe
-      const args = [poolData.address, poolData.tokenId]
+      const args = [poolData.vaultAddress]
       const value = parseEther(amount)
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -64,7 +64,7 @@ export const useWithdrawBribe = () => {
       )
       const method = bribeContract.withdrawBribe
       const estimate = bribeContract.estimateGas.withdrawBribe
-      const args = [poolData.address, poolData.tokenId, parseEther(`${amount}`)]
+      const args = [poolData.vaultAddress, parseEther(`${amount}`)]
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -95,6 +95,7 @@ export const useAcceptBribe = () => {
   const addTransaction = useTransactionAdder()
   const poolData = useGetPoolData()
 
+  // TODO: Determine what the new function is that maps to this one
   const onAcceptBribe = useCallback(
     async (cb: () => void) => {
       const bribeContract = getContract(

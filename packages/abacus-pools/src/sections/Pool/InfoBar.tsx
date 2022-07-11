@@ -1,5 +1,5 @@
 import { useEthToUSD } from "@state/application/hooks"
-import { useGetPoolData } from "@state/singlePoolData/hooks"
+import { useCurrentPoolSize, useGetPoolData } from "@state/singlePoolData/hooks"
 import React, { FunctionComponent } from "react"
 import styled, { useTheme } from "styled-components"
 import {
@@ -37,8 +37,9 @@ const PoolTitle = styled(InfoBarContent)`
 `
 
 const InfoBar: FunctionComponent = () => {
-  const { emissionsStarted, tokenPrice, totalParticipants, size, name } =
+  const { emissionsStarted, tokenPrice, totalParticipants, name } =
     useGetPoolData()
+  const size = useCurrentPoolSize()
   const tokensLockedEth = (Number(size) * Number(tokenPrice)).toLocaleString(
     "en-US",
     {

@@ -240,7 +240,7 @@ export const useGetBribeData = () => {
     }
     if (account) {
       const accountBribe = await bribeContract(ABC_BRIBE_FACTORY)
-        .methods.bribePerAccount(poolData.vaultAddress, account)
+        .methods.bribePerAccount(account, poolData.vaultAddress)
         .call()
       bribe.bribeOfferedByUser = Number(formatEther(accountBribe))
     }

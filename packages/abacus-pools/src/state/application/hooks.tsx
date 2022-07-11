@@ -8,10 +8,11 @@ import {
 } from "@config/constants"
 import axios from "axios"
 import ABC_TOKEN_ABI from "@config/contracts/ABC_TOKEN_ABI.json"
-import { useActiveWeb3React, useWeb3Contract } from "@hooks/index"
+import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import { formatEther } from "ethers/lib/utils"
 import request from "graphql-request"
 import { GetAggregatesDocument, GetAggregatesQuery } from "abacus-graph"
+import { BigNumber } from "ethers"
 import { AppDispatch, AppState } from "../index"
 import {
   toggleWalletModal,
@@ -152,24 +153,27 @@ export const useAggregate = () => useSelector(aggregateSelector)
 
 export const useFetchCurrentEpoch = () => {
   const dispatch = useDispatch()
-  const epochCall = useWeb3Contract(ABC_EPOCH_ABI)
+  const epochMulti = useMultiCall(ABC_EPOCH_ABI)
 
   const fetchCurrentEpoch = useCallback(async () => {
     try {
       // TODO: Use multi-call
-      const [currentEpoch, epochLength] = await Promise.all([
-        epochCall(ABC_EPOCH).methods.getCurrentEpoch().call(),
-        epochCall(ABC_EPOCH).methods.epochLength().call(),
-      ])
+      const [[currentEpoch], [epochLength]] = await epochMulti(
+        ABC_EPOCH,
+        ["getCurrentEpoch", "epochLength"],
+        [[], []]
+      )
+
       const epoch = {
-        current: parseInt(currentEpoch, 10),
-        length: parseInt(epochLength, 10) * 1000,
+        current: BigNumber.from(currentEpoch).toNumber(),
+        length: BigNumber.from(epochLength).toNumber() * 1000,
       }
+
       dispatch(setEpoch(epoch))
     } catch {
       // TODO: Determine why this errors
     }
-  }, [dispatch, epochCall])
+  }, [dispatch, epochMulti])
 
   return {
     fetchCurrentEpoch,

@@ -9,8 +9,6 @@ import {
   useSetPoolData,
 } from "@state/singlePoolData/hooks"
 import { PoolCard } from "@components/PoolCard"
-import { formatEther } from "ethers/lib/utils"
-import { BigNumber } from "ethers"
 import { Container } from "../../layouts/styles"
 import { CurrentState } from "./CurrentState"
 
@@ -56,7 +54,7 @@ type ClosePoolProps = {
 }
 
 const ClosePool: FunctionComponent<ClosePoolProps> = ({ vaultAddress }) => {
-  const { nfts, size, totalParticipants, name } = useGetPoolData()
+  const { nfts, totalParticipants, name } = useGetPoolData()
   const setPool = useSetPoolData()
   const getTickets = useGetTickets()
 
@@ -82,7 +80,6 @@ const ClosePool: FunctionComponent<ClosePoolProps> = ({ vaultAddress }) => {
           nfts={nfts}
           title={name}
           participants={totalParticipants}
-          poolSize={formatEther(size.div(BigNumber.from("1000")))}
           vaultId={vaultAddress}
         />
         <CurrentState vaultAddress={vaultAddress} />

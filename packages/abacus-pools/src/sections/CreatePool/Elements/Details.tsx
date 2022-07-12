@@ -29,7 +29,7 @@ export const Details: FunctionComponent<DetailsProps> = ({
   return (
     <>
       <LoadingOverlay loading={isPending} />
-      <Title>Confirm and Begin Pool</Title>
+      <Title>Begin Pool</Title>
       <NFTGrid size={nfts.length}>
         {nfts.map((nft) => (
           <NFTImage key={nft.id} src={nft.img} alt={nft.collectionTitle} />

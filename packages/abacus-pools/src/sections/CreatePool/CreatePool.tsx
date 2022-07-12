@@ -22,6 +22,7 @@ const StyledSection = styled(Section)<{ complete: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  position: relative;
 
   ${({ complete }) => (complete ? "" : Media.sm`padding: 20px 76px;`)}
 `

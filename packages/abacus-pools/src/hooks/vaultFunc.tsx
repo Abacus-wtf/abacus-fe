@@ -10,7 +10,9 @@ import { useTransactionAdder } from "@state/transactions/hooks"
 import _ from "lodash"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { formatEther, parseEther } from "ethers/lib/utils"
-import { TICKET_SIZE } from "@config/constants"
+import { TICKET_SIZE, ABC_FACTORY } from "@config/constants"
+import { BigNumber } from "ethers"
+import FACTORY_ABI from "../config/contracts/ABC_FACTORY_ABI.json"
 import VAULT_ABI from "../config/contracts/ABC_VAULT_ABI.json"
 import ERC_721_ABI from "../config/contracts/ERC_721_ABI.json"
 
@@ -178,23 +180,38 @@ export const useUnlockPosition = () => {
   }
 }
 
-export const useOnStartEmissions = () => {
+export const useOnSignVault = () => {
   const { account, library } = useActiveWeb3React()
   const { generalizedContractCall, isPending } = useGeneralizedContractCall()
   const addTransaction = useTransactionAdder()
   const poolData = useGetPoolData()
 
-  const onStartEmissions = useCallback(
-    async (cb: () => void) => {
+  const onSignVault = useCallback(
+    async (addresses: string[], tokenIds: number[], cb: () => void) => {
+      const vaultFactory = getContract(
+        ABC_FACTORY,
+        FACTORY_ABI,
+        library,
+        account
+      )
       const vaultContract = getContract(
         poolData.vaultAddress,
         VAULT_ABI,
         library,
         account
       )
-      const method = vaultContract.startEmissions
-      const estimate = vaultContract.estimateGas.startEmissions
-      const args = []
+
+      const nonce = await vaultContract.getNonce()
+
+      const method = vaultFactory.signMultiAssetVault
+      const estimate = vaultFactory.estimateGas.signMultiAssetVault
+      const args = [
+        BigNumber.from(nonce).toNumber(),
+        addresses,
+        tokenIds,
+        addresses[0],
+      ]
+      console.log("args", args)
       const value = null
       const txnCb = async (response: any) => {
         addTransaction(response, {
@@ -214,7 +231,7 @@ export const useOnStartEmissions = () => {
     [library, account, generalizedContractCall, addTransaction, poolData]
   )
   return {
-    onStartEmissions,
+    onSignVault,
     isPending,
   }
 }

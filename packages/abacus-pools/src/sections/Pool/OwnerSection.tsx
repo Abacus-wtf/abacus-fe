@@ -1,7 +1,7 @@
 import { LoadingOverlay } from "@components/LoadingOverlay"
 import { ABC_BRIBE_FACTORY } from "@config/constants"
 import { useAcceptBribe } from "@hooks/bribeFunc"
-import { useOnApproveTransfer, useOnStartEmissions } from "@hooks/vaultFunc"
+import { useOnApproveTransfer, useOnSignVault } from "@hooks/vaultFunc"
 import { useGetPoolData } from "@state/singlePoolData/hooks"
 import { Button, ButtonType, Kilo, Section } from "abacus-ui"
 import { Link } from "gatsby"
@@ -11,6 +11,7 @@ import { SectionHeader, SectionTitle } from "./Pool.styled"
 
 const SectionStyled = styled(Section)`
   border: 1px solid #f33636;
+  position: relative;
 `
 
 const ButtonContainer = styled.div`
@@ -30,13 +31,30 @@ interface OwnerSectionProps {
 }
 
 const OwnerSection = ({ refreshPoolData }: OwnerSectionProps) => {
-  const { vaultAddress, approvedBribeFactory, emissionsStarted } =
+  const { vaultAddress, approvedBribeFactory, emissionsStarted, nfts } =
     useGetPoolData()
-  const { onStartEmissions, isPending: isPendingStartEmissions } =
-    useOnStartEmissions()
+  const { onSignVault, isPending: isPendingStartEmissions } = useOnSignVault()
   const { onAcceptBribe, isPending: isPendingAcceptBribe } = useAcceptBribe()
   const { onApproveTransfer, isPending: isPendingApproval } =
     useOnApproveTransfer()
+
+  const signVault = () => {
+    const INITIAL: { addresses: string[]; tokenIds: number[] } = {
+      addresses: [],
+      tokenIds: [],
+    }
+    const { addresses, tokenIds } = nfts.reduce((acc, nft) => {
+      if (!nft.isManager) {
+        return acc
+      }
+      return {
+        addresses: [...acc.addresses, nft.address],
+        tokenIds: [...acc.tokenIds, Number(nft.tokenId)],
+      }
+    }, INITIAL)
+    onSignVault(addresses, tokenIds, () => refreshPoolData())
+  }
+
   return (
     <SectionStyled>
       <LoadingOverlay
@@ -55,11 +73,7 @@ const OwnerSection = ({ refreshPoolData }: OwnerSectionProps) => {
           <StyledButton buttonType={ButtonType.Gray}>Close Pool</StyledButton>
         </Link>
         <StyledButton
-          onClick={() =>
-            onStartEmissions(async () => {
-              await refreshPoolData()
-            })
-          }
+          onClick={() => signVault()}
           buttonType={ButtonType.Gray}
           disabled={emissionsStarted || isPendingStartEmissions}
         >

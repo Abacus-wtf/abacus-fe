@@ -11,6 +11,7 @@ export interface NFT {
   collectionLink?: string
   owner?: string
   ownerLink?: string
+  isManager?: boolean
 }
 
 export interface NFTBasePool extends NFT {

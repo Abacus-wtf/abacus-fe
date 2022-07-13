@@ -10,6 +10,7 @@ import React, { FunctionComponent, useEffect, useState } from "react"
 
 import { LoadingOverlay, LockTimeSelector } from "@components/index"
 import moment from "moment"
+import { isNumber } from "lodash"
 import { ConfirmButton } from "./CurrentState.styled"
 
 type PurchaseTokensProps = {
@@ -110,15 +111,17 @@ const PurchaseTokens: FunctionComponent<PurchaseTokensProps> = ({
           onChange={() => setStartEpoch(currentEpoch + 1)}
         />
       </Flex>
-      <LockTimeSelector
-        label="How long do you want to lock your deposit?"
-        learnMoreLink="/learn-more"
-        lockDuration={finalEpoch}
-        setLockDuration={setFinalEpoch}
-        durations={durations}
-        customDurationConfig={customDurationConfig}
-        formatter={customDurationFormatter}
-      />
+      {isNumber(startEpoch) && (
+        <LockTimeSelector
+          label="How long do you want to lock your deposit?"
+          learnMoreLink="/learn-more"
+          lockDuration={finalEpoch}
+          setLockDuration={setFinalEpoch}
+          durations={durations}
+          customDurationConfig={customDurationConfig}
+          formatter={customDurationFormatter}
+        />
+      )}
       <ConfirmButton disabled={confirmDisabled} onClick={purchaseTokens}>
         {isPending ? "Pending..." : "Confirm Purchase"}
       </ConfirmButton>

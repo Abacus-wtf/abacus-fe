@@ -404,6 +404,7 @@ export const useSetPoolData = () => {
               asset?.owner?.user && asset?.owner?.user?.username
                 ? asset.owner.user.username
                 : shortenAddress(asset?.owner?.address),
+            ownerAddress: asset?.owner?.address,
             ownerLink: asset?.owner?.address
               ? `https://${IS_PRODUCTION ? "" : "testnets."}opensea.io/${
                   asset.owner.address
@@ -438,7 +439,6 @@ export const useSetPoolData = () => {
             )
           )
           creditsAvailable = multi[0][0]
-          // userTokensLocked = formatEther(multi[1][0]) TODO - What is this for?
           approved = false // approval
           approvedBribeFactory = false // approvalBribe
         }

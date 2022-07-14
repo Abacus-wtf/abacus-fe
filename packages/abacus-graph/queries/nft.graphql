@@ -2,4 +2,25 @@ fragment NFT on NFT {
   id
   address
   tokenId
+  vaults {
+    id
+  }
+}
+
+query NFTs(
+  $first: Int!
+  $skip: Int!
+  $orderBy: NFT_orderBy = address
+  $orderDirection: OrderDirection = desc
+  $where: NFT_filter
+) {
+  nfts(
+    first: $first
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    skip: $skip
+    where: $where
+  ) {
+    ...NFT
+  }
 }

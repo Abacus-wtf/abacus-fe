@@ -4,4 +4,7 @@ fragment VaultNFT on VaultNFT {
   nft {
     ...NFT
   }
+  vault {
+    id
+  }
 }

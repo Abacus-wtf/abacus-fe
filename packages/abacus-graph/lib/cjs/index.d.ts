@@ -1415,6 +1415,30 @@ export declare type NftFragment = {
     id: string;
     address: string;
     tokenId: string;
+    vaults?: Array<{
+        __typename?: 'VaultNFT';
+        id: string;
+    }> | null;
+};
+export declare type NfTsQueryVariables = Exact<{
+    first: Scalars['Int'];
+    skip: Scalars['Int'];
+    orderBy?: InputMaybe<Nft_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    where?: InputMaybe<Nft_Filter>;
+}>;
+export declare type NfTsQuery = {
+    __typename?: 'Query';
+    nfts: Array<{
+        __typename?: 'NFT';
+        id: string;
+        address: string;
+        tokenId: string;
+        vaults?: Array<{
+            __typename?: 'VaultNFT';
+            id: string;
+        }> | null;
+    }>;
 };
 export declare type VaultFragment = {
     __typename?: 'Vault';
@@ -1432,6 +1456,14 @@ export declare type VaultFragment = {
             id: string;
             address: string;
             tokenId: string;
+            vaults?: Array<{
+                __typename?: 'VaultNFT';
+                id: string;
+            }> | null;
+        };
+        vault: {
+            __typename?: 'Vault';
+            id: string;
         };
     }> | null;
     tickets: Array<{
@@ -1477,6 +1509,14 @@ export declare type GetPoolsQuery = {
                 id: string;
                 address: string;
                 tokenId: string;
+                vaults?: Array<{
+                    __typename?: 'VaultNFT';
+                    id: string;
+                }> | null;
+            };
+            vault: {
+                __typename?: 'Vault';
+                id: string;
             };
         }> | null;
         tickets: Array<{
@@ -1519,6 +1559,14 @@ export declare type GetPoolQuery = {
                 id: string;
                 address: string;
                 tokenId: string;
+                vaults?: Array<{
+                    __typename?: 'VaultNFT';
+                    id: string;
+                }> | null;
+            };
+            vault: {
+                __typename?: 'Vault';
+                id: string;
             };
         }> | null;
         tickets: Array<{
@@ -1617,6 +1665,14 @@ export declare type VaultNftFragment = {
         id: string;
         address: string;
         tokenId: string;
+        vaults?: Array<{
+            __typename?: 'VaultNFT';
+            id: string;
+        }> | null;
+    };
+    vault: {
+        __typename?: 'Vault';
+        id: string;
     };
 };
 export declare const AllocationFragmentDoc: DocumentNode<AllocationFragment, unknown>;
@@ -1644,6 +1700,13 @@ export declare const GetEpochAllocationAggregateDocument: DocumentNode<GetEpochA
 }>>;
 export declare const GetEpochAllocationsDocument: DocumentNode<GetEpochAllocationsQuery, Exact<{
     where?: InputMaybe<EpochAllocation_Filter> | undefined;
+}>>;
+export declare const NfTsDocument: DocumentNode<NfTsQuery, Exact<{
+    first: Scalars['Int'];
+    skip: Scalars['Int'];
+    orderBy?: InputMaybe<Nft_OrderBy> | undefined;
+    orderDirection?: InputMaybe<OrderDirection> | undefined;
+    where?: InputMaybe<Nft_Filter> | undefined;
 }>>;
 export declare const GetPoolsDocument: DocumentNode<GetPoolsQuery, Exact<{
     first: Scalars['Int'];

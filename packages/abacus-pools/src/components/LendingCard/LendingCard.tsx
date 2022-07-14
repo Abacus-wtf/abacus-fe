@@ -50,7 +50,7 @@ const LendingCard = ({
       <CardInfoRow flexGrow>
         <CardInfo>
           <CardTitle as={link ? Link : "a"} to={link} hasLink={!!link}>
-            {title}
+            {title ?? "Untitled"}
           </CardTitle>
           <Kilo>Collection</Kilo>
         </CardInfo>

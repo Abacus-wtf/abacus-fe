@@ -11,7 +11,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 1120px;
-  gap: 32px;
+  gap: 40px;
   width: 100%;
   padding: 0px 16px;
   padding-top: 24px;
@@ -19,6 +19,7 @@ export const Container = styled.div`
   box-sizing: border-box;
 
   ${Media.md`
+    gap: 32px ;
     padding: 0px 100px;
     padding-bottom: 100px;
   `}

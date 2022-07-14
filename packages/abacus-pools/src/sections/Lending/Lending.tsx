@@ -15,6 +15,7 @@ import { random } from "lodash"
 import { useFetchLendingNFTs, useLendingNFTs } from "@state/lending/hooks"
 import { useActiveWeb3React } from "@hooks/index"
 import { Container } from "../../layouts/styles"
+import { LendingSearch } from "./LendingSearch"
 
 const FilterContainer = styled.div`
   display: flex;
@@ -146,10 +147,11 @@ const Lending = () => {
           </FilterButton>
         </Flex>
       </FilterContainer>
+      <LendingSearch />
       <CardGrid>
         {filteredNFTs.map((nft) => (
           <LendingCard
-            key={`${nft.address}`}
+            key={`${nft.address}/${nft.tokenId}`}
             link={`/lending/${nft.address}`}
             title={nft.name}
             nft={nft}

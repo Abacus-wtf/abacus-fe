@@ -152,7 +152,7 @@ const Lending = () => {
         {filteredNFTs.map((nft) => (
           <LendingCard
             key={`${nft.address}/${nft.tokenId}`}
-            link={`/lending/${nft.address}`}
+            link={`/lending/${nft.address}/${nft.tokenId}`}
             title={nft.name}
             nft={nft}
             borrowed={random(0, 40, true)}

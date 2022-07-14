@@ -5,6 +5,7 @@ import singlePoolData from "./singlePoolData/reducer"
 import transactions from "./transactions/reducer"
 import miscData from "./miscData/reducer"
 import allocations from "./allocations/reducer"
+import lending from "./lending/reducer"
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     transactions,
     miscData,
     allocations,
+    lending,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({

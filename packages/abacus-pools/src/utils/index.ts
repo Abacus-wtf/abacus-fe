@@ -1,5 +1,8 @@
 export const round2Decimals = (num: number) =>
-  Math.round((num + Number.EPSILON) * 100) / 100
+  num.toLocaleString("en-US", {
+    maximumSignificantDigits: 2,
+    minimumSignificantDigits: 2,
+  })
 
 export const getUserIcon = (account: string) => {
   const acc: number = parseInt(account, 16) % 613 // using a relatively large prime number here to get a lot of diversity

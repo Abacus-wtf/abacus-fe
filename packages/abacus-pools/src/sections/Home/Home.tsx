@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import { Loader, Media } from "abacus-ui"
+import { Loader } from "abacus-ui"
 import { useSetPools, useGetPools } from "@state/poolData/hooks"
 import {
   PoolCard,
@@ -9,6 +9,7 @@ import {
   InfoBarContent,
   InfoBarItem,
   InfoBarTitle,
+  CardGrid,
 } from "@components/index"
 import {
   useAggregate,
@@ -33,20 +34,6 @@ const LoadingContainer = styled.div`
   & > * {
     height: 200px;
   }
-`
-
-const PoolGrid = styled.div`
-  display: grid;
-  grid-row-gap: 24px;
-  grid-column-gap: 32px;
-
-  ${Media.sm`
-    grid-template-columns: repeat(2, calc(50% - 16px));
-  `}
-
-  ${Media.lg`
-    grid-template-columns: repeat(3, calc(calc(100% / 3) - calc(64px / 3)));
-  `}
 `
 
 const Home: React.FC = () => {
@@ -97,7 +84,7 @@ const Home: React.FC = () => {
       </InfoBarContainer>
       <ExploreFilters page={0} />
 
-      <PoolGrid>
+      <CardGrid>
         {pools.map((pool) => (
           <PoolCard
             key={`${pool.vaultAddress}`}
@@ -108,7 +95,7 @@ const Home: React.FC = () => {
             vaultId={pool.vaultAddress}
           />
         ))}
-      </PoolGrid>
+      </CardGrid>
     </Container>
   )
 }

@@ -45,7 +45,7 @@ const InputContainer = styled.div<InputContainerProps>`
   flex-direction: row-reverse;
   justify-content: space-between;
   align-items: stretch;
-  box-shadow: 0px 2px 0px #f6f6f6;
+  box-shadow: 0px 4px 2px -2px #f6f6f6;
 
   ${({ disabled }) =>
     disabled
@@ -57,13 +57,13 @@ const InputContainer = styled.div<InputContainerProps>`
       : ""}
 
   &:focus-within {
-    box-shadow: 0px 2px 0px #6b6b6b;
+    box-shadow: 0px 4px 2px -2px #6b6b6b;
   }
 
   ${({ required, pristine, theme, value }) =>
     required && !pristine && !value
       ? css`
-          box-shadow: 0px 2px 0px ${theme.colors.utility.red};
+          box-shadow: 0px 4px 2px -2px ${theme.colors.utility.red};
         `
       : ""}
 `;

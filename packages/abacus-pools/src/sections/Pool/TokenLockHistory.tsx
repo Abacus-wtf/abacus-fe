@@ -7,7 +7,7 @@ import {
 import { Section } from "abacus-ui"
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
-import { SectionHeader, SectionTitle } from "./Pool.styled"
+import { SectionHeader, SectionTitle } from "@components/index"
 
 const CurrentContainer = styled.div`
   display: flex;

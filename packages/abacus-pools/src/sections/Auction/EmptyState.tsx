@@ -1,11 +1,6 @@
-import { Exa, Giga, Section } from "abacus-ui"
+import { Title } from "@components/Title"
+import { Giga, Section } from "abacus-ui"
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
-
-const Title = styled(Exa)`
-  font-family: "Bluu next";
-  font-weight: bold;
-`
 
 const EmptyState: FunctionComponent = () => (
   <Section>

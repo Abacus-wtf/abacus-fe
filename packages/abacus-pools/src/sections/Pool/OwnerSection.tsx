@@ -7,7 +7,7 @@ import { Button, ButtonType, Kilo, Section } from "abacus-ui"
 import { Link } from "gatsby"
 import React from "react"
 import styled from "styled-components"
-import { SectionHeader, SectionTitle } from "./Pool.styled"
+import { SectionHeader, SectionTitle } from "@components/index"
 
 const SectionStyled = styled(Section)`
   border: 1px solid #f33636;

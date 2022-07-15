@@ -2,7 +2,7 @@ import { useEntryLevels } from "@state/singlePoolData/hooks"
 import { ProgressBar, Section } from "abacus-ui"
 import React, { FunctionComponent, useState } from "react"
 import styled from "styled-components"
-import { SectionHeader, SectionTitle } from "./Pool.styled"
+import { SectionHeader, SectionTitle } from "@components/index"
 
 const EntryLevelsWrapper = styled.div`
   display: flex;

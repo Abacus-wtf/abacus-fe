@@ -7,10 +7,19 @@ import {
   IS_PRODUCTION,
   OPENSEA_LINK,
 } from "@config/constants"
-import { openseaGetMany, OpenSeaGetManyParams } from "abacus-utils"
+import {
+  matchOpenSeaAssetToNFT,
+  OpenSeaAsset,
+  openseaGet,
+  openseaGetMany,
+  OpenSeaGetManyParams,
+} from "abacus-utils"
 import _ from "lodash"
 import { useActiveWeb3React } from "@hooks/index"
 import {
+  GetNftDocument,
+  GetNftQuery,
+  GetNftQueryVariables,
   NfTsDocument,
   NfTsQuery,
   NfTsQueryVariables,
@@ -20,9 +29,33 @@ import {
 } from "abacus-graph"
 
 import { PAGINATE_BY } from "./constants"
-import { lendingNftsSelector } from "./selectors"
-import { setNfts } from "./actions"
+import {
+  currentLendingNftSelector,
+  fetchingCurrentLendingNftSelector,
+  lendingNftsSelector,
+} from "./selectors"
+import {
+  setLendingNfts,
+  setCurrentLendingNft,
+  setFetchingCurrentLendingNft,
+} from "./actions"
 import { LendingNFT } from "./reducer"
+
+const parseAsset = (account: string) => (asset: OpenSeaAsset) => ({
+  address: asset.asset_contract.address,
+  tokenId: asset.token_id,
+  img: asset.image_preview_url || asset.image_url,
+  alt: asset.name,
+  name: asset.name,
+  collectionTitle: asset.collection.name,
+  collectionLink: asset?.collection?.name
+    ? `https://${
+        IS_PRODUCTION ? "" : "testnets."
+      }opensea.io/collection/${asset.collection.name.toLowerCase()}`
+    : "",
+  owner: asset?.owner.address,
+  isManager: asset?.owner.address.toLowerCase() === account?.toLowerCase(),
+})
 
 const parseSubgraphNFTs = async (nfts: NfTsQuery["nfts"], account?: string) => {
   const mappedNfts: OpenSeaGetManyParams = nfts.map((nft) => ({
@@ -32,21 +65,17 @@ const parseSubgraphNFTs = async (nfts: NfTsQuery["nfts"], account?: string) => {
   const { assets } = await openseaGetMany(mappedNfts, {
     url: OPENSEA_LINK,
   })
-  const nftData: LendingNFT[] = _.map(assets, (asset) => ({
-    address: asset.asset_contract.address,
-    tokenId: asset.token_id,
-    img: asset.image_preview_url || asset.image_url,
-    alt: asset.name,
-    name: asset.name,
-    collectionTitle: asset.collection.name,
-    collectionLink: asset?.collection?.name
-      ? `https://${
-          IS_PRODUCTION ? "" : "testnets."
-        }opensea.io/collection/${asset.collection.name.toLowerCase()}`
-      : "",
-    owner: asset.owner.address,
-    isManager: asset.owner.address.toLowerCase() === account?.toLowerCase(),
-  }))
+  const nftData: LendingNFT[] = _.map(nfts, (nft) => {
+    const asset = matchOpenSeaAssetToNFT(assets, {
+      nftAddress: nft.address,
+      tokenId: nft.tokenId,
+    })
+    const assetData = parseAsset(account)(asset)
+    return {
+      ...assetData,
+      vaults: nft.vaults.map(({ vault }) => ({ ...vault })),
+    }
+  })
   return nftData
 }
 
@@ -76,7 +105,7 @@ export const useFetchLendingNFTs = () => {
       )
       const parsedNfts = await parseSubgraphNFTs(nfts, account)
 
-      dispatch(setNfts(parsedNfts))
+      dispatch(setLendingNfts(parsedNfts))
     },
     [account, dispatch]
   )
@@ -84,3 +113,53 @@ export const useFetchLendingNFTs = () => {
 
 export const useLendingNFTs = () =>
   useSelector<AppState, AppState["lending"]["nfts"]>(lendingNftsSelector)
+
+export const useFetchCurrentLendingNFT = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const { account } = useActiveWeb3React()
+
+  return useCallback(
+    async (address: string, tokenId: string) => {
+      dispatch(setFetchingCurrentLendingNft(true))
+      let lendingNFT: LendingNFT
+      try {
+        const id = `${address}/${tokenId}`
+
+        const variables: GetNftQueryVariables = {
+          id,
+        }
+        const { nft } = await request<GetNftQuery>(
+          GRAPHQL_ENDPOINT,
+          GetNftDocument,
+          variables
+        )
+        const asset = await openseaGet(`asset/${id}`, {
+          url: OPENSEA_LINK,
+        })
+        const parsedAsset = parseAsset(account)(asset)
+        lendingNFT = {
+          ...parsedAsset,
+          vaults: nft.vaults.map(({ vault }) => ({ ...vault })),
+        }
+      } catch {
+        console.log("unable to fetch currentLendingNft")
+      }
+
+      dispatch(setFetchingCurrentLendingNft(false))
+      if (lendingNFT) {
+        dispatch(setCurrentLendingNft(lendingNFT))
+      }
+    },
+    [account, dispatch]
+  )
+}
+
+export const useCurrentLendingNFT = () =>
+  useSelector<AppState, AppState["lending"]["currentNft"]>(
+    currentLendingNftSelector
+  )
+
+export const useFetchingCurrentLendingNft = () =>
+  useSelector<AppState, AppState["lending"]["fetchingCurrentNft"]>(
+    fetchingCurrentLendingNftSelector
+  )

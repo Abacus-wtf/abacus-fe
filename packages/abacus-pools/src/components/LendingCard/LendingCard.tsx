@@ -1,8 +1,7 @@
 import React from "react"
-import { Kilo, ProgressBar } from "abacus-ui"
+import { Kilo } from "abacus-ui"
 import { Link } from "gatsby"
 import { round2Decimals } from "@utils"
-import styled from "styled-components"
 import { NFTImage } from "../NFTImage"
 import {
   NumericallyConditionalText,
@@ -11,14 +10,8 @@ import {
   CardInfoContent,
   CardInfoRow,
   CardTitle,
+  LendingProgressBar,
 } from ".."
-
-const LendingProgressBar = styled(ProgressBar)`
-  width: 100%;
-  height: 8px;
-  min-height: unset;
-  background-color: ${({ theme }) => theme.colors.utility.green};
-`
 
 type LendingCardProps = {
   title: string
@@ -77,7 +70,7 @@ const LendingCard = ({
           <Kilo>Available</Kilo>
         </CardInfo>
       </CardInfoRow>
-      <LendingProgressBar progress={progress} label={null} />
+      <LendingProgressBar progress={progress} />
     </CardContainer>
   )
 }

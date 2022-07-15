@@ -3,7 +3,16 @@ fragment NFT on NFT {
   address
   tokenId
   vaults {
-    id
+    vault {
+      id
+      name
+    }
+  }
+}
+
+query GetNFT($id: ID!) {
+  nft(id: $id) {
+    ...NFT
   }
 }
 

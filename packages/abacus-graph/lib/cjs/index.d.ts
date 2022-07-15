@@ -1417,8 +1417,32 @@ export declare type NftFragment = {
     tokenId: string;
     vaults?: Array<{
         __typename?: 'VaultNFT';
-        id: string;
+        vault: {
+            __typename?: 'Vault';
+            id: string;
+            name: string;
+        };
     }> | null;
+};
+export declare type GetNftQueryVariables = Exact<{
+    id: Scalars['ID'];
+}>;
+export declare type GetNftQuery = {
+    __typename?: 'Query';
+    nft?: {
+        __typename?: 'NFT';
+        id: string;
+        address: string;
+        tokenId: string;
+        vaults?: Array<{
+            __typename?: 'VaultNFT';
+            vault: {
+                __typename?: 'Vault';
+                id: string;
+                name: string;
+            };
+        }> | null;
+    } | null;
 };
 export declare type NfTsQueryVariables = Exact<{
     first: Scalars['Int'];
@@ -1436,7 +1460,11 @@ export declare type NfTsQuery = {
         tokenId: string;
         vaults?: Array<{
             __typename?: 'VaultNFT';
-            id: string;
+            vault: {
+                __typename?: 'Vault';
+                id: string;
+                name: string;
+            };
         }> | null;
     }>;
 };
@@ -1458,7 +1486,11 @@ export declare type VaultFragment = {
             tokenId: string;
             vaults?: Array<{
                 __typename?: 'VaultNFT';
-                id: string;
+                vault: {
+                    __typename?: 'Vault';
+                    id: string;
+                    name: string;
+                };
             }> | null;
         };
         vault: {
@@ -1511,7 +1543,11 @@ export declare type GetPoolsQuery = {
                 tokenId: string;
                 vaults?: Array<{
                     __typename?: 'VaultNFT';
-                    id: string;
+                    vault: {
+                        __typename?: 'Vault';
+                        id: string;
+                        name: string;
+                    };
                 }> | null;
             };
             vault: {
@@ -1561,7 +1597,11 @@ export declare type GetPoolQuery = {
                 tokenId: string;
                 vaults?: Array<{
                     __typename?: 'VaultNFT';
-                    id: string;
+                    vault: {
+                        __typename?: 'Vault';
+                        id: string;
+                        name: string;
+                    };
                 }> | null;
             };
             vault: {
@@ -1667,7 +1707,11 @@ export declare type VaultNftFragment = {
         tokenId: string;
         vaults?: Array<{
             __typename?: 'VaultNFT';
-            id: string;
+            vault: {
+                __typename?: 'Vault';
+                id: string;
+                name: string;
+            };
         }> | null;
     };
     vault: {
@@ -1700,6 +1744,9 @@ export declare const GetEpochAllocationAggregateDocument: DocumentNode<GetEpochA
 }>>;
 export declare const GetEpochAllocationsDocument: DocumentNode<GetEpochAllocationsQuery, Exact<{
     where?: InputMaybe<EpochAllocation_Filter> | undefined;
+}>>;
+export declare const GetNftDocument: DocumentNode<GetNftQuery, Exact<{
+    id: Scalars['ID'];
 }>>;
 export declare const NfTsDocument: DocumentNode<NfTsQuery, Exact<{
     first: Scalars['Int'];

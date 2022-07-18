@@ -15,7 +15,7 @@ import {
   OpenSeaGetManyParams,
 } from "abacus-utils"
 import _ from "lodash"
-import { useActiveWeb3React } from "@hooks/index"
+import { useActiveWeb3React, useMultiCall } from "@hooks/index"
 import {
   GetNftDocument,
   GetNftQuery,
@@ -27,6 +27,9 @@ import {
   Nft_OrderBy,
   OrderDirection,
 } from "abacus-graph"
+import { BigNumber } from "ethers"
+import LEND_ABI from "../../config/contracts/ABC_LEND_MULTI_ABI.json"
+import { ABC_LEND } from "../../config/constants"
 
 import { PAGINATE_BY } from "./constants"
 import {
@@ -117,6 +120,7 @@ export const useLendingNFTs = () =>
 export const useFetchCurrentLendingNFT = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { account } = useActiveWeb3React()
+  const lendMulti = useMultiCall(LEND_ABI)
 
   return useCallback(
     async (address: string, tokenId: string) => {
@@ -137,6 +141,17 @@ export const useFetchCurrentLendingNFT = () => {
           url: OPENSEA_LINK,
         })
         const parsedAsset = parseAsset(account)(asset)
+
+        const [[loans]] = await Promise.all([
+          lendMulti(ABC_LEND, ["loans"], [[address, tokenId]]),
+        ])
+        const borrower = BigNumber.from(loans[0])
+        const pool = BigNumber.from(loans[1])
+        const transferFromPermission = BigNumber.from(loans[2])
+        const loanAmount = BigNumber.from(loans[2])
+
+        console.log({ borrower, pool, transferFromPermission, loanAmount })
+
         lendingNFT = {
           ...parsedAsset,
           vaults: nft.vaults.map(({ vault }) => ({ ...vault })),

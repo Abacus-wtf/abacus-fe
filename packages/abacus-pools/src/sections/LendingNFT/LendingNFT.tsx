@@ -14,8 +14,10 @@ import { round2Decimals } from "@utils"
 import { Button, Flex, Font, Kilo, Media, Mega, Section } from "abacus-ui"
 import { Link } from "gatsby"
 import { random } from "lodash"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import styled, { css } from "styled-components"
+import { BorrowModal } from "./BorrowModal"
+import { RepayModal } from "./RepayModal"
 
 const StyledSection = styled(Section)`
   display: flex;
@@ -109,11 +111,13 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
   const fetchCurrentLendingNft = useFetchCurrentLendingNFT()
   const { name, img, alt, vaults } = useCurrentLendingNFT()
   const fetching = useFetchingCurrentLendingNft()
-  const onPayBack = () => {}
-  const onBorrow = () => {}
+  const [borrowModalOpen, setBorrowModalOpen] = useState(false)
+  const [repayModalOpen, setRepayModalOpen] = useState(false)
 
   useEffect(() => {
-    fetchCurrentLendingNft(address, tokenId)
+    if (address && tokenId) {
+      fetchCurrentLendingNft(address, tokenId)
+    }
   }, [address, fetchCurrentLendingNft, tokenId])
 
   if (fetching) {
@@ -150,6 +154,20 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
 
   return (
     <Container>
+      <BorrowModal
+        isOpen={borrowModalOpen}
+        closeModal={() => setBorrowModalOpen(false)}
+        address={address}
+        tokenId={tokenId}
+        refresh={() => fetchCurrentLendingNft(address, tokenId)}
+      />
+      <RepayModal
+        isOpen={repayModalOpen}
+        closeModal={() => setRepayModalOpen(false)}
+        address={address}
+        tokenId={tokenId}
+        refresh={() => fetchCurrentLendingNft(address, tokenId)}
+      />
       <StyledLink to="/lending">{"<"} Back to Lending</StyledLink>
       <StyledSection>
         <NFTImage src={img} alt={alt} />
@@ -215,9 +233,11 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
                 <b>-</b>
               </Mega>
             </Column>
-            <StyledButton onClick={onPayBack}>Pay Back</StyledButton>
+            <StyledButton onClick={() => setRepayModalOpen(true)}>
+              Pay Back
+            </StyledButton>
             <span />
-            <StyledButton borrow onClick={onBorrow}>
+            <StyledButton borrow onClick={() => setBorrowModalOpen(true)}>
               Borrow
             </StyledButton>
           </BorrowGrid>

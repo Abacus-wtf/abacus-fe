@@ -136,6 +136,10 @@ const DropdownButton = styled(Button)<{ menuOpen: boolean }>`
   `}
 `
 
+const StyledTera = styled(Tera)`
+  font-size: 26px;
+`
+
 const StyledLink = styled(Link)<{ highlight?: boolean }>`
   display: flex;
   text-decoration: ${({ highlight }) => (highlight ? "underline" : "none")};
@@ -201,13 +205,16 @@ const Navbar = ({ pathname }: NavbarProps) => {
         <MenuContainer menuOpen={menuOpen}>
           <MenuSection>
             <StyledLink highlight={pathname === "/"} to="/">
-              <Tera style={{ fontWeight: 300 }}>Pools</Tera>
+              <StyledTera>Pools</StyledTera>
             </StyledLink>
             <StyledLink
-              highlight={pathname === "/allocations/"}
+              highlight={pathname === "/allocations"}
               to="/allocations"
             >
-              <Tera style={{ fontWeight: 300 }}>Allocations</Tera>
+              <StyledTera>Allocations</StyledTera>
+            </StyledLink>
+            <StyledLink highlight={pathname === "/lending"} to="/lending">
+              <StyledTera>Lending</StyledTera>
             </StyledLink>
           </MenuSection>
 

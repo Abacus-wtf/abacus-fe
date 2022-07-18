@@ -31,6 +31,7 @@ const StyledSelect = styled.select`
   background-color: ${({ theme }) => theme.colors.button.secondary};
   border-radius: ${({ theme }) => theme.borderRadius.button};
   appearance: none;
+  width: 100%;
 `;
 
 const Option = styled.option`

@@ -1012,9 +1012,9 @@ var StyledSelect = styled.select(templateObject_2$h || (templateObject_2$h = __m
 });
 var Option = styled.option(templateObject_3$b || (templateObject_3$b = __makeTemplateObject(["\n  padding: 12px;\n"], ["\n  padding: 12px;\n"])));
 var Select = function (_a) {
-    var className = _a.className, options = _a.options, value = _a.value, setValue = _a.setValue;
+    var className = _a.className, options = _a.options, value = _a.value, disabled = _a.disabled, setValue = _a.setValue;
     return (React.createElement(Container$h, null,
-        React.createElement(StyledSelect, { className: className, value: value, onChange: function (e) { return setValue(e.target.value); } }, options.map(function (option) { return (React.createElement(Option, { key: option }, option)); })),
+        React.createElement(StyledSelect, { className: className, disabled: disabled, value: value, onChange: function (e) { return setValue(e.target.value); } }, options.map(function (option) { return (React.createElement(Option, { key: option }, option)); })),
         React.createElement(DownChevron, null)));
 };
 var templateObject_1$l, templateObject_2$h, templateObject_3$b;

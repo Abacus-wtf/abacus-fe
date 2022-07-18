@@ -1024,9 +1024,9 @@ var StyledSelect = styled__default["default"].select(templateObject_2$h || (temp
 });
 var Option = styled__default["default"].option(templateObject_3$b || (templateObject_3$b = __makeTemplateObject(["\n  padding: 12px;\n"], ["\n  padding: 12px;\n"])));
 var Select = function (_a) {
-    var className = _a.className, options = _a.options, value = _a.value, setValue = _a.setValue;
+    var className = _a.className, options = _a.options, value = _a.value, disabled = _a.disabled, setValue = _a.setValue;
     return (React__default["default"].createElement(Container$h, null,
-        React__default["default"].createElement(StyledSelect, { className: className, value: value, onChange: function (e) { return setValue(e.target.value); } }, options.map(function (option) { return (React__default["default"].createElement(Option, { key: option }, option)); })),
+        React__default["default"].createElement(StyledSelect, { className: className, disabled: disabled, value: value, onChange: function (e) { return setValue(e.target.value); } }, options.map(function (option) { return (React__default["default"].createElement(Option, { key: option }, option)); })),
         React__default["default"].createElement(DownChevron, null)));
 };
 var templateObject_1$l, templateObject_2$h, templateObject_3$b;

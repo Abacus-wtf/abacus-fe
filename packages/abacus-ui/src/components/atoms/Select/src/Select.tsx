@@ -7,6 +7,7 @@ type SelectProps = {
   className?: string;
   options: string[];
   value: string;
+  disabled?: boolean;
   setValue: React.Dispatch<string>;
 };
 
@@ -38,10 +39,17 @@ const Option = styled.option`
   padding: 12px;
 `;
 
-const Select = ({ className, options, value, setValue }: SelectProps) => (
+const Select = ({
+  className,
+  options,
+  value,
+  disabled,
+  setValue,
+}: SelectProps) => (
   <Container>
     <StyledSelect
       className={className}
+      disabled={disabled}
       value={value}
       onChange={(e) => setValue(e.target.value)}
     >

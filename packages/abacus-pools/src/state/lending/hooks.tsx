@@ -165,7 +165,7 @@ export const useFetchCurrentLendingNFT = () => {
         dispatch(setCurrentLendingNft(lendingNFT))
       }
     },
-    [account, dispatch]
+    [account, dispatch, lendMulti]
   )
 }
 

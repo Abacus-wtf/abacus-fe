@@ -1,4 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit"
+import { BigNumber } from "ethers"
 import {
   setLendingNfts,
   setCurrentLendingNft,
@@ -15,10 +16,17 @@ export interface LendingNFT {
   collectionLink: string
   owner: string
   isManager: boolean
+  isApprovedForAll: boolean
   vaults: {
     id: string
     name: string
   }[]
+  loan?: {
+    borrower: string
+    pool: string
+    transferFromPermission: boolean
+    loanAmount: BigNumber
+  }
 }
 
 interface LendingState {
@@ -30,6 +38,7 @@ interface LendingState {
 const initialState: LendingState = {
   nfts: [],
   currentNft: {
+    isApprovedForAll: false,
     address: "",
     tokenId: "",
     img: "",

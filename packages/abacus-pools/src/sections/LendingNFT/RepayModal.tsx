@@ -38,7 +38,9 @@ const RepayModal = ({
   const { onRepay, isPending } = useOnRepay()
 
   useEffect(() => {
-    setSelectedPool(vaults[0].id)
+    if (vaults && vaults.length > 0) {
+      setSelectedPool(vaults[0].id)
+    }
   }, [vaults])
 
   const repay = () => {

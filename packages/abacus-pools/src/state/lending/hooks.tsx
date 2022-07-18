@@ -15,7 +15,7 @@ import {
   OpenSeaGetManyParams,
 } from "abacus-utils"
 import _ from "lodash"
-import { useActiveWeb3React, useMultiCall } from "@hooks/index"
+import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import {
   GetNftDocument,
   GetNftQuery,
@@ -28,6 +28,7 @@ import {
   OrderDirection,
 } from "abacus-graph"
 import { BigNumber } from "ethers"
+import ERC_721_ABI from "../../config/contracts/ERC_721_ABI.json"
 import LEND_ABI from "../../config/contracts/ABC_LEND_MULTI_ABI.json"
 import { ABC_LEND } from "../../config/constants"
 
@@ -76,6 +77,7 @@ const parseSubgraphNFTs = async (nfts: NfTsQuery["nfts"], account?: string) => {
     const assetData = parseAsset(account)(asset)
     return {
       ...assetData,
+      isApprovedForAll: false,
       vaults: nft.vaults.map(({ vault }) => ({ ...vault })),
     }
   })
@@ -121,6 +123,7 @@ export const useFetchCurrentLendingNFT = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { account } = useActiveWeb3React()
   const lendMulti = useMultiCall(LEND_ABI)
+  const erc721 = useWeb3Contract(ERC_721_ABI)
 
   return useCallback(
     async (address: string, tokenId: string) => {
@@ -137,24 +140,43 @@ export const useFetchCurrentLendingNFT = () => {
           GetNftDocument,
           variables
         )
+
         const asset = await openseaGet(`asset/${id}`, {
           url: OPENSEA_LINK,
         })
+
         const parsedAsset = parseAsset(account)(asset)
 
         const [[loans]] = await Promise.all([
           lendMulti(ABC_LEND, ["loans"], [[address, tokenId]]),
         ])
-        const borrower = BigNumber.from(loans[0])
-        const pool = BigNumber.from(loans[1])
-        const transferFromPermission = BigNumber.from(loans[2])
+
+        const borrower = BigNumber.from(loans[0]).toString()
+        const pool = BigNumber.from(loans[1]).toString()
+        const transferFromPermission = Boolean(
+          BigNumber.from(loans[2]).toNumber()
+        )
         const loanAmount = BigNumber.from(loans[2])
 
-        console.log({ borrower, pool, transferFromPermission, loanAmount })
+        let isApprovedForAll = false
+        if (parsedAsset.isManager) {
+          isApprovedForAll = await erc721(nft.address)
+            .methods.isApprovedForAll(account, ABC_LEND)
+            .call()
+        }
 
         lendingNFT = {
           ...parsedAsset,
-          vaults: nft.vaults.map(({ vault }) => ({ ...vault })),
+          vaults: nft.vaults.map(({ vault }) => ({
+            ...vault,
+          })),
+          isApprovedForAll,
+          loan: {
+            borrower,
+            pool,
+            transferFromPermission,
+            loanAmount,
+          },
         }
       } catch {
         console.log("unable to fetch currentLendingNft")
@@ -165,7 +187,7 @@ export const useFetchCurrentLendingNFT = () => {
         dispatch(setCurrentLendingNft(lendingNFT))
       }
     },
-    [account, dispatch, lendMulti]
+    [account, dispatch, erc721, lendMulti]
   )
 }
 

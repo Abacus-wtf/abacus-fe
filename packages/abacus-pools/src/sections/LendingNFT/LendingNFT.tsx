@@ -11,7 +11,16 @@ import {
   useFetchingCurrentLendingNft,
 } from "@state/lending/hooks"
 import { round2Decimals } from "@utils"
-import { Button, Flex, Font, Kilo, Media, Mega, Section } from "abacus-ui"
+import {
+  Button,
+  Flex,
+  Font,
+  Kilo,
+  Media,
+  Mega,
+  PersistentBanner,
+  Section,
+} from "abacus-ui"
 import { Link } from "gatsby"
 import { random } from "lodash"
 import React, { useEffect, useState } from "react"
@@ -109,7 +118,7 @@ type LendingNFTProps = {
 
 const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
   const fetchCurrentLendingNft = useFetchCurrentLendingNFT()
-  const { name, img, alt, vaults } = useCurrentLendingNFT()
+  const { name, img, alt, vaults, isManager } = useCurrentLendingNFT()
   const fetching = useFetchingCurrentLendingNft()
   const [borrowModalOpen, setBorrowModalOpen] = useState(false)
   const [repayModalOpen, setRepayModalOpen] = useState(false)
@@ -154,6 +163,9 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
 
   return (
     <Container>
+      {!isManager && (
+        <PersistentBanner bottom="0">Only owner can borrow</PersistentBanner>
+      )}
       <BorrowModal
         isOpen={borrowModalOpen}
         closeModal={() => setBorrowModalOpen(false)}
@@ -233,11 +245,18 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
                 <b>-</b>
               </Mega>
             </Column>
-            <StyledButton onClick={() => setRepayModalOpen(true)}>
+            <StyledButton
+              onClick={() => setRepayModalOpen(true)}
+              disabled={!isManager}
+            >
               Pay Back
             </StyledButton>
             <span />
-            <StyledButton borrow onClick={() => setBorrowModalOpen(true)}>
+            <StyledButton
+              borrow
+              onClick={() => setBorrowModalOpen(true)}
+              disabled={!isManager}
+            >
               Borrow
             </StyledButton>
           </BorrowGrid>

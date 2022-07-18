@@ -1,14 +1,8 @@
-import { LoadingOverlay } from "@components/LoadingOverlay"
 import { Title } from "@components/Title"
 import { useOnBorrow } from "@hooks/lendingFunc"
-import { useCurrentLendingNFT } from "@state/lending/hooks"
-import { Button, Input, Modal, Select } from "abacus-ui"
-import React, { useEffect, useState } from "react"
+import { Button, Input, Select } from "abacus-ui"
+import React, { useState } from "react"
 import styled from "styled-components"
-
-const StyledModal = styled(Modal)`
-  position: relative;
-`
 
 const Container = styled.div`
   display: flex;
@@ -17,29 +11,28 @@ const Container = styled.div`
   gap: 16px;
 `
 
-type BorrowModalProps = {
-  isOpen: boolean
-  closeModal: () => void
+type BorrowProps = {
+  selectedPool: string
   address: string
   tokenId: string
+  vaults: {
+    id: string
+    name: string
+  }[]
+  setSelectedPool: React.Dispatch<string>
   refresh: () => void
 }
 
-const BorrowModal = ({
-  isOpen,
-  closeModal,
+const Borrow = ({
+  selectedPool,
   address,
   tokenId,
+  vaults,
+  setSelectedPool,
   refresh,
-}: BorrowModalProps) => {
+}: BorrowProps) => {
   const [eth, setEth] = useState<string>()
-  const [selectedPool, setSelectedPool] = useState("")
-  const { vaults } = useCurrentLendingNFT()
   const { onBorrow, isPending } = useOnBorrow()
-
-  useEffect(() => {
-    setSelectedPool(vaults[0].id)
-  }, [vaults])
 
   const borrow = () => {
     onBorrow(selectedPool, address, Number(tokenId), eth, () => {
@@ -48,10 +41,8 @@ const BorrowModal = ({
   }
 
   const vaultNames = vaults.map((vault) => vault.name || "Untitled Vault")
-
   return (
-    <StyledModal isOpen={isOpen} closeModal={closeModal}>
-      <LoadingOverlay loading={isPending} />
+    <>
       <Title>Borrow</Title>
       <Container>
         <Input
@@ -76,12 +67,12 @@ const BorrowModal = ({
           }}
           options={vaultNames}
         />
-        <Button onClick={borrow}>
-          {isPending ? "Borrowing..." : "Borrow"}
+        <Button onClick={borrow} disabled={isPending}>
+          {isPending ? "tx pending..." : "Borrow"}
         </Button>
       </Container>
-    </StyledModal>
+    </>
   )
 }
 
-export { BorrowModal }
+export { Borrow }

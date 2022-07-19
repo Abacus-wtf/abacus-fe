@@ -32,7 +32,13 @@ import { aggregateVaultTokenLockHistory, getPoolSize } from "utils/vaultTickets"
 import { matchOpenSeaAssetToNFT, openseaGetMany } from "abacus-utils"
 
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"
-import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
+import {
+  getBribe,
+  getPoolData,
+  getReserve,
+  getTickets,
+  getTraderProfile,
+} from "./actions"
 import { Bribe } from "./reducer"
 import {
   GetTicketQueryResponse,
@@ -416,7 +422,7 @@ export const useSetPoolData = () => {
                   IS_PRODUCTION ? "" : "testnets."
                 }opensea.io/collection/${asset.collection.name.toLowerCase()}`
               : "",
-            nftName: asset.name || "",
+            name: asset.name || "",
             isManager: owner.toLowerCase() === account?.toLowerCase(),
           }
         })
@@ -534,4 +540,46 @@ export const useSetPoolData = () => {
 export const usePoolCurrentEpoch = () =>
   useSelector<AppState, AppState["singlePoolData"]["data"]["epoch"]>(
     getPoolEpochSelector
+  )
+
+export const useSetReserve = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const vaultMulti = useMultiCall(VAULT_ABI)
+  const currentEpoch = usePoolCurrentEpoch()
+
+  return useCallback(
+    async (
+      vaultAddress: string,
+      address: string,
+      tokenId: number,
+      endEpoch: number
+    ) => {
+      const [[amountOfReservations], [costToReserve], [reservationsAvailable]] =
+        await vaultMulti(
+          vaultAddress,
+          [
+            "getAmountOfReservations",
+            "getCostToReserve",
+            "reservationsAvailable",
+          ],
+          [[currentEpoch], [endEpoch], []]
+        )
+
+      dispatch(
+        getReserve({
+          total: BigNumber.from(amountOfReservations).toNumber(),
+          totalAvailable: BigNumber.from(reservationsAvailable).toNumber(),
+          costToReserve: BigNumber.from(costToReserve),
+        })
+      )
+    },
+    [currentEpoch, dispatch, vaultMulti]
+  )
+}
+
+const getPoolReserveSelector = (state: AppState) => state.singlePoolData.reserve
+
+export const usePoolReserve = () =>
+  useSelector<AppState, AppState["singlePoolData"]["reserve"]>(
+    getPoolReserveSelector
   )

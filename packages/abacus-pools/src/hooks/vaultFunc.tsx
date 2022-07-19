@@ -588,3 +588,50 @@ export const useChangePayoutRatio = () => {
     isPending,
   }
 }
+
+export const useOnReserve = () => {
+  const { account, library } = useActiveWeb3React()
+  const { generalizedContractCall, isPending } = useGeneralizedContractCall()
+  const addTransaction = useTransactionAdder()
+  const poolData = useGetPoolData()
+
+  const onReserve = useCallback(
+    async (
+      address: string,
+      tokenId: number,
+      endEpoch: number,
+      value: BigNumber,
+      cb: () => void
+    ) => {
+      const vaultContract = getContract(
+        poolData.vaultAddress,
+        VAULT_ABI,
+        library,
+        account
+      )
+      const method = vaultContract.reserve
+      const estimate = vaultContract.estimateGas.reserve
+      const args = [address, tokenId, endEpoch]
+      console.log(args)
+      const txnCb = async (response: any) => {
+        addTransaction(response, {
+          summary: "Reserve",
+        })
+        await response.wait()
+        cb()
+      }
+      await generalizedContractCall({
+        method,
+        estimate,
+        args,
+        value,
+        cb: txnCb,
+      })
+    },
+    [library, account, generalizedContractCall, addTransaction, poolData]
+  )
+  return {
+    onReserve,
+    isPending,
+  }
+}

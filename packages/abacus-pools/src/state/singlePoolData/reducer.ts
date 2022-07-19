@@ -1,6 +1,13 @@
 import { createReducer } from "@reduxjs/toolkit"
 import { GetTicketsQuery } from "abacus-graph"
-import { getBribe, getPoolData, getTickets, getTraderProfile } from "./actions"
+import { BigNumber } from "ethers"
+import {
+  getBribe,
+  getPoolData,
+  getReserve,
+  getTickets,
+  getTraderProfile,
+} from "./actions"
 import { INITIAL_POOL, Pool } from "../poolData/reducer"
 
 export interface TraderProfile {
@@ -21,11 +28,18 @@ export interface Bribe {
   bribeOfferedByUser: number
 }
 
+export interface Reserve {
+  total: number
+  totalAvailable: number
+  costToReserve: BigNumber
+}
+
 export interface PoolState {
   data: Pool
   traderProfile?: TraderProfile
   bribe?: Bribe
   tickets?: GetTicketsQuery["tickets"]
+  reserve?: Reserve
 }
 
 const initialState: PoolState = {
@@ -55,5 +69,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(getBribe, (state, action) => {
       state.bribe = action.payload
+    })
+    .addCase(getReserve, (state, action) => {
+      state.reserve = action.payload
     })
 )

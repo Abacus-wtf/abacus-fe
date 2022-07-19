@@ -5,6 +5,7 @@ import { Modal } from "abacus-ui"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Borrow } from "./Borrow"
+import { BorrowModalSteps } from "./steps"
 
 const StyledModal = styled(Modal)`
   position: relative;
@@ -25,6 +26,7 @@ const BorrowModal = ({
   tokenId,
   refresh,
 }: BorrowModalProps) => {
+  const [] = useState(BorrowModalSteps.Reserve)
   const [selectedPool, setSelectedPool] = useState("")
   const { vaults } = useCurrentLendingNFT()
   const { isPending: pendingBorrow } = useOnBorrow()

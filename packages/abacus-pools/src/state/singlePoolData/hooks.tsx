@@ -565,10 +565,15 @@ export const useSetReserve = () => {
           [[currentEpoch], [endEpoch], []]
         )
 
+      const total = BigNumber.from(reservationsAvailable).toNumber()
+      const totalAvailable =
+        BigNumber.from(reservationsAvailable).toNumber() -
+        BigNumber.from(amountOfReservations).toNumber()
+
       dispatch(
         getReserve({
-          total: BigNumber.from(amountOfReservations).toNumber(),
-          totalAvailable: BigNumber.from(reservationsAvailable).toNumber(),
+          total,
+          totalAvailable,
           costToReserve: BigNumber.from(costToReserve),
         })
       )

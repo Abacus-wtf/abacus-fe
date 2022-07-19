@@ -1,3 +1,4 @@
+import { LoadingOverlay } from "@components/LoadingOverlay"
 import { NFTImage } from "@components/NFTImage"
 import { useOnReserve } from "@hooks/vaultFunc"
 import {
@@ -54,10 +55,12 @@ const Reserve = ({ refreshPoolData }: ReserveProps) => {
     }
   }, [endEpoch, selectedNft, setReserve, vaultAddress])
 
-  const buttonDisabled = !selectedNft || !endEpoch || !reserve
+  const buttonDisabled =
+    !selectedNft || !endEpoch || !reserve || !reserve.totalAvailable
 
   return (
     <Container>
+      <LoadingOverlay loading={isPending} />
       <Mega>NFT to Reserve</Mega>
       <Flex style={{ gap: "16px", alignItems: "flex-end" }}>
         <StyledNftImage src={selectedNft?.img} alt={selectedNft?.alt} />
@@ -86,7 +89,7 @@ const Reserve = ({ refreshPoolData }: ReserveProps) => {
       </Flex>
       <Flex style={{ flexDirection: "column", gap: "16px" }}>
         <Mega>Reservations Available</Mega>
-        <P>{reserve ? reserve.totalAvailable : "-"}</P>
+        <P>{reserve ? `${reserve.totalAvailable} / ${reserve.total}` : "-"}</P>
         <Mega>Cost to Reserve</Mega>
         <P>{reserve ? formatEther(reserve.costToReserve) : "-"} ETH</P>
       </Flex>

@@ -1014,7 +1014,7 @@ var CustomLockDuration = function (_a) {
 };
 var templateObject_1$m, templateObject_2$i, templateObject_3$c;
 
-var Container$h = styled__default["default"].div(templateObject_1$l || (templateObject_1$l = __makeTemplateObject(["\n  display: flex;\n  gap: 10px;\n  position: relative;\n\n  & svg {\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    right: 20px;\n  }\n"], ["\n  display: flex;\n  gap: 10px;\n  position: relative;\n\n  & svg {\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    right: 20px;\n  }\n"])));
+var Container$h = styled__default["default"].div(templateObject_1$l || (templateObject_1$l = __makeTemplateObject(["\n  display: flex;\n  gap: 10px;\n  position: relative;\n  height: max-content;\n\n  & svg {\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    right: 20px;\n  }\n"], ["\n  display: flex;\n  gap: 10px;\n  position: relative;\n  height: max-content;\n\n  & svg {\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    right: 20px;\n  }\n"])));
 var StyledSelect = styled__default["default"].select(templateObject_2$h || (templateObject_2$h = __makeTemplateObject(["\n  ", ";\n  border: none;\n  padding: 13px 20px;\n  padding-right: 38px;\n  background-color: ", ";\n  border-radius: ", ";\n  appearance: none;\n  width: 100%;\n"], ["\n  ", ";\n  border: none;\n  padding: 13px 20px;\n  padding-right: 38px;\n  background-color: ", ";\n  border-radius: ", ";\n  appearance: none;\n  width: 100%;\n"])), Font("kilo"), function (_a) {
     var theme = _a.theme;
     return theme.colors.button.secondary;

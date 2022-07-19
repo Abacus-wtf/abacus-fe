@@ -15,6 +15,7 @@ const Container = styled.div`
   display: flex;
   gap: 10px;
   position: relative;
+  height: max-content;
 
   & svg {
     position: absolute;

@@ -9,6 +9,7 @@ import {
 } from "@state/singlePoolData/hooks"
 import { Button, Flex, Input, Mega, P, Select } from "abacus-ui"
 import { formatEther } from "ethers/lib/utils"
+import { Link } from "gatsby"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
@@ -65,6 +66,11 @@ const Reserve = ({ refreshPoolData }: ReserveProps) => {
   return (
     <Container>
       <LoadingOverlay loading={isPending} />
+      {selectedNft && (
+        <Link to={`/lending/${selectedNft.address}/${selectedNft.tokenId}`}>
+          Borrow {">"}
+        </Link>
+      )}
       <Mega>NFT to Reserve</Mega>
       <Flex style={{ gap: "16px", alignItems: "flex-end" }}>
         <StyledNftImage src={selectedNft?.img} alt={selectedNft?.alt} />

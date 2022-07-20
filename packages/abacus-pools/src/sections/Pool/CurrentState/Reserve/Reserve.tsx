@@ -27,7 +27,7 @@ const StyledNftImage = styled(NFTImage)`
 `
 
 const Reserve = ({ refreshPoolData }: ReserveProps) => {
-  const { nfts, vaultAddress } = useGetPoolData()
+  const { nfts, vaultAddress, emissionsStarted } = useGetPoolData()
   const { onReserve, isPending } = useOnReserve()
   const ownedNfts = nfts.filter((nft) => nft.isManager)
   const [endEpoch, setEndEpoch] = useState("")
@@ -56,7 +56,11 @@ const Reserve = ({ refreshPoolData }: ReserveProps) => {
   }, [endEpoch, selectedNft, setReserve, vaultAddress])
 
   const buttonDisabled =
-    !selectedNft || !endEpoch || !reserve || !reserve.totalAvailable
+    !selectedNft ||
+    !endEpoch ||
+    !reserve ||
+    !reserve.totalAvailable ||
+    !emissionsStarted
 
   return (
     <Container>
@@ -109,6 +113,11 @@ const Reserve = ({ refreshPoolData }: ReserveProps) => {
       >
         Reserve
       </Button>
+      {!emissionsStarted && (
+        <P style={{ color: "red" }}>
+          Emissions need to be started before reservations can be made
+        </P>
+      )}
     </Container>
   )
 }

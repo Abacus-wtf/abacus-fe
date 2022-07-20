@@ -1,7 +1,8 @@
 import { FunctionComponent } from "react";
-declare type OpenAppModalProps = {
+declare type ModalProps = {
     isOpen: boolean;
     closeModal: () => void;
+    className?: string;
 };
-declare const OpenAppModal: FunctionComponent<OpenAppModalProps>;
-export default OpenAppModal;
+declare const Modal: FunctionComponent<ModalProps>;
+export default Modal;

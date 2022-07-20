@@ -1405,8 +1405,8 @@ var ModalBody = styled__default["default"].div(templateObject_4 || (templateObje
 var preventBubbling = function (e) {
     e.stopPropagation();
 };
-var OpenAppModal = function (_a) {
-    var isOpen = _a.isOpen, closeModal = _a.closeModal, children = _a.children;
+var Modal = function (_a) {
+    var isOpen = _a.isOpen, closeModal = _a.closeModal, children = _a.children, className = _a.className;
     React.useEffect(function () {
         var closeOnEsc = function (e) {
             if (isOpen && (e.key === "Escape" || e.code === "Escape")) {
@@ -1418,7 +1418,7 @@ var OpenAppModal = function (_a) {
     }, [isOpen, closeModal]);
     return (React__default["default"].createElement(Container$3, { onClick: closeModal, isOpen: isOpen },
         React__default["default"].createElement(ModalBody, { onClick: preventBubbling },
-            React__default["default"].createElement(Section, null, children))));
+            React__default["default"].createElement(Section, { className: className }, children))));
 };
 var templateObject_1$3, templateObject_2$2, templateObject_3, templateObject_4;
 
@@ -1500,7 +1500,7 @@ exports.Medium = Medium;
 exports.Mega = Container$y;
 exports.Milli = Container$x;
 exports.MiniList = MiniList;
-exports.Modal = OpenAppModal;
+exports.Modal = Modal;
 exports.Navbar = Navbar;
 exports.OutboundLink = OutboundLink;
 exports.P = StyledP;

@@ -43,19 +43,21 @@ const ModalBody = styled.div`
   `}
 `;
 
-type OpenAppModalProps = {
+type ModalProps = {
   isOpen: boolean;
   closeModal: () => void;
+  className?: string;
 };
 
 const preventBubbling = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
 };
 
-const OpenAppModal: FunctionComponent<OpenAppModalProps> = ({
+const Modal: FunctionComponent<ModalProps> = ({
   isOpen,
   closeModal,
   children,
+  className,
 }) => {
   useEffect(() => {
     const closeOnEsc = (e: { key: string; code: string }) => {
@@ -72,10 +74,10 @@ const OpenAppModal: FunctionComponent<OpenAppModalProps> = ({
   return (
     <Container onClick={closeModal} isOpen={isOpen}>
       <ModalBody onClick={preventBubbling}>
-        <Section>{children}</Section>
+        <Section className={className}>{children}</Section>
       </ModalBody>
     </Container>
   );
 };
 
-export default OpenAppModal;
+export default Modal;

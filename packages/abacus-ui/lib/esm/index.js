@@ -1393,8 +1393,8 @@ var ModalBody = styled.div(templateObject_4 || (templateObject_4 = __makeTemplat
 var preventBubbling = function (e) {
     e.stopPropagation();
 };
-var OpenAppModal = function (_a) {
-    var isOpen = _a.isOpen, closeModal = _a.closeModal, children = _a.children;
+var Modal = function (_a) {
+    var isOpen = _a.isOpen, closeModal = _a.closeModal, children = _a.children, className = _a.className;
     useEffect(function () {
         var closeOnEsc = function (e) {
             if (isOpen && (e.key === "Escape" || e.code === "Escape")) {
@@ -1406,7 +1406,7 @@ var OpenAppModal = function (_a) {
     }, [isOpen, closeModal]);
     return (React.createElement(Container$3, { onClick: closeModal, isOpen: isOpen },
         React.createElement(ModalBody, { onClick: preventBubbling },
-            React.createElement(Section, null, children))));
+            React.createElement(Section, { className: className }, children))));
 };
 var templateObject_1$3, templateObject_2$2, templateObject_3, templateObject_4;
 
@@ -1438,5 +1438,5 @@ var PreviousSessionsAutoScroll = function (_a) {
 };
 var templateObject_1, templateObject_2;
 
-export { AbacusBalance, AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, Accordion, Activity, ActivitySection, Add, Button, ButtonType, CardBackground, CardBar, CardWithTitle, Checkbox, Checkmark, ChevronLeft, Close, Discord, DownChevron, Dropdown, Eth as ETH, Error, Container$F as Exa, ExploreImage, ExploreInfo, Extras, Flex, Font, FontImport, Container$E as Giga, Container$D as H1, Container$C as H2, Container$B as H3, Container$A as H4, Container$z as H5, StyledH6 as H6, Hamburger, Infographic, Input, StyledDiv as Kilo, LinkImage, Loader$1 as Loader, LoadingShimmer, Lock, Logo, Media, Medium, Container$y as Mega, Container$x as Milli, MiniList, OpenAppModal as Modal, Navbar, OutboundLink, StyledP as P, PartOfCollection, PersistentBanner, Container$w as Peta, Pill, PreviousSessionsAutoScroll, PriceHistory, ProfileGroup, ProfileIcon, ProfileInfo, ProgressBar, CustomLockDuration as Range, Remove, Section, Select, SessionCard, SessionCountdown, Container$v as Small, SocialLinks, Spinner, SplitSection, StatInfo, Container$u as Tera, Twitter, VisuallyHidden, Container$t as Yotta, Container$s as Zetta, breakpoints, defaultTheme };
+export { AbacusBalance, AbacusBar, AbacusCrowds as AbacusCrowdsIcon, Abacus as AbacusIcon, AbacusSpot as AbacusSpotIcon, Accordion, Activity, ActivitySection, Add, Button, ButtonType, CardBackground, CardBar, CardWithTitle, Checkbox, Checkmark, ChevronLeft, Close, Discord, DownChevron, Dropdown, Eth as ETH, Error, Container$F as Exa, ExploreImage, ExploreInfo, Extras, Flex, Font, FontImport, Container$E as Giga, Container$D as H1, Container$C as H2, Container$B as H3, Container$A as H4, Container$z as H5, StyledH6 as H6, Hamburger, Infographic, Input, StyledDiv as Kilo, LinkImage, Loader$1 as Loader, LoadingShimmer, Lock, Logo, Media, Medium, Container$y as Mega, Container$x as Milli, MiniList, Modal, Navbar, OutboundLink, StyledP as P, PartOfCollection, PersistentBanner, Container$w as Peta, Pill, PreviousSessionsAutoScroll, PriceHistory, ProfileGroup, ProfileIcon, ProfileInfo, ProgressBar, CustomLockDuration as Range, Remove, Section, Select, SessionCard, SessionCountdown, Container$v as Small, SocialLinks, Spinner, SplitSection, StatInfo, Container$u as Tera, Twitter, VisuallyHidden, Container$t as Yotta, Container$s as Zetta, breakpoints, defaultTheme };
 //# sourceMappingURL=index.js.map

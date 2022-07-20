@@ -3,6 +3,7 @@ import { AppDispatch, AppState } from "@state/index"
 import { useDispatch, useSelector } from "react-redux"
 import request from "graphql-request"
 import {
+  ABC_NFT_ETH,
   GRAPHQL_ENDPOINT,
   IS_PRODUCTION,
   OPENSEA_LINK,
@@ -14,7 +15,6 @@ import {
   openseaGetMany,
   OpenSeaGetManyParams,
 } from "abacus-utils"
-import _ from "lodash"
 import { useActiveWeb3React, useMultiCall, useWeb3Contract } from "@hooks/index"
 import {
   GetNftDocument,
@@ -28,7 +28,9 @@ import {
   OrderDirection,
 } from "abacus-graph"
 import { BigNumber } from "ethers"
+import { map } from "lodash"
 import ERC_721_ABI from "../../config/contracts/ERC_721_ABI.json"
+import ABC_NFT_ETH_ABI from "../../config/contracts/ABC_NFT_ETH_ABI.json"
 import LEND_ABI from "../../config/contracts/ABC_LEND_MULTI_ABI.json"
 import { ABC_LEND } from "../../config/constants"
 
@@ -69,7 +71,7 @@ const parseSubgraphNFTs = async (nfts: NfTsQuery["nfts"], account?: string) => {
   const { assets } = await openseaGetMany(mappedNfts, {
     url: OPENSEA_LINK,
   })
-  const nftData: LendingNFT[] = _.map(nfts, (nft) => {
+  const nftData: LendingNFT[] = map(nfts, (nft) => {
     const asset = matchOpenSeaAssetToNFT(assets, {
       nftAddress: nft.address,
       tokenId: nft.tokenId,
@@ -77,7 +79,9 @@ const parseSubgraphNFTs = async (nfts: NfTsQuery["nfts"], account?: string) => {
     const assetData = parseAsset(account)(asset)
     return {
       ...assetData,
-      isApprovedForAll: false,
+      lendApproved: false,
+      repayApproved: false,
+      nEthBalance: BigNumber.from(0),
       vaults: nft.vaults.map(({ vault }) => ({ ...vault })),
     }
   })
@@ -122,8 +126,9 @@ export const useLendingNFTs = () =>
 export const useFetchCurrentLendingNFT = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { account } = useActiveWeb3React()
-  const lendMulti = useMultiCall(LEND_ABI)
+  const lendContract = useWeb3Contract(LEND_ABI)
   const erc721 = useWeb3Contract(ERC_721_ABI)
+  const nEthMulti = useMultiCall(ABC_NFT_ETH_ABI)
 
   return useCallback(
     async (address: string, tokenId: string) => {
@@ -147,9 +152,9 @@ export const useFetchCurrentLendingNFT = () => {
 
         const parsedAsset = parseAsset(account)(asset)
 
-        const [[loans]] = await Promise.all([
-          lendMulti(ABC_LEND, ["loans"], [[address, tokenId]]),
-        ])
+        const loans = await lendContract(ABC_LEND)
+          .methods.loans(address, tokenId)
+          .call()
 
         const borrower = BigNumber.from(loans[0]).toString()
         const pool = BigNumber.from(loans[1]).toString()
@@ -158,19 +163,24 @@ export const useFetchCurrentLendingNFT = () => {
         )
         const loanAmount = BigNumber.from(loans[2])
 
-        let isApprovedForAll = false
-        if (parsedAsset.isManager) {
-          isApprovedForAll = await erc721(nft.address)
-            .methods.isApprovedForAll(account, ABC_LEND)
-            .call()
-        }
+        const lendApproved = await erc721(nft.address)
+          .methods.isApprovedForAll(account, ABC_LEND)
+          .call()
+
+        const [[nEthAllowance], [nEthBalance]] = await nEthMulti(
+          ABC_NFT_ETH,
+          ["allowance", "balanceOf"],
+          [[account, ABC_LEND], [account]]
+        )
 
         lendingNFT = {
           ...parsedAsset,
           vaults: nft.vaults.map(({ vault }) => ({
             ...vault,
           })),
-          isApprovedForAll,
+          lendApproved,
+          repayApproved: BigNumber.from(nEthAllowance).gte(BigNumber.from(0)),
+          nEthBalance,
           loan: {
             borrower,
             pool,
@@ -187,7 +197,7 @@ export const useFetchCurrentLendingNFT = () => {
         dispatch(setCurrentLendingNft(lendingNFT))
       }
     },
-    [account, dispatch, erc721, lendMulti]
+    [account, dispatch, erc721, lendContract, nEthMulti]
   )
 }
 

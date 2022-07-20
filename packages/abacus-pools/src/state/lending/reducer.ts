@@ -16,7 +16,9 @@ export interface LendingNFT {
   collectionLink: string
   owner: string
   isManager: boolean
-  isApprovedForAll: boolean
+  lendApproved: boolean
+  repayApproved: boolean
+  nEthBalance: BigNumber
   vaults: {
     id: string
     name: string
@@ -38,7 +40,9 @@ interface LendingState {
 const initialState: LendingState = {
   nfts: [],
   currentNft: {
-    isApprovedForAll: false,
+    lendApproved: false,
+    repayApproved: false,
+    nEthBalance: BigNumber.from(0),
     address: "",
     tokenId: "",
     img: "",

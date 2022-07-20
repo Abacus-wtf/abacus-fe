@@ -1,19 +1,19 @@
 import { LoadingOverlay } from "@components/LoadingOverlay"
 import { useOnApproveLoan, useOnBorrow } from "@hooks/lendingFunc"
+
+import React, { useEffect, useMemo, useState } from "react"
+
+import { Title } from "@components/Title"
 import { useCurrentLendingNFT } from "@state/lending/hooks"
-import { Modal } from "abacus-ui"
-import React, { useEffect, useState } from "react"
-import styled from "styled-components"
 import { Borrow } from "./Borrow"
 import { BorrowModalSteps } from "./steps"
-
-const StyledModal = styled(Modal)`
-  position: relative;
-`
+import { Approve } from "./Approve"
+import { StyledModal } from "../Modal.styled"
 
 type BorrowModalProps = {
   isOpen: boolean
   closeModal: () => void
+  selectedVault: string
   address: string
   tokenId: string
   refresh: () => void
@@ -24,32 +24,46 @@ const BorrowModal = ({
   closeModal,
   address,
   tokenId,
+  selectedVault,
   refresh,
 }: BorrowModalProps) => {
-  const [] = useState(BorrowModalSteps.Reserve)
-  const [selectedPool, setSelectedPool] = useState("")
-  const { vaults } = useCurrentLendingNFT()
+  const [step, setStep] = useState(BorrowModalSteps.Approve)
+  const { lendApproved } = useCurrentLendingNFT()
   const { isPending: pendingBorrow } = useOnBorrow()
   const { isPending: pendingApproveLoad } = useOnApproveLoan()
 
-  const isPending = pendingBorrow || pendingApproveLoad
   useEffect(() => {
-    if (vaults && vaults.length) {
-      setSelectedPool(vaults[0].id)
+    if (lendApproved) {
+      setStep(BorrowModalSteps.Borrow)
     }
-  }, [vaults])
+  }, [lendApproved])
+
+  const ui = useMemo(() => {
+    switch (step) {
+      case BorrowModalSteps.Approve:
+        return <Approve refresh={refresh} setStep={setStep} />
+      case BorrowModalSteps.Borrow:
+        return (
+          <Borrow
+            selectedVault={selectedVault}
+            address={address}
+            tokenId={tokenId}
+            refresh={refresh}
+            closeModal={closeModal}
+          />
+        )
+      default:
+        return null
+    }
+  }, [address, closeModal, refresh, selectedVault, step, tokenId])
+
+  const isPending = pendingBorrow || pendingApproveLoad
 
   return (
     <StyledModal isOpen={isOpen} closeModal={closeModal}>
       <LoadingOverlay loading={isPending} />
-      <Borrow
-        selectedPool={selectedPool}
-        address={address}
-        tokenId={tokenId}
-        vaults={vaults}
-        setSelectedPool={setSelectedPool}
-        refresh={refresh}
-      />
+      <Title>{step}</Title>
+      {ui}
     </StyledModal>
   )
 }

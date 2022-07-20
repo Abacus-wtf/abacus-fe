@@ -1,5 +1,4 @@
 export enum BorrowModalSteps {
-  Reserve,
-  Approve,
-  Borrow,
+  Approve = "Approve",
+  Borrow = "Borrow",
 }

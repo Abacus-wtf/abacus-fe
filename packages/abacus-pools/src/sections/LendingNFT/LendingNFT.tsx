@@ -20,9 +20,10 @@ import {
   Mega,
   PersistentBanner,
   Section,
+  Select,
 } from "abacus-ui"
 import { Link } from "gatsby"
-import { random } from "lodash"
+import { debounce, random } from "lodash"
 import React, { useEffect, useState } from "react"
 import styled, { css } from "styled-components"
 import { BorrowModal } from "./BorrowModal"
@@ -119,13 +120,25 @@ type LendingNFTProps = {
 const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
   const fetchCurrentLendingNft = useFetchCurrentLendingNFT()
   const { name, img, alt, vaults, isManager } = useCurrentLendingNFT()
+  const [selectedVault, setSelectedVault] =
+    useState<typeof vaults[number]>(null)
   const fetching = useFetchingCurrentLendingNft()
   const [borrowModalOpen, setBorrowModalOpen] = useState(false)
   const [repayModalOpen, setRepayModalOpen] = useState(false)
 
   useEffect(() => {
+    if (vaults) {
+      setSelectedVault(vaults[0])
+    }
+  }, [vaults])
+
+  useEffect(() => {
+    const debouncedFetch = debounce(fetchCurrentLendingNft, 200)
     if (address && tokenId) {
-      fetchCurrentLendingNft(address, tokenId)
+      debouncedFetch(address, tokenId)
+    }
+    return () => {
+      debouncedFetch.cancel()
     }
   }, [address, fetchCurrentLendingNft, tokenId])
 
@@ -172,6 +185,7 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
         address={address}
         tokenId={tokenId}
         refresh={() => fetchCurrentLendingNft(address, tokenId)}
+        selectedVault={selectedVault?.id ?? ""}
       />
       <RepayModal
         isOpen={repayModalOpen}
@@ -190,7 +204,7 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
               <Title>{name}</Title>
             </Info>
             <Info>
-              <Label>Abacus Vaults</Label>
+              <Label>Selected Abacus Vault</Label>
               <Flex
                 style={{
                   flexDirection: "column",
@@ -198,11 +212,16 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
                   gap: "6px",
                 }}
               >
-                {vaults.map((vault) => (
-                  <StyledLink key={vault.id} to={`/pool/${vault.id}`}>
-                    {vault.name || "Untitled Vault"} {">"}
-                  </StyledLink>
-                ))}
+                <Select
+                  value={selectedVault?.id ?? ""}
+                  setValue={(newValue) => {
+                    const nextVault = vaults.find(
+                      (vault) => vault.id === newValue
+                    )
+                    setSelectedVault(nextVault)
+                  }}
+                  options={vaults?.map((vault) => vault.id) ?? []}
+                />
               </Flex>
             </Info>
           </Details>
@@ -245,10 +264,7 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
                 <b>-</b>
               </Mega>
             </Column>
-            <StyledButton
-              onClick={() => setRepayModalOpen(true)}
-              disabled={!isManager}
-            >
+            <StyledButton onClick={() => setRepayModalOpen(true)}>
               Pay Back
             </StyledButton>
             <span />

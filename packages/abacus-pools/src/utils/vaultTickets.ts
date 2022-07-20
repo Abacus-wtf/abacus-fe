@@ -44,4 +44,4 @@ export const getPoolSize = (
       0
     )
     return ticketAcc + amount
-  }, 0)
+  }, 0) ?? 0

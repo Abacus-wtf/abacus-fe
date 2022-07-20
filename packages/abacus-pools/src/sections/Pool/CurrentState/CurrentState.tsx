@@ -134,7 +134,7 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
               Current Ticket:
               <CurrentTicketValue>#{currentTicket}</CurrentTicketValue>
             </CurrentTicket>
-            <Title>Purchase Tokens</Title>
+            <Title>{page}</Title>
           </TitleContainer>
           <ProgressBar progress={percentTicketsSold} label={progressLabel} />
           <PageContainer>

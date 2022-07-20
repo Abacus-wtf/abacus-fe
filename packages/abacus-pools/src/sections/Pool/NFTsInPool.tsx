@@ -39,7 +39,11 @@ const NFTsInPool: FunctionComponent = () => {
       </SectionHeader>
       <OverallImageContainer>
         {_.map(nfts, (nft) => (
-          <ImageContainer href={nft.collectionLink} target="_blank">
+          <ImageContainer
+            key={`${nft.address}/${nft.tokenId}`}
+            href={nft.collectionLink}
+            target="_blank"
+          >
             <NFTImage style={{ height: "100%" }} src={nft.img} />
           </ImageContainer>
         ))}

@@ -205,12 +205,7 @@ export const useOnSignVault = () => {
 
       const method = vaultFactory.signMultiAssetVault
       const estimate = vaultFactory.estimateGas.signMultiAssetVault
-      const args = [
-        BigNumber.from(nonce).toNumber(),
-        addresses,
-        tokenIds,
-        addresses[0],
-      ]
+      const args = [BigNumber.from(nonce).toNumber(), addresses, tokenIds]
       console.log("args", args)
       const value = null
       const txnCb = async (response: any) => {

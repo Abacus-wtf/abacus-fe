@@ -349,12 +349,11 @@ export const useSetPoolData = () => {
     async (vaultAddress: string) => {
       try {
         const now = Math.floor(new Date().getTime() / 1000)
-        const [closePoolContract, emissionsStarted, [currentEpoch]] =
-          await vault(
-            vaultAddress,
-            ["closePoolContract", "emissionsStarted", "getEpoch"],
-            [[], [], [now]]
-          )
+        const [[closePoolContract], [currentEpoch]] = await vault(
+          vaultAddress,
+          ["closePoolContract", "getEpoch"],
+          [[], [now]]
+        )
 
         let creditsAvailable = BigNumber.from(0)
         let approved = false
@@ -450,9 +449,9 @@ export const useSetPoolData = () => {
         }
 
         let auction: Auction
-        if (closePoolContract[0] !== ZERO_ADDRESS) {
+        if (closePoolContract !== ZERO_ADDRESS) {
           const [auctionComplete, auctionEndTime] = await closePool(
-            closePoolContract[0],
+            closePoolContract,
             ["auctionComplete", "auctionEndTime"],
             [[], []]
           )
@@ -461,7 +460,7 @@ export const useSetPoolData = () => {
             auctionEndTime: BigNumber.from(auctionEndTime[0]).toNumber(),
             highestBid: Number(formatEther(_auction.highestBid)),
             highestBidder: _auction.highestBidder ?? "",
-            closePoolAddress: closePoolContract[0],
+            closePoolAddress: closePoolContract,
             profit: 0,
             principalCalculated: false,
             hasTickets: _pool.tickets.length > 0,
@@ -486,7 +485,7 @@ export const useSetPoolData = () => {
               ],
             ] = await Promise.all([
               closePool(
-                closePoolContract[0],
+                closePoolContract,
                 [
                   "principalCalculated",
                   "auctionPremium",
@@ -506,15 +505,30 @@ export const useSetPoolData = () => {
           }
         }
 
+        const emissionsStartedInputs = nfts.reduce((acc, nft) => {
+          if (!nft.isManager) {
+            return acc
+          }
+          return [...acc, [nft.address, nft.tokenId, currentEpoch]]
+        }, [])
+
+        const emissionsStartedArray = await vault(
+          vaultAddress,
+          emissionsStartedInputs.map(() => "emissionsStarted"),
+          emissionsStartedInputs
+        )
+
         const pool: Pool = {
           name: _pool.name,
-          emissionsStarted: emissionsStarted[0],
+          emissionsStarted: emissionsStartedArray.every(
+            (emissionsStarted) => emissionsStarted[0]
+          ),
           vaultAddress,
           userTokensLocked,
           tokenPrice: IS_PRODUCTION ? ".001" : "0.001",
           creditsAvailable: BigNumber.from(creditsAvailable).toString(),
           state:
-            closePoolContract[0] === ZERO_ADDRESS
+            closePoolContract === ZERO_ADDRESS
               ? PoolStatus.Normal
               : auction && !auction.auctionComplete
               ? PoolStatus.Auction

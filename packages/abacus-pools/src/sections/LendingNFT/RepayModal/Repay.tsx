@@ -46,7 +46,9 @@ const Repay = ({ address, tokenId, refresh, closeModal }: RepayProps) => {
           </MaxButton>
         }
       />
-      <Button onClick={repay}>{isPending ? "Repaying..." : "Repay"}</Button>
+      <Button disabled={isPending} onClick={repay}>
+        {isPending ? "Repaying..." : "Repay"}
+      </Button>
     </Container>
   )
 }

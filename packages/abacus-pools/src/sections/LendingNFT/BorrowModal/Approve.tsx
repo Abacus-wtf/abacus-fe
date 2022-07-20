@@ -1,3 +1,4 @@
+import { LoadingOverlay } from "@components/LoadingOverlay"
 import { useOnApproveLoan } from "@hooks/lendingFunc"
 import { Button } from "abacus-ui"
 import React from "react"
@@ -21,6 +22,7 @@ const Approve = ({ refresh, setStep }: ApproveProps) => {
 
   return (
     <>
+      <LoadingOverlay loading={isPending} />
       <Container>
         Approve the Lending Contract to enable lending!
         <Button onClick={approve} disabled={isPending}>

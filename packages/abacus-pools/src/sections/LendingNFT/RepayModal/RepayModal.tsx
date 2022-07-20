@@ -1,5 +1,3 @@
-import { LoadingOverlay } from "@components/LoadingOverlay"
-import { useOnApproveNETH, useOnRepay } from "@hooks/lendingFunc"
 import React, { useMemo, useState } from "react"
 
 import { Title } from "@components/Title"
@@ -21,12 +19,9 @@ const RepayModal = ({
   closeModal,
   address,
   tokenId,
-
   refresh,
 }: RepayModalProps) => {
   const [step, setStep] = useState(RepayModalSteps.Approve)
-  const { isPending: pendingRepay } = useOnRepay()
-  const { isPending: pendingApprove } = useOnApproveNETH()
 
   const ui = useMemo(() => {
     switch (step) {
@@ -46,11 +41,8 @@ const RepayModal = ({
     }
   }, [address, closeModal, refresh, step, tokenId])
 
-  const isPending = pendingRepay || pendingApprove
-
   return (
     <StyledModal isOpen={isOpen} closeModal={closeModal}>
-      <LoadingOverlay loading={isPending} />
       <Title>{step}</Title>
       {ui}
     </StyledModal>

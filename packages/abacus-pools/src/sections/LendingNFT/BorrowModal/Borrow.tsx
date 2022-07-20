@@ -1,3 +1,4 @@
+import { LoadingOverlay } from "@components/LoadingOverlay"
 import { useOnBorrow } from "@hooks/lendingFunc"
 import { Button, Input } from "abacus-ui"
 import React, { useState } from "react"
@@ -30,6 +31,7 @@ const Borrow = ({
 
   return (
     <Container>
+      <LoadingOverlay loading={isPending} />
       <Input
         type="number"
         name="borrow_eth"

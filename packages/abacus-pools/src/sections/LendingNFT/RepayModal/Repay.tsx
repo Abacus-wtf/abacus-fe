@@ -1,3 +1,4 @@
+import { LoadingOverlay } from "@components/LoadingOverlay"
 import { useOnRepay } from "@hooks/lendingFunc"
 import { useCurrentLendingNFT } from "@state/lending/hooks"
 
@@ -29,6 +30,7 @@ const Repay = ({ address, tokenId, refresh, closeModal }: RepayProps) => {
 
   return (
     <Container>
+      <LoadingOverlay loading={isPending} />
       <Input
         type="number"
         name="repay_eth"

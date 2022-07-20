@@ -1,6 +1,3 @@
-import { LoadingOverlay } from "@components/LoadingOverlay"
-import { useOnApproveLoan, useOnBorrow } from "@hooks/lendingFunc"
-
 import React, { useEffect, useMemo, useState } from "react"
 
 import { Title } from "@components/Title"
@@ -29,8 +26,6 @@ const BorrowModal = ({
 }: BorrowModalProps) => {
   const [step, setStep] = useState(BorrowModalSteps.Approve)
   const { lendApproved } = useCurrentLendingNFT()
-  const { isPending: pendingBorrow } = useOnBorrow()
-  const { isPending: pendingApproveLoad } = useOnApproveLoan()
 
   useEffect(() => {
     if (lendApproved) {
@@ -57,11 +52,8 @@ const BorrowModal = ({
     }
   }, [address, closeModal, refresh, selectedVault, step, tokenId])
 
-  const isPending = pendingBorrow || pendingApproveLoad
-
   return (
     <StyledModal isOpen={isOpen} closeModal={closeModal}>
-      <LoadingOverlay loading={isPending} />
       <Title>{step}</Title>
       {ui}
     </StyledModal>

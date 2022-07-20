@@ -1,3 +1,4 @@
+import { LoadingOverlay } from "@components/LoadingOverlay"
 import { useOnApproveNETH } from "@hooks/lendingFunc"
 import { useCurrentLendingNFT } from "@state/lending/hooks"
 
@@ -30,6 +31,7 @@ const Approve = ({ refresh, setStep }: ApproveProps) => {
 
   return (
     <>
+      <LoadingOverlay loading={isPending} />
       <Container>
         <Mega>Set approval for your repayment!</Mega>
         <Button onClick={approve} disabled={isPending}>

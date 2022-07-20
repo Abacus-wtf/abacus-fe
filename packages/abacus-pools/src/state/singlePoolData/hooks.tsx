@@ -505,23 +505,16 @@ export const useSetPoolData = () => {
           }
         }
 
-        const emissionsStartedInputs = nfts.reduce((acc, nft) => {
-          if (!nft.isManager) {
-            return acc
-          }
-          return [...acc, [nft.address, nft.tokenId, currentEpoch]]
-        }, [])
-
-        const emissionsStartedArray = await vault(
+        const [[emissionStartedCount]] = await vault(
           vaultAddress,
-          emissionsStartedInputs.map(() => "emissionsStarted"),
-          emissionsStartedInputs
+          ["emissionStartedCount"],
+          [[currentEpoch]]
         )
 
         const pool: Pool = {
           name: _pool.name,
-          emissionsStarted: emissionsStartedArray.every(
-            (emissionsStarted) => emissionsStarted[0]
+          emissionsStarted: BigNumber.from(emissionStartedCount).gte(
+            BigNumber.from(0)
           ),
           vaultAddress,
           userTokensLocked,

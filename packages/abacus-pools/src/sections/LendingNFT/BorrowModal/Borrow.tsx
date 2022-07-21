@@ -1,8 +1,10 @@
 import { LoadingOverlay } from "@components/LoadingOverlay"
 import { useOnBorrow } from "@hooks/lendingFunc"
+import { useCurrentLendingNFT } from "@state/lending/hooks"
 import { Button, Input } from "abacus-ui"
+import { formatEther } from "ethers/lib/utils"
 import React, { useState } from "react"
-import { Container } from "../Modal.styled"
+import { Container, MaxButton } from "../Modal.styled"
 
 type BorrowProps = {
   selectedVault: string
@@ -19,6 +21,7 @@ const Borrow = ({
   refresh,
   closeModal,
 }: BorrowProps) => {
+  const { loan } = useCurrentLendingNFT()
   const [eth, setEth] = useState<string>()
   const { onBorrow, isPending } = useOnBorrow()
 
@@ -29,6 +32,8 @@ const Borrow = ({
     })
   }
 
+  const totalAvailable = formatEther(loan?.totalAvailable ?? "0X0")
+
   return (
     <Container>
       <LoadingOverlay loading={isPending} />
@@ -37,10 +42,17 @@ const Borrow = ({
         name="borrow_eth"
         value={eth}
         onChange={setEth}
-        hint="Max available"
+        hint={`Max available: ${totalAvailable} nETH`}
         label="Amount:"
         placeholder="0.00"
-        pill="ETH"
+        pill={
+          <MaxButton
+            disabled={!totalAvailable}
+            onClick={() => setEth(totalAvailable)}
+          >
+            Max
+          </MaxButton>
+        }
       />
       <Button onClick={borrow} disabled={isPending}>
         {isPending ? "tx pending..." : "Borrow"}

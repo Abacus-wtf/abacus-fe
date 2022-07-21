@@ -4,6 +4,7 @@ import {
   setLendingNfts,
   setCurrentLendingNft,
   setFetchingCurrentLendingNft,
+  setCurrentLendingNFTTotalAvailable,
 } from "./actions"
 
 export interface LendingNFT {
@@ -26,8 +27,8 @@ export interface LendingNFT {
   loan?: {
     borrower: string
     pool: string
-    transferFromPermission: boolean
     loanAmount: BigNumber
+    totalAvailable?: BigNumber
   }
 }
 
@@ -67,5 +68,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(setFetchingCurrentLendingNft, (state, action) => {
       state.fetchingCurrentNft = action.payload
+    })
+    .addCase(setCurrentLendingNFTTotalAvailable, (state, action) => {
+      state.currentNft.loan.totalAvailable = action.payload
     })
 )

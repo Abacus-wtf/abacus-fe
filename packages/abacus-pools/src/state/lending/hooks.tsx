@@ -32,6 +32,7 @@ import { map } from "lodash"
 import ERC_721_ABI from "../../config/contracts/ERC_721_ABI.json"
 import ABC_NFT_ETH_ABI from "../../config/contracts/ABC_NFT_ETH_ABI.json"
 import LEND_ABI from "../../config/contracts/ABC_LEND_MULTI_ABI.json"
+import ABC_VAULT_ABI from "../../config/contracts/ABC_VAULT_ABI.json"
 import { ABC_LEND } from "../../config/constants"
 
 import { PAGINATE_BY } from "./constants"
@@ -39,11 +40,13 @@ import {
   currentLendingNftSelector,
   fetchingCurrentLendingNftSelector,
   lendingNftsSelector,
+  nftHealthRatioSelector,
 } from "./selectors"
 import {
   setLendingNfts,
   setCurrentLendingNft,
   setFetchingCurrentLendingNft,
+  setCurrentLendingNFTTotalAvailable,
 } from "./actions"
 import { LendingNFT } from "./reducer"
 
@@ -126,7 +129,7 @@ export const useLendingNFTs = () =>
 export const useFetchCurrentLendingNFT = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { account } = useActiveWeb3React()
-  const lendContract = useWeb3Contract(LEND_ABI)
+  const lendMulti = useMultiCall(LEND_ABI)
   const erc721 = useWeb3Contract(ERC_721_ABI)
   const nEthMulti = useMultiCall(ABC_NFT_ETH_ABI)
 
@@ -152,16 +155,11 @@ export const useFetchCurrentLendingNFT = () => {
 
         const parsedAsset = parseAsset(account)(asset)
 
-        const loans = await lendContract(ABC_LEND)
-          .methods.loans(address, tokenId)
-          .call()
-
-        const borrower = BigNumber.from(loans[0]).toString()
-        const pool = BigNumber.from(loans[1]).toString()
-        const transferFromPermission = Boolean(
-          BigNumber.from(loans[2]).toNumber()
+        const [position] = await lendMulti(
+          ABC_LEND,
+          ["getPosition"],
+          [[address, tokenId]]
         )
-        const loanAmount = BigNumber.from(loans[2])
 
         const lendApproved = await erc721(nft.address)
           .methods.isApprovedForAll(account, ABC_LEND)
@@ -182,10 +180,9 @@ export const useFetchCurrentLendingNFT = () => {
           repayApproved: BigNumber.from(nEthAllowance).gte(BigNumber.from(0)),
           nEthBalance,
           loan: {
-            borrower,
-            pool,
-            transferFromPermission,
-            loanAmount,
+            borrower: position[0],
+            pool: position[1],
+            loanAmount: BigNumber.from(position[2]),
           },
         }
       } catch {
@@ -197,7 +194,34 @@ export const useFetchCurrentLendingNFT = () => {
         dispatch(setCurrentLendingNft(lendingNFT))
       }
     },
-    [account, dispatch, erc721, lendContract, nEthMulti]
+    [account, dispatch, erc721, lendMulti, nEthMulti]
+  )
+}
+
+export const useFetchTotalLendingAvailable = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const vault = useWeb3Contract(ABC_VAULT_ABI)
+
+  return useCallback(
+    async (vaultId: string) => {
+      if (vaultId) {
+        const now = Math.floor(new Date().getTime() / 1000)
+        const currentEpoch = await vault(vaultId).methods.getEpoch(now).call()
+
+        const payoutPerRes = await vault(vaultId)
+          .methods.getPayoutPerRes(currentEpoch)
+          .call()
+
+        const totalAvailable = BigNumber.from(payoutPerRes)
+          .mul(BigNumber.from(19))
+          .div(BigNumber.from(20))
+
+        if (totalAvailable) {
+          dispatch(setCurrentLendingNFTTotalAvailable(totalAvailable))
+        }
+      }
+    },
+    [dispatch, vault]
   )
 }
 
@@ -210,3 +234,6 @@ export const useFetchingCurrentLendingNft = () =>
   useSelector<AppState, AppState["lending"]["fetchingCurrentNft"]>(
     fetchingCurrentLendingNftSelector
   )
+
+export const useCurrentLendingNFTHealthRatio = () =>
+  useSelector<AppState, number>(nftHealthRatioSelector)

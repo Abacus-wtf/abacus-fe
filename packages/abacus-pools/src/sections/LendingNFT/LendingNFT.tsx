@@ -4,13 +4,15 @@ import { LoadingOverlay } from "@components/LoadingOverlay"
 import { NFTImage } from "@components/NFTImage"
 import { NumericallyConditionalText } from "@components/NumericallyConditionalText"
 import { Title } from "@components/Title"
+import { useActiveWeb3React } from "@hooks/index"
 import { Container } from "@layouts/styles"
 import {
   useCurrentLendingNFT,
+  useCurrentLendingNFTHealthRatio,
   useFetchCurrentLendingNFT,
   useFetchingCurrentLendingNft,
+  useFetchTotalLendingAvailable,
 } from "@state/lending/hooks"
-import { round2Decimals } from "@utils"
 import {
   Button,
   Flex,
@@ -22,8 +24,9 @@ import {
   Section,
   Select,
 } from "abacus-ui"
+import { formatEther } from "ethers/lib/utils"
 import { Link } from "gatsby"
-import { debounce, random } from "lodash"
+import { debounce } from "lodash"
 import React, { useEffect, useState } from "react"
 import styled, { css } from "styled-components"
 import { BorrowModal } from "./BorrowModal"
@@ -118,8 +121,11 @@ type LendingNFTProps = {
 }
 
 const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
+  const { account } = useActiveWeb3React()
   const fetchCurrentLendingNft = useFetchCurrentLendingNFT()
-  const { name, img, alt, vaults, isManager } = useCurrentLendingNFT()
+  const fetchTotalLendingAvailable = useFetchTotalLendingAvailable()
+  const healthRatio = useCurrentLendingNFTHealthRatio()
+  const { name, img, alt, vaults, isManager, loan } = useCurrentLendingNFT()
   const [selectedVault, setSelectedVault] =
     useState<typeof vaults[number]>(null)
   const fetching = useFetchingCurrentLendingNft()
@@ -142,14 +148,24 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
     }
   }, [address, fetchCurrentLendingNft, tokenId])
 
+  const vaultId = selectedVault?.id ?? ""
+  useEffect(() => {
+    if (vaultId) {
+      fetchTotalLendingAvailable(vaultId)
+    }
+  }, [fetchTotalLendingAvailable, vaultId])
+
   if (fetching) {
     return <LoadingOverlay loading={fetching} />
   }
 
-  const healthRatio = random(0, 10, true)
-  const borrowed = random(0, 40, true)
-  const borrowedByYou = borrowed / random(true)
-  const available = random(0, 40, true)
+  const isMyLoan = loan?.borrower.toLowerCase() === account?.toLowerCase()
+  const loanValue = Number(formatEther(loan?.loanAmount ?? "0x0"))
+  const availableValue = Number(formatEther(loan?.totalAvailable ?? "0x0"))
+
+  const borrowed = loanValue
+  const borrowedByYou = isMyLoan ? loanValue : 0
+  const available = availableValue
   const total = borrowed + available
   const progress = borrowed / total
 
@@ -232,9 +248,7 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
               gap: "4px",
             }}
           >
-            <HealthRatio value={healthRatio}>
-              {round2Decimals(healthRatio)}
-            </HealthRatio>
+            <HealthRatio value={healthRatio}>{healthRatio}</HealthRatio>
             <Label>Health Ratio</Label>
           </Flex>
           <LendingProgressBar progress={progress} />
@@ -242,20 +256,20 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
             <Column>
               <Label>Borrowed</Label>
               <Mega>
-                {round2Decimals(borrowed)} <b>ETH</b>
+                {borrowed} <b>ETH</b>
               </Mega>
             </Column>
             <Divider />
             <Column>
               <Label>Available</Label>
               <Mega>
-                {round2Decimals(available)} <b>ETH</b>
+                {available} <b>ETH</b>
               </Mega>
             </Column>
             <Column>
               <Label>Borrowed by You</Label>
               <Mega>
-                {round2Decimals(borrowedByYou)} <b>ETH</b>
+                {borrowedByYou} <b>ETH</b>
               </Mega>
             </Column>
             <Divider />

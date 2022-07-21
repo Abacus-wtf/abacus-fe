@@ -1,4 +1,5 @@
 import { createAction } from "@reduxjs/toolkit"
+import { BigNumber } from "ethers"
 import { LendingNFT } from "./reducer"
 
 export const setLendingNfts = createAction<LendingNFT[]>(
@@ -9,4 +10,7 @@ export const setCurrentLendingNft = createAction<LendingNFT>(
 )
 export const setFetchingCurrentLendingNft = createAction<boolean>(
   "poolData/setFetchingCurrentLendingNft"
+)
+export const setCurrentLendingNFTTotalAvailable = createAction<BigNumber>(
+  "poolData/setCurrentLendingNFTTotalAvailable"
 )

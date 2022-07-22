@@ -257,16 +257,14 @@ export const useGetTickets = () => {
     )
 
     const ticketsReturned = _.map(_.range(0, 50), (i) => {
-      const ticket = vault.tickets.find(
-        (ticket) => Number(ticket.ticketNumber) === i
-      )
+      const ticket = vault.tickets.find((ticket) => ticket.ticketNumber === i)
 
       if (!ticket) {
         return {
           id: "",
           vaultAddress: poolData.vaultAddress ?? "",
           tokenPurchasesLength: 0,
-          ticketNumber: String(i),
+          ticketNumber: i,
           tokenPurchases: [],
         }
       }

@@ -42,7 +42,7 @@ export const getPoolSize = (
       (acc, tokenPurchase) =>
         currentEpoch >= tokenPurchase.finalEpoch
           ? acc
-          : acc + Number(tokenPurchase.amount),
+          : acc + Number(tokenPurchase.amount) / 1000,
       0
     )
     return ticketAcc + amount

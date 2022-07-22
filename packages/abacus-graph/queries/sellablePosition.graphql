@@ -2,6 +2,7 @@ fragment SellablePosition on SellablePosition {
   id
   nonce
   owner
+  timestamp
   amount
   vaultAddress
   availableEpoch

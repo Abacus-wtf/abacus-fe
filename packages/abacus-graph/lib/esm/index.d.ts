@@ -715,6 +715,7 @@ export declare type SellablePosition = {
     nonce: Scalars['Int'];
     owner: Scalars['ID'];
     soldAt?: Maybe<Scalars['BigInt']>;
+    timestamp: Scalars['Int'];
     vaultAddress: Scalars['ID'];
 };
 export declare type SellablePosition_Filter = {
@@ -768,6 +769,14 @@ export declare type SellablePosition_Filter = {
     soldAt_lte?: InputMaybe<Scalars['BigInt']>;
     soldAt_not?: InputMaybe<Scalars['BigInt']>;
     soldAt_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    timestamp?: InputMaybe<Scalars['Int']>;
+    timestamp_gt?: InputMaybe<Scalars['Int']>;
+    timestamp_gte?: InputMaybe<Scalars['Int']>;
+    timestamp_in?: InputMaybe<Array<Scalars['Int']>>;
+    timestamp_lt?: InputMaybe<Scalars['Int']>;
+    timestamp_lte?: InputMaybe<Scalars['Int']>;
+    timestamp_not?: InputMaybe<Scalars['Int']>;
+    timestamp_not_in?: InputMaybe<Array<Scalars['Int']>>;
     vaultAddress?: InputMaybe<Scalars['ID']>;
     vaultAddress_gt?: InputMaybe<Scalars['ID']>;
     vaultAddress_gte?: InputMaybe<Scalars['ID']>;
@@ -784,6 +793,7 @@ export declare enum SellablePosition_OrderBy {
     Nonce = "nonce",
     Owner = "owner",
     SoldAt = "soldAt",
+    Timestamp = "timestamp",
     VaultAddress = "vaultAddress"
 }
 export declare type Subscription = {
@@ -1646,6 +1656,7 @@ export declare type VaultFragment = {
         id: string;
         nonce: number;
         owner: string;
+        timestamp: number;
         amount: string;
         vaultAddress: string;
         availableEpoch: number;
@@ -1712,6 +1723,7 @@ export declare type GetPoolsQuery = {
             id: string;
             nonce: number;
             owner: string;
+            timestamp: number;
             amount: string;
             vaultAddress: string;
             availableEpoch: number;
@@ -1775,6 +1787,7 @@ export declare type GetPoolQuery = {
             id: string;
             nonce: number;
             owner: string;
+            timestamp: number;
             amount: string;
             vaultAddress: string;
             availableEpoch: number;
@@ -1787,6 +1800,7 @@ export declare type SellablePositionFragment = {
     id: string;
     nonce: number;
     owner: string;
+    timestamp: number;
     amount: string;
     vaultAddress: string;
     availableEpoch: number;

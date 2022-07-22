@@ -4,7 +4,7 @@ import {
   setLendingNfts,
   setCurrentLendingNft,
   setFetchingCurrentLendingNft,
-  setCurrentLendingNFTTotalAvailable,
+  setCurrentLendingNFTVaultInfo,
 } from "./actions"
 
 export interface LendingNFT {
@@ -24,6 +24,8 @@ export interface LendingNFT {
     id: string
     name: string
   }[]
+  reservationStatus: boolean
+  nextReservationStatus: boolean
   loan?: {
     borrower: string
     pool: string
@@ -54,6 +56,8 @@ const initialState: LendingState = {
     owner: "",
     isManager: false,
     vaults: [],
+    reservationStatus: false,
+    nextReservationStatus: false,
   },
   fetchingCurrentNft: false,
 }
@@ -69,7 +73,10 @@ export default createReducer(initialState, (builder) =>
     .addCase(setFetchingCurrentLendingNft, (state, action) => {
       state.fetchingCurrentNft = action.payload
     })
-    .addCase(setCurrentLendingNFTTotalAvailable, (state, action) => {
-      state.currentNft.loan.totalAvailable = action.payload
+    .addCase(setCurrentLendingNFTVaultInfo, (state, action) => {
+      state.currentNft.loan.totalAvailable = action.payload.totalAvailable
+      state.currentNft.reservationStatus = action.payload.reservationStatus
+      state.currentNft.nextReservationStatus =
+        action.payload.nextReservationStatus
     })
 )

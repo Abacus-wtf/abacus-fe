@@ -46,7 +46,7 @@ import {
   setLendingNfts,
   setCurrentLendingNft,
   setFetchingCurrentLendingNft,
-  setCurrentLendingNFTTotalAvailable,
+  setCurrentLendingNFTVaultInfo,
 } from "./actions"
 import { LendingNFT } from "./reducer"
 
@@ -86,6 +86,8 @@ const parseSubgraphNFTs = async (nfts: NfTsQuery["nfts"], account?: string) => {
       repayApproved: false,
       nEthBalance: BigNumber.from(0),
       vaults: nft.vaults.map(({ vault }) => ({ ...vault })),
+      reservationStatus: false,
+      nextReservationStatus: false,
     }
   })
   return nftData
@@ -94,6 +96,7 @@ const parseSubgraphNFTs = async (nfts: NfTsQuery["nfts"], account?: string) => {
 export const useFetchLendingNFTs = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { account } = useActiveWeb3React()
+  const lendMulti = useMultiCall(LEND_ABI)
 
   return useCallback(
     async (
@@ -115,11 +118,26 @@ export const useFetchLendingNFTs = () => {
         NfTsDocument,
         variables
       )
-      const parsedNfts = await parseSubgraphNFTs(nfts, account)
 
-      dispatch(setLendingNfts(parsedNfts))
+      const positions = await lendMulti(
+        ABC_LEND,
+        nfts.map(() => "getPosition"),
+        nfts.map(({ address, tokenId }) => [address, tokenId])
+      )
+
+      const parsedNfts = await parseSubgraphNFTs(nfts, account)
+      const nftsWithPosition = parsedNfts.map((nft, i) => ({
+        ...nft,
+        loan: {
+          borrower: positions[i][0],
+          pool: positions[i][1],
+          loanAmount: BigNumber.from(positions[i][2]),
+        },
+      }))
+
+      dispatch(setLendingNfts(nftsWithPosition))
     },
-    [account, dispatch]
+    [account, dispatch, lendMulti]
   )
 }
 
@@ -179,6 +197,8 @@ export const useFetchCurrentLendingNFT = () => {
           lendApproved,
           repayApproved: BigNumber.from(nEthAllowance).gte(BigNumber.from(0)),
           nEthBalance,
+          reservationStatus: false,
+          nextReservationStatus: false,
           loan: {
             borrower: position[0],
             pool: position[1],
@@ -198,30 +218,48 @@ export const useFetchCurrentLendingNFT = () => {
   )
 }
 
-export const useFetchTotalLendingAvailable = () => {
+export const useFetchVaultRelatedLendingData = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const vault = useWeb3Contract(ABC_VAULT_ABI)
+  const vaultMulti = useMultiCall(ABC_VAULT_ABI)
 
   return useCallback(
-    async (vaultId: string) => {
+    async (vaultId: string, address: string, tokenId: string) => {
       if (vaultId) {
         const now = Math.floor(new Date().getTime() / 1000)
-        const currentEpoch = await vault(vaultId).methods.getEpoch(now).call()
+        const next = now + 12 * 60 * 60
+        const [[currentEpoch], [nextEpoch]] = await vaultMulti(
+          vaultId,
+          ["getEpoch", "getEpoch"],
+          [[now], [next]]
+        )
 
-        const payoutPerRes = await vault(vaultId)
-          .methods.getPayoutPerRes(currentEpoch)
-          .call()
+        const [[payoutPerRes], [reservationStatus], [nextReservationStatus]] =
+          await vaultMulti(
+            vaultId,
+            ["getPayoutPerRes", "getReservationStatus", "getReservationStatus"],
+            [
+              [currentEpoch],
+              [address, tokenId, currentEpoch],
+              [address, tokenId, nextEpoch],
+            ]
+          )
 
         const totalAvailable = BigNumber.from(payoutPerRes)
           .mul(BigNumber.from(19))
           .div(BigNumber.from(20))
 
         if (totalAvailable) {
-          dispatch(setCurrentLendingNFTTotalAvailable(totalAvailable))
+          dispatch(
+            setCurrentLendingNFTVaultInfo({
+              totalAvailable,
+              reservationStatus,
+              nextReservationStatus,
+            })
+          )
         }
       }
     },
-    [dispatch, vault]
+    [dispatch, vaultMulti]
   )
 }
 

@@ -11,6 +11,12 @@ export const setCurrentLendingNft = createAction<LendingNFT>(
 export const setFetchingCurrentLendingNft = createAction<boolean>(
   "poolData/setFetchingCurrentLendingNft"
 )
-export const setCurrentLendingNFTTotalAvailable = createAction<BigNumber>(
-  "poolData/setCurrentLendingNFTTotalAvailable"
+
+type LendingVaultInfo = {
+  totalAvailable: BigNumber
+  reservationStatus: boolean
+  nextReservationStatus: boolean
+}
+export const setCurrentLendingNFTVaultInfo = createAction<LendingVaultInfo>(
+  "poolData/setCurrentLendingNFTVaultInfo"
 )

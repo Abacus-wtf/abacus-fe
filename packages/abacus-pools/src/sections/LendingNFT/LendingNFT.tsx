@@ -11,7 +11,7 @@ import {
   useCurrentLendingNFTHealthRatio,
   useFetchCurrentLendingNFT,
   useFetchingCurrentLendingNft,
-  useFetchTotalLendingAvailable,
+  useFetchVaultRelatedLendingData,
 } from "@state/lending/hooks"
 import {
   Button,
@@ -20,14 +20,16 @@ import {
   Kilo,
   Media,
   Mega,
+  P,
   PersistentBanner,
   Section,
   Select,
 } from "abacus-ui"
+import { BigNumber } from "ethers"
 import { formatEther } from "ethers/lib/utils"
 import { Link } from "gatsby"
 import { debounce } from "lodash"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import styled, { css } from "styled-components"
 import { BorrowModal } from "./BorrowModal"
 import { RepayModal } from "./RepayModal"
@@ -123,9 +125,19 @@ type LendingNFTProps = {
 const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
   const { account } = useActiveWeb3React()
   const fetchCurrentLendingNft = useFetchCurrentLendingNFT()
-  const fetchTotalLendingAvailable = useFetchTotalLendingAvailable()
+  const fetchVaultRelatedLendingData = useFetchVaultRelatedLendingData()
   const healthRatio = useCurrentLendingNFTHealthRatio()
-  const { name, img, alt, vaults, isManager, loan } = useCurrentLendingNFT()
+  const {
+    name,
+    img,
+    alt,
+    vaults,
+    isManager,
+    loan,
+    nEthBalance,
+    reservationStatus,
+    nextReservationStatus,
+  } = useCurrentLendingNFT()
   const [selectedVault, setSelectedVault] =
     useState<typeof vaults[number]>(null)
   const fetching = useFetchingCurrentLendingNft()
@@ -150,10 +162,20 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
 
   const vaultId = selectedVault?.id ?? ""
   useEffect(() => {
-    if (vaultId) {
-      fetchTotalLendingAvailable(vaultId)
+    if (vaultId && address && tokenId) {
+      fetchVaultRelatedLendingData(vaultId, address, tokenId)
     }
-  }, [fetchTotalLendingAvailable, vaultId])
+  }, [address, fetchVaultRelatedLendingData, tokenId, vaultId])
+
+  const cannotBorrowInfo = useMemo(() => {
+    if (!reservationStatus && !nextReservationStatus) {
+      return "You don't have a reservation for this vault"
+    }
+    if (reservationStatus && !nextReservationStatus) {
+      return "Your reservation expires within 12 hours"
+    }
+    return null
+  }, [reservationStatus, nextReservationStatus])
 
   if (fetching) {
     return <LoadingOverlay loading={fetching} />
@@ -278,17 +300,25 @@ const LendingNFT = ({ address, tokenId }: LendingNFTProps) => {
                 <b>-</b>
               </Mega>
             </Column>
-            <StyledButton onClick={() => setRepayModalOpen(true)}>
+            <StyledButton
+              onClick={() => setRepayModalOpen(true)}
+              disabled={BigNumber.from(nEthBalance ?? "0x0").isZero()}
+            >
               Pay Back
             </StyledButton>
             <span />
             <StyledButton
               borrow
               onClick={() => setBorrowModalOpen(true)}
-              disabled={!isManager}
+              disabled={
+                !isManager || !reservationStatus || !nextReservationStatus
+              }
             >
               Borrow
             </StyledButton>
+            {cannotBorrowInfo && (
+              <P style={{ color: "red", gridColumn: 3 }}>{cannotBorrowInfo}</P>
+            )}
           </BorrowGrid>
         </InfoContainer>
       </StyledSection>

@@ -712,6 +712,7 @@ export declare type SellablePosition = {
     amount: Scalars['BigInt'];
     availableEpoch: Scalars['Int'];
     id: Scalars['ID'];
+    nonce: Scalars['Int'];
     owner: Scalars['ID'];
     soldAt?: Maybe<Scalars['BigInt']>;
     vaultAddress: Scalars['ID'];
@@ -743,6 +744,14 @@ export declare type SellablePosition_Filter = {
     id_lte?: InputMaybe<Scalars['ID']>;
     id_not?: InputMaybe<Scalars['ID']>;
     id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+    nonce?: InputMaybe<Scalars['Int']>;
+    nonce_gt?: InputMaybe<Scalars['Int']>;
+    nonce_gte?: InputMaybe<Scalars['Int']>;
+    nonce_in?: InputMaybe<Array<Scalars['Int']>>;
+    nonce_lt?: InputMaybe<Scalars['Int']>;
+    nonce_lte?: InputMaybe<Scalars['Int']>;
+    nonce_not?: InputMaybe<Scalars['Int']>;
+    nonce_not_in?: InputMaybe<Array<Scalars['Int']>>;
     owner?: InputMaybe<Scalars['ID']>;
     owner_gt?: InputMaybe<Scalars['ID']>;
     owner_gte?: InputMaybe<Scalars['ID']>;
@@ -772,6 +781,7 @@ export declare enum SellablePosition_OrderBy {
     Amount = "amount",
     AvailableEpoch = "availableEpoch",
     Id = "id",
+    Nonce = "nonce",
     Owner = "owner",
     SoldAt = "soldAt",
     VaultAddress = "vaultAddress"
@@ -1634,6 +1644,7 @@ export declare type VaultFragment = {
     sellablePositions: Array<{
         __typename?: 'SellablePosition';
         id: string;
+        nonce: number;
         owner: string;
         amount: string;
         vaultAddress: string;
@@ -1699,6 +1710,7 @@ export declare type GetPoolsQuery = {
         sellablePositions: Array<{
             __typename?: 'SellablePosition';
             id: string;
+            nonce: number;
             owner: string;
             amount: string;
             vaultAddress: string;
@@ -1761,6 +1773,7 @@ export declare type GetPoolQuery = {
         sellablePositions: Array<{
             __typename?: 'SellablePosition';
             id: string;
+            nonce: number;
             owner: string;
             amount: string;
             vaultAddress: string;
@@ -1772,6 +1785,7 @@ export declare type GetPoolQuery = {
 export declare type SellablePositionFragment = {
     __typename?: 'SellablePosition';
     id: string;
+    nonce: number;
     owner: string;
     amount: string;
     vaultAddress: string;

@@ -1041,7 +1041,7 @@ export declare type SubscriptionVaultsArgs = {
 export declare type Ticket = {
     __typename?: 'Ticket';
     id: Scalars['ID'];
-    ticketNumber: Scalars['BigInt'];
+    ticketNumber: Scalars['Int'];
     tokenPurchases: Array<TokenPurchase>;
     tokenPurchasesLength: Scalars['Int'];
     vaultAddress: Scalars['ID'];
@@ -1064,14 +1064,14 @@ export declare type Ticket_Filter = {
     id_lte?: InputMaybe<Scalars['ID']>;
     id_not?: InputMaybe<Scalars['ID']>;
     id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-    ticketNumber?: InputMaybe<Scalars['BigInt']>;
-    ticketNumber_gt?: InputMaybe<Scalars['BigInt']>;
-    ticketNumber_gte?: InputMaybe<Scalars['BigInt']>;
-    ticketNumber_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    ticketNumber_lt?: InputMaybe<Scalars['BigInt']>;
-    ticketNumber_lte?: InputMaybe<Scalars['BigInt']>;
-    ticketNumber_not?: InputMaybe<Scalars['BigInt']>;
-    ticketNumber_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    ticketNumber?: InputMaybe<Scalars['Int']>;
+    ticketNumber_gt?: InputMaybe<Scalars['Int']>;
+    ticketNumber_gte?: InputMaybe<Scalars['Int']>;
+    ticketNumber_in?: InputMaybe<Array<Scalars['Int']>>;
+    ticketNumber_lt?: InputMaybe<Scalars['Int']>;
+    ticketNumber_lte?: InputMaybe<Scalars['Int']>;
+    ticketNumber_not?: InputMaybe<Scalars['Int']>;
+    ticketNumber_not_in?: InputMaybe<Array<Scalars['Int']>>;
     tokenPurchasesLength?: InputMaybe<Scalars['Int']>;
     tokenPurchasesLength_gt?: InputMaybe<Scalars['Int']>;
     tokenPurchasesLength_gte?: InputMaybe<Scalars['Int']>;
@@ -1648,7 +1648,7 @@ export declare type VaultFragment = {
     tickets: Array<{
         __typename?: 'Ticket';
         id: string;
-        ticketNumber: string;
+        ticketNumber: number;
         vaultAddress: string;
         tokenPurchasesLength: number;
         tokenPurchases: Array<{
@@ -1716,7 +1716,7 @@ export declare type GetPoolsQuery = {
         tickets: Array<{
             __typename?: 'Ticket';
             id: string;
-            ticketNumber: string;
+            ticketNumber: number;
             vaultAddress: string;
             tokenPurchasesLength: number;
             tokenPurchases: Array<{
@@ -1781,7 +1781,7 @@ export declare type GetPoolQuery = {
         tickets: Array<{
             __typename?: 'Ticket';
             id: string;
-            ticketNumber: string;
+            ticketNumber: number;
             vaultAddress: string;
             tokenPurchasesLength: number;
             tokenPurchases: Array<{
@@ -1832,7 +1832,7 @@ export declare type TokenPurchaseFragment = {
 export declare type TicketFragment = {
     __typename?: 'Ticket';
     id: string;
-    ticketNumber: string;
+    ticketNumber: number;
     vaultAddress: string;
     tokenPurchasesLength: number;
     tokenPurchases: Array<{
@@ -1855,7 +1855,7 @@ export declare type GetTicketsQuery = {
     tickets: Array<{
         __typename?: 'Ticket';
         id: string;
-        ticketNumber: string;
+        ticketNumber: number;
         vaultAddress: string;
         tokenPurchasesLength: number;
         tokenPurchases: Array<{

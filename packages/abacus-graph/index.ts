@@ -1186,7 +1186,7 @@ export type SubscriptionVaultsArgs = {
 export type Ticket = {
   __typename?: 'Ticket';
   id: Scalars['ID'];
-  ticketNumber: Scalars['BigInt'];
+  ticketNumber: Scalars['Int'];
   tokenPurchases: Array<TokenPurchase>;
   tokenPurchasesLength: Scalars['Int'];
   vaultAddress: Scalars['ID'];
@@ -1212,14 +1212,14 @@ export type Ticket_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-  ticketNumber?: InputMaybe<Scalars['BigInt']>;
-  ticketNumber_gt?: InputMaybe<Scalars['BigInt']>;
-  ticketNumber_gte?: InputMaybe<Scalars['BigInt']>;
-  ticketNumber_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  ticketNumber_lt?: InputMaybe<Scalars['BigInt']>;
-  ticketNumber_lte?: InputMaybe<Scalars['BigInt']>;
-  ticketNumber_not?: InputMaybe<Scalars['BigInt']>;
-  ticketNumber_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  ticketNumber?: InputMaybe<Scalars['Int']>;
+  ticketNumber_gt?: InputMaybe<Scalars['Int']>;
+  ticketNumber_gte?: InputMaybe<Scalars['Int']>;
+  ticketNumber_in?: InputMaybe<Array<Scalars['Int']>>;
+  ticketNumber_lt?: InputMaybe<Scalars['Int']>;
+  ticketNumber_lte?: InputMaybe<Scalars['Int']>;
+  ticketNumber_not?: InputMaybe<Scalars['Int']>;
+  ticketNumber_not_in?: InputMaybe<Array<Scalars['Int']>>;
   tokenPurchasesLength?: InputMaybe<Scalars['Int']>;
   tokenPurchasesLength_gt?: InputMaybe<Scalars['Int']>;
   tokenPurchasesLength_gte?: InputMaybe<Scalars['Int']>;
@@ -1687,7 +1687,7 @@ export type NfTsQueryVariables = Exact<{
 
 export type NfTsQuery = { __typename?: 'Query', nfts: Array<{ __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }> };
 
-export type VaultFragment = { __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: number, emissionsSigned: boolean, totalParticipants: number, nfts?: Array<{ __typename?: 'VaultNFT', nft: { __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }, vault: { __typename?: 'Vault', id: string } }> | null, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> }>, sellablePositions: Array<{ __typename?: 'SellablePosition', id: string, nonce: number, owner: string, timestamp: number, amount: string, vaultAddress: string, startEpoch: number, finalEpoch: number, soldAt?: string | null }> };
+export type VaultFragment = { __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: number, emissionsSigned: boolean, totalParticipants: number, nfts?: Array<{ __typename?: 'VaultNFT', nft: { __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }, vault: { __typename?: 'Vault', id: string } }> | null, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: number, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> }>, sellablePositions: Array<{ __typename?: 'SellablePosition', id: string, nonce: number, owner: string, timestamp: number, amount: string, vaultAddress: string, startEpoch: number, finalEpoch: number, soldAt?: string | null }> };
 
 export type GetPoolsQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -1698,20 +1698,20 @@ export type GetPoolsQueryVariables = Exact<{
 }>;
 
 
-export type GetPoolsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: number, emissionsSigned: boolean, totalParticipants: number, nfts?: Array<{ __typename?: 'VaultNFT', nft: { __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }, vault: { __typename?: 'Vault', id: string } }> | null, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> }>, sellablePositions: Array<{ __typename?: 'SellablePosition', id: string, nonce: number, owner: string, timestamp: number, amount: string, vaultAddress: string, startEpoch: number, finalEpoch: number, soldAt?: string | null }> }> };
+export type GetPoolsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: number, emissionsSigned: boolean, totalParticipants: number, nfts?: Array<{ __typename?: 'VaultNFT', nft: { __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }, vault: { __typename?: 'Vault', id: string } }> | null, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: number, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> }>, sellablePositions: Array<{ __typename?: 'SellablePosition', id: string, nonce: number, owner: string, timestamp: number, amount: string, vaultAddress: string, startEpoch: number, finalEpoch: number, soldAt?: string | null }> }> };
 
 export type GetPoolQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetPoolQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: number, emissionsSigned: boolean, totalParticipants: number, nfts?: Array<{ __typename?: 'VaultNFT', nft: { __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }, vault: { __typename?: 'Vault', id: string } }> | null, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> }>, sellablePositions: Array<{ __typename?: 'SellablePosition', id: string, nonce: number, owner: string, timestamp: number, amount: string, vaultAddress: string, startEpoch: number, finalEpoch: number, soldAt?: string | null }> } | null };
+export type GetPoolQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: number, emissionsSigned: boolean, totalParticipants: number, nfts?: Array<{ __typename?: 'VaultNFT', nft: { __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }, vault: { __typename?: 'Vault', id: string } }> | null, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: number, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> }>, sellablePositions: Array<{ __typename?: 'SellablePosition', id: string, nonce: number, owner: string, timestamp: number, amount: string, vaultAddress: string, startEpoch: number, finalEpoch: number, soldAt?: string | null }> } | null };
 
 export type SellablePositionFragment = { __typename?: 'SellablePosition', id: string, nonce: number, owner: string, timestamp: number, amount: string, vaultAddress: string, startEpoch: number, finalEpoch: number, soldAt?: string | null };
 
 export type TokenPurchaseFragment = { __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string };
 
-export type TicketFragment = { __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> };
+export type TicketFragment = { __typename?: 'Ticket', id: string, ticketNumber: number, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> };
 
 export type GetTicketsQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -1720,7 +1720,7 @@ export type GetTicketsQueryVariables = Exact<{
 }>;
 
 
-export type GetTicketsQuery = { __typename?: 'Query', tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> }> };
+export type GetTicketsQuery = { __typename?: 'Query', tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: number, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> }> };
 
 export type UserAllocationsQueryVariables = Exact<{
   id: Scalars['ID'];

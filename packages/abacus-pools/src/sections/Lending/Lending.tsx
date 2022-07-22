@@ -11,7 +11,7 @@ import {
 } from "abacus-ui"
 import { LendingCard, CardGrid } from "@components/index"
 import styled from "styled-components"
-import { random } from "lodash"
+
 import { useFetchLendingNFTs, useLendingNFTs } from "@state/lending/hooks"
 import { useActiveWeb3React } from "@hooks/index"
 import { formatEther } from "ethers/lib/utils"
@@ -150,17 +150,22 @@ const Lending = () => {
       </FilterContainer>
       <LendingSearch />
       <CardGrid>
-        {filteredNFTs.map((nft) => (
-          <LendingCard
-            key={`${nft.address}/${nft.tokenId}`}
-            link={`/lending/${nft.address}/${nft.tokenId}`}
-            title={nft.name}
-            nft={nft}
-            borrowed={Number(formatEther(nft?.loan?.loanAmount ?? "0x0"))}
-            available={random(0, 40, true)}
-            healthRatio={random(0, 10, true)}
-          />
-        ))}
+        {filteredNFTs.map((nft) => {
+          const borrowed = Number(formatEther(nft?.loan?.loanAmount ?? "0x0"))
+          const available = nft.loan.totalAvailable.toNumber() / 1000
+          const healthRatio = (borrowed / available) * 100
+          return (
+            <LendingCard
+              key={`${nft.address}/${nft.tokenId}`}
+              link={`/lending/${nft.address}/${nft.tokenId}`}
+              title={nft.name}
+              nft={nft}
+              borrowed={borrowed}
+              available={available}
+              healthRatio={healthRatio}
+            />
+          )
+        })}
       </CardGrid>
     </Container>
   )

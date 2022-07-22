@@ -85,7 +85,10 @@ const parseSubgraphNFTs = async (nfts: NfTsQuery["nfts"], account?: string) => {
       lendApproved: false,
       repayApproved: false,
       nEthBalance: BigNumber.from(0),
-      vaults: nft.vaults.map(({ vault }) => ({ ...vault })),
+      vaults: nft.vaults.map(({ vault }) => ({
+        ...vault,
+        size: BigNumber.from(vault.size),
+      })),
       reservationStatus: false,
       nextReservationStatus: false,
     }
@@ -126,14 +129,22 @@ export const useFetchLendingNFTs = () => {
       )
 
       const parsedNfts = await parseSubgraphNFTs(nfts, account)
-      const nftsWithPosition = parsedNfts.map((nft, i) => ({
-        ...nft,
-        loan: {
-          borrower: positions[i][0],
-          pool: positions[i][1],
-          loanAmount: BigNumber.from(positions[i][2]),
-        },
-      }))
+      const nftsWithPosition = parsedNfts.map((nft, i) => {
+        const vaultWeCareAbout = nft.vaults.sort((a, b) =>
+          a.size.sub(b.size).toNumber()
+        )[0]
+        return {
+          ...nft,
+          loan: {
+            borrower: positions[i][0],
+            pool: positions[i][1],
+            loanAmount: BigNumber.from(positions[i][2]),
+            totalAvailable: vaultWeCareAbout.size
+              .mul(BigNumber.from(19))
+              .div(BigNumber.from(20)),
+          },
+        }
+      })
 
       dispatch(setLendingNfts(nftsWithPosition))
     },
@@ -193,6 +204,7 @@ export const useFetchCurrentLendingNFT = () => {
           ...parsedAsset,
           vaults: nft.vaults.map(({ vault }) => ({
             ...vault,
+            size: BigNumber.from(vault.size),
           })),
           lendApproved,
           repayApproved: BigNumber.from(nEthAllowance).gte(BigNumber.from(0)),

@@ -23,6 +23,7 @@ export interface LendingNFT {
   vaults: {
     id: string
     name: string
+    size: BigNumber
   }[]
   reservationStatus: boolean
   nextReservationStatus: boolean

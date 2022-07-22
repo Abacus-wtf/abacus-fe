@@ -38,6 +38,7 @@ const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
   const poolData: Pool[] = _.map(vaults, (vault) => {
     const now = new Date().getTime()
     const diff = now - vault.timestamp * 1000
+    // TODO: Will need to set constand for epoch length and use that here testnet = 1 day, main will be different
     const epoch = Math.floor(diff / (24 * 60 * 60 * 1000))
 
     return {

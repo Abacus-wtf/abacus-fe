@@ -14,6 +14,7 @@ import styled from "styled-components"
 import { random } from "lodash"
 import { useFetchLendingNFTs, useLendingNFTs } from "@state/lending/hooks"
 import { useActiveWeb3React } from "@hooks/index"
+import { formatEther } from "ethers/lib/utils"
 import { Container } from "../../layouts/styles"
 import { LendingSearch } from "./LendingSearch"
 
@@ -155,7 +156,7 @@ const Lending = () => {
             link={`/lending/${nft.address}/${nft.tokenId}`}
             title={nft.name}
             nft={nft}
-            borrowed={random(0, 40, true)}
+            borrowed={Number(formatEther(nft?.loan?.loanAmount ?? "0x0"))}
             available={random(0, 40, true)}
             healthRatio={random(0, 10, true)}
           />

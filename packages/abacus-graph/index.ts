@@ -519,6 +519,8 @@ export type Query = {
   nfts: Array<Nft>;
   participant?: Maybe<Participant>;
   participants: Array<Participant>;
+  sellablePosition?: Maybe<SellablePosition>;
+  sellablePositions: Array<SellablePosition>;
   ticket?: Maybe<Ticket>;
   tickets: Array<Ticket>;
   tokenPurchase?: Maybe<TokenPurchase>;
@@ -681,6 +683,24 @@ export type QueryParticipantsArgs = {
 };
 
 
+export type QuerySellablePositionArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerySellablePositionsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<SellablePosition_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<SellablePosition_Filter>;
+};
+
+
 export type QueryTicketArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
@@ -770,6 +790,78 @@ export type QueryVaultsArgs = {
   where?: InputMaybe<Vault_Filter>;
 };
 
+export type SellablePosition = {
+  __typename?: 'SellablePosition';
+  amount: Scalars['BigInt'];
+  availableEpoch: Scalars['Int'];
+  id: Scalars['ID'];
+  owner: Scalars['ID'];
+  soldAt?: Maybe<Scalars['BigInt']>;
+  vaultAddress: Scalars['ID'];
+};
+
+export type SellablePosition_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  amount?: InputMaybe<Scalars['BigInt']>;
+  amount_gt?: InputMaybe<Scalars['BigInt']>;
+  amount_gte?: InputMaybe<Scalars['BigInt']>;
+  amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  amount_lt?: InputMaybe<Scalars['BigInt']>;
+  amount_lte?: InputMaybe<Scalars['BigInt']>;
+  amount_not?: InputMaybe<Scalars['BigInt']>;
+  amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  availableEpoch?: InputMaybe<Scalars['Int']>;
+  availableEpoch_gt?: InputMaybe<Scalars['Int']>;
+  availableEpoch_gte?: InputMaybe<Scalars['Int']>;
+  availableEpoch_in?: InputMaybe<Array<Scalars['Int']>>;
+  availableEpoch_lt?: InputMaybe<Scalars['Int']>;
+  availableEpoch_lte?: InputMaybe<Scalars['Int']>;
+  availableEpoch_not?: InputMaybe<Scalars['Int']>;
+  availableEpoch_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  owner?: InputMaybe<Scalars['ID']>;
+  owner_gt?: InputMaybe<Scalars['ID']>;
+  owner_gte?: InputMaybe<Scalars['ID']>;
+  owner_in?: InputMaybe<Array<Scalars['ID']>>;
+  owner_lt?: InputMaybe<Scalars['ID']>;
+  owner_lte?: InputMaybe<Scalars['ID']>;
+  owner_not?: InputMaybe<Scalars['ID']>;
+  owner_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  soldAt?: InputMaybe<Scalars['BigInt']>;
+  soldAt_gt?: InputMaybe<Scalars['BigInt']>;
+  soldAt_gte?: InputMaybe<Scalars['BigInt']>;
+  soldAt_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  soldAt_lt?: InputMaybe<Scalars['BigInt']>;
+  soldAt_lte?: InputMaybe<Scalars['BigInt']>;
+  soldAt_not?: InputMaybe<Scalars['BigInt']>;
+  soldAt_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  vaultAddress?: InputMaybe<Scalars['ID']>;
+  vaultAddress_gt?: InputMaybe<Scalars['ID']>;
+  vaultAddress_gte?: InputMaybe<Scalars['ID']>;
+  vaultAddress_in?: InputMaybe<Array<Scalars['ID']>>;
+  vaultAddress_lt?: InputMaybe<Scalars['ID']>;
+  vaultAddress_lte?: InputMaybe<Scalars['ID']>;
+  vaultAddress_not?: InputMaybe<Scalars['ID']>;
+  vaultAddress_not_in?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export enum SellablePosition_OrderBy {
+  Amount = 'amount',
+  AvailableEpoch = 'availableEpoch',
+  Id = 'id',
+  Owner = 'owner',
+  SoldAt = 'soldAt',
+  VaultAddress = 'vaultAddress'
+}
+
 export type Subscription = {
   __typename?: 'Subscription';
   /** Access to subgraph metadata */
@@ -790,6 +882,8 @@ export type Subscription = {
   nfts: Array<Nft>;
   participant?: Maybe<Participant>;
   participants: Array<Participant>;
+  sellablePosition?: Maybe<SellablePosition>;
+  sellablePositions: Array<SellablePosition>;
   ticket?: Maybe<Ticket>;
   tickets: Array<Ticket>;
   tokenPurchase?: Maybe<TokenPurchase>;
@@ -952,6 +1046,24 @@ export type SubscriptionParticipantsArgs = {
 };
 
 
+export type SubscriptionSellablePositionArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionSellablePositionsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<SellablePosition_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<SellablePosition_Filter>;
+};
+
+
 export type SubscriptionTicketArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
@@ -1111,7 +1223,6 @@ export type TokenPurchase = {
   finalEpoch: Scalars['Int'];
   id: Scalars['ID'];
   owner: Scalars['ID'];
-  soldAt?: Maybe<Scalars['BigInt']>;
   startEpoch: Scalars['Int'];
   ticket: Ticket;
   timestamp: Scalars['BigInt'];
@@ -1152,14 +1263,6 @@ export type TokenPurchase_Filter = {
   owner_lte?: InputMaybe<Scalars['ID']>;
   owner_not?: InputMaybe<Scalars['ID']>;
   owner_not_in?: InputMaybe<Array<Scalars['ID']>>;
-  soldAt?: InputMaybe<Scalars['BigInt']>;
-  soldAt_gt?: InputMaybe<Scalars['BigInt']>;
-  soldAt_gte?: InputMaybe<Scalars['BigInt']>;
-  soldAt_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  soldAt_lt?: InputMaybe<Scalars['BigInt']>;
-  soldAt_lte?: InputMaybe<Scalars['BigInt']>;
-  soldAt_not?: InputMaybe<Scalars['BigInt']>;
-  soldAt_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   startEpoch?: InputMaybe<Scalars['Int']>;
   startEpoch_gt?: InputMaybe<Scalars['Int']>;
   startEpoch_gte?: InputMaybe<Scalars['Int']>;
@@ -1204,7 +1307,6 @@ export enum TokenPurchase_OrderBy {
   FinalEpoch = 'finalEpoch',
   Id = 'id',
   Owner = 'owner',
-  SoldAt = 'soldAt',
   StartEpoch = 'startEpoch',
   Ticket = 'ticket',
   Timestamp = 'timestamp'
@@ -1251,9 +1353,11 @@ export type Vault = {
   name: Scalars['String'];
   nfts?: Maybe<Array<VaultNft>>;
   owner: Scalars['ID'];
+  sellablePositions: Array<SellablePosition>;
+  size: Scalars['BigInt'];
   status: Scalars['Int'];
   tickets: Array<Ticket>;
-  timestamp: Scalars['BigInt'];
+  timestamp: Scalars['Int'];
   totalParticipants: Scalars['Int'];
 };
 
@@ -1264,6 +1368,15 @@ export type VaultNftsArgs = {
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<VaultNft_Filter>;
+};
+
+
+export type VaultSellablePositionsArgs = {
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<SellablePosition_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<SellablePosition_Filter>;
 };
 
 
@@ -1387,6 +1500,21 @@ export type Vault_Filter = {
   owner_lte?: InputMaybe<Scalars['ID']>;
   owner_not?: InputMaybe<Scalars['ID']>;
   owner_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  sellablePositions?: InputMaybe<Array<Scalars['String']>>;
+  sellablePositions_?: InputMaybe<SellablePosition_Filter>;
+  sellablePositions_contains?: InputMaybe<Array<Scalars['String']>>;
+  sellablePositions_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+  sellablePositions_not?: InputMaybe<Array<Scalars['String']>>;
+  sellablePositions_not_contains?: InputMaybe<Array<Scalars['String']>>;
+  sellablePositions_not_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+  size?: InputMaybe<Scalars['BigInt']>;
+  size_gt?: InputMaybe<Scalars['BigInt']>;
+  size_gte?: InputMaybe<Scalars['BigInt']>;
+  size_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  size_lt?: InputMaybe<Scalars['BigInt']>;
+  size_lte?: InputMaybe<Scalars['BigInt']>;
+  size_not?: InputMaybe<Scalars['BigInt']>;
+  size_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   status?: InputMaybe<Scalars['Int']>;
   status_gt?: InputMaybe<Scalars['Int']>;
   status_gte?: InputMaybe<Scalars['Int']>;
@@ -1402,14 +1530,14 @@ export type Vault_Filter = {
   tickets_not?: InputMaybe<Array<Scalars['String']>>;
   tickets_not_contains?: InputMaybe<Array<Scalars['String']>>;
   tickets_not_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
-  timestamp?: InputMaybe<Scalars['BigInt']>;
-  timestamp_gt?: InputMaybe<Scalars['BigInt']>;
-  timestamp_gte?: InputMaybe<Scalars['BigInt']>;
-  timestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  timestamp_lt?: InputMaybe<Scalars['BigInt']>;
-  timestamp_lte?: InputMaybe<Scalars['BigInt']>;
-  timestamp_not?: InputMaybe<Scalars['BigInt']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  timestamp?: InputMaybe<Scalars['Int']>;
+  timestamp_gt?: InputMaybe<Scalars['Int']>;
+  timestamp_gte?: InputMaybe<Scalars['Int']>;
+  timestamp_in?: InputMaybe<Array<Scalars['Int']>>;
+  timestamp_lt?: InputMaybe<Scalars['Int']>;
+  timestamp_lte?: InputMaybe<Scalars['Int']>;
+  timestamp_not?: InputMaybe<Scalars['Int']>;
+  timestamp_not_in?: InputMaybe<Array<Scalars['Int']>>;
   totalParticipants?: InputMaybe<Scalars['Int']>;
   totalParticipants_gt?: InputMaybe<Scalars['Int']>;
   totalParticipants_gte?: InputMaybe<Scalars['Int']>;
@@ -1426,6 +1554,8 @@ export enum Vault_OrderBy {
   Name = 'name',
   Nfts = 'nfts',
   Owner = 'owner',
+  SellablePositions = 'sellablePositions',
+  Size = 'size',
   Status = 'status',
   Tickets = 'tickets',
   Timestamp = 'timestamp',
@@ -1527,7 +1657,7 @@ export type NfTsQueryVariables = Exact<{
 
 export type NfTsQuery = { __typename?: 'Query', nfts: Array<{ __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }> };
 
-export type VaultFragment = { __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: string, emissionsSigned: boolean, totalParticipants: number, nfts?: Array<{ __typename?: 'VaultNFT', nft: { __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }, vault: { __typename?: 'Vault', id: string } }> | null, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, soldAt?: string | null, timestamp: string }> }> };
+export type VaultFragment = { __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: number, emissionsSigned: boolean, totalParticipants: number, nfts?: Array<{ __typename?: 'VaultNFT', nft: { __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }, vault: { __typename?: 'Vault', id: string } }> | null, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> }>, sellablePositions: Array<{ __typename?: 'SellablePosition', id: string, owner: string, amount: string, vaultAddress: string, availableEpoch: number, soldAt?: string | null }> };
 
 export type GetPoolsQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -1538,18 +1668,20 @@ export type GetPoolsQueryVariables = Exact<{
 }>;
 
 
-export type GetPoolsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: string, emissionsSigned: boolean, totalParticipants: number, nfts?: Array<{ __typename?: 'VaultNFT', nft: { __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }, vault: { __typename?: 'Vault', id: string } }> | null, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, soldAt?: string | null, timestamp: string }> }> }> };
+export type GetPoolsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: number, emissionsSigned: boolean, totalParticipants: number, nfts?: Array<{ __typename?: 'VaultNFT', nft: { __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }, vault: { __typename?: 'Vault', id: string } }> | null, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> }>, sellablePositions: Array<{ __typename?: 'SellablePosition', id: string, owner: string, amount: string, vaultAddress: string, availableEpoch: number, soldAt?: string | null }> }> };
 
 export type GetPoolQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetPoolQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: string, emissionsSigned: boolean, totalParticipants: number, nfts?: Array<{ __typename?: 'VaultNFT', nft: { __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }, vault: { __typename?: 'Vault', id: string } }> | null, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, soldAt?: string | null, timestamp: string }> }> } | null };
+export type GetPoolQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', id: string, name: string, owner: string, status: number, timestamp: number, emissionsSigned: boolean, totalParticipants: number, nfts?: Array<{ __typename?: 'VaultNFT', nft: { __typename?: 'NFT', id: string, address: string, tokenId: string, vaults?: Array<{ __typename?: 'VaultNFT', vault: { __typename?: 'Vault', id: string, name: string } }> | null }, vault: { __typename?: 'Vault', id: string } }> | null, tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> }>, sellablePositions: Array<{ __typename?: 'SellablePosition', id: string, owner: string, amount: string, vaultAddress: string, availableEpoch: number, soldAt?: string | null }> } | null };
 
-export type TokenPurchaseFragment = { __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, soldAt?: string | null, timestamp: string };
+export type SellablePositionFragment = { __typename?: 'SellablePosition', id: string, owner: string, amount: string, vaultAddress: string, availableEpoch: number, soldAt?: string | null };
 
-export type TicketFragment = { __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, soldAt?: string | null, timestamp: string }> };
+export type TokenPurchaseFragment = { __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string };
+
+export type TicketFragment = { __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> };
 
 export type GetTicketsQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -1558,7 +1690,7 @@ export type GetTicketsQueryVariables = Exact<{
 }>;
 
 
-export type GetTicketsQuery = { __typename?: 'Query', tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, soldAt?: string | null, timestamp: string }> }> };
+export type GetTicketsQuery = { __typename?: 'Query', tickets: Array<{ __typename?: 'Ticket', id: string, ticketNumber: string, vaultAddress: string, tokenPurchasesLength: number, tokenPurchases: Array<{ __typename?: 'TokenPurchase', amount: string, id: string, startEpoch: number, finalEpoch: number, owner: string, timestamp: string }> }> };
 
 export type UserAllocationsQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -1574,9 +1706,10 @@ export const AllocationFragmentDoc = {"kind":"Document","definitions":[{"kind":"
 export const BidFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Bid"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Bid"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"bidder"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]} as unknown as DocumentNode<BidFragment, unknown>;
 export const NftFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NFT"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NFT"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"tokenId"}},{"kind":"Field","name":{"kind":"Name","value":"vaults"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vault"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<NftFragment, unknown>;
 export const VaultNftFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"VaultNFT"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"VaultNFT"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nft"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NFT"}}]}},{"kind":"Field","name":{"kind":"Name","value":"vault"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},...NftFragmentDoc.definitions]} as unknown as DocumentNode<VaultNftFragment, unknown>;
-export const TokenPurchaseFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TokenPurchase"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TokenPurchase"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"startEpoch"}},{"kind":"Field","name":{"kind":"Name","value":"finalEpoch"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"soldAt"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}}]} as unknown as DocumentNode<TokenPurchaseFragment, unknown>;
+export const TokenPurchaseFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TokenPurchase"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TokenPurchase"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"startEpoch"}},{"kind":"Field","name":{"kind":"Name","value":"finalEpoch"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}}]} as unknown as DocumentNode<TokenPurchaseFragment, unknown>;
 export const TicketFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Ticket"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Ticket"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ticketNumber"}},{"kind":"Field","name":{"kind":"Name","value":"vaultAddress"}},{"kind":"Field","name":{"kind":"Name","value":"tokenPurchasesLength"}},{"kind":"Field","name":{"kind":"Name","value":"tokenPurchases"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenPurchase"}}]}}]}},...TokenPurchaseFragmentDoc.definitions]} as unknown as DocumentNode<TicketFragment, unknown>;
-export const VaultFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Vault"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Vault"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nfts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"VaultNFT"}}]}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"emissionsSigned"}},{"kind":"Field","name":{"kind":"Name","value":"totalParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"tickets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Ticket"}}]}}]}},...VaultNftFragmentDoc.definitions,...TicketFragmentDoc.definitions]} as unknown as DocumentNode<VaultFragment, unknown>;
+export const SellablePositionFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SellablePosition"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SellablePosition"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"vaultAddress"}},{"kind":"Field","name":{"kind":"Name","value":"availableEpoch"}},{"kind":"Field","name":{"kind":"Name","value":"soldAt"}}]}}]} as unknown as DocumentNode<SellablePositionFragment, unknown>;
+export const VaultFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Vault"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Vault"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nfts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"VaultNFT"}}]}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"emissionsSigned"}},{"kind":"Field","name":{"kind":"Name","value":"totalParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"tickets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Ticket"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sellablePositions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SellablePosition"}}]}}]}},...VaultNftFragmentDoc.definitions,...TicketFragmentDoc.definitions,...SellablePositionFragmentDoc.definitions]} as unknown as DocumentNode<VaultFragment, unknown>;
 export const GetAggregatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAggregates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"StringValue","value":"MEDICI_RULES","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"totalPools"}},{"kind":"Field","name":{"kind":"Name","value":"TVL"}},{"kind":"Field","name":{"kind":"Name","value":"totalParticipants"}}]}}]}}]} as unknown as DocumentNode<GetAggregatesQuery, GetAggregatesQueryVariables>;
 export const AllocationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Allocations"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allocations"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Allocation"}}]}}]}},...AllocationFragmentDoc.definitions]} as unknown as DocumentNode<AllocationsQuery, AllocationsQueryVariables>;
 export const GetAuctionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAuction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"auction"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"highestBid"}},{"kind":"Field","name":{"kind":"Name","value":"highestBidder"}},{"kind":"Field","name":{"kind":"Name","value":"bids"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Bid"}}]}}]}}]}},...BidFragmentDoc.definitions]} as unknown as DocumentNode<GetAuctionQuery, GetAuctionQueryVariables>;

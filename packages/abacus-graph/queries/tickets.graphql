@@ -4,7 +4,6 @@ fragment TokenPurchase on TokenPurchase {
   startEpoch
   finalEpoch
   owner
-  soldAt
   timestamp
 }
 

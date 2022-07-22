@@ -1,0 +1,8 @@
+fragment SellablePosition on SellablePosition {
+  id
+  owner
+  amount
+  vaultAddress
+  availableEpoch
+  soldAt
+}

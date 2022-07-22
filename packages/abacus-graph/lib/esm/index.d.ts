@@ -495,6 +495,8 @@ export declare type Query = {
     nfts: Array<Nft>;
     participant?: Maybe<Participant>;
     participants: Array<Participant>;
+    sellablePosition?: Maybe<SellablePosition>;
+    sellablePositions: Array<SellablePosition>;
     ticket?: Maybe<Ticket>;
     tickets: Array<Ticket>;
     tokenPurchase?: Maybe<TokenPurchase>;
@@ -621,6 +623,20 @@ export declare type QueryParticipantsArgs = {
     subgraphError?: _SubgraphErrorPolicy_;
     where?: InputMaybe<Participant_Filter>;
 };
+export declare type QuerySellablePositionArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type QuerySellablePositionsArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<SellablePosition_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<SellablePosition_Filter>;
+};
 export declare type QueryTicketArgs = {
     block?: InputMaybe<Block_Height>;
     id: Scalars['ID'];
@@ -691,6 +707,75 @@ export declare type QueryVaultsArgs = {
     subgraphError?: _SubgraphErrorPolicy_;
     where?: InputMaybe<Vault_Filter>;
 };
+export declare type SellablePosition = {
+    __typename?: 'SellablePosition';
+    amount: Scalars['BigInt'];
+    availableEpoch: Scalars['Int'];
+    id: Scalars['ID'];
+    owner: Scalars['ID'];
+    soldAt?: Maybe<Scalars['BigInt']>;
+    vaultAddress: Scalars['ID'];
+};
+export declare type SellablePosition_Filter = {
+    /** Filter for the block changed event. */
+    _change_block?: InputMaybe<BlockChangedFilter>;
+    amount?: InputMaybe<Scalars['BigInt']>;
+    amount_gt?: InputMaybe<Scalars['BigInt']>;
+    amount_gte?: InputMaybe<Scalars['BigInt']>;
+    amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    amount_lt?: InputMaybe<Scalars['BigInt']>;
+    amount_lte?: InputMaybe<Scalars['BigInt']>;
+    amount_not?: InputMaybe<Scalars['BigInt']>;
+    amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    availableEpoch?: InputMaybe<Scalars['Int']>;
+    availableEpoch_gt?: InputMaybe<Scalars['Int']>;
+    availableEpoch_gte?: InputMaybe<Scalars['Int']>;
+    availableEpoch_in?: InputMaybe<Array<Scalars['Int']>>;
+    availableEpoch_lt?: InputMaybe<Scalars['Int']>;
+    availableEpoch_lte?: InputMaybe<Scalars['Int']>;
+    availableEpoch_not?: InputMaybe<Scalars['Int']>;
+    availableEpoch_not_in?: InputMaybe<Array<Scalars['Int']>>;
+    id?: InputMaybe<Scalars['ID']>;
+    id_gt?: InputMaybe<Scalars['ID']>;
+    id_gte?: InputMaybe<Scalars['ID']>;
+    id_in?: InputMaybe<Array<Scalars['ID']>>;
+    id_lt?: InputMaybe<Scalars['ID']>;
+    id_lte?: InputMaybe<Scalars['ID']>;
+    id_not?: InputMaybe<Scalars['ID']>;
+    id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+    owner?: InputMaybe<Scalars['ID']>;
+    owner_gt?: InputMaybe<Scalars['ID']>;
+    owner_gte?: InputMaybe<Scalars['ID']>;
+    owner_in?: InputMaybe<Array<Scalars['ID']>>;
+    owner_lt?: InputMaybe<Scalars['ID']>;
+    owner_lte?: InputMaybe<Scalars['ID']>;
+    owner_not?: InputMaybe<Scalars['ID']>;
+    owner_not_in?: InputMaybe<Array<Scalars['ID']>>;
+    soldAt?: InputMaybe<Scalars['BigInt']>;
+    soldAt_gt?: InputMaybe<Scalars['BigInt']>;
+    soldAt_gte?: InputMaybe<Scalars['BigInt']>;
+    soldAt_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    soldAt_lt?: InputMaybe<Scalars['BigInt']>;
+    soldAt_lte?: InputMaybe<Scalars['BigInt']>;
+    soldAt_not?: InputMaybe<Scalars['BigInt']>;
+    soldAt_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    vaultAddress?: InputMaybe<Scalars['ID']>;
+    vaultAddress_gt?: InputMaybe<Scalars['ID']>;
+    vaultAddress_gte?: InputMaybe<Scalars['ID']>;
+    vaultAddress_in?: InputMaybe<Array<Scalars['ID']>>;
+    vaultAddress_lt?: InputMaybe<Scalars['ID']>;
+    vaultAddress_lte?: InputMaybe<Scalars['ID']>;
+    vaultAddress_not?: InputMaybe<Scalars['ID']>;
+    vaultAddress_not_in?: InputMaybe<Array<Scalars['ID']>>;
+};
+export declare enum SellablePosition_OrderBy {
+    Amount = "amount",
+    AvailableEpoch = "availableEpoch",
+    Id = "id",
+    Owner = "owner",
+    SoldAt = "soldAt",
+    VaultAddress = "vaultAddress"
+}
 export declare type Subscription = {
     __typename?: 'Subscription';
     /** Access to subgraph metadata */
@@ -711,6 +796,8 @@ export declare type Subscription = {
     nfts: Array<Nft>;
     participant?: Maybe<Participant>;
     participants: Array<Participant>;
+    sellablePosition?: Maybe<SellablePosition>;
+    sellablePositions: Array<SellablePosition>;
     ticket?: Maybe<Ticket>;
     tickets: Array<Ticket>;
     tokenPurchase?: Maybe<TokenPurchase>;
@@ -836,6 +923,20 @@ export declare type SubscriptionParticipantsArgs = {
     skip?: InputMaybe<Scalars['Int']>;
     subgraphError?: _SubgraphErrorPolicy_;
     where?: InputMaybe<Participant_Filter>;
+};
+export declare type SubscriptionSellablePositionArgs = {
+    block?: InputMaybe<Block_Height>;
+    id: Scalars['ID'];
+    subgraphError?: _SubgraphErrorPolicy_;
+};
+export declare type SubscriptionSellablePositionsArgs = {
+    block?: InputMaybe<Block_Height>;
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<SellablePosition_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    subgraphError?: _SubgraphErrorPolicy_;
+    where?: InputMaybe<SellablePosition_Filter>;
 };
 export declare type SubscriptionTicketArgs = {
     block?: InputMaybe<Block_Height>;
@@ -972,7 +1073,6 @@ export declare type TokenPurchase = {
     finalEpoch: Scalars['Int'];
     id: Scalars['ID'];
     owner: Scalars['ID'];
-    soldAt?: Maybe<Scalars['BigInt']>;
     startEpoch: Scalars['Int'];
     ticket: Ticket;
     timestamp: Scalars['BigInt'];
@@ -1012,14 +1112,6 @@ export declare type TokenPurchase_Filter = {
     owner_lte?: InputMaybe<Scalars['ID']>;
     owner_not?: InputMaybe<Scalars['ID']>;
     owner_not_in?: InputMaybe<Array<Scalars['ID']>>;
-    soldAt?: InputMaybe<Scalars['BigInt']>;
-    soldAt_gt?: InputMaybe<Scalars['BigInt']>;
-    soldAt_gte?: InputMaybe<Scalars['BigInt']>;
-    soldAt_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    soldAt_lt?: InputMaybe<Scalars['BigInt']>;
-    soldAt_lte?: InputMaybe<Scalars['BigInt']>;
-    soldAt_not?: InputMaybe<Scalars['BigInt']>;
-    soldAt_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     startEpoch?: InputMaybe<Scalars['Int']>;
     startEpoch_gt?: InputMaybe<Scalars['Int']>;
     startEpoch_gte?: InputMaybe<Scalars['Int']>;
@@ -1063,7 +1155,6 @@ export declare enum TokenPurchase_OrderBy {
     FinalEpoch = "finalEpoch",
     Id = "id",
     Owner = "owner",
-    SoldAt = "soldAt",
     StartEpoch = "startEpoch",
     Ticket = "ticket",
     Timestamp = "timestamp"
@@ -1104,9 +1195,11 @@ export declare type Vault = {
     name: Scalars['String'];
     nfts?: Maybe<Array<VaultNft>>;
     owner: Scalars['ID'];
+    sellablePositions: Array<SellablePosition>;
+    size: Scalars['BigInt'];
     status: Scalars['Int'];
     tickets: Array<Ticket>;
-    timestamp: Scalars['BigInt'];
+    timestamp: Scalars['Int'];
     totalParticipants: Scalars['Int'];
 };
 export declare type VaultNftsArgs = {
@@ -1115,6 +1208,13 @@ export declare type VaultNftsArgs = {
     orderDirection?: InputMaybe<OrderDirection>;
     skip?: InputMaybe<Scalars['Int']>;
     where?: InputMaybe<VaultNft_Filter>;
+};
+export declare type VaultSellablePositionsArgs = {
+    first?: InputMaybe<Scalars['Int']>;
+    orderBy?: InputMaybe<SellablePosition_OrderBy>;
+    orderDirection?: InputMaybe<OrderDirection>;
+    skip?: InputMaybe<Scalars['Int']>;
+    where?: InputMaybe<SellablePosition_Filter>;
 };
 export declare type VaultTicketsArgs = {
     first?: InputMaybe<Scalars['Int']>;
@@ -1232,6 +1332,21 @@ export declare type Vault_Filter = {
     owner_lte?: InputMaybe<Scalars['ID']>;
     owner_not?: InputMaybe<Scalars['ID']>;
     owner_not_in?: InputMaybe<Array<Scalars['ID']>>;
+    sellablePositions?: InputMaybe<Array<Scalars['String']>>;
+    sellablePositions_?: InputMaybe<SellablePosition_Filter>;
+    sellablePositions_contains?: InputMaybe<Array<Scalars['String']>>;
+    sellablePositions_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+    sellablePositions_not?: InputMaybe<Array<Scalars['String']>>;
+    sellablePositions_not_contains?: InputMaybe<Array<Scalars['String']>>;
+    sellablePositions_not_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+    size?: InputMaybe<Scalars['BigInt']>;
+    size_gt?: InputMaybe<Scalars['BigInt']>;
+    size_gte?: InputMaybe<Scalars['BigInt']>;
+    size_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    size_lt?: InputMaybe<Scalars['BigInt']>;
+    size_lte?: InputMaybe<Scalars['BigInt']>;
+    size_not?: InputMaybe<Scalars['BigInt']>;
+    size_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     status?: InputMaybe<Scalars['Int']>;
     status_gt?: InputMaybe<Scalars['Int']>;
     status_gte?: InputMaybe<Scalars['Int']>;
@@ -1247,14 +1362,14 @@ export declare type Vault_Filter = {
     tickets_not?: InputMaybe<Array<Scalars['String']>>;
     tickets_not_contains?: InputMaybe<Array<Scalars['String']>>;
     tickets_not_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
-    timestamp?: InputMaybe<Scalars['BigInt']>;
-    timestamp_gt?: InputMaybe<Scalars['BigInt']>;
-    timestamp_gte?: InputMaybe<Scalars['BigInt']>;
-    timestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    timestamp_lt?: InputMaybe<Scalars['BigInt']>;
-    timestamp_lte?: InputMaybe<Scalars['BigInt']>;
-    timestamp_not?: InputMaybe<Scalars['BigInt']>;
-    timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    timestamp?: InputMaybe<Scalars['Int']>;
+    timestamp_gt?: InputMaybe<Scalars['Int']>;
+    timestamp_gte?: InputMaybe<Scalars['Int']>;
+    timestamp_in?: InputMaybe<Array<Scalars['Int']>>;
+    timestamp_lt?: InputMaybe<Scalars['Int']>;
+    timestamp_lte?: InputMaybe<Scalars['Int']>;
+    timestamp_not?: InputMaybe<Scalars['Int']>;
+    timestamp_not_in?: InputMaybe<Array<Scalars['Int']>>;
     totalParticipants?: InputMaybe<Scalars['Int']>;
     totalParticipants_gt?: InputMaybe<Scalars['Int']>;
     totalParticipants_gte?: InputMaybe<Scalars['Int']>;
@@ -1270,6 +1385,8 @@ export declare enum Vault_OrderBy {
     Name = "name",
     Nfts = "nfts",
     Owner = "owner",
+    SellablePositions = "sellablePositions",
+    Size = "size",
     Status = "status",
     Tickets = "tickets",
     Timestamp = "timestamp",
@@ -1474,7 +1591,7 @@ export declare type VaultFragment = {
     name: string;
     owner: string;
     status: number;
-    timestamp: string;
+    timestamp: number;
     emissionsSigned: boolean;
     totalParticipants: number;
     nfts?: Array<{
@@ -1511,9 +1628,17 @@ export declare type VaultFragment = {
             startEpoch: number;
             finalEpoch: number;
             owner: string;
-            soldAt?: string | null;
             timestamp: string;
         }>;
+    }>;
+    sellablePositions: Array<{
+        __typename?: 'SellablePosition';
+        id: string;
+        owner: string;
+        amount: string;
+        vaultAddress: string;
+        availableEpoch: number;
+        soldAt?: string | null;
     }>;
 };
 export declare type GetPoolsQueryVariables = Exact<{
@@ -1531,7 +1656,7 @@ export declare type GetPoolsQuery = {
         name: string;
         owner: string;
         status: number;
-        timestamp: string;
+        timestamp: number;
         emissionsSigned: boolean;
         totalParticipants: number;
         nfts?: Array<{
@@ -1568,9 +1693,17 @@ export declare type GetPoolsQuery = {
                 startEpoch: number;
                 finalEpoch: number;
                 owner: string;
-                soldAt?: string | null;
                 timestamp: string;
             }>;
+        }>;
+        sellablePositions: Array<{
+            __typename?: 'SellablePosition';
+            id: string;
+            owner: string;
+            amount: string;
+            vaultAddress: string;
+            availableEpoch: number;
+            soldAt?: string | null;
         }>;
     }>;
 };
@@ -1585,7 +1718,7 @@ export declare type GetPoolQuery = {
         name: string;
         owner: string;
         status: number;
-        timestamp: string;
+        timestamp: number;
         emissionsSigned: boolean;
         totalParticipants: number;
         nfts?: Array<{
@@ -1622,11 +1755,28 @@ export declare type GetPoolQuery = {
                 startEpoch: number;
                 finalEpoch: number;
                 owner: string;
-                soldAt?: string | null;
                 timestamp: string;
             }>;
         }>;
+        sellablePositions: Array<{
+            __typename?: 'SellablePosition';
+            id: string;
+            owner: string;
+            amount: string;
+            vaultAddress: string;
+            availableEpoch: number;
+            soldAt?: string | null;
+        }>;
     } | null;
+};
+export declare type SellablePositionFragment = {
+    __typename?: 'SellablePosition';
+    id: string;
+    owner: string;
+    amount: string;
+    vaultAddress: string;
+    availableEpoch: number;
+    soldAt?: string | null;
 };
 export declare type TokenPurchaseFragment = {
     __typename?: 'TokenPurchase';
@@ -1635,7 +1785,6 @@ export declare type TokenPurchaseFragment = {
     startEpoch: number;
     finalEpoch: number;
     owner: string;
-    soldAt?: string | null;
     timestamp: string;
 };
 export declare type TicketFragment = {
@@ -1651,7 +1800,6 @@ export declare type TicketFragment = {
         startEpoch: number;
         finalEpoch: number;
         owner: string;
-        soldAt?: string | null;
         timestamp: string;
     }>;
 };
@@ -1675,7 +1823,6 @@ export declare type GetTicketsQuery = {
             startEpoch: number;
             finalEpoch: number;
             owner: string;
-            soldAt?: string | null;
             timestamp: string;
         }>;
     }>;
@@ -1725,6 +1872,7 @@ export declare const NftFragmentDoc: DocumentNode<NftFragment, unknown>;
 export declare const VaultNftFragmentDoc: DocumentNode<VaultNftFragment, unknown>;
 export declare const TokenPurchaseFragmentDoc: DocumentNode<TokenPurchaseFragment, unknown>;
 export declare const TicketFragmentDoc: DocumentNode<TicketFragment, unknown>;
+export declare const SellablePositionFragmentDoc: DocumentNode<SellablePositionFragment, unknown>;
 export declare const VaultFragmentDoc: DocumentNode<VaultFragment, unknown>;
 export declare const GetAggregatesDocument: DocumentNode<GetAggregatesQuery, Exact<{
     [key: string]: never;

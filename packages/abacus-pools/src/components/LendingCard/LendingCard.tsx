@@ -66,7 +66,7 @@ const LendingCard = ({
           <Kilo>Borrowed</Kilo>
         </CardInfo>
         <CardInfo>
-          <CardInfoContent>{round2Decimals(available)} ETH</CardInfoContent>
+          <CardInfoContent>~{round2Decimals(available)} ETH</CardInfoContent>
           <Kilo>Available</Kilo>
         </CardInfo>
       </CardInfoRow>

@@ -31,6 +31,7 @@ import {
 import { aggregateVaultTokenLockHistory, getPoolSize } from "utils/vaultTickets"
 import { matchOpenSeaAssetToNFT, openseaGetMany } from "abacus-utils"
 
+import { ActivitySectionProps } from "@components/ActivitySection"
 import { Auction, Pool, PoolStatus } from "../poolData/reducer"
 import {
   getBribe,
@@ -45,6 +46,7 @@ import {
   GetTicketVariables,
   GET_TICKETS,
 } from "./queries"
+import { sellablePositionsSelector } from "./selectors"
 
 const getPoolDataSelector = (
   state: AppState
@@ -82,57 +84,7 @@ export const useTickets = () =>
 const getPoolEpochSelector = (state: AppState) =>
   state.singlePoolData.data.epoch
 
-type SellablePosition = {
-  id: string
-  amount: number
-  nonce: number
-  startEpoch: number
-  finalEpoch: number
-}
-
-export const useSellablePositions = () => {
-  const { account } = useActiveWeb3React()
-  const initial: SellablePosition[] = []
-  const sellablePositionsSelector = createSelector(
-    getTicketsSelector,
-    getPoolEpochSelector,
-    (tickets, currentEpoch) =>
-      tickets
-        ?.reduce((acc, ticket) => {
-          if (!ticket.tokenPurchasesLength || !account) {
-            return acc
-          }
-          const nextSellablePositions: SellablePosition[] =
-            ticket.tokenPurchases.reduce((tokenAcc, tokenPurchase) => {
-              const isAccountsPurchase =
-                tokenPurchase.owner.toLowerCase() === account.toLowerCase()
-              if (!isAccountsPurchase) {
-                return tokenAcc
-              }
-              const isSold = !!tokenPurchase.soldAt
-              if (isSold) {
-                return tokenAcc
-              }
-              const locked = tokenPurchase.finalEpoch > currentEpoch
-              if (locked) {
-                return tokenAcc
-              }
-              const sellablePosition: SellablePosition = {
-                id: tokenPurchase.id,
-                amount: Number(tokenPurchase.amount),
-                nonce: 0, // TODO: Get this from event emission
-                startEpoch: tokenPurchase.startEpoch,
-                finalEpoch: tokenPurchase.finalEpoch,
-              }
-
-              return [...tokenAcc, sellablePosition]
-            }, initial)
-          return [...acc, ...nextSellablePositions]
-        }, initial)
-        .sort((a, b) => b.startEpoch - a.startEpoch)
-  )
-  return useSelector(sellablePositionsSelector)
-}
+export const useSellablePositions = () => useSelector(sellablePositionsSelector)
 
 export const useEntryLevels = () => {
   const entryLevelsSelector = createSelector(
@@ -163,53 +115,42 @@ export const useCurrentPoolSize = () => {
   return useSelector(poolSizeSelector)
 }
 
-type Activity = {
-  id: string
-  user: string
-  action: "purchase" | "sale"
-  timestamp: number
-  amount: number
-  length?: number
-}
+type Activity = ActivitySectionProps["activities"][number]
 
-export const useActivity = () => {
+export const useCurrentPoolActivity = () => {
   const initial: Activity[] = []
-  const activitySelector = createSelector(getTicketsSelector, (tickets) =>
-    tickets
-      ?.reduce((acc, ticket) => {
-        if (!ticket.tokenPurchasesLength) {
-          return acc
-        }
-        const nextActivities: Activity[] = ticket.tokenPurchases.reduce(
-          (tokenAcc, tokenPurchase) => {
-            const timestamp = Number(tokenPurchase.timestamp) * 1000
-            const purchase: Activity = {
-              id: tokenPurchase.id,
-              user: tokenPurchase.owner,
-              action: "purchase",
-              timestamp,
-              amount: Number(tokenPurchase.amount),
-              length: tokenPurchase.finalEpoch - tokenPurchase.startEpoch,
-            }
-            const sale: Activity = tokenPurchase.soldAt
-              ? {
-                  id: tokenPurchase.id,
-                  user: tokenPurchase.owner,
-                  action: "purchase",
-                  timestamp,
-                  amount: Number(tokenPurchase.amount),
-                }
-              : null
-            if (sale) {
-              return [...tokenAcc, purchase, sale]
-            }
-            return [...tokenAcc, purchase]
-          },
-          initial
-        )
-        return [...acc, ...nextActivities]
-      }, initial)
-      .sort((a, b) => b.timestamp - a.timestamp)
+  const activitySelector = createSelector(
+    sellablePositionsSelector,
+    (sellablePositions) =>
+      sellablePositions
+        ?.reduce((acc, sellablePosition) => {
+          const timestamp = Number(sellablePosition.timestamp) * 1000
+          const length =
+            sellablePosition.finalEpoch - sellablePosition.startEpoch
+          const purchase: Activity = {
+            id: sellablePosition.id,
+            user: sellablePosition.owner,
+            description: `Purchased ${Number(
+              sellablePosition.amount
+            )} tokens for ${length} epoch${length > 1 ? "s" : ""}`,
+            timestamp,
+          }
+          const sale: Activity = sellablePosition.soldAt
+            ? {
+                id: `${sellablePosition.id}_sale`,
+                user: sellablePosition.owner,
+                description: `Sold positon of ${Number(
+                  sellablePosition.amount
+                )} tokens`,
+                timestamp,
+              }
+            : null
+          if (sale) {
+            return [...acc, purchase, sale]
+          }
+          return [...acc, purchase]
+        }, initial)
+        .sort((a, b) => b.timestamp - a.timestamp)
   )
   return useSelector(activitySelector)
 }
@@ -533,6 +474,7 @@ export const useSetPoolData = () => {
           isManager: nfts.some((nft) => nft.isManager),
           totalParticipants: _pool.totalParticipants,
           epoch: BigNumber.from(currentEpoch).toNumber(),
+          sellablePositions: _pool.sellablePositions,
         }
         dispatch(getPoolData(pool))
       } catch (e) {

@@ -34,6 +34,7 @@ const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
   const { assets } = await openseaGetMany(nfts, {
     url: OPENSEA_LINK,
   })
+
   const poolData: Pool[] = _.map(vaults, (vault) => ({
     state:
       vault.status === 0
@@ -58,6 +59,8 @@ const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
     emissionsStarted: vault.emissionsSigned,
     totalParticipants: vault.totalParticipants,
     tickets: vault.tickets,
+    epoch: 0,
+    sellablePositions: vault.sellablePositions,
   }))
   return poolData
 }

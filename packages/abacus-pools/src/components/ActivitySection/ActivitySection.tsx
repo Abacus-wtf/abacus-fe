@@ -47,8 +47,8 @@ const ActivityWhen = styled.div`
   justify-self: flex-end;
 `
 
-type ActivitySectionProps = {
-  activity: {
+export type ActivitySectionProps = {
+  activities: {
     id: string
     user: string
     description: string
@@ -56,14 +56,14 @@ type ActivitySectionProps = {
   }[]
 }
 
-const ActivitySection = ({ activity }: ActivitySectionProps) => (
+const ActivitySection = ({ activities }: ActivitySectionProps) => (
   <Section>
     <SectionHeader>
       <SectionTitle>Activity</SectionTitle>
       <SeeAllButton buttonType={ButtonType.Clear}>See All</SeeAllButton>
     </SectionHeader>
     <Wrapper>
-      {activity?.map((item) => (
+      {activities?.map((item) => (
         <ActivityItem key={item.id}>
           <Flex style={{ columnGap: "10px" }}>
             <StyledProfileIcon src={getUserIcon(item.user)} />

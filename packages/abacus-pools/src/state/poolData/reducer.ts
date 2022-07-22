@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit"
-import { GetPoolsQuery } from "abacus-graph"
+import { GetPoolsQuery, SellablePositionFragment } from "abacus-graph"
 import { getPools, getMyPools } from "./actions"
 
 export interface NFT {
@@ -69,7 +69,8 @@ export interface Pool {
   tickets?: GetPoolsQuery["vaults"][number]["tickets"]
   nfts: NFT[]
   name: string
-  epoch?: number
+  epoch: number
+  sellablePositions: SellablePositionFragment[]
 }
 
 export const INITIAL_POOL: Pool = {
@@ -77,6 +78,8 @@ export const INITIAL_POOL: Pool = {
   state: PoolStatus.Normal,
   totalParticipants: 0,
   nfts: [],
+  sellablePositions: [],
+  epoch: 0,
 }
 
 interface PoolState {

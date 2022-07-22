@@ -11,7 +11,6 @@ import {
 } from "abacus-ui"
 import { LendingCard, CardGrid } from "@components/index"
 import styled from "styled-components"
-
 import { useFetchLendingNFTs, useLendingNFTs } from "@state/lending/hooks"
 import { useActiveWeb3React } from "@hooks/index"
 import { formatEther } from "ethers/lib/utils"

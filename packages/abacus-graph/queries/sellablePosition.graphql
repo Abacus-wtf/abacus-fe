@@ -5,6 +5,7 @@ fragment SellablePosition on SellablePosition {
   timestamp
   amount
   vaultAddress
-  availableEpoch
+  startEpoch
+  finalEpoch
   soldAt
 }

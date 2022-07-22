@@ -710,11 +710,12 @@ export declare type QueryVaultsArgs = {
 export declare type SellablePosition = {
     __typename?: 'SellablePosition';
     amount: Scalars['BigInt'];
-    availableEpoch: Scalars['Int'];
+    finalEpoch: Scalars['Int'];
     id: Scalars['ID'];
     nonce: Scalars['Int'];
     owner: Scalars['ID'];
     soldAt?: Maybe<Scalars['BigInt']>;
+    startEpoch: Scalars['Int'];
     timestamp: Scalars['Int'];
     vaultAddress: Scalars['ID'];
 };
@@ -729,14 +730,14 @@ export declare type SellablePosition_Filter = {
     amount_lte?: InputMaybe<Scalars['BigInt']>;
     amount_not?: InputMaybe<Scalars['BigInt']>;
     amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    availableEpoch?: InputMaybe<Scalars['Int']>;
-    availableEpoch_gt?: InputMaybe<Scalars['Int']>;
-    availableEpoch_gte?: InputMaybe<Scalars['Int']>;
-    availableEpoch_in?: InputMaybe<Array<Scalars['Int']>>;
-    availableEpoch_lt?: InputMaybe<Scalars['Int']>;
-    availableEpoch_lte?: InputMaybe<Scalars['Int']>;
-    availableEpoch_not?: InputMaybe<Scalars['Int']>;
-    availableEpoch_not_in?: InputMaybe<Array<Scalars['Int']>>;
+    finalEpoch?: InputMaybe<Scalars['Int']>;
+    finalEpoch_gt?: InputMaybe<Scalars['Int']>;
+    finalEpoch_gte?: InputMaybe<Scalars['Int']>;
+    finalEpoch_in?: InputMaybe<Array<Scalars['Int']>>;
+    finalEpoch_lt?: InputMaybe<Scalars['Int']>;
+    finalEpoch_lte?: InputMaybe<Scalars['Int']>;
+    finalEpoch_not?: InputMaybe<Scalars['Int']>;
+    finalEpoch_not_in?: InputMaybe<Array<Scalars['Int']>>;
     id?: InputMaybe<Scalars['ID']>;
     id_gt?: InputMaybe<Scalars['ID']>;
     id_gte?: InputMaybe<Scalars['ID']>;
@@ -769,6 +770,14 @@ export declare type SellablePosition_Filter = {
     soldAt_lte?: InputMaybe<Scalars['BigInt']>;
     soldAt_not?: InputMaybe<Scalars['BigInt']>;
     soldAt_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startEpoch?: InputMaybe<Scalars['Int']>;
+    startEpoch_gt?: InputMaybe<Scalars['Int']>;
+    startEpoch_gte?: InputMaybe<Scalars['Int']>;
+    startEpoch_in?: InputMaybe<Array<Scalars['Int']>>;
+    startEpoch_lt?: InputMaybe<Scalars['Int']>;
+    startEpoch_lte?: InputMaybe<Scalars['Int']>;
+    startEpoch_not?: InputMaybe<Scalars['Int']>;
+    startEpoch_not_in?: InputMaybe<Array<Scalars['Int']>>;
     timestamp?: InputMaybe<Scalars['Int']>;
     timestamp_gt?: InputMaybe<Scalars['Int']>;
     timestamp_gte?: InputMaybe<Scalars['Int']>;
@@ -788,11 +797,12 @@ export declare type SellablePosition_Filter = {
 };
 export declare enum SellablePosition_OrderBy {
     Amount = "amount",
-    AvailableEpoch = "availableEpoch",
+    FinalEpoch = "finalEpoch",
     Id = "id",
     Nonce = "nonce",
     Owner = "owner",
     SoldAt = "soldAt",
+    StartEpoch = "startEpoch",
     Timestamp = "timestamp",
     VaultAddress = "vaultAddress"
 }
@@ -1659,7 +1669,8 @@ export declare type VaultFragment = {
         timestamp: number;
         amount: string;
         vaultAddress: string;
-        availableEpoch: number;
+        startEpoch: number;
+        finalEpoch: number;
         soldAt?: string | null;
     }>;
 };
@@ -1726,7 +1737,8 @@ export declare type GetPoolsQuery = {
             timestamp: number;
             amount: string;
             vaultAddress: string;
-            availableEpoch: number;
+            startEpoch: number;
+            finalEpoch: number;
             soldAt?: string | null;
         }>;
     }>;
@@ -1790,7 +1802,8 @@ export declare type GetPoolQuery = {
             timestamp: number;
             amount: string;
             vaultAddress: string;
-            availableEpoch: number;
+            startEpoch: number;
+            finalEpoch: number;
             soldAt?: string | null;
         }>;
     } | null;
@@ -1803,7 +1816,8 @@ export declare type SellablePositionFragment = {
     timestamp: number;
     amount: string;
     vaultAddress: string;
-    availableEpoch: number;
+    startEpoch: number;
+    finalEpoch: number;
     soldAt?: string | null;
 };
 export declare type TokenPurchaseFragment = {

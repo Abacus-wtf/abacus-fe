@@ -11,7 +11,7 @@ export const aggregateVaultTokenLockHistory = (
     .reverse()
     .map((_, i) => i - 10)
   return offsets
-    .filter((offset) => offset >= 0)
+    .filter((offset) => currentEpoch + offset >= 0)
     .map((offset) => {
       const thisEpoch = currentEpoch + offset
       const valuation = {

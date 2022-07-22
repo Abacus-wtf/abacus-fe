@@ -35,33 +35,39 @@ const parseSubgraphVaults = async (vaults: GetPoolsQuery["vaults"]) => {
     url: OPENSEA_LINK,
   })
 
-  const poolData: Pool[] = _.map(vaults, (vault) => ({
-    state:
-      vault.status === 0
-        ? PoolStatus.Normal
-        : vault.status === 1
-        ? PoolStatus.Auction
-        : PoolStatus.Closed,
-    nfts: vault.nfts.map(({ nft }) => {
-      const asset = matchOpenSeaAssetToNFT(assets, {
-        ...nft,
-        nftAddress: nft.address,
-      })
-      return {
-        ...nft,
-        name: asset.name,
-        img: asset.image_url,
-        alt: `${asset.name} in NFT Collection: ${asset.collection}`,
-      }
-    }),
-    name: vault.name,
-    vaultAddress: vault.id,
-    emissionsStarted: vault.emissionsSigned,
-    totalParticipants: vault.totalParticipants,
-    tickets: vault.tickets,
-    epoch: 0,
-    sellablePositions: vault.sellablePositions,
-  }))
+  const poolData: Pool[] = _.map(vaults, (vault) => {
+    const now = new Date().getTime()
+    const diff = now - vault.timestamp * 1000
+    const epoch = Math.floor(diff / (24 * 60 * 60 * 1000))
+
+    return {
+      state:
+        vault.status === 0
+          ? PoolStatus.Normal
+          : vault.status === 1
+          ? PoolStatus.Auction
+          : PoolStatus.Closed,
+      nfts: vault.nfts.map(({ nft }) => {
+        const asset = matchOpenSeaAssetToNFT(assets, {
+          ...nft,
+          nftAddress: nft.address,
+        })
+        return {
+          ...nft,
+          name: asset.name,
+          img: asset.image_url,
+          alt: `${asset.name} in NFT Collection: ${asset.collection}`,
+        }
+      }),
+      name: vault.name,
+      vaultAddress: vault.id,
+      emissionsStarted: vault.emissionsSigned,
+      totalParticipants: vault.totalParticipants,
+      tickets: vault.tickets,
+      epoch,
+      sellablePositions: vault.sellablePositions,
+    }
+  })
   return poolData
 }
 

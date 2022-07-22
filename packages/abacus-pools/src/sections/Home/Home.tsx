@@ -16,8 +16,6 @@ import {
   useCurrentEpoch,
   useGetAggregate,
 } from "@state/application/hooks"
-import { formatEther } from "ethers/lib/utils"
-import { BigNumber } from "ethers"
 import { Container } from "../../layouts/styles"
 
 const LoadingContainer = styled.div`
@@ -59,9 +57,7 @@ const Home: React.FC = () => {
     )
   }
 
-  const TVL = aggregate
-    ? formatEther(BigNumber.from(aggregate.TVL).div(BigNumber.from("1000")))
-    : "-"
+  const TVL = aggregate ? Number(aggregate.TVL) / 1000 : "-"
   return (
     <Container>
       <InfoBarContainer>

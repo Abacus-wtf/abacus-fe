@@ -37,7 +37,10 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
   className,
 }) => {
   const tokenLockHistory = useTokenLockHistory(vaultId)
-  const poolSize = usePoolSize(vaultId)
+  const poolSize = usePoolSize(vaultId).toLocaleString("en-US", {
+    maximumSignificantDigits: 4,
+    minimumSignificantDigits: 2,
+  })
   const lockHistoryValues: number[] =
     tokenLockHistory
       ?.map((lockedValues) => lockedValues.uv)

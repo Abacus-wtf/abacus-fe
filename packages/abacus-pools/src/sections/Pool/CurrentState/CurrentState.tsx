@@ -99,8 +99,8 @@ const CurrentState: FunctionComponent<CurrentStateProps> = ({
   const src = nfts?.[0]?.img ?? ""
 
   const numTokensLocked = Number(size)
-  const currentTicketTokensLocked = Math.floor(numTokensLocked * 1000)
-  const currentTicket = Math.floor(numTokensLocked / 1000) + 1
+  const currentTicketTokensLocked = Math.floor(numTokensLocked * 1000) % 1000
+  const currentTicket = Math.floor(numTokensLocked) + 1
   const percentTicketsSold = currentTicketTokensLocked / 1000
   const progressLabel = useMemo(() => {
     const percentForDislplay = Number(

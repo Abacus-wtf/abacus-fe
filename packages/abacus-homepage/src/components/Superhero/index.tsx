@@ -70,6 +70,7 @@ const Superhero: FunctionComponent<SuperheroProps> = ({
         buttonType={ButtonType.White}
         type="button"
         onClick={openModal}
+        disabled
       >
         <Mega>Launch App</Mega>
       </StyledButton>

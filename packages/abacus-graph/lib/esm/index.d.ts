@@ -1568,6 +1568,7 @@ export declare type NftFragment = {
             __typename?: 'Vault';
             id: string;
             name: string;
+            size: string;
         };
     }> | null;
 };
@@ -1587,6 +1588,7 @@ export declare type GetNftQuery = {
                 __typename?: 'Vault';
                 id: string;
                 name: string;
+                size: string;
             };
         }> | null;
     } | null;
@@ -1611,6 +1613,7 @@ export declare type NfTsQuery = {
                 __typename?: 'Vault';
                 id: string;
                 name: string;
+                size: string;
             };
         }> | null;
     }>;
@@ -1637,12 +1640,14 @@ export declare type VaultFragment = {
                     __typename?: 'Vault';
                     id: string;
                     name: string;
+                    size: string;
                 };
             }> | null;
         };
         vault: {
             __typename?: 'Vault';
             id: string;
+            size: string;
         };
     }> | null;
     tickets: Array<{
@@ -1705,12 +1710,14 @@ export declare type GetPoolsQuery = {
                         __typename?: 'Vault';
                         id: string;
                         name: string;
+                        size: string;
                     };
                 }> | null;
             };
             vault: {
                 __typename?: 'Vault';
                 id: string;
+                size: string;
             };
         }> | null;
         tickets: Array<{
@@ -1770,12 +1777,14 @@ export declare type GetPoolQuery = {
                         __typename?: 'Vault';
                         id: string;
                         name: string;
+                        size: string;
                     };
                 }> | null;
             };
             vault: {
                 __typename?: 'Vault';
                 id: string;
+                size: string;
             };
         }> | null;
         tickets: Array<{
@@ -1900,12 +1909,14 @@ export declare type VaultNftFragment = {
                 __typename?: 'Vault';
                 id: string;
                 name: string;
+                size: string;
             };
         }> | null;
     };
     vault: {
         __typename?: 'Vault';
         id: string;
+        size: string;
     };
 };
 export declare const AllocationFragmentDoc: DocumentNode<AllocationFragment, unknown>;

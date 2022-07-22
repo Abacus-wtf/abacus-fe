@@ -6,5 +6,6 @@ fragment VaultNFT on VaultNFT {
   }
   vault {
     id
+    size
   }
 }

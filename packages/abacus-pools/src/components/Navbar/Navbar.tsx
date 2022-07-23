@@ -226,7 +226,7 @@ const Navbar = ({ pathname }: NavbarProps) => {
                       maximumSignificantDigits: 8,
                       minimumSignificantDigits: 2,
                     })
-                  : "..."}{" "}
+                  : "0"}{" "}
                 ABC
               </Kilo>
             </StyledLink>

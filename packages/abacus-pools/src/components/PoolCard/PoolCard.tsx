@@ -56,10 +56,10 @@ const PoolCard: FunctionComponent<PoolCardProps> = ({
   return (
     <CardContainer className={className} hasLink={!!link}>
       <NFTImage src={src} alt={alt} numNfts={nfts?.length} />
-      <CardInfoRow flexGrow>
+      <CardInfoRow>
         <CardInfo>
           <CardTitle as={link ? Link : "a"} to={link} hasLink={!!link}>
-            {title}
+            {title || "Untitled"}
           </CardTitle>
           <Kilo>Pool Name</Kilo>
         </CardInfo>

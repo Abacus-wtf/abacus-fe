@@ -10,14 +10,7 @@ import {
 } from "@components/index"
 import { Checkmark, Close } from "abacus-ui"
 
-import { OutboundLink } from "gatsby-plugin-google-gtag"
-
-const StyledOutboundLink = styled(OutboundLink)`
-  color: ${({ theme }) => theme.colors.core.primary};
-  text-decoration: none;
-`
-
-const EnabledEmissions = styled(InfoBarTitle)<{ emissionsStarted: boolean }>`
+const EnabledEmissions = styled(InfoBarContent)<{ emissionsStarted: boolean }>`
   display: flex;
   align-items: center;
   gap: 4px;
@@ -57,24 +50,17 @@ const InfoBar: FunctionComponent = () => {
         <InfoBarTitle>${tokensLockedUSD}</InfoBarTitle>
       </InfoBarItem>
       <InfoBarItem>
-        <InfoBarTitle>Participants</InfoBarTitle>
-        <InfoBarContent>{totalParticipants}</InfoBarContent>
-      </InfoBarItem>
-      <InfoBarItem>
-        <InfoBarTitle>Owner</InfoBarTitle>
+        <InfoBarTitle>Emissions Status</InfoBarTitle>
         <InfoBarContent>
-          <StyledOutboundLink target="_blank" href="">
-            TODO {/* {owner} */}
-          </StyledOutboundLink>
+          <EnabledEmissions emissionsStarted={emissionsStarted}>
+            {emissionsStarted ? (
+              <Checkmark stroke={theme.colors.utility.green} />
+            ) : (
+              <Close fill={theme.colors.utility.red} />
+            )}
+            {emissionsStarted ? "Emissions Enabled" : "Emissions Not Enabled"}
+          </EnabledEmissions>
         </InfoBarContent>
-        <EnabledEmissions emissionsStarted={emissionsStarted}>
-          {emissionsStarted ? (
-            <Checkmark stroke={theme.colors.utility.green} />
-          ) : (
-            <Close fill={theme.colors.utility.red} />
-          )}
-          {emissionsStarted ? "Emissions Enabled" : "Emissions Not Enabled"}
-        </EnabledEmissions>
       </InfoBarItem>
     </InfoBarContainer>
   )

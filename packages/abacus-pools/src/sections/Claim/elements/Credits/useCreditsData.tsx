@@ -39,26 +39,13 @@ const useCreditsData = () => {
         epochVault(ABC_EPOCH, ["getCurrentEpoch"], [[]]),
       ])
 
-      const [abcEmissions, userCredits, getEpochEndTime, epochTracker] =
-        await epochVault(
-          ABC_EPOCH,
-          [
-            "getBaseEmission",
-            "getUserCredits",
-            "getEpochEndTime",
-            "epochTracker",
-          ],
-          [
-            [currentEpoch[0]],
-            [currentEpoch[0], account],
-            [currentEpoch[0]],
-            [currentEpoch[0]],
-          ]
-        )
-
-      setTotalEmissions(
-        BigNumber.from(abcEmissions[0]).add(BigNumber.from(epochTracker[2]))
+      const [userCredits, getEpochEndTime, epochTracker] = await epochVault(
+        ABC_EPOCH,
+        ["getUserCredits", "getEpochEndTime", "epochTracker"],
+        [[currentEpoch[0], account], [currentEpoch[0]], [currentEpoch[0]]]
       )
+
+      setTotalEmissions(BigNumber.from("20000000000000000000000000"))
       setTotalCredits(Number(formatEther(BigNumber.from(epochTracker[0]))))
 
       setPendingRewards(Number(formatEther(_pendingRewards)))
@@ -68,7 +55,7 @@ const useCreditsData = () => {
       setCurrentEpoch(BigNumber.from(currentEpoch[0]).toNumber())
       setUserData({
         userCredits: Number(formatEther(userCredits[0])),
-        abcEmissions: Number(formatEther(abcEmissions[0])),
+        abcEmissions: Number(formatEther("20000000000000000000000000")),
       })
       setCurrentEpochSet(true)
     }

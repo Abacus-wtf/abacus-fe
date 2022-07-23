@@ -71,7 +71,12 @@ const EntryLevels: FunctionComponent = () => {
                 label={
                   <ProgressLabel>
                     <span>{displayProgress}</span> % filled /{" "}
-                    <span>{1 - progress}</span> ETH left
+                    <span>
+                      {(1 - progress).toLocaleString("en-us", {
+                        maximumSignificantDigits: 3,
+                      })}
+                    </span>{" "}
+                    ETH left
                   </ProgressLabel>
                 }
               />

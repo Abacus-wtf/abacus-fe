@@ -11,11 +11,7 @@ import {
   InfoBarTitle,
   CardGrid,
 } from "@components/index"
-import {
-  useAggregate,
-  useCurrentEpoch,
-  useGetAggregate,
-} from "@state/application/hooks"
+import { useAggregate, useGetAggregate } from "@state/application/hooks"
 import { Container } from "../../layouts/styles"
 
 const LoadingContainer = styled.div`
@@ -39,7 +35,6 @@ const Home: React.FC = () => {
   const pools = useGetPools()
   const aggregate = useAggregate()
   const getAggregate = useGetAggregate()
-  const currentEpoch = useCurrentEpoch()
 
   useEffect(() => {
     getAggregate()
@@ -68,14 +63,6 @@ const Home: React.FC = () => {
         <InfoBarItem>
           <InfoBarTitle>Amount in Pools</InfoBarTitle>
           <InfoBarContent>{TVL}ETH</InfoBarContent>
-        </InfoBarItem>
-        <InfoBarItem>
-          <InfoBarTitle>Total Participants</InfoBarTitle>
-          <InfoBarContent>{aggregate?.totalParticipants ?? "-"}</InfoBarContent>
-        </InfoBarItem>
-        <InfoBarItem>
-          <InfoBarTitle>Current Epoch</InfoBarTitle>
-          <InfoBarContent>{currentEpoch ?? "-"}</InfoBarContent>
         </InfoBarItem>
       </InfoBarContainer>
       <ExploreFilters page={0} />
